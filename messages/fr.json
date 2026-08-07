@@ -1,0 +1,157 @@
+{
+  "brand": {
+    "name": "HomeLink Africa",
+    "tagline": "Logements, voitures et excursions vérifiés partout au Rwanda."
+  },
+  "header": {
+    "skipToContent": "Aller au contenu",
+    "language": "Langue",
+    "currency": "Devise",
+    "theme": "Thème",
+    "themeLight": "Clair",
+    "themeDark": "Sombre",
+    "themeSystem": "Système",
+    "signIn": "Se connecter",
+    "menu": "Menu",
+    "trips": "Voyages",
+    "messages": "Messages",
+    "help": "Aide"
+  },
+  "nav": {
+    "stays": "Logements",
+    "cars": "Voitures",
+    "experiences": "Excursions",
+    "howItWorks": "Comment ça marche"
+  },
+  "landing": {
+    "heroTitle": "Un logement prêt à votre arrivée",
+    "heroBody": "Chaque logement, voiture et guide sur HomeLink a été inspecté en personne par notre équipe à Kigali. S'il est ici, nous y sommes allés.",
+    "doorsLabel": "Qu'est-ce qui vous amène ?",
+    "feedTitle": "Vérifiés à Kigali cette semaine",
+    "feedBody": "Récemment inspectés et prêts à réserver.",
+    "viewAll": "Voir tous les logements"
+  },
+  "doors": {
+    "arriving": {
+      "title": "Je viens au Rwanda",
+      "body": "Composez un voyage : un logement, une voiture qui vous attend et des journées déjà planifiées."
+    },
+    "home": {
+      "title": "Je cherche un logement",
+      "body": "Louez à long terme à Kigali. Vraies photos, propriétaires vérifiés, sans jeux d'agence."
+    },
+    "car": {
+      "title": "J'ai besoin d'une voiture",
+      "body": "Sans chauffeur ou avec chauffeur. Prise en charge à l'aéroport incluse."
+    },
+    "explore": {
+      "title": "Je veux explorer",
+      "body": "Gorilles, lacs, balades urbaines et parcs nationaux avec des guides vérifiés."
+    }
+  },
+  "duration": {
+    "label": "Pour combien de temps ?",
+    "short": "Quelques nuits",
+    "shortHint": "À la nuit",
+    "medium": "Quelques mois",
+    "mediumHint": "À la nuit",
+    "long": "Un an ou plus",
+    "longHint": "Bail",
+    "helper": "Les séjours courts et moyens se réservent à la nuit. Le long terme bascule vers une demande de bail."
+  },
+  "search": {
+    "where": "Où",
+    "wherePlaceholder": "Kigali",
+    "arriving": "Arrivée",
+    "leaving": "Départ",
+    "guests": "Voyageurs",
+    "guestCount": "{count, plural, one {# voyageur} other {# voyageurs}}",
+    "submit": "Rechercher",
+    "pickUp": "Prise en charge",
+    "dropOff": "Restitution",
+    "when": "Quand"
+  },
+  "listing": {
+    "perNight": "par nuit",
+    "perMonth": "par mois",
+    "perDay": "par jour",
+    "bedrooms": "{count, plural, one {# chambre} other {# chambres}}",
+    "sleeps": "Couche {count}",
+    "nightsTotal": "{count, plural, one {# nuit} other {# nuits}}",
+    "save": "Enregistrer",
+    "reserve": "Réserver",
+    "seatCount": "{count, plural, one {# place} other {# places}}",
+    "durationHours": "{count, plural, one {# heure} other {# heures}}"
+  },
+  "verification": {
+    "badge": "Vérifié",
+    "escrow": "Séquestre",
+    "escrowShort": "Retenu jusqu'à votre arrivée confirmée",
+    "title": "Vérifié par quelqu'un qui est allé sur place",
+    "inspectedBy": "Inspecté par {name} le {date}",
+    "openRecord": "Voir nos vérifications",
+    "steps": {
+      "inspected": "Inspecté en personne",
+      "inspectedBody": "Contrôlé selon une liste de 34 points : pression d'eau, groupe électrogène, accès routier et cuisine.",
+      "photographed": "Photographié par nous",
+      "photographedBody": "Chaque image ici a été prise par l'équipe HomeLink. Aucune photo fournie par le propriétaire n'apparaît sur une annonce vérifiée.",
+      "identity": "Identité du propriétaire confirmée",
+      "identityBody": "Titre de propriété ou mandat de location vérifié avec la pièce d'identité nationale. Contrôles effectués avant tout versement.",
+      "escrow": "Votre argent est retenu",
+      "escrowBody": "Le paiement reste sous séquestre jusqu'à votre arrivée confirmée. Si le logement ne correspond pas, remboursement intégral et un autre logement le soir même."
+    }
+  },
+  "trust": {
+    "listingsVerified": "{count} annonces vérifiées",
+    "inspectedInPerson": "Chacune inspectée en personne",
+    "escrowProtected": "Séquestre sur chaque séjour",
+    "noSurprises": "Le prix affiché est le prix payé"
+  },
+  "status": {
+    "draft": "Brouillon",
+    "confirmed": "Confirmé",
+    "awaitingCheckIn": "En attente d'arrivée",
+    "paymentPending": "Paiement en attente",
+    "fundsReleased": "Fonds versés",
+    "cancelled": "Annulé",
+    "disputed": "Litige",
+    "lowAvailability": "{count, plural, one {# restant pour ces dates} other {# restants pour ces dates}}"
+  },
+  "filters": {
+    "verifiedOnly": "Vérifiés uniquement",
+    "backupPower": "Groupe électrogène",
+    "fibre": "Internet fibre",
+    "furnished": "Meublé",
+    "parking": "Parking",
+    "longTerm": "Bail long terme",
+    "selfDrive": "Sans chauffeur",
+    "withDriver": "Avec chauffeur",
+    "clear": "Effacer les filtres"
+  },
+  "segment": {
+    "label": "Vous consultez depuis",
+    "abroad": "L'étranger",
+    "rwanda": "Le Rwanda",
+    "hint": "Définit votre langue, votre devise et votre moyen de paiement. Modifiable à tout moment."
+  },
+  "dev": {
+    "label": "Aperçu en tant que",
+    "role": "Rôle",
+    "note": "Développement uniquement. Les rôles sont simulés en attendant les comptes."
+  },
+  "roles": {
+    "visitor": "Déconnecté",
+    "guest": "Voyageur",
+    "host": "Hôte",
+    "driver": "Chauffeur",
+    "guide": "Guide",
+    "ops": "Équipe conciergerie",
+    "admin": "Administrateur"
+  },
+  "empty": {
+    "noResults": "Rien ne correspond encore à ces filtres",
+    "noResultsBody": "Nous ne listons que ce que nous avons inspecté, les résultats sont donc plus restreints que prévu. Élargissez les dates ou retirez un filtre.",
+    "comingSoon": "Pas encore construit",
+    "comingSoonBody": "Cet écran fait partie de la structure mais n'a pas encore de contenu."
+  }
+}

@@ -1,0 +1,393 @@
+import type {
+  Booking,
+  Conversation,
+  Experience,
+  Listing,
+  Message,
+  Trip,
+  Vehicle,
+  VerificationRecord,
+} from "@/lib/domain/types";
+import { money } from "@/lib/domain/money";
+
+/**
+ * Phase 1 fixture data.
+ *
+ * Shapes match the domain types exactly, so the Supabase implementation in
+ * Phase 2 is a swap rather than a rewrite. Prices are stored in the currency
+ * the supplier is actually paid in — RWF for local supply — and converted for
+ * display. RWF amounts are whole francs because RWF has no minor unit.
+ */
+
+function verification(
+  id: string,
+  inspectorName: string,
+  inspectedAt: string,
+  checklistPoints = 34,
+): VerificationRecord {
+  return {
+    id,
+    inspectorName,
+    inspectedAt,
+    checklistPoints,
+    photographedByHomeLink: true,
+    ownerIdentityConfirmed: true,
+  };
+}
+
+export const LISTINGS: Listing[] = [
+  {
+    id: "lst_kacyiru_garden",
+    slug: "kacyiru-garden-apartment",
+    name: "Garden apartment with hill view",
+    neighbourhood: "Kacyiru",
+    city: "Kigali",
+    bedrooms: 2,
+    sleeps: 4,
+    amenities: ["backupPower", "fibre", "furnished", "parking", "garden"],
+    nightlyRate: money(165_000, "RWF"),
+    monthlyRate: money(2_900_000, "RWF"),
+    modes: ["nightly", "lease"],
+    verification: verification("ver_001", "Jean-Claude U.", "2026-10-12"),
+    imageSeed: "kacyiru",
+    summary:
+      "Quiet street five minutes from the ministries, with a walled garden and a generator that actually starts.",
+    unitsAvailable: 3,
+  },
+  {
+    id: "lst_kimihurura_townhouse",
+    slug: "kimihurura-townhouse",
+    name: "Kimihurura townhouse",
+    neighbourhood: "Kimihurura",
+    city: "Kigali",
+    bedrooms: 3,
+    sleeps: 6,
+    amenities: ["backupPower", "fibre", "furnished", "parking", "security"],
+    nightlyRate: money(219_000, "RWF"),
+    monthlyRate: money(3_800_000, "RWF"),
+    modes: ["nightly", "lease"],
+    verification: verification("ver_002", "Aline M.", "2026-10-03"),
+    imageSeed: "kimihurura",
+    summary:
+      "Three floors, a roof terrace facing the valley, and walking distance to the restaurants on KG 5.",
+    unitsAvailable: 2,
+  },
+  {
+    id: "lst_nyarutarama_villa",
+    slug: "nyarutarama-lake-villa",
+    name: "Villa near the lake",
+    neighbourhood: "Nyarutarama",
+    city: "Kigali",
+    bedrooms: 4,
+    sleeps: 8,
+    amenities: ["backupPower", "fibre", "furnished", "parking", "garden", "security"],
+    nightlyRate: money(340_000, "RWF"),
+    monthlyRate: money(5_600_000, "RWF"),
+    modes: ["nightly", "lease"],
+    verification: verification("ver_003", "Jean-Claude U.", "2026-09-28", 41),
+    imageSeed: "nyarutarama",
+    summary:
+      "Built for a family that entertains: a long kitchen, a lawn, and a gate that opens onto the golf course road.",
+    unitsAvailable: 1,
+  },
+  {
+    id: "lst_remera_studio",
+    slug: "remera-studio",
+    name: "Bright studio near the stadium",
+    neighbourhood: "Remera",
+    city: "Kigali",
+    bedrooms: 1,
+    sleeps: 2,
+    amenities: ["fibre", "furnished", "water"],
+    nightlyRate: money(62_000, "RWF"),
+    monthlyRate: money(950_000, "RWF"),
+    modes: ["nightly", "lease"],
+    verification: verification("ver_004", "Aline M.", "2026-10-19"),
+    imageSeed: "remera",
+    summary:
+      "Small, clean, and close to the bus lines. The obvious first place for someone arriving to work in Kigali.",
+    unitsAvailable: 5,
+  },
+  {
+    id: "lst_kiyovu_apartment",
+    slug: "kiyovu-city-apartment",
+    name: "City apartment in Kiyovu",
+    neighbourhood: "Kiyovu",
+    city: "Kigali",
+    bedrooms: 2,
+    sleeps: 4,
+    amenities: ["backupPower", "fibre", "furnished", "workspace", "security"],
+    nightlyRate: money(198_000, "RWF"),
+    monthlyRate: money(3_200_000, "RWF"),
+    modes: ["nightly", "lease"],
+    verification: verification("ver_005", "Patrick N.", "2026-10-22"),
+    imageSeed: "kiyovu",
+    summary:
+      "A desk by the window with real fibre behind it, in the quietest pocket of the city centre.",
+    unitsAvailable: 2,
+  },
+  {
+    id: "lst_gikondo_family",
+    slug: "gikondo-family-house",
+    name: "Family house with a yard",
+    neighbourhood: "Gikondo",
+    city: "Kigali",
+    bedrooms: 3,
+    sleeps: 6,
+    amenities: ["parking", "water", "garden", "furnished"],
+    nightlyRate: money(128_000, "RWF"),
+    monthlyRate: money(1_950_000, "RWF"),
+    modes: ["nightly", "lease"],
+    verification: verification("ver_006", "Patrick N.", "2026-10-08"),
+    imageSeed: "gikondo",
+    summary:
+      "Older build, well kept, with the kind of yard children actually use. Long-term lease preferred.",
+    unitsAvailable: 4,
+  },
+];
+
+export const VEHICLES: Vehicle[] = [
+  {
+    id: "veh_rav4",
+    slug: "toyota-rav4",
+    name: "Toyota RAV4",
+    vehicleClass: "suv",
+    seats: 5,
+    transmission: "automatic",
+    driveModes: ["selfDrive", "withDriver"],
+    dailyRate: money(58_000, "RWF"),
+    withDriverSupplement: money(25_000, "RWF"),
+    verification: verification("ver_v01", "Eric H.", "2026-10-15", 22),
+    imageSeed: "rav4",
+    summary:
+      "The default Rwandan hire car for a reason. Handles the hills and the unpaved stretches without drama.",
+    unitsAvailable: 6,
+  },
+  {
+    id: "veh_landcruiser",
+    slug: "toyota-land-cruiser",
+    name: "Toyota Land Cruiser",
+    vehicleClass: "suv",
+    seats: 7,
+    transmission: "manual",
+    driveModes: ["withDriver"],
+    dailyRate: money(145_000, "RWF"),
+    withDriverSupplement: money(0, "RWF"),
+    verification: verification("ver_v02", "Eric H.", "2026-10-11", 22),
+    imageSeed: "landcruiser",
+    summary:
+      "For the parks. Comes with a driver who has done the Nyungwe and Akagera roads many times.",
+    unitsAvailable: 2,
+  },
+  {
+    id: "veh_corolla",
+    slug: "toyota-corolla",
+    name: "Toyota Corolla",
+    vehicleClass: "saloon",
+    seats: 5,
+    transmission: "automatic",
+    driveModes: ["selfDrive", "withDriver"],
+    dailyRate: money(38_000, "RWF"),
+    withDriverSupplement: money(25_000, "RWF"),
+    verification: verification("ver_v03", "Eric H.", "2026-10-18", 22),
+    imageSeed: "corolla",
+    summary: "City car. Cheap to run, easy to park, fine on any tarmac road in the country.",
+    unitsAvailable: 8,
+  },
+  {
+    id: "veh_hiace",
+    slug: "toyota-hiace",
+    name: "Toyota HiAce",
+    vehicleClass: "minibus",
+    seats: 12,
+    transmission: "manual",
+    driveModes: ["withDriver"],
+    dailyRate: money(120_000, "RWF"),
+    withDriverSupplement: money(0, "RWF"),
+    verification: verification("ver_v04", "Eric H.", "2026-09-30", 22),
+    imageSeed: "hiace",
+    summary: "Group transport with a driver. The usual choice for a family arriving together.",
+    unitsAvailable: 3,
+  },
+];
+
+export const EXPERIENCES: Experience[] = [
+  {
+    id: "exp_gorillas",
+    slug: "volcanoes-gorilla-trek",
+    name: "Gorilla trek in Volcanoes National Park",
+    interests: ["wildlife", "hiking"],
+    durationHours: 10,
+    minAge: 15,
+    groupMax: 8,
+    // USD 1,500.00 — the park permit is priced in dollars, not francs.
+    pricePerPerson: money(150_000, "USD"),
+    guideName: "Emmanuel R.",
+    verification: verification("ver_e01", "Aline M.", "2026-09-14", 18),
+    imageSeed: "gorillas",
+    summary:
+      "A full day at altitude with a park-licensed tracker. Permits handled by us, transport from Kigali included.",
+    meetingPoint: "Kinigi park headquarters",
+  },
+  {
+    id: "exp_kigali_walk",
+    slug: "kigali-city-walk",
+    name: "Kigali on foot",
+    interests: ["city", "culture", "food"],
+    durationHours: 4,
+    minAge: 8,
+    groupMax: 12,
+    pricePerPerson: money(45_000, "RWF"),
+    guideName: "Solange K.",
+    verification: verification("ver_e02", "Patrick N.", "2026-10-06", 18),
+    imageSeed: "kigaliwalk",
+    summary:
+      "Nyamirambo, the markets, and lunch cooked by a women's cooperative. The city as people actually live it.",
+    meetingPoint: "Nyamirambo Women's Centre",
+  },
+  {
+    id: "exp_kivu",
+    slug: "lake-kivu-day",
+    name: "A day on Lake Kivu",
+    interests: ["lake", "food"],
+    durationHours: 8,
+    minAge: 5,
+    groupMax: 10,
+    pricePerPerson: money(85_000, "RWF"),
+    guideName: "Didier B.",
+    verification: verification("ver_e03", "Aline M.", "2026-10-01", 18),
+    imageSeed: "kivu",
+    summary: "Boat out to the islands, swimming where it is safe, and fish grilled on the shore.",
+    meetingPoint: "Rubavu public beach",
+  },
+  {
+    id: "exp_nyungwe",
+    slug: "nyungwe-canopy-walk",
+    name: "Nyungwe canopy walk",
+    interests: ["wildlife", "hiking"],
+    durationHours: 12,
+    minAge: 12,
+    groupMax: 10,
+    pricePerPerson: money(120_000, "RWF"),
+    guideName: "Emmanuel R.",
+    verification: verification("ver_e04", "Patrick N.", "2026-09-22", 18),
+    imageSeed: "nyungwe",
+    summary: "The suspended bridge above the rainforest, plus a chance at the colobus troops on the way in.",
+    meetingPoint: "Nyungwe reception centre",
+  },
+];
+
+export const BOOKINGS: Booking[] = [
+  {
+    id: "bkg_001",
+    reference: "HL-4KQ2-8M",
+    service: "stay",
+    supplyItemId: "lst_kacyiru_garden",
+    title: "Garden apartment with hill view",
+    startDate: "2026-11-14",
+    endDate: "2026-11-17",
+    party: 2,
+    total: money(495_000, "RWF"),
+    status: "confirmed",
+    escrowHeld: true,
+    stayMode: "nightly",
+  },
+  {
+    id: "bkg_002",
+    reference: "HL-7XB1-2P",
+    service: "car",
+    supplyItemId: "veh_rav4",
+    title: "Toyota RAV4, self-drive",
+    startDate: "2026-11-14",
+    endDate: "2026-11-17",
+    party: 2,
+    total: money(174_000, "RWF"),
+    status: "confirmed",
+    escrowHeld: false,
+  },
+  {
+    id: "bkg_003",
+    reference: "HL-9DL5-4T",
+    service: "experience",
+    supplyItemId: "exp_kigali_walk",
+    title: "Kigali on foot",
+    startDate: "2026-11-15",
+    endDate: "2026-11-15",
+    party: 2,
+    total: money(90_000, "RWF"),
+    status: "confirmed",
+    escrowHeld: false,
+  },
+];
+
+export const TRIPS: Trip[] = [
+  {
+    id: "trp_001",
+    name: "Kigali, November",
+    displayCurrency: "USD",
+    status: "booked",
+    bookingIds: ["bkg_001", "bkg_002", "bkg_003"],
+  },
+];
+
+export const CONVERSATIONS: Conversation[] = [
+  {
+    id: "cnv_001",
+    subject: "Arrival details, Garden apartment",
+    scope: { kind: "booking", id: "bkg_001" },
+    participantNames: ["You", "Aline M. (HomeLink)"],
+    lastMessagePreview:
+      "Your flight lands at 19:40, so I will have someone at the gate with the keys.",
+    lastMessageAt: "2026-11-09T14:22:00Z",
+    unreadCount: 1,
+  },
+  {
+    id: "cnv_002",
+    subject: "Car pickup at the airport",
+    scope: { kind: "booking", id: "bkg_002" },
+    participantNames: ["You", "Eric H. (Driver)"],
+    lastMessagePreview: "The RAV4 is booked out to you from Saturday morning.",
+    lastMessageAt: "2026-11-08T09:05:00Z",
+    unreadCount: 0,
+  },
+];
+
+export const MESSAGES: Message[] = [
+  {
+    id: "msg_001",
+    conversationId: "cnv_001",
+    authorName: "You",
+    authorRole: "guest",
+    body: "We land Saturday evening on RwandAir from Brussels. Is a late check-in workable?",
+    sentAt: "2026-11-09T13:40:00Z",
+    readAt: "2026-11-09T13:52:00Z",
+  },
+  {
+    id: "msg_002",
+    conversationId: "cnv_001",
+    authorName: "Aline M. (HomeLink)",
+    authorRole: "ops",
+    body: "Your flight lands at 19:40, so I will have someone at the gate with the keys. The generator is fuelled and the water tank is full.",
+    sentAt: "2026-11-09T14:22:00Z",
+  },
+  {
+    id: "msg_003",
+    conversationId: "cnv_002",
+    authorName: "Eric H. (Driver)",
+    authorRole: "driver",
+    body: "The RAV4 is booked out to you from Saturday morning. I will leave it in the arrivals car park, bay 12.",
+    sentAt: "2026-11-08T09:05:00Z",
+    readAt: "2026-11-08T09:30:00Z",
+  },
+];
+
+/**
+ * Display-only FX, expressed per 1 RWF. Phase 2 replaces this with a live
+ * feed and records the settlement rate against each transaction.
+ */
+export const FX_RATES = {
+  RWF: 1,
+  USD: 1 / 1_290,
+  EUR: 1 / 1_400,
+  GBP: 1 / 1_630,
+} as const;

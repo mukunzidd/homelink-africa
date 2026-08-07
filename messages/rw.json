@@ -1,0 +1,157 @@
+{
+  "brand": {
+    "name": "HomeLink Africa",
+    "tagline": "Amacumbi, imodoka n'ingendo byagenzuwe mu Rwanda hose."
+  },
+  "header": {
+    "skipToContent": "Simbukira ku bikubiyemo",
+    "language": "Ururimi",
+    "currency": "Ifaranga",
+    "theme": "Isura",
+    "themeLight": "Urumuri",
+    "themeDark": "Umwijima",
+    "themeSystem": "Iya sisitemu",
+    "signIn": "Injira",
+    "menu": "Ibikubiyemo",
+    "trips": "Ingendo",
+    "messages": "Ubutumwa",
+    "help": "Ubufasha"
+  },
+  "nav": {
+    "stays": "Amacumbi",
+    "cars": "Imodoka",
+    "experiences": "Ingendo",
+    "howItWorks": "Uko bikora"
+  },
+  "landing": {
+    "heroTitle": "Urugo rwiteguye igihe ugeze",
+    "heroBody": "Buri cumbi, imodoka n'umuyobozi kuri HomeLink byagenzuwe imbonankubone n'itsinda ryacu i Kigali. Niba biri hano, twarabigezeho.",
+    "doorsLabel": "Ni iki kigushoboye kuza?",
+    "feedTitle": "Byagenzuwe i Kigali muri iki cyumweru",
+    "feedBody": "Bimaze kugenzurwa kandi biteguye gufatwa.",
+    "viewAll": "Reba amacumbi yose"
+  },
+  "doors": {
+    "arriving": {
+      "title": "Ndaza mu Rwanda",
+      "body": "Tegura urugendo: aho ucumbika, imodoka igutegereje, n'iminsi imaze guteganywa."
+    },
+    "home": {
+      "title": "Nkeneye urugo",
+      "body": "Kodesha igihe kirekire i Kigali. Amafoto nyayo, ba nyir'inzu bagenzuwe, nta bujura bw'aba agent."
+    },
+    "car": {
+      "title": "Nkeneye imodoka",
+      "body": "Uyitwara ubwawe cyangwa hamwe n'umushoferi. Kugutwara ku kibuga cy'indege birimo."
+    },
+    "explore": {
+      "title": "Nshaka gusura",
+      "body": "Ingagi, ibiyaga, kugendagenda mu mujyi, na pariki z'igihugu hamwe n'abayobozi bagenzuwe."
+    }
+  },
+  "duration": {
+    "label": "Ubikeneye igihe kingana iki?",
+    "short": "Amajoro macye",
+    "shortHint": "Ku ijoro",
+    "medium": "Amezi macye",
+    "mediumHint": "Ku ijoro",
+    "long": "Umwaka cyangwa irenga",
+    "longHint": "Amasezerano",
+    "helper": "Kuguma igihe gito n'igiciriritse bifatwa ku ijoro. Igihe kirekire cyimukira ku busabe bw'amasezerano yo gukodesha."
+  },
+  "search": {
+    "where": "Aho",
+    "wherePlaceholder": "Kigali",
+    "arriving": "Kugera",
+    "leaving": "Kugenda",
+    "guests": "Abashyitsi",
+    "guestCount": "{count, plural, one {umushyitsi #} other {abashyitsi #}}",
+    "submit": "Shakisha",
+    "pickUp": "Aho batorerwa",
+    "dropOff": "Aho basubiza",
+    "when": "Ryari"
+  },
+  "listing": {
+    "perNight": "ku ijoro",
+    "perMonth": "ku kwezi",
+    "perDay": "ku munsi",
+    "bedrooms": "{count, plural, one {icyumba # cyo kuraramo} other {ibyumba # byo kuraramo}}",
+    "sleeps": "Iryamamo {count}",
+    "nightsTotal": "{count, plural, one {ijoro #} other {amajoro #}}",
+    "save": "Bika",
+    "reserve": "Fata",
+    "seatCount": "{count, plural, one {intebe #} other {intebe #}}",
+    "durationHours": "{count, plural, one {isaha #} other {amasaha #}}"
+  },
+  "verification": {
+    "badge": "Byagenzuwe",
+    "escrow": "Amafaranga abitswe",
+    "escrowShort": "Abikwa kugeza wemeje ko wageze",
+    "title": "Byagenzuwe n'umuntu wageze aho",
+    "inspectedBy": "Byagenzuwe na {name} ku wa {date}",
+    "openRecord": "Reba ibyo twagenzuye",
+    "steps": {
+      "inspected": "Byagenzuwe imbonankubone",
+      "inspectedBody": "Byasuzumwe hakurikijwe urutonde rw'ingingo 34: umuvuduko w'amazi, umuriro w'inyongera, inzira igera aho, n'igikoni.",
+      "photographed": "Twafashe amafoto ubwacu",
+      "photographedBody": "Buri foto iri hano yafashwe n'itsinda rya HomeLink. Nta foto yatanzwe na nyir'inzu igaragara ku cumbi ryagenzuwe.",
+      "identity": "Umwirondoro wa nyir'inzu wemejwe",
+      "identityBody": "Impapuro z'ubutaka cyangwa uburenganzira bwo gukodesha byagenzuwe hifashishijwe indangamuntu. Bikorwa mbere y'uko amafaranga yishyurwa.",
+      "escrow": "Amafaranga yawe arabitswe",
+      "escrowBody": "Amafaranga abikwa kugeza wemeje ko wageze. Nibitaba nk'uko byasobanuwe, usubizwa amafaranga yose kandi tugushakira ubundi bucumbi kuri uwo mugoroba."
+    }
+  },
+  "trust": {
+    "listingsVerified": "Amacumbi {count} yagenzuwe",
+    "inspectedInPerson": "Buri kimwe cyagenzuwe imbonankubone",
+    "escrowProtected": "Amafaranga abikwa kuri buri cumbi",
+    "noSurprises": "Igiciro ubona ni cyo wishyura"
+  },
+  "status": {
+    "draft": "Inyandiko itarangiye",
+    "confirmed": "Byemejwe",
+    "awaitingCheckIn": "Bitegereje ko ugera",
+    "paymentPending": "Kwishyura bitegereje",
+    "fundsReleased": "Amafaranga yarekuwe",
+    "cancelled": "Byahagaritswe",
+    "disputed": "Hari impaka",
+    "lowAvailability": "{count, plural, one {hasigaye # kuri iyi tariki} other {hasigaye # kuri iyi tariki}}"
+  },
+  "filters": {
+    "verifiedOnly": "Ibyagenzuwe gusa",
+    "backupPower": "Umuriro w'inyongera",
+    "fibre": "Interineti ya fibre",
+    "furnished": "Ririmo ibikoresho",
+    "parking": "Aho gupaka",
+    "longTerm": "Amasezerano y'igihe kirekire",
+    "selfDrive": "Uyitwara ubwawe",
+    "withDriver": "Hamwe n'umushoferi",
+    "clear": "Kuraho muyunguruzi"
+  },
+  "segment": {
+    "label": "Urareba uri",
+    "abroad": "Mu mahanga",
+    "rwanda": "Mu Rwanda",
+    "hint": "Bishyiraho ururimi, ifaranga, n'uburyo bwo kwishyura. Ushobora guhindura igihe cyose."
+  },
+  "dev": {
+    "label": "Reba nka",
+    "role": "Uruhare",
+    "note": "Iby'iterambere gusa. Inshingano ni iz'agateganyo kugeza konti zishyizweho."
+  },
+  "roles": {
+    "visitor": "Ntiwinjiye",
+    "guest": "Umushyitsi",
+    "host": "Nyir'inzu",
+    "driver": "Umushoferi",
+    "guide": "Umuyobozi",
+    "ops": "Itsinda rifasha",
+    "admin": "Umuyobozi mukuru"
+  },
+  "empty": {
+    "noResults": "Nta kiraboneka kijyanye n'ibi byo kuyungurura",
+    "noResultsBody": "Dushyiraho gusa ibyo twagenzuye, bityo ibisubizo ni bike kurusha uko wabitekerezaga. Gerageza kwagura amatariki cyangwa gukuraho akayunguruzo.",
+    "comingSoon": "Ntibirubakwa",
+    "comingSoonBody": "Uru rupapuro ruri mu miterere ariko ntirurimo ibintu."
+  }
+}

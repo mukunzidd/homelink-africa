@@ -1,0 +1,157 @@
+{
+  "brand": {
+    "name": "HomeLink Africa",
+    "tagline": "Verified stays, cars, and days out across Rwanda."
+  },
+  "header": {
+    "skipToContent": "Skip to content",
+    "language": "Language",
+    "currency": "Currency",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "signIn": "Sign in",
+    "menu": "Menu",
+    "trips": "Trips",
+    "messages": "Messages",
+    "help": "Help"
+  },
+  "nav": {
+    "stays": "Stays",
+    "cars": "Cars",
+    "experiences": "Experiences",
+    "howItWorks": "How it works"
+  },
+  "landing": {
+    "heroTitle": "A home that is ready when you land",
+    "heroBody": "Every stay, car, and guide on HomeLink has been inspected in person by our team in Kigali. If it is here, we have stood in the room.",
+    "doorsLabel": "What brings you here?",
+    "feedTitle": "Verified in Kigali this week",
+    "feedBody": "Newly inspected and ready to book.",
+    "viewAll": "View all stays"
+  },
+  "doors": {
+    "arriving": {
+      "title": "I'm coming to Rwanda",
+      "body": "Compose a trip: a place to stay, a car waiting, and days already planned."
+    },
+    "home": {
+      "title": "I need a home",
+      "body": "Rent long-term in Kigali. Real photos, verified landlords, no agent games."
+    },
+    "car": {
+      "title": "I need a car",
+      "body": "Self-drive or with a driver. Airport pickup included."
+    },
+    "explore": {
+      "title": "I want to explore",
+      "body": "Gorillas, lakes, city walks, and national parks with vetted guides."
+    }
+  },
+  "duration": {
+    "label": "How long do you need it?",
+    "short": "A few nights",
+    "shortHint": "Nightly",
+    "medium": "A few months",
+    "mediumHint": "Nightly",
+    "long": "A year or more",
+    "longHint": "Lease",
+    "helper": "Short and medium stays book by the night. Long-term switches to a lease application."
+  },
+  "search": {
+    "where": "Where",
+    "wherePlaceholder": "Kigali",
+    "arriving": "Arriving",
+    "leaving": "Leaving",
+    "guests": "Guests",
+    "guestCount": "{count, plural, one {# guest} other {# guests}}",
+    "submit": "Search",
+    "pickUp": "Pick-up",
+    "dropOff": "Drop-off",
+    "when": "When"
+  },
+  "listing": {
+    "perNight": "per night",
+    "perMonth": "per month",
+    "perDay": "per day",
+    "bedrooms": "{count, plural, one {# bedroom} other {# bedrooms}}",
+    "sleeps": "Sleeps {count}",
+    "nightsTotal": "{count, plural, one {# night} other {# nights}}",
+    "save": "Save",
+    "reserve": "Reserve",
+    "seatCount": "{count, plural, one {# seat} other {# seats}}",
+    "durationHours": "{count, plural, one {# hour} other {# hours}}"
+  },
+  "verification": {
+    "badge": "Verified",
+    "escrow": "Escrow",
+    "escrowShort": "Held until you confirm check-in",
+    "title": "Verified by someone who stood in the room",
+    "inspectedBy": "Inspected by {name} on {date}",
+    "openRecord": "See what we checked",
+    "steps": {
+      "inspected": "Inspected in person",
+      "inspectedBody": "Checked against a 34-point list covering water pressure, power backup, road access, and the kitchen.",
+      "photographed": "Photographed by us",
+      "photographedBody": "Every image here was shot by the HomeLink team. No owner-supplied photos appear on a verified listing.",
+      "identity": "Owner identity confirmed",
+      "identityBody": "Title or lease authority verified against national ID. Identity checks complete before any payout is possible.",
+      "escrow": "Your money is held",
+      "escrowBody": "Payment sits in escrow until you confirm check-in. Not as described means a full refund and another home the same night."
+    }
+  },
+  "trust": {
+    "listingsVerified": "{count} listings verified",
+    "inspectedInPerson": "Every one inspected in person",
+    "escrowProtected": "Escrow on every stay",
+    "noSurprises": "The price you see is the price you pay"
+  },
+  "status": {
+    "draft": "Draft",
+    "confirmed": "Confirmed",
+    "awaitingCheckIn": "Awaiting check-in",
+    "paymentPending": "Payment pending",
+    "fundsReleased": "Funds released",
+    "cancelled": "Cancelled",
+    "disputed": "Disputed",
+    "lowAvailability": "{count, plural, one {# left for these dates} other {# left for these dates}}"
+  },
+  "filters": {
+    "verifiedOnly": "Verified only",
+    "backupPower": "Backup power",
+    "fibre": "Fibre internet",
+    "furnished": "Furnished",
+    "parking": "Parking",
+    "longTerm": "Long-term lease",
+    "selfDrive": "Self-drive",
+    "withDriver": "With driver",
+    "clear": "Clear filters"
+  },
+  "segment": {
+    "label": "Viewing as",
+    "abroad": "From abroad",
+    "rwanda": "In Rwanda",
+    "hint": "Sets your language, currency, and payment method. Change anything at any time."
+  },
+  "dev": {
+    "label": "Preview as",
+    "role": "Role",
+    "note": "Development only. Roles are mocked until accounts are wired up."
+  },
+  "roles": {
+    "visitor": "Signed out",
+    "guest": "Guest",
+    "host": "Host",
+    "driver": "Driver",
+    "guide": "Guide",
+    "ops": "Concierge ops",
+    "admin": "Admin"
+  },
+  "empty": {
+    "noResults": "Nothing matches those filters yet",
+    "noResultsBody": "We only list what we have inspected, so results are narrower than you may expect. Try widening the dates or clearing a filter.",
+    "comingSoon": "Not built yet",
+    "comingSoonBody": "This screen is part of the shell but has no content behind it yet."
+  }
+}

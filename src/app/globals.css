@@ -1,26 +1,221 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================================
+   HomeLink Africa — design tokens
+   Single-hue system. Tea green carries brand, trust, and status,
+   separated by depth and form rather than by a second colour.
+   No gold in the interface; the logo keeps its own.
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+   Raw values live on :root and flip per theme.
+   `@theme inline` maps them to utilities WITHOUT inlining the
+   value, so utilities follow the live variable when the theme
+   changes. Never hardcode a hex outside this block.
+   ============================================================ */
+
+:root {
+  /* Ground & surfaces — neutrals biased green, never cream, never pure grey */
+  --canvas: #f4f6f2;
+  --surface: #ffffff;
+  --surface-2: #eaeee6;
+  --line: #dbe1d6;
+  --line-soft: #e6ebe1;
+
+  /* Ink */
+  --ink: #0c2119;
+  --ink-2: #3c5147;
+  --ink-3: #6e8177;
+
+  /* Brand — tea green. Filled = an action you can take. */
+  --brand: #14684a;
+  --brand-deep: #0f5239;
+  --brand-tint: #e2eee8;
+  --on-brand: #ffffff;
+
+  /* Trust — deepest green. Ringed, never filled = a promise we make. */
+  --trust: #0f5239;
+  --trust-tint: #dcebe4;
+  --on-trust: #ffffff;
+
+  /* Semantic — tinted with a dot = a state the system reached. */
+  --ok: #1b7a4c;
+  --warn: #9a6206;
+  --crit: #a62620;
+  --ok-tint: #e3f2e9;
+  --warn-tint: #fbf0dc;
+  --crit-tint: #fae7e5;
+
+  --shadow-card: 0 1px 2px rgba(12, 33, 25, 0.06), 0 8px 24px -12px rgba(12, 33, 25, 0.18);
+  --shadow-pop: 0 2px 6px rgba(12, 33, 25, 0.08), 0 18px 40px -16px rgba(12, 33, 25, 0.28);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --canvas: #08150f;
+    --surface: #0f2019;
+    --surface-2: #162c23;
+    --line: #23392f;
+    --line-soft: #1a2e25;
+
+    --ink: #e7efe9;
+    --ink-2: #a6bbb0;
+    --ink-3: #778d83;
+
+    --brand: #46a87f;
+    --brand-deep: #5bbd93;
+    --brand-tint: #123024;
+    --on-brand: #04150e;
+
+    --trust: #6fcfa5;
+    --trust-tint: #0e2a20;
+    --on-trust: #04150e;
+
+    --ok: #4fbf8b;
+    --warn: #e0a82e;
+    --crit: #f0837a;
+    --ok-tint: #12301f;
+    --warn-tint: #2c2213;
+    --crit-tint: #331a18;
+
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 10px 28px -14px rgba(0, 0, 0, 0.7);
+    --shadow-pop: 0 2px 8px rgba(0, 0, 0, 0.55), 0 22px 46px -18px rgba(0, 0, 0, 0.8);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* The explicit toggle must beat the media query in BOTH directions. */
+:root[data-theme="dark"] {
+  --canvas: #08150f;
+  --surface: #0f2019;
+  --surface-2: #162c23;
+  --line: #23392f;
+  --line-soft: #1a2e25;
+  --ink: #e7efe9;
+  --ink-2: #a6bbb0;
+  --ink-3: #778d83;
+  --brand: #46a87f;
+  --brand-deep: #5bbd93;
+  --brand-tint: #123024;
+  --on-brand: #04150e;
+  --trust: #6fcfa5;
+  --trust-tint: #0e2a20;
+  --on-trust: #04150e;
+  --ok: #4fbf8b;
+  --warn: #e0a82e;
+  --crit: #f0837a;
+  --ok-tint: #12301f;
+  --warn-tint: #2c2213;
+  --crit-tint: #331a18;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5), 0 10px 28px -14px rgba(0, 0, 0, 0.7);
+  --shadow-pop: 0 2px 8px rgba(0, 0, 0, 0.55), 0 22px 46px -18px rgba(0, 0, 0, 0.8);
+}
+
+:root[data-theme="light"] {
+  --canvas: #f4f6f2;
+  --surface: #ffffff;
+  --surface-2: #eaeee6;
+  --line: #dbe1d6;
+  --line-soft: #e6ebe1;
+  --ink: #0c2119;
+  --ink-2: #3c5147;
+  --ink-3: #6e8177;
+  --brand: #14684a;
+  --brand-deep: #0f5239;
+  --brand-tint: #e2eee8;
+  --on-brand: #ffffff;
+  --trust: #0f5239;
+  --trust-tint: #dcebe4;
+  --on-trust: #ffffff;
+  --ok: #1b7a4c;
+  --warn: #9a6206;
+  --crit: #a62620;
+  --ok-tint: #e3f2e9;
+  --warn-tint: #fbf0dc;
+  --crit-tint: #fae7e5;
+  --shadow-card: 0 1px 2px rgba(12, 33, 25, 0.06), 0 8px 24px -12px rgba(12, 33, 25, 0.18);
+  --shadow-pop: 0 2px 6px rgba(12, 33, 25, 0.08), 0 18px 40px -16px rgba(12, 33, 25, 0.28);
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-tint: var(--brand-tint);
+  --color-on-brand: var(--on-brand);
+
+  --color-trust: var(--trust);
+  --color-trust-tint: var(--trust-tint);
+  --color-on-trust: var(--on-trust);
+
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-crit: var(--crit);
+  --color-ok-tint: var(--ok-tint);
+  --color-warn-tint: var(--warn-tint);
+  --color-crit-tint: var(--crit-tint);
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-instrument-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
+
+  /* Radius carries the density rule: discovery rounds, transaction squares. */
+  --radius-chip: 4px;
+  --radius-ctl: 8px;
+  --radius-card: 14px;
+
+  --shadow-card: var(--shadow-card);
+  --shadow-pop: var(--shadow-pop);
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    background: var(--canvas);
+    color-scheme: light dark;
+  }
+
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+  }
+
+  /* Focus is never removed. 2px brand ring, 2px offset, everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  /* Digits line up in columns wherever money or dates are tabulated. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
