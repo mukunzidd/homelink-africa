@@ -184,6 +184,17 @@
     color-scheme: light dark;
   }
 
+  /*
+   * The page body never scrolls sideways. `clip` rather than `hidden` because
+   * `hidden` on the body silently creates a scroll container, which breaks
+   * `position: sticky` on every sidebar in the app. This is a backstop: a
+   * popover that overflows should be repositioned, not hidden — but it stops
+   * one bad measurement from making the whole page shift horizontally.
+   */
+  body {
+    overflow-x: clip;
+  }
+
   :root[data-theme="light"] {
     color-scheme: light;
   }

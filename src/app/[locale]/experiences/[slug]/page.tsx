@@ -116,7 +116,7 @@ export default async function ExperienceDetailPage({
           />
         </div>
 
-        <aside className="lg:sticky lg:top-20">
+        <aside className="lg:sticky lg:top-20 lg:self-start">
           <SeatsPanel experience={experience} />
         </aside>
       </div>

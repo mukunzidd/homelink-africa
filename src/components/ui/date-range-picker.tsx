@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import {
@@ -67,6 +74,7 @@ export function DateRangePicker({
 
   const rootRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const dialogId = useId();
 
   const min = minDate ?? today();
@@ -76,8 +84,27 @@ export function DateRangePicker({
   const [view, setView] = useState<IsoDate>(() => startOfMonth(from ?? min));
   const [hovered, setHovered] = useState<IsoDate | null>(null);
   const [focused, setFocused] = useState<IsoDate>(() => from ?? min);
+  const [align, setAlign] = useState<"start" | "end">("start");
 
   useDismissable(rootRef, open, () => setOpen(false));
+
+  /**
+   * Flip the popover to right-aligned when left-aligned would run past the
+   * viewport. Two months is roughly 620px; the picker sits mid-row in the
+   * search bar, so on narrower screens the default alignment pushed the page
+   * into a horizontal scroll. Measured rather than guessed at a breakpoint,
+   * because the trigger's x position depends on the surrounding layout.
+   */
+  useLayoutEffect(() => {
+    if (!open) return;
+    const node = popoverRef.current;
+    if (!node) return;
+
+    setAlign("start");
+    const rect = node.getBoundingClientRect();
+    const overflowsRight = rect.left + node.offsetWidth > window.innerWidth - 8;
+    if (overflowsRight) setAlign("end");
+  }, [open, view]);
 
   // Keep the roving-focus cell in the DOM's focus, but only while the popover
   // is open — otherwise opening it would steal focus from the page.
@@ -216,13 +243,15 @@ export function DateRangePicker({
 
       {open && (
         <div
+          ref={popoverRef}
           id={dialogId}
           role="dialog"
           aria-modal="false"
           aria-label={editing === "from" ? labelFrom : labelTo}
           className={cn(
-            "absolute left-0 z-50 mt-2 w-max max-w-[calc(100vw-3rem)] rounded-card border border-line",
-            "bg-surface p-4 shadow-[var(--shadow-pop)]",
+            "absolute z-50 mt-2 w-max max-w-[calc(100vw-2rem)] overflow-x-auto rounded-card",
+            "border border-line bg-surface p-4 shadow-[var(--shadow-pop)]",
+            align === "end" ? "right-0" : "left-0",
           )}
         >
           <div className="mb-3 flex items-center justify-between gap-4">

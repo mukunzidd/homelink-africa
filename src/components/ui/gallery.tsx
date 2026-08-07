@@ -51,10 +51,13 @@ export function Gallery({
   useDismissable(dialogRef, open, () => setOpen(false));
 
   // Return focus to the control that opened the lightbox, so keyboard users
-  // are not dumped back at the top of the document.
+  // are not dumped back at the top of the document. Guarded on "was open", or
+  // this fires on mount and steals focus to the gallery on every page load.
+  const wasOpen = useRef(false);
   useEffect(() => {
     if (open) dialogRef.current?.focus();
-    else openerRef.current?.focus({ preventScroll: true });
+    else if (wasOpen.current) openerRef.current?.focus({ preventScroll: true });
+    wasOpen.current = open;
   }, [open]);
 
   // The lightbox covers the page, so the page behind it must not scroll.
@@ -83,7 +86,8 @@ export function Gallery({
           unreadable slivers. */}
       <div
         className={cn(
-          "relative grid h-64 gap-2 overflow-hidden rounded-card sm:h-80 sm:grid-cols-4 sm:grid-rows-2",
+          "relative grid h-64 grid-cols-2 grid-rows-2 gap-2 overflow-hidden rounded-card",
+          "sm:h-80 sm:grid-cols-4",
           className,
         )}
       >

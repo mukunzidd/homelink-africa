@@ -157,7 +157,7 @@ export default async function ListingDetailPage({
         </div>
 
         {/* Transaction density inside a discovery page. Intentional. */}
-        <aside className="lg:sticky lg:top-20">
+        <aside className="lg:sticky lg:top-20 lg:self-start">
           <BookingPanel
             listing={listing}
             defaultFrom={defaultFrom}
