@@ -1,0 +1,453 @@
+<title>HomeLink — Landing Page Wireframe</title>
+<style>
+  :root {
+    --paper:#F4F6F5; --panel:#FFFFFF; --ink:#1F2A28; --muted:#5C6764;
+    --line:#C7D0CE; --line-2:#DCE3E1; --fill:#E4E9E8; --fill-2:#EDF1F0;
+    --accent:#146C60; --accent-soft:#DCEAE7; --amber:#C26A1A; --amber-soft:#F6E7D6;
+    --note:#7A8582; --shadow:0 1px 2px rgba(31,42,40,.06),0 8px 24px rgba(31,42,40,.06);
+    --radius:10px;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#121817; --panel:#1A2321; --ink:#E7EDEB; --muted:#9AA6A3;
+      --line:#33413E; --line-2:#2A3634; --fill:#222D2B; --fill-2:#1E2725;
+      --accent:#4FBFAD; --accent-soft:#173430; --amber:#E0904A;
+      --amber-soft:#3A2A17; --note:#8A9693; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#121817; --panel:#1A2321; --ink:#E7EDEB; --muted:#9AA6A3;
+    --line:#33413E; --line-2:#2A3634; --fill:#222D2B; --fill-2:#1E2725;
+    --accent:#4FBFAD; --accent-soft:#173430; --amber:#E0904A; --amber-soft:#3A2A17;
+    --note:#8A9693; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --paper:#F4F6F5; --panel:#FFFFFF; --ink:#1F2A28; --muted:#5C6764;
+    --line:#C7D0CE; --line-2:#DCE3E1; --fill:#E4E9E8; --fill-2:#EDF1F0;
+    --accent:#146C60; --accent-soft:#DCEAE7; --amber:#C26A1A; --amber-soft:#F6E7D6;
+    --note:#7A8582; --shadow:0 1px 2px rgba(31,42,40,.06),0 8px 24px rgba(31,42,40,.06);
+  }
+
+  *{box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;margin:0;}
+  .wrap{max-width:1220px;margin:0 auto;padding:28px 20px 64px;}
+
+  /* ---------- Page header ---------- */
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px;}
+  h1{font-size:clamp(24px,3.4vw,34px);line-height:1.1;margin:0 0 8px;text-wrap:balance;letter-spacing:-.01em;}
+  .lede{color:var(--muted);max-width:64ch;margin:0;font-size:15px;}
+
+  /* ---------- Control bar ---------- */
+  .controls{position:sticky;top:0;z-index:30;margin:22px 0 24px;padding:12px;background:color-mix(in srgb,var(--panel) 88%,transparent);
+    backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:var(--radius);display:flex;flex-wrap:wrap;gap:16px 22px;align-items:center;box-shadow:var(--shadow);}
+  .ctl-group{display:flex;flex-direction:column;gap:6px;}
+  .ctl-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--note);}
+  .seg{display:inline-flex;background:var(--fill-2);border:1px solid var(--line);border-radius:8px;padding:3px;gap:2px;}
+  .seg button{font-family:var(--sans);font-size:13px;font-weight:550;color:var(--muted);background:transparent;border:0;padding:6px 12px;border-radius:6px;cursor:pointer;transition:background .15s,color .15s;}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:#fff;}
+  :root[data-theme="dark"] .seg button[aria-pressed="true"]{color:#0c1211;}
+  @media (prefers-color-scheme:dark){.seg button[aria-pressed="true"]{color:#0c1211;}}
+  .seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .legend{margin-left:auto;display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:11px;height:11px;border-radius:3px;border:1px solid var(--line);}
+  .sw-accent{background:var(--accent);border-color:var(--accent);}
+  .sw-amber{background:var(--amber);border-color:var(--amber);}
+  .sw-fill{background:var(--fill);}
+
+  /* ---------- Layout: stage + notes ---------- */
+  .board{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:26px;align-items:start;}
+  @media(max-width:960px){.board{grid-template-columns:1fr;}}
+
+  .stage-scroll{overflow-x:auto;padding:4px;}
+  .stage{margin:0 auto;transition:max-width .25s ease;}
+  .stage[data-device="desktop"]{max-width:940px;}
+  .stage[data-device="mobile"]{max-width:390px;}
+
+  /* device frame */
+  .frame{border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:var(--shadow);overflow:hidden;}
+  .chrome{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--fill-2);border-bottom:1px solid var(--line);}
+  .dots{display:flex;gap:5px;}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--line);display:block;}
+  .urlbar{flex:1;font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .stage[data-device="mobile"] .notch{height:22px;background:var(--fill-2);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;}
+  .stage[data-device="mobile"] .notch::after{content:"";width:54px;height:6px;border-radius:4px;background:var(--line);}
+  .stage[data-device="mobile"] .chrome{display:none;}
+  .stage[data-device="desktop"] .notch{display:none;}
+
+  .screen{padding:16px;display:flex;flex-direction:column;gap:14px;}
+  .stage[data-device="mobile"] .screen{padding:12px;gap:12px;}
+
+  /* region wrapper + badge */
+  .region{position:relative;border:1px dashed var(--line-2);border-radius:10px;padding:12px;}
+  .rlabel{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .badge{width:20px;height:20px;flex:none;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-family:var(--mono);font-size:11px;font-weight:700;display:grid;place-items:center;}
+  .rtag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--note);}
+
+  /* ---------- top bar ---------- */
+  .topbar{display:flex;align-items:center;gap:10px;}
+  .logo{font-weight:750;letter-spacing:-.02em;font-size:15px;}
+  .logo b{color:var(--accent);}
+  .navpills{margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+  .pill{font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--fill-2);border:1px solid var(--line);border-radius:999px;padding:4px 9px;}
+  .pill.ghost{background:transparent;}
+  .pill.solid{background:var(--accent);color:#fff;border-color:var(--accent);}
+  :root[data-theme="dark"] .pill.solid{color:#0c1211;}
+  @media (prefers-color-scheme:dark){.pill.solid{color:#0c1211;}}
+  .stage[data-device="mobile"] .navpills .hide-m{display:none;}
+
+  .contextbar{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--accent-soft);border:1px solid var(--line-2);border-radius:7px;padding:6px 10px;}
+  .contextbar .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;}
+  .contextbar a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;cursor:pointer;}
+
+  /* ---------- hero ---------- */
+  .hero{display:flex;flex-direction:column;gap:12px;}
+  .hero-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);}
+  .hero h2{font-size:clamp(19px,3vw,26px);line-height:1.12;margin:0;text-wrap:balance;letter-spacing:-.01em;}
+  .hero p{margin:0;color:var(--muted);font-size:14px;max-width:52ch;}
+
+  .duration{display:flex;flex-direction:column;gap:7px;}
+  .duration .cap{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--note);}
+  .dseg{display:inline-flex;background:var(--fill-2);border:1px solid var(--line);border-radius:9px;padding:3px;gap:3px;flex-wrap:wrap;}
+  .dseg button{font-family:var(--sans);font-size:12.5px;font-weight:550;color:var(--muted);background:transparent;border:0;padding:7px 13px;border-radius:6px;cursor:pointer;}
+  .dseg button[aria-pressed="true"]{background:var(--accent);color:#fff;}
+  :root[data-theme="dark"] .dseg button[aria-pressed="true"]{color:#0c1211;}
+  @media (prefers-color-scheme:dark){.dseg button[aria-pressed="true"]{color:#0c1211;}}
+  .dseg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  .searchrow{display:grid;grid-template-columns:1.4fr 1.4fr .8fr auto;gap:8px;align-items:end;}
+  .stage[data-device="mobile"] .searchrow{grid-template-columns:1fr;}
+  .field{display:flex;flex-direction:column;gap:4px;}
+  .field .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--note);}
+  .field .v{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:9px 11px;font-size:13px;color:var(--ink);}
+  .btn-search{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:11px 16px;font-weight:650;font-size:13px;cursor:pointer;font-family:var(--sans);}
+  :root[data-theme="dark"] .btn-search{color:#0c1211;}
+  @media (prefers-color-scheme:dark){.btn-search{color:#0c1211;}}
+
+  /* ---------- doors ---------- */
+  .doors{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .stage[data-device="mobile"] .doors{grid-template-columns:1fr;}
+  .door{border:1px solid var(--line);border-radius:10px;padding:13px;background:var(--panel);display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .12s;}
+  .door:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-1px);}
+  .door.primary{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;background:color-mix(in srgb,var(--accent-soft) 60%,var(--panel));}
+  .door .ic{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--fill);display:grid;place-items:center;color:var(--muted);}
+  .door .ic svg{width:17px;height:17px;}
+  .door h3{margin:0;font-size:14px;letter-spacing:-.01em;}
+  .door .sub{margin:0;font-size:12px;color:var(--muted);}
+  .route{margin-top:auto;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--accent);display:inline-flex;align-items:center;gap:5px;}
+  .route::before{content:"→";}
+
+  /* ---------- feed ---------- */
+  .feedhead{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;}
+  .feedhead h3{margin:0;font-size:15px;letter-spacing:-.01em;}
+  .feedhead .count{font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .feedhead .filters{margin-left:auto;display:flex;gap:6px;}
+  .stage[data-device="mobile"] .feedhead .filters{display:none;}
+  .chip{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 9px;background:var(--fill-2);}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .stage[data-device="mobile"] .grid{grid-template-columns:1fr;}
+  .card{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel);display:flex;flex-direction:column;}
+  .thumb{aspect-ratio:4/3;background:var(--fill);position:relative;
+    background-image:repeating-linear-gradient(135deg,var(--line-2) 0 1px,transparent 1px 11px);}
+  .thumb .vbadge{position:absolute;top:7px;left:7px;font-family:var(--mono);font-size:9.5px;font-weight:600;color:#fff;background:var(--accent);border-radius:5px;padding:2px 6px;display:inline-flex;align-items:center;gap:4px;}
+  :root[data-theme="dark"] .thumb .vbadge{color:#0c1211;}
+  @media (prefers-color-scheme:dark){.thumb .vbadge{color:#0c1211;}}
+  .thumb .imgmark{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:var(--note);opacity:.7;}
+  .cbody{padding:10px;display:flex;flex-direction:column;gap:5px;}
+  .cbody .t{font-size:13px;font-weight:600;}
+  .cbody .m{font-size:11.5px;color:var(--muted);}
+  .cbody .price{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .cbody .price small{font-weight:500;color:var(--muted);}
+  .payline{display:flex;align-items:center;gap:6px;margin-top:2px;}
+  .rail{font-family:var(--mono);font-size:9.5px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 6px;}
+  .addon{align-self:flex-start;margin-top:4px;font-family:var(--mono);font-size:10.5px;color:var(--amber);background:var(--amber-soft);border:1px dashed var(--amber);border-radius:6px;padding:3px 8px;cursor:pointer;}
+  .addon::before{content:"+ ";}
+  .region[data-only]{display:none;}
+  .stage[data-seg="abroad"] .region[data-only="abroad"]{display:block;}
+  .stage[data-seg="local"] .region[data-only="local"]{display:block;}
+  /* hide amber add-ons for local (residential, no tour push) */
+  .stage[data-seg="local"] .addon{display:none;}
+
+  /* ---------- trust ---------- */
+  .trust{display:flex;align-items:center;gap:10px;background:var(--fill-2);border:1px solid var(--line-2);border-radius:9px;padding:11px 13px;}
+  .trust .shield{width:26px;height:26px;flex:none;border-radius:7px;background:var(--accent);display:grid;place-items:center;color:#fff;}
+  :root[data-theme="dark"] .trust .shield{color:#0c1211;}
+  @media (prefers-color-scheme:dark){.trust .shield{color:#0c1211;}}
+  .trust p{margin:0;font-size:12.5px;color:var(--muted);}
+  .trust p b{color:var(--ink);}
+
+  /* ---------- notes column ---------- */
+  .notes{position:sticky;top:96px;display:flex;flex-direction:column;gap:12px;}
+  @media(max-width:960px){.notes{position:static;}}
+  .notes h4{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--note);margin:0 0 2px;}
+  .note{display:grid;grid-template-columns:22px 1fr;gap:10px;padding:11px;border:1px solid var(--line);border-radius:9px;background:var(--panel);}
+  .note .n{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-family:var(--mono);font-size:11px;font-weight:700;display:grid;place-items:center;}
+  .note .b{font-size:12.5px;color:var(--muted);}
+  .note .b strong{color:var(--ink);font-weight:650;display:block;margin-bottom:2px;font-size:12.5px;}
+  .footnote{font-family:var(--mono);font-size:11px;color:var(--note);border-top:1px solid var(--line-2);padding-top:12px;margin-top:6px;}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Wireframe · v1 · Intent-routing landing</p>
+  <h1>HomeLink landing page</h1>
+  <p class="lede">Low-fidelity structure for the entry experience. Toggle the segment to see context auto-adaptation (currency, language, payment rail, framing), and the device to see the responsive reflow. Color is meaningful: <strong>teal</strong> marks interactive and routing affordances, <strong>amber</strong> marks optional bundle add-ons, grey is content placeholder.</p>
+
+  <div class="controls" role="region" aria-label="Wireframe controls">
+    <div class="ctl-group">
+      <span class="ctl-label" id="segLbl">Visitor context</span>
+      <div class="seg" role="group" aria-labelledby="segLbl">
+        <button data-seg="abroad" aria-pressed="true">From abroad</button>
+        <button data-seg="local" aria-pressed="false">In Rwanda</button>
+      </div>
+    </div>
+    <div class="ctl-group">
+      <span class="ctl-label" id="devLbl">Device</span>
+      <div class="seg" role="group" aria-labelledby="devLbl">
+        <button data-device="desktop" aria-pressed="true">Desktop</button>
+        <button data-device="mobile" aria-pressed="false">Mobile</button>
+      </div>
+    </div>
+    <div class="legend" aria-hidden="true">
+      <span><i class="swatch sw-accent"></i>interactive / routing</span>
+      <span><i class="swatch sw-amber"></i>bundle add-on</span>
+      <span><i class="swatch sw-fill"></i>content placeholder</span>
+    </div>
+  </div>
+
+  <div class="board">
+    <div class="stage-scroll">
+      <div class="stage" id="stage" data-seg="abroad" data-device="desktop">
+        <div class="frame">
+          <div class="notch"></div>
+          <div class="chrome">
+            <div class="dots"><i></i><i></i><i></i></div>
+            <div class="urlbar" data-t="url">homelink.rw</div>
+          </div>
+          <div class="screen">
+
+            <!-- 1: top bar + context -->
+            <div class="region">
+              <div class="rlabel"><span class="badge">1</span><span class="rtag">Header · context auto-adaptation</span></div>
+              <div class="topbar">
+                <span class="logo">Home<b>Link</b></span>
+                <span class="navpills">
+                  <span class="pill" data-t="lang">EN</span>
+                  <span class="pill" data-t="curr">USD $</span>
+                  <span class="pill ghost hide-m">List your property</span>
+                  <span class="pill solid">Sign in</span>
+                </span>
+              </div>
+              <div style="height:9px"></div>
+              <div class="contextbar">
+                <span class="dot"></span>
+                <span data-t="context">Showing prices in USD · English · Kigali</span>
+                <a data-t="change">change</a>
+              </div>
+            </div>
+
+            <!-- 2: hero + duration -->
+            <div class="region">
+              <div class="rlabel"><span class="badge">2</span><span class="rtag">Hero · duration selector sets the flow</span></div>
+              <div class="hero">
+                <span class="hero-eyebrow" data-t="heroEyebrow">Coming to Rwanda</span>
+                <h2 data-t="heroTitle">Land in Rwanda with everything ready.</h2>
+                <p data-t="heroSub">A home we've personally verified, a car waiting, your days planned. Booked from anywhere, guaranteed.</p>
+                <div class="duration">
+                  <span class="cap">When / how long</span>
+                  <div class="dseg" role="group" aria-label="Stay duration">
+                    <button data-dur="short" aria-pressed="false">Short stay</button>
+                    <button data-dur="medium" aria-pressed="true">Medium</button>
+                    <button data-dur="long" aria-pressed="false">Long term</button>
+                  </div>
+                </div>
+                <div class="searchrow">
+                  <div class="field"><span class="k">Where</span><span class="v" data-t="fWhere">Kigali, Rwanda</span></div>
+                  <div class="field"><span class="k" data-t="fWhenK">Dates</span><span class="v" data-t="fWhen">4 Aug – 1 Sep</span></div>
+                  <div class="field"><span class="k" data-t="fWhoK">Guests</span><span class="v" data-t="fWho">2</span></div>
+                  <button class="btn-search" data-t="fBtn">Search</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3: intent doors -->
+            <div class="region">
+              <div class="rlabel"><span class="badge">3</span><span class="rtag">Intent doors · sit above the feed, never a gate</span></div>
+              <div class="doors">
+                <div class="door" data-door="trip">
+                  <span class="ic">🧭</span>
+                  <h3 data-t="d1t">I'm coming to Rwanda</h3>
+                  <p class="sub" data-t="d1s">Stay, car and tour as one Trip</p>
+                  <span class="route" data-t="d1r">Journey · builds a Trip</span>
+                </div>
+                <div class="door" data-door="home">
+                  <span class="ic">🏠</span>
+                  <h3 data-t="d2t">I need a home</h3>
+                  <p class="sub" data-t="d2s">Long or medium-term lease</p>
+                  <span class="route" data-t="d2r">Residential · direct booking</span>
+                </div>
+                <div class="door" data-door="car">
+                  <span class="ic">🚗</span>
+                  <h3 data-t="d3t">I need a car / explore</h3>
+                  <p class="sub" data-t="d3s">Cars and tours on their own</p>
+                  <span class="route" data-t="d3r">Direct · single service</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4: browsable feed -->
+            <div class="region">
+              <div class="rlabel"><span class="badge">4</span><span class="rtag">Browsable feed · visible without choosing a door</span></div>
+              <div class="feedhead">
+                <h3 data-t="feedTitle">Verified stays in Kigali</h3>
+                <span class="count" data-t="feedCount">128 places</span>
+                <span class="filters">
+                  <span class="chip" data-t="flt1">Verified</span>
+                  <span class="chip" data-t="flt2">Price</span>
+                  <span class="chip" data-t="flt3">Neighbourhood</span>
+                </span>
+              </div>
+              <div class="grid" id="grid"><!-- cards injected --></div>
+            </div>
+
+            <!-- 5: trust -->
+            <div class="region">
+              <div class="rlabel"><span class="badge">5</span><span class="rtag">Trust strip · the guarantee</span></div>
+              <div class="trust">
+                <span class="shield">🛡</span>
+                <p data-t="trust"><b>Every place personally inspected and guaranteed.</b> Funds held in escrow until check-in.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="notes" aria-label="How to read this wireframe">
+      <h4>How to read this</h4>
+      <div class="note"><span class="n">1</span><span class="b"><strong>Context adapts to the visitor.</strong>Language, currency and rail default from location and are always overridable via “change”.</span></div>
+      <div class="note"><span class="n">2</span><span class="b"><strong>Duration sets the flow.</strong>Short / medium means nightly booking; long term switches to the leasing flow before results load.</span></div>
+      <div class="note"><span class="n">3</span><span class="b"><strong>Intent doors, not a gate.</strong>They route by why you came, but sit on top of a feed you can scroll straight past. The most relevant door is highlighted per segment.</span></div>
+      <div class="note"><span class="n">4</span><span class="b"><strong>Feed is always browsable.</strong>Locals who just want to scroll see listings immediately, framed for their segment.</span></div>
+      <div class="note"><span class="n">5</span><span class="b"><strong>Bundle is gravity.</strong>“Add a car / tour” hints (amber) pull toward a Trip for visitors, and never appear on residential listings.</span></div>
+      <div class="footnote" data-t="foot">Segment: visitor from abroad. Diaspora and tourist framing, card-first, Trip prompts on.</div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var stage = document.getElementById("stage");
+    var grid = document.getElementById("grid");
+
+    var copy = {
+      abroad: {
+        url:"homelink.rw", lang:"EN", curr:"USD $",
+        context:"Showing prices in USD · English · Kigali", change:"change",
+        heroEyebrow:"Coming to Rwanda",
+        heroTitle:"Land in Rwanda with everything ready.",
+        heroSub:"A home we've personally verified, a car waiting, your days planned. Booked from anywhere, guaranteed.",
+        fWhere:"Kigali, Rwanda", fWhenK:"Dates", fWhen:"4 Aug – 1 Sep", fWhoK:"Guests", fWho:"2", fBtn:"Search",
+        d1t:"I'm coming to Rwanda", d1s:"Stay, car and tour as one Trip", d1r:"Journey · builds a Trip",
+        d2t:"I need a home", d2s:"Long or medium-term lease", d2r:"Residential · direct booking",
+        d3t:"I need a car / explore", d3s:"Cars and tours on their own", d3r:"Direct · single service",
+        feedTitle:"Verified stays in Kigali", feedCount:"128 places",
+        flt1:"Verified", flt2:"Price", flt3:"Neighbourhood",
+        trust:"<b>Every place personally inspected and guaranteed.</b> Funds held in escrow until check-in.",
+        primaryDoor:"trip",
+        foot:"Segment: visitor from abroad. Diaspora and tourist framing, card-first, Trip prompts on.",
+        cards:[
+          {t:"Serviced 2-bed · Kacyiru", m:"Verified · 4 guests · workspace", price:"$74", per:"/ night", rail:"Card", addon:"Add airport car"},
+          {t:"Garden apartment · Nyarutarama", m:"Verified · 3 guests · pool", price:"$92", per:"/ night", rail:"Card", addon:"Add a day-tour"},
+          {t:"City studio · Kiyovu", m:"Verified · 2 guests · central", price:"$58", per:"/ night", rail:"Card", addon:""},
+          {t:"Family villa · Gacuriro", m:"Verified · 6 guests · monthly", price:"$1,850", per:"/ month", rail:"Card", addon:"Add a car"},
+          {t:"Loft near CBD · Muhima", m:"Verified · 2 guests · balcony", price:"$66", per:"/ night", rail:"Card", addon:""},
+          {t:"Hillside 3-bed · Rebero", m:"Verified · 5 guests · view", price:"$120", per:"/ night", rail:"Card", addon:"Add a tour"}
+        ]
+      },
+      local: {
+        url:"homelink.rw", lang:"RW", curr:"RWF",
+        context:"Amafaranga muri RWF · Kinyarwanda · Kigali", change:"hindura",
+        heroEyebrow:"Shaka urugo",
+        heroTitle:"Find your next home in Rwanda.",
+        heroSub:"Long-term and short-term rentals, verified and fairly priced. Pay the deposit securely by Mobile Money.",
+        fWhere:"Kigali", fWhenK:"Move-in", fWhen:"August", fWhoK:"Bedrooms", fWho:"2 bed", fBtn:"Search",
+        d1t:"I need a home", d1s:"Long or medium-term lease", d1r:"Residential · direct booking",
+        d2t:"I need a car", d2s:"Self-drive or with driver", d2r:"Direct · single service",
+        d3t:"I'm coming to Rwanda", d3s:"Plan a full trip with stay + car", d3r:"Journey · builds a Trip",
+        feedTitle:"Homes for rent in Kigali", feedCount:"342 listings",
+        flt1:"Long-term", flt2:"Price (RWF)", flt3:"Neighbourhood",
+        trust:"<b>Verified listings, transparent pricing.</b> Pay your deposit securely by Mobile Money.",
+        primaryDoor:"home",
+        foot:"Segment: browsing from Rwanda. Residential framing forward, RWF, Mobile-Money-first (copy would render in Kinyarwanda).",
+        cards:[
+          {t:"2-bed apartment · Kimironko", m:"Verified · long-term · unfurnished", price:"RWF 450,000", per:"/ month", rail:"MoMo", addon:""},
+          {t:"3-bed house · Kanombe", m:"Verified · long-term · parking", price:"RWF 680,000", per:"/ month", rail:"MoMo", addon:""},
+          {t:"Studio · Remera", m:"Verified · short or long · furnished", price:"RWF 280,000", per:"/ month", rail:"MoMo", addon:""},
+          {t:"1-bed · Gisozi", m:"Verified · long-term · water tank", price:"RWF 320,000", per:"/ month", rail:"MoMo", addon:""},
+          {t:"4-bed family · Kibagabaga", m:"Verified · long-term · garden", price:"RWF 950,000", per:"/ month", rail:"MoMo", addon:""},
+          {t:"Bedsitter · Nyamirambo", m:"Verified · long-term · secure", price:"RWF 180,000", per:"/ month", rail:"MoMo", addon:""}
+        ]
+      }
+    };
+
+    function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+
+    function renderCards(seg){
+      var data = copy[seg].cards;
+      grid.innerHTML = data.map(function(c){
+        var addon = c.addon ? '<span class="addon">'+esc(c.addon)+'</span>' : '';
+        return '<div class="card"><div class="thumb"><span class="vbadge">✓ Verified</span>'
+          + '<span class="imgmark">photo</span></div>'
+          + '<div class="cbody"><span class="t">'+esc(c.t)+'</span>'
+          + '<span class="m">'+esc(c.m)+'</span>'
+          + '<span class="price">'+esc(c.price)+' <small>'+esc(c.per)+'</small></span>'
+          + '<span class="payline"><span class="rail">'+esc(c.rail)+'</span></span>'
+          + addon + '</div></div>';
+      }).join("");
+    }
+
+    function applySeg(seg){
+      var c = copy[seg];
+      document.querySelectorAll("[data-t]").forEach(function(el){
+        var k = el.getAttribute("data-t");
+        if(c[k] === undefined) return;
+        if(k === "trust") el.innerHTML = c[k];
+        else el.textContent = c[k];
+      });
+      document.querySelectorAll(".door").forEach(function(d){
+        d.classList.toggle("primary", d.getAttribute("data-door") === c.primaryDoor);
+      });
+      renderCards(seg);
+      stage.setAttribute("data-seg", seg);
+    }
+
+    // segment + device toggle wiring
+    document.querySelectorAll('.seg button[data-seg]').forEach(function(b){
+      b.addEventListener("click", function(){
+        document.querySelectorAll('.seg button[data-seg]').forEach(function(x){x.setAttribute("aria-pressed","false");});
+        b.setAttribute("aria-pressed","true");
+        applySeg(b.getAttribute("data-seg"));
+      });
+    });
+    document.querySelectorAll('.seg button[data-device]').forEach(function(b){
+      b.addEventListener("click", function(){
+        document.querySelectorAll('.seg button[data-device]').forEach(function(x){x.setAttribute("aria-pressed","false");});
+        b.setAttribute("aria-pressed","true");
+        stage.setAttribute("data-device", b.getAttribute("data-device"));
+      });
+    });
+    document.querySelectorAll('.dseg button[data-dur]').forEach(function(b){
+      b.addEventListener("click", function(){
+        document.querySelectorAll('.dseg button[data-dur]').forEach(function(x){x.setAttribute("aria-pressed","false");});
+        b.setAttribute("aria-pressed","true");
+      });
+    });
+
+    applySeg("abroad");
+  })();
+</script>

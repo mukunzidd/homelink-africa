@@ -1,0 +1,984 @@
+<title>HomeLink Africa — Style Guide</title>
+<style>
+  /* ============================================================
+     HomeLink Africa — design tokens
+     Single-hue system. Tea green carries brand, trust, and status —
+     separated by depth and form, not by a second colour.
+     No gold in the interface; the logo keeps its own.
+     Both themes designed. Neither is an inversion of the other.
+     ============================================================ */
+  :root {
+    /* Ground & surfaces — neutrals biased green, never cream, never pure grey */
+    --canvas:     #F4F6F2;
+    --surface:    #FFFFFF;
+    --surface-2:  #EAEEE6;
+    --line:       #DBE1D6;
+    --line-soft:  #E6EBE1;
+
+    /* Ink */
+    --ink:        #0C2119;
+    --ink-2:      #3C5147;
+    --ink-3:      #6E8177;
+
+    /* Brand — tea green */
+    --brand:      #14684A;   /* brand text, links, borders */
+    --brand-fill: #14684A;   /* button fills */
+    --brand-deep: #0F5239;   /* hover, pressed */
+    --brand-tint: #E2EEE8;
+    --on-brand:   #FFFFFF;
+
+    /* Trust — the deepest green, plus a distinct badge form. Verification, escrow. */
+    --trust:      #0F5239;
+    --trust-fill: #0F5239;
+    --trust-tint: #DCEBE4;
+    --on-trust:   #FFFFFF;
+
+    /* Semantic */
+    --ok:         #1B7A4C;
+    --warn:       #9A6206;
+    --crit:       #A62620;
+    --ok-tint:    #E3F2E9;
+    --warn-tint:  #FBF0DC;
+    --crit-tint:  #FAE7E5;
+
+    --shadow-card: 0 1px 2px rgba(12,33,25,.06), 0 8px 24px -12px rgba(12,33,25,.18);
+    --shadow-pop:  0 2px 6px rgba(12,33,25,.08), 0 18px 40px -16px rgba(12,33,25,.28);
+
+    /* Type roles. Production faces named in Typography; these stacks are
+       close system stand-ins so nothing silently falls back. */
+    --font-display: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+    --r-chip: 4px;
+    --r-ctl:  8px;
+    --r-card: 14px;
+    --r-pill: 999px;
+
+    --maxw: 1180px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --canvas:     #08150F;
+      --surface:    #0F2019;
+      --surface-2:  #162C23;
+      --line:       #23392F;
+      --line-soft:  #1A2E25;
+
+      --ink:        #E7EFE9;
+      --ink-2:      #A6BBB0;
+      --ink-3:      #778D83;
+
+      --brand:      #46A87F;
+      --brand-fill: #2E8C64;
+      --brand-deep: #5BBD93;
+      --brand-tint: #123024;
+      --on-brand:   #04150E;
+
+      --trust:      #6FCFA5;
+      --trust-fill: #1F6E4E;
+      --trust-tint: #0E2A20;
+      --on-trust:   #FFFFFF;
+
+      --ok:         #4FBF8B;
+      --warn:       #E0A82E;
+      --crit:       #F0837A;
+      --ok-tint:    #12301F;
+      --warn-tint:  #2C2213;
+      --crit-tint:  #331A18;
+
+      --shadow-card: 0 1px 2px rgba(0,0,0,.5), 0 10px 28px -14px rgba(0,0,0,.7);
+      --shadow-pop:  0 2px 8px rgba(0,0,0,.55), 0 22px 46px -18px rgba(0,0,0,.8);
+    }
+  }
+
+  /* Viewer toggle must beat the media query in BOTH directions */
+  :root[data-theme="dark"] {
+    --canvas:#08150F; --surface:#0F2019; --surface-2:#162C23; --line:#23392F; --line-soft:#1A2E25;
+    --ink:#E7EFE9; --ink-2:#A6BBB0; --ink-3:#778D83;
+    --brand:#46A87F; --brand-fill:#2E8C64; --brand-deep:#5BBD93; --brand-tint:#123024; --on-brand:#04150E;
+    --trust:#6FCFA5; --trust-fill:#1F6E4E; --trust-tint:#0E2A20; --on-trust:#FFFFFF;
+    --ok:#4FBF8B; --warn:#E0A82E; --crit:#F0837A;
+    --ok-tint:#12301F; --warn-tint:#2C2213; --crit-tint:#331A18;
+    --shadow-card: 0 1px 2px rgba(0,0,0,.5), 0 10px 28px -14px rgba(0,0,0,.7);
+    --shadow-pop:  0 2px 8px rgba(0,0,0,.55), 0 22px 46px -18px rgba(0,0,0,.8);
+  }
+  :root[data-theme="light"] {
+    --canvas:#F4F6F2; --surface:#FFFFFF; --surface-2:#EAEEE6; --line:#DBE1D6; --line-soft:#E6EBE1;
+    --ink:#0C2119; --ink-2:#3C5147; --ink-3:#6E8177;
+    --brand:#14684A; --brand-fill:#14684A; --brand-deep:#0F5239; --brand-tint:#E2EEE8; --on-brand:#FFFFFF;
+    --trust:#0F5239; --trust-fill:#0F5239; --trust-tint:#DCEBE4; --on-trust:#FFFFFF;
+    --ok:#1B7A4C; --warn:#9A6206; --crit:#A62620;
+    --ok-tint:#E3F2E9; --warn-tint:#FBF0DC; --crit-tint:#FAE7E5;
+    --shadow-card: 0 1px 2px rgba(12,33,25,.06), 0 8px 24px -12px rgba(12,33,25,.18);
+    --shadow-pop:  0 2px 6px rgba(12,33,25,.08), 0 18px 40px -16px rgba(12,33,25,.28);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- masthead ---------- */
+  .masthead {
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+    padding: 44px 0 40px;
+  }
+  .masthead .wrap { display: flex; flex-direction: column; gap: 20px; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 600; color: var(--ink-3); margin: 0;
+  }
+  h1.title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.05; font-weight: 600; margin: 0;
+    text-wrap: balance; letter-spacing: -.015em;
+  }
+  .lede { font-size: 18px; color: var(--ink-2); max-width: 62ch; margin: 0; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 4px; }
+
+  /* ---------- sections ---------- */
+  main { padding: 8px 0 96px; }
+  section.block { padding-top: 56px; }
+  .sec-head { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+  .sec-head h2 {
+    font-family: var(--font-display);
+    font-size: 28px; line-height: 1.15; font-weight: 600; margin: 0;
+    letter-spacing: -.01em; text-wrap: balance;
+  }
+  .sec-head p { margin: 0; color: var(--ink-2); max-width: 68ch; }
+  h3.sub {
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 700; color: var(--ink-3); margin: 32px 0 12px;
+  }
+
+  /* ---------- panels & grids ---------- */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 24px;
+  }
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .g4 { grid-template-columns: repeat(auto-fit, minmax(158px, 1fr)); }
+
+  code, .mono { font-family: var(--font-mono); font-size: .875em; }
+  code.tok {
+    background: var(--surface-2); color: var(--ink-2);
+    padding: 1px 6px; border-radius: var(--r-chip); white-space: nowrap;
+  }
+
+  /* ---------- tables ---------- */
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 15px; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  th {
+    font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700; background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- logo lockups ---------- */
+  .lockups { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .lockup {
+    border: 1px solid var(--line); border-radius: var(--r-card);
+    padding: 32px 24px; display: flex; flex-direction: column;
+    align-items: center; gap: 16px; text-align: center;
+  }
+  .lockup .cap { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
+  .lockup.on-black { background: #000; }
+  .lockup.on-black .cap { color: #8A8F86; }
+  .lockup.on-white { background: #FFF; }
+  .lockup.on-white .cap { color: #717D71; }
+  .mark { display: flex; align-items: center; gap: 12px; }
+  .mark svg { flex: none; }
+  .word { font-family: var(--font-ui); font-weight: 700; letter-spacing: -.01em; line-height: 1.05; text-align: left; }
+  .word .l1 { font-size: 22px; display: block; }
+  .word .l2 { font-size: 22px; display: block; }
+  .flag {
+    font-size: 12px; font-weight: 650; padding: 4px 10px; border-radius: var(--r-pill);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .flag-bad { background: #FAE7E5; color: #A62620; }
+  .flag-good { background: #E3EFE9; color: #14684A; }
+
+  /* ---------- swatches ---------- */
+  .swatch { border: 1px solid var(--line); border-radius: var(--r-ctl); overflow: hidden; background: var(--surface); }
+  .swatch .chip { height: 64px; }
+  .swatch .info { padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+  .swatch .name { font-size: 13px; font-weight: 650; }
+  .swatch .hex { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+  .swatch .use { font-size: 12px; color: var(--ink-2); line-height: 1.4; }
+
+  /* ---------- type specimens ---------- */
+  .spec { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid var(--line-soft); }
+  .spec:last-child { border-bottom: 0; }
+  .spec .label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); display: flex; gap: 12px; flex-wrap: wrap; }
+  .t-dl { font-family: var(--font-display); font-size: 44px; line-height: 1.05; font-weight: 600; letter-spacing: -.015em; }
+  .t-dm { font-family: var(--font-display); font-size: 32px; line-height: 1.12; font-weight: 600; letter-spacing: -.01em; }
+  .t-h1 { font-size: 26px; line-height: 1.2; font-weight: 650; letter-spacing: -.008em; }
+  .t-h2 { font-size: 20px; line-height: 1.3; font-weight: 650; }
+  .t-h3 { font-size: 16px; line-height: 1.4; font-weight: 650; }
+  .t-bd { font-size: 16px; line-height: 1.6; font-weight: 400; }
+  .t-sm { font-size: 14px; line-height: 1.5; font-weight: 400; color: var(--ink-2); }
+  .t-mi { font-size: 12px; line-height: 1.4; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+
+  /* ---------- controls ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font: inherit; font-weight: 650; font-size: 15px;
+    padding: 11px 20px; border-radius: var(--r-ctl);
+    border: 1px solid transparent; cursor: pointer;
+    transition: background-color .16s ease-out, border-color .16s ease-out, color .16s ease-out;
+  }
+  .btn-primary { background: var(--brand-fill); color: var(--on-brand); }
+  .btn-primary:hover { background: var(--brand-deep); }
+  .btn-trust { background: var(--trust-fill); color: var(--on-trust); border-color: var(--trust-fill); }
+  .btn-trust:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+  .btn-secondary { background: transparent; color: var(--brand); border-color: var(--brand); }
+  .btn-secondary:hover { background: var(--brand-tint); }
+  .btn-quiet { background: transparent; color: var(--ink-2); border-color: var(--line); }
+  .btn-quiet:hover { background: var(--surface-2); color: var(--ink); }
+  .btn-sm { padding: 7px 14px; font-size: 14px; }
+  .btn:focus-visible, a:focus-visible, .chipf:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .field input {
+    font: inherit; font-size: 15px; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r-ctl); padding: 10px 12px; width: 100%;
+  }
+  .field input:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; border-color: var(--brand); }
+  .field .hint { font-size: 12px; color: var(--ink-3); }
+  .field.err input { border-color: var(--crit); }
+  .field.err .hint { color: var(--crit); }
+
+  .chipf {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 550; padding: 7px 13px;
+    border-radius: var(--r-pill); border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink-2); cursor: pointer;
+  }
+  .chipf[aria-pressed="true"] { background: var(--brand-tint); border-color: var(--brand); color: var(--brand); }
+
+  /* ---------- badges & pills ---------- */
+  .badge-verified {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; letter-spacing: .03em;
+    color: var(--trust); background: var(--trust-tint);
+    border: 1.5px solid color-mix(in srgb, var(--trust) 55%, transparent);
+    padding: 4px 10px 4px 7px; border-radius: var(--r-pill);
+  }
+  .badge-verified svg { flex: none; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 650; padding: 3px 10px;
+    border-radius: var(--r-pill); border: 1px solid transparent;
+  }
+  .pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .pill-ok   { color: var(--ok);   background: var(--ok-tint); }
+  .pill-warn { color: var(--warn); background: var(--warn-tint); }
+  .pill-crit { color: var(--crit); background: var(--crit-tint); }
+  .pill-idle { color: var(--ink-3); background: var(--surface-2); }
+
+  /* ---------- density demo ---------- */
+  .density { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); align-items: start; }
+  .density-col { display: flex; flex-direction: column; gap: 12px; }
+  .density-tag { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .density-tag strong { font-size: 14px; font-weight: 700; }
+  .density-tag span { font-size: 13px; color: var(--ink-3); }
+
+  .card-discovery {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow-card);
+  }
+  .card-discovery .photo {
+    height: 168px; position: relative;
+    background:
+      radial-gradient(118% 90% at 20% 10%, rgba(111,207,165,.36), transparent 60%),
+      linear-gradient(158deg, #1E7A57 0%, #14684A 46%, #0B3A2A 100%);
+  }
+  .card-discovery .photo .ridge { position: absolute; inset: auto 0 0 0; height: 62px; background: linear-gradient(to top, rgba(4,14,10,.6), transparent); }
+  .card-discovery .photo .seal-slot { position: absolute; top: 12px; left: 12px; }
+  .card-discovery .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .card-discovery .place { font-size: 12px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); font-weight: 650; }
+  .card-discovery .name { font-family: var(--font-display); font-size: 20px; line-height: 1.25; font-weight: 600; margin: 0; }
+  .card-discovery .attrs { font-size: 14px; color: var(--ink-2); }
+  .card-discovery .price { display: flex; align-items: baseline; gap: 6px; margin-top: 6px; }
+  .card-discovery .price .amt { font-size: 19px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .card-discovery .price .per { font-size: 14px; color: var(--ink-3); }
+
+  .row-txn {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r-ctl); padding: 12px 14px;
+    display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center;
+  }
+  .row-txn .thumb { width: 56px; height: 56px; border-radius: 6px; flex: none; background: linear-gradient(158deg, #1E7A57, #0B3A2A); }
+  .row-txn .mid { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .row-txn .r-name { font-size: 15px; font-weight: 650; line-height: 1.3; }
+  .row-txn .r-sub { font-size: 13px; color: var(--ink-3); line-height: 1.35; }
+  .row-txn .r-price { text-align: right; display: flex; flex-direction: column; gap: 1px; }
+  .row-txn .r-amt { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
+  .row-txn .r-per { font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+  .breakdown { font-size: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .breakdown .li { display: flex; justify-content: space-between; gap: 16px; }
+  .breakdown .li span:last-child { font-variant-numeric: tabular-nums; }
+  .breakdown .li.total { border-top: 1px solid var(--line); padding-top: 10px; margin-top: 2px; font-weight: 700; font-size: 15px; }
+  .breakdown .muted { color: var(--ink-2); }
+
+  /* ---------- trust ladder ---------- */
+  .ladder { display: flex; flex-direction: column; gap: 0; }
+  .ladder .step { display: grid; grid-template-columns: 28px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line-soft); }
+  .ladder .step:last-child { border-bottom: 0; }
+  .ladder .dot {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--trust-tint); color: var(--trust);
+    display: grid; place-items: center; font-size: 12px; font-weight: 800;
+    border: 1px solid color-mix(in srgb, var(--trust) 42%, transparent);
+    font-variant-numeric: tabular-nums;
+  }
+  .ladder .step h4 { margin: 0 0 2px; font-size: 15px; font-weight: 650; }
+  .ladder .step p { margin: 0; font-size: 14px; color: var(--ink-2); }
+
+  /* ---------- callouts ---------- */
+  .callout { border-left: 3px solid var(--brand); background: var(--brand-tint); padding: 14px 18px; border-radius: 0 var(--r-ctl) var(--r-ctl) 0; }
+  .callout p { margin: 0; font-size: 15px; color: var(--ink); }
+  .callout p + p { margin-top: 8px; }
+  .callout.trust { border-left-color: var(--trust); background: var(--trust-tint); }
+  .callout.alert { border-left-color: var(--crit); background: var(--crit-tint); }
+
+  ul.tight { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+  ul.tight li { font-size: 15px; color: var(--ink-2); }
+  ul.tight li strong { color: var(--ink); }
+
+  .scale-strip { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
+  .scale-strip .u { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .scale-strip .u .bar { background: var(--brand); border-radius: 2px; width: 100%; }
+  .scale-strip .u .cap { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); }
+
+  .ratio-row { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .ratio-row .box { width: 56px; height: 32px; border-radius: 6px; display: grid; place-items: center; font-size: 12px; font-weight: 700; flex: none; }
+
+  footer.foot { border-top: 1px solid var(--line); padding: 32px 0 64px; color: var(--ink-3); font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  }
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">HomeLink Africa · Milestone 1, Phase 1</p>
+    <h1 class="title">Style guide for a platform whose product is trust</h1>
+    <p class="lede">
+      One colour family, used with discipline. Tea green carries the brand and the promise both;
+      depth and form do the work that a second hue would otherwise do. Everything below serves one
+      sentence: <em>if it is on HomeLink, we have stood in the room.</em>
+    </p>
+    <div class="meta-row">
+      <span class="pill pill-ok">Single-hue system</span>
+      <span class="pill pill-idle">Light &amp; dark, both designed</span>
+      <span class="pill pill-idle">Tokens are normative</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ============ THE HUE DECISION ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>One hue, three depths</h2>
+        <p>
+          The interface has no gold. Green does the work everywhere, and the three jobs it has to hold
+          apart are separated by <em>depth and form</em> rather than by a second colour — a harder
+          discipline than a two-colour system, and a quieter result.
+        </p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Job</th><th>Token</th><th>Told apart by</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>An action you can take</strong><br /><span style="font-size:13px;color:var(--ink-3)">Reserve, Pay, Add a car</span></td>
+              <td><code class="tok">--brand</code> <span style="color:var(--brand);font-weight:650">#14684A</span></td>
+              <td>Solid fill, white text, button shape. Only one per view.</td>
+            </tr>
+            <tr>
+              <td><strong>A promise we are making</strong><br /><span style="font-size:13px;color:var(--ink-3)">Verified, Escrow, Guarantee</span></td>
+              <td><code class="tok">--trust</code> <span style="color:var(--trust);font-weight:650">#0F5239</span></td>
+              <td>Deepest green, never filled. A ringed pill with a seal glyph — a form no button ever takes.</td>
+            </tr>
+            <tr>
+              <td><strong>A state the system reached</strong><br /><span style="font-size:13px;color:var(--ink-3)">Confirmed, Paid, Released</span></td>
+              <td><code class="tok">--ok</code> <span style="color:var(--ok);font-weight:650">#1B7A4C</span></td>
+              <td>Tinted pill with a dot and a word. Never interactive, never bordered.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout" style="margin-top:20px;">
+        <p>
+          <strong>The rule that keeps this readable:</strong> if it is filled, it is an action. If it is
+          ringed, it is a promise. If it is tinted with a dot, it is a status. Someone should be able to
+          tell the three apart in greyscale — which is the test this system is actually built to pass.
+        </p>
+      </div>
+      <div class="callout alert" style="margin-top:16px;">
+        <p>
+          <strong>Known tension, accepted deliberately.</strong> The logo is gold and the interface is not,
+          so the mark will read as its own object rather than as part of the system. That is a legitimate
+          choice — plenty of brands run a metallic mark over a non-metallic product — but it means the
+          logo needs air around it and should not sit inside coloured UI chrome. Revisit if the mark ever
+          starts to feel pasted on.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ LOGO ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>The logo, and a problem to solve</h2>
+        <p>
+          The mark keeps its gold — that is brand equity and the interface palette does not govern it.
+          But the gold-on-black lockup does not survive a light ground:
+          <code class="tok">#C69434</code> on white measures about <strong>2.4:1</strong>, well under the
+          4.5:1 needed for text. You need a second lockup before the light theme ships.
+        </p>
+      </div>
+      <div class="lockups">
+        <div class="lockup on-black">
+          <span class="cap">Dark ground · ship as-is</span>
+          <div class="mark">
+            <svg width="58" height="46" viewBox="0 0 58 46" aria-label="HomeLink Africa house mark">
+              <path d="M4 24 L29 5 L54 24" fill="none" stroke="#C69434" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M46 20 V40" fill="none" stroke="#C69434" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M2 33 Q22 24 38 34" fill="none" stroke="#C69434" stroke-width="2.6" stroke-linecap="round"/>
+              <rect x="25" y="14" width="4.6" height="4.6" fill="#C69434"/>
+              <rect x="32" y="14" width="4.6" height="4.6" fill="#C69434"/>
+              <rect x="25" y="21" width="4.6" height="4.6" fill="#C69434"/>
+              <rect x="32" y="21" width="4.6" height="4.6" fill="#C69434"/>
+            </svg>
+            <span class="word" style="color:#C69434">
+              <span class="l1">HomeLink</span><span class="l2">Africa</span>
+            </span>
+          </div>
+          <span class="flag flag-good">Contrast 8.9:1 · passes</span>
+        </div>
+
+        <div class="lockup on-white">
+          <span class="cap">Light ground · gold wordmark</span>
+          <div class="mark">
+            <svg width="58" height="46" viewBox="0 0 58 46" aria-label="HomeLink Africa house mark, gold">
+              <path d="M4 24 L29 5 L54 24" fill="none" stroke="#C69434" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M46 20 V40" fill="none" stroke="#C69434" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M2 33 Q22 24 38 34" fill="none" stroke="#C69434" stroke-width="2.6" stroke-linecap="round"/>
+              <rect x="25" y="14" width="4.6" height="4.6" fill="#C69434"/>
+              <rect x="32" y="14" width="4.6" height="4.6" fill="#C69434"/>
+              <rect x="25" y="21" width="4.6" height="4.6" fill="#C69434"/>
+              <rect x="32" y="21" width="4.6" height="4.6" fill="#C69434"/>
+            </svg>
+            <span class="word" style="color:#C69434">
+              <span class="l1">HomeLink</span><span class="l2">Africa</span>
+            </span>
+          </div>
+          <span class="flag flag-bad">Contrast 2.4:1 · fails</span>
+        </div>
+
+        <div class="lockup on-white">
+          <span class="cap">Light ground · recommended fix</span>
+          <div class="mark">
+            <svg width="58" height="46" viewBox="0 0 58 46" aria-label="HomeLink Africa house mark, gold on light">
+              <path d="M4 24 L29 5 L54 24" fill="none" stroke="#C69434" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M46 20 V40" fill="none" stroke="#C69434" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M2 33 Q22 24 38 34" fill="none" stroke="#C69434" stroke-width="2.6" stroke-linecap="round"/>
+              <rect x="25" y="14" width="4.6" height="4.6" fill="#131A14"/>
+              <rect x="32" y="14" width="4.6" height="4.6" fill="#131A14"/>
+              <rect x="25" y="21" width="4.6" height="4.6" fill="#131A14"/>
+              <rect x="32" y="21" width="4.6" height="4.6" fill="#131A14"/>
+            </svg>
+            <span class="word" style="color:#131A14">
+              <span class="l1">HomeLink</span><span class="l2">Africa</span>
+            </span>
+          </div>
+          <span class="flag flag-good">Contrast 15.8:1 · passes</span>
+        </div>
+      </div>
+      <p style="font-size:14px;color:var(--ink-2);margin:18px 0 0;max-width:68ch;">
+        <strong>The rule:</strong> the house mark keeps its gold on any ground — it is a shape, not text,
+        so the contrast floor does not apply. The wordmark switches to <code class="tok">--ink</code> on light
+        grounds. This is a one-off asset job, not a redesign, and it is the only blocker between the logo
+        and a shippable light theme.
+      </p>
+    </section>
+
+    <!-- ============ COLOR ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>Colour</h2>
+        <p>
+          Green is both accurate and strategic: it is what Rwanda looks like at altitude, and it is
+          unclaimed — Booking.com owns blue, Airbnb owns coral. Neutrals carry a green bias throughout,
+          so nothing reads as default grey.
+        </p>
+      </div>
+
+      <h3 class="sub">Brand — tea green</h3>
+      <div class="grid g4">
+        <div class="swatch"><div class="chip" style="background:var(--brand)"></div><div class="info"><span class="name">brand</span><span class="hex">#14684A / #46A87F</span><span class="use">Primary actions, links, brand marks</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--brand-deep)"></div><div class="info"><span class="name">brand-deep</span><span class="hex">#0F5239 / #5BBD93</span><span class="use">Hover, pressed</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--brand-tint);border-bottom:1px solid var(--line)"></div><div class="info"><span class="name">brand-tint</span><span class="hex">#E2EEE8 / #123024</span><span class="use">Selected chips, callouts</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--trust)"></div><div class="info"><span class="name">trust</span><span class="hex">#0F5239 / #6FCFA5</span><span class="use">Verified, escrow, guarantee. Ringed, never filled.</span></div></div>
+      </div>
+
+      <h3 class="sub">Ground &amp; ink</h3>
+      <div class="grid g4">
+        <div class="swatch"><div class="chip" style="background:var(--canvas);border-bottom:1px solid var(--line)"></div><div class="info"><span class="name">canvas</span><span class="hex">#F4F6F2 / #08150F</span><span class="use">Page ground</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--surface);border-bottom:1px solid var(--line)"></div><div class="info"><span class="name">surface</span><span class="hex">#FFFFFF / #0F2019</span><span class="use">Cards, sheets, rows</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--surface-2)"></div><div class="info"><span class="name">surface-2</span><span class="hex">#EAEEE6 / #162C23</span><span class="use">Table heads, wells</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--ink)"></div><div class="info"><span class="name">ink</span><span class="hex">#0C2119 / #E7EFE9</span><span class="use">Headings, body</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--ink-2)"></div><div class="info"><span class="name">ink-2</span><span class="hex">#3C5147 / #A6BBB0</span><span class="use">Secondary text</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--ink-3)"></div><div class="info"><span class="name">ink-3</span><span class="hex">#6E8177 / #778D83</span><span class="use">Labels, captions</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--line)"></div><div class="info"><span class="name">line</span><span class="hex">#DBE1D6 / #23392F</span><span class="use">Borders, dividers</span></div></div>
+      </div>
+
+      <div class="callout alert" style="margin-top:18px;">
+        <p>
+          <strong>The light theme is not cream.</strong> Warm cream with a green accent is the most
+          circulated palette in generated design work, and it makes the green look dusty. The cool
+          green-biased white above keeps the brand crisp and lets the neutrals read as chosen rather
+          than inherited. This is the most load-bearing neutral decision in the system.
+        </p>
+      </div>
+
+      <h3 class="sub">Semantic</h3>
+      <div class="grid g4">
+        <div class="swatch"><div class="chip" style="background:var(--ok)"></div><div class="info"><span class="name">ok</span><span class="hex">#1B7A4C / #4FBF8B</span><span class="use">Confirmed, paid, released</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--warn)"></div><div class="info"><span class="name">warn</span><span class="hex">#9A6206 / #E0A82E</span><span class="use">Pending, low availability</span></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--crit)"></div><div class="info"><span class="name">crit</span><span class="hex">#A62620 / #F0837A</span><span class="use">Failed, cancelled, disputed</span></div></div>
+      </div>
+      <p style="font-size:14px;color:var(--ink-2);margin:14px 0 0;max-width:70ch;">
+        With gold out of the palette, amber is free to mean caution again. <code class="tok">ok</code> and
+        <code class="tok">brand</code> are both green and deliberately distinct in use: brand is
+        <em>an action you can take</em>, ok is <em>a state the system reached</em>. Never substitute one
+        for the other, and never let colour alone carry state.
+      </p>
+
+      <h3 class="sub">Contrast, measured</h3>
+      <div class="panel" style="display:flex;flex-direction:column;gap:12px;">
+        <div class="ratio-row"><span class="box" style="background:#14684A;color:#FFF">Aa</span><span>White on brand fill — <strong>6.8:1</strong> · passes AA for all sizes</span></div>
+        <div class="ratio-row"><span class="box" style="background:#FFF;color:#14684A;border:1px solid var(--line)">Aa</span><span>Brand text on white — <strong>6.5:1</strong> · passes AA</span></div>
+        <div class="ratio-row"><span class="box" style="background:#DCEBE4;color:#0F5239">Aa</span><span>Trust green on its tint — <strong>7.9:1</strong> · passes AAA</span></div>
+        <div class="ratio-row"><span class="box" style="background:#08150F;color:#46A87F">Aa</span><span>Brand text on dark canvas — <strong>6.9:1</strong> · passes AA</span></div>
+        <div class="ratio-row"><span class="box" style="background:#08150F;color:#6FCFA5">Aa</span><span>Trust green on dark canvas — <strong>11.2:1</strong> · passes AAA</span></div>
+      </div>
+    </section>
+
+    <!-- ============ THE RULE ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>The governing rule</h2>
+        <p>
+          Your brief pulled two ways: <strong>beautiful and clean</strong> points toward Airbnb;
+          <strong>intuitive</strong> points toward Booking.com. This settles every such argument so
+          nobody relitigates it per-component.
+        </p>
+      </div>
+      <div class="callout">
+        <p><strong>Warmth on discovery. Convention on transaction.</strong></p>
+        <p>
+          Landing, browse, and listing detail are where someone decides they want this — room,
+          photography, the display serif. Results, checkout, and Ops are where someone is trying to
+          finish — density, familiar patterns, zero novelty. One token set, two densities.
+        </p>
+      </div>
+
+      <h3 class="sub">The same listing, both postures</h3>
+      <div class="density">
+        <div class="density-col">
+          <div class="density-tag"><strong>Discovery</strong><span>14px radius · photo-led · serif name</span></div>
+          <article class="card-discovery">
+            <div class="photo">
+              <div class="seal-slot">
+                <span class="badge-verified">
+                  <svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M8 .8l1.9 1.4 2.3-.3.9 2.2 2 1.2-.7 2.2.7 2.2-2 1.2-.9 2.2-2.3-.3L8 14.2l-1.9-1.4-2.3.3-.9-2.2-2-1.2.7-2.2-.7-2.2 2-1.2.9-2.2 2.3.3z" fill="currentColor" opacity=".2"/>
+                    <path d="M4.8 8.1l2.1 2.1 4.3-4.3" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Verified
+                </span>
+              </div>
+              <div class="ridge"></div>
+            </div>
+            <div class="body">
+              <p class="place">Kacyiru · Kigali</p>
+              <h4 class="name">Garden apartment with hill view</h4>
+              <p class="attrs">2 bedrooms · Sleeps 4 · Backup power · Fibre</p>
+              <div class="price"><span class="amt">$128</span><span class="per">per night</span></div>
+              <div style="display:flex;gap:8px;margin-top:10px;">
+                <button class="btn btn-primary btn-sm">Reserve</button>
+                <button class="btn btn-quiet btn-sm">Save</button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="density-col">
+          <div class="density-tag"><strong>Transaction</strong><span>8px radius · scannable · tabular figures</span></div>
+          <div class="row-txn">
+            <div class="thumb"></div>
+            <div class="mid">
+              <span class="r-name">Garden apartment with hill view</span>
+              <span class="r-sub">Kacyiru · 2 bed · Sleeps 4</span>
+              <span class="badge-verified" style="align-self:flex-start;margin-top:2px;">
+                <svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 8.1l2.1 2.1 4.3-4.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Verified
+              </span>
+            </div>
+            <div class="r-price"><span class="r-amt">$384</span><span class="r-per">3 nights · $128/night</span></div>
+          </div>
+          <div class="row-txn">
+            <div class="thumb"></div>
+            <div class="mid">
+              <span class="r-name">Kimihurura townhouse</span>
+              <span class="r-sub">Kimihurura · 3 bed · Sleeps 6</span>
+              <span class="pill pill-warn" style="align-self:flex-start;margin-top:2px;">2 left for these dates</span>
+            </div>
+            <div class="r-price"><span class="r-amt">$510</span><span class="r-per">3 nights · $170/night</span></div>
+          </div>
+          <div class="panel" style="padding:16px 18px;">
+            <div class="breakdown">
+              <div class="li"><span class="muted">$128 &times; 3 nights</span><span>$384.00</span></div>
+              <div class="li"><span class="muted">Cleaning</span><span>$25.00</span></div>
+              <div class="li"><span class="muted">Service fee</span><span>$41.35</span></div>
+              <div class="li total"><span>Total (USD)</span><span>$450.35</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);">
+              <span class="badge-verified">
+                <svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 8.1l2.1 2.1 4.3-4.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Escrow
+              </span>
+              <span style="font-size:13px;color:var(--ink-2);">Held until you confirm check-in</span>
+            </div>
+            <button class="btn btn-primary" style="width:100%;margin-top:14px;">Pay $450.35</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHAT WE BORROW ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>What we borrow, and from whom</h2>
+        <p>Deliberate inheritance, not imitation. We copy patterns people already know, and spend our originality in exactly one place: how verification is told.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Reference</th><th>What we take</th><th>What we refuse</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Airbnb</strong></td><td>Photo-led cards, generous whitespace, rounded geometry, search-as-hero, host-as-person framing</td><td>Its coral palette, and its ambiguity about who guarantees what</td></tr>
+            <tr><td><strong>Booking.com</strong></td><td>Filter rail behaviour, result-row density, price breakdown clarity, honest scarcity signals, the checkout step spine</td><td>Manufactured urgency, interstitial upsells, visual clutter</td></tr>
+            <tr><td><strong>Plum Guide</strong></td><td>Verification told as a story with evidence — what was checked, by whom, when</td><td>Its exclusivity tone, which would exclude the Rwandan residential lane</td></tr>
+            <tr><td><strong>Turo</strong></td><td>Place-and-time pickup pickers, driver / self-drive toggle, vehicle spec chips</td><td>Peer-to-peer variability framing — our fleet is vetted</td></tr>
+            <tr><td><strong>GetYourGuide</strong></td><td>Interest and age-group filtering, duration-forward cards, itinerary timelines</td><td>Review-count-as-everything hierarchy</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ TYPOGRAPHY ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>Typography</h2>
+        <p>Three roles: a display serif carrying warmth on discovery, a neutral grotesk that disappears under dense booking data, and a mono for anything read aloud to support.</p>
+      </div>
+      <div class="table-scroll" style="margin-bottom:8px;">
+        <table>
+          <thead><tr><th>Role</th><th>Production face</th><th>Where</th><th>Why not the obvious pick</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Display</strong></td><td>Fraunces <span class="mono" style="color:var(--ink-3)">(400–700, soft 20, wonk 0)</span></td><td>Listing names, hero headlines, discovery section heads</td><td>Playfair reads bridal; Lora reads blog. Fraunces has optical sizing and warmth without costume.</td></tr>
+            <tr><td><strong>UI</strong></td><td>Instrument Sans <span class="mono" style="color:var(--ink-3)">(400–700)</span></td><td>Everything transactional — results, forms, checkout, Ops</td><td>Inter is what everyone reaches for. Instrument is slightly narrower, which buys real column width in dense rows.</td></tr>
+            <tr><td><strong>Mono</strong></td><td>IBM Plex Mono <span class="mono" style="color:var(--ink-3)">(400–600)</span></td><td>Booking refs, ledger entries, KYC IDs, Ops audit trails</td><td>True tabular figures and unambiguous 0/O, 1/l — which matters when read over a phone.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px;color:var(--ink-3);margin:0 0 8px;">
+        The logo wordmark is a heavy geometric sans and does not need to match the UI face — a logotype
+        is a drawing, not a style. Load UI faces via <code class="tok">next/font/google</code>. This page
+        renders in close system stand-ins, since artifact pages cannot fetch external fonts; the scale and
+        hierarchy are accurate, the letterforms approximate.
+      </p>
+
+      <h3 class="sub">Scale</h3>
+      <div class="panel">
+        <div class="spec"><div class="label"><span>display-l</span><span>44 / 1.05 / 600</span><span>hero only</span></div><div class="t-dl">A home that is ready when you land</div></div>
+        <div class="spec"><div class="label"><span>display-m</span><span>32 / 1.12 / 600</span><span>section heads</span></div><div class="t-dm">Verified by someone who stood in the room</div></div>
+        <div class="spec"><div class="label"><span>h1</span><span>26 / 1.20 / 650</span></div><div class="t-h1">Your trip to Kigali</div></div>
+        <div class="spec"><div class="label"><span>h2</span><span>20 / 1.30 / 650</span></div><div class="t-h2">Garden apartment with hill view</div></div>
+        <div class="spec"><div class="label"><span>h3</span><span>16 / 1.40 / 650</span></div><div class="t-h3">Payment &amp; escrow</div></div>
+        <div class="spec"><div class="label"><span>body</span><span>16 / 1.60 / 400</span><span>max 65ch</span></div><div class="t-bd" style="max-width:65ch">Funds are held until you confirm check-in. If the home is not as described, you are refunded in full and we find you another that night.</div></div>
+        <div class="spec"><div class="label"><span>small</span><span>14 / 1.50 / 400</span></div><div class="t-sm">Cancel free until 3 November. After that, the first night is non-refundable.</div></div>
+        <div class="spec"><div class="label"><span>micro</span><span>12 / 1.40 / 700 / +.1em</span></div><div class="t-mi">Kacyiru · Kigali</div></div>
+      </div>
+    </section>
+
+    <!-- ============ SPACE ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>Space, radius, elevation</h2>
+        <p>Radius is how the two densities are told apart at a glance. Discovery rounds; transaction squares.</p>
+      </div>
+      <div class="grid g2">
+        <div class="panel">
+          <h3 class="sub" style="margin-top:0">Spacing scale (4px base)</h3>
+          <div class="scale-strip">
+            <div class="u" style="width:14px"><div class="bar" style="height:4px"></div><span class="cap">4</span></div>
+            <div class="u" style="width:20px"><div class="bar" style="height:8px"></div><span class="cap">8</span></div>
+            <div class="u" style="width:26px"><div class="bar" style="height:12px"></div><span class="cap">12</span></div>
+            <div class="u" style="width:32px"><div class="bar" style="height:16px"></div><span class="cap">16</span></div>
+            <div class="u" style="width:38px"><div class="bar" style="height:24px"></div><span class="cap">24</span></div>
+            <div class="u" style="width:44px"><div class="bar" style="height:32px"></div><span class="cap">32</span></div>
+            <div class="u" style="width:50px"><div class="bar" style="height:48px"></div><span class="cap">48</span></div>
+            <div class="u" style="width:56px"><div class="bar" style="height:64px"></div><span class="cap">64</span></div>
+          </div>
+          <p style="font-size:14px;color:var(--ink-2);margin:18px 0 0;">
+            Sibling groups use flex or grid <code class="tok">gap</code>. Per-element margins are not used
+            for rhythm — they collapse and double in ways that are hard to trace.
+          </p>
+        </div>
+        <div class="panel">
+          <h3 class="sub" style="margin-top:0">Radius &amp; elevation</h3>
+          <ul class="tight">
+            <li><strong>4px</strong> <code class="tok">--r-chip</code> — tags, inline code, thumbnails</li>
+            <li><strong>8px</strong> <code class="tok">--r-ctl</code> — buttons, inputs, transaction rows</li>
+            <li><strong>14px</strong> <code class="tok">--r-card</code> — discovery cards, panels, sheets</li>
+            <li><strong>999px</strong> <code class="tok">--r-pill</code> — status pills, filter chips, verified badge</li>
+          </ul>
+          <p style="font-size:14px;color:var(--ink-2);margin:16px 0 0;">
+            Two elevations only. <code class="tok">--shadow-card</code> for resting surfaces,
+            <code class="tok">--shadow-pop</code> for things floating above the page. Nothing else casts
+            a shadow.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMPONENTS ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>Core components</h2>
+        <p>The set every screen in the clickable shell is assembled from.</p>
+      </div>
+
+      <h3 class="sub">Buttons</h3>
+      <div class="panel">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary">Reserve</button>
+          <button class="btn btn-trust">Confirm check-in</button>
+          <button class="btn btn-secondary">Add a car</button>
+          <button class="btn btn-quiet">Save for later</button>
+          <button class="btn btn-primary btn-sm">Pay RWF 165,000</button>
+        </div>
+        <p style="font-size:14px;color:var(--ink-2);margin:18px 0 0;max-width:70ch;">
+          One primary per view. Trust actions — confirming check-in, releasing escrow — use the deepest
+          green, so the weightiest button on the page is also the calmest. A control names exactly what
+          happens: <em>Pay RWF 165,000</em>, not <em>Submit</em>. Add-ons use secondary, never primary,
+          because the bundle is gravity and not a gate.
+        </p>
+      </div>
+
+      <h3 class="sub">Inputs</h3>
+      <div class="panel">
+        <div class="grid g3">
+          <div class="field"><label for="d1">Arriving</label><input id="d1" type="text" value="14 Nov 2026" /><span class="hint">Kigali time</span></div>
+          <div class="field"><label for="d2">How long</label><input id="d2" type="text" value="3 nights" /><span class="hint">Short · Medium · Long</span></div>
+          <div class="field err"><label for="d3">Mobile Money number</label><input id="d3" type="text" value="078 000 00" /><span class="hint">This number is 8 digits. Rwandan MTN numbers have 9.</span></div>
+        </div>
+        <p style="font-size:14px;color:var(--ink-2);margin:18px 0 0;">Errors say what went wrong <em>and</em> what to do. No apologies, no “invalid input”.</p>
+      </div>
+
+      <h3 class="sub">Filter chips &amp; status pills</h3>
+      <div class="panel">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+          <button class="chipf" aria-pressed="true">Verified only</button>
+          <button class="chipf" aria-pressed="true">2+ bedrooms</button>
+          <button class="chipf" aria-pressed="false">Backup power</button>
+          <button class="chipf" aria-pressed="false">Fibre internet</button>
+          <button class="chipf" aria-pressed="false">Long-term lease</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span class="pill pill-ok">Confirmed</span>
+          <span class="pill pill-ok">Funds released</span>
+          <span class="pill pill-warn">Awaiting check-in</span>
+          <span class="pill pill-warn">Payment pending</span>
+          <span class="pill pill-crit">Cancelled</span>
+          <span class="pill pill-crit">Disputed</span>
+          <span class="pill pill-idle">Draft</span>
+        </div>
+        <p style="font-size:14px;color:var(--ink-2);margin:18px 0 0;">
+          State is encoded in form as well as colour — every pill carries a dot and a word, so it survives
+          colourblindness and a greyscale print of an Ops screen.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ TRUST ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>The verification system</h2>
+        <p>The one place HomeLink must out-design its references. A checkmark is a claim; evidence is a product. The badge is always a link, and it always opens the record below.</p>
+      </div>
+      <div class="grid g2">
+        <div class="panel">
+          <h3 class="sub" style="margin-top:0">What the badge opens</h3>
+          <div class="ladder">
+            <div class="step"><span class="dot">1</span><div><h4>Inspected in person</h4><p>Jean-Claude U. visited on 12 Oct 2026. Kitchen, water pressure, power backup, and road access checked against a 34-point list.</p></div></div>
+            <div class="step"><span class="dot">2</span><div><h4>Photographed by us</h4><p>Every image on this listing was shot by the HomeLink team. No owner-supplied photos appear on verified listings.</p></div></div>
+            <div class="step"><span class="dot">3</span><div><h4>Owner identity confirmed</h4><p>Title or lease authority verified against national ID. KYC complete before any payout is possible.</p></div></div>
+            <div class="step"><span class="dot">4</span><div><h4>Your money is held</h4><p>Payment sits in escrow until you confirm check-in. Not as described means a full refund and another home the same night.</p></div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3 class="sub" style="margin-top:0">Rules</h3>
+          <ul class="tight">
+            <li><strong>Green is never decorative.</strong> If the badge is on screen, the record exists and is reachable in one tap.</li>
+            <li><strong>Never a grade.</strong> No bronze/silver/gold tiers. A listing is verified or it is not on HomeLink.</li>
+            <li><strong>Name the human.</strong> A named inspector with a date, not “our team”. This is the entire difference between us and a checkbox.</li>
+            <li><strong>Escrow is stated in money terms</strong> at the moment money is asked for — not buried in a trust page nobody opens.</li>
+            <li><strong>The badge is ringed, never filled.</strong> That is the one form no button takes, so a promise can never be mistaken for a control — which matters most in greyscale and for colourblind users.</li>
+          </ul>
+          <div class="callout trust" style="margin-top:20px;">
+            <p style="font-size:14px;">
+              Phase 1 renders these records from fixtures. The fixture's shape is the shape of the
+              <code class="tok">verification_record</code> table in Phase 2 — so the UI does not move when
+              Supabase arrives.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MONEY & LOCALE ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>Money and locale</h2>
+        <p>Both cross-cutting, both agreed as genuinely working in Phase 1, and both expensive to retrofit across twenty screens.</p>
+      </div>
+      <div class="callout alert">
+        <p>
+          <strong>RWF is a zero-decimal currency.</strong> A naive <code class="tok">minor / 100</code> renders
+          RWF&nbsp;165,000 as RWF&nbsp;1,650. Every amount is
+          <code class="tok">{ minor: number, currency: ISO4217 }</code> and every render goes through
+          <code class="tok">formatMoney()</code>, which reads the currency's exponent. No component divides
+          by 100, anywhere.
+        </p>
+      </div>
+      <div class="table-scroll" style="margin-top:20px;">
+        <table>
+          <thead><tr><th>Segment</th><th>Locale</th><th>Currency</th><th>Rail</th><th>Renders as</th></tr></thead>
+          <tbody>
+            <tr><td>Diaspora, US</td><td class="mono">en-US</td><td>USD</td><td>Card</td><td class="num mono">$450.35</td></tr>
+            <tr><td>Diaspora, EU</td><td class="mono">fr-FR</td><td>EUR</td><td>Card</td><td class="num mono">415,80&nbsp;€</td></tr>
+            <tr><td>Tourist, UK</td><td class="mono">en-GB</td><td>GBP</td><td>Card</td><td class="num mono">£356.20</td></tr>
+            <tr><td>Local</td><td class="mono">rw-RW</td><td>RWF</td><td>Mobile Money</td><td class="num mono">165,000&nbsp;RWF</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid g2" style="margin-top:20px;">
+        <div class="panel">
+          <h3 class="sub" style="margin-top:0">Locale rules</h3>
+          <ul class="tight">
+            <li><strong>Every string via <code class="tok">t()</code></strong> from day one. EN is authored; FR and RW start machine-drafted and get corrected — the wiring is what cannot be retrofitted.</li>
+            <li><strong>Kinyarwanda runs long.</strong> Budget roughly 1.3× English for button and label widths. Nothing may depend on a fixed-width control.</li>
+            <li><strong>Routes carry locale</strong> — <code class="tok">/[locale]/stays/…</code> — so listing pages are indexable per language.</li>
+            <li><strong>Currency is independent of language.</strong> A diaspora user can read in Kinyarwanda and pay in USD.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3 class="sub" style="margin-top:0">Segment defaults, always overridable</h3>
+          <ul class="tight">
+            <li><strong>From abroad</strong> — EN/FR, USD/EUR/GBP, card first, arrival framing, Trip prompts on.</li>
+            <li><strong>From Rwanda</strong> — RW available, RWF, Mobile Money first, residential framing, listings surfaced immediately.</li>
+            <li><strong>Phase 1</strong> drives this from a visible toggle plus browser locale; <strong>Phase 2</strong> adds the IP/geo signal.</li>
+            <li>The override control is persistent and visible in the header, never hidden in settings.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MOTION & A11Y ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>Motion and access</h2>
+        <p>Restraint, mostly. The product is used on mid-range Android phones over patchy connections.</p>
+      </div>
+      <div class="grid g2">
+        <div class="panel">
+          <h3 class="sub" style="margin-top:0">Motion</h3>
+          <ul class="tight">
+            <li><strong>150–200ms, ease-out</strong> for state changes — hover, selection, disclosure.</li>
+            <li><strong>240ms</strong> for sheets and drawers entering. Nothing animates longer.</li>
+            <li><strong>No scroll-triggered reveals.</strong> They cost paint time and delay content on slow devices.</li>
+            <li><strong>One orchestrated moment</strong>, earned: the escrow confirmation on checkout — the emotional peak of the product and the only place motion carries meaning.</li>
+            <li><code class="tok">prefers-reduced-motion</code> honoured globally.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3 class="sub" style="margin-top:0">Access</h3>
+          <ul class="tight">
+            <li><strong>4.5:1 minimum</strong> for body text in both themes. Every brand and trust pairing is measured above, not assumed.</li>
+            <li><strong>Visible focus everywhere</strong> — 2px brand ring, 2px offset. Never removed.</li>
+            <li><strong>Never colour alone.</strong> Every status carries a word; every chip carries <code class="tok">aria-pressed</code>.</li>
+            <li><strong>Touch targets 44px minimum</strong> on transaction surfaces, where mistakes cost money.</li>
+            <li><strong>Both themes designed</strong>, not inverted — brand lifts to <code class="tok">#46A87F</code> and trust to <code class="tok">#6FCFA5</code> so the depth ordering survives on a dark ground.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCOPE ============ -->
+    <section class="block">
+      <div class="sec-head">
+        <h2>What this guide does not yet cover</h2>
+        <p>Named honestly, so nobody assumes coverage that is not here.</p>
+      </div>
+      <div class="panel">
+        <ul class="tight">
+          <li><strong>The light-ground logo asset.</strong> Specified above, but somebody has to draw and export it. Blocker for the light theme.</li>
+          <li><strong>Concierge Ops visual language.</strong> An internal tool with different density needs again — tables, bulk actions, audit trails. It inherits these tokens but needs its own layout pass.</li>
+          <li><strong>Map treatment.</strong> Pin design, cluster behaviour, and the list-map split are unresolved pending a maps provider.</li>
+          <li><strong>Photography direction.</strong> The verification promise says we shoot every listing; the shooting standard is a separate document and a real operational cost.</li>
+          <li><strong>Email and WhatsApp templates.</strong> The channel bridge renders outside our CSS entirely and needs its own constrained token subset.</li>
+          <li><strong>Illustration and empty states.</strong> Deferred until we know which empty states actually occur.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    HomeLink Africa · Milestone 1 Phase 1 style guide · Tokens here are normative for the clickable shell.
+    Supabase-backed data lands in Phase 2 behind the same repository interfaces.
+  </div>
+</footer>
