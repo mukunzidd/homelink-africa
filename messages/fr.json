@@ -153,5 +153,81 @@
     "noResultsBody": "Nous ne listons que ce que nous avons inspecté, les résultats sont donc plus restreints que prévu. Élargissez les dates ou retirez un filtre.",
     "comingSoon": "Pas encore construit",
     "comingSoonBody": "Cet écran fait partie de la structure mais n'a pas encore de contenu."
+  },
+  "amenities": {
+    "label": "Ce qu'il y a",
+    "backupPower": "Groupe électrogène",
+    "fibre": "Internet fibre",
+    "furnished": "Meublé",
+    "parking": "Parking",
+    "water": "Réservoir d'eau",
+    "security": "Gardiennage sur place",
+    "garden": "Jardin",
+    "workspace": "Bureau et espace de travail"
+  },
+  "detail": {
+    "about": "À propos du logement",
+    "backToStays": "Tous les logements",
+    "checkAvailability": "Vérifier la disponibilité",
+    "unavailable": "Choisissez des dates pour voir le total",
+    "nightlyFrom": "À partir de",
+    "monthlyFrom": "Long terme à partir de",
+    "leaseAvailable": "Disponible en bail long terme",
+    "leaseBody": "Douze mois ou plus passent par une demande de bail plutôt qu'une réservation à la nuit : documents, dépôt de garantie et contrat signé.",
+    "applyForLease": "Demander un bail"
+  },
+  "quote": {
+    "accommodation": "{rate} × {nights, plural, one {# nuit} other {# nuits}}",
+    "cleaning": "Ménage",
+    "serviceFee": "Frais de service",
+    "total": "Total",
+    "totalIn": "Total ({currency})",
+    "chargedIn": "Débité en {currency}. Converti au taux du jour ; le montant débité est confirmé avant le paiement.",
+    "noHiddenFees": "Aucun frais de réservation n'est ajouté à la fin. C'est le prix."
+  },
+  "checkout": {
+    "title": "Confirmer et payer",
+    "step": "Étape {current} sur {total}",
+    "steps": {
+      "dates": "Dates",
+      "guests": "Voyageurs",
+      "review": "Vérification",
+      "pay": "Paiement"
+    },
+    "yourStay": "Votre séjour",
+    "changeDates": "Modifier",
+    "guestsLabel": "Qui vient",
+    "guestsHelp": "Ce logement couche {max} personnes.",
+    "payWith": "Comment souhaitez-vous payer",
+    "card": "Carte",
+    "cardHint": "Visa, Mastercard, Amex",
+    "mobileMoney": "Mobile Money",
+    "mobileMoneyHint": "MTN MoMo ou Airtel Money",
+    "mobileNumber": "Numéro Mobile Money",
+    "mobileNumberError": "Les numéros rwandais comptent 9 chiffres. Vérifiez le numéro et réessayez.",
+    "cardNumber": "Numéro de carte",
+    "cardHolder": "Nom sur la carte",
+    "payNow": "Payer {amount}",
+    "processing": "Paiement en cours…",
+    "stubNotice": "Rien n'est débité. Les moyens de paiement arrivent en phase 2 — ce bouton enregistre la réservation sur des données de test.",
+    "escrowTitle": "Votre argent est retenu jusqu'à votre arrivée",
+    "escrowBody": "Nous retenons la totalité du montant et ne le versons à l'hôte qu'après confirmation de votre arrivée. Si le logement ne correspond pas, remboursement intégral et un autre logement le soir même.",
+    "noEscrowBody": "Ce séjour est en dessous de notre seuil de séquestre, le paiement est donc direct. La même garantie d'exactitude s'applique.",
+    "cancellation": "Annulation gratuite jusqu'au {date}. Ensuite, la première nuit n'est pas remboursable.",
+    "agree": "En payant, vous acceptez les conditions de réservation et la politique d'annulation ci-dessus."
+  },
+  "confirmation": {
+    "title": "C'est réservé",
+    "body": "Nous avons envoyé les détails par e-mail et ouvert une conversation avec l'équipe conciergerie.",
+    "reference": "Référence de réservation",
+    "referenceHint": "Citez-la si vous nous appelez ou nous écrivez.",
+    "whatNext": "La suite",
+    "next1": "Aline, de notre équipe à Kigali, vous écrira dans les prochaines heures pour confirmer votre arrivée.",
+    "next2": "Votre argent reste sous séquestre jusqu'à confirmation de votre arrivée.",
+    "next3": "Ajoutez une voiture ou une sortie à tout moment avant d'arriver — cela rejoint le même voyage.",
+    "openMessages": "Ouvrir la conversation",
+    "addCar": "Ajouter une voiture",
+    "addExperience": "Ajouter une activité",
+    "viewBooking": "Voir la réservation"
   }
 }

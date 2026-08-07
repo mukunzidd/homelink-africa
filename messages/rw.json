@@ -153,5 +153,81 @@
     "noResultsBody": "Dushyiraho gusa ibyo twagenzuye, bityo ibisubizo ni bike kurusha uko wabitekerezaga. Gerageza kwagura amatariki cyangwa gukuraho akayunguruzo.",
     "comingSoon": "Ntibirubakwa",
     "comingSoonBody": "Uru rupapuro ruri mu miterere ariko ntirurimo ibintu."
+  },
+  "amenities": {
+    "label": "Ibiboneka aha",
+    "backupPower": "Umuriro w'inyongera",
+    "fibre": "Interineti ya fibre",
+    "furnished": "Ririmo ibikoresho",
+    "parking": "Aho gupaka",
+    "water": "Itanki ry'amazi",
+    "security": "Umutekano aho ngaho",
+    "garden": "Ubusitani",
+    "workspace": "Ameza n'aho gukorera"
+  },
+  "detail": {
+    "about": "Ibyerekeye aha hantu",
+    "backToStays": "Amacumbi yose",
+    "checkAvailability": "Reba ko biboneka",
+    "unavailable": "Hitamo amatariki kugira ngo urebe igiteranyo",
+    "nightlyFrom": "Guhera kuri",
+    "monthlyFrom": "Igihe kirekire guhera kuri",
+    "leaseAvailable": "Iraboneka mu masezerano y'igihe kirekire",
+    "leaseBody": "Amezi cumi n'abiri cyangwa arenga bikorwa nk'ubusabe bw'amasezerano yo gukodesha aho kuba ugufata ku ijoro: impapuro, ingwate, n'amasezerano ashyizweho umukono.",
+    "applyForLease": "Saba amasezerano"
+  },
+  "quote": {
+    "accommodation": "{rate} × {nights, plural, one {ijoro #} other {amajoro #}}",
+    "cleaning": "Isuku",
+    "serviceFee": "Amafaranga ya serivisi",
+    "total": "Igiteranyo",
+    "totalIn": "Igiteranyo ({currency})",
+    "chargedIn": "Bishyurwa muri {currency}. Bihinduwe ku giciro cy'uyu munsi; umubare wishyurwa wemezwa mbere yo kwishyura.",
+    "noHiddenFees": "Nta mafaranga yo gufata yongerwaho ku iherezo. Iki ni cyo giciro."
+  },
+  "checkout": {
+    "title": "Emeza kandi wishyure",
+    "step": "Intambwe ya {current} kuri {total}",
+    "steps": {
+      "dates": "Amatariki",
+      "guests": "Abashyitsi",
+      "review": "Kugenzura",
+      "pay": "Kwishyura"
+    },
+    "yourStay": "Aho uzacumbika",
+    "changeDates": "Hindura",
+    "guestsLabel": "Abaza",
+    "guestsHelp": "Aha hantu haryamamo {max}.",
+    "payWith": "Wifuza kwishyura ute",
+    "card": "Ikarita",
+    "cardHint": "Visa, Mastercard, Amex",
+    "mobileMoney": "Mobile Money",
+    "mobileMoneyHint": "MTN MoMo cyangwa Airtel Money",
+    "mobileNumber": "Nimero ya Mobile Money",
+    "mobileNumberError": "Nimero z'u Rwanda zigira imibare 9. Genzura nimero wongere ugerageze.",
+    "cardNumber": "Nimero y'ikarita",
+    "cardHolder": "Izina riri ku ikarita",
+    "payNow": "Ishyura {amount}",
+    "processing": "Turimo kwakira ubwishyu…",
+    "stubNotice": "Nta mafaranga akurwaho. Uburyo bwo kwishyura buzaza mu cyiciro cya 2 — iyi buto yandika igifatwa mu byitegererezo.",
+    "escrowTitle": "Amafaranga yawe abikwa kugeza ugeze",
+    "escrowBody": "Tubika amafaranga yose kandi tukayaha nyir'inzu gusa nyuma yo kwemeza ko wageze. Niba ahantu hatameze nk'uko byasobanuwe, usubizwa amafaranga yose kandi tukagushakira ubundi bucumbi kuri uwo mugoroba.",
+    "noEscrowBody": "Ubu bucumbi buri munsi y'urugero rwacu rwo kubika amafaranga, bityo ubwishyu bugera ako kanya. Ubwizerane ku byasobanuwe buracyariho.",
+    "cancellation": "Guhagarika ku buntu kugeza {date}. Nyuma y'aho, ijoro rya mbere ntirisubizwa.",
+    "agree": "Mu kwishyura wemera amabwiriza yo gufata n'amabwiriza yo guhagarika ari hejuru."
+  },
+  "confirmation": {
+    "title": "Wafashe neza",
+    "body": "Twoherereje amakuru kuri imeyili yawe kandi dufungura ikiganiro n'itsinda rifasha.",
+    "reference": "Nimero y'ubwishingizi",
+    "referenceHint": "Yivuge nuduhamagara cyangwa utwandikira.",
+    "whatNext": "Ibikurikira",
+    "next1": "Aline wo mu itsinda ryacu i Kigali azakwandikira mu masaha make kugira ngo yemeze uko uzagera.",
+    "next2": "Amafaranga yawe aguma abitswe kugeza wemeje ko wageze.",
+    "next3": "Ongeraho imodoka cyangwa igikorwa igihe cyose mbere yo kugera — bijya mu rugendo rumwe.",
+    "openMessages": "Fungura ikiganiro",
+    "addCar": "Ongeraho imodoka",
+    "addExperience": "Ongeraho icyo gukora",
+    "viewBooking": "Reba ibyafashwe"
   }
 }

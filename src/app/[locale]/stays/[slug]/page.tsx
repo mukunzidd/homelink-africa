@@ -1,8 +1,32 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { repos } from "@/lib/repos";
-import { NotBuiltYet } from "@/components/shell/not-built-yet";
+import { Link } from "@/i18n/navigation";
+import { addDays, today } from "@/lib/domain/dates";
+import { quoteStay } from "@/lib/domain/pricing";
+import { SupplyImage } from "@/components/ui/supply-image";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
+import { StatusPill } from "@/components/ui/status-pill";
+import { MoneyText } from "@/components/ui/money-text";
+import { BookingPanel } from "@/components/listing/booking-panel";
+import { VerificationRecordPanel } from "@/components/listing/verification-record";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const listing = await repos().stays.bySlug(slug);
+  if (!listing) return {};
+
+  return {
+    title: `${listing.name}, ${listing.neighbourhood}`,
+    description: listing.summary,
+  };
+}
 
 export default async function ListingDetailPage({
   params,
@@ -15,7 +39,133 @@ export default async function ListingDetailPage({
   const listing = await repos().stays.bySlug(slug);
   if (!listing) notFound();
 
-  await getTranslations("listing");
+  const t = await getTranslations("detail");
+  const tListing = await getTranslations("listing");
+  const tVerify = await getTranslations("verification");
+  const tAmenities = await getTranslations("amenities");
+  const tStatus = await getTranslations("status");
 
-  return <NotBuiltYet title={listing.name} />;
+  // Default the panel to a three-night stay a week out, so the price is
+  // concrete on arrival rather than asking for input before showing anything.
+  const defaultFrom = addDays(today(), 7);
+  const defaultTo = addDays(defaultFrom, 3);
+
+  // Whether escrow applies depends on the total, so it is decided from a
+  // representative quote rather than from the nightly rate alone.
+  const sampleQuote = quoteStay(listing, defaultFrom, defaultTo);
+  const escrowApplies = sampleQuote?.escrowHeld ?? false;
+
+  const canLease = listing.modes.includes("lease") && listing.monthlyRate;
+
+  return (
+    <div className="mx-auto flex max-w-[1180px] flex-col gap-8 px-6 py-8">
+      <Link
+        href="/stays"
+        className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
+      >
+        ← {t("backToStays")}
+      </Link>
+
+      {/* Discovery density: photography leads, the name is set in the serif. */}
+      <header className="flex flex-col gap-4">
+        <SupplyImage
+          seed={listing.imageSeed}
+          className="h-64 rounded-card sm:h-80"
+        >
+          <span className="absolute left-4 top-4">
+            <VerifiedBadge label={tVerify("badge")} />
+          </span>
+        </SupplyImage>
+
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.07em] text-ink-3">
+              {listing.neighbourhood} · {listing.city}
+            </p>
+            <h1 className="max-w-[20ch] text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tight text-ink">
+              {listing.name}
+            </h1>
+            <p className="text-[15px] text-ink-2">
+              {tListing("bedrooms", { count: listing.bedrooms })} ·{" "}
+              {tListing("sleeps", { count: listing.sleeps })}
+            </p>
+          </div>
+
+          {listing.unitsAvailable <= 2 && (
+            <StatusPill tone="warn">
+              {tStatus("lowAvailability", { count: listing.unitsAvailable })}
+            </StatusPill>
+          )}
+        </div>
+      </header>
+
+      <div className="grid items-start gap-8 lg:grid-cols-[1fr_360px]">
+        <div className="flex flex-col gap-8">
+          <section className="flex flex-col gap-3">
+            <h2 className="font-display text-2xl font-semibold text-ink">
+              {t("about")}
+            </h2>
+            <p className="max-w-[65ch] text-[17px] leading-relaxed text-ink-2">
+              {listing.summary}
+            </p>
+          </section>
+
+          <section className="flex flex-col gap-3">
+            <h2 className="text-xs font-bold uppercase tracking-[0.1em] text-ink-3">
+              {tAmenities("label")}
+            </h2>
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {listing.amenities.map((amenity) => (
+                <li
+                  key={amenity}
+                  className="flex items-center gap-2.5 text-[15px] text-ink-2"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="size-1.5 flex-none rounded-full bg-brand"
+                  />
+                  {tAmenities(amenity)}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <VerificationRecordPanel
+            record={listing.verification}
+            escrowApplies={escrowApplies}
+          />
+
+          {canLease && (
+            <section className="flex flex-col gap-2.5 rounded-card border border-line bg-surface p-6">
+              <h2 className="font-display text-xl font-semibold text-ink">
+                {t("leaseAvailable")}
+              </h2>
+              <p className="max-w-[62ch] text-sm leading-relaxed text-ink-2">
+                {t("leaseBody")}
+              </p>
+              <p className="flex items-baseline gap-1.5 pt-1">
+                <span className="text-sm text-ink-3">{t("monthlyFrom")}</span>
+                <MoneyText
+                  amount={listing.monthlyRate!}
+                  className="text-lg font-bold text-ink"
+                />
+                <span className="text-sm text-ink-3">
+                  {tListing("perMonth")}
+                </span>
+              </p>
+            </section>
+          )}
+        </div>
+
+        {/* Transaction density inside a discovery page. Intentional. */}
+        <aside className="lg:sticky lg:top-20">
+          <BookingPanel
+            listing={listing}
+            defaultFrom={defaultFrom}
+            defaultTo={defaultTo}
+          />
+        </aside>
+      </div>
+    </div>
+  );
 }

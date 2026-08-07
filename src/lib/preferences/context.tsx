@@ -46,6 +46,10 @@ type PreferencesValue = {
   rail: SegmentDefaults["rail"];
   tripPromptsOn: boolean;
 
+  /** Display-only rates. Callers needing multi-line conversion use these
+   *  through `toDisplayQuote`, so line items always sum to their total. */
+  fx: FxTable;
+
   /** Convert into the display currency and format for the active locale. */
   display: (m: Money) => string;
   /** Convert without formatting, when the caller needs the raw Money. */
@@ -160,6 +164,7 @@ export function PreferencesProvider({
       setTheme,
       rail: SEGMENT_DEFAULTS[segment].rail,
       tripPromptsOn: SEGMENT_DEFAULTS[segment].tripPromptsOn,
+      fx,
       toDisplayCurrency,
       display: (m: Money) => formatMoney(toDisplayCurrency(m), intlLocale),
     };

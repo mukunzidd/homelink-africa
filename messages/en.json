@@ -153,5 +153,81 @@
     "noResultsBody": "We only list what we have inspected, so results are narrower than you may expect. Try widening the dates or clearing a filter.",
     "comingSoon": "Not built yet",
     "comingSoonBody": "This screen is part of the shell but has no content behind it yet."
+  },
+  "amenities": {
+    "label": "What's here",
+    "backupPower": "Backup power",
+    "fibre": "Fibre internet",
+    "furnished": "Furnished",
+    "parking": "Parking",
+    "water": "Water tank",
+    "security": "Security on site",
+    "garden": "Garden",
+    "workspace": "Desk and workspace"
+  },
+  "detail": {
+    "about": "About this place",
+    "backToStays": "All stays",
+    "checkAvailability": "Check availability",
+    "unavailable": "Choose dates to see the total",
+    "nightlyFrom": "From",
+    "monthlyFrom": "Long-term from",
+    "leaseAvailable": "Available as a long-term lease",
+    "leaseBody": "Twelve months or more is handled as a lease application rather than a nightly booking: documents, a deposit, and a signed agreement.",
+    "applyForLease": "Apply for a lease"
+  },
+  "quote": {
+    "accommodation": "{rate} × {nights, plural, one {# night} other {# nights}}",
+    "cleaning": "Cleaning",
+    "serviceFee": "Service fee",
+    "total": "Total",
+    "totalIn": "Total ({currency})",
+    "chargedIn": "Charged in {currency}. Converted at today's rate; the amount you are charged is confirmed before you pay.",
+    "noHiddenFees": "No booking fee is added at the end. This is the price."
+  },
+  "checkout": {
+    "title": "Confirm and pay",
+    "step": "Step {current} of {total}",
+    "steps": {
+      "dates": "Dates",
+      "guests": "Guests",
+      "review": "Review",
+      "pay": "Pay"
+    },
+    "yourStay": "Your stay",
+    "changeDates": "Change",
+    "guestsLabel": "Who is coming",
+    "guestsHelp": "This place sleeps {max}.",
+    "payWith": "How you'd like to pay",
+    "card": "Card",
+    "cardHint": "Visa, Mastercard, Amex",
+    "mobileMoney": "Mobile Money",
+    "mobileMoneyHint": "MTN MoMo or Airtel Money",
+    "mobileNumber": "Mobile Money number",
+    "mobileNumberError": "Rwandan mobile numbers have 9 digits. Check the number and try again.",
+    "cardNumber": "Card number",
+    "cardHolder": "Name on card",
+    "payNow": "Pay {amount}",
+    "processing": "Taking payment…",
+    "stubNotice": "Nothing is charged. Payment rails arrive in Phase 2 — this button records the booking against fixture data.",
+    "escrowTitle": "Your money is held until you arrive",
+    "escrowBody": "We hold the full amount and release it to the host only after you confirm check-in. If the place is not as described, you are refunded in full and we find you another home the same night.",
+    "noEscrowBody": "This stay is below our escrow threshold, so payment settles directly. The same guarantee on accuracy still applies.",
+    "cancellation": "Free cancellation until {date}. After that the first night is non-refundable.",
+    "agree": "By paying you accept the booking terms and the cancellation policy above."
+  },
+  "confirmation": {
+    "title": "You're booked",
+    "body": "We've sent the details to your email and opened a thread with the concierge team.",
+    "reference": "Booking reference",
+    "referenceHint": "Quote this if you call or message us.",
+    "whatNext": "What happens next",
+    "next1": "Aline from our Kigali team will message you within a few hours to confirm arrival details.",
+    "next2": "Your money stays in escrow until you confirm check-in.",
+    "next3": "Add a car or a day out any time before you arrive — it joins the same trip.",
+    "openMessages": "Open the thread",
+    "addCar": "Add a car",
+    "addExperience": "Add something to do",
+    "viewBooking": "View booking"
   }
 }
