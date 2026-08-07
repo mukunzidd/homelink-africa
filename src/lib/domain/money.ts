@@ -102,6 +102,16 @@ export function formatMoney(
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: m.currency,
+    /**
+     * RWF prints as the ISO code, not as a symbol.
+     *
+     * CLDR's symbol for the Rwandan franc is "RF", which is not what anyone in
+     * Kigali writes — invoices, banks and the revenue authority all use "RWF"
+     * or "Frw", and so do HomeLink's own product documents. The other three
+     * currencies keep their narrow symbols, because $, € and £ are read
+     * instantly and a code would only add noise.
+     */
+    currencyDisplay: m.currency === "RWF" ? "code" : "narrowSymbol",
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   }).format(toMajor(m));

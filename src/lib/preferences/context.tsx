@@ -78,12 +78,14 @@ function readPersisted(): Persisted {
 
 export function PreferencesProvider({
   children,
-  intlLocale,
+  numberLocale,
   fx,
   initialSegment,
 }: {
   children: React.ReactNode;
-  intlLocale: string;
+  /** Number-formatting tag, which is not always the text tag — see
+   *  NUMBER_LOCALES for why Kinyarwanda groups money the English way. */
+  numberLocale: string;
   fx: FxTable;
   initialSegment: Segment;
 }) {
@@ -166,9 +168,9 @@ export function PreferencesProvider({
       tripPromptsOn: SEGMENT_DEFAULTS[segment].tripPromptsOn,
       fx,
       toDisplayCurrency,
-      display: (m: Money) => formatMoney(toDisplayCurrency(m), intlLocale),
+      display: (m: Money) => formatMoney(toDisplayCurrency(m), numberLocale),
     };
-  }, [segment, currency, role, theme, fx, intlLocale, setSegment, setCurrency, setRole, setTheme]);
+  }, [segment, currency, role, theme, fx, numberLocale, setSegment, setCurrency, setRole, setTheme]);
 
   return (
     <PreferencesContext.Provider value={value}>

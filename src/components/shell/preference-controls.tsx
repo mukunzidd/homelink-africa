@@ -6,9 +6,9 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { LOCALE_LABELS, routing, type Locale } from "@/i18n/routing";
 import { CURRENCIES, type CurrencyCode } from "@/lib/domain/money";
 import { usePreferences, type ThemeChoice } from "@/lib/preferences/context";
+import { Select } from "@/components/ui/select";
 import {
   BanknoteIcon,
-  ChevronDownIcon,
   GlobeIcon,
   MonitorIcon,
   MoonIcon,
@@ -29,68 +29,6 @@ import { cn } from "@/lib/cn";
  * weight without hiding anything.
  */
 
-/**
- * A borderless select that inherits the group's chrome.
- *
- * The native control stays underneath — it is fully keyboard accessible and
- * gets the platform's own picker on mobile, which is better than anything
- * hand-rolled. The visible row is the icon, the value, and the caret; the
- * select sits transparently on top of it.
- */
-function SelectControl<T extends string>({
-  label,
-  value,
-  options,
-  onChange,
-  icon,
-  display,
-  disabled,
-  className,
-}: {
-  label: string;
-  value: T;
-  options: readonly T[];
-  onChange: (next: T) => void;
-  icon: React.ReactNode;
-  display: (value: T) => string;
-  disabled?: boolean;
-  className?: string;
-}) {
-  return (
-    <div
-      className={cn(
-        "relative flex items-center gap-1.5 px-3 text-ink-2",
-        "transition-colors duration-150 hover:bg-surface-2 hover:text-ink",
-        "focus-within:outline focus-within:outline-2 focus-within:outline-brand focus-within:-outline-offset-2",
-        disabled && "opacity-60",
-        className,
-      )}
-    >
-      {icon}
-      {/* Presentational: the select underneath already announces its value,
-          so leaving this readable would have it read out twice. */}
-      <span aria-hidden="true" className="text-[13px] font-semibold">
-        {display(value)}
-      </span>
-      <ChevronDownIcon className="text-ink-3" />
-
-      <select
-        aria-label={label}
-        value={value}
-        disabled={disabled}
-        onChange={(e) => onChange(e.target.value as T)}
-        className="absolute inset-0 cursor-pointer opacity-0 focus-visible:outline-none"
-      >
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {display(option)}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
 /** Language is the URL, so switching it is a navigation, not a state change. */
 function LocaleControl() {
   const t = useTranslations("header");
@@ -100,22 +38,27 @@ function LocaleControl() {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <SelectControl
+    /* The trigger shows the uppercase tag because "Kinyarwanda" is 11
+       characters and would set the width of the whole group. The open list
+       shows full endonyms, where there is room for them. */
+    <Select
       label={t("language")}
+      hideLabel
+      size="sm"
       value={locale}
-      options={routing.locales}
       disabled={isPending}
+      icon={<GlobeIcon size={15} />}
+      options={routing.locales.map((l) => ({
+        value: l,
+        label: l.toUpperCase(),
+        hint: LOCALE_LABELS[l],
+      }))}
       onChange={(next) =>
         startTransition(() => {
-          router.replace(pathname, { locale: next });
+          router.replace(pathname, { locale: next as Locale });
         })
       }
-      icon={<GlobeIcon />}
-      /* Uppercase tag, not the full endonym: "Kinyarwanda" is 11 characters
-         and would set the width of the whole group. Full names stay in the
-         open menu, where there is room for them. */
-      display={(l) => l.toUpperCase()}
-      className="hidden h-9 sm:flex"
+      className="hidden w-[104px] sm:block"
     />
   );
 }
@@ -126,14 +69,15 @@ function CurrencyControl() {
   const { currency, setCurrency } = usePreferences();
 
   return (
-    <SelectControl
+    <Select
       label={t("currency")}
+      hideLabel
+      size="sm"
       value={currency}
-      options={CURRENCIES}
-      onChange={(next: CurrencyCode) => setCurrency(next)}
-      icon={<BanknoteIcon />}
-      display={(c) => c}
-      className="hidden h-9 sm:flex"
+      icon={<BanknoteIcon size={15} />}
+      options={CURRENCIES.map((c) => ({ value: c, label: c }))}
+      onChange={(next) => setCurrency(next as CurrencyCode)}
+      className="hidden w-[104px] sm:block"
     />
   );
 }
@@ -171,8 +115,8 @@ function ThemeControl() {
         setTheme(THEME_ORDER[(THEME_ORDER.indexOf(theme) + 1) % THEME_ORDER.length])
       }
       className={cn(
-        "grid h-9 w-10 cursor-pointer place-items-center text-ink-2",
-        "transition-colors duration-150 hover:bg-surface-2 hover:text-ink",
+        "grid h-9 w-9 cursor-pointer place-items-center rounded-ctl border border-line bg-surface",
+        "text-ink-2 transition-colors duration-150 hover:bg-surface-2 hover:text-ink",
       )}
     >
       {icons[theme]}
@@ -202,7 +146,7 @@ function SegmentControl() {
     <div
       role="group"
       aria-label={t("label")}
-      className="flex h-9 items-center p-0.5"
+      className="flex h-9 items-center rounded-ctl border border-line bg-surface p-0.5"
     >
       {options.map((option) => {
         const active = segment === option.value;
@@ -232,7 +176,9 @@ function SegmentControl() {
 
 export function PreferenceControls() {
   return (
-    <div className="flex items-center divide-x divide-line overflow-hidden rounded-ctl border border-line bg-surface">
+    /* The controls carry their own borders now that two of them open
+       popovers — a shared outer frame would clip the menus. */
+    <div className="flex items-center gap-1.5">
       <SegmentControl />
       <LocaleControl />
       <CurrencyControl />

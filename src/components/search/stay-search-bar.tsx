@@ -103,7 +103,8 @@ export function StaySearchBar({
         label={t("guests")}
         value={party}
         onChange={(next) => setParty(Number(next))}
-        icon={<UsersIcon size={15} />}
+        icon={<UsersIcon size={13} />}
+        variant="field"
         options={Array.from({ length: maxParty }, (_, i) => i + 1).map((n) => ({
           value: n,
           label: t("guestCount", { count: n }),

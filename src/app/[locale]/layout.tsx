@@ -4,7 +4,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Fraunces, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 
-import { INTL_LOCALES, routing, type Locale } from "@/i18n/routing";
+import { NUMBER_LOCALES, routing, type Locale } from "@/i18n/routing";
 import { repos } from "@/lib/repos";
 import { PreferencesProvider } from "@/lib/preferences/context";
 import { SiteHeader } from "@/components/shell/site-header";
@@ -90,7 +90,7 @@ export default async function LocaleLayout({
       <body className="min-h-full flex flex-col bg-canvas text-ink">
         <NextIntlClientProvider>
           <PreferencesProvider
-            intlLocale={INTL_LOCALES[locale as Locale]}
+            numberLocale={NUMBER_LOCALES[locale as Locale]}
             fx={fx}
             initialSegment={initialSegment}
           >
