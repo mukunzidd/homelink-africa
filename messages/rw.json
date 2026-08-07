@@ -71,6 +71,47 @@
     "dropOff": "Aho basubiza",
     "when": "Ryari"
   },
+  "calendar": {
+    "addDate": "Ongeraho itariki",
+    "previousMonth": "Ukwezi gushize",
+    "nextMonth": "Ukwezi gutaha",
+    "pickArrival": "Hitamo itariki uzagera",
+    "pickDeparture": "Hitamo itariki uzagenda",
+    "nightsSelected": "{count, plural, one {ijoro #} other {amajoro #}}",
+    "clear": "Siba",
+    "done": "Byarangiye"
+  },
+  "results": {
+    "countWithDates": "{count, plural, one {ahantu #} other {ahantu #}} kuri {range}",
+    "countNoDates": "{count, plural, one {ahantu # hagenzuwe} other {ahantu # hagenzuwe}} i Kigali",
+    "addDatesPrompt": "Ongeraho amatariki kugira ngo urebe igiteranyo n'ibiboneka koko",
+    "addDatesAction": "Ongeraho amatariki",
+    "sortLabel": "Shungura",
+    "sort": {
+      "recommended": "Ibyifuzwa",
+      "priceAsc": "Igiciro gito mbere",
+      "priceDesc": "Igiciro kinini mbere",
+      "newest": "Byagenzuwe vuba",
+      "size": "Ibyumba byinshi"
+    },
+    "neighbourhood": "Agace",
+    "anyNeighbourhood": "Ahantu hose i Kigali",
+    "bedrooms": "Ibyumba byo kuraramo",
+    "anyBedrooms": "Uko byagenda kose",
+    "bedroomsPlus": "{count}+",
+    "totalFor": "igiteranyo cy'{count, plural, one {ijoro #} other {amajoro #}}",
+    "filtersHeading": "Gabanya ibisubizo",
+    "activeFilters": "{count, plural, one {akayunguruzo #} other {utuyunguruzo #}} dukora"
+  },
+  "gallery": {
+    "label": "Amafoto",
+    "openGallery": "Reba amafoto yose",
+    "close": "Funga",
+    "previous": "Ifoto ibanza",
+    "next": "Ifoto ikurikira",
+    "counter": "{current} kuri {total}",
+    "placeholderNote": "Amafoto afatirwa buri cumbi kandi ntaraboneka muri iyi verisiyo. Utu tuboneka ni agateganyo."
+  },
   "listing": {
     "perNight": "ku ijoro",
     "perMonth": "ku kwezi",
@@ -99,6 +140,18 @@
       "identityBody": "Impapuro z'ubutaka cyangwa uburenganzira bwo gukodesha byagenzuwe hifashishijwe indangamuntu. Bikorwa mbere y'uko amafaranga yishyurwa.",
       "escrow": "Amafaranga yawe arabitswe",
       "escrowBody": "Amafaranga abikwa kugeza wemeje ko wageze. Nibitaba nk'uko byasobanuwe, usubizwa amafaranga yose kandi tugushakira ubundi bucumbi kuri uwo mugoroba."
+    },
+    "kinds": {
+      "car": {
+        "inspectedBody": "Yasukuwe, yageragezwe mu muhanda, kandi igenzurwa hakurikijwe urutonde rw'ingingo 22: amapine, feri, ipine ry'inyongera, ikoresho ryo kuzamura, n'impapuro.",
+        "identityBody": "Ubwo nyir'imodoka n'ubwishingizi byagenzuwe hifashishijwe icyangombwa cy'imodoka mbere yo gukodeshwa.",
+        "photographedBody": "Yafashwe amafoto n'itsinda rya HomeLink, iyi modoka nyirizina — si ifoto y'ubucuruzi y'ubwoko bwayo."
+      },
+      "experience": {
+        "inspectedBody": "Yakozwe yose n'umukozi wacu mbere yo gushyirwaho, hakurikijwe igenzura ry'ingingo 18: umutekano, igihe, n'ibirimo koko.",
+        "identityBody": "Uruhushya rw'umuyobozi n'icyemezo cya pariki byagenzuwe, kandi bivugururwa buri gihembwe.",
+        "photographedBody": "Yafashwe amafoto ku rugendo nyarwo n'itsinda rya HomeLink."
+      }
     }
   },
   "trust": {
@@ -229,5 +282,64 @@
     "addCar": "Ongeraho imodoka",
     "addExperience": "Ongeraho icyo gukora",
     "viewBooking": "Reba ibyafashwe"
+  },
+  "quoteLines": {
+    "hire": "{rate} × {days, plural, one {umunsi #} other {iminsi #}}",
+    "driver": "Umushoferi",
+    "seats": "{rate} × {count, plural, one {umuntu #} other {abantu #}}"
+  },
+  "cars": {
+    "title": "Imodoka",
+    "subtitle": "{count, plural, one {imodoka # yagenzuwe} other {imodoka # zagenzuwe}} i Kigali, zisukurwa kandi zigenzurwa mbere ya buri gukodesha.",
+    "seats": "{count, plural, one {intebe #} other {intebe #}}",
+    "perDay": "ku munsi",
+    "transmission": {
+      "manual": "Iy'amaboko",
+      "automatic": "Iyikora yonyine"
+    },
+    "class": {
+      "compact": "Ntoya",
+      "saloon": "Iy'umujyi",
+      "suv": "SUV",
+      "minibus": "Minibisi"
+    },
+    "driveMode": "Uko uzayitwara",
+    "selfDrive": "Uyitwara ubwawe",
+    "withDriver": "Hamwe n'umushoferi",
+    "driverIncluded": "Umushoferi arimo",
+    "driverOnly": "Iyi modoka iza n'umushoferi.",
+    "pickUpLabel": "Aho uyitorera",
+    "dropOffLabel": "Aho uyisubiza",
+    "airportPickup": "Barashobora kuguhagurukira ku kibuga cy'indege",
+    "book": "Kodesha iyi modoka",
+    "about": "Ibyerekeye iyi modoka",
+    "backToCars": "Imodoka zose",
+    "daysTotal": "igiteranyo cy'{count, plural, one {umunsi #} other {iminsi #}}"
+  },
+  "experiences": {
+    "title": "Ingendo",
+    "subtitle": "{count, plural, one {urugendo #} other {ingendo #}} hamwe n'abayobozi tuzi amazina yabo.",
+    "perPerson": "kuri buri muntu",
+    "duration": "{count, plural, one {isaha #} other {amasaha #}}",
+    "minAge": "Kuva ku myaka {age}",
+    "groupMax": "Kugeza kuri {count}",
+    "guide": "Umuyobozi wawe",
+    "meetingPoint": "Aho muhurira",
+    "interestLabel": "Icyo ushaka",
+    "allInterests": "Byose",
+    "interest": {
+      "wildlife": "Inyamaswa",
+      "culture": "Umuco",
+      "city": "Umujyi",
+      "hiking": "Kuzamuka imisozi",
+      "lake": "Ikiyaga",
+      "food": "Ibiryo"
+    },
+    "book": "Fata uru rugendo",
+    "about": "Ibyerekeye uru rugendo",
+    "backToExperiences": "Ingendo zose",
+    "peopleLabel": "Abantu bangahe",
+    "whenLabel": "Umunsi uwuhe",
+    "ageNotice": "Imyaka ntarengwa kuri uru ni {age}."
   }
 }

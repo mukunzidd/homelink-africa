@@ -5,8 +5,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { repos } from "@/lib/repos";
 import { Link } from "@/i18n/navigation";
 import { addDays, today } from "@/lib/domain/dates";
+import { parseStaySearch, type RawParams } from "@/lib/search-params";
 import { quoteStay } from "@/lib/domain/pricing";
-import { SupplyImage } from "@/components/ui/supply-image";
+import { Gallery } from "@/components/ui/gallery";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { StatusPill } from "@/components/ui/status-pill";
 import { MoneyText } from "@/components/ui/money-text";
@@ -30,8 +31,10 @@ export async function generateMetadata({
 
 export default async function ListingDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; slug: string }>;
+  searchParams: Promise<RawParams>;
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
@@ -39,16 +42,19 @@ export default async function ListingDetailPage({
   const listing = await repos().stays.bySlug(slug);
   if (!listing) notFound();
 
+  const search = parseStaySearch(await searchParams);
+
   const t = await getTranslations("detail");
   const tListing = await getTranslations("listing");
   const tVerify = await getTranslations("verification");
   const tAmenities = await getTranslations("amenities");
   const tStatus = await getTranslations("status");
 
-  // Default the panel to a three-night stay a week out, so the price is
-  // concrete on arrival rather than asking for input before showing anything.
-  const defaultFrom = addDays(today(), 7);
-  const defaultTo = addDays(defaultFrom, 3);
+  // Dates the person already chose in search win. Otherwise default to three
+  // nights a week out, so the price is concrete on arrival rather than asking
+  // for input before showing anything at all.
+  const defaultFrom = search.from ?? addDays(today(), 7);
+  const defaultTo = search.to ?? addDays(defaultFrom, 3);
 
   // Whether escrow applies depends on the total, so it is decided from a
   // representative quote rather than from the nightly rate alone.
@@ -68,14 +74,7 @@ export default async function ListingDetailPage({
 
       {/* Discovery density: photography leads, the name is set in the serif. */}
       <header className="flex flex-col gap-4">
-        <SupplyImage
-          seed={listing.imageSeed}
-          className="h-64 rounded-card sm:h-80"
-        >
-          <span className="absolute left-4 top-4">
-            <VerifiedBadge label={tVerify("badge")} />
-          </span>
-        </SupplyImage>
+        <Gallery seed={listing.imageSeed} verifiedLabel={tVerify("badge")} />
 
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="flex flex-col gap-2">
@@ -163,6 +162,7 @@ export default async function ListingDetailPage({
             listing={listing}
             defaultFrom={defaultFrom}
             defaultTo={defaultTo}
+            defaultParty={search.party}
           />
         </aside>
       </div>

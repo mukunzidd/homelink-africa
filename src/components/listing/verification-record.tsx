@@ -13,35 +13,49 @@ import { formatDate } from "@/lib/domain/dates";
  *
  * No brand colour appears in here. Marketing colour on a guarantee reads as
  * marketing, which is exactly what would undermine it.
+ *
+ * The copy is kind-aware because the checks genuinely differ. A car is not
+ * inspected for water pressure, and telling someone it was would undo the
+ * specificity that makes the record worth reading.
  */
+export type VerificationKind = "stay" | "car" | "experience";
+
 export async function VerificationRecordPanel({
   record,
   escrowApplies,
+  kind = "stay",
 }: {
   record: Record;
   escrowApplies: boolean;
+  kind?: VerificationKind;
 }) {
   const t = await getTranslations("verification");
   const locale = (await getLocale()) as Locale;
   const inspectedOn = formatDate(record.inspectedAt, INTL_LOCALES[locale]);
 
+  /** Stay copy is the default; the other kinds override the parts that differ. */
+  function body(key: "inspectedBody" | "identityBody" | "photographedBody") {
+    if (kind === "stay") return t(`steps.${key}`);
+    return t(`kinds.${kind}.${key}`);
+  }
+
   const steps = [
     {
       key: "inspected",
       title: t("steps.inspected"),
-      body: t("steps.inspectedBody"),
+      body: body("inspectedBody"),
       show: true,
     },
     {
       key: "photographed",
       title: t("steps.photographed"),
-      body: t("steps.photographedBody"),
+      body: body("photographedBody"),
       show: record.photographedByHomeLink,
     },
     {
       key: "identity",
       title: t("steps.identity"),
-      body: t("steps.identityBody"),
+      body: body("identityBody"),
       show: record.ownerIdentityConfirmed,
     },
     {

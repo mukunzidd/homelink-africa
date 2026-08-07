@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePreferences } from "@/lib/preferences/context";
 import type { Role } from "@/lib/domain/types";
+import { Select } from "@/components/ui/select";
 import { cn } from "@/lib/cn";
 
 const ROLES: Role[] = [
@@ -45,20 +46,14 @@ export function DevBar() {
           {t("label")}
         </span>
 
-        <label className="contents">
-          <span className="sr-only">{t("role")}</span>
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value as Role)}
-            className="cursor-pointer rounded-full bg-brand-tint px-3 py-1 text-xs font-semibold text-brand"
-          >
-            {ROLES.map((r) => (
-              <option key={r} value={r}>
-                {tRoles(r)}
-              </option>
-            ))}
-          </select>
-        </label>
+        <Select
+          label={t("role")}
+          hideLabel
+          size="sm"
+          value={role}
+          onChange={(next) => setRole(next as Role)}
+          options={ROLES.map((r) => ({ value: r, label: tRoles(r) }))}
+        />
 
         <button
           type="button"

@@ -6,6 +6,8 @@ import { IntentDoors } from "@/components/landing/intent-doors";
 import { DurationSelector } from "@/components/landing/duration-selector";
 import { ListingCard } from "@/components/listing/listing-card";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
+import { StaySearchBar } from "@/components/search/stay-search-bar";
+import { parseStaySearch } from "@/lib/search-params";
 
 export default async function LandingPage({
   params,
@@ -19,9 +21,10 @@ export default async function LandingPage({
   const tTrust = await getTranslations("trust");
   const tVerify = await getTranslations("verification");
 
-  const [featured, allStays] = await Promise.all([
+  const [featured, allStays, neighbourhoods] = await Promise.all([
     repos().stays.featured(6),
     repos().stays.list(),
+    repos().stays.neighbourhoods(),
   ]);
 
   return (
@@ -46,7 +49,15 @@ export default async function LandingPage({
           <span>{tTrust("noSurprises")}</span>
         </div>
 
-        <div className="mt-2 rounded-card border border-line bg-surface p-6">
+        {/* The same control that sits above results, so what someone picks
+            here survives the jump instead of being asked for twice. */}
+        <StaySearchBar
+          search={parseStaySearch({})}
+          neighbourhoods={neighbourhoods}
+          variant="hero"
+        />
+
+        <div className="rounded-card border border-line bg-surface p-6">
           <DurationSelector />
         </div>
       </section>

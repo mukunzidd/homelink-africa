@@ -5,11 +5,13 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import type { Listing } from "@/lib/domain/types";
 import { quoteStay } from "@/lib/domain/pricing";
-import { addDays, isBefore, isIsoDate, type IsoDate } from "@/lib/domain/dates";
+import { addDays, isIsoDate, type IsoDate } from "@/lib/domain/dates";
 import { Button } from "@/components/ui/button";
 import { MoneyText } from "@/components/ui/money-text";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
+import { UsersIcon } from "@/components/ui/icons";
+import { Select } from "@/components/ui/select";
 import { QuoteBreakdown } from "./quote-breakdown";
-import { cn } from "@/lib/cn";
 
 /**
  * The booking panel on a listing page.
@@ -23,10 +25,12 @@ export function BookingPanel({
   listing,
   defaultFrom,
   defaultTo,
+  defaultParty = 2,
 }: {
   listing: Listing;
   defaultFrom: IsoDate;
   defaultTo: IsoDate;
+  defaultParty?: number;
 }) {
   const t = useTranslations("detail");
   const tListing = useTranslations("listing");
@@ -34,30 +38,20 @@ export function BookingPanel({
   const tQuote = useTranslations("quote");
   const router = useRouter();
 
-  const [from, setFrom] = useState<IsoDate>(defaultFrom);
-  const [to, setTo] = useState<IsoDate>(defaultTo);
-  const [party, setParty] = useState(2);
+  const [from, setFrom] = useState<IsoDate | null>(defaultFrom);
+  const [to, setTo] = useState<IsoDate | null>(defaultTo);
+  const [party, setParty] = useState(Math.min(defaultParty, listing.sleeps));
 
   const quote = useMemo(() => {
     if (!isIsoDate(from) || !isIsoDate(to)) return null;
     return quoteStay(listing, from, to);
   }, [listing, from, to]);
 
-  /** Check-out must follow check-in; nudge it rather than showing an error. */
-  function changeFrom(next: string) {
-    setFrom(next);
-    if (isIsoDate(next) && !isBefore(next, to)) setTo(addDays(next, 3));
-  }
-
   function reserve() {
+    if (!from || !to) return;
     const qs = new URLSearchParams({ from, to, party: String(party) });
     router.push(`/stays/${listing.slug}/book?${qs.toString()}`);
   }
-
-  const fieldClass = cn(
-    "w-full rounded-ctl border border-line bg-surface px-3 py-2.5 text-[15px] text-ink",
-    "min-h-11 focus-visible:border-brand",
-  );
 
   return (
     <div className="flex flex-col gap-4 rounded-card border border-line bg-surface p-5 shadow-[var(--shadow-card)]">
@@ -70,55 +64,35 @@ export function BookingPanel({
         <span className="text-sm text-ink-3">{tListing("perNight")}</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
-        <label className="flex flex-col gap-1.5">
-          <span className="text-[13px] font-semibold text-ink-2">
-            {tSearch("arriving")}
-          </span>
-          <input
-            type="date"
-            value={from}
-            onChange={(e) => changeFrom(e.target.value)}
-            className={fieldClass}
-          />
-        </label>
+      <DateRangePicker
+        from={from}
+        to={to}
+        onChange={(nextFrom, nextTo) => {
+          setFrom(nextFrom);
+          // A new arrival with no departure yet defaults to three nights, so
+          // the panel keeps showing a price instead of blanking out.
+          setTo(nextTo ?? (nextFrom ? addDays(nextFrom, 3) : null));
+        }}
+        labelFrom={tSearch("arriving")}
+        labelTo={tSearch("leaving")}
+      />
 
-        <label className="flex flex-col gap-1.5">
-          <span className="text-[13px] font-semibold text-ink-2">
-            {tSearch("leaving")}
-          </span>
-          <input
-            type="date"
-            value={to}
-            min={addDays(from, 1)}
-            onChange={(e) => setTo(e.target.value)}
-            className={fieldClass}
-          />
-        </label>
-      </div>
-
-      <label className="flex flex-col gap-1.5">
-        <span className="text-[13px] font-semibold text-ink-2">
-          {tSearch("guests")}
-        </span>
-        <select
-          value={party}
-          onChange={(e) => setParty(Number(e.target.value))}
-          className={cn(fieldClass, "cursor-pointer")}
-        >
-          {Array.from({ length: listing.sleeps }, (_, i) => i + 1).map((n) => (
-            <option key={n} value={n}>
-              {tSearch("guestCount", { count: n })}
-            </option>
-          ))}
-        </select>
-      </label>
+      <Select
+        label={tSearch("guests")}
+        value={party}
+        onChange={(next) => setParty(Number(next))}
+        icon={<UsersIcon size={15} />}
+        options={Array.from({ length: listing.sleeps }, (_, i) => i + 1).map(
+          (n) => ({ value: n, label: tSearch("guestCount", { count: n }) }),
+        )}
+      />
 
       {quote ? (
         <>
           <QuoteBreakdown
             quote={quote}
-            nightlyRate={listing.nightlyRate}
+            unitRate={listing.nightlyRate}
+            units={quote.nights}
             className="border-t border-line pt-4"
           />
           <Button onClick={reserve} fullWidth size="lg">

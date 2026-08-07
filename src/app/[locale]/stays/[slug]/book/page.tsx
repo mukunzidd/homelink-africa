@@ -73,11 +73,18 @@ export default async function BookPage({
 
       <div className="grid items-start gap-8 lg:grid-cols-[1fr_360px]">
         <CheckoutForm
-          listing={listing}
+          item={{
+            kind: "stay",
+            id: listing.id,
+            slug: listing.slug,
+            name: listing.name,
+            unitRate: listing.nightlyRate,
+          }}
           quote={quote}
-          from={from}
-          to={to}
-          party={party}
+          units={quote.nights}
+          detailHref={`/stays/${listing.slug}`}
+          confirmQuery={{ slug: listing.slug, from, to, party: String(party) }}
+          referenceSeed={`${listing.id}:${from}:${to}:${party}`}
           cancellationDate={cancellationDate}
         />
 

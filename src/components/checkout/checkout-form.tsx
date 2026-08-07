@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import type { Listing } from "@/lib/domain/types";
+import type { ServiceKind } from "@/lib/domain/types";
+import type { Money } from "@/lib/domain/money";
 import type { Quote } from "@/lib/domain/pricing";
 import { bookingReference, toDisplayQuote } from "@/lib/domain/pricing";
-import type { IsoDate } from "@/lib/domain/dates";
 import { usePreferences } from "@/lib/preferences/context";
 import { Button } from "@/components/ui/button";
 import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
@@ -15,28 +15,41 @@ import { cn } from "@/lib/cn";
 
 type Rail = "card" | "mobileMoney";
 
+/** What is being paid for, reduced to what the pay step actually needs. */
+export type CheckoutItem = {
+  kind: ServiceKind;
+  id: string;
+  slug: string;
+  name: string;
+  unitRate: Money;
+};
+
 /**
- * The pay step.
+ * The pay step, shared by stays, cars, and experiences.
  *
- * Nothing is charged — payment rails land in Phase 2. What is real here is the
- * shape: the rail defaults to the one the segment implies, the escrow promise
- * is stated at the moment money is asked for rather than on a page nobody
- * opens, and the button names the amount instead of saying "Submit".
+ * A checkout is the worst place to introduce variety: people have learned one
+ * shape and any deviation reads as a trick. So the three modules differ only
+ * in what they hand in — the rail choice, the escrow statement, the price
+ * breakdown, and the button that names the amount are identical.
+ *
+ * Nothing is charged; payment rails land in Phase 2.
  */
 export function CheckoutForm({
-  listing,
+  item,
   quote,
-  from,
-  to,
-  party,
+  units,
+  confirmQuery,
+  referenceSeed,
   cancellationDate,
 }: {
-  listing: Listing;
+  item: CheckoutItem;
   quote: Quote;
-  from: IsoDate;
-  to: IsoDate;
-  party: number;
-  cancellationDate: string;
+  units: number;
+  detailHref?: string;
+  /** Carried to the confirmation screen, which has no store to read from yet. */
+  confirmQuery: Record<string, string>;
+  referenceSeed: string;
+  cancellationDate?: string;
 }) {
   const t = useTranslations("checkout");
   const tQuote = useTranslations("quote");
@@ -47,6 +60,7 @@ export function CheckoutForm({
 
   // The button must name the same number the breakdown above it totals to.
   const shownTotal = toDisplayQuote(quote, currency, fx).total;
+
   const [rail, setRail] = useState<Rail>(defaultRail);
   const [momoNumber, setMomoNumber] = useState("");
   const [touched, setTouched] = useState(false);
@@ -61,14 +75,8 @@ export function CheckoutForm({
     if (momoInvalid) return;
 
     setSubmitting(true);
-    const reference = bookingReference(`${listing.id}:${from}:${to}:${party}`);
-    const qs = new URLSearchParams({
-      slug: listing.slug,
-      from,
-      to,
-      party: String(party),
-      escrow: quote.escrowHeld ? "1" : "0",
-    });
+    const reference = bookingReference(referenceSeed);
+    const qs = new URLSearchParams({ kind: item.kind, ...confirmQuery });
     router.push(`/bookings/${reference}?${qs.toString()}`);
   }
 
@@ -199,13 +207,16 @@ export function CheckoutForm({
       <section className="flex flex-col gap-4 rounded-card border border-line bg-surface p-5">
         <QuoteBreakdown
           quote={quote}
-          nightlyRate={listing.nightlyRate}
+          unitRate={item.unitRate}
+          units={units}
           showEscrow={false}
         />
 
-        <p className="text-xs leading-relaxed text-ink-3">
-          {t("cancellation", { date: cancellationDate })}
-        </p>
+        {cancellationDate && (
+          <p className="text-xs leading-relaxed text-ink-3">
+            {t("cancellation", { date: cancellationDate })}
+          </p>
+        )}
 
         <Button size="lg" fullWidth onClick={submit} disabled={submitting}>
           {submitting

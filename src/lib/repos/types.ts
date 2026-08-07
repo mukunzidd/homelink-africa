@@ -24,12 +24,22 @@ import type { CurrencyCode, FxTable } from "@/lib/domain/money";
  * async shape of the call sites is already correct when the network arrives.
  */
 
+export type StaySort =
+  | "recommended"
+  | "priceAsc"
+  | "priceDesc"
+  | "newest"
+  | "size";
+
 export type StayQuery = {
   neighbourhood?: string;
   minBedrooms?: number;
+  /** Party size. A place that cannot sleep everyone is not a result. */
+  minSleeps?: number;
   amenities?: string[];
   band?: DurationBand;
   verifiedOnly?: boolean;
+  sort?: StaySort;
   limit?: number;
 };
 
@@ -37,6 +47,8 @@ export interface StaysRepo {
   list(query?: StayQuery): Promise<Listing[]>;
   bySlug(slug: string): Promise<Listing | null>;
   featured(limit?: number): Promise<Listing[]>;
+  /** Distinct neighbourhoods with live inventory, for the search field. */
+  neighbourhoods(): Promise<string[]>;
 }
 
 export type VehicleQuery = {

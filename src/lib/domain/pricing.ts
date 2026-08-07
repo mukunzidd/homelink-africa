@@ -1,4 +1,4 @@
-import type { Listing } from "./types";
+import type { DriveMode, Experience, Listing, Vehicle } from "./types";
 import type { CurrencyCode, FxTable, Money } from "./money";
 import { add, convert, money, multiply } from "./money";
 import { nightsBetween, type IsoDate } from "./dates";
@@ -23,8 +23,16 @@ const SERVICE_FEE_RATE = 0.1076;
  */
 const ESCROW_THRESHOLD_RWF = 300_000;
 
+export type QuoteLineKey =
+  | "accommodation"
+  | "cleaning"
+  | "serviceFee"
+  | "hire"
+  | "driver"
+  | "seats";
+
 export type QuoteLine = {
-  key: "accommodation" | "cleaning" | "serviceFee";
+  key: QuoteLineKey;
   amount: Money;
 };
 
@@ -69,6 +77,81 @@ export function quoteStay(
     lines,
     total,
     escrowHeld: total.minor >= ESCROW_THRESHOLD_RWF,
+  };
+}
+
+/**
+ * Hire quote. Priced per day, so the pickup day counts — unlike a stay, where
+ * the check-out day is not a night.
+ */
+export function quoteVehicle(
+  vehicle: Vehicle,
+  from: IsoDate,
+  to: IsoDate,
+  driveMode: DriveMode,
+): Quote | null {
+  const days = nightsBetween(from, to) + 1;
+  if (days < 1) return null;
+
+  const currency = vehicle.dailyRate.currency;
+  const hire = multiply(vehicle.dailyRate, days);
+
+  const lines: QuoteLine[] = [{ key: "hire", amount: hire }];
+
+  if (driveMode === "withDriver" && vehicle.withDriverSupplement?.minor) {
+    lines.push({
+      key: "driver",
+      amount: multiply(vehicle.withDriverSupplement, days),
+    });
+  }
+
+  const subtotal = lines.reduce<Money>(
+    (acc, line) => add(acc, line.amount),
+    money(0, currency),
+  );
+  const serviceFee = money(
+    Math.round(subtotal.minor * SERVICE_FEE_RATE),
+    currency,
+  );
+  lines.push({ key: "serviceFee", amount: serviceFee });
+
+  const total = add(subtotal, serviceFee);
+
+  return {
+    nights: days,
+    lines,
+    total,
+    // A car is handed over in person and can be refused on the spot, so escrow
+    // is not the mechanism that protects it. Deposits are a Phase 2 concern.
+    escrowHeld: false,
+  };
+}
+
+/**
+ * Experience quote. Priced per person, on one date.
+ */
+export function quoteExperience(
+  experience: Experience,
+  party: number,
+): Quote | null {
+  if (party < 1) return null;
+
+  const currency = experience.pricePerPerson.currency;
+  const seats = multiply(experience.pricePerPerson, party);
+  const serviceFee = money(Math.round(seats.minor * SERVICE_FEE_RATE), currency);
+
+  const lines: QuoteLine[] = [
+    { key: "seats", amount: seats },
+    { key: "serviceFee", amount: serviceFee },
+  ];
+
+  return {
+    nights: 0,
+    lines,
+    total: add(seats, serviceFee),
+    // Permits and guides are paid forward before the day, so funds are not
+    // held. The refund policy carries the guarantee instead.
+    escrowHeld: false,
   };
 }
 

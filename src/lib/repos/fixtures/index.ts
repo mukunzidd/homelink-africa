@@ -32,12 +32,16 @@ const stays: StaysRepo = {
     let out = [...LISTINGS];
 
     if (query.neighbourhood) {
-      out = out.filter(
-        (l) => l.neighbourhood.toLowerCase() === query.neighbourhood!.toLowerCase(),
-      );
+      const needle = query.neighbourhood.trim().toLowerCase();
+      // Contains rather than equals: the field is a free-text combobox, so
+      // "kacy" and "Kacyiru " both have to find the same place.
+      out = out.filter((l) => l.neighbourhood.toLowerCase().includes(needle));
     }
     if (query.minBedrooms !== undefined) {
       out = out.filter((l) => l.bedrooms >= query.minBedrooms!);
+    }
+    if (query.minSleeps !== undefined) {
+      out = out.filter((l) => l.sleeps >= query.minSleeps!);
     }
     if (query.amenities?.length) {
       out = out.filter((l) =>
@@ -49,6 +53,28 @@ const stays: StaysRepo = {
     }
     // `verifiedOnly` is a no-op today: nothing unverified is ever listed.
     // The filter exists because Phase 3 opens a vetted-marketplace lane.
+
+    const byNewest = (a: (typeof out)[number], b: (typeof out)[number]) =>
+      b.verification.inspectedAt.localeCompare(a.verification.inspectedAt);
+
+    switch (query.sort) {
+      case "priceAsc":
+        out.sort((a, b) => a.nightlyRate.minor - b.nightlyRate.minor);
+        break;
+      case "priceDesc":
+        out.sort((a, b) => b.nightlyRate.minor - a.nightlyRate.minor);
+        break;
+      case "newest":
+        out.sort(byNewest);
+        break;
+      case "size":
+        out.sort((a, b) => b.bedrooms - a.bedrooms);
+        break;
+      default:
+        // "Recommended" is recency of verification until there is behaviour to
+        // rank on. Named honestly rather than dressed up as an algorithm.
+        out.sort(byNewest);
+    }
 
     return query.limit ? out.slice(0, query.limit) : out;
   },
@@ -63,6 +89,12 @@ const stays: StaysRepo = {
         b.verification.inspectedAt.localeCompare(a.verification.inspectedAt),
       )
       .slice(0, limit);
+  },
+
+  async neighbourhoods() {
+    return [...new Set(LISTINGS.map((l) => l.neighbourhood))].sort((a, b) =>
+      a.localeCompare(b),
+    );
   },
 };
 

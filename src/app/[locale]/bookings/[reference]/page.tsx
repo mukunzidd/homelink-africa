@@ -4,8 +4,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { repos } from "@/lib/repos";
 import { Link } from "@/i18n/navigation";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
-import { formatDateRange, isIsoDate } from "@/lib/domain/dates";
-import { quoteStay } from "@/lib/domain/pricing";
+import type { DriveMode, ServiceKind } from "@/lib/domain/types";
+import type { Money } from "@/lib/domain/money";
+import type { Quote } from "@/lib/domain/pricing";
+import { formatDate, formatDateRange, isIsoDate } from "@/lib/domain/dates";
+import { quoteExperience, quoteStay, quoteVehicle } from "@/lib/domain/pricing";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { StatusPill } from "@/components/ui/status-pill";
@@ -14,50 +17,117 @@ import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
 import { Button } from "@/components/ui/button";
 
 /**
- * Confirmation.
+ * Confirmation, for all three modules.
  *
- * Booking details ride in the URL because nothing is persisted yet — Phase 2
- * gives this a real `booking` row and the page reads it by reference instead.
- * The reference itself is deterministic, so a reload shows the same code.
+ * Details ride in the URL because nothing is persisted yet — Phase 2 gives
+ * this a real `booking` row and the page reads it by reference instead. The
+ * reference is deterministic, so a reload shows the same code.
  */
+type Resolved = {
+  title: string;
+  subtitle: string;
+  imageSeed: string;
+  quote: Quote;
+  unitRate: Money;
+  units: number;
+  when: string;
+  party: number;
+};
+
 export default async function BookingConfirmationPage({
   params,
   searchParams,
 }: {
   params: Promise<{ locale: string; reference: string }>;
-  searchParams: Promise<{
-    slug?: string;
-    from?: string;
-    to?: string;
-    party?: string;
-  }>;
+  searchParams: Promise<Record<string, string | undefined>>;
 }) {
   const { locale, reference } = await params;
   setRequestLocale(locale);
 
   const sp = await searchParams;
-  if (!sp.slug || !isIsoDate(sp.from) || !isIsoDate(sp.to)) notFound();
+  if (!sp.slug) notFound();
 
-  const listing = await repos().stays.bySlug(sp.slug);
-  if (!listing) notFound();
+  const intlLocale = INTL_LOCALES[locale as Locale];
+  const kind = (sp.kind ?? "stay") as ServiceKind;
+  const party = Number(sp.party) || 2;
 
-  const quote = quoteStay(listing, sp.from, sp.to);
-  if (!quote) notFound();
+  const resolved = await resolve();
+  if (!resolved) notFound();
+
+  async function resolve(): Promise<Resolved | null> {
+    if (kind === "car") {
+      const vehicle = await repos().mobility.bySlug(sp.slug!);
+      if (!vehicle || !isIsoDate(sp.from) || !isIsoDate(sp.to)) return null;
+      const driveMode = (sp.driveMode ?? "selfDrive") as DriveMode;
+      const quote = quoteVehicle(vehicle, sp.from, sp.to, driveMode);
+      if (!quote) return null;
+      return {
+        title: vehicle.name,
+        subtitle: vehicle.summary,
+        imageSeed: vehicle.imageSeed,
+        quote,
+        unitRate: vehicle.dailyRate,
+        units: quote.nights,
+        when: formatDateRange(sp.from, sp.to, intlLocale),
+        party,
+      };
+    }
+
+    if (kind === "experience") {
+      const experience = await repos().experiences.bySlug(sp.slug!);
+      if (!experience || !isIsoDate(sp.date)) return null;
+      const quote = quoteExperience(experience, party);
+      if (!quote) return null;
+      return {
+        title: experience.name,
+        subtitle: experience.meetingPoint,
+        imageSeed: experience.imageSeed,
+        quote,
+        unitRate: experience.pricePerPerson,
+        units: party,
+        when: formatDate(sp.date, intlLocale),
+        party,
+      };
+    }
+
+    const listing = await repos().stays.bySlug(sp.slug!);
+    if (!listing || !isIsoDate(sp.from) || !isIsoDate(sp.to)) return null;
+    const quote = quoteStay(listing, sp.from, sp.to);
+    if (!quote) return null;
+    return {
+      title: listing.name,
+      subtitle: `${listing.neighbourhood} · ${listing.city}`,
+      imageSeed: listing.imageSeed,
+      quote,
+      unitRate: listing.nightlyRate,
+      units: quote.nights,
+      when: formatDateRange(sp.from, sp.to, intlLocale),
+      party,
+    };
+  }
 
   const t = await getTranslations("confirmation");
   const tStatus = await getTranslations("status");
   const tVerify = await getTranslations("verification");
   const tSearch = await getTranslations("search");
 
-  const intlLocale = INTL_LOCALES[locale as Locale];
-  const stayRange = formatDateRange(sp.from, sp.to, intlLocale);
-  const party = Number(sp.party) || 2;
-
   const nextSteps = [
     t("next1"),
-    ...(quote.escrowHeld ? [t("next2")] : []),
+    ...(resolved.quote.escrowHeld ? [t("next2")] : []),
     t("next3"),
   ];
+
+  // Add-ons offered are the ones not already booked — suggesting a car to
+  // someone who just booked a car is noise, and Principle 3 says the bundle
+  // pulls toward a richer trip without ever getting in the way.
+  const addOns = [
+    { href: "/cars", label: t("addCar"), show: kind !== "car" },
+    {
+      href: "/experiences",
+      label: t("addExperience"),
+      show: kind !== "experience",
+    },
+  ].filter((a) => a.show);
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-8 px-6 py-8">
@@ -110,12 +180,11 @@ export default async function BookingConfirmationPage({
 
           {/* The bundle is gravity, never a gate — so these are secondary. */}
           <div className="flex flex-wrap gap-2.5">
-            <Link href="/cars">
-              <Button variant="secondary">{t("addCar")}</Button>
-            </Link>
-            <Link href="/experiences">
-              <Button variant="secondary">{t("addExperience")}</Button>
-            </Link>
+            {addOns.map((addOn) => (
+              <Link key={addOn.href} href={addOn.href}>
+                <Button variant="secondary">{addOn.label}</Button>
+              </Link>
+            ))}
             <Link href="/messages">
               <Button variant="quiet">{t("openMessages")}</Button>
             </Link>
@@ -123,14 +192,14 @@ export default async function BookingConfirmationPage({
         </div>
 
         <aside className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5">
-          <SupplyImage seed={listing.imageSeed} className="h-28 rounded-[6px]" />
+          <SupplyImage seed={resolved.imageSeed} className="h-28 rounded-[6px]" />
 
           <div className="flex flex-col gap-1">
             <h2 className="text-[15px] font-semibold leading-snug text-ink">
-              {listing.name}
+              {resolved.title}
             </h2>
-            <p className="text-[13px] text-ink-3">
-              {listing.neighbourhood} · {listing.city}
+            <p className="line-clamp-2 text-[13px] text-ink-3">
+              {resolved.subtitle}
             </p>
           </div>
 
@@ -139,19 +208,20 @@ export default async function BookingConfirmationPage({
           <dl className="flex flex-col gap-1.5 border-t border-line pt-3 text-[13px]">
             <div className="flex justify-between gap-3">
               <dt className="text-ink-3">{tSearch("when")}</dt>
-              <dd className="tnum text-right text-ink">{stayRange}</dd>
+              <dd className="tnum text-right text-ink">{resolved.when}</dd>
             </div>
             <div className="flex justify-between gap-3">
               <dt className="text-ink-3">{tSearch("guests")}</dt>
               <dd className="text-right text-ink">
-                {tSearch("guestCount", { count: party })}
+                {tSearch("guestCount", { count: resolved.party })}
               </dd>
             </div>
           </dl>
 
           <QuoteBreakdown
-            quote={quote}
-            nightlyRate={listing.nightlyRate}
+            quote={resolved.quote}
+            unitRate={resolved.unitRate}
+            units={resolved.units}
             className="border-t border-line pt-3"
           />
         </aside>

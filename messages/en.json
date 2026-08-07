@@ -71,6 +71,47 @@
     "dropOff": "Drop-off",
     "when": "When"
   },
+  "calendar": {
+    "addDate": "Add date",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "pickArrival": "Pick your arrival date",
+    "pickDeparture": "Pick your departure date",
+    "nightsSelected": "{count, plural, one {# night} other {# nights}}",
+    "clear": "Clear",
+    "done": "Done"
+  },
+  "results": {
+    "countWithDates": "{count, plural, one {# place} other {# places}} for {range}",
+    "countNoDates": "{count, plural, one {# verified place} other {# verified places}} in Kigali",
+    "addDatesPrompt": "Add dates to see totals and what's actually free",
+    "addDatesAction": "Add dates",
+    "sortLabel": "Sort",
+    "sort": {
+      "recommended": "Recommended",
+      "priceAsc": "Price, lowest first",
+      "priceDesc": "Price, highest first",
+      "newest": "Recently verified",
+      "size": "Most bedrooms"
+    },
+    "neighbourhood": "Neighbourhood",
+    "anyNeighbourhood": "Anywhere in Kigali",
+    "bedrooms": "Bedrooms",
+    "anyBedrooms": "Any",
+    "bedroomsPlus": "{count}+",
+    "totalFor": "total for {count, plural, one {# night} other {# nights}}",
+    "filtersHeading": "Narrow it down",
+    "activeFilters": "{count, plural, one {# filter} other {# filters}} on"
+  },
+  "gallery": {
+    "label": "Photos",
+    "openGallery": "See all photos",
+    "close": "Close",
+    "previous": "Previous photo",
+    "next": "Next photo",
+    "counter": "{current} of {total}",
+    "placeholderNote": "Photography is commissioned per listing and is not in the shell yet. These panels stand in for the real set."
+  },
   "listing": {
     "perNight": "per night",
     "perMonth": "per month",
@@ -99,6 +140,18 @@
       "identityBody": "Title or lease authority verified against national ID. Identity checks complete before any payout is possible.",
       "escrow": "Your money is held",
       "escrowBody": "Payment sits in escrow until you confirm check-in. Not as described means a full refund and another home the same night."
+    },
+    "kinds": {
+      "car": {
+        "inspectedBody": "Serviced, road-tested, and checked against a 22-point list covering tyres, brakes, spare, jack, and papers.",
+        "identityBody": "Operator ownership and insurance verified against the vehicle registration before it can be hired.",
+        "photographedBody": "Photographed by the HomeLink team, this exact vehicle — not a manufacturer stock shot of the model."
+      },
+      "experience": {
+        "inspectedBody": "Run in full by a member of our team before it was listed, on an 18-point check covering safety, timing, and what is actually included.",
+        "identityBody": "Guide licensing and park accreditation verified, and renewed each season.",
+        "photographedBody": "Photographed on a real departure by the HomeLink team."
+      }
     }
   },
   "trust": {
@@ -229,5 +282,64 @@
     "addCar": "Add a car",
     "addExperience": "Add something to do",
     "viewBooking": "View booking"
+  },
+  "quoteLines": {
+    "hire": "{rate} × {days, plural, one {# day} other {# days}}",
+    "driver": "Driver",
+    "seats": "{rate} × {count, plural, one {# person} other {# people}}"
+  },
+  "cars": {
+    "title": "Cars",
+    "subtitle": "{count, plural, one {# vetted vehicle} other {# vetted vehicles}} in Kigali, serviced and checked before every hire.",
+    "seats": "{count, plural, one {# seat} other {# seats}}",
+    "perDay": "per day",
+    "transmission": {
+      "manual": "Manual",
+      "automatic": "Automatic"
+    },
+    "class": {
+      "compact": "Compact",
+      "saloon": "Saloon",
+      "suv": "SUV",
+      "minibus": "Minibus"
+    },
+    "driveMode": "How you'll drive",
+    "selfDrive": "Self-drive",
+    "withDriver": "With a driver",
+    "driverIncluded": "Driver included",
+    "driverOnly": "This vehicle comes with a driver.",
+    "pickUpLabel": "Pick-up",
+    "dropOffLabel": "Drop-off",
+    "airportPickup": "Airport pick-up available",
+    "book": "Hire this car",
+    "about": "About this car",
+    "backToCars": "All cars",
+    "daysTotal": "total for {count, plural, one {# day} other {# days}}"
+  },
+  "experiences": {
+    "title": "Experiences",
+    "subtitle": "{count, plural, one {# day out} other {# days out}} with guides we know by name.",
+    "perPerson": "per person",
+    "duration": "{count, plural, one {# hour} other {# hours}}",
+    "minAge": "Ages {age}+",
+    "groupMax": "Up to {count}",
+    "guide": "Your guide",
+    "meetingPoint": "Where you meet",
+    "interestLabel": "What you're after",
+    "allInterests": "Everything",
+    "interest": {
+      "wildlife": "Wildlife",
+      "culture": "Culture",
+      "city": "City",
+      "hiking": "Hiking",
+      "lake": "Lake",
+      "food": "Food"
+    },
+    "book": "Book this day",
+    "about": "About this day",
+    "backToExperiences": "All experiences",
+    "peopleLabel": "How many people",
+    "whenLabel": "Which day",
+    "ageNotice": "Minimum age for this one is {age}."
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { Quote } from "@/lib/domain/pricing";
+import type { Quote, QuoteLineKey } from "@/lib/domain/pricing";
 import { toDisplayQuote } from "@/lib/domain/pricing";
 import type { Money } from "@/lib/domain/money";
 import { usePreferences } from "@/lib/preferences/context";
@@ -17,36 +17,55 @@ import { cn } from "@/lib/cn";
  * lines rather than converting the total separately. The escrow marker sits
  * here, at the moment money is discussed, rather than on a trust page nobody
  * opens.
+ *
+ * Shared across stays, cars, and experiences: the shape of a quote is the same
+ * everywhere, only the unit differs — nights, days, or seats.
  */
 export function QuoteBreakdown({
   quote,
-  nightlyRate,
+  unitRate,
+  units,
   showEscrow = true,
   className,
 }: {
   quote: Quote;
-  nightlyRate: Money;
+  /** The per-unit price, restated on the first line for checkability. */
+  unitRate: Money;
+  /** Nights, days, or people, depending on what is being booked. */
+  units: number;
   showEscrow?: boolean;
   className?: string;
 }) {
   const t = useTranslations("quote");
+  const tLines = useTranslations("quoteLines");
   const tVerify = useTranslations("verification");
   const { display, currency, fx } = usePreferences();
 
   const shown = toDisplayQuote(quote, currency, fx);
 
+  function label(key: QuoteLineKey): string {
+    const rate = display(unitRate);
+    switch (key) {
+      case "accommodation":
+        return t("accommodation", { rate, nights: units });
+      case "hire":
+        return tLines("hire", { rate, days: units });
+      case "seats":
+        return tLines("seats", { rate, count: units });
+      case "driver":
+        return tLines("driver");
+      case "cleaning":
+        return t("cleaning");
+      case "serviceFee":
+        return t("serviceFee");
+    }
+  }
+
   return (
     <div className={cn("flex flex-col gap-2 text-sm", className)}>
       {shown.lines.map((line) => (
         <div key={line.key} className="flex items-baseline justify-between gap-4">
-          <span className="text-ink-2">
-            {line.key === "accommodation"
-              ? t("accommodation", {
-                  rate: display(nightlyRate),
-                  nights: shown.nights,
-                })
-              : t(line.key)}
-          </span>
+          <span className="text-ink-2">{label(line.key)}</span>
           <MoneyText amount={line.amount} className="text-ink" />
         </div>
       ))}

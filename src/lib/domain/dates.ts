@@ -74,3 +74,96 @@ export function formatDateRange(
     timeZone: "UTC",
   }).formatRange(toUtc(from), toUtc(to));
 }
+
+/* ------------------------------------------------------- calendar helpers */
+
+export function startOfMonth(date: IsoDate): IsoDate {
+  return `${date.slice(0, 7)}-01`;
+}
+
+export function addMonths(date: IsoDate, months: number): IsoDate {
+  const [y, m] = date.split("-").map(Number);
+  const total = y * 12 + (m - 1) + months;
+  const year = Math.floor(total / 12);
+  const month = (total % 12) + 1;
+  return `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-01`;
+}
+
+/**
+ * Which weekday a locale's week starts on. Monday across most of the world
+ * including Rwanda and France, Sunday in the US — getting this wrong shifts
+ * every column of the grid, which is the kind of error people notice
+ * immediately and cannot explain.
+ *
+ * `weekInfo` is not in every runtime yet, so Monday is the fallback.
+ */
+export function firstDayOfWeek(locale: string): number {
+  try {
+    const info = (
+      new Intl.Locale(locale) as Intl.Locale & {
+        getWeekInfo?: () => { firstDay: number };
+        weekInfo?: { firstDay: number };
+      }
+    );
+    const first = info.getWeekInfo?.().firstDay ?? info.weekInfo?.firstDay;
+    return first === 7 ? 0 : (first ?? 1);
+  } catch {
+    return 1;
+  }
+}
+
+/** Weekday initials in the locale's own order, for the grid header. */
+export function weekdayLabels(locale: string, format: "narrow" | "short" = "narrow"): string[] {
+  const first = firstDayOfWeek(locale);
+  const fmt = new Intl.DateTimeFormat(locale, { weekday: format, timeZone: "UTC" });
+  // 2024-01-07 is a Sunday, so offsetting from it lands on each weekday.
+  return Array.from({ length: 7 }, (_, i) =>
+    fmt.format(new Date(Date.UTC(2024, 0, 7 + ((first + i) % 7)))),
+  );
+}
+
+export function formatMonthTitle(month: IsoDate, locale: string): string {
+  return new Intl.DateTimeFormat(locale, {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(toUtc(month));
+}
+
+export type CalendarCell = {
+  date: IsoDate;
+  /** False for the leading and trailing days that pad the grid. */
+  inMonth: boolean;
+};
+
+/**
+ * Six weeks of cells for a month, padded from the locale's first weekday.
+ * Always six rows so the popover does not change height between months —
+ * a grid that resizes as you page through it is genuinely unpleasant to use.
+ */
+export function monthGrid(month: IsoDate, locale: string): CalendarCell[] {
+  const first = startOfMonth(month);
+  const firstWeekday = toUtc(first).getUTCDay();
+  const offset = (firstWeekday - firstDayOfWeek(locale) + 7) % 7;
+  const gridStart = addDays(first, -offset);
+  const monthPrefix = first.slice(0, 7);
+
+  return Array.from({ length: 42 }, (_, i) => {
+    const date = addDays(gridStart, i);
+    return { date, inMonth: date.startsWith(monthPrefix) };
+  });
+}
+
+export function isSameMonth(a: IsoDate, b: IsoDate): boolean {
+  return a.slice(0, 7) === b.slice(0, 7);
+}
+
+export function clampToRange(
+  date: IsoDate,
+  min?: IsoDate,
+  max?: IsoDate,
+): IsoDate {
+  if (min && date < min) return min;
+  if (max && date > max) return max;
+  return date;
+}

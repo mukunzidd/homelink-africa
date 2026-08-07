@@ -103,3 +103,100 @@ export function ChevronDownIcon({ className, size = 14 }: IconProps) {
     </svg>
   );
 }
+
+export function ChevronLeftIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M12 4.5 6.5 10l5.5 5.5" />
+    </svg>
+  );
+}
+
+export function ChevronRightIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M8 4.5 13.5 10 8 15.5" />
+    </svg>
+  );
+}
+
+export function CalendarIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <rect x="3" y="4.4" width="14" height="12.6" rx="1.8" />
+      <path d="M3 8.2h14M7 2.8v3M13 2.8v3" />
+    </svg>
+  );
+}
+
+export function SearchIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <circle cx="9" cy="9" r="5.6" />
+      <path d="m13.2 13.2 3.6 3.6" />
+    </svg>
+  );
+}
+
+export function UsersIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <circle cx="8" cy="7" r="2.8" />
+      <path d="M3 16.4a5 5 0 0 1 10 0" />
+      <path d="M13.4 4.6a2.8 2.8 0 0 1 0 5.2M14.6 16.4a5 5 0 0 0-1.4-3.5" />
+    </svg>
+  );
+}
+
+export function SortIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M5 4.5v11M5 15.5 2.6 13M5 4.5 7.4 7" />
+      <path d="M11 6h6M11 10h4.5M11 14h3" />
+    </svg>
+  );
+}
+
+export function CarIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M3 12.4h14M4.4 12.4V9.2l1.5-3.4A1.4 1.4 0 0 1 7.2 5h5.6a1.4 1.4 0 0 1 1.3.8l1.5 3.4v3.2" />
+      <path d="M3.6 12.4v2.2h2.6v-2.2M13.8 12.4v2.2h2.6v-2.2" />
+      <path d="M4.4 9.2h11.2" />
+    </svg>
+  );
+}
+
+export function CompassIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <circle cx="10" cy="10" r="7.4" />
+      <path d="m12.8 7.2-1.6 4-4 1.6 1.6-4Z" />
+    </svg>
+  );
+}
+
+export function ClockIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <circle cx="10" cy="10" r="7.4" />
+      <path d="M10 5.8V10l2.8 1.8" />
+    </svg>
+  );
+}
+
+export function ExpandIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M7.6 2.8H2.8v4.8M12.4 2.8h4.8v4.8M12.4 17.2h4.8v-4.8M7.6 17.2H2.8v-4.8" />
+    </svg>
+  );
+}
+
+export function CloseIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M5 5l10 10M15 5 5 15" />
+    </svg>
+  );
+}

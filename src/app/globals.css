@@ -208,6 +208,30 @@
   .tnum {
     font-variant-numeric: tabular-nums;
   }
+
+  /*
+   * The OPEN list of a native select is drawn by the OS and cannot be styled
+   * cross-browser. Two levers exist and we pull both: `color-scheme` above
+   * makes macOS and iOS render a dark menu in dark mode, and these explicit
+   * colours cover Chrome and Firefox on Windows and Linux, which otherwise
+   * draw a white rectangle regardless of theme.
+   */
+  select,
+  option,
+  optgroup {
+    background-color: var(--surface);
+    color: var(--ink);
+  }
+
+  option:checked {
+    background-color: var(--brand-tint);
+    color: var(--brand);
+  }
+
+  /* Same problem, same fix, for the datalist attached to the place field. */
+  input::-webkit-calendar-picker-indicator {
+    filter: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

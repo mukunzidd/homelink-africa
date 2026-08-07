@@ -71,6 +71,47 @@
     "dropOff": "Restitution",
     "when": "Quand"
   },
+  "calendar": {
+    "addDate": "Ajouter une date",
+    "previousMonth": "Mois précédent",
+    "nextMonth": "Mois suivant",
+    "pickArrival": "Choisissez votre date d'arrivée",
+    "pickDeparture": "Choisissez votre date de départ",
+    "nightsSelected": "{count, plural, one {# nuit} other {# nuits}}",
+    "clear": "Effacer",
+    "done": "Terminé"
+  },
+  "results": {
+    "countWithDates": "{count, plural, one {# logement} other {# logements}} pour {range}",
+    "countNoDates": "{count, plural, one {# logement vérifié} other {# logements vérifiés}} à Kigali",
+    "addDatesPrompt": "Ajoutez des dates pour voir les totaux et ce qui est réellement libre",
+    "addDatesAction": "Ajouter des dates",
+    "sortLabel": "Trier",
+    "sort": {
+      "recommended": "Recommandés",
+      "priceAsc": "Prix croissant",
+      "priceDesc": "Prix décroissant",
+      "newest": "Vérifiés récemment",
+      "size": "Plus de chambres"
+    },
+    "neighbourhood": "Quartier",
+    "anyNeighbourhood": "Partout à Kigali",
+    "bedrooms": "Chambres",
+    "anyBedrooms": "Peu importe",
+    "bedroomsPlus": "{count}+",
+    "totalFor": "au total pour {count, plural, one {# nuit} other {# nuits}}",
+    "filtersHeading": "Affiner",
+    "activeFilters": "{count, plural, one {# filtre} other {# filtres}} actifs"
+  },
+  "gallery": {
+    "label": "Photos",
+    "openGallery": "Voir toutes les photos",
+    "close": "Fermer",
+    "previous": "Photo précédente",
+    "next": "Photo suivante",
+    "counter": "{current} sur {total}",
+    "placeholderNote": "Les photos sont réalisées pour chaque logement et ne sont pas encore intégrées. Ces panneaux remplacent la série réelle."
+  },
   "listing": {
     "perNight": "par nuit",
     "perMonth": "par mois",
@@ -99,6 +140,18 @@
       "identityBody": "Titre de propriété ou mandat de location vérifié avec la pièce d'identité nationale. Contrôles effectués avant tout versement.",
       "escrow": "Votre argent est retenu",
       "escrowBody": "Le paiement reste sous séquestre jusqu'à votre arrivée confirmée. Si le logement ne correspond pas, remboursement intégral et un autre logement le soir même."
+    },
+    "kinds": {
+      "car": {
+        "inspectedBody": "Révisé, essayé sur route et contrôlé selon une liste de 22 points : pneus, freins, roue de secours, cric et papiers.",
+        "identityBody": "Propriété de l'exploitant et assurance vérifiées avec la carte grise avant toute location.",
+        "photographedBody": "Photographié par l'équipe HomeLink, ce véhicule précis — pas une photo de catalogue du modèle."
+      },
+      "experience": {
+        "inspectedBody": "Effectuée en entier par un membre de notre équipe avant sa mise en ligne, selon un contrôle en 18 points : sécurité, horaires et ce qui est réellement inclus.",
+        "identityBody": "Licence du guide et accréditation des parcs vérifiées, et renouvelées chaque saison.",
+        "photographedBody": "Photographiée lors d'un vrai départ par l'équipe HomeLink."
+      }
     }
   },
   "trust": {
@@ -229,5 +282,64 @@
     "addCar": "Ajouter une voiture",
     "addExperience": "Ajouter une activité",
     "viewBooking": "Voir la réservation"
+  },
+  "quoteLines": {
+    "hire": "{rate} × {days, plural, one {# jour} other {# jours}}",
+    "driver": "Chauffeur",
+    "seats": "{rate} × {count, plural, one {# personne} other {# personnes}}"
+  },
+  "cars": {
+    "title": "Voitures",
+    "subtitle": "{count, plural, one {# véhicule vérifié} other {# véhicules vérifiés}} à Kigali, révisés et contrôlés avant chaque location.",
+    "seats": "{count, plural, one {# place} other {# places}}",
+    "perDay": "par jour",
+    "transmission": {
+      "manual": "Manuelle",
+      "automatic": "Automatique"
+    },
+    "class": {
+      "compact": "Citadine",
+      "saloon": "Berline",
+      "suv": "SUV",
+      "minibus": "Minibus"
+    },
+    "driveMode": "Comment vous conduirez",
+    "selfDrive": "Sans chauffeur",
+    "withDriver": "Avec chauffeur",
+    "driverIncluded": "Chauffeur inclus",
+    "driverOnly": "Ce véhicule est fourni avec un chauffeur.",
+    "pickUpLabel": "Prise en charge",
+    "dropOffLabel": "Restitution",
+    "airportPickup": "Prise en charge à l'aéroport possible",
+    "book": "Louer cette voiture",
+    "about": "À propos de cette voiture",
+    "backToCars": "Toutes les voitures",
+    "daysTotal": "au total pour {count, plural, one {# jour} other {# jours}}"
+  },
+  "experiences": {
+    "title": "Excursions",
+    "subtitle": "{count, plural, one {# sortie} other {# sorties}} avec des guides que nous connaissons par leur nom.",
+    "perPerson": "par personne",
+    "duration": "{count, plural, one {# heure} other {# heures}}",
+    "minAge": "À partir de {age} ans",
+    "groupMax": "Jusqu'à {count}",
+    "guide": "Votre guide",
+    "meetingPoint": "Point de rendez-vous",
+    "interestLabel": "Ce qui vous intéresse",
+    "allInterests": "Tout",
+    "interest": {
+      "wildlife": "Faune",
+      "culture": "Culture",
+      "city": "Ville",
+      "hiking": "Randonnée",
+      "lake": "Lac",
+      "food": "Cuisine"
+    },
+    "book": "Réserver cette sortie",
+    "about": "À propos de cette sortie",
+    "backToExperiences": "Toutes les excursions",
+    "peopleLabel": "Combien de personnes",
+    "whenLabel": "Quel jour",
+    "ageNotice": "L'âge minimum pour cette sortie est de {age} ans."
   }
 }
