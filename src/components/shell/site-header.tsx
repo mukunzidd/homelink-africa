@@ -1,12 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "./logo";
-import {
-  CurrencySwitcher,
-  LocaleSwitcher,
-  SegmentSwitcher,
-  ThemeToggle,
-} from "./preference-controls";
+import { PreferenceControls } from "./preference-controls";
 
 export async function SiteHeader() {
   const t = await getTranslations("header");
@@ -45,15 +40,8 @@ export async function SiteHeader() {
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center gap-2">
-            <div className="hidden lg:block">
-              <SegmentSwitcher />
-            </div>
-            <div className="hidden sm:contents">
-              <LocaleSwitcher />
-              <CurrencySwitcher />
-            </div>
-            <ThemeToggle />
+          <div className="ml-auto">
+            <PreferenceControls />
           </div>
         </div>
       </header>

@@ -130,8 +130,8 @@
   },
   "segment": {
     "label": "Vous consultez depuis",
-    "abroad": "L'étranger",
-    "rwanda": "Le Rwanda",
+    "abroad": "Étranger",
+    "rwanda": "Rwanda",
     "hint": "Définit votre langue, votre devise et votre moyen de paiement. Modifiable à tout moment."
   },
   "dev": {

@@ -130,8 +130,8 @@
   },
   "segment": {
     "label": "Viewing as",
-    "abroad": "From abroad",
-    "rwanda": "In Rwanda",
+    "abroad": "Abroad",
+    "rwanda": "Rwanda",
     "hint": "Sets your language, currency, and payment method. Change anything at any time."
   },
   "dev": {

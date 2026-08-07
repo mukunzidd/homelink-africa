@@ -6,126 +6,237 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { LOCALE_LABELS, routing, type Locale } from "@/i18n/routing";
 import { CURRENCIES, type CurrencyCode } from "@/lib/domain/money";
 import { usePreferences, type ThemeChoice } from "@/lib/preferences/context";
+import {
+  BanknoteIcon,
+  ChevronDownIcon,
+  GlobeIcon,
+  MonitorIcon,
+  MoonIcon,
+  PinIcon,
+  PlaneIcon,
+  SunIcon,
+} from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 
-const selectClass = cn(
-  "appearance-none rounded-ctl border border-line bg-surface",
-  "py-2 pl-3 pr-8 text-sm font-medium text-ink-2 cursor-pointer",
-  "hover:text-ink hover:bg-surface-2 transition-colors duration-150 min-h-9",
-  "bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 12%22><path d=%22M3 4.5L6 7.5L9 4.5%22 fill=%22none%22 stroke=%22%236E8177%22 stroke-width=%221.5%22 stroke-linecap=%22round%22/></svg>')]",
-  "bg-[length:12px_12px] bg-[position:right_10px_center] bg-no-repeat",
-);
+/**
+ * One grouped control, not four floating boxes.
+ *
+ * These are utilities, not navigation: they should be findable and then get
+ * out of the way. Four separately bordered pills gave them the same visual
+ * weight as the primary nav and still left "English / RWF / System" unlabelled
+ * until you opened them. Collapsing the chrome into a single bordered object
+ * with hairline dividers, and letting an icon carry the meaning, drops the
+ * weight without hiding anything.
+ */
+
+/**
+ * A borderless select that inherits the group's chrome.
+ *
+ * The native control stays underneath — it is fully keyboard accessible and
+ * gets the platform's own picker on mobile, which is better than anything
+ * hand-rolled. The visible row is the icon, the value, and the caret; the
+ * select sits transparently on top of it.
+ */
+function SelectControl<T extends string>({
+  label,
+  value,
+  options,
+  onChange,
+  icon,
+  display,
+  disabled,
+  className,
+}: {
+  label: string;
+  value: T;
+  options: readonly T[];
+  onChange: (next: T) => void;
+  icon: React.ReactNode;
+  display: (value: T) => string;
+  disabled?: boolean;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "relative flex items-center gap-1.5 px-3 text-ink-2",
+        "transition-colors duration-150 hover:bg-surface-2 hover:text-ink",
+        "focus-within:outline focus-within:outline-2 focus-within:outline-brand focus-within:-outline-offset-2",
+        disabled && "opacity-60",
+        className,
+      )}
+    >
+      {icon}
+      {/* Presentational: the select underneath already announces its value,
+          so leaving this readable would have it read out twice. */}
+      <span aria-hidden="true" className="text-[13px] font-semibold">
+        {display(value)}
+      </span>
+      <ChevronDownIcon className="text-ink-3" />
+
+      <select
+        aria-label={label}
+        value={value}
+        disabled={disabled}
+        onChange={(e) => onChange(e.target.value as T)}
+        className="absolute inset-0 cursor-pointer opacity-0 focus-visible:outline-none"
+      >
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {display(option)}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
 
 /** Language is the URL, so switching it is a navigation, not a state change. */
-export function LocaleSwitcher() {
+function LocaleControl() {
   const t = useTranslations("header");
-  const locale = useLocale();
+  const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
   return (
-    <label className="contents">
-      <span className="sr-only">{t("language")}</span>
-      <select
-        value={locale}
-        disabled={isPending}
-        onChange={(e) => {
-          const next = e.target.value as Locale;
-          startTransition(() => {
-            router.replace(pathname, { locale: next });
-          });
-        }}
-        className={cn(selectClass, isPending && "opacity-60")}
-      >
-        {routing.locales.map((l) => (
-          <option key={l} value={l}>
-            {LOCALE_LABELS[l]}
-          </option>
-        ))}
-      </select>
-    </label>
+    <SelectControl
+      label={t("language")}
+      value={locale}
+      options={routing.locales}
+      disabled={isPending}
+      onChange={(next) =>
+        startTransition(() => {
+          router.replace(pathname, { locale: next });
+        })
+      }
+      icon={<GlobeIcon />}
+      /* Uppercase tag, not the full endonym: "Kinyarwanda" is 11 characters
+         and would set the width of the whole group. Full names stay in the
+         open menu, where there is room for them. */
+      display={(l) => l.toUpperCase()}
+      className="hidden h-9 sm:flex"
+    />
   );
 }
 
 /** Currency is independent of language: read in Kinyarwanda, pay in USD. */
-export function CurrencySwitcher() {
+function CurrencyControl() {
   const t = useTranslations("header");
   const { currency, setCurrency } = usePreferences();
 
   return (
-    <label className="contents">
-      <span className="sr-only">{t("currency")}</span>
-      <select
-        value={currency}
-        onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
-        className={selectClass}
-      >
-        {CURRENCIES.map((c) => (
-          <option key={c} value={c}>
-            {c}
-          </option>
-        ))}
-      </select>
-    </label>
+    <SelectControl
+      label={t("currency")}
+      value={currency}
+      options={CURRENCIES}
+      onChange={(next: CurrencyCode) => setCurrency(next)}
+      icon={<BanknoteIcon />}
+      display={(c) => c}
+      className="hidden h-9 sm:flex"
+    />
   );
 }
 
-export function ThemeToggle() {
+const THEME_ORDER: ThemeChoice[] = ["system", "light", "dark"];
+
+/**
+ * Icon only, and it cycles.
+ *
+ * Three states do not justify a labelled dropdown — the icon states the
+ * current mode, and the accessible name spells it out for anyone who needs it.
+ */
+function ThemeControl() {
   const t = useTranslations("header");
   const { theme, setTheme } = usePreferences();
 
-  const options: { value: ThemeChoice; label: string }[] = [
-    { value: "system", label: t("themeSystem") },
-    { value: "light", label: t("themeLight") },
-    { value: "dark", label: t("themeDark") },
-  ];
+  const labels: Record<ThemeChoice, string> = {
+    system: t("themeSystem"),
+    light: t("themeLight"),
+    dark: t("themeDark"),
+  };
+
+  const icons: Record<ThemeChoice, React.ReactNode> = {
+    system: <MonitorIcon />,
+    light: <SunIcon />,
+    dark: <MoonIcon />,
+  };
 
   return (
-    <label className="contents">
-      <span className="sr-only">{t("theme")}</span>
-      <select
-        value={theme}
-        onChange={(e) => setTheme(e.target.value as ThemeChoice)}
-        className={selectClass}
-      >
-        {options.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-    </label>
+    <button
+      type="button"
+      aria-label={`${t("theme")}: ${labels[theme]}`}
+      title={labels[theme]}
+      onClick={() =>
+        setTheme(THEME_ORDER[(THEME_ORDER.indexOf(theme) + 1) % THEME_ORDER.length])
+      }
+      className={cn(
+        "grid h-9 w-10 cursor-pointer place-items-center text-ink-2",
+        "transition-colors duration-150 hover:bg-surface-2 hover:text-ink",
+      )}
+    >
+      {icons[theme]}
+    </button>
   );
 }
 
 /**
- * The segment override. Product & UX §4 requires this to be visible and
- * persistent, never buried in settings — it changes currency and payment rail,
- * which are the two things a user most needs to correct about our guess.
+ * The segment override. Product & UX §4 requires this visible and persistent,
+ * never buried in settings — it changes currency and payment rail, which are
+ * the two things a user most needs to correct about our guess.
+ *
+ * It stays a visible two-state toggle rather than joining the dropdowns
+ * because it is the only control here that changes what the product does, not
+ * just how it reads.
  */
-export function SegmentSwitcher() {
+function SegmentControl() {
   const t = useTranslations("segment");
   const { segment, setSegment } = usePreferences();
 
+  const options = [
+    { value: "abroad", label: t("abroad"), icon: <PlaneIcon /> },
+    { value: "rwanda", label: t("rwanda"), icon: <PinIcon /> },
+  ] as const;
+
   return (
-    <div className="inline-flex rounded-ctl border border-line bg-surface p-0.5">
-      {(["abroad", "rwanda"] as const).map((s) => (
-        <button
-          key={s}
-          type="button"
-          aria-pressed={segment === s}
-          onClick={() => setSegment(s)}
-          className={cn(
-            "rounded-[6px] px-3 py-1.5 text-sm font-medium transition-colors duration-150 cursor-pointer",
-            segment === s
-              ? "bg-brand-tint text-brand"
-              : "text-ink-3 hover:text-ink",
-          )}
-        >
-          {t(s)}
-        </button>
-      ))}
+    <div
+      role="group"
+      aria-label={t("label")}
+      className="flex h-9 items-center p-0.5"
+    >
+      {options.map((option) => {
+        const active = segment === option.value;
+        return (
+          <button
+            key={option.value}
+            type="button"
+            aria-pressed={active}
+            title={option.label}
+            onClick={() => setSegment(option.value)}
+            className={cn(
+              "flex h-8 cursor-pointer items-center gap-1.5 rounded-[6px] px-2.5",
+              "text-[13px] font-semibold transition-colors duration-150",
+              active
+                ? "bg-brand-tint text-brand"
+                : "text-ink-3 hover:text-ink",
+            )}
+          >
+            {option.icon}
+            <span className="hidden lg:inline">{option.label}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+export function PreferenceControls() {
+  return (
+    <div className="flex items-center divide-x divide-line overflow-hidden rounded-ctl border border-line bg-surface">
+      <SegmentControl />
+      <LocaleControl />
+      <CurrencyControl />
+      <ThemeControl />
     </div>
   );
 }
