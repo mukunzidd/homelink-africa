@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "./logo";
@@ -31,7 +32,15 @@ export async function SiteHeader() {
           </Link>
 
           <div className="col-span-2 row-start-2 flex justify-center md:col-span-1 md:row-start-1">
-            <VerticalTabs />
+            {/*
+              The tabs read the lease band from the query to tell Stays from
+              Renting, and `useSearchParams` opts a route out of static
+              rendering unless it sits behind a boundary. The fallback reserves
+              the tabs' height so the header does not jump as they hydrate.
+            */}
+            <Suspense fallback={<div className="h-[58px]" />}>
+              <VerticalTabs />
+            </Suspense>
           </div>
 
           <div className="justify-self-end md:col-start-3">

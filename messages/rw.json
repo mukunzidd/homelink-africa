@@ -369,5 +369,17 @@
     "next": "Komeza",
     "clearDates": "Siba amatariki",
     "clearGuests": "Tangira bushya"
+  },
+  "highlight": {
+    "inspected": "Hari uwahageze",
+    "inspectedBody": "{name} yagenzuye aha hantu imbonankubone ku wa {date}, atari ku rupapuro.",
+    "escrow": "Amafaranga yawe aritegereza",
+    "escrowBody": "Turayabika, tukayaha nyir'inzu gusa numara kwemeza ko wageze.",
+    "power": "Umuriro ntugucika",
+    "powerBody": "Jenerateri iri aho, yakoreshejwe kandi yuzuyemo lisansi mu igenzura.",
+    "fibre": "Fibre ikora koko",
+    "fibreBody": "Umuvuduko wageragezwe uwo munsi, ntabwo wavuye mu kwamamaza.",
+    "photos": "Amafoto twafashe",
+    "photosBody": "Yafashwe n'itsinda ryacu. Nta na kimwe cyavuye kuri telefone ya nyir'inzu."
   }
 }

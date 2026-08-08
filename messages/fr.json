@@ -369,5 +369,17 @@
     "next": "Suivant",
     "clearDates": "Effacer les dates",
     "clearGuests": "Réinitialiser"
+  },
+  "highlight": {
+    "inspected": "Quelqu'un y est allé",
+    "inspectedBody": "{name} a vérifié ce logement en personne le {date}, pas depuis un formulaire.",
+    "escrow": "Votre argent attend",
+    "escrowBody": "Nous le retenons et ne le versons à l'hôte qu'une fois votre arrivée confirmée.",
+    "power": "Le courant tient",
+    "powerBody": "Groupe électrogène sur place, démarré et plein lors de l'inspection.",
+    "fibre": "Une fibre qui marche",
+    "fibreBody": "Débit testé sur place, pas repris d'une annonce.",
+    "photos": "Nos propres photos",
+    "photosBody": "Prises par notre équipe. Rien ne vient du téléphone du propriétaire."
   }
 }

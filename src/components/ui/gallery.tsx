@@ -8,7 +8,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CloseIcon,
-  ExpandIcon,
+  GridIcon,
 } from "@/components/ui/icons";
 import { useDismissable } from "@/lib/use-dismissable";
 import { cn } from "@/lib/cn";
@@ -74,6 +74,13 @@ export function Gallery({
     setIndex((i) => (i + delta + frames.length) % frames.length);
   }
 
+  /** Tiles darken slightly on hover so the mosaic answers the cursor. */
+  const FRAME = cn(
+    "group relative cursor-pointer overflow-hidden bg-surface-2",
+    "after:absolute after:inset-0 after:bg-ink after:opacity-0",
+    "after:transition-opacity after:duration-200 hover:after:opacity-[0.12]",
+  );
+
   function show(i: number) {
     setIndex(i);
     setOpen(true);
@@ -81,13 +88,19 @@ export function Gallery({
 
   return (
     <>
-      {/* Airbnb's mosaic: one lead frame, four supporting. Below `sm` it
-          collapses to the lead alone rather than shrinking five frames into
-          unreadable slivers. */}
+      {/*
+        One lead frame and four supporting, collapsing to the lead alone below
+        `sm` rather than shrinking five frames into unreadable slivers.
+
+        Rounding lives on the container, never the tiles: rounding each tile
+        would put a curve in the middle of the mosaic where two of them meet.
+        A hairline gap plus a shared clip is what makes this read as one image
+        split into panes instead of five separate cards.
+      */}
       <div
         className={cn(
-          "relative grid h-64 grid-cols-2 grid-rows-2 gap-2 overflow-hidden rounded-card",
-          "sm:h-80 sm:grid-cols-4",
+          "relative grid h-[22rem] grid-cols-2 grid-rows-2 gap-1.5 overflow-hidden rounded-card",
+          "sm:h-[26rem] sm:grid-cols-4",
           className,
         )}
       >
@@ -95,7 +108,7 @@ export function Gallery({
           type="button"
           onClick={() => show(0)}
           aria-label={t("counter", { current: 1, total: frames.length })}
-          className="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden rounded-card sm:rounded-none"
+          className={cn(FRAME, "col-span-2 row-span-2")}
         >
           <SupplyImage seed={frames[0]} className="h-full w-full">
             {verifiedLabel && (
@@ -112,7 +125,7 @@ export function Gallery({
             type="button"
             onClick={() => show(i + 1)}
             aria-label={t("counter", { current: i + 2, total: frames.length })}
-            className="relative hidden cursor-pointer overflow-hidden sm:block"
+            className={cn(FRAME, "hidden sm:block")}
           >
             <SupplyImage seed={frame} className="h-full w-full" />
           </button>
@@ -123,12 +136,13 @@ export function Gallery({
           type="button"
           onClick={() => show(0)}
           className={cn(
-            "absolute bottom-3 right-3 flex cursor-pointer items-center gap-2 rounded-ctl",
-            "border border-line bg-surface/95 px-3 py-2 text-[13px] font-semibold text-ink",
-            "shadow-[var(--shadow-card)] backdrop-blur transition-colors hover:bg-surface",
+            "absolute bottom-4 right-4 z-10 flex cursor-pointer items-center gap-2 rounded-ctl",
+            "border border-ink/15 bg-surface px-3.5 py-2.5 text-[13px] font-semibold text-ink",
+            "shadow-[var(--shadow-card)] transition-transform duration-150",
+            "hover:scale-[1.03] active:scale-[0.98]",
           )}
         >
-          <ExpandIcon size={14} />
+          <GridIcon size={14} />
           {t("openGallery")}
         </button>
       </div>
@@ -139,7 +153,7 @@ export function Gallery({
            scrim and its chrome use fixed values rather than tokens: `--ink`
            here would be near-white in dark mode and invert the overlay. */
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-[#050B08]/90 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-[#050B08]/92 p-4 backdrop-blur-sm"
           role="presentation"
         >
           <div
@@ -152,17 +166,17 @@ export function Gallery({
               if (e.key === "ArrowLeft") step(-1);
               if (e.key === "ArrowRight") step(1);
             }}
-            className="flex w-full max-w-4xl flex-col gap-3 outline-none"
+            className="flex w-full max-w-5xl flex-col gap-4 outline-none"
           >
             <div className="flex items-center justify-between gap-4">
-              <p className="tnum text-sm font-semibold text-white/90">
+              <p className="tnum rounded-full bg-white/10 px-3 py-1 text-[13px] font-semibold text-white/90">
                 {t("counter", { current: index + 1, total: frames.length })}
               </p>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label={t("close")}
-                className="grid size-9 cursor-pointer place-items-center rounded-full bg-white/12 text-white transition-colors hover:bg-white/22"
+                className="grid size-10 cursor-pointer place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
               >
                 <CloseIcon />
               </button>
@@ -175,8 +189,8 @@ export function Gallery({
               />
 
               {[
-                { dir: -1, label: t("previous"), side: "left-3", icon: <ChevronLeftIcon size={18} /> },
-                { dir: 1, label: t("next"), side: "right-3", icon: <ChevronRightIcon size={18} /> },
+                { dir: -1, label: t("previous"), side: "left-4", icon: <ChevronLeftIcon size={20} /> },
+                { dir: 1, label: t("next"), side: "right-4", icon: <ChevronRightIcon size={20} /> },
               ].map((control) => (
                 <button
                   key={control.label}
@@ -184,8 +198,8 @@ export function Gallery({
                   onClick={() => step(control.dir)}
                   aria-label={control.label}
                   className={cn(
-                    "absolute top-1/2 grid size-11 -translate-y-1/2 cursor-pointer place-items-center",
-                    "rounded-full bg-white/12 text-white backdrop-blur transition-colors hover:bg-white/22",
+                    "absolute top-1/2 grid size-12 -translate-y-1/2 cursor-pointer place-items-center",
+                    "rounded-full bg-white/12 text-white backdrop-blur transition-colors hover:bg-white/25",
                     control.side,
                   )}
                 >
@@ -194,7 +208,7 @@ export function Gallery({
               ))}
             </div>
 
-            <div className="flex gap-2 overflow-x-auto pb-1">
+            <div className="flex justify-center gap-2 overflow-x-auto pb-1">
               {frames.map((frame, i) => (
                 <button
                   key={frame}
@@ -204,7 +218,7 @@ export function Gallery({
                   aria-current={i === index}
                   className={cn(
                     "h-14 w-20 flex-none cursor-pointer overflow-hidden rounded-[6px] transition-opacity",
-                    i === index ? "ring-2 ring-white" : "opacity-50 hover:opacity-85",
+                    i === index ? "ring-2 ring-white" : "opacity-45 hover:opacity-80",
                   )}
                 >
                   <SupplyImage seed={frame} className="h-full w-full" />
@@ -212,7 +226,7 @@ export function Gallery({
               ))}
             </div>
 
-            <p className="max-w-[68ch] text-xs leading-relaxed text-white/60">
+            <p className="mx-auto max-w-[64ch] text-center text-xs leading-relaxed text-white/55">
               {t("placeholderNote")}
             </p>
           </div>

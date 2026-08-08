@@ -369,5 +369,17 @@
     "next": "Next",
     "clearDates": "Clear dates",
     "clearGuests": "Reset"
+  },
+  "highlight": {
+    "inspected": "Someone walked through it",
+    "inspectedBody": "{name} checked this place in person on {date}, not from a form.",
+    "escrow": "Your money waits",
+    "escrowBody": "We hold it and release it to the host only once you confirm you're in.",
+    "power": "The power stays on",
+    "powerBody": "Backup generator on site, started and fuelled at inspection.",
+    "fibre": "Fibre that works",
+    "fibreBody": "Speed tested on the day, not taken from an advert.",
+    "photos": "Photos we took",
+    "photosBody": "Shot by our team. Nothing here came from the owner's phone."
   }
 }
