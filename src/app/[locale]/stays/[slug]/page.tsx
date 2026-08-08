@@ -109,7 +109,12 @@ export default async function ListingDetailPage({
         </div>
       </header>
 
-      <Gallery seed={listing.imageSeed} verifiedLabel={tVerify("badge")} />
+      <Gallery
+        seed={listing.imageSeed}
+        images={listing.images}
+        alt={listing.name}
+        verifiedLabel={tVerify("badge")}
+      />
 
       <div className="grid items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_380px]">
         {/* Hairline rules between sections rather than cards: this column is

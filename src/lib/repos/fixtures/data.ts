@@ -50,6 +50,7 @@ export const LISTINGS: Listing[] = [
     modes: ["nightly", "lease"],
     verification: verification("ver_001", "Jean-Claude U.", "2026-10-12"),
     imageSeed: "kacyiru",
+    images: ["/images/listings/interior-1.jpg", "/images/listings/interior-2.jpg", "/images/listings/interior-3.jpg", "/images/listings/interior-4.jpg", "/images/listings/interior-5.jpg"],
     summary:
       "Quiet street five minutes from the ministries, with a walled garden and a generator that actually starts.",
     unitsAvailable: 3,
@@ -68,6 +69,7 @@ export const LISTINGS: Listing[] = [
     modes: ["nightly", "lease"],
     verification: verification("ver_002", "Aline M.", "2026-10-03"),
     imageSeed: "kimihurura",
+    images: ["/images/listings/interior-3.jpg", "/images/listings/interior-6.jpg", "/images/listings/interior-7.jpg", "/images/listings/interior-8.jpg", "/images/listings/interior-1.jpg"],
     summary:
       "Three floors, a roof terrace facing the valley, and walking distance to the restaurants on KG 5.",
     unitsAvailable: 2,
@@ -86,6 +88,7 @@ export const LISTINGS: Listing[] = [
     modes: ["nightly", "lease"],
     verification: verification("ver_003", "Jean-Claude U.", "2026-09-28", 41),
     imageSeed: "nyarutarama",
+    images: ["/images/listings/interior-5.jpg", "/images/listings/interior-8.jpg", "/images/listings/interior-6.jpg", "/images/listings/interior-2.jpg", "/images/listings/interior-7.jpg"],
     summary:
       "Built for a family that entertains: a long kitchen, a lawn, and a gate that opens onto the golf course road.",
     unitsAvailable: 1,
@@ -104,6 +107,7 @@ export const LISTINGS: Listing[] = [
     modes: ["nightly", "lease"],
     verification: verification("ver_004", "Aline M.", "2026-10-19"),
     imageSeed: "remera",
+    images: ["/images/listings/interior-2.jpg", "/images/listings/interior-1.jpg", "/images/listings/interior-4.jpg", "/images/listings/interior-3.jpg", "/images/listings/interior-6.jpg"],
     summary:
       "Small, clean, and close to the bus lines. The obvious first place for someone arriving to work in Kigali.",
     unitsAvailable: 5,
@@ -122,6 +126,7 @@ export const LISTINGS: Listing[] = [
     modes: ["nightly", "lease"],
     verification: verification("ver_005", "Patrick N.", "2026-10-22"),
     imageSeed: "kiyovu",
+    images: ["/images/listings/interior-7.jpg", "/images/listings/interior-4.jpg", "/images/listings/interior-8.jpg", "/images/listings/interior-5.jpg", "/images/listings/interior-2.jpg"],
     summary:
       "A desk by the window with real fibre behind it, in the quietest pocket of the city centre.",
     unitsAvailable: 2,
@@ -140,6 +145,7 @@ export const LISTINGS: Listing[] = [
     modes: ["nightly", "lease"],
     verification: verification("ver_006", "Patrick N.", "2026-10-08"),
     imageSeed: "gikondo",
+    images: ["/images/listings/interior-6.jpg", "/images/listings/interior-5.jpg", "/images/listings/interior-1.jpg", "/images/listings/interior-7.jpg", "/images/listings/interior-3.jpg"],
     summary:
       "Older build, well kept, with the kind of yard children actually use. Long-term lease preferred.",
     unitsAvailable: 4,
@@ -159,6 +165,7 @@ export const VEHICLES: Vehicle[] = [
     withDriverSupplement: money(25_000, "RWF"),
     verification: verification("ver_v01", "Eric H.", "2026-10-15", 22),
     imageSeed: "rav4",
+    images: ["/images/cars/vehicle-1.jpg"],
     summary:
       "The default Rwandan hire car for a reason. Handles the hills and the unpaved stretches without drama.",
     unitsAvailable: 6,
@@ -175,6 +182,7 @@ export const VEHICLES: Vehicle[] = [
     withDriverSupplement: money(0, "RWF"),
     verification: verification("ver_v02", "Eric H.", "2026-10-11", 22),
     imageSeed: "landcruiser",
+    images: ["/images/cars/vehicle-4.jpg"],
     summary:
       "For the parks. Comes with a driver who has done the Nyungwe and Akagera roads many times.",
     unitsAvailable: 2,
@@ -191,6 +199,7 @@ export const VEHICLES: Vehicle[] = [
     withDriverSupplement: money(25_000, "RWF"),
     verification: verification("ver_v03", "Eric H.", "2026-10-18", 22),
     imageSeed: "corolla",
+    images: ["/images/cars/vehicle-2.jpg"],
     summary: "City car. Cheap to run, easy to park, fine on any tarmac road in the country.",
     unitsAvailable: 8,
   },
@@ -206,6 +215,7 @@ export const VEHICLES: Vehicle[] = [
     withDriverSupplement: money(0, "RWF"),
     verification: verification("ver_v04", "Eric H.", "2026-09-30", 22),
     imageSeed: "hiace",
+    images: ["/images/cars/vehicle-3.jpg"],
     summary: "Group transport with a driver. The usual choice for a family arriving together.",
     unitsAvailable: 3,
   },
@@ -225,6 +235,7 @@ export const EXPERIENCES: Experience[] = [
     guideName: "Emmanuel R.",
     verification: verification("ver_e01", "Aline M.", "2026-09-14", 18),
     imageSeed: "gorillas",
+    images: ["/images/experiences/outing-4.jpg"],
     summary:
       "A full day at altitude with a park-licensed tracker. Permits handled by us, transport from Kigali included.",
     meetingPoint: "Kinigi park headquarters",
@@ -272,6 +283,7 @@ export const EXPERIENCES: Experience[] = [
     guideName: "Emmanuel R.",
     verification: verification("ver_e04", "Patrick N.", "2026-09-22", 18),
     imageSeed: "nyungwe",
+    images: ["/images/experiences/outing-4.jpg"],
     summary: "The suspended bridge above the rainforest, plus a chance at the colobus troops on the way in.",
     meetingPoint: "Nyungwe reception centre",
   },

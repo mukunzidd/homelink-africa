@@ -61,6 +61,8 @@ export default async function VehicleDetailPage({
       <header className="flex flex-col gap-4">
         <Gallery
           seed={vehicle.imageSeed}
+          images={vehicle.images}
+          alt={vehicle.name}
           count={4}
           verifiedLabel={tVerify("badge")}
         />

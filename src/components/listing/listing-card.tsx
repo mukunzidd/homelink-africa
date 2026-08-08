@@ -24,7 +24,13 @@ export async function ListingCard({ listing }: { listing: Listing }) {
   return (
     <article className="group overflow-hidden rounded-card border border-line bg-surface shadow-[var(--shadow-card)] transition-shadow duration-150 hover:shadow-[var(--shadow-pop)]">
       <Link href={`/stays/${listing.slug}`} className="block">
-        <SupplyImage seed={listing.imageSeed} className="h-44">
+        <SupplyImage
+          seed={listing.imageSeed}
+          src={listing.images?.[0]}
+          alt={listing.name}
+          sizes="(max-width: 640px) 100vw, 33vw"
+          className="h-44"
+        >
           <span className="absolute left-3 top-3">
             <VerifiedBadge label={tVerify("badge")} size="sm" />
           </span>

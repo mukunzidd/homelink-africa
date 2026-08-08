@@ -65,7 +65,13 @@ export default async function CarsPage({
               className="flex flex-col overflow-hidden rounded-card border border-line bg-surface shadow-[var(--shadow-card)] transition-shadow duration-150 hover:shadow-[var(--shadow-pop)]"
             >
               <Link href={`/cars/${vehicle.slug}`}>
-                <SupplyImage seed={vehicle.imageSeed} className="h-40">
+                <SupplyImage
+                  seed={vehicle.imageSeed}
+                  src={vehicle.images?.[0]}
+                  alt={vehicle.name}
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="h-40"
+                >
                   <span className="absolute left-3 top-3">
                     <VerifiedBadge label={tVerify("badge")} size="sm" />
                   </span>

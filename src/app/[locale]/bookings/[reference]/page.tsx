@@ -27,6 +27,7 @@ type Resolved = {
   title: string;
   subtitle: string;
   imageSeed: string;
+  image?: string;
   quote: Quote;
   unitRate: Money;
   units: number;
@@ -65,6 +66,7 @@ export default async function BookingConfirmationPage({
         title: vehicle.name,
         subtitle: vehicle.summary,
         imageSeed: vehicle.imageSeed,
+        image: vehicle.images?.[0],
         quote,
         unitRate: vehicle.dailyRate,
         units: quote.nights,
@@ -82,6 +84,7 @@ export default async function BookingConfirmationPage({
         title: experience.name,
         subtitle: experience.meetingPoint,
         imageSeed: experience.imageSeed,
+        image: experience.images?.[0],
         quote,
         unitRate: experience.pricePerPerson,
         units: party,
@@ -98,6 +101,7 @@ export default async function BookingConfirmationPage({
       title: listing.name,
       subtitle: `${listing.neighbourhood} · ${listing.city}`,
       imageSeed: listing.imageSeed,
+        image: listing.images?.[0],
       quote,
       unitRate: listing.nightlyRate,
       units: quote.nights,
@@ -193,7 +197,13 @@ export default async function BookingConfirmationPage({
         </div>
 
         <aside className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5">
-          <SupplyImage seed={resolved.imageSeed} className="h-28 rounded-[6px]" />
+          <SupplyImage
+            seed={resolved.imageSeed}
+            src={resolved.image}
+            alt={resolved.title}
+            sizes="320px"
+            className="h-28 rounded-[6px]"
+          />
 
           <div className="flex flex-col gap-1">
             <h2 className="text-[15px] font-semibold leading-snug text-ink">

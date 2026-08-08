@@ -61,6 +61,8 @@ export default async function ExperienceDetailPage({
       <header className="flex flex-col gap-4">
         <Gallery
           seed={experience.imageSeed}
+          images={experience.images}
+          alt={experience.name}
           verifiedLabel={tVerify("badge")}
         />
 

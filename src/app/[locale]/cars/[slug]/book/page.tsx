@@ -74,7 +74,13 @@ export default async function BookCarPage({
             {t("yourStay")}
           </h2>
 
-          <SupplyImage seed={vehicle.imageSeed} className="h-28 rounded-[6px]" />
+          <SupplyImage
+            seed={vehicle.imageSeed}
+            src={vehicle.images?.[0]}
+            alt={vehicle.name}
+            sizes="320px"
+            className="h-28 rounded-[6px]"
+          />
 
           <div className="flex flex-col gap-1">
             <h3 className="text-[15px] font-semibold leading-snug text-ink">

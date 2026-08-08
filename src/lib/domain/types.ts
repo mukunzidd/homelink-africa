@@ -74,8 +74,10 @@ export type Listing = {
   monthlyRate?: Money;
   modes: StayMode[];
   verification: VerificationRecord;
-  /** Photo treatment is deferred; these are colour seeds for the shell. */
+  /** Colour seed, used when no photograph exists yet. */
   imageSeed: string;
+  /** Photographs, first is the hero. Empty until our team has shot the place. */
+  images?: string[];
   summary: string;
   /** Remaining units for the shown dates. Honest scarcity only. */
   unitsAvailable: number;
@@ -98,6 +100,7 @@ export type Vehicle = {
   withDriverSupplement?: Money;
   verification: VerificationRecord;
   imageSeed: string;
+  images?: string[];
   summary: string;
   unitsAvailable: number;
 };
@@ -124,6 +127,7 @@ export type Experience = {
   guideName: string;
   verification: VerificationRecord;
   imageSeed: string;
+  images?: string[];
   summary: string;
   meetingPoint: string;
 };

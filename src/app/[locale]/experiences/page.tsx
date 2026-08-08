@@ -70,7 +70,13 @@ export default async function ExperiencesPage({
               className="flex flex-col overflow-hidden rounded-card border border-line bg-surface shadow-[var(--shadow-card)] transition-shadow duration-150 hover:shadow-[var(--shadow-pop)]"
             >
               <Link href={`/experiences/${experience.slug}`}>
-                <SupplyImage seed={experience.imageSeed} className="h-40">
+                <SupplyImage
+                  seed={experience.imageSeed}
+                  src={experience.images?.[0]}
+                  alt={experience.name}
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="h-40"
+                >
                   <span className="absolute left-3 top-3">
                     <VerifiedBadge label={tVerify("badge")} size="sm" />
                   </span>

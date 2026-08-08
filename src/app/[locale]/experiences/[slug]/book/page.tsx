@@ -78,6 +78,9 @@ export default async function BookExperiencePage({
 
           <SupplyImage
             seed={experience.imageSeed}
+            src={experience.images?.[0]}
+            alt={experience.name}
+            sizes="320px"
             className="h-28 rounded-[6px]"
           />
 

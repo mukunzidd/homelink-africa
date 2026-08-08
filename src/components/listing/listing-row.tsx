@@ -52,6 +52,9 @@ export async function ListingRow({
       <Link href={href} className="flex-none">
         <SupplyImage
           seed={listing.imageSeed}
+          src={listing.images?.[0]}
+          alt={listing.name}
+          sizes="(max-width: 640px) 100vw, 176px"
           className="h-32 w-full rounded-[6px] sm:h-full sm:w-44"
         />
       </Link>

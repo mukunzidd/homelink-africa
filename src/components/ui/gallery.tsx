@@ -31,17 +31,25 @@ function framesFor(seed: string, count: number): string[] {
 
 export function Gallery({
   seed,
+  images,
+  alt = "",
   count = 5,
   verifiedLabel,
   className,
 }: {
   seed: string;
+  /** Real photographs. Falls back to seeded panels where absent. */
+  images?: string[];
+  alt?: string;
   count?: number;
   verifiedLabel?: string;
   className?: string;
 }) {
   const t = useTranslations("gallery");
-  const frames = framesFor(seed, count);
+  // Seeds still drive the count and the keys, so a partly-photographed item
+  // shows what exists and fills the rest rather than collapsing the mosaic.
+  const frames = framesFor(seed, Math.max(count, images?.length ?? 0));
+  const srcAt = (i: number) => images?.[i];
 
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
@@ -110,7 +118,14 @@ export function Gallery({
           aria-label={t("counter", { current: 1, total: frames.length })}
           className={cn(FRAME, "col-span-2 row-span-2")}
         >
-          <SupplyImage seed={frames[0]} className="h-full w-full">
+          <SupplyImage
+            seed={frames[0]}
+            src={srcAt(0)}
+            alt={alt}
+            priority
+            sizes="(max-width: 640px) 100vw, 50vw"
+            className="h-full w-full"
+          >
             {verifiedLabel && (
               <span className="absolute left-4 top-4">
                 <VerifiedBadge label={verifiedLabel} />
@@ -127,7 +142,13 @@ export function Gallery({
             aria-label={t("counter", { current: i + 2, total: frames.length })}
             className={cn(FRAME, "hidden sm:block")}
           >
-            <SupplyImage seed={frame} className="h-full w-full" />
+            <SupplyImage
+              seed={frame}
+              src={srcAt(i + 1)}
+              alt={alt}
+              sizes="25vw"
+              className="h-full w-full"
+            />
           </button>
         ))}
 
@@ -185,6 +206,9 @@ export function Gallery({
             <div className="relative">
               <SupplyImage
                 seed={frames[index]}
+                src={srcAt(index)}
+                alt={alt}
+                sizes="(max-width: 1024px) 100vw, 960px"
                 className="aspect-[3/2] w-full rounded-card"
               />
 
@@ -221,14 +245,22 @@ export function Gallery({
                     i === index ? "ring-2 ring-white" : "opacity-45 hover:opacity-80",
                   )}
                 >
-                  <SupplyImage seed={frame} className="h-full w-full" />
+                  <SupplyImage
+              seed={frame}
+              src={srcAt(i + 1)}
+              alt={alt}
+              sizes="25vw"
+              className="h-full w-full"
+            />
                 </button>
               ))}
             </div>
 
-            <p className="mx-auto max-w-[64ch] text-center text-xs leading-relaxed text-white/55">
-              {t("placeholderNote")}
-            </p>
+            {!images?.length && (
+              <p className="mx-auto max-w-[64ch] text-center text-xs leading-relaxed text-white/55">
+                {t("placeholderNote")}
+              </p>
+            )}
           </div>
         </div>
       )}
