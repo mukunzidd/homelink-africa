@@ -21,43 +21,15 @@
     "stays": "Amacumbi",
     "cars": "Imodoka",
     "experiences": "Ingendo",
-    "howItWorks": "Uko bikora"
+    "howItWorks": "Uko bikora",
+    "homes": "Amazu"
   },
   "landing": {
     "heroTitle": "Urugo rwiteguye igihe ugeze",
     "heroBody": "Buri cumbi, imodoka n'umuyobozi kuri HomeLink byagenzuwe imbonankubone n'itsinda ryacu i Kigali. Niba biri hano, twarabigezeho.",
-    "doorsLabel": "Ni iki kigushoboye kuza?",
     "feedTitle": "Byagenzuwe i Kigali muri iki cyumweru",
     "feedBody": "Bimaze kugenzurwa kandi biteguye gufatwa.",
     "viewAll": "Reba amacumbi yose"
-  },
-  "doors": {
-    "arriving": {
-      "title": "Ndaza mu Rwanda",
-      "body": "Tegura urugendo: aho ucumbika, imodoka igutegereje, n'iminsi imaze guteganywa."
-    },
-    "home": {
-      "title": "Nkeneye urugo",
-      "body": "Kodesha igihe kirekire i Kigali. Amafoto nyayo, ba nyir'inzu bagenzuwe, nta bujura bw'aba agent."
-    },
-    "car": {
-      "title": "Nkeneye imodoka",
-      "body": "Uyitwara ubwawe cyangwa hamwe n'umushoferi. Kugutwara ku kibuga cy'indege birimo."
-    },
-    "explore": {
-      "title": "Nshaka gusura",
-      "body": "Ingagi, ibiyaga, kugendagenda mu mujyi, na pariki z'igihugu hamwe n'abayobozi bagenzuwe."
-    }
-  },
-  "duration": {
-    "label": "Ubikeneye igihe kingana iki?",
-    "short": "Amajoro macye",
-    "shortHint": "Ku ijoro",
-    "medium": "Amezi macye",
-    "mediumHint": "Ku ijoro",
-    "long": "Umwaka cyangwa irenga",
-    "longHint": "Amasezerano",
-    "helper": "Kuguma igihe gito n'igiciriritse bifatwa ku ijoro. Igihe kirekire cyimukira ku busabe bw'amasezerano yo gukodesha."
   },
   "search": {
     "where": "Aho",
@@ -341,5 +313,42 @@
     "peopleLabel": "Abantu bangahe",
     "whenLabel": "Umunsi uwuhe",
     "ageNotice": "Imyaka ntarengwa kuri uru ni {age}."
+  },
+  "searchPanel": {
+    "whereLabel": "Aho",
+    "whereValue": "Shakisha aho ujya",
+    "whenLabel": "Ryari",
+    "whenValue": "Ongeraho amatariki",
+    "whoLabel": "Bande",
+    "whoValue": "Ongeraho abashyitsi",
+    "search": "Shakisha",
+    "suggested": "Ahantu twagusaba",
+    "nearby": "Hafi yawe",
+    "nearbyHint": "Reba ibiri hafi yawe",
+    "anywhere": "Ahantu hose mu Rwanda",
+    "anywhereHint": "Reba ibyo twagenzuye byose",
+    "placesCount": "{count, plural, one {ahantu # hagenzuwe} other {ahantu # hagenzuwe}}",
+    "modeDates": "Amatariki",
+    "modeFlexible": "Bihinduka",
+    "howLong": "Ushaka kumara igihe kingana iki?",
+    "weekend": "Impera z'icyumweru",
+    "week": "Icyumweru",
+    "month": "Ukwezi",
+    "longStay": "Igihe kirekire",
+    "goAnytime": "Igihe icyo ari cyo cyose",
+    "monthsUnit": "{count, plural, one {ukwezi} other {amezi}}",
+    "leaseNote": "Amezi cumi n'abiri cyangwa arenga bikorwa nk'ubusabe bw'amasezerano, si ugufata ku ijoro.",
+    "adults": "Abakuru",
+    "adultsHint": "Imyaka 13 kuzamura",
+    "children": "Abana",
+    "childrenHint": "Imyaka 2 kugeza 12",
+    "infants": "Impinja",
+    "infantsHint": "Munsi y'imyaka 2",
+    "guestsSummary": "{count, plural, one {umushyitsi #} other {abashyitsi #}}",
+    "infantsSummary": "{count, plural, one {impinja #} other {impinja #}}",
+    "clear": "Siba",
+    "apply": "Byarangiye",
+    "anytime": "Igihe cyose",
+    "flexibleFor": "{label}, igihe cyose"
   }
 }

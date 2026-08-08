@@ -12,21 +12,16 @@ import {
   GlobeIcon,
   MonitorIcon,
   MoonIcon,
-  PinIcon,
-  PlaneIcon,
   SunIcon,
 } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 
 /**
- * One grouped control, not four floating boxes.
+ * Display preferences only: language, currency, theme.
  *
- * These are utilities, not navigation: they should be findable and then get
- * out of the way. Four separately bordered pills gave them the same visual
- * weight as the primary nav and still left "English / RWF / System" unlabelled
- * until you opened them. Collapsing the chrome into a single bordered object
- * with hairline dividers, and letting an icon carry the meaning, drops the
- * weight without hiding anything.
+ * The segment toggle used to sit here too, which gave a choice that changes
+ * *what the product does* — currency and payment rail — the same weight as
+ * one that only changes how it reads. It now lives in the preview bar.
  */
 
 /** Language is the URL, so switching it is a navigation, not a state change. */
@@ -124,62 +119,11 @@ function ThemeControl() {
   );
 }
 
-/**
- * The segment override. Product & UX §4 requires this visible and persistent,
- * never buried in settings — it changes currency and payment rail, which are
- * the two things a user most needs to correct about our guess.
- *
- * It stays a visible two-state toggle rather than joining the dropdowns
- * because it is the only control here that changes what the product does, not
- * just how it reads.
- */
-function SegmentControl() {
-  const t = useTranslations("segment");
-  const { segment, setSegment } = usePreferences();
-
-  const options = [
-    { value: "abroad", label: t("abroad"), icon: <PlaneIcon /> },
-    { value: "rwanda", label: t("rwanda"), icon: <PinIcon /> },
-  ] as const;
-
-  return (
-    <div
-      role="group"
-      aria-label={t("label")}
-      className="flex h-9 items-center rounded-ctl border border-line bg-surface p-0.5"
-    >
-      {options.map((option) => {
-        const active = segment === option.value;
-        return (
-          <button
-            key={option.value}
-            type="button"
-            aria-pressed={active}
-            title={option.label}
-            onClick={() => setSegment(option.value)}
-            className={cn(
-              "flex h-8 cursor-pointer items-center gap-1.5 rounded-[6px] px-2.5",
-              "text-[13px] font-semibold transition-colors duration-150",
-              active
-                ? "bg-brand-tint text-brand"
-                : "text-ink-3 hover:text-ink",
-            )}
-          >
-            {option.icon}
-            <span className="hidden lg:inline">{option.label}</span>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
 export function PreferenceControls() {
   return (
     /* The controls carry their own borders now that two of them open
        popovers — a shared outer frame would clip the menus. */
     <div className="flex items-center gap-1.5">
-      <SegmentControl />
       <LocaleControl />
       <CurrencyControl />
       <ThemeControl />

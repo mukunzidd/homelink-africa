@@ -49,6 +49,9 @@ export interface StaysRepo {
   featured(limit?: number): Promise<Listing[]>;
   /** Distinct neighbourhoods with live inventory, for the search field. */
   neighbourhoods(): Promise<string[]>;
+  /** Same, with counts — a suggestion that says how much is behind it is
+   *  more useful than a bare name, and honest about thin inventory. */
+  neighbourhoodsWithCounts(): Promise<{ name: string; count: number }[]>;
 }
 
 export type VehicleQuery = {

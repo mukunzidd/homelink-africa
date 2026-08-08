@@ -8,7 +8,7 @@ export default async function TripStartPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("doors");
+  const t = await getTranslations("landing");
 
-  return <NotBuiltYet title={t("arriving.title")} />;
+  return <NotBuiltYet title={t("heroTitle")} />;
 }

@@ -21,43 +21,15 @@
     "stays": "Stays",
     "cars": "Cars",
     "experiences": "Experiences",
-    "howItWorks": "How it works"
+    "howItWorks": "How it works",
+    "homes": "Homes"
   },
   "landing": {
     "heroTitle": "A home that is ready when you land",
     "heroBody": "Every stay, car, and guide on HomeLink has been inspected in person by our team in Kigali. If it is here, we have stood in the room.",
-    "doorsLabel": "What brings you here?",
     "feedTitle": "Verified in Kigali this week",
     "feedBody": "Newly inspected and ready to book.",
     "viewAll": "View all stays"
-  },
-  "doors": {
-    "arriving": {
-      "title": "I'm coming to Rwanda",
-      "body": "Compose a trip: a place to stay, a car waiting, and days already planned."
-    },
-    "home": {
-      "title": "I need a home",
-      "body": "Rent long-term in Kigali. Real photos, verified landlords, no agent games."
-    },
-    "car": {
-      "title": "I need a car",
-      "body": "Self-drive or with a driver. Airport pickup included."
-    },
-    "explore": {
-      "title": "I want to explore",
-      "body": "Gorillas, lakes, city walks, and national parks with vetted guides."
-    }
-  },
-  "duration": {
-    "label": "How long do you need it?",
-    "short": "A few nights",
-    "shortHint": "Nightly",
-    "medium": "A few months",
-    "mediumHint": "Nightly",
-    "long": "A year or more",
-    "longHint": "Lease",
-    "helper": "Short and medium stays book by the night. Long-term switches to a lease application."
   },
   "search": {
     "where": "Where",
@@ -341,5 +313,42 @@
     "peopleLabel": "How many people",
     "whenLabel": "Which day",
     "ageNotice": "Minimum age for this one is {age}."
+  },
+  "searchPanel": {
+    "whereLabel": "Where",
+    "whereValue": "Search destinations",
+    "whenLabel": "When",
+    "whenValue": "Add dates",
+    "whoLabel": "Who",
+    "whoValue": "Add guests",
+    "search": "Search",
+    "suggested": "Suggested destinations",
+    "nearby": "Nearby",
+    "nearbyHint": "Find what's around you",
+    "anywhere": "Anywhere in Rwanda",
+    "anywhereHint": "Browse everything we've verified",
+    "placesCount": "{count, plural, one {# verified place} other {# verified places}}",
+    "modeDates": "Dates",
+    "modeFlexible": "Flexible",
+    "howLong": "How long do you want to stay?",
+    "weekend": "A weekend",
+    "week": "A week",
+    "month": "A month",
+    "longStay": "Longer",
+    "goAnytime": "Go anytime",
+    "monthsUnit": "{count, plural, one {month} other {months}}",
+    "leaseNote": "Twelve months or more is handled as a lease application, not a nightly booking.",
+    "adults": "Adults",
+    "adultsHint": "Ages 13 or above",
+    "children": "Children",
+    "childrenHint": "Ages 2 to 12",
+    "infants": "Infants",
+    "infantsHint": "Under 2",
+    "guestsSummary": "{count, plural, one {# guest} other {# guests}}",
+    "infantsSummary": "{count, plural, one {# infant} other {# infants}}",
+    "clear": "Clear",
+    "apply": "Done",
+    "anytime": "Anytime",
+    "flexibleFor": "{label}, anytime"
   }
 }

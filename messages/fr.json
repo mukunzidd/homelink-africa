@@ -21,43 +21,15 @@
     "stays": "Logements",
     "cars": "Voitures",
     "experiences": "Excursions",
-    "howItWorks": "Comment ça marche"
+    "howItWorks": "Comment ça marche",
+    "homes": "Résidences"
   },
   "landing": {
     "heroTitle": "Un logement prêt à votre arrivée",
     "heroBody": "Chaque logement, voiture et guide sur HomeLink a été inspecté en personne par notre équipe à Kigali. S'il est ici, nous y sommes allés.",
-    "doorsLabel": "Qu'est-ce qui vous amène ?",
     "feedTitle": "Vérifiés à Kigali cette semaine",
     "feedBody": "Récemment inspectés et prêts à réserver.",
     "viewAll": "Voir tous les logements"
-  },
-  "doors": {
-    "arriving": {
-      "title": "Je viens au Rwanda",
-      "body": "Composez un voyage : un logement, une voiture qui vous attend et des journées déjà planifiées."
-    },
-    "home": {
-      "title": "Je cherche un logement",
-      "body": "Louez à long terme à Kigali. Vraies photos, propriétaires vérifiés, sans jeux d'agence."
-    },
-    "car": {
-      "title": "J'ai besoin d'une voiture",
-      "body": "Sans chauffeur ou avec chauffeur. Prise en charge à l'aéroport incluse."
-    },
-    "explore": {
-      "title": "Je veux explorer",
-      "body": "Gorilles, lacs, balades urbaines et parcs nationaux avec des guides vérifiés."
-    }
-  },
-  "duration": {
-    "label": "Pour combien de temps ?",
-    "short": "Quelques nuits",
-    "shortHint": "À la nuit",
-    "medium": "Quelques mois",
-    "mediumHint": "À la nuit",
-    "long": "Un an ou plus",
-    "longHint": "Bail",
-    "helper": "Les séjours courts et moyens se réservent à la nuit. Le long terme bascule vers une demande de bail."
   },
   "search": {
     "where": "Où",
@@ -341,5 +313,42 @@
     "peopleLabel": "Combien de personnes",
     "whenLabel": "Quel jour",
     "ageNotice": "L'âge minimum pour cette sortie est de {age} ans."
+  },
+  "searchPanel": {
+    "whereLabel": "Où",
+    "whereValue": "Chercher une destination",
+    "whenLabel": "Quand",
+    "whenValue": "Ajouter des dates",
+    "whoLabel": "Qui",
+    "whoValue": "Ajouter des voyageurs",
+    "search": "Rechercher",
+    "suggested": "Destinations suggérées",
+    "nearby": "À proximité",
+    "nearbyHint": "Voir ce qui vous entoure",
+    "anywhere": "Partout au Rwanda",
+    "anywhereHint": "Parcourir tout ce que nous avons vérifié",
+    "placesCount": "{count, plural, one {# logement vérifié} other {# logements vérifiés}}",
+    "modeDates": "Dates",
+    "modeFlexible": "Flexible",
+    "howLong": "Combien de temps souhaitez-vous rester ?",
+    "weekend": "Un week-end",
+    "week": "Une semaine",
+    "month": "Un mois",
+    "longStay": "Plus longtemps",
+    "goAnytime": "N'importe quand",
+    "monthsUnit": "{count, plural, one {mois} other {mois}}",
+    "leaseNote": "Douze mois ou plus passent par une demande de bail, pas une réservation à la nuit.",
+    "adults": "Adultes",
+    "adultsHint": "13 ans et plus",
+    "children": "Enfants",
+    "childrenHint": "De 2 à 12 ans",
+    "infants": "Bébés",
+    "infantsHint": "Moins de 2 ans",
+    "guestsSummary": "{count, plural, one {# voyageur} other {# voyageurs}}",
+    "infantsSummary": "{count, plural, one {# bébé} other {# bébés}}",
+    "clear": "Effacer",
+    "apply": "Terminé",
+    "anytime": "N'importe quand",
+    "flexibleFor": "{label}, n'importe quand"
   }
 }

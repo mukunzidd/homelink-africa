@@ -193,6 +193,17 @@ export function ExpandIcon({ className, size = 16 }: IconProps) {
   );
 }
 
+/** Collapsed state of the preview bar: settings without implying a page. */
+export function SlidersIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M3 6h9M15 6h2M3 14h2M8 14h9" />
+      <circle cx="13.5" cy="6" r="1.9" />
+      <circle cx="6.5" cy="14" r="1.9" />
+    </svg>
+  );
+}
+
 export function CloseIcon({ className, size = 16 }: IconProps) {
   return (
     <svg {...base(size, className)}>

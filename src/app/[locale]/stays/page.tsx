@@ -7,7 +7,7 @@ import { countActiveFilters, parseStaySearch, type RawParams } from "@/lib/searc
 import { ListingRow } from "@/components/listing/listing-row";
 import { StayFilters } from "@/components/listing/stay-filters";
 import { SortControl } from "@/components/listing/sort-control";
-import { StaySearchBar } from "@/components/search/stay-search-bar";
+import { SearchPill } from "@/components/search/search-pill";
 import { AddDatesPrompt } from "@/components/search/add-dates-prompt";
 
 export default async function StaysPage({
@@ -24,7 +24,7 @@ export default async function StaysPage({
   const t = await getTranslations("results");
   const tEmpty = await getTranslations("empty");
 
-  const [listings, neighbourhoods] = await Promise.all([
+  const [listings, neighbourhoods, destinations] = await Promise.all([
     repos().stays.list({
       neighbourhood: search.neighbourhood,
       minBedrooms: search.bedrooms,
@@ -34,6 +34,7 @@ export default async function StaysPage({
       sort: search.sort,
     }),
     repos().stays.neighbourhoods(),
+    repos().stays.neighbourhoodsWithCounts(),
   ]);
 
   const intlLocale = INTL_LOCALES[locale as Locale];
@@ -43,7 +44,7 @@ export default async function StaysPage({
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-6 px-6 py-8">
-      <StaySearchBar search={search} neighbourhoods={neighbourhoods} />
+      <SearchPill search={search} destinations={destinations} />
 
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex flex-col gap-1">

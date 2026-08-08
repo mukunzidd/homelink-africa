@@ -9,7 +9,7 @@ import { repos } from "@/lib/repos";
 import { PreferencesProvider } from "@/lib/preferences/context";
 import { SiteHeader } from "@/components/shell/site-header";
 import { SiteFooter } from "@/components/shell/site-footer";
-import { DevBar } from "@/components/shell/dev-bar";
+import { PreviewBar } from "@/components/shell/preview-bar";
 import { ThemeScript } from "@/components/shell/theme-script";
 
 import "../globals.css";
@@ -99,7 +99,7 @@ export default async function LocaleLayout({
               {children}
             </main>
             <SiteFooter />
-            <DevBar />
+            <PreviewBar />
           </PreferencesProvider>
         </NextIntlClientProvider>
       </body>
