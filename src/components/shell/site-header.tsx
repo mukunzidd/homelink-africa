@@ -17,20 +17,24 @@ export async function SiteHeader() {
       </a>
 
       <header className="sticky top-0 z-40 border-b border-line bg-surface/95 backdrop-blur">
-        <div className="relative mx-auto flex max-w-[1180px] items-center gap-6 px-6 py-2">
-          <Link href="/" className="flex-none rounded-ctl">
+        {/*
+          A three-column grid rather than absolute positioning. The tabs were
+          taken out of flow to centre them, which meant they contributed no
+          height — the header collapsed to the logo's height and the taller
+          tabs spilled past its edge with nothing above them.
+          `1fr auto 1fr` centres the tabs on the page, not on whatever space
+          the logo happens to leave, and they still set the header's height.
+        */}
+        <div className="mx-auto grid max-w-[1180px] grid-cols-[1fr_auto] items-center gap-4 px-6 py-3 md:grid-cols-[1fr_auto_1fr]">
+          <Link href="/" className="justify-self-start rounded-ctl">
             <Logo />
           </Link>
 
-          {/* Centred and absolutely placed so the tabs stay optically centred
-              on the page rather than on whatever space the logo leaves. */}
-          <div className="pointer-events-none absolute inset-x-0 hidden justify-center md:flex">
-            <div className="pointer-events-auto">
-              <VerticalTabs />
-            </div>
+          <div className="col-span-2 row-start-2 flex justify-center md:col-span-1 md:row-start-1">
+            <VerticalTabs />
           </div>
 
-          <div className="ml-auto">
+          <div className="justify-self-end md:col-start-3">
             <PreferenceControls />
           </div>
         </div>

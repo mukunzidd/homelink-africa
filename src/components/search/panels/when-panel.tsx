@@ -3,7 +3,13 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
-import { addDays, isBefore, type IsoDate } from "@/lib/domain/dates";
+import {
+  addDays,
+  formatDateRange,
+  isBefore,
+  quickRanges,
+  type IsoDate,
+} from "@/lib/domain/dates";
 import { Segmented } from "@/components/ui/segmented";
 import { BigStepper } from "@/components/ui/stepper";
 import { Calendar } from "@/components/ui/calendar";
@@ -55,12 +61,23 @@ export function WhenPanel({
   const [hovered, setHovered] = useState<IsoDate | null>(null);
 
   function pick(date: IsoDate) {
-    // No arrival yet, or a click before the current one: treat it as the new
-    // arrival rather than an error. Nobody clicks backwards by accident twice.
-    if (!value.from || !value.to || !isBefore(value.from, date)) {
+    /*
+     * A click starts a new range when there is nothing to extend: no arrival
+     * yet, a completed range already sitting there, or a date at or before the
+     * current arrival. Otherwise it closes the range.
+     *
+     * The bug this replaces tested `!value.to`, which is true for exactly the
+     * state the second click happens in — one date chosen, none yet to close
+     * it — so every second click silently restarted instead of completing.
+     */
+    const startsNewRange =
+      !value.from || !!value.to || !isBefore(value.from, date);
+
+    if (startsNewRange) {
       onChange({ ...value, from: date, to: null, span: null });
       return;
     }
+
     onChange({ ...value, to: date, span: null });
     setHovered(null);
   }
@@ -105,7 +122,53 @@ export function WhenPanel({
       />
 
       {mode === "dates" ? (
-        <Calendar
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-7">
+          {/* The four ranges that cover most stays, one click each. Reaching
+              "this weekend" through a month grid is three interactions for
+              something that should be none. Each card shows the dates it
+              resolves to, so the shortcut is never a guess. */}
+          <div className="flex gap-2 overflow-x-auto pb-1 sm:w-44 sm:flex-none sm:flex-col sm:overflow-visible sm:pb-0">
+            {quickRanges().map((range) => {
+              const active =
+                value.from === range.from && value.to === range.to;
+              return (
+                <button
+                  key={range.key}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() =>
+                    onChange({
+                      ...value,
+                      from: range.from,
+                      to: range.to,
+                      span: null,
+                    })
+                  }
+                  className={cn(
+                    "flex min-w-[9.5rem] cursor-pointer flex-col gap-0.5 rounded-card border px-4 py-3 text-left",
+                    "transition-colors duration-150",
+                    active
+                      ? "border-brand bg-brand-tint"
+                      : "border-line hover:border-ink-3",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "text-[15px] font-semibold",
+                      active ? "text-brand" : "text-ink",
+                    )}
+                  >
+                    {t(`quick${range.key.charAt(0).toUpperCase()}${range.key.slice(1)}`)}
+                  </span>
+                  <span className="tnum text-[13px] text-ink-3">
+                    {formatDateRange(range.from, range.to, INTL_LOCALES[locale])}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <Calendar
           from={value.from}
           to={value.to}
           hovered={hovered}
@@ -116,7 +179,8 @@ export function WhenPanel({
             previousMonth: tCal("previousMonth"),
             nextMonth: tCal("nextMonth"),
           }}
-        />
+          />
+        </div>
       ) : (
         <div className="flex w-full max-w-lg flex-col items-center gap-5">
           <p className="font-display text-xl font-semibold text-ink">

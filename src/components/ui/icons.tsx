@@ -211,3 +211,104 @@ export function CloseIcon({ className, size = 16 }: IconProps) {
     </svg>
   );
 }
+
+/* ---- amenity glyphs. A dot next to "Backup power" says nothing; these do. -- */
+
+export function BoltIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M11.2 2.4 4.6 11h4.2l-1 6.6L14.4 9h-4.2z" />
+    </svg>
+  );
+}
+
+export function WifiIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M2.6 7.6a11 11 0 0 1 14.8 0M5.4 10.6a7 7 0 0 1 9.2 0M8.2 13.6a3 3 0 0 1 3.6 0" />
+      <circle cx="10" cy="16.4" r=".9" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function BedIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M2.6 15V6M2.6 11h14.8v4M17.4 11V9.4a2 2 0 0 0-2-2H9.2V11" />
+      <circle cx="6" cy="9.2" r="1.6" />
+    </svg>
+  );
+}
+
+export function DropletIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M10 2.6s5 5.2 5 8.6a5 5 0 0 1-10 0c0-3.4 5-8.6 5-8.6Z" />
+    </svg>
+  );
+}
+
+export function ShieldIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M10 2.6 4 5v4.6c0 3.6 2.5 6.4 6 7.8 3.5-1.4 6-4.2 6-7.8V5z" />
+    </svg>
+  );
+}
+
+export function LeafIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M3.6 16.4C3 11 6.4 4.6 16.4 3.6c1 10-5.4 13.4-10.8 12.8" />
+      <path d="M3.6 16.4c2.6-2.8 5.6-5 9.2-6.6" />
+    </svg>
+  );
+}
+
+export function LaptopIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <rect x="4" y="4.4" width="12" height="8.2" rx="1.4" />
+      <path d="M2.4 15.6h15.2" />
+    </svg>
+  );
+}
+
+/** The gallery opener: a grid of frames, not a magnifier. */
+export function GridIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <rect x="3" y="3" width="6" height="6" rx="1.2" />
+      <rect x="11" y="3" width="6" height="6" rx="1.2" />
+      <rect x="3" y="11" width="6" height="6" rx="1.2" />
+      <rect x="11" y="11" width="6" height="6" rx="1.2" />
+    </svg>
+  );
+}
+
+/** The lease lane: a key is a tenancy, a bed is a night. */
+export function KeyIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <circle cx="6.6" cy="13.4" r="3.4" />
+      <path d="M9 11 16.4 3.6M13.6 6.4l2 2M11.8 8.2l2 2" />
+    </svg>
+  );
+}
+
+export function ShareIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M10 13V3M10 3 6.6 6.4M10 3l3.4 3.4" />
+      <path d="M4 11.6v3.8a1.6 1.6 0 0 0 1.6 1.6h8.8a1.6 1.6 0 0 0 1.6-1.6v-3.8" />
+    </svg>
+  );
+}
+
+export function HeartIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M10 16.4S3.2 12.6 3.2 8a3.6 3.6 0 0 1 6.8-1.7A3.6 3.6 0 0 1 16.8 8c0 4.6-6.8 8.4-6.8 8.4Z" />
+    </svg>
+  );
+}

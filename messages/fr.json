@@ -18,11 +18,11 @@
     "help": "Aide"
   },
   "nav": {
-    "stays": "Logements",
+    "stays": "Séjours",
     "cars": "Voitures",
     "experiences": "Excursions",
     "howItWorks": "Comment ça marche",
-    "homes": "Résidences"
+    "homes": "Location"
   },
   "landing": {
     "heroTitle": "Un logement prêt à votre arrivée",
@@ -199,7 +199,19 @@
     "monthlyFrom": "Long terme à partir de",
     "leaseAvailable": "Disponible en bail long terme",
     "leaseBody": "Douze mois ou plus passent par une demande de bail plutôt qu'une réservation à la nuit : documents, dépôt de garantie et contrat signé.",
-    "applyForLease": "Demander un bail"
+    "applyForLease": "Demander un bail",
+    "highlights": "Ce qui ressort",
+    "thingsToKnow": "À savoir",
+    "houseRules": "Règlement intérieur",
+    "houseRulesBody": "Arrivée à partir de 14h00, départ avant 11h00. Pas de fêtes. Silence après 22h00, les voisins vous en remercieront.",
+    "cancellationTitle": "Annulation",
+    "safetyTitle": "Sécurité et paiement",
+    "inspectorRole": "Inspecteur HomeLink",
+    "seeRecord": "Voir le dossier complet",
+    "share": "Partager",
+    "save": "Enregistrer",
+    "entirePlace": "Logement entier",
+    "hostedBy": "Vérifié par"
   },
   "quote": {
     "accommodation": "{rate} × {nights, plural, one {# nuit} other {# nuits}}",
@@ -315,29 +327,29 @@
     "ageNotice": "L'âge minimum pour cette sortie est de {age} ans."
   },
   "searchPanel": {
-    "whereLabel": "Où",
-    "whereValue": "Chercher une destination",
-    "whenLabel": "Quand",
-    "whenValue": "Ajouter des dates",
-    "whoLabel": "Qui",
-    "whoValue": "Ajouter des voyageurs",
+    "whereLabel": "Destination",
+    "whereValue": "Kigali, ou un quartier",
+    "whenLabel": "Dates",
+    "whenValue": "Dates flexibles",
+    "whoLabel": "Voyageurs",
+    "whoValue": "Combien",
     "search": "Rechercher",
-    "suggested": "Destinations suggérées",
+    "suggested": "Là où nous avons inspecté",
     "nearby": "À proximité",
     "nearbyHint": "Voir ce qui vous entoure",
-    "anywhere": "Partout au Rwanda",
-    "anywhereHint": "Parcourir tout ce que nous avons vérifié",
+    "anywhere": "Partout à Kigali",
+    "anywhereHint": "Tout ce où nous sommes allés",
     "placesCount": "{count, plural, one {# logement vérifié} other {# logements vérifiés}}",
-    "modeDates": "Dates",
-    "modeFlexible": "Flexible",
-    "howLong": "Combien de temps souhaitez-vous rester ?",
+    "modeDates": "Dates précises",
+    "modeFlexible": "À peu près",
+    "howLong": "Combien de temps restez-vous ?",
     "weekend": "Un week-end",
     "week": "Une semaine",
     "month": "Un mois",
     "longStay": "Plus longtemps",
     "goAnytime": "N'importe quand",
     "monthsUnit": "{count, plural, one {mois} other {mois}}",
-    "leaseNote": "Douze mois ou plus passent par une demande de bail, pas une réservation à la nuit.",
+    "leaseNote": "Un an ou plus relève du bail, pas de la réservation à la nuit. Nous vous accompagnons pour les documents et le dépôt.",
     "adults": "Adultes",
     "adultsHint": "13 ans et plus",
     "children": "Enfants",
@@ -349,6 +361,10 @@
     "clear": "Effacer",
     "apply": "Terminé",
     "anytime": "N'importe quand",
-    "flexibleFor": "{label}, n'importe quand"
+    "flexibleFor": "{label}, n'importe quand",
+    "quickTonight": "Ce soir",
+    "quickTomorrow": "Demain",
+    "quickWeekend": "Ce week-end",
+    "quickNextWeek": "La semaine prochaine"
   }
 }

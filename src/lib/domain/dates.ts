@@ -167,3 +167,38 @@ export function clampToRange(
   if (max && date > max) return max;
   return date;
 }
+
+/* --------------------------------------------------------- quick ranges */
+
+/** 0 = Sunday. */
+export function weekdayOf(date: IsoDate): number {
+  return toUtc(date).getUTCDay();
+}
+
+export type QuickRange = { key: string; from: IsoDate; to: IsoDate };
+
+/**
+ * The handful of ranges people actually pick, resolved to real dates.
+ *
+ * Most stays are one of these, and reaching them through a month grid is three
+ * interactions for something that should be one. Resolving them here rather
+ * than in the component keeps "what counts as this weekend" testable and out
+ * of the UI.
+ */
+export function quickRanges(from: IsoDate = today()): QuickRange[] {
+  const day = weekdayOf(from);
+
+  // The coming Friday. Already Friday or Saturday means this weekend, not next.
+  const toFriday = (5 - day + 7) % 7;
+  const friday = addDays(from, day === 6 ? -1 : toFriday);
+
+  // Monday of next week.
+  const nextMonday = addDays(from, ((8 - day) % 7) || 7);
+
+  return [
+    { key: "tonight", from, to: addDays(from, 1) },
+    { key: "tomorrow", from: addDays(from, 1), to: addDays(from, 2) },
+    { key: "weekend", from: friday, to: addDays(friday, 2) },
+    { key: "nextWeek", from: nextMonday, to: addDays(nextMonday, 7) },
+  ];
+}
