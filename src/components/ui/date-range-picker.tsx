@@ -29,6 +29,11 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@/components/ui/icons";
+import {
+  FIELD_SHELL,
+  FieldContent,
+  fieldShellState,
+} from "@/components/ui/field-shell";
 import { cn } from "@/lib/cn";
 
 /**
@@ -189,11 +194,6 @@ export function DateRangePicker({
 
   const nights = from && to ? nightsBetween(from, to) : 0;
 
-  const fieldClass = cn(
-    "flex min-h-11 flex-1 cursor-pointer flex-col items-start gap-0.5 rounded-ctl border px-3 py-2 text-left",
-    "transition-colors duration-150",
-  );
-
   return (
     <div ref={rootRef} className={cn("relative", className)}>
       <div className="flex gap-2">
@@ -213,30 +213,25 @@ export function DateRangePicker({
             aria-controls={open ? dialogId : undefined}
             onClick={() => openAt(field.side)}
             className={cn(
-              fieldClass,
-              open && editing === field.side
-                ? "border-brand bg-brand-tint/40"
-                : "border-line bg-surface hover:bg-surface-2",
+              FIELD_SHELL,
+              "flex-1 cursor-pointer",
+              fieldShellState(open && editing === field.side),
             )}
           >
-            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
-              {field.label}
-            </span>
-            <span
-              className={cn(
-                "flex items-center gap-1.5 text-[15px] font-medium",
-                field.value ? "text-ink" : "text-ink-3",
-              )}
+            <FieldContent
+              label={field.label}
+              icon={<CalendarIcon size={15} />}
             >
-              <CalendarIcon size={14} className="flex-none text-ink-3" />
-              {field.value
-                ? formatDate(field.value, intlLocale, {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })
-                : (placeholder ?? t("addDate"))}
-            </span>
+              <span className={cn("block truncate", !field.value && "text-ink-3")}>
+                {field.value
+                  ? formatDate(field.value, intlLocale, {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })
+                  : (placeholder ?? t("addDate"))}
+              </span>
+            </FieldContent>
           </button>
         ))}
       </div>

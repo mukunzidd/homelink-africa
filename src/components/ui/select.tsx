@@ -2,6 +2,11 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { ChevronDownIcon } from "@/components/ui/icons";
+import {
+  FIELD_SHELL,
+  FieldContent,
+  fieldShellState,
+} from "@/components/ui/field-shell";
 import { useDismissable } from "@/lib/use-dismissable";
 import { cn } from "@/lib/cn";
 
@@ -180,30 +185,25 @@ export function Select<T extends string | number>({
         onClick={() => (open ? close() : openList())}
         onKeyDown={onKeyDown}
         className={cn(
-          "flex w-full cursor-pointer items-center gap-2 rounded-ctl border border-line bg-surface text-left",
-          "transition-colors duration-150 hover:bg-surface-2",
-          "disabled:cursor-not-allowed disabled:opacity-60",
-          open && "border-brand",
+          "cursor-pointer disabled:cursor-not-allowed disabled:opacity-60",
           isField
-            ? "min-h-11 flex-col justify-center gap-0.5 px-3 py-2"
-            : size === "sm"
-              ? "min-h-9 px-2.5"
-              : "min-h-11 px-3",
+            ? cn(FIELD_SHELL, fieldShellState(open))
+            : cn(
+                "flex w-full items-center gap-2 rounded-ctl border bg-surface text-left",
+                "transition-colors duration-150 hover:bg-surface-2",
+                open ? "border-brand" : "border-line",
+                size === "sm" ? "min-h-9 px-2.5" : "min-h-11 px-3",
+              ),
         )}
       >
         {isField ? (
-          <>
-            <span className="w-full text-[11px] font-bold uppercase tracking-wider text-ink-3">
-              {label}
-            </span>
-            <span className="flex w-full items-center gap-1.5">
-              {icon && <span className="flex-none text-ink-3">{icon}</span>}
-              <span className="flex-1 truncate text-[15px] font-medium text-ink">
-                {selected?.label ?? ""}
-              </span>
-              <ChevronDownIcon className="flex-none text-ink-3" />
-            </span>
-          </>
+          <FieldContent
+            label={label}
+            icon={icon}
+            trailing={<ChevronDownIcon />}
+          >
+            <span className="block truncate">{selected?.label ?? ""}</span>
+          </FieldContent>
         ) : (
           <>
             {icon && <span className="flex-none text-ink-3">{icon}</span>}
