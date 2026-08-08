@@ -261,11 +261,13 @@
     "whatNext": "What happens next",
     "next1": "Aline from our Kigali team will message you within a few hours to confirm arrival details.",
     "next2": "Your money stays in escrow until you confirm check-in.",
-    "next3": "Add a car or a day out any time before you arrive — it joins the same trip.",
+    "next3": "About a week before you arrive, Aline will ask whether you want a car or anything else arranged.",
     "openMessages": "Open the thread",
-    "addCar": "Add a car",
-    "addExperience": "Add something to do",
-    "viewBooking": "View booking"
+    "viewBooking": "View booking",
+    "arrangeTitle": "Anything else you need?",
+    "arrangeBody": "A car at the airport, a driver for the week, a day out somewhere worth going. Tell the Kigali team and they'll arrange it — no second booking, no separate account.",
+    "arrangeAction": "Message the team",
+    "arrangeNote": "They'll also check in about a week before you land, once you know your flight."
   },
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {# day} other {# days}}",

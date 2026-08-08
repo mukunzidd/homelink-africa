@@ -117,18 +117,6 @@ export default async function BookingConfirmationPage({
     t("next3"),
   ];
 
-  // Add-ons offered are the ones not already booked — suggesting a car to
-  // someone who just booked a car is noise, and Principle 3 says the bundle
-  // pulls toward a richer trip without ever getting in the way.
-  const addOns = [
-    { href: "/cars", label: t("addCar"), show: kind !== "car" },
-    {
-      href: "/experiences",
-      label: t("addExperience"),
-      show: kind !== "experience",
-    },
-  ].filter((a) => a.show);
-
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-8 px-6 py-8">
       <StepSpine current={4} />
@@ -178,17 +166,30 @@ export default async function BookingConfirmationPage({
             </ol>
           </section>
 
-          {/* The bundle is gravity, never a gate — so these are secondary. */}
-          <div className="flex flex-wrap gap-2.5">
-            {addOns.map((addOn) => (
-              <Link key={addOn.href} href={addOn.href}>
-                <Button variant="secondary">{addOn.label}</Button>
-              </Link>
-            ))}
-            <Link href="/messages">
-              <Button variant="quiet">{t("openMessages")}</Button>
+          {/*
+            An offer, not a catalogue.
+            "Add a car" sent people into an unfiltered search with none of this
+            booking carried across, so it read as "go start something else"
+            rather than "finish your trip". And the moment is wrong: nobody
+            arranges an airport pickup three months out — they do it days
+            before, when the logistics feel real.
+            So this asks a person instead, and says plainly that the team will
+            come back nearer the date. It is also the honest shape of the
+            product today: a human arranges these, there is no second checkout
+            behind them.
+          */}
+          <section className="flex flex-col items-start gap-3 rounded-card border border-line bg-surface p-6">
+            <h2 className="font-display text-xl font-semibold text-ink">
+              {t("arrangeTitle")}
+            </h2>
+            <p className="max-w-[58ch] text-[15px] leading-relaxed text-ink-2">
+              {t("arrangeBody")}
+            </p>
+            <Link href="/messages" className="mt-1">
+              <Button variant="trust">{t("arrangeAction")}</Button>
             </Link>
-          </div>
+            <p className="text-[13px] text-ink-3">{t("arrangeNote")}</p>
+          </section>
         </div>
 
         <aside className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5">

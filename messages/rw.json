@@ -261,11 +261,13 @@
     "whatNext": "Ibikurikira",
     "next1": "Aline wo mu itsinda ryacu i Kigali azakwandikira mu masaha make kugira ngo yemeze uko uzagera.",
     "next2": "Amafaranga yawe aguma abitswe kugeza wemeje ko wageze.",
-    "next3": "Ongeraho imodoka cyangwa igikorwa igihe cyose mbere yo kugera — bijya mu rugendo rumwe.",
+    "next3": "Nka icyumweru mbere yuko ugera, Aline azakubaza niba ushaka imodoka cyangwa ikindi kintu.",
     "openMessages": "Fungura ikiganiro",
-    "addCar": "Ongeraho imodoka",
-    "addExperience": "Ongeraho icyo gukora",
-    "viewBooking": "Reba ibyafashwe"
+    "viewBooking": "Reba ibyafashwe",
+    "arrangeTitle": "Hari ikindi ukeneye?",
+    "arrangeBody": "Imodoka ku kibuga cy'indege, umushoferi w'icyumweru, cyangwa urugendo rukwiye. Bibwire itsinda ry'i Kigali maze babigutegurire — nta kundi gufata, nta konti yindi.",
+    "arrangeAction": "Andikira itsinda",
+    "arrangeNote": "Bazongera bakubaze nka icyumweru mbere yuko ugera, numara kumenya indege yawe."
   },
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {umunsi #} other {iminsi #}}",

@@ -261,11 +261,13 @@
     "whatNext": "La suite",
     "next1": "Aline, de notre équipe à Kigali, vous écrira dans les prochaines heures pour confirmer votre arrivée.",
     "next2": "Votre argent reste sous séquestre jusqu'à confirmation de votre arrivée.",
-    "next3": "Ajoutez une voiture ou une sortie à tout moment avant d'arriver — cela rejoint le même voyage.",
+    "next3": "Environ une semaine avant votre arrivée, Aline vous demandera si vous voulez une voiture ou autre chose.",
     "openMessages": "Ouvrir la conversation",
-    "addCar": "Ajouter une voiture",
-    "addExperience": "Ajouter une activité",
-    "viewBooking": "Voir la réservation"
+    "viewBooking": "Voir la réservation",
+    "arrangeTitle": "Besoin d'autre chose ?",
+    "arrangeBody": "Une voiture à l'aéroport, un chauffeur pour la semaine, une sortie qui en vaut la peine. Dites-le à l'équipe de Kigali et elle s'en occupe — pas de seconde réservation, pas de compte séparé.",
+    "arrangeAction": "Écrire à l'équipe",
+    "arrangeNote": "Elle reprendra contact environ une semaine avant votre arrivée, quand vous connaîtrez votre vol."
   },
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {# jour} other {# jours}}",
