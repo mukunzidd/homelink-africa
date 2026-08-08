@@ -70,10 +70,11 @@ export default async function StaysPage({
       {!hasDates && <AddDatesPrompt />}
 
       <div className="grid gap-6 lg:grid-cols-[268px_1fr]">
-        {/* Capped and scrollable: a sticky element taller than the viewport
-            hides its own lower half, because the page scroll no longer moves
-            it. The rail scrolls internally instead. */}
-        <aside className="lg:sticky lg:top-20 lg:max-h-[calc(100dvh-6rem)] lg:self-start lg:overflow-y-auto">
+        {/* `self-start` matters: a grid item stretches by default, so without
+            it the aside is as tall as the results column and sticky has
+            nothing left to do. No internal scroll — that clipped the
+            neighbourhood menu. */}
+        <aside className="lg:sticky lg:top-20 lg:self-start">
           <StayFilters neighbourhoods={neighbourhoods} />
         </aside>
 

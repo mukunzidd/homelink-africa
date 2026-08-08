@@ -193,12 +193,12 @@ export function Select<T extends string | number>({
       >
         {isField ? (
           <>
-            <span className="flex w-full items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-ink-3">
-              {icon}
+            <span className="w-full text-[11px] font-bold uppercase tracking-wider text-ink-3">
               {label}
             </span>
-            <span className="flex w-full items-center justify-between gap-2">
-              <span className="truncate text-[15px] font-medium text-ink">
+            <span className="flex w-full items-center gap-1.5">
+              {icon && <span className="flex-none text-ink-3">{icon}</span>}
+              <span className="flex-1 truncate text-[15px] font-medium text-ink">
                 {selected?.label ?? ""}
               </span>
               <ChevronDownIcon className="flex-none text-ink-3" />

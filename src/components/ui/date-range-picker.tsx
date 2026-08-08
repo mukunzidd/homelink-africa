@@ -228,7 +228,7 @@ export function DateRangePicker({
                 field.value ? "text-ink" : "text-ink-3",
               )}
             >
-              <CalendarIcon size={14} className="text-ink-3" />
+              <CalendarIcon size={14} className="flex-none text-ink-3" />
               {field.value
                 ? formatDate(field.value, intlLocale, {
                     day: "numeric",
@@ -249,7 +249,7 @@ export function DateRangePicker({
           aria-modal="false"
           aria-label={editing === "from" ? labelFrom : labelTo}
           className={cn(
-            "absolute z-50 mt-2 w-max max-w-[calc(100vw-2rem)] overflow-x-auto rounded-card",
+            "absolute z-50 mt-2 w-max rounded-card",
             "border border-line bg-surface p-4 shadow-[var(--shadow-pop)]",
             align === "end" ? "right-0" : "left-0",
           )}
@@ -297,8 +297,11 @@ export function DateRangePicker({
             className="flex gap-6"
           >
             {months.map((month, index) => (
-              <MonthGrid
+              <div
                 key={month}
+                className={index === 1 ? "hidden sm:block" : "block"}
+              >
+              <MonthGrid
                 month={month}
                 locale={intlLocale}
                 weekdays={weekdays}
@@ -308,8 +311,8 @@ export function DateRangePicker({
                 focused={focused}
                 onSelect={select}
                 onHover={setHovered}
-                className={index === 1 ? "hidden sm:grid" : "grid"}
               />
+              </div>
             ))}
           </div>
 
@@ -362,7 +365,6 @@ function MonthGrid({
   focused,
   onSelect,
   onHover,
-  className,
 }: {
   month: IsoDate;
   locale: string;
@@ -373,7 +375,6 @@ function MonthGrid({
   focused: IsoDate;
   onSelect: (date: IsoDate) => void;
   onHover: (date: IsoDate | null) => void;
-  className?: string;
 }) {
   const cells = useMemo(() => monthGrid(month, locale), [month, locale]);
   const now = today();
@@ -382,7 +383,7 @@ function MonthGrid({
     <div
       role="grid"
       aria-label={formatMonthTitle(month, locale)}
-      className={cn("grid-cols-7 gap-y-0.5", className)}
+      className="grid grid-cols-7 gap-y-0.5"
     >
       {weekdays.map((day, i) => (
         <div

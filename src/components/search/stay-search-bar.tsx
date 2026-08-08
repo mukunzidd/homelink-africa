@@ -56,7 +56,7 @@ export function StaySearchBar({
     "transition-colors duration-150 focus-within:border-brand hover:bg-surface-2",
   );
   const fieldLabel =
-    "text-[11px] font-bold uppercase tracking-wider text-ink-3 flex items-center gap-1.5";
+    "text-[11px] font-bold uppercase tracking-wider text-ink-3";
   const bareInput =
     "bg-transparent text-[15px] font-medium text-ink outline-none placeholder:text-ink-3";
 
@@ -68,18 +68,18 @@ export function StaySearchBar({
       )}
     >
       <label className={cn(fieldShell, "sm:flex-[1.2]")}>
-        <span className={fieldLabel}>
-          <PinIcon size={13} />
-          {t("where")}
-        </span>
-        <input
+        <span className={fieldLabel}>{t("where")}</span>
+        <span className="flex items-center gap-1.5">
+          <PinIcon size={14} className="flex-none text-ink-3" />
+          <input
           list="neighbourhood-options"
           value={neighbourhood}
           onChange={(e) => setNeighbourhood(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && submit()}
           placeholder={tResults("anyNeighbourhood")}
-          className={bareInput}
-        />
+          className={cn(bareInput, "w-full")}
+          />
+        </span>
         <datalist id="neighbourhood-options">
           {neighbourhoods.map((n) => (
             <option key={n} value={n} />
@@ -103,7 +103,7 @@ export function StaySearchBar({
         label={t("guests")}
         value={party}
         onChange={(next) => setParty(Number(next))}
-        icon={<UsersIcon size={13} />}
+        icon={<UsersIcon size={14} />}
         variant="field"
         options={Array.from({ length: maxParty }, (_, i) => i + 1).map((n) => ({
           value: n,
