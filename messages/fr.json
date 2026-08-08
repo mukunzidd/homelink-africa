@@ -365,6 +365,9 @@
     "quickTonight": "Ce soir",
     "quickTomorrow": "Demain",
     "quickWeekend": "Ce week-end",
-    "quickNextWeek": "La semaine prochaine"
+    "quickNextWeek": "La semaine prochaine",
+    "next": "Suivant",
+    "clearDates": "Effacer les dates",
+    "clearGuests": "Réinitialiser"
   }
 }

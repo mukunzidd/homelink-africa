@@ -365,6 +365,9 @@
     "quickTonight": "Muri iri joro",
     "quickTomorrow": "Ejo",
     "quickWeekend": "Iyi mpera z'icyumweru",
-    "quickNextWeek": "Icyumweru gitaha"
+    "quickNextWeek": "Icyumweru gitaha",
+    "next": "Komeza",
+    "clearDates": "Siba amatariki",
+    "clearGuests": "Tangira bushya"
   }
 }

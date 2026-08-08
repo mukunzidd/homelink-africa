@@ -167,10 +167,89 @@ export function SearchPill({
               }}
             />
           )}
-          {open === "when" && <WhenPanel value={when} onChange={setWhen} />}
-          {open === "who" && <WhoPanel party={party} onChange={setParty} />}
+          {open === "when" && (
+            <>
+              <WhenPanel value={when} onChange={setWhen} />
+              {/*
+                A panel that takes a decision has to offer a way out of itself.
+                Without this the only exit was the Search button up in the pill,
+                which the open panel visually dominates — so a completed date
+                range looked like a dead end.
+              */}
+              <PanelFooter
+                clearLabel={t("clearDates")}
+                onClear={() =>
+                  setWhen({ from: null, to: null, span: null, months: 12 })
+                }
+                clearDisabled={!when.from && !when.to && !when.span}
+                primaryLabel={t("next")}
+                onPrimary={() => setOpen("who")}
+              />
+            </>
+          )}
+
+          {open === "who" && (
+            <>
+              <WhoPanel party={party} onChange={setParty} />
+              <PanelFooter
+                clearLabel={t("clearGuests")}
+                onClear={() =>
+                  setParty({ adults: 1, children: 0, infants: 0 })
+                }
+                clearDisabled={
+                  party.adults <= 1 && !party.children && !party.infants
+                }
+                primaryLabel={t("search")}
+                onPrimary={submit}
+              />
+            </>
+          )}
         </div>
       )}
+    </div>
+  );
+}
+
+function PanelFooter({
+  clearLabel,
+  onClear,
+  clearDisabled,
+  primaryLabel,
+  onPrimary,
+}: {
+  clearLabel: string;
+  onClear: () => void;
+  clearDisabled?: boolean;
+  primaryLabel: string;
+  onPrimary: () => void;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-t border-line px-5 py-3.5">
+      <button
+        type="button"
+        onClick={onClear}
+        disabled={clearDisabled}
+        className={cn(
+          "rounded-ctl px-2 py-1.5 text-[14px] font-semibold underline underline-offset-4",
+          "transition-colors duration-150",
+          clearDisabled
+            ? "cursor-not-allowed text-ink-3/45 no-underline"
+            : "cursor-pointer text-ink-2 hover:text-ink",
+        )}
+      >
+        {clearLabel}
+      </button>
+
+      <button
+        type="button"
+        onClick={onPrimary}
+        className={cn(
+          "cursor-pointer rounded-ctl bg-brand px-5 py-2.5 text-[14px] font-semibold text-on-brand",
+          "transition-colors duration-150 hover:bg-brand-deep",
+        )}
+      >
+        {primaryLabel}
+      </button>
     </div>
   );
 }
