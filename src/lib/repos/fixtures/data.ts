@@ -382,6 +382,56 @@ export const BOOKINGS: Booking[] = [
   },
 ];
 
+/*
+ * A history, because a dashboard with nothing behind it is a screen nobody has
+ * really looked at. These three are deliberately awkward: one stay that ran and
+ * released, one day out booked on its own with no trip around it, and one
+ * cancelled hire. A list that only ever shows tidy confirmed rows hides every
+ * state the layout actually has to survive.
+ */
+export const PAST_BOOKINGS: Booking[] = [
+  {
+    id: "bkg_004",
+    reference: "HL-2RN8-6C",
+    service: "stay",
+    supplyItemId: "lst_remera_studio",
+    title: "Bright studio near the stadium",
+    startDate: "2026-03-02",
+    endDate: "2026-03-09",
+    party: 1,
+    total: money(434_000, "RWF"),
+    status: "completed",
+    escrowHeld: false,
+    stayMode: "nightly",
+  },
+  {
+    id: "bkg_005",
+    reference: "HL-6TS3-9J",
+    service: "experience",
+    supplyItemId: "exp_kivu",
+    title: "A day on Lake Kivu",
+    startDate: "2026-03-07",
+    endDate: "2026-03-07",
+    party: 2,
+    total: money(170_000, "RWF"),
+    status: "completed",
+    escrowHeld: false,
+  },
+  {
+    id: "bkg_006",
+    reference: "HL-8WM4-1F",
+    service: "car",
+    supplyItemId: "veh_corolla",
+    title: "Toyota Corolla, self-drive",
+    startDate: "2026-05-18",
+    endDate: "2026-05-21",
+    party: 2,
+    total: money(114_000, "RWF"),
+    status: "cancelled",
+    escrowHeld: false,
+  },
+];
+
 export const TRIPS: Trip[] = [
   {
     id: "trp_001",
@@ -389,6 +439,19 @@ export const TRIPS: Trip[] = [
     displayCurrency: "USD",
     status: "booked",
     bookingIds: ["bkg_001", "bkg_002", "bkg_003"],
+  },
+  /*
+   * Deliberately covers only two of the three March-to-May bookings. Trips are
+   * an optional grouping (Product & UX Principle 2), and the cancelled hire
+   * sits outside any of them — which is the case that catches a dashboard
+   * written as "render the trips" rather than "render the bookings".
+   */
+  {
+    id: "trp_002",
+    name: "Lake Kivu, March",
+    displayCurrency: "RWF",
+    status: "completed",
+    bookingIds: ["bkg_004", "bkg_005"],
   },
 ];
 

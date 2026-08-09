@@ -7,6 +7,7 @@ import { LOCALE_LABELS, routing, type Locale } from "@/i18n/routing";
 import { CURRENCIES, type CurrencyCode } from "@/lib/domain/money";
 import { usePreferences, type ThemeChoice } from "@/lib/preferences/context";
 import { Select } from "@/components/ui/select";
+import { AccountMenu } from "./account-menu";
 import {
   BanknoteIcon,
   GlobeIcon,
@@ -131,11 +132,17 @@ function ThemeControl() {
 export function PreferenceControls() {
   return (
     /* The controls carry their own borders now that two of them open
-       popovers — a shared outer frame would clip the menus. */
+       popovers — a shared outer frame would clip the menus.
+
+       The account menu sits at the end rather than the start: language,
+       currency and theme are how the page reads, and who you are is where you
+       go. Reading order puts the destination last, nearest the edge, which is
+       also where every product this one is judged against puts it. */
     <div className="flex items-center gap-1.5">
       <LocaleControl />
       <CurrencyControl />
       <ThemeControl />
+      <AccountMenu />
     </div>
   );
 }

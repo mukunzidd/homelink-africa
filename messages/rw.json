@@ -15,7 +15,9 @@
     "menu": "Ibikubiyemo",
     "trips": "Ingendo",
     "messages": "Ubutumwa",
-    "help": "Ubufasha"
+    "help": "Ubufasha",
+    "inventory": "Ibyo ntanga",
+    "queue": "Umurongo"
   },
   "nav": {
     "stays": "Amacumbi",
@@ -142,7 +144,9 @@
     "fundsReleased": "Amafaranga yarekuwe",
     "cancelled": "Byahagaritswe",
     "disputed": "Hari impaka",
-    "lowAvailability": "{count, plural, one {hasigaye # kuri iyi tariki} other {hasigaye # kuri iyi tariki}}"
+    "lowAvailability": "{count, plural, one {hasigaye # kuri iyi tariki} other {hasigaye # kuri iyi tariki}}",
+    "active": "Biragenda",
+    "completed": "Byarangiye"
   },
   "filters": {
     "verifiedOnly": "Ibyagenzuwe gusa",
@@ -432,5 +436,17 @@
     "foodBody": "Ritekerwa aho uri n'abahatuye, ntiriva mu gikoni cyo i Kigali.",
     "fullDay": "Ni umunsi wose",
     "fullDayBody": "Amasaha {count} hamwe n'urugendo ruva i Kigali rukanagaruka, atari isaha ugomba kubakira umunsi wose."
+  },
+  "trips": {
+    "title": "Ingendo zawe",
+    "subtitle": "Ibyo wabitse byose hamwe natwe, n'ikiganiro kijyana na buri kimwe.",
+    "comingUp": "Ibizaza",
+    "earlier": "Ibyahise",
+    "emptyBody": "Nta cyo warabika. Ibiri kuri HomeLink byose byagenzuwe imbonankubone, bityo ni bike kuruta uko wabitekerezaga — kandi nta gitangaza uzasanga ugezeyo.",
+    "browse": "Reba amazu yagenzuwe",
+    "reference": "Nomero",
+    "openThread": "Fungura ikiganiro",
+    "noThread": "Nta butumwa buraboneka",
+    "partOf": "Bijyanye na {name}"
   }
 }

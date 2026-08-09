@@ -48,7 +48,7 @@ Tick these off and commit the tick with the work.
       mosaic tiles fall back to gradient. Same treatment the experiences got in
       `5f9eb13`: five frames each, looked at before committing, IDs recorded in
       `public/images/README.md`.
-- [ ] **3. Guest dashboard — "my trips".**
+- [x] **3. Guest dashboard — "my trips".**
       Upcoming and past bookings, references, escrow state, link into the
       thread, the concierge add-on offer that already lives on the confirmation
       screen.

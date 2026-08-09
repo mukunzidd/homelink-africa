@@ -15,7 +15,9 @@
     "menu": "Menu",
     "trips": "Trips",
     "messages": "Messages",
-    "help": "Help"
+    "help": "Help",
+    "inventory": "Inventory",
+    "queue": "Queue"
   },
   "nav": {
     "stays": "Stays",
@@ -142,7 +144,9 @@
     "fundsReleased": "Funds released",
     "cancelled": "Cancelled",
     "disputed": "Disputed",
-    "lowAvailability": "{count, plural, one {# left for these dates} other {# left for these dates}}"
+    "lowAvailability": "{count, plural, one {# left for these dates} other {# left for these dates}}",
+    "active": "Under way",
+    "completed": "Completed"
   },
   "filters": {
     "verifiedOnly": "Verified only",
@@ -432,5 +436,17 @@
     "foodBody": "Cooked where you are by the people who live there, not carried out from a Kigali kitchen.",
     "fullDay": "It is the whole day",
     "fullDayBody": "{count} hours with transport from Kigali at both ends, not a slot you have to build a day around."
+  },
+  "trips": {
+    "title": "Your trips",
+    "subtitle": "Everything you have booked with us, and the thread that goes with each one.",
+    "comingUp": "Coming up",
+    "earlier": "Earlier",
+    "emptyBody": "Nothing booked yet. Everything on HomeLink has been inspected in person, so there is less of it than you might expect — and none of it is a surprise when you arrive.",
+    "browse": "Browse verified stays",
+    "reference": "Ref",
+    "openThread": "Open the thread",
+    "noThread": "No messages yet",
+    "partOf": "Part of {name}"
   }
 }

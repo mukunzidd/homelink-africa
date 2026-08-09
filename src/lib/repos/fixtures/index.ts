@@ -11,6 +11,7 @@ import type {
 import {
   BOOKINGS,
   CONVERSATIONS,
+  PAST_BOOKINGS,
   EXPERIENCES,
   FX_RATES,
   LISTINGS,
@@ -83,6 +84,10 @@ const stays: StaysRepo = {
     return LISTINGS.find((l) => l.slug === slug) ?? null;
   },
 
+  async byId(id) {
+    return LISTINGS.find((l) => l.id === id) ?? null;
+  },
+
   async featured(limit = 3) {
     return [...LISTINGS]
       .sort((a, b) =>
@@ -123,6 +128,10 @@ const mobility: MobilityRepo = {
   async bySlug(slug) {
     return VEHICLES.find((v) => v.slug === slug) ?? null;
   },
+
+  async byId(id) {
+    return VEHICLES.find((v) => v.id === id) ?? null;
+  },
 };
 
 const experiences: ExperiencesRepo = {
@@ -140,14 +149,23 @@ const experiences: ExperiencesRepo = {
   async bySlug(slug) {
     return EXPERIENCES.find((e) => e.slug === slug) ?? null;
   },
+
+  async byId(id) {
+    return EXPERIENCES.find((e) => e.id === id) ?? null;
+  },
 };
+
+/** Newest first, so "coming up" and "earlier" both read outward from today. */
+const ALL_BOOKINGS = [...BOOKINGS, ...PAST_BOOKINGS].sort((a, b) =>
+  b.startDate.localeCompare(a.startDate),
+);
 
 const bookings: BookingRepo = {
   async listForCurrentUser() {
-    return [...BOOKINGS];
+    return [...ALL_BOOKINGS];
   },
   async byId(id) {
-    return BOOKINGS.find((b) => b.id === id) ?? null;
+    return ALL_BOOKINGS.find((b) => b.id === id) ?? null;
   },
 };
 
@@ -169,6 +187,13 @@ const messaging: MessagingRepo = {
   async messages(conversationId) {
     return MESSAGES.filter((m) => m.conversationId === conversationId).sort((a, b) =>
       a.sentAt.localeCompare(b.sentAt),
+    );
+  },
+  async forBooking(bookingId) {
+    return (
+      CONVERSATIONS.find(
+        (c) => c.scope.kind === "booking" && c.scope.id === bookingId,
+      ) ?? null
     );
   },
 };

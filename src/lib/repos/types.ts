@@ -43,7 +43,19 @@ export type StayQuery = {
   limit?: number;
 };
 
-export interface StaysRepo {
+/**
+ * Supply is reachable by id as well as by slug.
+ *
+ * A URL knows a slug; a booking row knows an id, because that is what a
+ * foreign key will hold in Phase 2. Every screen that shows what a booking is
+ * *of* — trips, inventory, the ops queue, a message thread header — starts
+ * from the id, so the lookup belongs here rather than in four page files.
+ */
+export interface SupplyById<T> {
+  byId(id: string): Promise<T | null>;
+}
+
+export interface StaysRepo extends SupplyById<Listing> {
   list(query?: StayQuery): Promise<Listing[]>;
   bySlug(slug: string): Promise<Listing | null>;
   featured(limit?: number): Promise<Listing[]>;
@@ -60,7 +72,7 @@ export type VehicleQuery = {
   limit?: number;
 };
 
-export interface MobilityRepo {
+export interface MobilityRepo extends SupplyById<Vehicle> {
   list(query?: VehicleQuery): Promise<Vehicle[]>;
   bySlug(slug: string): Promise<Vehicle | null>;
 }
@@ -71,7 +83,7 @@ export type ExperienceQuery = {
   limit?: number;
 };
 
-export interface ExperiencesRepo {
+export interface ExperiencesRepo extends SupplyById<Experience> {
   list(query?: ExperienceQuery): Promise<Experience[]>;
   bySlug(slug: string): Promise<Experience | null>;
 }
@@ -89,6 +101,8 @@ export interface TripRepo {
 export interface MessagingRepo {
   conversations(): Promise<Conversation[]>;
   messages(conversationId: string): Promise<Message[]>;
+  /** Threads are scoped, never free-floating, so a booking has at most one. */
+  forBooking(bookingId: string): Promise<Conversation | null>;
 }
 
 export interface FxRepo {
