@@ -85,11 +85,71 @@ Tick these off and commit the tick with the work.
 - [ ] **7. Physical review sweep in the browser.**
       Walk all four journeys from `docs/02-product-and-ux` §5 end to end, in
       each role, both themes, desktop and mobile. Write down what is wrong
-      before fixing any of it.
+      before fixing any of it. *Findings are in the section below.*
 - [ ] **8. Rewrite the roadmap.**
       Update `docs/02-product-and-ux` §10 and `docs/03-technical-plan` §11 to
       describe the real sequence, including this milestone. Both currently claim
       a foundations-first order the build has not followed.
+
+## Sweep findings, 2026-08-09
+
+Eighteen routes at 1280 and 390, light and dark, each seen as the role that
+would actually be on it. Written down before anything was touched.
+
+### Wrong
+
+1. **The checkout calls a car a stay.** The summary panel on `/cars/…/book`
+   and `/experiences/…/book` is headed "Your stay", and both pages say "This
+   stay is below our escrow threshold". `checkout.yourStay` and
+   `checkout.noEscrowBody` were written for one lane and reused in three. The
+   verification panel already solved this with kind-aware copy; the checkout
+   did not follow.
+
+2. **The Renting lane is Stays with a chip on.** `/stays?band=long` shows the
+   same six places at the same nightly prices. `ListingRow` always renders
+   `perNight`, so the one thing that distinguishes a lease from a booking —
+   that it is priced by the month — is invisible in the lane built for it. The
+   tab, the key icon and the whole §5-C journey currently change nothing a
+   user can see.
+
+3. **`/trips` does not check who is asking.** `/inventory` and `/queue` read
+   the role cookie and decline politely. `/trips` does not, so a host or an
+   ops user landing on it sees the guest's bookings, and the rows hard-code
+   `"guest"` when they look up the thread. Nothing is exposed that a fixture
+   does not already publish, but it is the wrong shape to carry into auth.
+
+4. **`/trip/start` is dead.** It renders `NotBuiltYet` and nothing in `src`
+   links to it. It predates the tab strip, which replaced the intent doors it
+   was the target of.
+
+### Not wrong, but worth recording
+
+5. All six fixture listings carry both `nightly` and `lease`, so the band
+   filter removes nothing. Fixture thinness rather than a bug, but it is why
+   finding 2 was invisible until the lane was walked.
+
+6. `en` is tagged `en-US` for formatting while every word of the copy is
+   British — "neighbourhood", "saloon", "tarmac". Dates therefore read
+   "November 14, 2026". Message times were pinned to a 24-hour clock in step 6
+   for exactly this reason; the date format is the same argument and a wider
+   change, so it is left for a deliberate decision rather than folded into a
+   sweep.
+
+### Not the product — measuring mistakes, recorded so the next sweep skips them
+
+7. Headless Chrome on macOS will not open a window narrower than about 500px.
+   `--window-size=390,…` lays the page out wider and crops the screenshot,
+   which reads exactly like horizontal overflow on every page. Render inside a
+   same-origin iframe of an exact width instead.
+
+8. `next build` does not clear `.next/cache/images`. Replace a file under
+   `public/` and the optimiser still serves the previous variant, so a
+   screenshot taken to verify a swap shows the image you just deleted.
+
+9. A measuring harness that takes a URL in its own query string has to encode
+   it. Unencoded, everything after the first `&` was eaten, which produced one
+   404 and three checkout pages that had quietly redirected back to their
+   detail page. The screenshots were right; the URLs were wrong.
 
 ## Decisions already taken
 
