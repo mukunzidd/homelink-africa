@@ -52,11 +52,22 @@ Tick these off and commit the tick with the work.
       Upcoming and past bookings, references, escrow state, link into the
       thread, the concierge add-on offer that already lives on the confirmation
       screen.
-- [ ] **4. Supply dashboard — "my inventory".**
+- [x] **4. Supply dashboard — "my inventory".**
       One shell serving host, driver and guide. Their journey has the same
       shape: I list a thing, it gets booked, I get paid. The noun and two
       columns change; the layout does not. If a real difference shows up while
       building, note it here rather than forking the page on a hunch.
+      *No difference between the three roles turned up.* The noun changes, and
+      the two columns are "what the thing is" (bedrooms / gearbox / hours) and
+      "what it earns" (per night / per day / per person). Everything else —
+      section order, booking rows, the money panel — is identical, so the
+      decision to build one shell holds.
+      Two gaps found while building, both worth a look in step 7 rather than a
+      fix on a hunch. The supply side shows no cancellations, where the guest
+      side lists them under "Earlier"; money that did not arrive is arguably
+      the thing a supplier notices most. And there is no ownership model, so
+      every verified item in a lane appears — the page says so plainly rather
+      than implying one host owns Kigali.
 - [ ] **5. Concierge ops shell — "the queue".**
       Verification queue, manual add-on requests, all threads, payouts. This is
       the tool that delivers the guarantee the whole product rests on

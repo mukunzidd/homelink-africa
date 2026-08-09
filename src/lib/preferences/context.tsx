@@ -11,6 +11,7 @@ import {
 import type { CurrencyCode, FxTable, Money } from "@/lib/domain/money";
 import { convert, formatMoney } from "@/lib/domain/money";
 import type { Role, Segment, SegmentDefaults } from "@/lib/domain/types";
+import { ROLE_COOKIE } from "./role";
 
 /**
  * Everything the user can override about how the product presents itself.
@@ -67,6 +68,19 @@ type Persisted = {
   theme?: ThemeChoice;
 };
 
+/**
+ * Role is mirrored into a cookie as well as localStorage.
+ *
+ * The dashboards decide server-side which rows they are allowed to read, and
+ * only a cookie reaches the server. See `./role.ts` for why this is not the
+ * deferred theme-cookie question. Not `httpOnly`, because the client sets it —
+ * once auth is real the server issues it and this function goes away.
+ */
+function persistRoleCookie(role: Role): void {
+  if (typeof document === "undefined") return;
+  document.cookie = `${ROLE_COOKIE}=${role}; path=/; max-age=31536000; samesite=lax`;
+}
+
 function readPersisted(): Persisted {
   if (typeof window === "undefined") return {};
   try {
@@ -102,7 +116,12 @@ export function PreferencesProvider({
     const stored = readPersisted();
     if (stored.segment) setSegmentState(stored.segment);
     if (stored.currency) setCurrencyState(stored.currency);
-    if (stored.role) setRoleState(stored.role);
+    if (stored.role) {
+      setRoleState(stored.role);
+      // A session that predates the cookie still has the role in localStorage,
+      // and would otherwise see the signed-out dashboard until it was set again.
+      persistRoleCookie(stored.role);
+    }
     if (stored.theme) setThemeState(stored.theme);
   }, []);
 
@@ -141,6 +160,7 @@ export function PreferencesProvider({
     (r: Role) => {
       setRoleState(r);
       persist({ role: r });
+      persistRoleCookie(r);
     },
     [persist],
   );

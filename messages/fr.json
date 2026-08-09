@@ -448,5 +448,36 @@
     "openThread": "Ouvrir la conversation",
     "noThread": "Aucun message",
     "partOf": "Fait partie de {name}"
+  },
+  "inventory": {
+    "metaTitle": "Votre offre",
+    "title": {
+      "stay": "Vos logements",
+      "car": "Vos véhicules",
+      "experience": "Vos sorties"
+    },
+    "subtitle": {
+      "stay": "Ce que vous avez mis en ligne chez nous, ce qui est réservé, et quand l'argent vous parvient.",
+      "car": "Ce que compte votre flotte, ce qui est loué, et quand l'argent vous parvient.",
+      "experience": "Ce que vous animez avec nous, ce qui est réservé, et quand l'argent vous parvient."
+    },
+    "listed": "En ligne",
+    "bookedNow": "Réservés",
+    "dueToYou": "À vous revenir",
+    "booked": "Réservations",
+    "nothingBooked": "Rien de réservé pour l'instant. Les réservations apparaissent ici dès qu'un voyageur paie.",
+    "settled": "Déjà versé",
+    "inspectedOn": "Inspecté le {date}",
+    "unitsFree": "{count, plural, one {# libre} other {# libres}}",
+    "payoutAfterCheckIn": "Versé une fois l'arrivée confirmée par le voyageur",
+    "payoutOnStart": "Versé à la date de début",
+    "payoutSettled": "Versé",
+    "moneyTitle": "Votre argent",
+    "dueOnStart": "Dû à la date de début",
+    "moneyNote": "Rien sur cet écran ne déplace d'argent. Les versements sont effectués par l'équipe de Kigali, et ces montants sont ceux sur lesquels elle travaille.",
+    "notYours": "Cet écran est celui de quelqu'un d'autre",
+    "notYoursBody": "Cette page est réservée aux hôtes, chauffeurs et guides. Si vous êtes voyageur, vos réservations sont dans Voyages.",
+    "listedWithUs": "En ligne chez nous",
+    "ownershipNote": "Tout ce que HomeLink a vérifié dans cette catégorie. La répartition entre prestataires n'est pas encore modélisée : en V1, l'offre est mise en ligne par l'équipe concierge, il n'y a donc qu'un seul prestataire."
   }
 }

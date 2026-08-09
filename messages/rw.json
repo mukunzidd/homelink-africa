@@ -448,5 +448,36 @@
     "openThread": "Fungura ikiganiro",
     "noThread": "Nta butumwa buraboneka",
     "partOf": "Bijyanye na {name}"
+  },
+  "inventory": {
+    "metaTitle": "Ibyo utanga",
+    "title": {
+      "stay": "Amazu yawe",
+      "car": "Imodoka zawe",
+      "experience": "Ingendo zawe"
+    },
+    "subtitle": {
+      "stay": "Ibyo washyize kuri urubuga, ibyabitswe, n'igihe amafaranga akugeraho.",
+      "car": "Imodoka ufite, izakodeshejwe, n'igihe amafaranga akugeraho.",
+      "experience": "Ibyo uyobora hamwe natwe, ibyabitswe, n'igihe amafaranga akugeraho."
+    },
+    "listed": "Biri ku rubuga",
+    "bookedNow": "Byabitswe",
+    "dueToYou": "Bigiye kukugeraho",
+    "booked": "Ibyabitswe",
+    "nothingBooked": "Nta cyo kirabikwa. Ibyabitswe bigaragara hano ako kanya umukiriya yishyuye.",
+    "settled": "Byamaze kwishyurwa",
+    "inspectedOn": "Byagenzuwe ku wa {date}",
+    "unitsFree": "{count, plural, one {# ihari} other {# zihari}}",
+    "payoutAfterCheckIn": "Wishyurwa umukiriya amaze kwemeza ko yageze",
+    "payoutOnStart": "Wishyurwa ku itariki byatangiriyeho",
+    "payoutSettled": "Byishyuwe",
+    "moneyTitle": "Amafaranga yawe",
+    "dueOnStart": "Agomba kwishyurwa ku itariki byatangiriyeho",
+    "moneyNote": "Nta kintu kuri iyi paji cyimura amafaranga. Kwishyura bikorwa n'itsinda ryo i Kigali, kandi izi ngano ni zo bakoresha.",
+    "notYours": "Iyi paji ni iy'undi muntu",
+    "notYoursBody": "Iyi ni iy'abatanga amazu, abashoferi n'abayobozi. Niba uri umukiriya, ibyo wabitse biri muri Ingendo.",
+    "listedWithUs": "Ibiri ku rubuga rwacu",
+    "ownershipNote": "Ibyo HomeLink yagenzuye byose muri iki cyiciro. Uwo ari we utunze iki nticyarashyirwaho — muri V1 ibyatanzwe bishyirwaho n'itsinda rya konsiyeji, bityo nk'aho hari umutanzi umwe."
   }
 }

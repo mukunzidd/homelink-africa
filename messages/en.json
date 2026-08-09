@@ -448,5 +448,36 @@
     "openThread": "Open the thread",
     "noThread": "No messages yet",
     "partOf": "Part of {name}"
+  },
+  "inventory": {
+    "metaTitle": "Your inventory",
+    "title": {
+      "stay": "Your homes",
+      "car": "Your vehicles",
+      "experience": "Your days out"
+    },
+    "subtitle": {
+      "stay": "What you have listed with us, what is booked, and when the money reaches you.",
+      "car": "What you have on the fleet, what is hired, and when the money reaches you.",
+      "experience": "What you run with us, what is booked, and when the money reaches you."
+    },
+    "listed": "Listed",
+    "bookedNow": "Booked",
+    "dueToYou": "Coming to you",
+    "booked": "Booked",
+    "nothingBooked": "Nothing booked for these yet. Bookings appear here the moment a guest pays.",
+    "settled": "Already paid out",
+    "inspectedOn": "Inspected {date}",
+    "unitsFree": "{count, plural, one {# free} other {# free}}",
+    "payoutAfterCheckIn": "Paid out once the guest confirms check-in",
+    "payoutOnStart": "Paid out on the start date",
+    "payoutSettled": "Paid out",
+    "moneyTitle": "Your money",
+    "dueOnStart": "Due on the start date",
+    "moneyNote": "Nothing on this screen moves money. Payouts are run by the Kigali team, and the amounts here are what they are working from.",
+    "notYours": "This screen belongs to someone else",
+    "notYoursBody": "Inventory is for hosts, drivers and guides. If you are a guest, your bookings are under Trips.",
+    "listedWithUs": "Listed with us",
+    "ownershipNote": "Everything HomeLink has verified in this lane. Which supplier owns what is not modelled yet — in V1 inventory is listed by the concierge team, so there is effectively one supplier."
   }
 }
