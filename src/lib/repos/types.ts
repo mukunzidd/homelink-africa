@@ -95,6 +95,14 @@ export interface ExperiencesRepo extends SupplyById<Experience> {
 export interface BookingRepo {
   listForCurrentUser(): Promise<Booking[]>;
   byId(id: string): Promise<Booking | null>;
+  /**
+   * By the code the guest actually holds.
+   *
+   * A reference is the only identifier that leaves the system — it is on the
+   * email, it is what someone reads down a phone line to Kigali, and it is
+   * what they will paste into a URL. An id is ours; a reference is theirs.
+   */
+  byReference(reference: string): Promise<Booking | null>;
 }
 
 export interface TripRepo {

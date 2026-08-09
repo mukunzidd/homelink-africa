@@ -22,6 +22,12 @@ import { cn } from "@/lib/cn";
  * what actions hang off the end, not in the shape of the row. Where a role
  * needs an extra fact it goes in `aside`, so the divergence stays visible in
  * one place instead of spreading into three near-copies of this file.
+ *
+ * `recordHref` is opt-in rather than derived from the booking, and that is the
+ * point: a booking record is the guest's own account of their own money, so
+ * Trips passes it and Inventory does not. Deriving it here would hand a
+ * supplier a link into someone else's confirmation, which is the leak that had
+ * to be closed on /trips itself.
  */
 const STATUS_TONE: Record<Booking["status"], StatusTone> = {
   draft: "idle",
@@ -40,6 +46,8 @@ export async function BookingRow({
   aside,
   /** Past and cancelled rows recede rather than disappear. */
   muted,
+  /** Where this booking's own record lives, for the person it belongs to. */
+  recordHref,
 }: {
   booking: Booking;
   supply: SupplyRef | null;
@@ -47,8 +55,10 @@ export async function BookingRow({
   locale: string;
   aside?: React.ReactNode;
   muted?: boolean;
+  recordHref?: string;
 }) {
   const t = await getTranslations("trips");
+  const tConfirm = await getTranslations("confirmation");
   const tStatus = await getTranslations("status");
   const tVerify = await getTranslations("verification");
   const tSearch = await getTranslations("search");
@@ -84,9 +94,12 @@ export async function BookingRow({
           )}
         </div>
 
-        {supply ? (
+        {/* The title goes to the booking when the reader owns it, and to the
+            public listing otherwise. Whichever it is, a row's headline should
+            lead somewhere the reader can actually use. */}
+        {recordHref || supply ? (
           <Link
-            href={supply.href}
+            href={recordHref ?? supply!.href}
             className="rounded-ctl text-[17px] font-semibold leading-snug text-ink hover:text-brand"
           >
             {name}
@@ -101,6 +114,15 @@ export async function BookingRow({
         </p>
 
         {aside}
+
+        {recordHref && supply && (
+          <Link
+            href={supply.href}
+            className="w-fit rounded-ctl text-[13px] font-semibold text-brand hover:text-brand-deep"
+          >
+            {tConfirm("viewListing")}
+          </Link>
+        )}
 
         {/* Monospaced, because this is a code people read aloud down a phone
             line to the Kigali office. Proportional digits make 1 and l an
@@ -121,7 +143,10 @@ export async function BookingRow({
 
         {conversation ? (
           <Link
-            href="/messages"
+            // Straight at the thread, not the inbox. Messaging has taken a
+            // `thread` parameter since it was built; the row was still landing
+            // people on a list and asking them to find their own conversation.
+            href={`/messages?thread=${conversation.id}`}
             className="flex items-center gap-2 rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
           >
             {t("openThread")}

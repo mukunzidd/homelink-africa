@@ -172,6 +172,11 @@ const bookings: BookingRepo = {
   async byId(id) {
     return ALL_BOOKINGS.find((b) => b.id === id) ?? null;
   },
+  async byReference(reference) {
+    // Case-insensitive: the code is printed in caps and will be typed in both.
+    const needle = reference.trim().toUpperCase();
+    return ALL_BOOKINGS.find((b) => b.reference.toUpperCase() === needle) ?? null;
+  },
 };
 
 const trips: TripRepo = {

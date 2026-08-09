@@ -286,7 +286,10 @@
     "arrangeTitle": "Hari ikindi ukeneye?",
     "arrangeBody": "Imodoka ku kibuga cy'indege, umushoferi w'icyumweru, cyangwa urugendo rukwiye. Bibwire itsinda ry'i Kigali maze babigutegurire — nta kundi gufata, nta konti yindi.",
     "arrangeAction": "Andikira itsinda",
-    "arrangeNote": "Bazongera bakubaze nka icyumweru mbere yuko ugera, numara kumenya indege yawe."
+    "arrangeNote": "Bazongera bakubaze nka icyumweru mbere yuko ugera, numara kumenya indege yawe.",
+    "viewListing": "Reba icyatanzwe",
+    "cancelledNote": "Ubu bwiyandikishe bwarahagaritswe. Nta kindi ugomba, kandi ayo wari wamaze kwishyura yasubijwe hakoreshejwe uburyo wishyuriye.",
+    "recordNote": "Byabikiwe ku wa {date}. Icyo ushaka guhindura cyose kinyura mu itsinda ryo i Kigali, atari mu ifishi."
   },
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {umunsi #} other {iminsi #}}",

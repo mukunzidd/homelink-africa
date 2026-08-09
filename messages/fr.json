@@ -286,7 +286,10 @@
     "arrangeTitle": "Besoin d'autre chose ?",
     "arrangeBody": "Une voiture à l'aéroport, un chauffeur pour la semaine, une sortie qui en vaut la peine. Dites-le à l'équipe de Kigali et elle s'en occupe — pas de seconde réservation, pas de compte séparé.",
     "arrangeAction": "Écrire à l'équipe",
-    "arrangeNote": "Elle reprendra contact environ une semaine avant votre arrivée, quand vous connaîtrez votre vol."
+    "arrangeNote": "Elle reprendra contact environ une semaine avant votre arrivée, quand vous connaîtrez votre vol.",
+    "viewListing": "Voir l'annonce",
+    "cancelledNote": "Cette réservation a été annulée. Plus rien n'est dû, et tout montant déjà prélevé a été restitué par le moyen utilisé pour payer.",
+    "recordNote": "Réservé pour le {date}. Toute modification passe par l'équipe de Kigali, pas par un formulaire."
   },
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {# jour} other {# jours}}",

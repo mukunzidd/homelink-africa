@@ -286,7 +286,10 @@
     "arrangeTitle": "Anything else you need?",
     "arrangeBody": "A car at the airport, a driver for the week, a day out somewhere worth going. Tell the Kigali team and they'll arrange it — no second booking, no separate account.",
     "arrangeAction": "Message the team",
-    "arrangeNote": "They'll also check in about a week before you land, once you know your flight."
+    "arrangeNote": "They'll also check in about a week before you land, once you know your flight.",
+    "viewListing": "View the listing",
+    "cancelledNote": "This booking was cancelled. Nothing further is owed, and anything already taken has been returned by the same route it was paid.",
+    "recordNote": "Booked for {date}. Anything you need changed goes through the Kigali team, not a form."
   },
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {# day} other {# days}}",

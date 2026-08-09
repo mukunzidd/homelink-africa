@@ -2,27 +2,241 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { repos } from "@/lib/repos";
+import { supplyRefFor } from "@/lib/repos/supply-ref";
 import { Link } from "@/i18n/navigation";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
-import type { DriveMode, ServiceKind } from "@/lib/domain/types";
+import type { Booking, DriveMode, ServiceKind } from "@/lib/domain/types";
 import type { Money } from "@/lib/domain/money";
 import type { Quote } from "@/lib/domain/pricing";
 import { formatDate, formatDateRange, isIsoDate } from "@/lib/domain/dates";
 import { quoteExperience, quoteStay, quoteVehicle } from "@/lib/domain/pricing";
+import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
+import { cookies } from "next/headers";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { StatusPill } from "@/components/ui/status-pill";
+import { MoneyText } from "@/components/ui/money-text";
 import { StepSpine } from "@/components/checkout/step-spine";
 import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
 import { Button } from "@/components/ui/button";
 
 /**
- * Confirmation, for all three modules.
+ * One booking, at two moments in its life.
  *
- * Details ride in the URL because nothing is persisted yet — Phase 2 gives
- * this a real `booking` row and the page reads it by reference instead. The
- * reference is deterministic, so a reload shows the same code.
+ * **Just paid.** Nothing is persisted yet, so the details ride in the query
+ * string and the page reconstructs the quote from them. This is the flow
+ * checkout has always used and it is unchanged.
+ *
+ * **Come back to it.** A guest arriving from Trips has only the reference —
+ * the code on their email, the one they read down a phone line — and no query
+ * string at all. Until now that produced a 404, which meant the reference, the
+ * escrow state and "what happens next" all lived on a page a guest could reach
+ * exactly once and never again.
+ *
+ * The row wins when there is one. Post-checkout references are generated from
+ * a seed and will not collide with a fixture, so the two paths do not fight.
  */
+export default async function BookingPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string; reference: string }>;
+  searchParams: Promise<Record<string, string | undefined>>;
+}) {
+  const { locale, reference } = await params;
+  setRequestLocale(locale);
+
+  const booking = await repos().bookings.byReference(reference);
+  if (booking) return <BookingRecord booking={booking} locale={locale} />;
+
+  return <JustBooked reference={reference} locale={locale} searchParams={searchParams} />;
+}
+
+/* ------------------------------------------------------------- the record */
+
+const STATUS_TONE = {
+  draft: "idle",
+  confirmed: "ok",
+  active: "ok",
+  completed: "idle",
+  cancelled: "crit",
+} as const;
+
+async function BookingRecord({
+  booking,
+  locale,
+}: {
+  booking: Booking;
+  locale: string;
+}) {
+  const t = await getTranslations("confirmation");
+  const tStatus = await getTranslations("status");
+  const tVerify = await getTranslations("verification");
+  const tSearch = await getTranslations("search");
+  const tQuote = await getTranslations("quote");
+  const tTrips = await getTranslations("trips");
+
+  const intlLocale = INTL_LOCALES[locale as Locale];
+
+  // A booking is the guest's record of their own money. Anyone else reaching
+  // it by guessing a six-character code gets the same refusal Trips gives.
+  const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
+  if (role !== "guest") notFound();
+
+  const [supply, conversation] = await Promise.all([
+    supplyRefFor(booking),
+    repos().messaging.forBooking(booking.id, "guest"),
+  ]);
+
+  const upcoming = booking.status === "confirmed" || booking.status === "active";
+
+  // The three-step explanation belongs to a booking that has not happened yet.
+  // Telling someone what happens next about a stay they took in March is the
+  // sort of thing that makes a product feel like it is not paying attention.
+  const nextSteps = upcoming
+    ? [t("next1"), ...(booking.escrowHeld ? [t("next2")] : []), t("next3")]
+    : [];
+
+  return (
+    <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
+      <Link
+        href="/trips"
+        className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
+      >
+        ← {tTrips("title")}
+      </Link>
+
+      <header className="flex flex-col gap-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <StatusPill tone={STATUS_TONE[booking.status]}>
+            {tStatus(booking.status)}
+          </StatusPill>
+          {booking.escrowHeld && (
+            <StatusPill tone="warn">{tVerify("escrowShort")}</StatusPill>
+          )}
+        </div>
+        <h1 className="max-w-[24ch] text-balance font-display text-4xl font-semibold leading-[1.06] tracking-tight text-ink sm:text-5xl">
+          {supply?.name ?? booking.title}
+        </h1>
+        {supply && <p className="text-[15px] text-ink-2">{supply.detail}</p>}
+      </header>
+
+      <div className="grid items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_340px]">
+        <div className="flex flex-col">
+          {/* The code first, because it is the one thing on this page somebody
+              came back to find. */}
+          <section className="flex flex-col gap-1.5 pb-6">
+            <h2 className="text-xs font-bold uppercase tracking-[0.1em] text-ink-3">
+              {t("reference")}
+            </h2>
+            <p className="font-mono text-2xl font-semibold tracking-tight text-ink">
+              {booking.reference}
+            </p>
+            <p className="text-sm text-ink-2">{t("referenceHint")}</p>
+          </section>
+
+          <dl className="grid gap-x-8 gap-y-4 border-t border-line py-6 sm:grid-cols-3">
+            {[
+              {
+                key: "when",
+                label: tSearch("when"),
+                value: formatDateRange(booking.startDate, booking.endDate, intlLocale),
+              },
+              {
+                key: "who",
+                label: tSearch("guests"),
+                value: tSearch("guestCount", { count: booking.party }),
+              },
+              { key: "total", label: tQuote("total"), value: null },
+            ].map((row) => (
+              <div key={row.key} className="flex flex-col gap-1">
+                <dt className="text-[13px] text-ink-3">{row.label}</dt>
+                <dd className="tnum text-[15px] font-semibold text-ink">
+                  {row.value ?? (
+                    <MoneyText amount={booking.total} className="font-semibold" />
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          {nextSteps.length > 0 && (
+            <section className="flex flex-col gap-3 border-t border-line py-6">
+              <h2 className="font-display text-2xl font-semibold text-ink">
+                {t("whatNext")}
+              </h2>
+              <ol className="flex flex-col gap-2.5">
+                {nextSteps.map((step, index) => (
+                  <li key={index} className="flex gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="tnum mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-surface-2 text-xs font-bold text-ink-3"
+                    >
+                      {index + 1}
+                    </span>
+                    <p className="max-w-[62ch] text-[15px] leading-relaxed text-ink-2">
+                      {step}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          {booking.status === "cancelled" && (
+            <p className="border-t border-line py-6 text-[15px] leading-relaxed text-ink-2">
+              {t("cancelledNote")}
+            </p>
+          )}
+
+          <section className="flex flex-col items-start gap-3 border-t border-line py-6">
+            <h2 className="font-display text-2xl font-semibold text-ink">
+              {t("arrangeTitle")}
+            </h2>
+            <p className="max-w-[58ch] text-[15px] leading-relaxed text-ink-2">
+              {t("arrangeBody")}
+            </p>
+            <Link
+              href={conversation ? `/messages?thread=${conversation.id}` : "/messages"}
+              className="mt-1"
+            >
+              <Button variant="trust">
+                {conversation ? tTrips("openThread") : t("arrangeAction")}
+              </Button>
+            </Link>
+          </section>
+        </div>
+
+        <aside className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5 lg:sticky lg:top-24">
+          <SupplyImage
+            seed={supply?.imageSeed ?? booking.supplyItemId}
+            src={supply?.image}
+            alt={supply?.name ?? booking.title}
+            sizes="320px"
+            className="h-28 rounded-[6px]"
+          />
+          <VerifiedBadge label={tVerify("badge")} size="sm" className="self-start" />
+          {supply && (
+            <Link
+              href={supply.href}
+              className="rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
+            >
+              {t("viewListing")}
+            </Link>
+          )}
+          <p className="border-t border-line pt-3 text-[13px] leading-relaxed text-ink-3">
+            {t("recordNote", {
+              date: formatDate(booking.startDate, intlLocale),
+            })}
+          </p>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------- straight out of checkout */
+
 type Resolved = {
   title: string;
   subtitle: string;
@@ -35,16 +249,15 @@ type Resolved = {
   party: number;
 };
 
-export default async function BookingConfirmationPage({
-  params,
+async function JustBooked({
+  reference,
+  locale,
   searchParams,
 }: {
-  params: Promise<{ locale: string; reference: string }>;
+  reference: string;
+  locale: string;
   searchParams: Promise<Record<string, string | undefined>>;
 }) {
-  const { locale, reference } = await params;
-  setRequestLocale(locale);
-
   const sp = await searchParams;
   if (!sp.slug) notFound();
 
@@ -101,7 +314,7 @@ export default async function BookingConfirmationPage({
       title: listing.name,
       subtitle: `${listing.neighbourhood} · ${listing.city}`,
       imageSeed: listing.imageSeed,
-        image: listing.images?.[0],
+      image: listing.images?.[0],
       quote,
       unitRate: listing.nightlyRate,
       units: quote.nights,

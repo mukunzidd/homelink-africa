@@ -99,6 +99,7 @@ export default async function TripsPage({
             conversation={conversation}
             locale={intlLocale}
             muted={muted}
+            recordHref={`/bookings/${booking.reference}`}
             aside={
               trip && (
                 <p className="text-[13px] text-ink-3">
