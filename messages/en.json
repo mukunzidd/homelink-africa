@@ -521,7 +521,9 @@
     "delivered": "Delivered",
     "replyLabel": "Write a reply",
     "replyPlaceholder": "Write a reply…",
-    "replyNote": "Sending arrives with the backend. The thread above is fixture data, and this box is here so the layout can be judged with a reply box in it."
+    "replyNote": "Sending arrives with the backend. The thread above is fixture data, and this box is here so the layout can be judged with a reply box in it.",
+    "attach": "Attach a photo",
+    "attachLimits": "JPEG, PNG or WebP, up to 15MB. Location data is stripped before anything is stored."
   },
   "queue": {
     "title": "The queue",

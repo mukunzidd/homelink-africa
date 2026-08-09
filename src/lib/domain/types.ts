@@ -264,12 +264,32 @@ export type Conversation = {
   unreadCount: number;
 };
 
+/**
+ * A photograph in a thread.
+ *
+ * Not decoration on this product. The concierge model means the person who saw
+ * the thing and the person who paid for it are never in the same room, so a
+ * photograph in a message is how a claim gets settled: the tank is full, the
+ * car is in bay 12, this is the crack that was already there. Modelling it as
+ * an attachment rather than a URL in the body is what lets it be laid out,
+ * counted, and eventually scanned for location data before it is stored.
+ */
+export type Attachment = {
+  id: string;
+  url: string;
+  /** Always written by hand. An unlabelled photograph is unreadable to
+   *  anyone using a screen reader, and these carry evidence. */
+  alt: string;
+};
+
 export type Message = {
   id: string;
   conversationId: string;
   authorName: string;
   authorRole: Role;
+  /** May be empty when the photograph is the whole message. */
   body: string;
+  attachments?: Attachment[];
   sentAt: string;
   readAt?: string;
 };

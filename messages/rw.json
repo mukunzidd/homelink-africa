@@ -521,7 +521,9 @@
     "delivered": "Bwageze",
     "replyLabel": "Andika igisubizo",
     "replyPlaceholder": "Andika igisubizo…",
-    "replyNote": "Kohereza bizaza hamwe na sisitemu y'inyuma. Ikiganiro kiri hejuru ni amakuru y'igerageza, kandi aka kazu kari hano kugira ngo imiterere y'urupapuro isuzumwe hari aho basubiriza."
+    "replyNote": "Kohereza bizaza hamwe na sisitemu y'inyuma. Ikiganiro kiri hejuru ni amakuru y'igerageza, kandi aka kazu kari hano kugira ngo imiterere y'urupapuro isuzumwe hari aho basubiriza.",
+    "attach": "Omeka ifoto",
+    "attachLimits": "JPEG, PNG cyangwa WebP, kugeza kuri 15MB. Aho ifoto yafatiwe hakurwaho mbere yo kubikwa."
   },
   "queue": {
     "title": "Umurongo",

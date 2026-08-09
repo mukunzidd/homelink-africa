@@ -3,6 +3,7 @@ import type { Conversation, Message, Role } from "@/lib/domain/types";
 import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/domain/dates";
 import { dayOf, formatTimeOfDay } from "@/lib/domain/instants";
+import { PaperclipIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 
 /**
@@ -17,6 +18,13 @@ import { cn } from "@/lib/cn";
  * was agreed about a booking, and people read it back weeks later to settle
  * exactly that — so it is laid out as a transcript with the day called out,
  * not as a stream.
+ *
+ * Photographs are first-class here rather than links in the text. On a product
+ * whose whole claim is that somebody went and looked, the picture *is* the
+ * argument: the tank is full, the car is in bay 12, this is the crack that was
+ * already there. A message may be nothing but a photograph, which is why the
+ * body is rendered conditionally — a layout that assumes text is always there
+ * puts an empty line above every picture.
  */
 export async function ThreadView({
   conversation,
@@ -90,9 +98,40 @@ export async function ThreadView({
                     {formatTimeOfDay(message.sentAt, locale)}
                   </span>
                 </div>
-                <p className="text-[15px] leading-relaxed text-ink-2">
-                  {message.body}
-                </p>
+                {message.body && (
+                  <p className="text-[15px] leading-relaxed text-ink-2">
+                    {message.body}
+                  </p>
+                )}
+
+                {message.attachments && message.attachments.length > 0 && (
+                  <ul
+                    className={cn(
+                      "mt-1 grid gap-1.5",
+                      message.attachments.length > 1 ? "grid-cols-2" : "grid-cols-1",
+                    )}
+                  >
+                    {message.attachments.map((attachment) => (
+                      <li key={attachment.id}>
+                        {/* Plain <img>: in Phase 2 these are short-lived signed
+                            URLs from private storage, which the image optimizer
+                            can neither cache nor allowlist. Deciding that now
+                            costs nothing and saves a swap later. */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={attachment.url}
+                          alt={attachment.alt}
+                          decoding="async"
+                          loading="lazy"
+                          className={cn(
+                            "w-full rounded-[6px] border border-line object-cover",
+                            message.attachments!.length > 1 ? "h-28" : "h-48",
+                          )}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
               {/* Read state on the last message you sent, and only there. On
@@ -131,6 +170,32 @@ export async function ThreadView({
             "disabled:cursor-not-allowed",
           )}
         />
+
+        {/*
+          The attach control is here, and inert like the box above it, because
+          leaving it out would hide the two questions it actually raises: how
+          much room it takes beside the send action, and what it has to promise.
+          Both are answered here rather than discovered when the backend lands.
+
+          It names the limits it will really have, and it repeats the location
+          line from the privacy note. Somebody attaching a photograph of their
+          front door to a thread is the moment that promise matters most, and
+          the note is four screens away by then.
+        */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <span
+            aria-disabled="true"
+            className={cn(
+              "inline-flex cursor-not-allowed items-center gap-2 rounded-ctl border border-line",
+              "bg-surface-2 px-3.5 py-2 text-[13px] font-semibold text-ink-3",
+            )}
+          >
+            <PaperclipIcon size={15} />
+            {t("attach")}
+          </span>
+          <p className="text-[12.5px] text-ink-3">{t("attachLimits")}</p>
+        </div>
+
         <p className="text-[13px] text-ink-3">{t("replyNote")}</p>
       </div>
     </div>

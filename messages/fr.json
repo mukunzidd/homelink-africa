@@ -521,7 +521,9 @@
     "delivered": "Remis",
     "replyLabel": "Écrire une réponse",
     "replyPlaceholder": "Écrire une réponse…",
-    "replyNote": "L'envoi arrivera avec le back-end. La conversation ci-dessus provient de données de test, et ce champ est là pour juger la mise en page avec une zone de réponse."
+    "replyNote": "L'envoi arrivera avec le back-end. La conversation ci-dessus provient de données de test, et ce champ est là pour juger la mise en page avec une zone de réponse.",
+    "attach": "Joindre une photo",
+    "attachLimits": "JPEG, PNG ou WebP, jusqu'à 15 Mo. Les données de localisation sont retirées avant tout stockage."
   },
   "queue": {
     "title": "La file",

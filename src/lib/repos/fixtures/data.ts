@@ -749,9 +749,12 @@ export const CONVERSATIONS: Conversation[] = [
     scope: { kind: "booking", id: "bkg_003" },
     participantNames: ["Marie L.", "Solange K."],
     participantRoles: ["guest", "guide"],
-    lastMessagePreview:
-      "We start at the Women's Centre at 09:00. Wear something you can walk the hill in.",
-    lastMessageAt: "2026-11-07T16:40:00Z",
+    // The last message in this thread is a photograph with no text. A preview
+    // has to say something, and the alt text is the only sentence that exists —
+    // which is the practical reason it is written by hand rather than left
+    // blank, on top of the accessibility one.
+    lastMessagePreview: "The corner where the walk starts, photographed from across the street.",
+    lastMessageAt: "2026-11-07T16:41:00Z",
     unreadCount: 0,
   },
   {
@@ -832,6 +835,18 @@ export const MESSAGES: Message[] = [
     authorName: "Eric H.",
     authorRole: "driver",
     body: "The RAV4 is booked out to you from Saturday morning. I will leave it in the arrivals car park, bay 12.",
+    attachments: [
+      {
+        id: "att_002",
+        url: "/images/cars/rav4-1.jpg",
+        alt: "The car, so you know which one to look for in the bay.",
+      },
+      {
+        id: "att_003",
+        url: "/images/cars/rav4-3.jpg",
+        alt: "The rear, with the registration plate visible.",
+      },
+    ],
     sentAt: "2026-11-08T09:05:00Z",
     readAt: "2026-11-08T09:30:00Z",
   },
@@ -842,6 +857,23 @@ export const MESSAGES: Message[] = [
     authorRole: "guide",
     body: "We start at the Women's Centre at 09:00. Wear something you can walk the hill in.",
     sentAt: "2026-11-07T16:40:00Z",
+  },
+  {
+    // No body at all. A photograph is a whole message here, and a layout that
+    // assumes text is always present puts an empty paragraph above it.
+    id: "msg_014",
+    conversationId: "cnv_003",
+    authorName: "Solange K.",
+    authorRole: "guide",
+    body: "",
+    attachments: [
+      {
+        id: "att_004",
+        url: "/images/experiences/kigali-2.jpg",
+        alt: "The corner where the walk starts, photographed from across the street.",
+      },
+    ],
+    sentAt: "2026-11-07T16:41:00Z",
   },
   {
     id: "msg_006",
@@ -858,6 +890,13 @@ export const MESSAGES: Message[] = [
     authorName: "Placide K.",
     authorRole: "host",
     body: "Tank is full and I ran it for ten minutes this morning.",
+    attachments: [
+      {
+        id: "att_001",
+        url: "/images/listings/interior-4.jpg",
+        alt: "The generator housing at the side of the building, running.",
+      },
+    ],
     sentAt: "2026-11-09T11:15:00Z",
   },
   {

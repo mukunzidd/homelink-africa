@@ -332,6 +332,15 @@ export function BowlIcon({ className, size = 16 }: IconProps) {
   );
 }
 
+/** Attaching a photograph to a message. */
+export function PaperclipIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M15.6 9.4 9.9 15.1a3.6 3.6 0 0 1-5.1-5.1l6.4-6.4a2.4 2.4 0 0 1 3.4 3.4l-6.4 6.4a1.2 1.2 0 0 1-1.7-1.7l5.7-5.7" />
+    </svg>
+  );
+}
+
 export function ShareIcon({ className, size = 16 }: IconProps) {
   return (
     <svg {...base(size, className)}>
