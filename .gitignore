@@ -24,6 +24,10 @@
 .DS_Store
 *.pem
 
+# Word lock files. Opening a .docx in docs/ writes one of these beside it and
+# deletes it on close, so it only ever reaches a commit by accident.
+~$*
+
 # debug
 npm-debug.log*
 yarn-debug.log*
