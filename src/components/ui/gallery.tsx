@@ -16,12 +16,11 @@ import { cn } from "@/lib/cn";
 /**
  * Gallery for a supply item.
  *
- * The verification promise says HomeLink shoots every listing itself, so stock
- * photography would contradict the product on the very screen that argues for
- * it. Until the shooting standard exists, each frame is a deterministic panel
- * derived from the item's seed, and the lightbox says plainly what they stand
- * in for. The layout, counter, keyboard handling, and lightbox are all real —
- * dropping in real images later changes one component.
+ * The verification promise says HomeLink shoots every listing itself, so a
+ * frame we have not shot yet is a deterministic panel derived from the item's
+ * seed rather than a borrowed photograph, and the lightbox says plainly what
+ * those stand in for. Frames fill from `images` in order, so a partly
+ * photographed item shows what exists and panels the rest.
  */
 
 /** Distinct seeds so the frames differ from each other but stay stable. */
@@ -246,12 +245,12 @@ export function Gallery({
                   )}
                 >
                   <SupplyImage
-              seed={frame}
-              src={srcAt(i + 1)}
-              alt={alt}
-              sizes="25vw"
-              className="h-full w-full"
-            />
+                    seed={frame}
+                    src={srcAt(i)}
+                    alt={alt}
+                    sizes="80px"
+                    className="h-full w-full"
+                  />
                 </button>
               ))}
             </div>
