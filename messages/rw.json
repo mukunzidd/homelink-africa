@@ -523,8 +523,6 @@
       "car": "Imodoka",
       "experience": "Urugendo"
     },
-    "verifyTitle": "Igenzura",
-    "verifyNote": "Nta kintu kijya ku rubuga hatabanje kuhagera umuntu. Ibitaraboneka itariki y'uruzinduko biri hejuru.",
     "verifyStatus": {
       "requested": "Ntibiratangwaho itariki",
       "scheduled": "Urugendo rwateganyijwe",
@@ -535,8 +533,6 @@
     "asked": "Byasabwe",
     "scheduled": "Uruzinduko",
     "inspector": "Umugenzuzi",
-    "asksTitle": "Ibyo abakiriya basabye",
-    "asksNote": "Buri buto « andikira itsinda » buri ku cyemezo bugera hano nk'akazi k'umuntu. Urutonde rurerure ni impamvu yo gushyira kimwe muri ibi mu buryo bwo kwiyandikisha.",
     "askStatus": {
       "open": "Nta wubifite",
       "quoted": "Byaciwe igiciro",
@@ -544,8 +540,6 @@
       "declined": "Byanzwe"
     },
     "withWhom": "Bifitwe na",
-    "payoutsTitle": "Kwishyura",
-    "payoutsNote": "Ayo mafaranga abitswe umukiriya abona nk'umutekano, arebwa n'inyuma nk'akazi. Ayabitswe ategereza ko kugera kwemezwa.",
     "payoutStatus": {
       "held": "Yabitswe",
       "due": "Agomba",
@@ -553,10 +547,31 @@
     },
     "releasesOn": "Arekurwa ku wa {date}",
     "paidOn": "Yishyuwe ku wa {date}",
-    "threadsTitle": "Ibiganiro byose",
-    "openMessages": "Fungura ubutumwa",
     "readOnlyNote": "Nta kintu kuri iyi paji gihindura ikintu. Guteganya uruzinduko, gushyira ku rubuga no kurekura amafaranga byose bisaba sisitemu y'inyuma, kandi buto idakora iruhande rw'amafaranga nyayo yaba mbi kurusha kutagira buto.",
     "notYours": "Iyi paji ni iy'itsinda ryo i Kigali",
-    "notYoursBody": "Umurongo ni igikoresho cy'itsinda rya konsiyeji. Niba warabitse, biri muri Ingendo; niba utanga ikintu, biri muri Ibyo ntanga."
+    "notYoursBody": "Umurongo ni igikoresho cy'itsinda rya konsiyeji. Niba warabitse, biri muri Ingendo; niba utanga ikintu, biri muri Ibyo ntanga.",
+    "tabsLabel": "Ibice by'umurongo",
+    "tabs": {
+      "verify": "Igenzura",
+      "asks": "Ibisabwa",
+      "payouts": "Kwishyura",
+      "threads": "Ibiganiro"
+    },
+    "openOnly": "Bikeneye umuntu",
+    "empty": "Nta kiri hano.",
+    "emptyOpen": "Nta kiri gutegereza. Byose muri iki gice byarangiye.",
+    "note": {
+      "verify": "Nta kintu kijya ku rubuga hatabanje kuhagera umuntu. Ibitaraboneka itariki y'uruzinduko biri hejuru.",
+      "asks": "Buri buto « andikira itsinda » buri ku cyemezo bugera hano nk'akazi k'umuntu. Urutonde rurerure ni impamvu yo gushyira kimwe muri ibi mu buryo bwo kwiyandikisha.",
+      "payouts": "Ayo mafaranga abitswe umukiriya abona nk'umutekano, arebwa n'inyuma nk'akazi. Ayabitswe ategereza ko kugera kwemezwa.",
+      "threads": "Ibiganiro byose itsinda ririmo. Akadomo kuzuye ni umuntu udutegereje."
+    }
+  },
+  "pager": {
+    "label": "Amapaji",
+    "range": "{from}–{to} kuri {total}",
+    "pageOf": "{page} / {pages}",
+    "previous": "Subira inyuma",
+    "next": "Ibikurikira"
   }
 }

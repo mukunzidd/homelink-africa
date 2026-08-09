@@ -523,8 +523,6 @@
       "car": "Car",
       "experience": "Day out"
     },
-    "verifyTitle": "Verification",
-    "verifyNote": "Nothing goes live until someone has stood in it. What nobody has booked in yet is at the top.",
     "verifyStatus": {
       "requested": "Not booked in",
       "scheduled": "Visit booked",
@@ -535,8 +533,6 @@
     "asked": "Asked",
     "scheduled": "Visit",
     "inspector": "Inspector",
-    "asksTitle": "Guests have asked for",
-    "asksNote": "Every \"message the team\" button on a confirmation lands here as a job for a person. A long list is the argument for building one of these into the checkout.",
     "askStatus": {
       "open": "Nobody yet",
       "quoted": "Priced",
@@ -544,8 +540,6 @@
       "declined": "Declined"
     },
     "withWhom": "With",
-    "payoutsTitle": "Payouts",
-    "payoutsNote": "The same escrow a guest reads as safety, read from behind as a job. Held money waits on a confirmed check-in.",
     "payoutStatus": {
       "held": "Held",
       "due": "Due",
@@ -553,10 +547,31 @@
     },
     "releasesOn": "Releases {date}",
     "paidOn": "Paid {date}",
-    "threadsTitle": "Every thread",
-    "openMessages": "Open messages",
     "readOnlyNote": "Nothing on this screen changes anything. Scheduling a visit, publishing a listing and releasing a payout all need a backend, and a dead button next to real money would be worse than no button.",
     "notYours": "This screen belongs to the Kigali team",
-    "notYoursBody": "The queue is the concierge team's tool. If you booked something, it is under Trips; if you supply something, it is under Inventory."
+    "notYoursBody": "The queue is the concierge team's tool. If you booked something, it is under Trips; if you supply something, it is under Inventory.",
+    "tabsLabel": "Sections of the queue",
+    "tabs": {
+      "verify": "Verification",
+      "asks": "Asks",
+      "payouts": "Payouts",
+      "threads": "Threads"
+    },
+    "openOnly": "Still needs someone",
+    "empty": "Nothing here.",
+    "emptyOpen": "Nothing open. Everything in this section has been dealt with.",
+    "note": {
+      "verify": "Nothing goes live until someone has stood in it. What nobody has booked in yet is at the top.",
+      "asks": "Every \"message the team\" button on a confirmation lands here as a job for a person. A long list is the argument for building one of these into the checkout.",
+      "payouts": "The same escrow a guest reads as safety, read from behind as a job. Held money waits on a confirmed check-in.",
+      "threads": "Every thread the team is in. A filled dot is someone waiting on us."
+    }
+  },
+  "pager": {
+    "label": "Pages",
+    "range": "{from}–{to} of {total}",
+    "pageOf": "{page} / {pages}",
+    "previous": "Back",
+    "next": "More"
   }
 }

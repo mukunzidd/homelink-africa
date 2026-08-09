@@ -523,8 +523,6 @@
       "car": "Voiture",
       "experience": "Sortie"
     },
-    "verifyTitle": "Vérification",
-    "verifyNote": "Rien ne passe en ligne sans que quelqu'un y soit allé. Ce qui n'a pas encore de visite planifiée est en haut.",
     "verifyStatus": {
       "requested": "Pas encore planifié",
       "scheduled": "Visite planifiée",
@@ -535,8 +533,6 @@
     "asked": "Demandé",
     "scheduled": "Visite",
     "inspector": "Inspecteur",
-    "asksTitle": "Ce que les voyageurs ont demandé",
-    "asksNote": "Chaque bouton « écrire à l'équipe » d'une confirmation arrive ici comme une tâche humaine. Une liste longue est l'argument pour intégrer l'une de ces demandes au tunnel de réservation.",
     "askStatus": {
       "open": "Personne encore",
       "quoted": "Chiffré",
@@ -544,8 +540,6 @@
       "declined": "Refusé"
     },
     "withWhom": "Suivi par",
-    "payoutsTitle": "Versements",
-    "payoutsNote": "Le même séquestre que le voyageur lit comme une sécurité, vu de l'intérieur comme une tâche. L'argent retenu attend une arrivée confirmée.",
     "payoutStatus": {
       "held": "Retenu",
       "due": "Dû",
@@ -553,10 +547,31 @@
     },
     "releasesOn": "Libéré le {date}",
     "paidOn": "Versé le {date}",
-    "threadsTitle": "Toutes les conversations",
-    "openMessages": "Ouvrir les messages",
     "readOnlyNote": "Rien sur cet écran ne modifie quoi que ce soit. Planifier une visite, publier une annonce et libérer un versement demandent tous un back-end, et un bouton mort à côté d'argent réel serait pire que pas de bouton.",
     "notYours": "Cet écran est celui de l'équipe de Kigali",
-    "notYoursBody": "La file est l'outil de l'équipe concierge. Si vous avez réservé, c'est dans Voyages ; si vous proposez quelque chose, c'est dans Mon offre."
+    "notYoursBody": "La file est l'outil de l'équipe concierge. Si vous avez réservé, c'est dans Voyages ; si vous proposez quelque chose, c'est dans Mon offre.",
+    "tabsLabel": "Sections de la file",
+    "tabs": {
+      "verify": "Vérification",
+      "asks": "Demandes",
+      "payouts": "Versements",
+      "threads": "Conversations"
+    },
+    "openOnly": "En attente de quelqu'un",
+    "empty": "Rien ici.",
+    "emptyOpen": "Rien en attente. Tout a été traité dans cette section.",
+    "note": {
+      "verify": "Rien ne passe en ligne sans que quelqu'un y soit allé. Ce qui n'a pas encore de visite planifiée est en haut.",
+      "asks": "Chaque bouton « écrire à l'équipe » d'une confirmation arrive ici comme une tâche humaine. Une liste longue est l'argument pour intégrer l'une de ces demandes au tunnel de réservation.",
+      "payouts": "Le même séquestre que le voyageur lit comme une sécurité, vu de l'intérieur comme une tâche. L'argent retenu attend une arrivée confirmée.",
+      "threads": "Toutes les conversations de l'équipe. Un point plein signale quelqu'un qui nous attend."
+    }
+  },
+  "pager": {
+    "label": "Pages",
+    "range": "{from}–{to} sur {total}",
+    "pageOf": "{page} / {pages}",
+    "previous": "Retour",
+    "next": "Suite"
   }
 }
