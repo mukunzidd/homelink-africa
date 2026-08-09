@@ -13,17 +13,23 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Where the work is
 
-**Read `docs/superpowers/specs/2026-08-09-ui-milestone.md` before starting.** It
-holds the current milestone, what "done" means for each step, the scope
-decisions already taken, and the open ones. It is kept ticked off as work lands,
-so it is the fastest way to find out where things stopped.
+**Read `docs/superpowers/specs/2026-08-10-real-data-milestone.md` before
+starting.** It holds the current milestone, what "done" means for each step, the
+scope decisions already taken, and the open ones. It is kept ticked off as work
+lands, so it is the fastest way to find out where things stopped.
+
+`docs/superpowers/specs/2026-08-09-ui-milestone.md` is the one before it, and is
+finished. Worth reading anyway: it carries the findings from two full browser
+sweeps, the arguments behind several decisions that look arbitrary in the code,
+and three measuring traps that will otherwise be rediscovered the hard way.
 
 Short version: the app is a front end on fixtures. There is no backend, no auth,
-no payments, no realtime — `package.json` has four dependencies. The current
-milestone finishes the UI and walks every journey in a browser *before* any of
-that gets built, so the schema is designed against screens people have actually
-looked at. `src/lib/repos/index.ts` is the single swap point where fixtures
-become a database later; new screens read through `repos()` like the rest.
+no payments, no realtime — `package.json` has four dependencies and no test
+runner. The previous milestone finished the UI and walked every journey in a
+browser *before* any of that got built, so the schema is designed against
+screens people have actually looked at. The current one puts those same screens
+on Postgres without moving any of them. `src/lib/repos/index.ts` is the single
+swap point; new screens read through `repos()` like the rest.
 
 The planning documents in `docs/01`–`docs/03` describe a foundations-first
 sequence the build has not followed. That divergence is deliberate; rewriting
