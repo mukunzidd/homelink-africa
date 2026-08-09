@@ -492,5 +492,53 @@
     "replyLabel": "Andika igisubizo",
     "replyPlaceholder": "Andika igisubizo…",
     "replyNote": "Kohereza bizaza hamwe na sisitemu y'inyuma. Ikiganiro kiri hejuru ni amakuru y'igerageza, kandi aka kazu kari hano kugira ngo imiterere y'urupapuro isuzumwe hari aho basubiriza."
+  },
+  "queue": {
+    "title": "Umurongo",
+    "subtitle": "Ibitegereje kugenzurwa, ibyo umukiriya yasabye umuntu, ibigomba abatanga serivisi, n'abategereje igisubizo.",
+    "countVerify": "Bigomba kugenzurwa",
+    "countAsks": "Ibisabwa bikiri hafunguye",
+    "countReplies": "Batwitezeho",
+    "countOwed": "Bigomba abatanga serivisi",
+    "lane": {
+      "stay": "Icumbi",
+      "car": "Imodoka",
+      "experience": "Urugendo"
+    },
+    "verifyTitle": "Igenzura",
+    "verifyNote": "Nta kintu kijya ku rubuga hatabanje kuhagera umuntu. Ibitaraboneka itariki y'uruzinduko biri hejuru.",
+    "verifyStatus": {
+      "requested": "Ntibiratangwaho itariki",
+      "scheduled": "Urugendo rwateganyijwe",
+      "inspected": "Byagenzuwe, ntibirajya ku rubuga",
+      "published": "Biri ku rubuga"
+    },
+    "reinspection": "Kongera kugenzura",
+    "asked": "Byasabwe",
+    "scheduled": "Uruzinduko",
+    "inspector": "Umugenzuzi",
+    "asksTitle": "Ibyo abakiriya basabye",
+    "asksNote": "Buri buto « andikira itsinda » buri ku cyemezo bugera hano nk'akazi k'umuntu. Urutonde rurerure ni impamvu yo gushyira kimwe muri ibi mu buryo bwo kwiyandikisha.",
+    "askStatus": {
+      "open": "Nta wubifite",
+      "quoted": "Byaciwe igiciro",
+      "arranged": "Byateguwe",
+      "declined": "Byanzwe"
+    },
+    "withWhom": "Bifitwe na",
+    "payoutsTitle": "Kwishyura",
+    "payoutsNote": "Ayo mafaranga abitswe umukiriya abona nk'umutekano, arebwa n'inyuma nk'akazi. Ayabitswe ategereza ko kugera kwemezwa.",
+    "payoutStatus": {
+      "held": "Yabitswe",
+      "due": "Agomba",
+      "paid": "Yishyuwe"
+    },
+    "releasesOn": "Arekurwa ku wa {date}",
+    "paidOn": "Yishyuwe ku wa {date}",
+    "threadsTitle": "Ibiganiro byose",
+    "openMessages": "Fungura ubutumwa",
+    "readOnlyNote": "Nta kintu kuri iyi paji gihindura ikintu. Guteganya uruzinduko, gushyira ku rubuga no kurekura amafaranga byose bisaba sisitemu y'inyuma, kandi buto idakora iruhande rw'amafaranga nyayo yaba mbi kurusha kutagira buto.",
+    "notYours": "Iyi paji ni iy'itsinda ryo i Kigali",
+    "notYoursBody": "Umurongo ni igikoresho cy'itsinda rya konsiyeji. Niba warabitse, biri muri Ingendo; niba utanga ikintu, biri muri Ibyo ntanga."
   }
 }

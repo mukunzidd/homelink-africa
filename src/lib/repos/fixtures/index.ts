@@ -4,21 +4,25 @@ import type {
   FxRepo,
   MessagingRepo,
   MobilityRepo,
+  OpsRepo,
   Repositories,
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
 import type { Role } from "@/lib/domain/types";
 import {
+  ADDON_REQUESTS,
   BOOKINGS,
   CONVERSATIONS,
-  PAST_BOOKINGS,
   EXPERIENCES,
   FX_RATES,
   LISTINGS,
   MESSAGES,
+  PAST_BOOKINGS,
+  PAYOUTS,
   TRIPS,
   VEHICLES,
+  VERIFICATION_QUEUE,
 } from "./data";
 
 /**
@@ -233,6 +237,53 @@ const messaging: MessagingRepo = {
   },
 };
 
+/**
+ * Ordered by what still needs doing, then oldest first inside that.
+ *
+ * Sorting by date alone was tried and looked wrong the moment it was on a
+ * screen: the oldest verification task is the one that shipped a week ago, so
+ * a queue sorted by age leads with finished work and buries the two rows
+ * nobody has touched. Same for payouts, where the March ones that are already
+ * paid pushed November's held money off the bottom.
+ *
+ * Age still decides within a state, because a queue sorted newest-first is a
+ * queue whose bottom never gets read.
+ */
+const VERIFY_ORDER = ["requested", "scheduled", "inspected", "published"];
+const PAYOUT_ORDER = ["held", "due", "paid"];
+const REQUEST_ORDER = ["open", "quoted", "arranged", "declined"];
+
+function byState<T>(order: string[], stateOf: (item: T) => string) {
+  return (a: T, b: T) => order.indexOf(stateOf(a)) - order.indexOf(stateOf(b));
+}
+
+const ops: OpsRepo = {
+  async verificationQueue() {
+    return [...VERIFICATION_QUEUE].sort(
+      (a, b) =>
+        byState(VERIFY_ORDER, (t: typeof a) => t.status)(a, b) ||
+        a.requestedAt.localeCompare(b.requestedAt),
+    );
+  },
+  async addOnRequests() {
+    return [...ADDON_REQUESTS].sort(
+      (a, b) =>
+        byState(REQUEST_ORDER, (r: typeof a) => r.status)(a, b) ||
+        a.requestedAt.localeCompare(b.requestedAt),
+    );
+  },
+  async payouts() {
+    return [...PAYOUTS].sort(
+      (a, b) =>
+        byState(PAYOUT_ORDER, (p: typeof a) => p.status)(a, b) ||
+        // Settled rows read most-recent-first; outstanding ones read soonest.
+        (a.status === "paid"
+          ? b.releaseOn.localeCompare(a.releaseOn)
+          : a.releaseOn.localeCompare(b.releaseOn)),
+    );
+  },
+};
+
 const fx: FxRepo = {
   async rates() {
     return FX_RATES;
@@ -249,5 +300,6 @@ export const fixtureRepositories: Repositories = {
   bookings,
   trips,
   messaging,
+  ops,
   fx,
 };

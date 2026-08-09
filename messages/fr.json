@@ -492,5 +492,53 @@
     "replyLabel": "Écrire une réponse",
     "replyPlaceholder": "Écrire une réponse…",
     "replyNote": "L'envoi arrivera avec le back-end. La conversation ci-dessus provient de données de test, et ce champ est là pour juger la mise en page avec une zone de réponse."
+  },
+  "queue": {
+    "title": "La file",
+    "subtitle": "Ce qui attend d'être vérifié, ce qu'un voyageur a demandé à une personne, ce qui est dû aux prestataires, et qui attend une réponse.",
+    "countVerify": "À vérifier",
+    "countAsks": "Demandes ouvertes",
+    "countReplies": "En attente de nous",
+    "countOwed": "Dû aux prestataires",
+    "lane": {
+      "stay": "Logement",
+      "car": "Voiture",
+      "experience": "Sortie"
+    },
+    "verifyTitle": "Vérification",
+    "verifyNote": "Rien ne passe en ligne sans que quelqu'un y soit allé. Ce qui n'a pas encore de visite planifiée est en haut.",
+    "verifyStatus": {
+      "requested": "Pas encore planifié",
+      "scheduled": "Visite planifiée",
+      "inspected": "Visité, pas en ligne",
+      "published": "En ligne"
+    },
+    "reinspection": "Nouvelle visite",
+    "asked": "Demandé",
+    "scheduled": "Visite",
+    "inspector": "Inspecteur",
+    "asksTitle": "Ce que les voyageurs ont demandé",
+    "asksNote": "Chaque bouton « écrire à l'équipe » d'une confirmation arrive ici comme une tâche humaine. Une liste longue est l'argument pour intégrer l'une de ces demandes au tunnel de réservation.",
+    "askStatus": {
+      "open": "Personne encore",
+      "quoted": "Chiffré",
+      "arranged": "Organisé",
+      "declined": "Refusé"
+    },
+    "withWhom": "Suivi par",
+    "payoutsTitle": "Versements",
+    "payoutsNote": "Le même séquestre que le voyageur lit comme une sécurité, vu de l'intérieur comme une tâche. L'argent retenu attend une arrivée confirmée.",
+    "payoutStatus": {
+      "held": "Retenu",
+      "due": "Dû",
+      "paid": "Versé"
+    },
+    "releasesOn": "Libéré le {date}",
+    "paidOn": "Versé le {date}",
+    "threadsTitle": "Toutes les conversations",
+    "openMessages": "Ouvrir les messages",
+    "readOnlyNote": "Rien sur cet écran ne modifie quoi que ce soit. Planifier une visite, publier une annonce et libérer un versement demandent tous un back-end, et un bouton mort à côté d'argent réel serait pire que pas de bouton.",
+    "notYours": "Cet écran est celui de l'équipe de Kigali",
+    "notYoursBody": "La file est l'outil de l'équipe concierge. Si vous avez réservé, c'est dans Voyages ; si vous proposez quelque chose, c'est dans Mon offre."
   }
 }

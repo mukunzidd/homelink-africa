@@ -68,7 +68,7 @@ Tick these off and commit the tick with the work.
       the thing a supplier notices most. And there is no ownership model, so
       every verified item in a lane appears — the page says so plainly rather
       than implying one host owns Kigali.
-- [ ] **5. Concierge ops shell — "the queue".**
+- [x] **5. Concierge ops shell — "the queue".**
       Verification queue, manual add-on requests, all threads, payouts. This is
       the tool that delivers the guarantee the whole product rests on
       (`docs/02-product-and-ux` §7).

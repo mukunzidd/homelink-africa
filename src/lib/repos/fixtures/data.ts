@@ -1,12 +1,15 @@
 import type {
+  AddOnRequest,
   Booking,
   Conversation,
   Experience,
   Listing,
   Message,
+  Payout,
   Trip,
   Vehicle,
   VerificationRecord,
+  VerificationTask,
 } from "@/lib/domain/types";
 import { money } from "@/lib/domain/money";
 
@@ -469,6 +472,152 @@ export const TRIPS: Trip[] = [
  * a guest directly are the driver and the guide, because both physically meet
  * them.
  */
+/*
+ * The queue behind the badge.
+ *
+ * Written so the four states are all present at once, because a queue where
+ * everything is in the same state teaches nothing about the layout. Notes
+ * carry the reason a row is stuck; in a real ops tool that sentence is the
+ * most-read text on the screen and the one a template always leaves out.
+ */
+export const VERIFICATION_QUEUE: VerificationTask[] = [
+  {
+    id: "vt_001",
+    kind: "new",
+    service: "stay",
+    name: "Two-bedroom in Gacuriro",
+    where: "Gacuriro, Kigali",
+    requestedAt: "2026-08-03",
+    scheduledFor: "2026-08-14",
+    inspectorName: "Aline M.",
+    status: "scheduled",
+    note: "Owner has three units in the block and is offering one. Confirm which door on the day.",
+  },
+  {
+    id: "vt_002",
+    kind: "new",
+    service: "car",
+    name: "Toyota Prado, 2019",
+    where: "Kicukiro, Kigali",
+    requestedAt: "2026-08-05",
+    status: "requested",
+    note: "Operator wants it listed for self-drive. No inspection booked until the insurance certificate arrives.",
+  },
+  {
+    id: "vt_003",
+    kind: "new",
+    service: "experience",
+    name: "Coffee farm morning, Huye",
+    where: "Huye",
+    requestedAt: "2026-07-28",
+    inspectorName: "Patrick N.",
+    status: "inspected",
+    note: "Ran it on 6 August. Worth listing, but the transfer from Kigali is three hours each way — price it as a full day or drop it.",
+  },
+  {
+    id: "vt_004",
+    kind: "reinspection",
+    service: "stay",
+    name: "Villa near the lake",
+    where: "Nyarutarama, Kigali",
+    requestedAt: "2026-08-08",
+    status: "requested",
+    note: "Verified 28 September, so it is coming up on a year. Re-walk before the December bookings open.",
+  },
+  {
+    id: "vt_005",
+    kind: "new",
+    service: "stay",
+    name: "Serviced flat, KG 11 Ave",
+    where: "Kimihurura, Kigali",
+    requestedAt: "2026-07-19",
+    inspectorName: "Jean-Claude U.",
+    status: "published",
+    note: "Live since 2 August.",
+  },
+];
+
+/*
+ * Every "message the team" button on the confirmation and trips screens lands
+ * here as a job for a person. That is the honest shape of the product today,
+ * and the length of this list is the argument for building any of it into the
+ * checkout later.
+ */
+export const ADDON_REQUESTS: AddOnRequest[] = [
+  {
+    id: "req_001",
+    bookingId: "bkg_001",
+    asked: "A car at the airport for the whole week, and someone to drive it — we do not want to drive ourselves the first few days.",
+    requestedAt: "2026-11-09",
+    status: "open",
+    owner: "Aline M.",
+  },
+  {
+    id: "req_002",
+    bookingId: "bkg_003",
+    asked: "Could the Sunday walk start an hour later? Our flight lands late on Saturday.",
+    requestedAt: "2026-11-08",
+    status: "quoted",
+    owner: "Aline M.",
+  },
+  {
+    id: "req_003",
+    bookingId: "bkg_002",
+    asked: "A child seat for the RAV4, for a four-year-old.",
+    requestedAt: "2026-11-07",
+    status: "arranged",
+    owner: "Patrick N.",
+  },
+];
+
+/*
+ * The same escrow state a guest reads as safety, read from behind as a job.
+ * Amounts are what supply is actually paid; commission is not modelled yet, so
+ * these are stated rather than derived from the booking total.
+ */
+export const PAYOUTS: Payout[] = [
+  {
+    id: "pay_001",
+    bookingId: "bkg_001",
+    payee: "Placide K.",
+    amount: money(405_000, "RWF"),
+    status: "held",
+    releaseOn: "2026-11-14",
+  },
+  {
+    id: "pay_002",
+    bookingId: "bkg_002",
+    payee: "Eric H.",
+    amount: money(142_000, "RWF"),
+    status: "due",
+    releaseOn: "2026-11-14",
+  },
+  {
+    id: "pay_003",
+    bookingId: "bkg_003",
+    payee: "Solange K.",
+    amount: money(73_000, "RWF"),
+    status: "due",
+    releaseOn: "2026-11-15",
+  },
+  {
+    id: "pay_004",
+    bookingId: "bkg_004",
+    payee: "Placide K.",
+    amount: money(356_000, "RWF"),
+    status: "paid",
+    releaseOn: "2026-03-09",
+  },
+  {
+    id: "pay_005",
+    bookingId: "bkg_005",
+    payee: "Didier B.",
+    amount: money(139_000, "RWF"),
+    status: "paid",
+    releaseOn: "2026-03-07",
+  },
+];
+
 export const CONVERSATIONS: Conversation[] = [
   {
     id: "cnv_001",

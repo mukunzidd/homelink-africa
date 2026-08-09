@@ -1,4 +1,5 @@
 import type {
+  AddOnRequest,
   Booking,
   Conversation,
   DriveMode,
@@ -7,9 +8,11 @@ import type {
   ExperienceInterest,
   Listing,
   Message,
+  Payout,
   Role,
   Trip,
   Vehicle,
+  VerificationTask,
 } from "@/lib/domain/types";
 import type { CurrencyCode, FxTable } from "@/lib/domain/money";
 
@@ -119,6 +122,20 @@ export interface MessagingRepo {
   forBooking(bookingId: string, role: Role): Promise<Conversation | null>;
 }
 
+/**
+ * The concierge team's own reads.
+ *
+ * Separate from the guest-facing repos rather than folded into them: these
+ * three lists have no per-user scoping at all, and the first time that is true
+ * of something is the moment to give it its own door rather than an optional
+ * flag on a door everyone uses.
+ */
+export interface OpsRepo {
+  verificationQueue(): Promise<VerificationTask[]>;
+  addOnRequests(): Promise<AddOnRequest[]>;
+  payouts(): Promise<Payout[]>;
+}
+
 export interface FxRepo {
   /** Display-only rates. Settlement rates are recorded per transaction. */
   rates(): Promise<FxTable>;
@@ -132,5 +149,6 @@ export type Repositories = {
   bookings: BookingRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
+  ops: OpsRepo;
   fx: FxRepo;
 };

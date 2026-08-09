@@ -175,6 +175,72 @@ export type Trip = {
   bookingIds: string[];
 };
 
+/* -------------------------------------------------------------- ops queue */
+
+/**
+ * The work behind the badge. Product & UX §7: the guarantee is delivered by
+ * people and enforced by software, and these three types are the people half.
+ *
+ * They are deliberately not fields on `Listing`. A listing exists once it is
+ * verified; before that there is only a candidate somebody rang us about, and
+ * modelling that as a half-populated listing is how an unverified property
+ * ends up one boolean away from being live.
+ */
+export type VerificationTaskKind = "new" | "reinspection";
+
+export type VerificationTaskStatus =
+  | "requested"
+  | "scheduled"
+  | "inspected"
+  | "published";
+
+export type VerificationTask = {
+  id: string;
+  kind: VerificationTaskKind;
+  service: ServiceKind;
+  /** What the thing calls itself. Not a slug: nothing is published yet. */
+  name: string;
+  where: string;
+  requestedAt: string;
+  scheduledFor?: string;
+  inspectorName?: string;
+  status: VerificationTaskStatus;
+  /** Why this one is not simply moving through. Usually the whole story. */
+  note?: string;
+};
+
+/**
+ * What a guest asked a human for.
+ *
+ * The confirmation and trips screens deliberately offer a person rather than a
+ * second checkout, so every one of those offers lands here as a job. If this
+ * list is long, the product has found something it should be selling itself.
+ */
+export type AddOnRequestStatus = "open" | "quoted" | "arranged" | "declined";
+
+export type AddOnRequest = {
+  id: string;
+  bookingId: string;
+  /** In the guest's words. Paraphrasing it into a category loses the job. */
+  asked: string;
+  requestedAt: string;
+  status: AddOnRequestStatus;
+  owner?: string;
+};
+
+/** Money out to supply. Mirrors the escrow state a guest sees, from behind. */
+export type PayoutStatus = "held" | "due" | "paid";
+
+export type Payout = {
+  id: string;
+  bookingId: string;
+  payee: string;
+  amount: Money;
+  status: PayoutStatus;
+  /** When it leaves, or left. Held payouts wait on a confirmed check-in. */
+  releaseOn: string;
+};
+
 /* -------------------------------------------------------------- messaging */
 
 export type Conversation = {
