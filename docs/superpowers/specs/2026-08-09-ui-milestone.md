@@ -86,6 +86,35 @@ Tick these off and commit the tick with the work.
   still worth having now, because it is what tells us whether the offline
   process is hiding a screen the team will need on day one.
 
+## Open decision: the theme flash script
+
+`ThemeScript` renders a bare inline `<script>` in the document head, and Next
+warns in development that scripts inside React components never execute on a
+client render.
+
+The warning stands. It is not a bug and the obvious fix makes things worse:
+`next/script` with `beforeInteractive` emits `self.__next_s.push(...)` rather
+than an inline script, and Next's runtime chunks are all `async`, so the header
+markup streams more than a kilobyte ahead of that queue being drained. Measured
+against the served HTML: the page would paint in the OS theme and then snap.
+That is the flash the component exists to prevent.
+
+The real fix is to stop needing a script. Persist the theme in a cookie, read it
+in the layout, and put `data-theme` on `<html>` from the server. No script, no
+flash, no warning.
+
+It is not a free cleanup. `cookies()` opts every route out of static rendering,
+and this codebase deliberately protects that — the header wraps `VerticalTabs`
+in a Suspense boundary for no reason other than keeping `useSearchParams` from
+doing exactly that. Nine of thirteen pages already take `searchParams` and are
+dynamic anyway, so the real cost is the landing page and the experience detail
+page.
+
+Decide it deliberately, ideally alongside the backend work, when there is a
+caching strategy to weigh it against. Until then the warning is noise and the
+comment in `theme-script.tsx` explains why, so nobody quietly "fixes" it back
+into a flash.
+
 ## Then what
 
 Backend and database, against surfaces that have been walked rather than
