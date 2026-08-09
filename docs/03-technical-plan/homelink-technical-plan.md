@@ -167,10 +167,65 @@ A **role-gated area of the same app** (fastest path; avoids a second stack) for 
 
 ## 11. Build Sequencing (maps to the product roadmap)
 
-- **Phase 0, Foundations.** Repo and CI/CD · Identity and roles · Localization scaffold (EN/FR/RW) · **Payments core (Ledger, PaymentRail, CardRail)** · **Messaging core plus realtime layer** · Concierge Ops shell · **Stays** module (listings, availability, verified badge, nightly plus lease).
-- **Phase 1, V1 launch (Kigali).** Mobility plus Experiences modules · Trip composition plus Direct booking · **MoMoRail (in)** · Escrow on high-value stays · in-app messaging plus notification center plus outbound WhatsApp / SMS / email · end-to-end concierge inventory.
-- **Phase 2, Flywheel.** Property-management module · **automated MoMo payouts** · **inbound WhatsApp threading** · reviews and referrals · analytics depth.
-- **Phase 3, Scale.** Vetted-marketplace self-listing lane in Stays · native apps · new geographies and experiences · service extraction where load justifies it.
+Phase 0 is split, because the build split it: the surfaces were built first,
+on fixtures, and the foundations are being built against them rather than
+ahead of them. The reasoning is in Product & UX §10 and the record is in
+`docs/superpowers/specs/2026-08-09-ui-milestone.md`. Everything after Phase 0
+is unchanged.
+
+- **Phase 0a, Surfaces on fixtures (done).** Repo and CI/CD · design tokens
+  and the domain types · localization scaffold (EN/FR/RW) with locale-aware
+  money and FX · **the repository seam** (`src/lib/repos`), which is the one
+  place the data source is named · **Stays**, **Mobility** and **Experiences**
+  browse, detail and checkout · guest, supply and concierge dashboards ·
+  scoped messaging · a full browser sweep of every §5 journey in every role.
+  No database, no auth, no payment provider, no realtime: four npm
+  dependencies.
+- **Phase 0b, Foundations.** Supabase schema and RLS behind the existing
+  `Repositories` interface · Identity and roles (the role cookie in
+  `lib/preferences/role.ts` becomes an auth claim, and nothing above it
+  changes) · **Payments core (Ledger, PaymentRail, CardRail)** · **Messaging
+  core plus realtime layer** · the data layer under the Concierge Ops shell
+  that already exists.
+- **Phase 1, V1 launch (Kigali).** Trip composition plus Direct booking ·
+  **MoMoRail (in)** · Escrow on high-value stays · in-app messaging plus
+  notification center plus outbound WhatsApp / SMS / email · end-to-end
+  concierge inventory.
+- **Phase 2, Flywheel.** Property-management module · **automated MoMo
+  payouts** · **inbound WhatsApp threading** · reviews and referrals ·
+  analytics depth.
+- **Phase 3, Scale.** Vetted-marketplace self-listing lane in Stays · native
+  apps · new geographies and experiences · service extraction where load
+  justifies it.
+
+### What 0a fixed about 0b
+
+The point of building the front end first was to stop guessing at the schema.
+Four things it changed, all of which would otherwise have been discovered
+against live rows:
+
+- `Conversation` needs **participant roles**, not just names. A booking has
+  more than one thread and the wrong participant must not be able to open the
+  other one. That is a row-level security policy, and it is much cheaper to
+  know about it before the policy is written.
+- **Unread is per reader**, so it is a join and not a column. The repository
+  interface has no unscoped `conversations()` for the same reason: every read
+  takes a viewer.
+- Supply is reachable **by id as well as by slug**. A URL knows a slug; a
+  `booking.supply_item_id` foreign key knows an id, and four screens need to
+  resolve one into a photograph and a link.
+- The **verification queue is not a listing**. A candidate somebody rang us
+  about is a different row from a published listing, and modelling it as a
+  half-populated `listing` puts an unverified property one boolean away from
+  going live.
+
+### The swap
+
+`src/lib/repos/index.ts` is a single function returning a `Repositories`
+object. Phase 0b adds `src/lib/repos/supabase/` exporting a
+`supabaseRepositories` that satisfies the same interfaces, and flips it. No
+screen imports a fixture, and no screen knows where a row came from — which is
+what makes the sequencing above safe rather than merely convenient.
 
 ---
 

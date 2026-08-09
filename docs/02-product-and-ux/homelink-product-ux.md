@@ -164,10 +164,71 @@ Touchpoints appear in every journey in Section 5: arrival coordination for the d
 
 ## 10. Roadmap
 
-- **Phase 0, Foundations.** Identity and roles, Localization, Payments abstraction and Ledger, Messaging and Notifications core, Concierge Ops tooling, Stays core.
-- **Phase 1, V1 launch (Kigali).** Full arrival bundle, concierge-verified inventory, full rails, in-app messaging plus channel bridge, EN / FR / RW.
-- **Phase 2, Flywheel.** Property-management (diaspora owners become supply), Mobile Money everywhere, inbound WhatsApp threading, reviews and referral loops.
-- **Phase 3, Scale.** Vetted-marketplace lane in Stays, native apps, more geographies and experiences.
+The four phases are unchanged. What changed is the order of work *inside*
+Phase 0, and it changed on purpose, so this section now describes the sequence
+the team is really following rather than the one it originally planned.
+
+- **Phase 0, Foundations.**
+  - **0a — Surfaces, on fixtures (done).** The whole front end, standing on
+    in-memory data behind a single swap point: design tokens and the type
+    system, EN / FR / RW, money and FX, then Stays, Mobility and Experiences
+    browsable, bookable and payable as far as a stub; then the three
+    dashboards V1 actually needs — guest trips, one supply shell for host,
+    driver and guide, and the concierge queue — plus scoped messaging. Closed
+    by walking every journey in §5 in a browser, in each role, both themes,
+    desktop and mobile.
+  - **0b — Foundations proper.** Identity and roles, localization already
+    standing, payments abstraction and ledger, messaging and notifications
+    core, and the data layer under the Concierge Ops tooling. Built against
+    surfaces that have been seen and argued about.
+- **Phase 1, V1 launch (Kigali).** Full arrival bundle, concierge-verified
+  inventory, full rails, in-app messaging plus channel bridge, EN / FR / RW.
+- **Phase 2, Flywheel.** Property-management (diaspora owners become supply),
+  Mobile Money everywhere, inbound WhatsApp threading, reviews and referral
+  loops.
+- **Phase 3, Scale.** Vetted-marketplace lane in Stays, native apps, more
+  geographies and experiences.
+
+### Why 0a comes before 0b
+
+Foundations-first assumes you already know which screens the foundations have
+to hold up. On a product whose whole proposition is a *guarantee* — a named
+inspector, evidence behind a badge, money held until someone confirms they are
+inside — that assumption is expensive to get wrong, because the schema
+hardens around it.
+
+Building the surfaces first was cheap and it paid. Five things that were not
+in this document turned up only because someone looked at a screen:
+
+1. **A booking carries more than one thread.** The guest asks the concierge
+   about a late arrival; the concierge asks the host whether the generator is
+   fuelled. Same night, same flat, two rooms that must never see each other.
+   §8 described messaging as scoped to a booking, which is true and not
+   enough.
+2. **Host, driver and guide are one screen.** The supply journey is identical
+   across the three — I list a thing, it gets booked, I get paid. Only the
+   noun and two columns differ. Three dashboards would have hardened three
+   accidental differences before anyone knew which were real.
+3. **Every concierge offer is a queue item.** Because the product deliberately
+   answers "anything else?" with a person rather than a second checkout, each
+   of those offers is a job. That list is the evidence for when one of them
+   should stop being manual.
+4. **Unread is a fact about a reader**, not about a thread, and read state was
+   the first thing the messaging screen made obviously wrong.
+5. **The Renting lane needs its own unit.** §5-C is a distinct journey, and it
+   was rendering the same six places at the same nightly prices as Stays — a
+   lease is priced by the month and applied for. The tab existed; the
+   difference did not.
+
+None of that is visible in a schema review. All of it is visible in ten
+minutes with the screens open. The step-by-step record, including what the
+final browser sweep found and what was deliberately left alone, is in
+`docs/superpowers/specs/2026-08-09-ui-milestone.md`.
+
+The cost of this order is that 0a's screens write nothing. That is a real
+limitation and the screens say so where it matters — the ops queue states
+plainly that no button on it moves money, and the checkout says nothing is
+charged.
 
 ---
 

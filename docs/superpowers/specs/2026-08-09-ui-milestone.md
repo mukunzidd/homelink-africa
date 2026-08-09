@@ -1,6 +1,6 @@
 # UI milestone: prove the journeys before building the backend
 
-**Status:** in progress. Started 2026-08-09.
+**Status:** complete. Started and finished 2026-08-09.
 
 ## Why this milestone exists
 
@@ -86,10 +86,14 @@ Tick these off and commit the tick with the work.
       Walk all four journeys from `docs/02-product-and-ux` §5 end to end, in
       each role, both themes, desktop and mobile. Write down what is wrong
       before fixing any of it. *Findings are in the section below.*
-- [ ] **8. Rewrite the roadmap.**
+- [x] **8. Rewrite the roadmap.**
       Update `docs/02-product-and-ux` §10 and `docs/03-technical-plan` §11 to
       describe the real sequence, including this milestone. Both currently claim
       a foundations-first order the build has not followed.
+      *Phase numbers were kept and Phase 0 was split into 0a (surfaces, done)
+      and 0b (foundations).* Renumbering would have invalidated several dozen
+      "Phase 1 / Phase 2" references in code comments that are load-bearing
+      documentation in their own right, to buy nothing but a tidier list.
 
 ## Sweep findings, 2026-08-09
 
