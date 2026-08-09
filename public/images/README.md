@@ -24,13 +24,33 @@ through Nyungwe and the tea that rings it. They are the right country and the
 right subject, and still the wrong specific outing — a photograph of somebody
 else's trek, not of ours.
 
-The interiors are place-neutral and read fine anywhere. The vehicles are the
-weakest set: they sit in deserts and snow, and one is not even the make it is
-captioned as. They are next to replace.
+The interiors are place-neutral and read fine anywhere.
 
-Each experience carries five frames because that is what the mosaic holds.
-Where a subject genuinely had no honest photograph, the frame is left to fall
-back to its seeded panel rather than filled with a picture of somewhere else.
+The vehicles are now the right make and the right model, five frames each, and
+each set reads as one car rather than five. Not one of the four they replaced
+was the make it was captioned as: a Ford Expedition in a red-rock desert stood
+in for the RAV4, a Volkswagen Polo for the Corolla, a Honda CR-V on Icelandic
+snow for the Land Cruiser, and a blue Chevrolet Camaro — a two-door coupé —
+for the twelve-seat HiAce.
+
+They are closest on the Land Cruiser, where the subject and the use are both
+right — open-sided game-drive vehicles in East African savanna, and the view
+from inside one, which is what "comes with a driver" actually looks like. The
+Corolla and the RAV4 are the right model in the wrong country: white saloons
+and grey crossovers, in forests and by water that could be most places. The
+HiAce sits in between, in southern and eastern Africa.
+
+Two candidates were dropped after being looked at rather than after being
+searched for. Both were fine RAV4 photographs taken on a dealer forecourt with
+`TAVAN BOGD` and `MONGOLIA` printed across the plate in letters large enough to
+read at gallery size. A stock car is a stand-in; a stock car with another
+country's dealer name on it is a contradiction of the sentence directly above
+it on the page.
+
+Each vehicle and each experience carries five frames because that is what the
+mosaic holds. Where a subject genuinely had no honest photograph, the frame is
+left to fall back to its seeded panel rather than filled with a picture of
+somewhere else.
 
 ## Replacing them
 
@@ -68,6 +88,28 @@ Unsplash photo IDs, so any of these can be traced back or re-fetched.
 | `experiences/nyungwe-3.jpg` | [z-lNmXoXt-k](https://unsplash.com/photos/z-lNmXoXt-k) | maxime niyomwungeri |
 | `experiences/nyungwe-4.jpg` | [u7mUyepYTlA](https://unsplash.com/photos/u7mUyepYTlA) | Tobias Doering |
 | `experiences/nyungwe-5.jpg` | [kcNCqCEdwi8](https://unsplash.com/photos/kcNCqCEdwi8) | Tobias Doering |
+| `cars/rav4-1.jpg` | [-PMNMWIYIF0](https://unsplash.com/photos/-PMNMWIYIF0) | Gino Marcelo Hernandez Sanchez |
+| `cars/rav4-2.jpg` | [qHYYjeihoig](https://unsplash.com/photos/qHYYjeihoig) | Agshin Osmanov |
+| `cars/rav4-3.jpg` | [UKz-UD0CqTA](https://unsplash.com/photos/UKz-UD0CqTA) | James Hardman |
+| `cars/rav4-4.jpg` | [MN0-x2hDNrc](https://unsplash.com/photos/MN0-x2hDNrc) | Gino Marcelo Hernandez Sanchez |
+| `cars/rav4-5.jpg` | [-7Gys8mZ1oE](https://unsplash.com/photos/-7Gys8mZ1oE) | Liao Je Wei |
+| `cars/landcruiser-1.jpg` | [GxU80twc7KA](https://unsplash.com/photos/GxU80twc7KA) | Meg von Haartman |
+| `cars/landcruiser-2.jpg` | [aXLWnXYWAu0](https://unsplash.com/photos/aXLWnXYWAu0) | Aden Heeremans |
+| `cars/landcruiser-3.jpg` | [WQRdXOBJLV0](https://unsplash.com/photos/WQRdXOBJLV0) | redcharlie |
+| `cars/landcruiser-4.jpg` | [0z4ZI9fdQiM](https://unsplash.com/photos/0z4ZI9fdQiM) | Mark Stoop |
+| `cars/landcruiser-5.jpg` | [FGqy6PbvxD0](https://unsplash.com/photos/FGqy6PbvxD0) | Mario Scheibl |
+| `cars/corolla-1.jpg` | [73XAgT8DOpo](https://unsplash.com/photos/73XAgT8DOpo) | Bestami Sarıkaya |
+| `cars/corolla-2.jpg` | [PBbP1bOZV1o](https://unsplash.com/photos/PBbP1bOZV1o) | Lucas Hunter |
+| `cars/corolla-3.jpg` | [DwNmXuRb1Tk](https://unsplash.com/photos/DwNmXuRb1Tk) | Bestami Sarıkaya |
+| `cars/corolla-4.jpg` | [u6UfP9-aNv4](https://unsplash.com/photos/u6UfP9-aNv4) | Bestami Sarıkaya |
+| `cars/corolla-5.jpg` | [MGMrQYGZXdI](https://unsplash.com/photos/MGMrQYGZXdI) | Grégory Dupont |
+| `cars/hiace-1.jpg` | [F4o_phtVg8o](https://unsplash.com/photos/F4o_phtVg8o) | Sipho Ndebele |
+| `cars/hiace-2.jpg` | [BqYAS7Sl5kU](https://unsplash.com/photos/BqYAS7Sl5kU) | Sam Mamabolo |
+| `cars/hiace-3.jpg` | [K59l2Aly3h8](https://unsplash.com/photos/K59l2Aly3h8) | Visual Karsa |
+| `cars/hiace-4.jpg` | [lGOAzV8s_ko](https://unsplash.com/photos/lGOAzV8s_ko) | Kenneth Sonntag |
+| `cars/hiace-5.jpg` | [6SlIB057YQs](https://unsplash.com/photos/6SlIB057YQs) | Ewien van Bergeijk - Kwant |
 
-The interiors and vehicles predate this table; their IDs were not recorded at
-the time and are not recoverable from the files.
+The interiors predate this table; their IDs were not recorded at the time and
+are not recoverable from the files. The four vehicles that used to sit here had
+the same gap, so there was no way to check what had been downloaded short of
+opening it — which is the argument for keeping this table current.

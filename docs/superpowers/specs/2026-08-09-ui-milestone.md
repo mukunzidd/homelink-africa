@@ -42,7 +42,7 @@ Tick these off and commit the tick with the work.
       `InspectorRow`, and `Highlights`. Cars and experiences have none of the
       three. Bring them up to the same standard without making three pages that
       merely look identical — a car and a trek earn different facts.
-- [ ] **2. Car photography.**
+- [x] **2. Car photography.**
       `vehicle-4.jpg` is a white Honda CR-V on Icelandic snow captioned as a
       Land Cruiser for the parks. Each vehicle has one image, so four of five
       mosaic tiles fall back to gradient. Same treatment the experiences got in
