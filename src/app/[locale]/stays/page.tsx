@@ -38,7 +38,10 @@ export default async function StaysPage({
   ]);
 
   const intlLocale = INTL_LOCALES[locale as Locale];
-  const hasDates = !!search.from && !!search.to;
+  // A lease is priced by the month and applied for, not quoted per night, so
+  // the whole date apparatus is beside the point in this lane.
+  const isLease = search.band === "long";
+  const hasDates = !isLease && !!search.from && !!search.to;
   const nights = hasDates ? nightsBetween(search.from!, search.to!) : 0;
   const activeFilters = countActiveFilters(search);
 
@@ -68,7 +71,7 @@ export default async function StaysPage({
         <SortControl value={search.sort} />
       </div>
 
-      {!hasDates && <AddDatesPrompt />}
+      {!hasDates && !isLease && <AddDatesPrompt />}
 
       <div className="grid gap-6 lg:grid-cols-[268px_1fr]">
         {/* `self-start` matters: a grid item stretches by default, so without
@@ -98,6 +101,7 @@ export default async function StaysPage({
                 to={search.to}
                 party={search.party}
                 nights={nights}
+                lease={isLease}
               />
             ))
           )}

@@ -257,7 +257,20 @@
     "escrowBody": "Nous retenons la totalité du montant et ne le versons à l'hôte qu'après confirmation de votre arrivée. Si le logement ne correspond pas, remboursement intégral et un autre logement le soir même.",
     "noEscrowBody": "Ce séjour est en dessous de notre seuil de séquestre, le paiement est donc direct. La même garantie d'exactitude s'applique.",
     "cancellation": "Annulation gratuite jusqu'au {date}. Ensuite, la première nuit n'est pas remboursable.",
-    "agree": "En payant, vous acceptez les conditions de réservation et la politique d'annulation ci-dessus."
+    "agree": "En payant, vous acceptez les conditions de réservation et la politique d'annulation ci-dessus.",
+    "summaryTitle": {
+      "stay": "Votre séjour",
+      "car": "Votre voiture",
+      "experience": "Votre sortie"
+    },
+    "kinds": {
+      "car": {
+        "noEscrowBody": "Une location est versée directement à l'opérateur — le séquestre concerne les séjours au-dessus de notre seuil. La même garantie d'exactitude s'applique : si la voiture n'est pas celle décrite ici, vous ne la payez pas."
+      },
+      "experience": {
+        "noEscrowBody": "Une sortie est versée directement au guide — le séquestre concerne les séjours au-dessus de notre seuil. La même garantie d'exactitude s'applique : si la journée n'est pas celle décrite ici, vous ne la payez pas."
+      }
+    }
   },
   "confirmation": {
     "title": "C'est réservé",
@@ -447,7 +460,9 @@
     "reference": "Réf.",
     "openThread": "Ouvrir la conversation",
     "noThread": "Aucun message",
-    "partOf": "Fait partie de {name}"
+    "partOf": "Fait partie de {name}",
+    "notYours": "Cet écran est celui de quelqu'un d'autre",
+    "notYoursBody": "Voyages regroupe vos propres réservations. Si vous proposez quelque chose à HomeLink, c'est dans Mon offre ; si vous êtes de l'équipe de Kigali, c'est dans La file."
   },
   "inventory": {
     "metaTitle": "Votre offre",

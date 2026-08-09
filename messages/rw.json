@@ -257,7 +257,20 @@
     "escrowBody": "Tubika amafaranga yose kandi tukayaha nyir'inzu gusa nyuma yo kwemeza ko wageze. Niba ahantu hatameze nk'uko byasobanuwe, usubizwa amafaranga yose kandi tukagushakira ubundi bucumbi kuri uwo mugoroba.",
     "noEscrowBody": "Ubu bucumbi buri munsi y'urugero rwacu rwo kubika amafaranga, bityo ubwishyu bugera ako kanya. Ubwizerane ku byasobanuwe buracyariho.",
     "cancellation": "Guhagarika ku buntu kugeza {date}. Nyuma y'aho, ijoro rya mbere ntirisubizwa.",
-    "agree": "Mu kwishyura wemera amabwiriza yo gufata n'amabwiriza yo guhagarika ari hejuru."
+    "agree": "Mu kwishyura wemera amabwiriza yo gufata n'amabwiriza yo guhagarika ari hejuru.",
+    "summaryTitle": {
+      "stay": "Icumbi cyawe",
+      "car": "Imodoka yawe",
+      "experience": "Urugendo rwawe"
+    },
+    "kinds": {
+      "car": {
+        "noEscrowBody": "Amafaranga y'ubukode ajya ako kanya kuri nyir'imodoka — kubika amafaranga ni ku macumbi arenze urugero rwacu. Icyemezo cy'ukuri kiracyariho: niba imodoka atari yo ivugwa hano, ntuyishyura."
+      },
+      "experience": {
+        "noEscrowBody": "Amafaranga y'urugendo ajya ako kanya ku muyobozi — kubika amafaranga ni ku macumbi arenze urugero rwacu. Icyemezo cy'ukuri kiracyariho: niba umunsi atari uwo uvugwa hano, ntuwishyura."
+      }
+    }
   },
   "confirmation": {
     "title": "Wafashe neza",
@@ -447,7 +460,9 @@
     "reference": "Nomero",
     "openThread": "Fungura ikiganiro",
     "noThread": "Nta butumwa buraboneka",
-    "partOf": "Bijyanye na {name}"
+    "partOf": "Bijyanye na {name}",
+    "notYours": "Iyi paji ni iy'undi muntu",
+    "notYoursBody": "Ingendo ni aho ibyo wowe wabitse biba. Niba utanga ikintu kuri HomeLink biri muri Ibyo ntanga, kandi niba uri mu itsinda ryo i Kigali biri mu Murongo."
   },
   "inventory": {
     "metaTitle": "Ibyo utanga",

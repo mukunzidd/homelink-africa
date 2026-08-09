@@ -257,7 +257,20 @@
     "escrowBody": "We hold the full amount and release it to the host only after you confirm check-in. If the place is not as described, you are refunded in full and we find you another home the same night.",
     "noEscrowBody": "This stay is below our escrow threshold, so payment settles directly. The same guarantee on accuracy still applies.",
     "cancellation": "Free cancellation until {date}. After that the first night is non-refundable.",
-    "agree": "By paying you accept the booking terms and the cancellation policy above."
+    "agree": "By paying you accept the booking terms and the cancellation policy above.",
+    "summaryTitle": {
+      "stay": "Your stay",
+      "car": "Your car",
+      "experience": "Your day out"
+    },
+    "kinds": {
+      "car": {
+        "noEscrowBody": "A hire settles directly to the operator — escrow is for stays above our threshold. The same guarantee on accuracy still applies: if the car is not what this page says, you are not paying for it."
+      },
+      "experience": {
+        "noEscrowBody": "A day out settles directly to the guide — escrow is for stays above our threshold. The same guarantee on accuracy still applies: if the day is not what this page says, you are not paying for it."
+      }
+    }
   },
   "confirmation": {
     "title": "You're booked",
@@ -447,7 +460,9 @@
     "reference": "Ref",
     "openThread": "Open the thread",
     "noThread": "No messages yet",
-    "partOf": "Part of {name}"
+    "partOf": "Part of {name}",
+    "notYours": "This screen belongs to someone else",
+    "notYoursBody": "Trips is where your own bookings live. If you supply something to HomeLink it is under Inventory, and if you are on the Kigali team it is under Queue."
   },
   "inventory": {
     "metaTitle": "Your inventory",

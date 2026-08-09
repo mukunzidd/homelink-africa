@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { repos } from "@/lib/repos";
@@ -7,6 +8,7 @@ import { Link } from "@/i18n/navigation";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import type { Booking, Trip } from "@/lib/domain/types";
 import { today } from "@/lib/domain/dates";
+import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
 import { BookingRow } from "@/components/bookings/booking-row";
 import { Button } from "@/components/ui/button";
 
@@ -27,6 +29,11 @@ export async function generateMetadata(): Promise<Metadata> {
  *
  * "Coming up" and "earlier" split on the end date rather than the start,
  * because a stay you are in the middle of is not over.
+ *
+ * Role-checked like the other two dashboards. It was not, which meant a host
+ * or an ops user who landed here read the guest's bookings and the guest's
+ * threads. Nothing was exposed that the fixtures do not already publish, but
+ * it is the wrong shape to still be carrying when auth arrives.
  */
 export default async function TripsPage({
   params,
@@ -40,13 +47,29 @@ export default async function TripsPage({
   const tConfirm = await getTranslations("confirmation");
   const intlLocale = INTL_LOCALES[locale as Locale];
 
+  const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
+  if (role !== "guest") {
+    return (
+      <div className="mx-auto flex max-w-[1180px] flex-col gap-4 px-6 py-16">
+        <h1 className="font-display text-3xl font-semibold text-ink">
+          {t("notYours")}
+        </h1>
+        <p className="max-w-[56ch] text-ink-2">{t("notYoursBody")}</p>
+        <Link
+          href="/"
+          className="mt-2 self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
+        >
+          ← HomeLink
+        </Link>
+      </div>
+    );
+  }
+
   const [bookings, trips] = await Promise.all([
     repos().bookings.listForCurrentUser(),
     repos().trips.listForCurrentUser(),
   ]);
 
-  // Trips is the guest's screen by definition, so the thread it links to is
-  // the guest's thread — not the concierge-to-host one on the same booking.
   const now = today();
   const upcoming = bookings
     .filter((b) => b.endDate >= now && b.status !== "cancelled")
@@ -63,7 +86,8 @@ export default async function TripsPage({
       list.map(async (booking) => {
         const [supply, conversation] = await Promise.all([
           supplyRefFor(booking),
-          repos().messaging.forBooking(booking.id, "guest"),
+          // The guest's thread on this booking, not the concierge-to-host one.
+          repos().messaging.forBooking(booking.id, role),
         ]);
         const trip = tripFor(booking);
 

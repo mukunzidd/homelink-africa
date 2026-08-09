@@ -82,7 +82,7 @@ Tick these off and commit the tick with the work.
       more than one thread. The guest talks to the concierge, and the concierge
       talks to the host, about the same night in the same flat — so threads
       carry participant *roles* and a host can never open the guest's thread.
-- [ ] **7. Physical review sweep in the browser.**
+- [x] **7. Physical review sweep in the browser.**
       Walk all four journeys from `docs/02-product-and-ux` §5 end to end, in
       each role, both themes, desktop and mobile. Write down what is wrong
       before fixing any of it. *Findings are in the section below.*
@@ -103,32 +103,40 @@ would actually be on it. Written down before anything was touched.
    stay is below our escrow threshold". `checkout.yourStay` and
    `checkout.noEscrowBody` were written for one lane and reused in three. The
    verification panel already solved this with kind-aware copy; the checkout
-   did not follow.
+   did not follow. **Fixed** the same way: stay copy is the default and the
+   other two lanes override it.
 
 2. **The Renting lane is Stays with a chip on.** `/stays?band=long` shows the
    same six places at the same nightly prices. `ListingRow` always renders
    `perNight`, so the one thing that distinguishes a lease from a booking —
    that it is priced by the month — is invisible in the lane built for it. The
    tab, the key icon and the whole §5-C journey currently change nothing a
-   user can see.
+   user can see. **Fixed.** The lane prices by the month, offers "Apply for a
+   lease" rather than "Reserve", and drops the three things that only mean
+   something to a nightly booking: the date prompt, the escrow badge, and
+   "2 left for these dates".
 
 3. **`/trips` does not check who is asking.** `/inventory` and `/queue` read
    the role cookie and decline politely. `/trips` does not, so a host or an
    ops user landing on it sees the guest's bookings, and the rows hard-code
    `"guest"` when they look up the thread. Nothing is exposed that a fixture
    does not already publish, but it is the wrong shape to carry into auth.
+   **Fixed**: same check, same polite refusal, and the thread lookup uses the
+   viewer's role rather than a hard-coded `"guest"`.
 
 4. **`/trip/start` is dead.** It renders `NotBuiltYet` and nothing in `src`
    links to it. It predates the tab strip, which replaced the intent doors it
-   was the target of.
+   was the target of. **Deleted.** `7dc6f0d` removed the doors outright and
+   this was the door's destination; the Trip concept itself lives on in
+   `/trips` and in the grouping on a booking row.
 
 ### Not wrong, but worth recording
 
-5. All six fixture listings carry both `nightly` and `lease`, so the band
+5. **Not fixed.** All six fixture listings carry both `nightly` and `lease`, so the band
    filter removes nothing. Fixture thinness rather than a bug, but it is why
    finding 2 was invisible until the lane was walked.
 
-6. `en` is tagged `en-US` for formatting while every word of the copy is
+6. **Not fixed, deliberately.** `en` is tagged `en-US` for formatting while every word of the copy is
    British — "neighbourhood", "saloon", "tarmac". Dates therefore read
    "November 14, 2026". Message times were pinned to a 24-hour clock in step 6
    for exactly this reason; the date format is the same argument and a wider

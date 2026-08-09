@@ -199,7 +199,12 @@ export function CheckoutForm({
           </>
         ) : (
           <p className="max-w-[62ch] text-sm leading-relaxed text-ink-2">
-            {t("noEscrowBody")}
+            {/* "This stay is below our escrow threshold" was being said over a
+                Land Cruiser. Stay copy stays the default and the other two
+                lanes override it, the same way the verification panel does. */}
+            {item.kind === "stay"
+              ? t("noEscrowBody")
+              : t(`kinds.${item.kind}.noEscrowBody`)}
           </p>
         )}
       </section>

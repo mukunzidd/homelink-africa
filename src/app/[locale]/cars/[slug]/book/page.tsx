@@ -71,7 +71,7 @@ export default async function BookCarPage({
 
         <aside className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5 lg:sticky lg:top-20">
           <h2 className="text-xs font-bold uppercase tracking-[0.1em] text-ink-3">
-            {t("yourStay")}
+            {t("summaryTitle.car")}
           </h2>
 
           <SupplyImage
