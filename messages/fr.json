@@ -587,5 +587,21 @@
     "pageOf": "{page} / {pages}",
     "previous": "Retour",
     "next": "Suite"
+  },
+  "owner": {
+    "label": "Votre côté de cette annonce",
+    "title": {
+      "stay": "Celle-ci est à vous",
+      "car": "Celui-ci est à vous",
+      "experience": "Celle-ci est à vous"
+    },
+    "bookedNow": "Réservé",
+    "coming": "À vous revenir",
+    "free": "Libre",
+    "dueForRewalk": "Nouvelle visite à prévoir",
+    "rewalkNote": "bientôt un an, elle est donc dans la file de vérification.",
+    "seeInInventory": "Voir dans mon offre",
+    "askToChange": "Demander une modification à l'équipe",
+    "changesNote": "Les tarifs, les photos et les disponibilités sont modifiés par l'équipe de Kigali tant que l'intégration des propriétaires se fait hors ligne. Écrivez-leur et c'est fait le jour même : il n'y a pas encore de formulaire ici, et un bouton qui n'enregistre rien serait pire que rien."
   }
 }

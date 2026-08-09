@@ -587,5 +587,21 @@
     "pageOf": "{page} / {pages}",
     "previous": "Back",
     "next": "More"
+  },
+  "owner": {
+    "label": "Your side of this listing",
+    "title": {
+      "stay": "This one is yours",
+      "car": "This one is yours",
+      "experience": "This one is yours"
+    },
+    "bookedNow": "Booked",
+    "coming": "Coming to you",
+    "free": "Free",
+    "dueForRewalk": "Due a re-walk",
+    "rewalkNote": "coming up on a year, so it is in the verification queue.",
+    "seeInInventory": "See it in your inventory",
+    "askToChange": "Ask the team to change something",
+    "changesNote": "Rates, photographs and availability are changed by the Kigali team while owner onboarding runs offline. Message them and it is done the same day — there is no form here yet, and a button that saved nothing would be worse than none."
   }
 }

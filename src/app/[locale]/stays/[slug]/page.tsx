@@ -17,6 +17,7 @@ import { BookingPanel } from "@/components/listing/booking-panel";
 import { Highlights } from "@/components/listing/highlights";
 import { InspectorRow } from "@/components/listing/inspector-row";
 import { VerificationRecordPanel } from "@/components/listing/verification-record";
+import { SupplyOwnerBand } from "@/components/listing/supply-owner-band";
 
 export async function generateMetadata({
   params,
@@ -78,6 +79,15 @@ export default async function ListingDetailPage({
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
+      <SupplyOwnerBand
+        kind="stay"
+        supplyItemId={listing.id}
+        rate={listing.nightlyRate}
+        rateLabel={tListing("perNight")}
+        availability={tStatus("lowAvailability", { count: listing.unitsAvailable })}
+        record={listing.verification}
+      />
+
       <Link
         href="/stays"
         className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"

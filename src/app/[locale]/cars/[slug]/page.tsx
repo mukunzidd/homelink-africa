@@ -13,6 +13,7 @@ import { HirePanel } from "@/components/mobility/hire-panel";
 import { VehicleHighlights } from "@/components/mobility/vehicle-highlights";
 import { InspectorRow } from "@/components/listing/inspector-row";
 import { VerificationRecordPanel } from "@/components/listing/verification-record";
+import { SupplyOwnerBand } from "@/components/listing/supply-owner-band";
 
 export async function generateMetadata({
   params,
@@ -69,6 +70,15 @@ export default async function VehicleDetailPage({
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
+      <SupplyOwnerBand
+        kind="car"
+        supplyItemId={vehicle.id}
+        rate={vehicle.dailyRate}
+        rateLabel={t("perDay")}
+        availability={tStatus("lowAvailability", { count: vehicle.unitsAvailable })}
+        record={vehicle.verification}
+      />
+
       <Link
         href="/cars"
         className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"

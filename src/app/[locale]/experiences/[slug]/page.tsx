@@ -11,6 +11,7 @@ import { SeatsPanel } from "@/components/experiences/seats-panel";
 import { ExperienceHighlights } from "@/components/experiences/experience-highlights";
 import { InspectorRow } from "@/components/listing/inspector-row";
 import { VerificationRecordPanel } from "@/components/listing/verification-record";
+import { SupplyOwnerBand } from "@/components/listing/supply-owner-band";
 
 export async function generateMetadata({
   params,
@@ -49,6 +50,15 @@ export default async function ExperienceDetailPage({
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
+      <SupplyOwnerBand
+        kind="experience"
+        supplyItemId={experience.id}
+        rate={experience.pricePerPerson}
+        rateLabel={t("perPerson")}
+        availability={t("groupMax", { count: experience.groupMax })}
+        record={experience.verification}
+      />
+
       <Link
         href="/experiences"
         className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"

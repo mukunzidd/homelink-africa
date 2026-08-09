@@ -51,7 +51,7 @@ export const LISTINGS: Listing[] = [
     nightlyRate: money(165_000, "RWF"),
     monthlyRate: money(2_900_000, "RWF"),
     modes: ["nightly", "lease"],
-    verification: verification("ver_001", "Jean-Claude U.", "2026-10-12"),
+    verification: verification("ver_001", "Jean-Claude U.", "2026-06-12"),
     imageSeed: "kacyiru",
     images: ["/images/listings/interior-1.jpg", "/images/listings/interior-2.jpg", "/images/listings/interior-3.jpg", "/images/listings/interior-4.jpg", "/images/listings/interior-5.jpg"],
     summary:
@@ -70,7 +70,7 @@ export const LISTINGS: Listing[] = [
     nightlyRate: money(219_000, "RWF"),
     monthlyRate: money(3_800_000, "RWF"),
     modes: ["nightly", "lease"],
-    verification: verification("ver_002", "Aline M.", "2026-10-03"),
+    verification: verification("ver_002", "Aline M.", "2026-04-03"),
     imageSeed: "kimihurura",
     images: ["/images/listings/interior-3.jpg", "/images/listings/interior-6.jpg", "/images/listings/interior-7.jpg", "/images/listings/interior-8.jpg", "/images/listings/interior-1.jpg"],
     summary:
@@ -89,7 +89,7 @@ export const LISTINGS: Listing[] = [
     nightlyRate: money(340_000, "RWF"),
     monthlyRate: money(5_600_000, "RWF"),
     modes: ["nightly", "lease"],
-    verification: verification("ver_003", "Jean-Claude U.", "2026-09-28", 41),
+    verification: verification("ver_003", "Jean-Claude U.", "2025-09-28", 41),
     imageSeed: "nyarutarama",
     images: ["/images/listings/interior-5.jpg", "/images/listings/interior-8.jpg", "/images/listings/interior-6.jpg", "/images/listings/interior-2.jpg", "/images/listings/interior-7.jpg"],
     summary:
@@ -108,7 +108,7 @@ export const LISTINGS: Listing[] = [
     nightlyRate: money(62_000, "RWF"),
     monthlyRate: money(950_000, "RWF"),
     modes: ["nightly", "lease"],
-    verification: verification("ver_004", "Aline M.", "2026-10-19"),
+    verification: verification("ver_004", "Aline M.", "2026-07-19"),
     imageSeed: "remera",
     images: ["/images/listings/interior-2.jpg", "/images/listings/interior-1.jpg", "/images/listings/interior-4.jpg", "/images/listings/interior-3.jpg", "/images/listings/interior-6.jpg"],
     summary:
@@ -127,7 +127,7 @@ export const LISTINGS: Listing[] = [
     nightlyRate: money(198_000, "RWF"),
     monthlyRate: money(3_200_000, "RWF"),
     modes: ["nightly", "lease"],
-    verification: verification("ver_005", "Patrick N.", "2026-10-22"),
+    verification: verification("ver_005", "Patrick N.", "2026-07-22"),
     imageSeed: "kiyovu",
     images: ["/images/listings/interior-7.jpg", "/images/listings/interior-4.jpg", "/images/listings/interior-8.jpg", "/images/listings/interior-5.jpg", "/images/listings/interior-2.jpg"],
     summary:
@@ -146,7 +146,7 @@ export const LISTINGS: Listing[] = [
     nightlyRate: money(128_000, "RWF"),
     monthlyRate: money(1_950_000, "RWF"),
     modes: ["nightly", "lease"],
-    verification: verification("ver_006", "Patrick N.", "2026-10-08"),
+    verification: verification("ver_006", "Patrick N.", "2026-02-08"),
     imageSeed: "gikondo",
     images: ["/images/listings/interior-6.jpg", "/images/listings/interior-5.jpg", "/images/listings/interior-1.jpg", "/images/listings/interior-7.jpg", "/images/listings/interior-3.jpg"],
     summary:
@@ -166,7 +166,7 @@ export const VEHICLES: Vehicle[] = [
     driveModes: ["selfDrive", "withDriver"],
     dailyRate: money(58_000, "RWF"),
     withDriverSupplement: money(25_000, "RWF"),
-    verification: verification("ver_v01", "Eric H.", "2026-10-15", 22),
+    verification: verification("ver_v01", "Eric H.", "2026-06-15", 22),
     imageSeed: "rav4",
     images: [
       "/images/cars/rav4-1.jpg",
@@ -189,7 +189,7 @@ export const VEHICLES: Vehicle[] = [
     driveModes: ["withDriver"],
     dailyRate: money(145_000, "RWF"),
     withDriverSupplement: money(0, "RWF"),
-    verification: verification("ver_v02", "Eric H.", "2026-10-11", 22),
+    verification: verification("ver_v02", "Eric H.", "2026-05-11", 22),
     imageSeed: "landcruiser",
     images: [
       "/images/cars/landcruiser-1.jpg",
@@ -212,7 +212,7 @@ export const VEHICLES: Vehicle[] = [
     driveModes: ["selfDrive", "withDriver"],
     dailyRate: money(38_000, "RWF"),
     withDriverSupplement: money(25_000, "RWF"),
-    verification: verification("ver_v03", "Eric H.", "2026-10-18", 22),
+    verification: verification("ver_v03", "Eric H.", "2026-07-18", 22),
     imageSeed: "corolla",
     images: [
       "/images/cars/corolla-1.jpg",
@@ -234,7 +234,7 @@ export const VEHICLES: Vehicle[] = [
     driveModes: ["withDriver"],
     dailyRate: money(120_000, "RWF"),
     withDriverSupplement: money(0, "RWF"),
-    verification: verification("ver_v04", "Eric H.", "2026-09-30", 22),
+    verification: verification("ver_v04", "Eric H.", "2025-10-30", 22),
     imageSeed: "hiace",
     images: [
       "/images/cars/hiace-1.jpg",
@@ -260,7 +260,7 @@ export const EXPERIENCES: Experience[] = [
     // USD 1,500.00 — the park permit is priced in dollars, not francs.
     pricePerPerson: money(150_000, "USD"),
     guideName: "Emmanuel R.",
-    verification: verification("ver_e01", "Aline M.", "2026-09-14", 18),
+    verification: verification("ver_e01", "Aline M.", "2026-05-14", 18),
     imageSeed: "gorillas",
     images: [
       "/images/experiences/gorillas-1.jpg",
@@ -283,7 +283,7 @@ export const EXPERIENCES: Experience[] = [
     groupMax: 12,
     pricePerPerson: money(45_000, "RWF"),
     guideName: "Solange K.",
-    verification: verification("ver_e02", "Patrick N.", "2026-10-06", 18),
+    verification: verification("ver_e02", "Patrick N.", "2026-07-06", 18),
     imageSeed: "kigaliwalk",
     images: [
       "/images/experiences/kigali-1.jpg",
@@ -306,7 +306,7 @@ export const EXPERIENCES: Experience[] = [
     groupMax: 10,
     pricePerPerson: money(85_000, "RWF"),
     guideName: "Didier B.",
-    verification: verification("ver_e03", "Aline M.", "2026-10-01", 18),
+    verification: verification("ver_e03", "Aline M.", "2026-06-01", 18),
     imageSeed: "kivu",
     images: [
       "/images/experiences/kivu-1.jpg",
@@ -328,7 +328,7 @@ export const EXPERIENCES: Experience[] = [
     groupMax: 10,
     pricePerPerson: money(120_000, "RWF"),
     guideName: "Emmanuel R.",
-    verification: verification("ver_e04", "Patrick N.", "2026-09-22", 18),
+    verification: verification("ver_e04", "Patrick N.", "2025-11-22", 18),
     imageSeed: "nyungwe",
     images: [
       "/images/experiences/nyungwe-1.jpg",

@@ -587,5 +587,21 @@
     "pageOf": "{page} / {pages}",
     "previous": "Subira inyuma",
     "next": "Ibikurikira"
+  },
+  "owner": {
+    "label": "Uruhande rwawe kuri ibi",
+    "title": {
+      "stay": "Iyi ni iyawe",
+      "car": "Iyi ni iyawe",
+      "experience": "Uru ni urwawe"
+    },
+    "bookedNow": "Byabitswe",
+    "coming": "Bigiye kukugeraho",
+    "free": "Bihari",
+    "dueForRewalk": "Bikeneye kongera kugenzurwa",
+    "rewalkNote": "hafi umwaka, bityo biri mu murongo w'igenzura.",
+    "seeInInventory": "Bireba mu byo utanga",
+    "askToChange": "Saba itsinda guhindura ikintu",
+    "changesNote": "Ibiciro, amafoto n'uko biboneka bihindurwa n'itsinda ryo i Kigali mu gihe kwiyandikisha kwa ba nyirabyo bikorwa hanze y'urubuga. Baandikire bikorwe uwo munsi — nta fishi iri hano, kandi buto itabika ikintu yaba mbi kurusha kutayigira."
   }
 }
