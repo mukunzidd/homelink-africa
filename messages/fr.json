@@ -117,12 +117,14 @@
       "car": {
         "inspectedBody": "Révisé, essayé sur route et contrôlé selon une liste de 22 points : pneus, freins, roue de secours, cric et papiers.",
         "identityBody": "Propriété de l'exploitant et assurance vérifiées avec la carte grise avant toute location.",
-        "photographedBody": "Photographié par l'équipe HomeLink, ce véhicule précis — pas une photo de catalogue du modèle."
+        "photographedBody": "Photographié par l'équipe HomeLink, ce véhicule précis — pas une photo de catalogue du modèle.",
+        "title": "Vérifiée par quelqu'un qui l'a conduite"
       },
       "experience": {
         "inspectedBody": "Effectuée en entier par un membre de notre équipe avant sa mise en ligne, selon un contrôle en 18 points : sécurité, horaires et ce qui est réellement inclus.",
         "identityBody": "Licence du guide et accréditation des parcs vérifiées, et renouvelées chaque saison.",
-        "photographedBody": "Photographiée lors d'un vrai départ par l'équipe HomeLink."
+        "photographedBody": "Photographiée lors d'un vrai départ par l'équipe HomeLink.",
+        "title": "Vérifiée par quelqu'un qui l'a faite"
       }
     }
   },
@@ -300,7 +302,18 @@
     "book": "Louer cette voiture",
     "about": "À propos de cette voiture",
     "backToCars": "Toutes les voitures",
-    "daysTotal": "au total pour {count, plural, one {# jour} other {# jours}}"
+    "daysTotal": "au total pour {count, plural, one {# jour} other {# jours}}",
+    "basedIn": "Kigali",
+    "bothModesHeading": "Au volant, ou avec chauffeur",
+    "driverOnlyHeading": "Avec chauffeur, au départ de Kigali",
+    "thingsToKnow": "Bon à savoir",
+    "paperworkTitle": "Permis et papiers",
+    "paperworkSelfBody": "Apportez votre permis national, et un permis international si vous êtes de passage. Assurance, carte grise et triangle sont dans la boîte à gants.",
+    "paperworkDriverBody": "Rien à apporter. Le chauffeur détient le permis, l'assurance et les entrées de parc.",
+    "fuelTitle": "Carburant et kilométrage",
+    "fuelBody": "Remise pleine, rendue pleine. Pas de plafond kilométrique, et aucun supplément pour sortir de Kigali.",
+    "cancellationTitle": "Annulation",
+    "cancellationBody": "Annulation gratuite jusqu'au {date}. Ensuite, la première journée n'est pas remboursable."
   },
   "experiences": {
     "title": "Excursions",
@@ -326,7 +339,15 @@
     "backToExperiences": "Toutes les excursions",
     "peopleLabel": "Combien de personnes",
     "whenLabel": "Quel jour",
-    "ageNotice": "L'âge minimum pour cette sortie est de {age} ans."
+    "ageNotice": "L'âge minimum pour cette sortie est de {age} ans.",
+    "guideRole": "Guide agréé. Pas un salarié HomeLink.",
+    "thingsToKnow": "Bon à savoir",
+    "bringTitle": "Ce qu'il faut prendre",
+    "bringBody": "Des chaussures fermées, une veste de pluie, de l'eau. Le matériel spécifique est fourni et déjà compris dans le prix.",
+    "ageTitle": "Âge minimum",
+    "weatherTitle": "La météo",
+    "weatherBody": "Ici la pluie tombe l'après-midi et annule rarement quoi que ce soit. Si une sortie est annulée pour raison de sécurité, elle est remboursée intégralement.",
+    "ageBody": "À partir de {age} ans. La limite est fixée par le parc ou l'opérateur, pas par nous, et elle est vérifiée au point de rendez-vous."
   },
   "searchPanel": {
     "whereLabel": "Destination",
@@ -383,5 +404,33 @@
     "fibreBody": "Débit testé sur place, pas repris d'une annonce.",
     "photos": "Nos propres photos",
     "photosBody": "Prises par notre équipe. Rien ne vient du téléphone du propriétaire."
+  },
+  "carHighlight": {
+    "inspected": "Quelqu'un l'a conduite avant vous",
+    "inspectedBody": "{name} a révisé et essayé cette voiture précise le {date}, sur une liste de {points} points.",
+    "driver": "Un chauffeur vient avec",
+    "driverBody": "Le tarif comprend quelqu'un qui roule sur ces routes depuis des années. Sur les pistes des parcs, ce n'est pas du luxe.",
+    "automatic": "Boîte automatique, sur ces collines",
+    "automaticBody": "Kigali est bâtie sur des crêtes et la circulation s'arrête en pleine montée. Celle-ci passe les rapports pour vous.",
+    "unpaved": "Faite pour là où le bitume s'arrête",
+    "unpavedBody": "Garde au sol et quatre roues motrices, parce que la moitié des endroits qui valent le détour cessent d'être des routes.",
+    "group": "Tout le monde tient dans un seul véhicule",
+    "groupBody": "{count} places : personne ne suit dans une deuxième voiture, personne ne se perd.",
+    "fleet": "Il y en a presque toujours une de libre",
+    "fleetBody": "{count} disponibles en ce moment : changer de dates vous coûte rarement la réservation."
+  },
+  "experienceHighlight": {
+    "inspected": "L'un de nous a fait la journée entière",
+    "inspectedBody": "{name} a suivi cette sortie exacte le {date}, du début à la fin, avant sa mise en ligne.",
+    "permit": "Le permis, c'est notre affaire",
+    "permitBody": "Les permis des Volcans partent des mois à l'avance et se paient en dollars. Le vôtre est réservé, et il est déjà compris dans le prix.",
+    "halfDay": "De retour avant l'après-midi",
+    "halfDayBody": "{count} heures de porte à porte : cela tient d'un côté ou de l'autre d'une journée de travail.",
+    "smallGroup": "Un petit groupe",
+    "smallGroupBody": "Plafonné à {count}. Vous ne suivez pas un fanion levé au milieu d'une foule.",
+    "food": "Le déjeuner est compris",
+    "foodBody": "Cuisiné sur place par les gens qui y vivent, pas transporté depuis une cuisine de Kigali.",
+    "fullDay": "C'est toute la journée",
+    "fullDayBody": "{count} heures avec le transport depuis Kigali à l'aller et au retour, pas un créneau autour duquel il faut construire sa journée."
   }
 }

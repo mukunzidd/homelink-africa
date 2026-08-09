@@ -296,6 +296,42 @@ export function KeyIcon({ className, size = 16 }: IconProps) {
   );
 }
 
+/* ---- lane glyphs. A car and a trek earn different facts, so different marks. -- */
+
+/** Not the tarmac. Half the roads worth driving here stop being roads. */
+export function RoadIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M7.6 2.8 3.2 17.2M12.4 2.8l4.4 14.4" />
+      <path d="M10 4v2.6M10 9v2.6M10 14v2.6" />
+    </svg>
+  );
+}
+
+/** Transmission. The gate of a shift pattern, which is the thing an automatic
+ *  spares you on a hill that has stopped moving. */
+export function GearIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M5.4 4.6v10.8M14.6 4.6v10.8M5.4 10h9.2" />
+      <circle cx="5.4" cy="3.4" r="1.2" />
+      <circle cx="14.6" cy="3.4" r="1.2" />
+      <circle cx="5.4" cy="16.6" r="1.2" />
+      <circle cx="14.6" cy="16.6" r="1.2" />
+    </svg>
+  );
+}
+
+/** Food that is part of the day rather than a stop on it. */
+export function BowlIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M2.8 8.2h14.4a7.2 7.2 0 0 1-14.4 0Z" />
+      <path d="M7.6 5.4c0-1.3 1-1.7 1-2.8M11.4 5.4c0-1.3 1-1.7 1-2.8" />
+    </svg>
+  );
+}
+
 export function ShareIcon({ className, size = 16 }: IconProps) {
   return (
     <svg {...base(size, className)}>

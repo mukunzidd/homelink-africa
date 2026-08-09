@@ -117,12 +117,14 @@
       "car": {
         "inspectedBody": "Serviced, road-tested, and checked against a 22-point list covering tyres, brakes, spare, jack, and papers.",
         "identityBody": "Operator ownership and insurance verified against the vehicle registration before it can be hired.",
-        "photographedBody": "Photographed by the HomeLink team, this exact vehicle — not a manufacturer stock shot of the model."
+        "photographedBody": "Photographed by the HomeLink team, this exact vehicle — not a manufacturer stock shot of the model.",
+        "title": "Verified by someone who drove it"
       },
       "experience": {
         "inspectedBody": "Run in full by a member of our team before it was listed, on an 18-point check covering safety, timing, and what is actually included.",
         "identityBody": "Guide licensing and park accreditation verified, and renewed each season.",
-        "photographedBody": "Photographed on a real departure by the HomeLink team."
+        "photographedBody": "Photographed on a real departure by the HomeLink team.",
+        "title": "Verified by someone who went on it"
       }
     }
   },
@@ -300,7 +302,18 @@
     "book": "Hire this car",
     "about": "About this car",
     "backToCars": "All cars",
-    "daysTotal": "total for {count, plural, one {# day} other {# days}}"
+    "daysTotal": "total for {count, plural, one {# day} other {# days}}",
+    "basedIn": "Kigali",
+    "bothModesHeading": "Drive it yourself, or with a driver",
+    "driverOnlyHeading": "With a driver, out of Kigali",
+    "thingsToKnow": "Things to know",
+    "paperworkTitle": "Licence and papers",
+    "paperworkSelfBody": "Bring your national licence, and an international permit if you are visiting. Insurance, registration and the warning triangle are in the glovebox.",
+    "paperworkDriverBody": "Nothing to bring. The driver holds the licence, the insurance and the park entry papers.",
+    "fuelTitle": "Fuel and distance",
+    "fuelBody": "Handed over full, returned full. No mileage cap, and no surcharge for leaving Kigali.",
+    "cancellationTitle": "Cancellation",
+    "cancellationBody": "Free cancellation until {date}. After that the first day is non-refundable."
   },
   "experiences": {
     "title": "Experiences",
@@ -326,7 +339,15 @@
     "backToExperiences": "All experiences",
     "peopleLabel": "How many people",
     "whenLabel": "Which day",
-    "ageNotice": "Minimum age for this one is {age}."
+    "ageNotice": "Minimum age for this one is {age}.",
+    "guideRole": "Licensed guide. Not a HomeLink employee.",
+    "thingsToKnow": "Things to know",
+    "bringTitle": "What to bring",
+    "bringBody": "Closed shoes, a rain layer, water. Anything specialised is provided and is already in the price.",
+    "ageTitle": "Minimum age",
+    "weatherTitle": "Weather",
+    "weatherBody": "The rain here comes in the afternoon and rarely cancels anything. If a day is called off for safety, it is refunded in full.",
+    "ageBody": "Ages {age} and over. The limit is set by the park or the operator, not by us, and it is checked at the meeting point."
   },
   "searchPanel": {
     "whereLabel": "Where to",
@@ -383,5 +404,33 @@
     "fibreBody": "Speed tested on the day, not taken from an advert.",
     "photos": "Photos we took",
     "photosBody": "Shot by our team. Nothing here came from the owner's phone."
+  },
+  "carHighlight": {
+    "inspected": "Someone drove it first",
+    "inspectedBody": "{name} serviced and road-tested this exact car on {date}, against a {points}-point list.",
+    "driver": "A driver comes with it",
+    "driverBody": "The rate includes someone who has driven these roads for years. On the park routes that is not a luxury.",
+    "automatic": "Automatic, on these hills",
+    "automaticBody": "Kigali is built on ridges and the traffic stops halfway up them. This one changes gear for you.",
+    "unpaved": "Made for where the tarmac ends",
+    "unpavedBody": "Ground clearance and four-wheel drive, because half the places worth going stop being roads.",
+    "group": "Everyone fits in one vehicle",
+    "groupBody": "{count} seats, so nobody follows in a second car and nobody gets separated.",
+    "fleet": "There is nearly always one free",
+    "fleetBody": "{count} on the fleet right now, so moving your dates rarely costs you the booking."
+  },
+  "experienceHighlight": {
+    "inspected": "One of us did the whole day",
+    "inspectedBody": "{name} went on this exact outing on {date}, start to finish, before it was listed.",
+    "permit": "The permit is ours to get",
+    "permitBody": "Volcanoes permits sell out months ahead and are priced in dollars. One is held for you, and it is already in the price.",
+    "halfDay": "Back before the afternoon",
+    "halfDayBody": "{count} hours door to door, so it fits either side of a working day.",
+    "smallGroup": "A small group",
+    "smallGroupBody": "Capped at {count}. You are not following a raised flag through a crowd.",
+    "food": "Lunch is in the price",
+    "foodBody": "Cooked where you are by the people who live there, not carried out from a Kigali kitchen.",
+    "fullDay": "It is the whole day",
+    "fullDayBody": "{count} hours with transport from Kigali at both ends, not a slot you have to build a day around."
   }
 }

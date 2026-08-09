@@ -37,7 +37,7 @@ describe the sequence the team is really following.
 
 Tick these off and commit the tick with the work.
 
-- [ ] **1. Polish parity for cars and experiences.**
+- [x] **1. Polish parity for cars and experiences.**
       The stays detail page carries `VerifiedBadge` in the title block,
       `InspectorRow`, and `Highlights`. Cars and experiences have none of the
       three. Bring them up to the same standard without making three pages that

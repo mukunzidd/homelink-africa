@@ -39,6 +39,11 @@ export async function VerificationRecordPanel({
     return t(`kinds.${kind}.${key}`);
   }
 
+  // "Someone stood in the room" is a claim about a room. Nobody stood in a
+  // Land Cruiser, and the heading is the one sentence a sceptical reader
+  // checks against the thing they are looking at.
+  const title = kind === "stay" ? t("title") : t(`kinds.${kind}.title`);
+
   const steps = [
     {
       key: "inspected",
@@ -77,7 +82,7 @@ export async function VerificationRecordPanel({
           id="verification-heading"
           className="font-display text-2xl font-semibold leading-tight text-ink"
         >
-          {t("title")}
+          {title}
         </h2>
         <p className="text-sm font-medium text-trust">
           {t("inspectedBy", { name: record.inspectorName, date: inspectedOn })}

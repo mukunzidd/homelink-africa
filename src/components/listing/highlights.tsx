@@ -3,9 +3,13 @@ import type { Listing, VerificationRecord } from "@/lib/domain/types";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { formatDate } from "@/lib/domain/dates";
 import { BoltIcon, ShieldIcon, WifiIcon } from "@/components/ui/icons";
+import {
+  HighlightList,
+  pickHighlights,
+} from "@/components/ui/highlight-list";
 
 /**
- * Three things worth knowing before reading anything else.
+ * What a stay earns.
  *
  * Drawn from what is actually true of this listing rather than from a fixed
  * marketing list: the named inspection always leads, escrow appears only when
@@ -30,7 +34,7 @@ export async function Highlights({
     month: "long",
   });
 
-  const items = [
+  const items = pickHighlights([
     {
       key: "inspected",
       icon: <ShieldIcon size={22} />,
@@ -59,23 +63,7 @@ export async function Highlights({
       body: t("fibreBody"),
       show: listing.amenities.includes("fibre"),
     },
-  ]
-    .filter((item) => item.show)
-    .slice(0, 3);
+  ]);
 
-  return (
-    <ul className="flex flex-col divide-y divide-line-soft">
-      {items.map((item) => (
-        <li key={item.key} className="flex items-start gap-4 py-4 first:pt-0 last:pb-0">
-          <span className="mt-0.5 flex-none text-ink-2">{item.icon}</span>
-          <div className="flex flex-col gap-0.5">
-            <p className="text-[15px] font-semibold text-ink">{item.title}</p>
-            <p className="max-w-[58ch] text-sm leading-relaxed text-ink-2">
-              {item.body}
-            </p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
+  return <HighlightList items={items} />;
 }

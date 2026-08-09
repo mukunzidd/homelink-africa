@@ -4,10 +4,14 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { repos } from "@/lib/repos";
 import { Link } from "@/i18n/navigation";
-import { addDays, isIsoDate, today } from "@/lib/domain/dates";
+import { INTL_LOCALES, type Locale } from "@/i18n/routing";
+import { addDays, formatDate, isIsoDate, today } from "@/lib/domain/dates";
 import { Gallery } from "@/components/ui/gallery";
 import { StatusPill } from "@/components/ui/status-pill";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { HirePanel } from "@/components/mobility/hire-panel";
+import { VehicleHighlights } from "@/components/mobility/vehicle-highlights";
+import { InspectorRow } from "@/components/listing/inspector-row";
 import { VerificationRecordPanel } from "@/components/listing/verification-record";
 
 export async function generateMetadata({
@@ -43,14 +47,28 @@ export default async function VehicleDetailPage({
   const defaultTo =
     isIsoDate(sp.to) && sp.to > defaultFrom ? sp.to : addDays(defaultFrom, 2);
 
+  const intlLocale = INTL_LOCALES[locale as Locale];
+  const cancelBy = addDays(defaultFrom, -2);
+  const cancellationDate = formatDate(
+    cancelBy < today() ? today() : cancelBy,
+    intlLocale,
+  );
+
+  const driverOnly = !vehicle.driveModes.includes("selfDrive");
+
+  // The stays page reads "Entire place · Kacyiru" then "2 bedrooms · Sleeps 4":
+  // what kind of thing, then the numbers. A car's equivalent of "what kind" is
+  // how you get hold of it, not what body shape it is — that is already in the
+  // strip beside the badge.
+  const heading = driverOnly ? t("driverOnlyHeading") : t("bothModesHeading");
   const specs = [
-    t(`class.${vehicle.vehicleClass}`),
     t(`transmission.${vehicle.transmission}`),
     t("seats", { count: vehicle.seats }),
-  ];
+    t("airportPickup"),
+  ].join(" · ");
 
   return (
-    <div className="mx-auto flex max-w-[1180px] flex-col gap-8 px-6 py-8">
+    <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
       <Link
         href="/cars"
         className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
@@ -58,25 +76,19 @@ export default async function VehicleDetailPage({
         ← {t("backToCars")}
       </Link>
 
-      <header className="flex flex-col gap-4">
-        <Gallery
-          seed={vehicle.imageSeed}
-          images={vehicle.images}
-          alt={vehicle.name}
-          count={4}
-          verifiedLabel={tVerify("badge")}
-        />
+      {/* Title above the gallery, for the same reason it is above the gallery
+          on a stay: someone arriving from a result row needs to confirm they
+          clicked the right car before they are asked to admire it. */}
+      <header className="flex flex-col gap-3">
+        <h1 className="max-w-[24ch] text-balance font-display text-4xl font-semibold leading-[1.06] tracking-tight text-ink sm:text-5xl">
+          {vehicle.name}
+        </h1>
 
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div className="flex flex-col gap-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.07em] text-ink-3">
-              {specs.join(" · ")}
-            </p>
-            <h1 className="font-display text-4xl font-semibold leading-[1.08] tracking-tight text-ink">
-              {vehicle.name}
-            </h1>
-          </div>
-
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <VerifiedBadge label={tVerify("badge")} size="sm" />
+          <span className="text-[15px] text-ink-2">
+            {t(`class.${vehicle.vehicleClass}`)} · {t("basedIn")}
+          </span>
           {vehicle.unitsAvailable <= 2 && (
             <StatusPill tone="warn">
               {tStatus("lowAvailability", { count: vehicle.unitsAvailable })}
@@ -85,28 +97,86 @@ export default async function VehicleDetailPage({
         </div>
       </header>
 
-      <div className="grid items-start gap-8 lg:grid-cols-[1fr_360px]">
-        <div className="flex flex-col gap-8">
-          <section className="flex flex-col gap-3">
+      <Gallery
+        seed={vehicle.imageSeed}
+        images={vehicle.images}
+        alt={vehicle.name}
+        verifiedLabel={tVerify("badge")}
+      />
+
+      <div className="grid items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_380px]">
+        <div className="flex flex-col">
+          <section className="flex flex-col gap-1 pb-6">
+            <h2 className="font-display text-2xl font-semibold text-ink">
+              {heading}
+            </h2>
+            <p className="text-[15px] text-ink-2">{specs}</p>
+          </section>
+
+          <div className="border-t border-line py-6">
+            <InspectorRow record={vehicle.verification} />
+          </div>
+
+          <div className="border-t border-line py-6">
+            <VehicleHighlights vehicle={vehicle} />
+          </div>
+
+          <section className="flex flex-col gap-3 border-t border-line py-6">
             <h2 className="font-display text-2xl font-semibold text-ink">
               {t("about")}
             </h2>
             <p className="max-w-[65ch] text-[17px] leading-relaxed text-ink-2">
               {vehicle.summary}
             </p>
-            <p className="text-sm text-ink-2">{t("airportPickup")}</p>
           </section>
 
           {/* A vehicle carries the same guarantee as a home: someone from the
               team inspected this exact car, and the record says who. */}
-          <VerificationRecordPanel
-            record={vehicle.verification}
-            escrowApplies={false}
-            kind="car"
-          />
+          <div className="border-t border-line py-6">
+            <VerificationRecordPanel
+              record={vehicle.verification}
+              escrowApplies={false}
+              kind="car"
+            />
+          </div>
+
+          {/* The unglamorous facts, gathered before someone pays rather than
+              discovered at the counter. A hire desk is where surprise fees
+              live, so this is where the promise about them gets kept. */}
+          <section className="flex flex-col gap-4 border-t border-line py-6">
+            <h2 className="font-display text-2xl font-semibold text-ink">
+              {t("thingsToKnow")}
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-3">
+              {[
+                {
+                  title: t("paperworkTitle"),
+                  body: driverOnly
+                    ? t("paperworkDriverBody")
+                    : t("paperworkSelfBody"),
+                },
+                { title: t("fuelTitle"), body: t("fuelBody") },
+                {
+                  // Not the stay wording. A hire cancelled late costs a day,
+                  // not a night, and the two are not the same amount of money.
+                  title: t("cancellationTitle"),
+                  body: t("cancellationBody", { date: cancellationDate }),
+                },
+              ].map((block) => (
+                <div key={block.title} className="flex flex-col gap-2">
+                  <h3 className="text-[15px] font-semibold text-ink">
+                    {block.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-ink-2">
+                    {block.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
 
-        <aside className="lg:sticky lg:top-20 lg:self-start">
+        <aside className="lg:sticky lg:top-24 lg:self-start">
           <HirePanel
             vehicle={vehicle}
             defaultFrom={defaultFrom}

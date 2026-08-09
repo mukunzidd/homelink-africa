@@ -117,12 +117,14 @@
       "car": {
         "inspectedBody": "Yasukuwe, yageragezwe mu muhanda, kandi igenzurwa hakurikijwe urutonde rw'ingingo 22: amapine, feri, ipine ry'inyongera, ikoresho ryo kuzamura, n'impapuro.",
         "identityBody": "Ubwo nyir'imodoka n'ubwishingizi byagenzuwe hifashishijwe icyangombwa cy'imodoka mbere yo gukodeshwa.",
-        "photographedBody": "Yafashwe amafoto n'itsinda rya HomeLink, iyi modoka nyirizina — si ifoto y'ubucuruzi y'ubwoko bwayo."
+        "photographedBody": "Yafashwe amafoto n'itsinda rya HomeLink, iyi modoka nyirizina — si ifoto y'ubucuruzi y'ubwoko bwayo.",
+        "title": "Yagenzuwe n'uwayitwaye"
       },
       "experience": {
         "inspectedBody": "Yakozwe yose n'umukozi wacu mbere yo gushyirwaho, hakurikijwe igenzura ry'ingingo 18: umutekano, igihe, n'ibirimo koko.",
         "identityBody": "Uruhushya rw'umuyobozi n'icyemezo cya pariki byagenzuwe, kandi bivugururwa buri gihembwe.",
-        "photographedBody": "Yafashwe amafoto ku rugendo nyarwo n'itsinda rya HomeLink."
+        "photographedBody": "Yafashwe amafoto ku rugendo nyarwo n'itsinda rya HomeLink.",
+        "title": "Rwagenzuwe n'uwarukoze"
       }
     }
   },
@@ -300,7 +302,18 @@
     "book": "Kodesha iyi modoka",
     "about": "Ibyerekeye iyi modoka",
     "backToCars": "Imodoka zose",
-    "daysTotal": "igiteranyo cy'{count, plural, one {umunsi #} other {iminsi #}}"
+    "daysTotal": "igiteranyo cy'{count, plural, one {umunsi #} other {iminsi #}}",
+    "basedIn": "Kigali",
+    "bothModesHeading": "Uyitwara ubwawe, cyangwa ukagira umushoferi",
+    "driverOnlyHeading": "Hamwe n'umushoferi, uhereye i Kigali",
+    "thingsToKnow": "Ibyo ukwiye kumenya",
+    "paperworkTitle": "Uruhushya n'impapuro",
+    "paperworkSelfBody": "Zana uruhushya rwawe rwo gutwara, n'urwa mpuzamahanga niba uturutse hanze. Ubwishingizi, ikarita y'imodoka n'ikimenyetso cy'impanuka biri mu gasanduku.",
+    "paperworkDriverBody": "Nta cyo uzana. Umushoferi ni we ufite uruhushya, ubwishingizi n'impapuro zo kwinjira muri pariki.",
+    "fuelTitle": "Lisansi n'intera",
+    "fuelBody": "Uyakira yuzuye, uyisubiza yuzuye. Nta rugero rw'ibirometero, kandi nta kiguzi cyo gusohoka i Kigali.",
+    "cancellationTitle": "Guhagarika",
+    "cancellationBody": "Guhagarika ku buntu kugeza ku wa {date}. Nyuma yaho umunsi wa mbere ntusubizwa."
   },
   "experiences": {
     "title": "Ingendo",
@@ -326,7 +339,15 @@
     "backToExperiences": "Ingendo zose",
     "peopleLabel": "Abantu bangahe",
     "whenLabel": "Umunsi uwuhe",
-    "ageNotice": "Imyaka ntarengwa kuri uru ni {age}."
+    "ageNotice": "Imyaka ntarengwa kuri uru ni {age}.",
+    "guideRole": "Umuyobozi wemewe. Si umukozi wa HomeLink.",
+    "thingsToKnow": "Ibyo ukwiye kumenya",
+    "bringTitle": "Icyo wazana",
+    "bringBody": "Inkweto zifunze, ikoti ry'imvura, n'amazi. Ibindi bikoresho byihariye biraboneka kandi biri mu giciro.",
+    "ageTitle": "Imyaka ntarengwa",
+    "weatherTitle": "Ikirere",
+    "weatherBody": "Hano imvura igwa nyuma ya saa sita kandi gake ihagarika ikintu. Iyo umunsi uhagaritswe kubera umutekano, amafaranga asubizwa yose.",
+    "ageBody": "Kuva ku myaka {age} kuzamura. Iyo mipaka ishyirwaho na pariki cyangwa uwatanze urugendo, si twe, kandi igenzurwa aho muhurira."
   },
   "searchPanel": {
     "whereLabel": "Aho ujya",
@@ -383,5 +404,33 @@
     "fibreBody": "Umuvuduko wageragezwe uwo munsi, ntabwo wavuye mu kwamamaza.",
     "photos": "Amafoto twafashe",
     "photosBody": "Yafashwe n'itsinda ryacu. Nta na kimwe cyavuye kuri telefone ya nyir'inzu."
+  },
+  "carHighlight": {
+    "inspected": "Hari uwayitwaye mbere yawe",
+    "inspectedBody": "{name} yayisuzumye kandi arayitwara ku wa {date}, akurikije urutonde rw'ingingo {points}.",
+    "driver": "Iza n'umushoferi",
+    "driverBody": "Igiciro kirimo umuntu umaze imyaka atwara kuri izi nzira. Ku mihanda ya pariki, si ubusabusa.",
+    "automatic": "Otomatike, kuri iyi misozi",
+    "automaticBody": "Kigali yubatswe ku misozi kandi imodoka zihagarara hagati mu kuzamuka. Iyi ihindura vitesi ku bwawe.",
+    "unpaved": "Yagenewe aho kaburimbo irangirira",
+    "unpavedBody": "Iri hejuru kandi ikoresha impande enye, kuko kimwe cya kabiri cy'ahantu heza hareka kuba imihanda.",
+    "group": "Mwese muba mu modoka imwe",
+    "groupBody": "Intebe {count}, nta wukurikira mu yindi modoka kandi nta wutandukana n'abandi.",
+    "fleet": "Hafi buri gihe haba hari iboneka",
+    "fleetBody": "{count} zihari ubu, bityo guhindura amatariki gake bigutwara ubwo bwiyandikishe."
+  },
+  "experienceHighlight": {
+    "inspected": "Umwe muri twe yakoze uwo munsi wose",
+    "inspectedBody": "{name} yagiye muri uru rugendo nyirizina ku wa {date}, kuva ku ntangiriro kugeza ku iherezo, mbere y'uko rushyirwa ku rubuga.",
+    "permit": "Uruhushya ni twe turubona",
+    "permitBody": "Impushya z'i Birunga zishira amezi menshi mbere kandi zishyurwa mu madolari. Urwawe rurabikwa, kandi ruri mu giciro.",
+    "halfDay": "Ugaruka mbere ya nimugoroba",
+    "halfDayBody": "Amasaha {count} uvuye mu rugo ukanagaruka, bityo bikwira mbere cyangwa nyuma y'akazi.",
+    "smallGroup": "Itsinda rito",
+    "smallGroupBody": "Ntirirenga {count}. Ntukurikira ibendera ryazamuwe mu bantu benshi.",
+    "food": "Ifunguro riri mu giciro",
+    "foodBody": "Ritekerwa aho uri n'abahatuye, ntiriva mu gikoni cyo i Kigali.",
+    "fullDay": "Ni umunsi wose",
+    "fullDayBody": "Amasaha {count} hamwe n'urugendo ruva i Kigali rukanagaruka, atari isaha ugomba kubakira umunsi wose."
   }
 }
