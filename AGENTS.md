@@ -25,16 +25,19 @@ and three measuring traps that will otherwise be rediscovered the hard way.
 
 Short version: the app is a front end on fixtures. There is no backend, no auth,
 no payments, no realtime — `package.json` has four dependencies and no test
-runner. The previous milestone finished the UI and walked every journey in a
-browser *before* any of that got built, so the schema is designed against
-screens people have actually looked at. The current one puts those same screens
-on Postgres without moving any of them. `src/lib/repos/index.ts` is the single
-swap point; new screens read through `repos()` like the rest.
+runner, and nothing yet runs in a container. The previous milestone finished
+the UI and walked every journey in a browser *before* any of that got built, so
+the schema is designed against screens people have actually looked at. The
+current one puts those same screens on Postgres without moving any of them.
+`src/lib/repos/index.ts` is the single swap point; new screens read through
+`repos()` like the rest.
 
-The planning documents in `docs/01`–`docs/03` describe a foundations-first
-sequence the build has not followed. That divergence is deliberate; rewriting
-those documents to match is the last step of the milestone, not a fix to make
-along the way.
+The planning documents in `docs/01`–`docs/03` used to describe a
+foundations-first sequence the build had not followed. They no longer do:
+Product & UX §10 and Technical Plan §11 were rewritten to split Phase 0 into
+surfaces-then-foundations and to say why. Phase numbers elsewhere in the code
+still refer to the original four, deliberately — several dozen comments say
+"Phase 2 replaces this" and renumbering would have invalidated all of them.
 
 ## House conventions
 

@@ -29,6 +29,8 @@ real sign-in, nothing else different.
 
 ## Ground rules
 
+- **Everything local runs in Docker.** No Postgres on the host, no "works on my
+  machine" Node version. See step 2.
 - **No screen may move.** If a page needs changing to accommodate the database,
   that is a finding about the schema, not a licence to redesign. Write it down.
   The surfaces were argued about on purpose.
@@ -40,7 +42,7 @@ real sign-in, nothing else different.
   happens.
 - **Verification changes medium.** Up to now the house rule has been "look at it
   in a browser". A ledger, a row-level security policy and an escrow release are
-  not things you look at — they are things you assert. Hence step 2.
+  not things you look at — they are things you assert. Hence step 3.
 
 ## Steps
 
@@ -51,38 +53,57 @@ Tick these off and commit the tick with the work.
       opened as a PR. It only grows, and every day it sits there the merge gets
       worse. Do this before writing a line of anything else.
 
-- [ ] **2. A test runner, and the first test.**
+- [ ] **2. The local stack, in containers.**
+      Supabase CLI orchestrates its own stack; a `compose.yaml` adds our
+      workloads to its network. `duda-dodo/` on this machine already runs
+      exactly this shape and has paid for several lessons — copy them rather
+      than rediscover them:
+      - **`node_modules` lives in a named volume, not the bind mount.**
+        Installing tens of thousands of small files across a macOS bind mount is
+        pathologically slow. Source stays bind-mounted so host edits are live.
+      - **Containers are held warm with `sleep infinity` and driven by
+        `docker compose exec`**, never `run`. A container per command is what
+        makes container-based test loops painful.
+      - **The web service does not get the service-role key.** It bypasses RLS
+        entirely and has no business inside a process that renders pages. Pass
+        it only to the runner that needs it.
+      - **In-network and host URLs differ.** Server code reaches Kong at
+        `http://supabase_kong_homelink:8000`; the browser cannot resolve
+        container names, so anything reaching the browser needs `127.0.0.1`.
+        Getting this wrong produces errors that look like auth failures.
+      - **`WATCHPACK_POLLING=true`**, or Turbopack will not see edits across the
+        bind mount.
+      - **Pick a port band that does not collide.** duda-dodo holds 55321–55329
+        and 4000, and host 3000 is occupied. Take 55421–55429 and 3100, so both
+        projects can run at once — they will need to, because this repo's
+        conventions keep getting compared against that one.
+
+      A `./dc`-style wrapper is worth stealing too. It is the difference between
+      a documented workflow and one that lives in somebody's shell history.
+
+- [ ] **3. A test runner, and the first test.**
       There is no test infrastructure at all: four dependencies, no runner, no
       test files. That was survivable while every claim could be checked with a
       screenshot. It stops being survivable here — the first thing this
       milestone builds is row-level security, and you cannot photograph a policy.
-      Add a runner, and prove it works by testing something that already exists
-      and is pure: `paginate` clamps an out-of-range page, `quoteStay` gets RWF
-      arithmetic right, `parseRole` refuses a cookie it does not recognise.
-      Do not port the repos until a test can fail.
+      Add a runner inside the container, and prove it works against something
+      that already exists and is pure: `paginate` clamps an out-of-range page,
+      `quoteStay` gets RWF arithmetic right, `parseRole` refuses a cookie it
+      does not recognise. Do not port a repo until a test can fail.
 
-- [ ] **3. Schema and RLS, written against what 0a found.**
-      Technical Plan §11 lists four consequences the UI work turned up, and each
-      is a schema decision rather than a screen decision:
-      - a booking carries **more than one thread**, and participants are roles —
-        so `conversation_participants` is a table and the read policy keys off
-        it. A host must not be able to select the guest's thread.
-      - **unread is per reader**, so it is a join against read receipts, not a
-        counter column. Two people looking at one thread do not have the same
-        number.
-      - supply is reachable **by id as well as by slug**, because that is what
-        `bookings.supply_item_id` holds.
-      - a **verification candidate is not a listing**. Keep them separate
-        tables; a half-populated `listing` is one boolean away from going live.
+- [ ] **4. Schema and RLS.**
+      The front end has already decided most of this; see the section below,
+      which lists the tables, the column types the domain types force, and the
+      queries that must stay possible. Write the policies in the same migrations.
 
-- [ ] **4. Identity, and the role claim.**
+- [ ] **5. Identity, and the role claim.**
       `lib/preferences/role.ts` is already the single place role is resolved,
       and it already documents that the cookie becomes an auth claim with
       nothing above it changing. Make that true. The preview bar's role switcher
       is development-only and should stop working against a real session rather
       than silently mislead.
 
-- [ ] **5. `supabaseRepositories`, one repo at a time.**
+- [ ] **6. `supabaseRepositories`, one repo at a time.**
       Add `src/lib/repos/supabase/` exporting an object satisfying
       `Repositories`. Port in dependency order — stays, mobility, experiences,
       then bookings, trips, messaging, ops — and keep the fixtures working
@@ -90,11 +111,73 @@ Tick these off and commit the tick with the work.
       still runnable. Every method already has a signature and a docstring
       saying what it must not leak; those are the spec.
 
-- [ ] **6. Flip `repos()`, and walk it again.**
+- [ ] **7. Flip `repos()`, and walk it again.**
       The same sweep as milestone step 7: every route, both widths, both themes,
       each role. The screens should be indistinguishable from today. Anything
       that moved is a bug in the port, not a redesign — that is the entire
       value of not having touched them.
+
+## What the front end already decides for you
+
+None of this needs designing. It is readable off `src/lib/domain/types.ts` and
+`src/lib/repos/types.ts`, and disagreeing with it means changing a screen.
+
+### Tables
+
+`listings`, `vehicles`, `experiences`, `verification_records`, `bookings`,
+`trips` + `trip_bookings`, `conversations` + `conversation_participants`,
+`messages` + `message_attachments` + `message_reads`, `verification_tasks`,
+`addon_requests`, `payouts`, `fx_rates`.
+
+Three of those joins exist because of a specific screen:
+
+- **`trip_bookings`** — `Trip.bookingIds` is an array, and a booking can belong
+  to no trip. `/trips` renders bookings and paints a trip name on the rows it
+  covers; the cancelled Corolla hire belongs to no trip and must still appear.
+- **`conversation_participants`** — a booking carries more than one thread and
+  participants are *roles*. The guest talks to the concierge; the concierge
+  talks to the host; neither may open the other's. This is the read policy.
+- **`message_reads`** — unread is a fact about a reader. Two people looking at
+  one thread do not have the same count, so it is a join, not a column.
+
+### Column types the domain forces
+
+- **Money is two columns, never one.** Every `Money` is an integer count of
+  minor units plus an ISO 4217 code. Not `numeric`, not `money`, not a float.
+  RWF is zero-decimal, which is why `lib/domain/money.ts` exists at all — a
+  `minor / 100` anywhere renders RWF 165,000 as 1,650.
+- **`date` and `timestamptz` are not interchangeable, and the codebase already
+  says which is which.** `lib/domain/dates.ts` argues that a check-in date is a
+  calendar date with no timezone; `lib/domain/instants.ts` argues that a message
+  was sent at an instant. So `bookings.start_date`, `end_date`,
+  `verification_records.inspected_at`, `payouts.release_on` are `date`; and
+  `messages.sent_at`, `message_reads.read_at`, `conversations.last_message_at`
+  are `timestamptz`. Two modules exist to keep those apart; two column types
+  should too.
+- **Ordered arrays stay ordered.** `Listing.images[0]` is the hero and the
+  gallery mosaic depends on the order. Either an array column or a table with an
+  explicit position — not a set.
+- **Enum-ish arrays are filtered by containment.** `amenities`, `modes`,
+  `driveModes`, `interests` are all filtered with "has all of these" in
+  `stays.list` / `mobility.list` / `experiences.list`. `text[]` with a GIN index
+  and `@>` is the straightforward answer; a join table means the "every amenity"
+  filter becomes a `group by … having count(*)`.
+
+### Queries that must remain possible
+
+- `stays.list` filters on neighbourhood (**contains**, not equals — the field is
+  a free-text combobox, so "kacy" finds Kacyiru), min bedrooms, min sleeps, all
+  of N amenities, lease band, and sorts by price, size, or recency of
+  verification.
+- `neighbourhoodsWithCounts()` is a `group by` with counts, because a suggestion
+  that says how much is behind it is honest about thin inventory.
+- `bookings.byReference` is **case-insensitive**. The code is printed in caps
+  and will be typed in both, so it wants a unique index on `upper(reference)`.
+- `messaging.forRole(role)` — there is deliberately no unscoped
+  "list all conversations" on the interface. Ops sees everything by being in
+  everything. Do not add one in SQL either.
+- `ops.*` has no per-user scoping at all and is the only place that is true, so
+  those three policies key off the role claim rather than ownership.
 
 ## Decisions already taken
 
@@ -103,7 +186,8 @@ Tick these off and commit the tick with the work.
   buys a tidier list and invalidates all of them.
 - **The fixtures do not get deleted.** They are the reference implementation of
   every interface and the only thing that makes the app runnable without a
-  database. Keep them behind the switch.
+  database — including in CI, and including for anyone who just wants to look at
+  a screen. Keep them behind the switch.
 
 ## Decisions that are now cheap, and were not
 
@@ -131,16 +215,17 @@ Tick these off and commit the tick with the work.
   outside the team sees the product.
 - **No ownership model.** A supply lane shows everything HomeLink has verified
   in it, and `/inventory` says so in a caption. Real supplier accounts end this,
-  and step 3 is where the join gets designed.
+  and step 4 is where the join gets designed.
 - **The supplier edit form.** `SupplyOwnerBand` is informational: it says rates
   and photographs are changed by the Kigali team, which is true in V1 per §9
   fast-follow #4. When owner onboarding comes online this is where the form goes.
 
 ## What "done" means
 
-A guest signs in, `/trips` lists their own bookings from Postgres, `/queue`
-refuses them, a host cannot open the guest's thread, and a full sweep is
-visually identical to the fixtures build. No new screen, no moved screen.
+`docker compose up` and one command gets a working stack. A guest signs in,
+`/trips` lists their own bookings from Postgres, `/queue` refuses them, a host
+cannot open the guest's thread, and a full sweep is visually identical to the
+fixtures build. No new screen, no moved screen.
 
 ## Then what
 
