@@ -482,9 +482,7 @@
     "listed": "Biri ku rubuga",
     "bookedNow": "Byabitswe",
     "dueToYou": "Bigiye kukugeraho",
-    "booked": "Ibyabitswe",
     "nothingBooked": "Nta cyo kirabikwa. Ibyabitswe bigaragara hano ako kanya umukiriya yishyuye.",
-    "settled": "Byamaze kwishyurwa",
     "inspectedOn": "Byagenzuwe ku wa {date}",
     "unitsFree": "{count, plural, one {# ihari} other {# zihari}}",
     "payoutAfterCheckIn": "Wishyurwa umukiriya amaze kwemeza ko yageze",
@@ -495,8 +493,22 @@
     "moneyNote": "Nta kintu kuri iyi paji cyimura amafaranga. Kwishyura bikorwa n'itsinda ryo i Kigali, kandi izi ngano ni zo bakoresha.",
     "notYours": "Iyi paji ni iy'undi muntu",
     "notYoursBody": "Iyi ni iy'abatanga amazu, abashoferi n'abayobozi. Niba uri umukiriya, ibyo wabitse biri muri Ingendo.",
-    "listedWithUs": "Ibiri ku rubuga rwacu",
-    "ownershipNote": "Ibyo HomeLink yagenzuye byose muri iki cyiciro. Uwo ari we utunze iki nticyarashyirwaho — muri V1 ibyatanzwe bishyirwaho n'itsinda rya konsiyeji, bityo nk'aho hari umutanzi umwe."
+    "ownershipNote": "Ibyo HomeLink yagenzuye byose muri iki cyiciro. Uwo ari we utunze iki nticyarashyirwaho — muri V1 ibyatanzwe bishyirwaho n'itsinda rya konsiyeji, bityo nk'aho hari umutanzi umwe.",
+    "tabsLabel": "Ibice",
+    "tabs": {
+      "booked": "Byabitswe",
+      "listings": "Biri ku rubuga",
+      "money": "Amafaranga"
+    },
+    "sortLabel": "Shungura",
+    "sort": {
+      "rate": "Igiciro",
+      "name": "Izina",
+      "inspected": "Igenzura"
+    },
+    "payoutCancelled": "Byahagaritswe — nta cyo kwishyurwa",
+    "whereFrom": "Aho ayo mafaranga ava",
+    "threadHint": "bifungura ikiganiro itsinda rya konsiyeji rigirana nawe kuri ubwo bwiyandikishe."
   },
   "messaging": {
     "title": "Ubutumwa",

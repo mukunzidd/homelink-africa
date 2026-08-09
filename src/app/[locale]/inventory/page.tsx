@@ -9,13 +9,17 @@ import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import type { Booking, ServiceKind } from "@/lib/domain/types";
 import type { Money } from "@/lib/domain/money";
 import { money, sum } from "@/lib/domain/money";
-import { formatDate, today } from "@/lib/domain/dates";
+import { formatDate, formatDateRange, today } from "@/lib/domain/dates";
+import { paginate, pageParam } from "@/lib/paginate";
 import { ROLE_COOKIE, parseRole, supplyLaneFor } from "@/lib/preferences/role";
 import { BookingRow } from "@/components/bookings/booking-row";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { StatusPill } from "@/components/ui/status-pill";
 import { MoneyText } from "@/components/ui/money-text";
+import { TabStrip } from "@/components/ui/tab-strip";
+import { Pager } from "@/components/ui/pager";
+import { cn } from "@/lib/cn";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("inventory");
@@ -26,15 +30,17 @@ export async function generateMetadata(): Promise<Metadata> {
  * One shell for host, driver and guide.
  *
  * Their journey has the same shape — I list a thing, it gets booked, I get
- * paid — so the page has the same three sections in the same order for all
- * three. What changes is the noun in the headings and the two columns on an
- * inventory row: what the thing *is* (bedrooms, gearbox, hours) and what it
- * costs (per night, per day, per person). Everything else is shared, and if a
- * real difference turns up it belongs in the milestone document before it
- * belongs in a fork of this file.
+ * paid — so the page has the same three tabs in the same order for all three.
+ * What changes is the noun in the headings and the two columns on an inventory
+ * row: what the thing *is* (bedrooms, gearbox, hours) and what it costs (per
+ * night, per day, per person).
  *
  * The lane is chosen from the role cookie on the server, so a driver's HTML
  * never contains a host's rows. See `lib/preferences/role.ts`.
+ *
+ * The three sections were one scroll. They are tabs now for the same reason
+ * the queue's are: a section should be addressable, and the counts in the
+ * header should be able to take you to the thing they are counting.
  */
 type InventoryItem = {
   id: string;
@@ -52,10 +58,20 @@ type InventoryItem = {
   availability?: string;
 };
 
+const PER_PAGE = 8;
+
+type TabKey = "booked" | "listings" | "money";
+const TAB_KEYS: TabKey[] = ["booked", "listings", "money"];
+
+type SortKey = "rate" | "name" | "inspected";
+const SORT_KEYS: SortKey[] = ["rate", "name", "inspected"];
+
 export default async function InventoryPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ tab?: string; page?: string; sort?: string }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -66,6 +82,7 @@ export default async function InventoryPage({
   const tExp = await getTranslations("experiences");
   const tVerify = await getTranslations("verification");
   const tStatus = await getTranslations("status");
+  const tTrips = await getTranslations("trips");
 
   const intlLocale = INTL_LOCALES[locale as Locale];
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
@@ -88,7 +105,15 @@ export default async function InventoryPage({
     );
   }
 
-  const items = await itemsFor(lane);
+  const sp = await searchParams;
+  const tab: TabKey = TAB_KEYS.includes(sp.tab as TabKey)
+    ? (sp.tab as TabKey)
+    : "booked";
+  const sort: SortKey = SORT_KEYS.includes(sp.sort as SortKey)
+    ? (sp.sort as SortKey)
+    : "rate";
+
+  const items = sortItems(await itemsFor(lane), sort);
 
   const bookings = (await repos().bookings.listForCurrentUser()).filter(
     (b) => b.service === lane,
@@ -100,28 +125,38 @@ export default async function InventoryPage({
   const settled = bookings
     .filter((b) => b.status === "completed")
     .sort((a, b) => b.startDate.localeCompare(a.startDate));
+  // Money that did not arrive is the thing a supplier notices most, and this
+  // screen used to drop it entirely — a cancelled hire appeared on the guest's
+  // Trips under "Earlier" and simply vanished from the operator's own page.
+  const cancelled = bookings
+    .filter((b) => b.status === "cancelled")
+    .sort((a, b) => b.startDate.localeCompare(a.startDate));
 
-  // All supply is paid in RWF, which is the whole reason prices are stored in
-  // the currency the supplier is actually paid in. Display conversion happens
-  // in MoneyText, never here.
-  const held = sum(
-    upcoming.filter((b) => b.escrowHeld).map((b) => b.total),
-    "RWF",
-  );
-  const due = sum(
-    upcoming.filter((b) => !b.escrowHeld).map((b) => b.total),
-    "RWF",
-  );
+  const held = sum(upcoming.filter((b) => b.escrowHeld).map((b) => b.total), "RWF");
+  const due = sum(upcoming.filter((b) => !b.escrowHeld).map((b) => b.total), "RWF");
   const paid = sum(settled.map((b) => b.total), "RWF");
+  const lost = sum(cancelled.map((b) => b.total), "RWF");
 
-  const rows = await Promise.all(
-    upcoming.map(async (booking) => renderBooking(booking, false)),
-  );
-  const settledRows = await Promise.all(
-    settled.map(async (booking) => renderBooking(booking, true)),
-  );
+  const bookingList = [...upcoming, ...settled, ...cancelled];
 
-  async function renderBooking(booking: Booking, muted: boolean) {
+  const at = pageParam(sp.page);
+  const view =
+    tab === "listings"
+      ? ({ tab, page: paginate(items, at, PER_PAGE) } as const)
+      : ({ tab, page: paginate(bookingList, at, PER_PAGE) } as const);
+
+  const hrefFor = (next: { tab?: TabKey; sort?: SortKey; page?: number }) => {
+    const q = new URLSearchParams();
+    const nextTab = next.tab ?? tab;
+    const nextSort = next.sort ?? sort;
+    if (nextTab !== "booked") q.set("tab", nextTab);
+    if (nextSort !== "rate") q.set("sort", nextSort);
+    if (next.page && next.page > 1) q.set("page", String(next.page));
+    const qs = q.toString();
+    return `/inventory${qs ? `?${qs}` : ""}`;
+  };
+
+  async function renderBooking(booking: Booking) {
     const [supply, conversation] = await Promise.all([
       supplyRefFor(booking),
       repos().messaging.forBooking(booking.id, role),
@@ -133,22 +168,29 @@ export default async function InventoryPage({
         supply={supply}
         conversation={conversation}
         locale={intlLocale}
-        muted={muted}
+        muted={booking.status !== "confirmed" && booking.status !== "active"}
         aside={
           // The supplier's column. A guest wants to know their money is safe;
           // a supplier wants to know when it stops being safe and becomes
           // theirs. Same field, opposite reading.
           <p className="text-[13px] text-ink-3">
-            {booking.status === "completed"
-              ? t("payoutSettled")
-              : booking.escrowHeld
-                ? t("payoutAfterCheckIn")
-                : t("payoutOnStart")}
+            {booking.status === "cancelled"
+              ? t("payoutCancelled")
+              : booking.status === "completed"
+                ? t("payoutSettled")
+                : booking.escrowHeld
+                  ? t("payoutAfterCheckIn")
+                  : t("payoutOnStart")}
           </p>
         }
       />
     );
   }
+
+  const bookedRows =
+    view.tab === "booked"
+      ? await Promise.all(view.page.items.map((b) => renderBooking(b as Booking)))
+      : [];
 
   async function itemsFor(kind: ServiceKind): Promise<InventoryItem[]> {
     if (kind === "car") {
@@ -207,13 +249,8 @@ export default async function InventoryPage({
     }));
   }
 
-  const summary = [
-    { key: "listed", label: t("listed"), value: String(items.length) },
-    { key: "booked", label: t("bookedNow"), value: String(upcoming.length) },
-  ];
-
   return (
-    <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
+    <div className="mx-auto flex max-w-[1180px] flex-col gap-6 px-6 py-6">
       <header className="flex flex-col gap-3">
         <h1 className="font-display text-4xl font-semibold leading-[1.06] tracking-tight text-ink sm:text-5xl">
           {t(`title.${lane}`)}
@@ -223,144 +260,186 @@ export default async function InventoryPage({
         </p>
       </header>
 
-      {/* Counts and money, on a rule rather than in tiles. Three bordered
-          boxes across the top is the house style of every admin template
-          there has ever been, and it makes two integers look like an
-          achievement. */}
+      {/* Counts and money, on a rule rather than in tiles, and each one a link
+          into the tab it counts. Three bordered boxes across the top is the
+          house style of every admin template there has ever been, and it makes
+          two integers look like an achievement. */}
       <dl className="flex flex-wrap items-end gap-x-10 gap-y-4 border-y border-line py-5">
-        {summary.map((stat) => (
-          <div key={stat.key} className="flex flex-col gap-0.5">
-            <dt className="text-[13px] text-ink-3">{stat.label}</dt>
-            <dd className="tnum font-display text-3xl font-semibold text-ink">
+        {(
+          [
+            { key: "listings", label: t("listed"), value: String(items.length) },
+            { key: "booked", label: t("bookedNow"), value: String(upcoming.length) },
+          ] as const
+        ).map((stat) => (
+          <Link
+            key={stat.key}
+            href={hrefFor({ tab: stat.key })}
+            className="group flex flex-col gap-0.5 rounded-ctl"
+          >
+            <dt className="text-[13px] text-ink-3 group-hover:text-ink-2">
+              {stat.label}
+            </dt>
+            <dd className="tnum font-display text-3xl font-semibold text-ink underline-offset-4 group-hover:underline">
               {stat.value}
             </dd>
-          </div>
+          </Link>
         ))}
-        <div className="flex flex-col gap-0.5">
-          <dt className="text-[13px] text-ink-3">{t("dueToYou")}</dt>
-          <dd>
+        <Link
+          href={hrefFor({ tab: "money" })}
+          className="group flex flex-col gap-0.5 rounded-ctl"
+        >
+          <dt className="text-[13px] text-ink-3 group-hover:text-ink-2">
+            {t("dueToYou")}
+          </dt>
+          <dd className="underline-offset-4 group-hover:underline">
             <MoneyText
               amount={money(held.minor + due.minor, "RWF")}
               className="font-display text-3xl font-semibold text-ink"
             />
           </dd>
-        </div>
+        </Link>
       </dl>
 
-      <div className="grid items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_340px]">
-        <div className="flex flex-col">
-          <section className="flex flex-col">
-            <h2 className="font-display text-2xl font-semibold text-ink">
-              {t("booked")}
-            </h2>
-            {upcoming.length ? (
-              <ul className="flex flex-col">{rows}</ul>
-            ) : (
-              <p className="border-t border-line py-6 text-[15px] text-ink-2">
-                {t("nothingBooked")}
-              </p>
-            )}
-          </section>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <TabStrip
+          label={t("tabsLabel")}
+          active={tab}
+          tabs={[
+            {
+              key: "booked",
+              label: t("tabs.booked"),
+              href: hrefFor({ tab: "booked" }),
+              count: bookingList.length,
+            },
+            {
+              key: "listings",
+              label: t("tabs.listings"),
+              href: hrefFor({ tab: "listings" }),
+              count: items.length,
+            },
+            { key: "money", label: t("tabs.money"), href: hrefFor({ tab: "money" }) },
+          ]}
+        />
 
-          <section className="flex flex-col pt-8">
-            {/* Not the noun again — the h1 already said "Your vehicles", and
-                repeating it here made the page look like two pages. */}
-            <h2 className="font-display text-2xl font-semibold text-ink">
-              {t("listedWithUs")}
-            </h2>
-            {/*
-              Said plainly rather than left to be discovered. There is no
-              ownership model in the fixtures, so this lane shows everything
-              HomeLink has verified in it — which is also close to the truth of
-              V1, where inventory is concierge-listed and the supplier side runs
-              offline (§9 fast-follow #4).
-            */}
-            <p className="pt-1.5 text-[13px] leading-relaxed text-ink-3">
-              {t("ownershipNote")}
+        {tab === "listings" && (
+          <div className="flex items-center gap-1">
+            <span className="pr-1 text-[13px] text-ink-3">{t("sortLabel")}</span>
+            {SORT_KEYS.map((key) => (
+              <Link
+                key={key}
+                href={hrefFor({ sort: key, page: 1 })}
+                aria-current={key === sort ? "true" : undefined}
+                className={cn(
+                  "rounded-ctl px-2.5 py-1.5 text-[13px] font-semibold transition-colors duration-150",
+                  key === sort
+                    ? "bg-surface-2 text-ink"
+                    : "text-ink-3 hover:bg-surface-2/60 hover:text-ink",
+                )}
+              >
+                {t(`sort.${key}`)}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {tab === "booked" && (
+        <section className="flex flex-col">
+          {bookingList.length ? (
+            <ul className="flex flex-col">{bookedRows}</ul>
+          ) : (
+            <p className="border-t border-line py-8 text-[15px] text-ink-2">
+              {t("nothingBooked")}
             </p>
-            <ul className="flex flex-col pt-4">
-              {items.map((item) => (
-                <li
-                  key={item.id}
-                  className="flex flex-col gap-4 border-t border-line py-5 sm:flex-row sm:items-center"
-                >
-                  <SupplyImage
-                    seed={item.imageSeed}
-                    src={item.image}
-                    alt={item.name}
-                    sizes="(max-width: 640px) 100vw, 160px"
-                    className="h-32 w-full rounded-[6px] sm:h-20 sm:w-32 sm:flex-none"
-                  />
-
-                  <div className="flex min-w-0 flex-1 flex-col gap-1">
-                    <Link
-                      href={item.href}
-                      className="rounded-ctl text-[17px] font-semibold leading-snug text-ink hover:text-brand"
-                    >
-                      {item.name}
-                    </Link>
-                    {/* Column one. */}
-                    <p className="text-sm text-ink-2">{item.detail}</p>
-                    <div className="flex flex-wrap items-center gap-2 pt-1">
-                      <VerifiedBadge label={tVerify("badge")} size="sm" />
-                      <span className="text-[13px] text-ink-3">
-                        {t("inspectedOn", {
-                          date: formatDate(item.inspectedAt, intlLocale, {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                          }),
-                        })}
-                      </span>
-                      {item.availability && (
-                        <StatusPill tone="idle">{item.availability}</StatusPill>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Column two. */}
-                  <div className="flex flex-none items-baseline gap-1.5 sm:flex-col sm:items-end sm:gap-0">
-                    <MoneyText
-                      amount={item.rate}
-                      className="text-[17px] font-bold text-ink"
-                    />
-                    <span className="text-[13px] text-ink-3">
-                      {item.rateLabel}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {settled.length > 0 && (
-            <section className="flex flex-col pt-8">
-              <h2 className="font-display text-2xl font-semibold text-ink">
-                {t("settled")}
-              </h2>
-              <ul className="flex flex-col">{settledRows}</ul>
-            </section>
           )}
-        </div>
+          <Pager page={view.page} hrefFor={(n) => hrefFor({ page: n })} className="mt-4" />
+        </section>
+      )}
 
-        <aside className="flex flex-col gap-4 rounded-card border border-line bg-surface p-6 lg:sticky lg:top-24">
-          <h2 className="font-display text-xl font-semibold text-ink">
-            {t("moneyTitle")}
-          </h2>
+      {tab === "listings" && (
+        <section className="flex flex-col">
+          {/*
+            Said plainly rather than left to be discovered. There is no
+            ownership model in the fixtures, so this lane shows everything
+            HomeLink has verified in it — which is also close to the truth of
+            V1, where inventory is concierge-listed and the supplier side runs
+            offline (§9 fast-follow #4).
+          */}
+          <p className="pb-3 text-[13px] leading-relaxed text-ink-3">
+            {t("ownershipNote")}
+          </p>
+          <ul className="flex flex-col">
+            {(view.page.items as InventoryItem[]).map((item) => (
+              <li
+                key={item.id}
+                className="flex flex-col gap-4 border-t border-line py-5 sm:flex-row sm:items-center"
+              >
+                <SupplyImage
+                  seed={item.imageSeed}
+                  src={item.image}
+                  alt={item.name}
+                  sizes="(max-width: 640px) 100vw, 160px"
+                  className="h-32 w-full rounded-[6px] sm:h-20 sm:w-32 sm:flex-none"
+                />
 
-          <dl className="flex flex-col gap-3 text-[15px]">
+                <div className="flex min-w-0 flex-1 flex-col gap-1">
+                  <Link
+                    href={item.href}
+                    className="rounded-ctl text-[17px] font-semibold leading-snug text-ink hover:text-brand"
+                  >
+                    {item.name}
+                  </Link>
+                  <p className="text-sm text-ink-2">{item.detail}</p>
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <VerifiedBadge label={tVerify("badge")} size="sm" />
+                    <span className="text-[13px] text-ink-3">
+                      {t("inspectedOn", {
+                        date: formatDate(item.inspectedAt, intlLocale, {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }),
+                      })}
+                    </span>
+                    {item.availability && (
+                      <StatusPill tone="idle">{item.availability}</StatusPill>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex flex-none items-baseline gap-1.5 sm:flex-col sm:items-end sm:gap-0">
+                  <MoneyText
+                    amount={item.rate}
+                    className="text-[17px] font-bold text-ink"
+                  />
+                  <span className="text-[13px] text-ink-3">{item.rateLabel}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <Pager page={view.page} hrefFor={(n) => hrefFor({ page: n })} className="mt-4" />
+        </section>
+      )}
+
+      {tab === "money" && (
+        <section className="flex flex-col gap-5">
+          <dl className="flex flex-col">
             {[
-              { key: "held", label: tVerify("escrow"), amount: held, tone: "warn" as const },
-              { key: "due", label: t("dueOnStart"), amount: due, tone: null },
-              { key: "paid", label: tStatus("fundsReleased"), amount: paid, tone: null },
+              { key: "held", label: tVerify("escrow"), amount: held },
+              { key: "due", label: t("dueOnStart"), amount: due },
+              { key: "paid", label: tStatus("fundsReleased"), amount: paid },
+              ...(cancelled.length
+                ? [{ key: "lost", label: tStatus("cancelled"), amount: lost }]
+                : []),
             ].map((line) => (
               <div
                 key={line.key}
-                className="flex items-baseline justify-between gap-4 border-b border-line-soft pb-3 last:border-b-0 last:pb-0"
+                className={cn(
+                  "flex items-baseline justify-between gap-4 border-t border-line py-4",
+                  line.key === "lost" && "text-ink-3",
+                )}
               >
-                <dt className="flex items-center gap-2 text-ink-2">
-                  {line.label}
-                </dt>
+                <dt className="text-[15px] text-ink-2">{line.label}</dt>
                 <dd>
                   <MoneyText amount={line.amount} className="font-semibold text-ink" />
                 </dd>
@@ -368,14 +447,60 @@ export default async function InventoryPage({
             ))}
           </dl>
 
+          {/* Every line above, traced back to the booking it came from. Three
+              sums with nothing behind them is a number you cannot check. */}
+          <div className="flex flex-col">
+            <h2 className="font-display text-xl font-semibold text-ink">
+              {t("whereFrom")}
+            </h2>
+            <ul className="flex flex-col">
+              {bookings.map((booking) => (
+                <li
+                  key={booking.id}
+                  className="flex items-center gap-4 border-t border-line py-3"
+                >
+                  <span className="font-mono text-[12px] tracking-tight text-ink-3">
+                    {booking.reference}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-[14px] text-ink-2">
+                    {formatDateRange(booking.startDate, booking.endDate, intlLocale)}
+                  </span>
+                  <span className="text-[13px] text-ink-3">
+                    {tStatus(booking.status)}
+                  </span>
+                  <MoneyText
+                    amount={booking.total}
+                    className="flex-none text-[14px] font-semibold text-ink"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* The one thing this screen must not imply. Nothing here moves
               money — the concierge runs payouts by hand and will until there
               is a ledger behind them. */}
-          <p className="text-[13px] leading-relaxed text-ink-3">
+          <p className="border-t border-line pt-4 text-[13px] leading-relaxed text-ink-3">
             {t("moneyNote")}
           </p>
-        </aside>
-      </div>
+        </section>
+      )}
+
+      {tab === "booked" && (
+        <p className="text-[13px] text-ink-3">
+          {tTrips("openThread")} — {t("threadHint")}
+        </p>
+      )}
     </div>
   );
+}
+
+/** Rate first by default: it is the number a supplier is actually managing. */
+function sortItems(items: InventoryItem[], sort: SortKey): InventoryItem[] {
+  const out = [...items];
+  if (sort === "name") out.sort((a, b) => a.name.localeCompare(b.name));
+  else if (sort === "inspected")
+    out.sort((a, b) => b.inspectedAt.localeCompare(a.inspectedAt));
+  else out.sort((a, b) => b.rate.minor - a.rate.minor);
+  return out;
 }

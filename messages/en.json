@@ -482,9 +482,7 @@
     "listed": "Listed",
     "bookedNow": "Booked",
     "dueToYou": "Coming to you",
-    "booked": "Booked",
     "nothingBooked": "Nothing booked for these yet. Bookings appear here the moment a guest pays.",
-    "settled": "Already paid out",
     "inspectedOn": "Inspected {date}",
     "unitsFree": "{count, plural, one {# free} other {# free}}",
     "payoutAfterCheckIn": "Paid out once the guest confirms check-in",
@@ -495,8 +493,22 @@
     "moneyNote": "Nothing on this screen moves money. Payouts are run by the Kigali team, and the amounts here are what they are working from.",
     "notYours": "This screen belongs to someone else",
     "notYoursBody": "Inventory is for hosts, drivers and guides. If you are a guest, your bookings are under Trips.",
-    "listedWithUs": "Listed with us",
-    "ownershipNote": "Everything HomeLink has verified in this lane. Which supplier owns what is not modelled yet — in V1 inventory is listed by the concierge team, so there is effectively one supplier."
+    "ownershipNote": "Everything HomeLink has verified in this lane. Which supplier owns what is not modelled yet — in V1 inventory is listed by the concierge team, so there is effectively one supplier.",
+    "tabsLabel": "Sections",
+    "tabs": {
+      "booked": "Booked",
+      "listings": "Listed",
+      "money": "Money"
+    },
+    "sortLabel": "Sort",
+    "sort": {
+      "rate": "Rate",
+      "name": "Name",
+      "inspected": "Inspected"
+    },
+    "payoutCancelled": "Cancelled — nothing to pay out",
+    "whereFrom": "Where that comes from",
+    "threadHint": "opens the thread the concierge keeps with you about that booking."
   },
   "messaging": {
     "title": "Messages",

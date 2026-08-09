@@ -482,9 +482,7 @@
     "listed": "En ligne",
     "bookedNow": "Réservés",
     "dueToYou": "À vous revenir",
-    "booked": "Réservations",
     "nothingBooked": "Rien de réservé pour l'instant. Les réservations apparaissent ici dès qu'un voyageur paie.",
-    "settled": "Déjà versé",
     "inspectedOn": "Inspecté le {date}",
     "unitsFree": "{count, plural, one {# libre} other {# libres}}",
     "payoutAfterCheckIn": "Versé une fois l'arrivée confirmée par le voyageur",
@@ -495,8 +493,22 @@
     "moneyNote": "Rien sur cet écran ne déplace d'argent. Les versements sont effectués par l'équipe de Kigali, et ces montants sont ceux sur lesquels elle travaille.",
     "notYours": "Cet écran est celui de quelqu'un d'autre",
     "notYoursBody": "Cette page est réservée aux hôtes, chauffeurs et guides. Si vous êtes voyageur, vos réservations sont dans Voyages.",
-    "listedWithUs": "En ligne chez nous",
-    "ownershipNote": "Tout ce que HomeLink a vérifié dans cette catégorie. La répartition entre prestataires n'est pas encore modélisée : en V1, l'offre est mise en ligne par l'équipe concierge, il n'y a donc qu'un seul prestataire."
+    "ownershipNote": "Tout ce que HomeLink a vérifié dans cette catégorie. La répartition entre prestataires n'est pas encore modélisée : en V1, l'offre est mise en ligne par l'équipe concierge, il n'y a donc qu'un seul prestataire.",
+    "tabsLabel": "Sections",
+    "tabs": {
+      "booked": "Réservé",
+      "listings": "En ligne",
+      "money": "Argent"
+    },
+    "sortLabel": "Trier",
+    "sort": {
+      "rate": "Tarif",
+      "name": "Nom",
+      "inspected": "Inspection"
+    },
+    "payoutCancelled": "Annulé — rien à verser",
+    "whereFrom": "D'où cela vient",
+    "threadHint": "ouvre la conversation que l'équipe concierge tient avec vous au sujet de cette réservation."
   },
   "messaging": {
     "title": "Messages",
