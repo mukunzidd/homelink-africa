@@ -26,6 +26,42 @@ import { cn } from "@/lib/cn";
  * Everything a native select gives for free is reimplemented here on purpose.
  */
 
+/** Tallest the list is allowed to get, and the gap it keeps from the trigger. */
+const DROP_MAX = 256;
+const DROP_GAP = 6;
+/** Breathing room kept against the viewport edge, so the list never touches it. */
+const DROP_MARGIN = 8;
+
+type Drop = { side: "below" | "above"; maxHeight: number };
+
+/**
+ * Which way the list opens.
+ *
+ * Downwards is the default and what people expect. But this control is used in
+ * a bar pinned to the bottom corner and in sticky booking panels that scroll
+ * low, where opening down puts the options under the fold — so the side is
+ * chosen from the room actually available rather than assumed, and the height
+ * is capped to that room so the list scrolls instead of running off-screen.
+ *
+ * Measured when the list opens, off the trigger that is already on screen. A
+ * dropped measurement (no ref yet) falls back to the default.
+ */
+function dropFor(trigger: HTMLElement | null): Drop {
+  if (!trigger) return { side: "below", maxHeight: DROP_MAX };
+
+  const rect = trigger.getBoundingClientRect();
+  const below = window.innerHeight - rect.bottom - DROP_GAP - DROP_MARGIN;
+  const above = rect.top - DROP_GAP - DROP_MARGIN;
+
+  // Only flip when below is genuinely short *and* above is roomier, so a list
+  // that fits perfectly well underneath is left where it is expected to be.
+  const side = below < Math.min(DROP_MAX, above) ? "above" : "below";
+  return {
+    side,
+    maxHeight: Math.min(DROP_MAX, Math.max(0, side === "above" ? above : below)),
+  };
+}
+
 export type SelectOption<T extends string | number> = {
   value: T;
   label: string;
@@ -72,6 +108,7 @@ export function Select<T extends string | number>({
 
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(selectedIndex);
+  const [drop, setDrop] = useState<Drop>({ side: "below", maxHeight: DROP_MAX });
 
   useDismissable(rootRef, open, () => close());
 
@@ -82,6 +119,7 @@ export function Select<T extends string | number>({
 
   function openList() {
     if (disabled) return;
+    setDrop(dropFor(triggerRef.current));
     setActiveIndex(selectedIndex);
     setOpen(true);
   }
@@ -227,8 +265,12 @@ export function Select<T extends string | number>({
           role="listbox"
           aria-label={label}
           tabIndex={-1}
+          style={{ maxHeight: drop.maxHeight }}
           className={cn(
-            "absolute left-0 top-[calc(100%+0.375rem)] z-50 max-h-64 min-w-full overflow-y-auto",
+            "absolute left-0 z-50 min-w-full overflow-y-auto",
+            drop.side === "above"
+              ? "bottom-[calc(100%+0.375rem)]"
+              : "top-[calc(100%+0.375rem)]",
             "rounded-ctl border border-line bg-surface p-1 shadow-[var(--shadow-pop)]",
           )}
         >
