@@ -55,6 +55,7 @@ export default async function ListingDetailPage({
   const tAmenities = await getTranslations("amenities");
   const tStatus = await getTranslations("status");
   const tCheckout = await getTranslations("checkout");
+  const tOwner = await getTranslations("owner");
 
   // Dates already chosen in search win; otherwise three nights a week out, so
   // the panel opens on a real price rather than asking before showing anything.
@@ -84,7 +85,7 @@ export default async function ListingDetailPage({
         supplyItemId={listing.id}
         rate={listing.nightlyRate}
         rateLabel={tListing("perNight")}
-        availability={tStatus("lowAvailability", { count: listing.unitsAvailable })}
+        extra={{ label: tOwner("free"), value: String(listing.unitsAvailable) }}
         record={listing.verification}
       />
 

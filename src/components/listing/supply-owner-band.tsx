@@ -38,15 +38,23 @@ export async function SupplyOwnerBand({
   supplyItemId,
   rate,
   rateLabel,
-  /** Units free, or the group cap for a day out. */
-  availability,
+  /**
+   * The one fact that differs by lane, carrying its own label.
+   *
+   * It was a bare string under a fixed "Free" heading, which read as "Free: 3
+   * left for these dates" on a stay — redundant — and as "Free: Up to 10" on a
+   * day out, which is not an availability count at all. A group cap is a
+   * property of the outing; how many seats remain is a different number nobody
+   * is tracking yet.
+   */
+  extra,
   record,
 }: {
   kind: ServiceKind;
   supplyItemId: string;
   rate: Money;
   rateLabel: string;
-  availability?: string;
+  extra?: { label: string; value: string };
   record: VerificationRecord;
 }) {
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
@@ -98,9 +106,9 @@ export async function SupplyOwnerBand({
           <MoneyText amount={coming} className="text-[17px] font-bold text-ink" />
         </Facts>
 
-        {availability && (
-          <Facts label={t("free")}>
-            <span className="text-[17px] font-bold text-ink">{availability}</span>
+        {extra && (
+          <Facts label={extra.label}>
+            <span className="tnum text-[17px] font-bold text-ink">{extra.value}</span>
           </Facts>
         )}
       </dl>

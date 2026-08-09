@@ -163,6 +163,35 @@ would actually be on it. Written down before anything was touched.
    404 and three checkout pages that had quietly redirected back to their
    detail page. The screenshots were right; the URLs were wrong.
 
+## Second sweep, after the depth pass
+
+The depth pass added booking records, tabs, paging, thread photographs and the
+supplier band — none of which existed when the step-7 sweep ran. Eighteen
+screens again, 1280 and 390, light and dark, each as the role that would be on
+it. Four things wrong, all small, all fixed in the same commit.
+
+1. **"Booked" meant two different numbers on one screen.** The header stat on
+   `/inventory` counted upcoming bookings; the tab beside it counted every
+   booking including past and cancelled. Header now reads "Upcoming".
+
+2. **The supplier band's fourth fact was mislabelled, and wrong on one lane.**
+   A fixed "Free" heading over a lane-supplied string gave "Free: 3 left for
+   these dates" on a stay — redundant — and "Free: Up to 10" on a day out,
+   which reports the group cap as an availability count. They are not the same
+   number, and nobody is tracking the second one. The slot now carries its own
+   label per lane.
+
+3. **The money tab truncated its dates at 390.** Four columns in one
+   non-wrapping row cut "Nov 14 – 17, 2026" to "Nov 14 – 17, 20…", and the
+   dates are the reason anyone reads that line. It wraps now.
+
+4. **An orphaned sentence** sat under the booked list explaining what "open the
+   thread" does, attached to nothing and several rows below the last link it
+   described. Removed; the link says what it does.
+
+Nothing was found in dark mode that light did not show, and nothing overflowed
+at 390.
+
 ## Decisions already taken
 
 - **Three dashboards, not five or seven.** Host, driver and guide share one

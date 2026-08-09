@@ -37,6 +37,7 @@ export default async function ExperienceDetailPage({
 
   const t = await getTranslations("experiences");
   const tVerify = await getTranslations("verification");
+  const tOwner = await getTranslations("owner");
 
   const interests = experience.interests
     .map((i) => t(`interest.${i}`))
@@ -55,7 +56,10 @@ export default async function ExperienceDetailPage({
         supplyItemId={experience.id}
         rate={experience.pricePerPerson}
         rateLabel={t("perPerson")}
-        availability={t("groupMax", { count: experience.groupMax })}
+        extra={{
+          label: tOwner("groupCap"),
+          value: t("groupMax", { count: experience.groupMax }),
+        }}
         record={experience.verification}
       />
 

@@ -480,7 +480,7 @@
       "experience": "Ce que vous animez avec nous, ce qui est réservé, et quand l'argent vous parvient."
     },
     "listed": "En ligne",
-    "bookedNow": "Réservés",
+    "bookedNow": "À venir",
     "dueToYou": "À vous revenir",
     "nothingBooked": "Rien de réservé pour l'instant. Les réservations apparaissent ici dès qu'un voyageur paie.",
     "inspectedOn": "Inspecté le {date}",
@@ -507,8 +507,7 @@
       "inspected": "Inspection"
     },
     "payoutCancelled": "Annulé — rien à verser",
-    "whereFrom": "D'où cela vient",
-    "threadHint": "ouvre la conversation que l'équipe concierge tient avec vous au sujet de cette réservation."
+    "whereFrom": "D'où cela vient"
   },
   "messaging": {
     "title": "Messages",
@@ -602,6 +601,7 @@
     "rewalkNote": "bientôt un an, elle est donc dans la file de vérification.",
     "seeInInventory": "Voir dans mon offre",
     "askToChange": "Demander une modification à l'équipe",
-    "changesNote": "Les tarifs, les photos et les disponibilités sont modifiés par l'équipe de Kigali tant que l'intégration des propriétaires se fait hors ligne. Écrivez-leur et c'est fait le jour même : il n'y a pas encore de formulaire ici, et un bouton qui n'enregistre rien serait pire que rien."
+    "changesNote": "Les tarifs, les photos et les disponibilités sont modifiés par l'équipe de Kigali tant que l'intégration des propriétaires se fait hors ligne. Écrivez-leur et c'est fait le jour même : il n'y a pas encore de formulaire ici, et un bouton qui n'enregistre rien serait pire que rien.",
+    "groupCap": "Groupe max."
   }
 }

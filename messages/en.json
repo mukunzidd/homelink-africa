@@ -480,7 +480,7 @@
       "experience": "What you run with us, what is booked, and when the money reaches you."
     },
     "listed": "Listed",
-    "bookedNow": "Booked",
+    "bookedNow": "Upcoming",
     "dueToYou": "Coming to you",
     "nothingBooked": "Nothing booked for these yet. Bookings appear here the moment a guest pays.",
     "inspectedOn": "Inspected {date}",
@@ -507,8 +507,7 @@
       "inspected": "Inspected"
     },
     "payoutCancelled": "Cancelled — nothing to pay out",
-    "whereFrom": "Where that comes from",
-    "threadHint": "opens the thread the concierge keeps with you about that booking."
+    "whereFrom": "Where that comes from"
   },
   "messaging": {
     "title": "Messages",
@@ -602,6 +601,7 @@
     "rewalkNote": "coming up on a year, so it is in the verification queue.",
     "seeInInventory": "See it in your inventory",
     "askToChange": "Ask the team to change something",
-    "changesNote": "Rates, photographs and availability are changed by the Kigali team while owner onboarding runs offline. Message them and it is done the same day — there is no form here yet, and a button that saved nothing would be worse than none."
+    "changesNote": "Rates, photographs and availability are changed by the Kigali team while owner onboarding runs offline. Message them and it is done the same day — there is no form here yet, and a button that saved nothing would be worse than none.",
+    "groupCap": "Group cap"
   }
 }

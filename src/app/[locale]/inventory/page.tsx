@@ -82,7 +82,6 @@ export default async function InventoryPage({
   const tExp = await getTranslations("experiences");
   const tVerify = await getTranslations("verification");
   const tStatus = await getTranslations("status");
-  const tTrips = await getTranslations("trips");
 
   const intlLocale = INTL_LOCALES[locale as Locale];
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
@@ -457,15 +456,18 @@ export default async function InventoryPage({
               {bookings.map((booking) => (
                 <li
                   key={booking.id}
-                  className="flex items-center gap-4 border-t border-line py-3"
+                  className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-line py-3"
                 >
                   <span className="font-mono text-[12px] tracking-tight text-ink-3">
                     {booking.reference}
                   </span>
-                  <span className="min-w-0 flex-1 truncate text-[14px] text-ink-2">
+                  {/* No truncate. At 390 this cut the dates mid-year — and the
+                      dates are the reason anybody reads the line. Wrapping
+                      costs a second row on a narrow screen and loses nothing. */}
+                  <span className="tnum text-[14px] text-ink-2">
                     {formatDateRange(booking.startDate, booking.endDate, intlLocale)}
                   </span>
-                  <span className="text-[13px] text-ink-3">
+                  <span className="ml-auto text-[13px] text-ink-3">
                     {tStatus(booking.status)}
                   </span>
                   <MoneyText
@@ -486,11 +488,6 @@ export default async function InventoryPage({
         </section>
       )}
 
-      {tab === "booked" && (
-        <p className="text-[13px] text-ink-3">
-          {tTrips("openThread")} — {t("threadHint")}
-        </p>
-      )}
     </div>
   );
 }

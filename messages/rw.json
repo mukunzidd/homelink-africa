@@ -480,7 +480,7 @@
       "experience": "Ibyo uyobora hamwe natwe, ibyabitswe, n'igihe amafaranga akugeraho."
     },
     "listed": "Biri ku rubuga",
-    "bookedNow": "Byabitswe",
+    "bookedNow": "Ibizaza",
     "dueToYou": "Bigiye kukugeraho",
     "nothingBooked": "Nta cyo kirabikwa. Ibyabitswe bigaragara hano ako kanya umukiriya yishyuye.",
     "inspectedOn": "Byagenzuwe ku wa {date}",
@@ -507,8 +507,7 @@
       "inspected": "Igenzura"
     },
     "payoutCancelled": "Byahagaritswe — nta cyo kwishyurwa",
-    "whereFrom": "Aho ayo mafaranga ava",
-    "threadHint": "bifungura ikiganiro itsinda rya konsiyeji rigirana nawe kuri ubwo bwiyandikishe."
+    "whereFrom": "Aho ayo mafaranga ava"
   },
   "messaging": {
     "title": "Ubutumwa",
@@ -602,6 +601,7 @@
     "rewalkNote": "hafi umwaka, bityo biri mu murongo w'igenzura.",
     "seeInInventory": "Bireba mu byo utanga",
     "askToChange": "Saba itsinda guhindura ikintu",
-    "changesNote": "Ibiciro, amafoto n'uko biboneka bihindurwa n'itsinda ryo i Kigali mu gihe kwiyandikisha kwa ba nyirabyo bikorwa hanze y'urubuga. Baandikire bikorwe uwo munsi — nta fishi iri hano, kandi buto itabika ikintu yaba mbi kurusha kutayigira."
+    "changesNote": "Ibiciro, amafoto n'uko biboneka bihindurwa n'itsinda ryo i Kigali mu gihe kwiyandikisha kwa ba nyirabyo bikorwa hanze y'urubuga. Baandikire bikorwe uwo munsi — nta fishi iri hano, kandi buto itabika ikintu yaba mbi kurusha kutayigira.",
+    "groupCap": "Ingano ntarengwa"
   }
 }

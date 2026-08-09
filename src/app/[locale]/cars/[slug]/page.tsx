@@ -43,6 +43,7 @@ export default async function VehicleDetailPage({
   const t = await getTranslations("cars");
   const tVerify = await getTranslations("verification");
   const tStatus = await getTranslations("status");
+  const tOwner = await getTranslations("owner");
 
   const defaultFrom = isIsoDate(sp.from) ? sp.from : addDays(today(), 7);
   const defaultTo =
@@ -75,7 +76,7 @@ export default async function VehicleDetailPage({
         supplyItemId={vehicle.id}
         rate={vehicle.dailyRate}
         rateLabel={t("perDay")}
-        availability={tStatus("lowAvailability", { count: vehicle.unitsAvailable })}
+        extra={{ label: tOwner("free"), value: String(vehicle.unitsAvailable) }}
         record={vehicle.verification}
       />
 
