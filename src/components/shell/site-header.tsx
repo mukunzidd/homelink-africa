@@ -25,13 +25,25 @@ export async function SiteHeader() {
           tabs spilled past its edge with nothing above them.
           `1fr auto 1fr` centres the tabs on the page, not on whatever space
           the logo happens to leave, and they still set the header's height.
+
+          Every column is stated explicitly. Auto-placement is not an option
+          here: grid resolves items with a definite row before auto-placed
+          ones, so the tabs' `md:row-start-1` used to claim column 1 and push
+          the logo into the middle of the header — the brand ended up centred
+          and the nav left-aligned, which is neither what this reads as nor
+          what the paragraph above claims.
+
+          Padding stays symmetric so `items-center` centres the logo and the
+          preferences against the true middle of the bar. The active tab's
+          underline reaches the bottom border by being pulled down through
+          that padding, rather than by the row being bottom-heavy.
         */}
-        <div className="mx-auto grid max-w-[1180px] grid-cols-[1fr_auto] items-center gap-4 px-6 py-3 md:grid-cols-[1fr_auto_1fr]">
-          <Link href="/" className="justify-self-start rounded-ctl">
+        <div className="mx-auto grid max-w-[1180px] grid-cols-[1fr_auto] items-center gap-4 px-6 py-2.5 md:grid-cols-[1fr_auto_1fr]">
+          <Link href="/" className="justify-self-start rounded-ctl md:col-start-1">
             <Logo />
           </Link>
 
-          <div className="col-span-2 row-start-2 flex justify-center md:col-span-1 md:row-start-1">
+          <div className="col-span-2 row-start-2 flex justify-center md:col-span-1 md:col-start-2 md:row-start-1">
             {/*
               The tabs read the lease band from the query to tell Stays from
               Renting, and `useSearchParams` opts a route out of static
@@ -43,7 +55,7 @@ export async function SiteHeader() {
             </Suspense>
           </div>
 
-          <div className="justify-self-end md:col-start-3">
+          <div className="justify-self-end md:col-start-3 md:row-start-1">
             <PreferenceControls />
           </div>
         </div>

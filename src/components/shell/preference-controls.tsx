@@ -35,7 +35,13 @@ function LocaleControl() {
   return (
     /* The trigger shows the uppercase tag because "Kinyarwanda" is 11
        characters and would set the width of the whole group. The open list
-       shows full endonyms, where there is room for them. */
+       shows full endonyms, where there is room for them.
+
+       That is also what lets the trigger drop its fixed 104px width, which was
+       sized for a label it never shows. The `min-w` is not padding: every tag
+       is two characters but they are not the same width, and switching
+       language is an in-place transition, so without a floor the whole group
+       would shrink by a few pixels the moment you picked FR over RW. */
     <Select
       label={t("language")}
       hideLabel
@@ -53,7 +59,7 @@ function LocaleControl() {
           router.replace(pathname, { locale: next as Locale });
         })
       }
-      className="hidden w-[104px] sm:block"
+      className="hidden min-w-[5.75rem] sm:block"
     />
   );
 }
@@ -72,7 +78,10 @@ function CurrencyControl() {
       icon={<BanknoteIcon size={15} />}
       options={CURRENCIES.map((c) => ({ value: c, label: c }))}
       onChange={(next) => setCurrency(next as CurrencyCode)}
-      className="hidden w-[104px] sm:block"
+      /* Same floor as the language control, for the same reason: RWF is wider
+         than USD, and unlike language this one changes without a navigation —
+         the group must not twitch under the cursor that just set it. */
+      className="hidden min-w-[6.25rem] sm:block"
     />
   );
 }

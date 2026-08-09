@@ -55,7 +55,7 @@ export function VerticalTabs() {
             key={tab.key}
             href={tab.href}
             className={cn(
-              "group relative flex flex-col items-center gap-1.5 rounded-ctl px-3 pb-3 pt-1.5",
+              "group relative flex flex-col items-center gap-1.5 rounded-ctl px-3 pb-1.5 pt-1.5",
               "transition-colors duration-150",
               active ? "text-ink" : "text-ink-3 hover:text-ink",
             )}
@@ -64,11 +64,18 @@ export function VerticalTabs() {
             <span className="text-[13px] font-medium">{t(tab.key)}</span>
 
             {/* Underline rather than a filled pill: these are peers, and a
-                filled state would compete with the search pill below. */}
+                filled state would compete with the search pill below.
+
+                `-bottom-2.5` reaches through the header's bottom padding so
+                the indicator lands on the border, tying the active lane to the
+                page under it. Anchoring it at `bottom-0` instead left it
+                floating in the bar with dead space beneath, reading as a dash
+                next to the label rather than as an indicator. The value tracks
+                the header's `py-2.5`; change one and change the other. */}
             <span
               aria-hidden="true"
               className={cn(
-                "absolute inset-x-2 bottom-0 h-0.5 rounded-full transition-colors duration-150",
+                "absolute inset-x-2 -bottom-2.5 h-0.5 rounded-full transition-colors duration-150",
                 active ? "bg-ink" : "bg-transparent group-hover:bg-line",
               )}
             />
