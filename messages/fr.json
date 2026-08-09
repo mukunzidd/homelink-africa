@@ -479,5 +479,18 @@
     "notYoursBody": "Cette page est réservée aux hôtes, chauffeurs et guides. Si vous êtes voyageur, vos réservations sont dans Voyages.",
     "listedWithUs": "En ligne chez nous",
     "ownershipNote": "Tout ce que HomeLink a vérifié dans cette catégorie. La répartition entre prestataires n'est pas encore modélisée : en V1, l'offre est mise en ligne par l'équipe concierge, il n'y a donc qu'un seul prestataire."
+  },
+  "messaging": {
+    "title": "Messages",
+    "subtitle": "Chaque conversation est rattachée à une réservation. Rien ici ne flotte tout seul.",
+    "noThreads": "Aucune conversation pour l'instant. Il s'en ouvre une dès qu'une réservation est confirmée.",
+    "allThreads": "Toutes les conversations",
+    "you": "Vous",
+    "aboutBooking": "À propos de la réservation {reference}",
+    "readAt": "Lu à {time}",
+    "delivered": "Remis",
+    "replyLabel": "Écrire une réponse",
+    "replyPlaceholder": "Écrire une réponse…",
+    "replyNote": "L'envoi arrivera avec le back-end. La conversation ci-dessus provient de données de test, et ce champ est là pour juger la mise en page avec une zone de réponse."
   }
 }

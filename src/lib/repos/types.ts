@@ -7,6 +7,7 @@ import type {
   ExperienceInterest,
   Listing,
   Message,
+  Role,
   Trip,
   Vehicle,
 } from "@/lib/domain/types";
@@ -99,10 +100,23 @@ export interface TripRepo {
 }
 
 export interface MessagingRepo {
-  conversations(): Promise<Conversation[]>;
+  /**
+   * Every thread this role is actually in, newest first.
+   *
+   * There is no unscoped "list all conversations" because there is no screen
+   * that should have one. Ops sees everything by being in everything, not by
+   * asking for a list without a viewer — which is the call that quietly turns
+   * into a leak the first time a real user table exists.
+   *
+   * `unreadCount` comes back computed for this role, not read from a stored
+   * counter: unread is a fact about a reader, and two people looking at the
+   * same thread do not have the same one.
+   */
+  forRole(role: Role): Promise<Conversation[]>;
+  byId(conversationId: string, role: Role): Promise<Conversation | null>;
   messages(conversationId: string): Promise<Message[]>;
-  /** Threads are scoped, never free-floating, so a booking has at most one. */
-  forBooking(bookingId: string): Promise<Conversation | null>;
+  /** A booking can carry several threads; this returns the one `role` is in. */
+  forBooking(bookingId: string, role: Role): Promise<Conversation | null>;
 }
 
 export interface FxRepo {

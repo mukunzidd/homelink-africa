@@ -124,7 +124,7 @@ export default async function InventoryPage({
   async function renderBooking(booking: Booking, muted: boolean) {
     const [supply, conversation] = await Promise.all([
       supplyRefFor(booking),
-      repos().messaging.forBooking(booking.id),
+      repos().messaging.forBooking(booking.id, role),
     ]);
     return (
       <BookingRow

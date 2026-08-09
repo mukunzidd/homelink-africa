@@ -183,8 +183,18 @@ export type Conversation = {
   /** Scoped to a booking or a trip; never free-floating. */
   scope: { kind: "booking" | "trip"; id: string };
   participantNames: string[];
+  /**
+   * Who is in the room, by role.
+   *
+   * A booking can carry more than one thread and they are not the same
+   * conversation: the guest talks to the concierge about arrival, and the
+   * concierge talks to the host about the generator. Names alone cannot
+   * express that, and a host must never open the guest's thread.
+   */
+  participantRoles: Role[];
   lastMessagePreview: string;
   lastMessageAt: string;
+  /** From the point of view of whoever asked. Computed per role, not stored. */
   unreadCount: number;
 };
 

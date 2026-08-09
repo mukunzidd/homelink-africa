@@ -8,6 +8,7 @@ import type {
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
+import type { Role } from "@/lib/domain/types";
 import {
   BOOKINGS,
   CONVERSATIONS,
@@ -178,23 +179,57 @@ const trips: TripRepo = {
   },
 };
 
+/**
+ * Unread is a fact about a reader, not about a thread.
+ *
+ * Your own messages are never unread to you, and a message someone else has
+ * already opened is not unread to them. Phase 2 stores read receipts per
+ * participant; the fixture approximates it with one `readAt` per message,
+ * which is enough to make the state visible on the screen.
+ */
+function unreadFor(conversationId: string, role: Role): number {
+  return MESSAGES.filter(
+    (m) => m.conversationId === conversationId && m.authorRole !== role && !m.readAt,
+  ).length;
+}
+
+function visibleTo(role: Role) {
+  return (c: (typeof CONVERSATIONS)[number]) =>
+    c.participantRoles.includes(role);
+}
+
+function forReader(c: (typeof CONVERSATIONS)[number], role: Role) {
+  return { ...c, unreadCount: unreadFor(c.id, role) };
+}
+
 const messaging: MessagingRepo = {
-  async conversations() {
-    return [...CONVERSATIONS].sort((a, b) =>
-      b.lastMessageAt.localeCompare(a.lastMessageAt),
-    );
+  async forRole(role) {
+    return CONVERSATIONS.filter(visibleTo(role))
+      .map((c) => forReader(c, role))
+      .sort((a, b) => b.lastMessageAt.localeCompare(a.lastMessageAt));
   },
+
+  async byId(conversationId, role) {
+    const found = CONVERSATIONS.find(
+      (c) => c.id === conversationId && visibleTo(role)(c),
+    );
+    return found ? forReader(found, role) : null;
+  },
+
   async messages(conversationId) {
     return MESSAGES.filter((m) => m.conversationId === conversationId).sort((a, b) =>
       a.sentAt.localeCompare(b.sentAt),
     );
   },
-  async forBooking(bookingId) {
-    return (
-      CONVERSATIONS.find(
-        (c) => c.scope.kind === "booking" && c.scope.id === bookingId,
-      ) ?? null
+
+  async forBooking(bookingId, role) {
+    const found = CONVERSATIONS.find(
+      (c) =>
+        c.scope.kind === "booking" &&
+        c.scope.id === bookingId &&
+        visibleTo(role)(c),
     );
+    return found ? forReader(found, role) : null;
   },
 };
 

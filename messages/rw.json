@@ -479,5 +479,18 @@
     "notYoursBody": "Iyi ni iy'abatanga amazu, abashoferi n'abayobozi. Niba uri umukiriya, ibyo wabitse biri muri Ingendo.",
     "listedWithUs": "Ibiri ku rubuga rwacu",
     "ownershipNote": "Ibyo HomeLink yagenzuye byose muri iki cyiciro. Uwo ari we utunze iki nticyarashyirwaho — muri V1 ibyatanzwe bishyirwaho n'itsinda rya konsiyeji, bityo nk'aho hari umutanzi umwe."
+  },
+  "messaging": {
+    "title": "Ubutumwa",
+    "subtitle": "Buri kiganiro gifitanye isano n'icyo wabitse. Nta na kimwe kihagaze cyonyine.",
+    "noThreads": "Nta kiganiro kiraboneka. Gifungurwa ako kanya ubwiyandikishe bwemejwe.",
+    "allThreads": "Ibiganiro byose",
+    "you": "Wowe",
+    "aboutBooking": "Ku bijyanye n'ubwiyandikishe {reference}",
+    "readAt": "Bwasomwe saa {time}",
+    "delivered": "Bwageze",
+    "replyLabel": "Andika igisubizo",
+    "replyPlaceholder": "Andika igisubizo…",
+    "replyNote": "Kohereza bizaza hamwe na sisitemu y'inyuma. Ikiganiro kiri hejuru ni amakuru y'igerageza, kandi aka kazu kari hano kugira ngo imiterere y'urupapuro isuzumwe hari aho basubiriza."
   }
 }

@@ -72,10 +72,16 @@ Tick these off and commit the tick with the work.
       Verification queue, manual add-on requests, all threads, payouts. This is
       the tool that delivers the guarantee the whole product rests on
       (`docs/02-product-and-ux` §7).
-- [ ] **6. Messaging shell.**
+- [x] **6. Messaging shell.**
       `/messages` currently renders `NotBuiltYet`. Threads scoped to a booking,
       guest / supply / concierge participants, read state. Per §8 this is
       load-bearing, not an add-on.
+      *Built before step 5*, because the ops queue lists "all threads" and
+      would otherwise have been written against a screen that did not exist.
+      One thing the fixtures made obvious once written down: a booking carries
+      more than one thread. The guest talks to the concierge, and the concierge
+      talks to the host, about the same night in the same flat — so threads
+      carry participant *roles* and a host can never open the guest's thread.
 - [ ] **7. Physical review sweep in the browser.**
       Walk all four journeys from `docs/02-product-and-ux` §5 end to end, in
       each role, both themes, desktop and mobile. Write down what is wrong

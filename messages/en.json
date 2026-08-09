@@ -479,5 +479,18 @@
     "notYoursBody": "Inventory is for hosts, drivers and guides. If you are a guest, your bookings are under Trips.",
     "listedWithUs": "Listed with us",
     "ownershipNote": "Everything HomeLink has verified in this lane. Which supplier owns what is not modelled yet — in V1 inventory is listed by the concierge team, so there is effectively one supplier."
+  },
+  "messaging": {
+    "title": "Messages",
+    "subtitle": "Every thread is attached to something you have booked. Nothing here floats free of a booking.",
+    "noThreads": "No threads yet. One opens the moment a booking is confirmed.",
+    "allThreads": "All threads",
+    "you": "You",
+    "aboutBooking": "About booking {reference}",
+    "readAt": "Read at {time}",
+    "delivered": "Delivered",
+    "replyLabel": "Write a reply",
+    "replyPlaceholder": "Write a reply…",
+    "replyNote": "Sending arrives with the backend. The thread above is fixture data, and this box is here so the layout can be judged with a reply box in it."
   }
 }

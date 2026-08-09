@@ -455,24 +455,94 @@ export const TRIPS: Trip[] = [
   },
 ];
 
+/*
+ * Threads, scoped and role-aware.
+ *
+ * A booking carries more than one of these and they are different rooms. The
+ * guest asks the concierge about a late arrival; the concierge asks the host
+ * whether the generator is fuelled. Both are about the same night in the same
+ * flat, and neither participant should see the other conversation.
+ *
+ * Note who is *not* in the guest's threads: the owner of the flat. That is the
+ * product working as designed — the guest's counterparty is HomeLink, and the
+ * concierge carries the message across. The two places a supplier does talk to
+ * a guest directly are the driver and the guide, because both physically meet
+ * them.
+ */
 export const CONVERSATIONS: Conversation[] = [
   {
     id: "cnv_001",
     subject: "Arrival details, Garden apartment",
     scope: { kind: "booking", id: "bkg_001" },
-    participantNames: ["You", "Aline M. (HomeLink)"],
+    participantNames: ["Marie L.", "Aline M."],
+    participantRoles: ["guest", "ops"],
     lastMessagePreview:
       "Your flight lands at 19:40, so I will have someone at the gate with the keys.",
     lastMessageAt: "2026-11-09T14:22:00Z",
-    unreadCount: 1,
+    unreadCount: 0,
   },
   {
     id: "cnv_002",
     subject: "Car pickup at the airport",
     scope: { kind: "booking", id: "bkg_002" },
-    participantNames: ["You", "Eric H. (Driver)"],
+    participantNames: ["Marie L.", "Eric H."],
+    participantRoles: ["guest", "driver"],
     lastMessagePreview: "The RAV4 is booked out to you from Saturday morning.",
     lastMessageAt: "2026-11-08T09:05:00Z",
+    unreadCount: 0,
+  },
+  {
+    id: "cnv_003",
+    subject: "Where we meet on Sunday",
+    scope: { kind: "booking", id: "bkg_003" },
+    participantNames: ["Marie L.", "Solange K."],
+    participantRoles: ["guest", "guide"],
+    lastMessagePreview:
+      "We start at the Women's Centre at 09:00. Wear something you can walk the hill in.",
+    lastMessageAt: "2026-11-07T16:40:00Z",
+    unreadCount: 0,
+  },
+  {
+    id: "cnv_004",
+    subject: "Generator and keys, 14 November",
+    scope: { kind: "booking", id: "bkg_001" },
+    participantNames: ["Aline M.", "Placide K."],
+    participantRoles: ["ops", "host"],
+    lastMessagePreview: "Tank is full and I ran it for ten minutes this morning.",
+    lastMessageAt: "2026-11-09T11:15:00Z",
+    unreadCount: 0,
+  },
+  {
+    id: "cnv_005",
+    subject: "RAV4 handover, bay 12",
+    scope: { kind: "booking", id: "bkg_002" },
+    participantNames: ["Aline M.", "Eric H."],
+    participantRoles: ["ops", "driver"],
+    lastMessagePreview: "Serviced on Thursday. I will leave it fuelled.",
+    lastMessageAt: "2026-11-06T07:20:00Z",
+    unreadCount: 0,
+  },
+  {
+    id: "cnv_006",
+    subject: "How was the studio?",
+    scope: { kind: "booking", id: "bkg_004" },
+    participantNames: ["Marie L.", "Patrick N."],
+    participantRoles: ["guest", "ops"],
+    lastMessagePreview: "Glad it worked. The water tank complaint is with the owner.",
+    lastMessageAt: "2026-03-10T08:05:00Z",
+    unreadCount: 0,
+  },
+  {
+    // Trip-scoped rather than booking-scoped. Rarer, and the one thread that
+    // is about the shape of the week rather than about a single line of it.
+    id: "cnv_007",
+    subject: "Your November week",
+    scope: { kind: "trip", id: "trp_001" },
+    participantNames: ["Marie L.", "Aline M."],
+    participantRoles: ["guest", "ops"],
+    lastMessagePreview:
+      "I will come back to you about a week out, once you have the flight numbers.",
+    lastMessageAt: "2026-11-09T14:31:00Z",
     unreadCount: 0,
   },
 ];
@@ -481,7 +551,7 @@ export const MESSAGES: Message[] = [
   {
     id: "msg_001",
     conversationId: "cnv_001",
-    authorName: "You",
+    authorName: "Marie L.",
     authorRole: "guest",
     body: "We land Saturday evening on RwandAir from Brussels. Is a late check-in workable?",
     sentAt: "2026-11-09T13:40:00Z",
@@ -490,7 +560,7 @@ export const MESSAGES: Message[] = [
   {
     id: "msg_002",
     conversationId: "cnv_001",
-    authorName: "Aline M. (HomeLink)",
+    authorName: "Aline M.",
     authorRole: "ops",
     body: "Your flight lands at 19:40, so I will have someone at the gate with the keys. The generator is fuelled and the water tank is full.",
     sentAt: "2026-11-09T14:22:00Z",
@@ -498,11 +568,97 @@ export const MESSAGES: Message[] = [
   {
     id: "msg_003",
     conversationId: "cnv_002",
-    authorName: "Eric H. (Driver)",
+    authorName: "Marie L.",
+    authorRole: "guest",
+    body: "Are we collecting the car at the airport or in town?",
+    sentAt: "2026-11-08T08:31:00Z",
+    readAt: "2026-11-08T08:44:00Z",
+  },
+  {
+    id: "msg_004",
+    conversationId: "cnv_002",
+    authorName: "Eric H.",
     authorRole: "driver",
     body: "The RAV4 is booked out to you from Saturday morning. I will leave it in the arrivals car park, bay 12.",
     sentAt: "2026-11-08T09:05:00Z",
     readAt: "2026-11-08T09:30:00Z",
+  },
+  {
+    id: "msg_005",
+    conversationId: "cnv_003",
+    authorName: "Solange K.",
+    authorRole: "guide",
+    body: "We start at the Women's Centre at 09:00. Wear something you can walk the hill in.",
+    sentAt: "2026-11-07T16:40:00Z",
+  },
+  {
+    id: "msg_006",
+    conversationId: "cnv_004",
+    authorName: "Aline M.",
+    authorRole: "ops",
+    body: "Guests arrive on the 14th, late. Can you confirm the generator has been run and the tank is full before then?",
+    sentAt: "2026-11-09T10:02:00Z",
+    readAt: "2026-11-09T10:40:00Z",
+  },
+  {
+    id: "msg_007",
+    conversationId: "cnv_004",
+    authorName: "Placide K.",
+    authorRole: "host",
+    body: "Tank is full and I ran it for ten minutes this morning.",
+    sentAt: "2026-11-09T11:15:00Z",
+  },
+  {
+    id: "msg_008",
+    conversationId: "cnv_005",
+    authorName: "Aline M.",
+    authorRole: "ops",
+    body: "RAV4 out to a guest from the 14th, self-drive. Anything outstanding on it?",
+    sentAt: "2026-11-06T06:58:00Z",
+    readAt: "2026-11-06T07:10:00Z",
+  },
+  {
+    id: "msg_009",
+    conversationId: "cnv_005",
+    authorName: "Eric H.",
+    authorRole: "driver",
+    body: "Serviced on Thursday. I will leave it fuelled.",
+    sentAt: "2026-11-06T07:20:00Z",
+    readAt: "2026-11-06T07:44:00Z",
+  },
+  {
+    id: "msg_010",
+    conversationId: "cnv_006",
+    authorName: "Marie L.",
+    authorRole: "guest",
+    body: "All fine, thank you. The only thing was the water pressure in the mornings.",
+    sentAt: "2026-03-09T17:20:00Z",
+    readAt: "2026-03-10T07:02:00Z",
+  },
+  {
+    id: "msg_011",
+    conversationId: "cnv_006",
+    authorName: "Patrick N.",
+    authorRole: "ops",
+    body: "Glad it worked. The water tank complaint is with the owner.",
+    sentAt: "2026-03-10T08:05:00Z",
+    readAt: "2026-03-10T09:12:00Z",
+  },
+  {
+    id: "msg_012",
+    conversationId: "cnv_007",
+    authorName: "Aline M.",
+    authorRole: "ops",
+    body: "Everything for the week is booked: the flat in Kacyiru, the RAV4 from Saturday, and Sunday on foot in Nyamirambo.",
+    sentAt: "2026-11-09T14:28:00Z",
+  },
+  {
+    id: "msg_013",
+    conversationId: "cnv_007",
+    authorName: "Aline M.",
+    authorRole: "ops",
+    body: "I will come back to you about a week out, once you have the flight numbers.",
+    sentAt: "2026-11-09T14:31:00Z",
   },
 ];
 

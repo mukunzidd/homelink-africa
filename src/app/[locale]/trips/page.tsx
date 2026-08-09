@@ -45,6 +45,8 @@ export default async function TripsPage({
     repos().trips.listForCurrentUser(),
   ]);
 
+  // Trips is the guest's screen by definition, so the thread it links to is
+  // the guest's thread — not the concierge-to-host one on the same booking.
   const now = today();
   const upcoming = bookings
     .filter((b) => b.endDate >= now && b.status !== "cancelled")
@@ -61,7 +63,7 @@ export default async function TripsPage({
       list.map(async (booking) => {
         const [supply, conversation] = await Promise.all([
           supplyRefFor(booking),
-          repos().messaging.forBooking(booking.id),
+          repos().messaging.forBooking(booking.id, "guest"),
         ]);
         const trip = tripFor(booking);
 
