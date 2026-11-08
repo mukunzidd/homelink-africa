@@ -598,6 +598,26 @@ export type Review = {
 };
 
 /** Something to fix in a home: from a tenant, a guest's report, an inspection or the team. */
+/**
+ * A clean the housekeeping team owes a home on one day. Derived from the
+ * bookings (a departure is a turnover; a booked mid-stay clean is a visit
+ * on the middle day), with who has it and how far it got kept beside.
+ */
+export type HousekeepingTask = {
+  id: string;
+  listingId: string;
+  date: string;
+  kind: "turnover" | "midStay" | "deep";
+  window: { from: string; until: string };
+  /** The booking leaving (turnover) or staying (mid-stay). */
+  bookingId: string;
+  /** The booking arriving after a turnover, which is what makes it tight. */
+  nextBookingId?: string;
+  assignee?: string;
+  status: "todo" | "inProgress" | "ready" | "issue";
+  note?: string;
+};
+
 export type MaintenanceTicket = {
   id: string;
   listingId: string;
@@ -611,4 +631,8 @@ export type MaintenanceTicket = {
   assignee?: string;
   scheduledFor?: string;
   source: "tenant" | "guest" | "staff" | "inspection";
+  /** Who said what while it was being fixed. */
+  notes?: { at: string; by: string; text: string }[];
+  /** Days the home was taken off sale for the work. */
+  blockedDates?: string[];
 };

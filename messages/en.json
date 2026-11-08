@@ -1680,6 +1680,100 @@
           "timing": "Timings hold"
         }
       }
+    },
+    "work": {
+      "housekeeping": "Housekeeping",
+      "housekeepingBody": "Every clean the homes need, day by day. A turnover with a guest arriving the same afternoon comes first; mark it ready so the desk can hand over the keys.",
+      "days": "Days",
+      "today": "Today",
+      "cleans": "{count, plural, =0 {no cleans} one {# clean} other {# cleans}}",
+      "hk": {
+        "todo": "To do",
+        "inProgress": "Cleaning",
+        "ready": "Ready",
+        "issue": "Problem"
+      },
+      "hkDone": {
+        "todo": "Back to to do",
+        "inProgress": "Marked as cleaning",
+        "ready": "Ready for the guest",
+        "issue": "Problem flagged to the desk"
+      },
+      "kind": {
+        "turnover": "Turnover",
+        "midStay": "Mid-stay clean",
+        "deep": "Deep clean"
+      },
+      "tight": "Guest arriving today",
+      "window": "Window",
+      "leaving": "Leaving",
+      "staying": "Staying",
+      "arriving": "Arriving",
+      "around": "around {time}",
+      "noCleans": "No cleans on this day.",
+      "cleaner": "Cleaner",
+      "assignedTo": "Given to {name}",
+      "nobody": "Nobody yet",
+      "progress": "Progress",
+      "noteSaved": "Note saved",
+      "note": "Note",
+      "notePlaceholder": "Anything the desk or the next cleaner should know",
+      "saveNote": "Save note",
+      "maintenance": "Maintenance",
+      "maintenanceBody": "Repairs across the homes, urgent first. Open one to give it to someone, book the visit, or take the home off sale while the work is on.",
+      "active": "Still to fix",
+      "all": "All",
+      "ticket": {
+        "open": "Open",
+        "scheduled": "Scheduled",
+        "inProgress": "In progress",
+        "done": "Done"
+      },
+      "priorityName": {
+        "urgent": "Urgent",
+        "normal": "Normal",
+        "low": "Low"
+      },
+      "source": {
+        "tenant": "From a tenant",
+        "guest": "From a guest",
+        "staff": "From the team",
+        "inspection": "From an inspection"
+      },
+      "offSale": "Off sale for the work",
+      "visitOn": "Visit {date}",
+      "home": "Home",
+      "reported": "Reported",
+      "photo": "Photo",
+      "fromIncident": "From incident",
+      "noTickets": "Nothing here.",
+      "status": "Status",
+      "priority": "Priority",
+      "fixer": "Who fixes it",
+      "moved": "Ticket updated",
+      "visit": "Visit day",
+      "setVisit": "Set the visit",
+      "scheduledFor": "Visit set for {date}",
+      "unscheduled": "Visit removed",
+      "blockTitle": "Take the home off sale",
+      "blockedFor": "Off sale for {count, plural, one {# night} other {# nights}}, {first} to {last}.",
+      "unblock": "Put it back on sale",
+      "unblocked": "Back on sale",
+      "blockBooked": "Guests are booked on {dates}. Move the work, not the guest.",
+      "blockInvalid": "Pick a start day and between 1 and 30 nights.",
+      "from": "From",
+      "nights": "Nights",
+      "block": "Take off sale",
+      "blockHint": "Nights with a guest in the home are refused: the work moves, not the guest.",
+      "addNote": "Add a note",
+      "ticketNotePlaceholder": "What was found, what was done, what is still needed",
+      "newTicket": "New ticket",
+      "ticketCreated": "Ticket created",
+      "what": "What needs fixing",
+      "whatPlaceholder": "Shower drains slowly",
+      "details": "Details",
+      "create": "Create ticket",
+      "cancel": "Cancel"
     }
   },
   "account": {

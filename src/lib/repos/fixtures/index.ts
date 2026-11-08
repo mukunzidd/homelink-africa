@@ -11,10 +11,11 @@ import type {
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
-import type { Conversation, Role, SharedLocation } from "@/lib/domain/types";
+import type { Conversation, HousekeepingTask, Role, SharedLocation } from "@/lib/domain/types";
+import { turnoverTasks } from "@/lib/workspace/day-board";
 import { readsAs } from "@/lib/preferences/role";
 import { convert, formatMoney } from "@/lib/domain/money";
-import { isIsoDate } from "@/lib/domain/dates";
+import { addDays, isIsoDate, nightsBetween } from "@/lib/domain/dates";
 import { CHECKLIST } from "@/lib/workspace/inspection";
 import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
@@ -736,7 +737,57 @@ const reviews: ReviewsRepo = {
   },
 };
 
+const HK_STATUS: HousekeepingTask["status"][] = ["todo", "inProgress", "ready", "issue"];
+
+/**
+ * The day's cleans, worked out from the bookings each time so they can
+ * never disagree with them. Mid-stay visits are spread evenly through the
+ * stay: one visit on a five-night stay is the middle day.
+ */
+function cleansOn(date: string): Omit<HousekeepingTask, "assignee" | "status" | "note">[] {
+  const bookings = store().bookings.filter((b) => b.service === "stay" && b.status !== "cancelled");
+  const turnovers = turnoverTasks(bookings, date).map((t) => ({
+    id: `hk_${date}_${t.listingId}_turnover`,
+    listingId: t.listingId,
+    date,
+    kind: "turnover" as const,
+    window: { from: t.from, until: t.nextBookingId ? t.until : "18:00" },
+    bookingId: t.outBookingId,
+    ...(t.nextBookingId ? { nextBookingId: t.nextBookingId } : {}),
+  }));
+  const mid = bookings.flatMap((b) => {
+    const visits = b.extras?.find((e) => e.key === "midStayClean")?.quantity ?? 0;
+    if (!visits || b.stayMode === "lease") return [];
+    const nights = nightsBetween(b.startDate, b.endDate);
+    const days = Array.from({ length: visits }, (_, i) => addDays(b.startDate, Math.max(1, Math.floor(((i + 1) * nights) / (visits + 1)))));
+    return days.includes(date)
+      ? [{ id: `hk_${date}_${b.supplyItemId}_mid_${b.id}`, listingId: b.supplyItemId, date, kind: "midStay" as const, window: { from: "10:00", until: "13:00" }, bookingId: b.id }]
+      : [];
+  });
+  return [...turnovers, ...mid];
+}
+
 const work: WorkRepo = {
+  async housekeeping(date) {
+    const kept = store().housekeeping;
+    return cleansOn(date).map((t) => ({ ...t, ...(kept[t.id] ?? { status: "todo" as const }) }));
+  },
+  async updateHousekeeping(id, by, patch) {
+    const date = /^hk_(\d{4}-\d{2}-\d{2})_/.exec(id)?.[1];
+    const task = date ? cleansOn(date).find((t) => t.id === id) : undefined;
+    if (!task) throw new Error(`No housekeeping task ${id}`);
+    if (patch.status !== undefined && !HK_STATUS.includes(patch.status)) throw new Error("No such status");
+    const cur = store().housekeeping[id] ?? { status: "todo" as const };
+    const next = {
+      ...cur,
+      ...(patch.assignee !== undefined ? { assignee: patch.assignee || undefined } : {}),
+      ...(patch.status !== undefined ? { status: patch.status } : {}),
+      ...(patch.note !== undefined ? { note: patch.note.trim().slice(0, 500) || undefined } : {}),
+    };
+    store().housekeeping[id] = next;
+    recordAudit({ actor: by, action: "housekeeping.update", target: id, detail: JSON.stringify(patch) });
+    return { ...task, ...next };
+  },
   async tickets(filter = {}) {
     return store()
       .tickets.filter((t) => (!filter.listingId || t.listingId === filter.listingId) && (!filter.status || filter.status.includes(t.status)))

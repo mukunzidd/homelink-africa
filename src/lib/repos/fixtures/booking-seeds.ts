@@ -95,7 +95,8 @@ export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
   return [
     make("soon", "lst_gikondo_family", 5, 9, "confirmed"),
     make("released", "lst_kibagabaga_bungalow", 1, 4, "confirmed"),
-    make("during", "lst_nyamirambo_rooftop", -2, 3, "active"),
+    // A clean booked for the middle of the stay, which falls today.
+    { ...make("during", "lst_nyamirambo_rooftop", -2, 3, "active"), extras: [{ key: "midStayClean", quantity: 1 }] },
     make("ended", "lst_remera_studio", -7, -3, "completed"),
     make("leaseEnd", "lst_gacuriro_estate", -372, -7, "completed", true),
     activeLease(),

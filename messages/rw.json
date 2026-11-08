@@ -1680,6 +1680,100 @@
           "timing": "Amasaha arubahirizwa"
         }
       }
+    },
+    "work": {
+      "housekeeping": "Isuku",
+      "housekeepingBody": "Isuku yose amazu akeneye, umunsi ku wundi. Isukura hagati y'abashyitsi umushyitsi mushya agera uwo munsi riza mbere; ryemeze ko ryarangiye kugira ngo abakira batange imfunguzo.",
+      "days": "Iminsi",
+      "today": "Uyu munsi",
+      "cleans": "{count, plural, =0 {nta suku} one {isuku #} other {isuku #}}",
+      "hk": {
+        "todo": "Bigomba gukorwa",
+        "inProgress": "Birimo gukorwa",
+        "ready": "Byiteguye",
+        "issue": "Hari ikibazo"
+      },
+      "hkDone": {
+        "todo": "Byasubijwe mu bigomba gukorwa",
+        "inProgress": "Byemejwe ko birimo gukorwa",
+        "ready": "Byiteguye umushyitsi",
+        "issue": "Ikibazo cyamenyeshejwe abakira"
+      },
+      "kind": {
+        "turnover": "Isukura hagati y'abashyitsi",
+        "midStay": "Isuku hagati mu kuba",
+        "deep": "Isuku yimbitse"
+      },
+      "tight": "Umushyitsi agera uyu munsi",
+      "window": "Igihe",
+      "leaving": "Uwagenda",
+      "staying": "Uri kuhaba",
+      "arriving": "Uwaza",
+      "around": "ahagana {time}",
+      "noCleans": "Nta suku kuri uyu munsi.",
+      "cleaner": "Ukora isuku",
+      "assignedTo": "Byahawe {name}",
+      "nobody": "Nta wurabihabwa",
+      "progress": "Aho bigeze",
+      "noteSaved": "Icyitonderwa cyabitswe",
+      "note": "Icyitonderwa",
+      "notePlaceholder": "Icyo abakira cyangwa ukurikiraho bagomba kumenya",
+      "saveNote": "Bika icyitonderwa",
+      "maintenance": "Gusana",
+      "maintenanceBody": "Ibisanwa mu mazu, ibyihutirwa mbere. Fungura kimwe ukimuhe umuntu, ushyireho umunsi wo kuza, cyangwa ukure inzu ku isoko imirimo ikiri gukorwa.",
+      "active": "Ibigomba gusanwa",
+      "all": "Byose",
+      "ticket": {
+        "open": "Gifunguye",
+        "scheduled": "Cyateganyijwe",
+        "inProgress": "Kirimo gukorwa",
+        "done": "Cyarangiye"
+      },
+      "priorityName": {
+        "urgent": "Byihutirwa",
+        "normal": "Bisanzwe",
+        "low": "Bidakomeye"
+      },
+      "source": {
+        "tenant": "Kivuye ku ukodesha",
+        "guest": "Kivuye ku mushyitsi",
+        "staff": "Kivuye mu ikipe",
+        "inspection": "Kivuye mu igenzura"
+      },
+      "offSale": "Kuvanwa ku isoko kubera imirimo",
+      "visitOn": "Gusura {date}",
+      "home": "Inzu",
+      "reported": "Byatanzwe",
+      "photo": "Ifoto",
+      "fromIncident": "Kivuye ku kibazo",
+      "noTickets": "Nta kintu kirimo.",
+      "status": "Aho bigeze",
+      "priority": "Icyihutirwa",
+      "fixer": "Ugisana",
+      "moved": "Byavuguruwe",
+      "visit": "Umunsi wo gusura",
+      "setVisit": "Shyiraho umunsi",
+      "scheduledFor": "Gusura byashyizwe ku {date}",
+      "unscheduled": "Umunsi wakuweho",
+      "blockTitle": "Kura inzu ku isoko",
+      "blockedFor": "Yakuwe ku isoko amajoro {count}, kuva {first} kugeza {last}.",
+      "unblock": "Yisubize ku isoko",
+      "unblocked": "Yasubijwe ku isoko",
+      "blockBooked": "Abashyitsi barafashe ku {dates}. Himura imirimo, si umushyitsi.",
+      "blockInvalid": "Hitamo umunsi wo gutangira n'amajoro hagati ya 1 na 30.",
+      "from": "Kuva",
+      "nights": "Amajoro",
+      "block": "Kura ku isoko",
+      "blockHint": "Amajoro hari umushyitsi mu nzu ntiyemerwa: imirimo niyo yimurwa, si umushyitsi.",
+      "addNote": "Ongeraho icyitonderwa",
+      "ticketNotePlaceholder": "Icyabonetse, icyakozwe, igisigaye",
+      "newTicket": "Ikibazo gishya",
+      "ticketCreated": "Byanditswe",
+      "what": "Igikeneye gusanwa",
+      "whatPlaceholder": "Douche itemba buhoro",
+      "details": "Ibisobanuro",
+      "create": "Andika",
+      "cancel": "Reka"
     }
   },
   "account": {

@@ -18,13 +18,13 @@ import {
 import { useToast } from "@/components/notifications/toaster";
 import { cn } from "@/lib/cn";
 
-const control = "min-h-10 w-full rounded-ctl border border-line bg-surface px-3 text-[14px] text-ink";
-const primary = "min-h-10 cursor-pointer rounded-ctl bg-brand px-4 text-[14px] font-semibold text-on-brand hover:bg-brand-deep disabled:opacity-60";
-const quiet = "min-h-10 cursor-pointer rounded-ctl border border-line bg-surface px-4 text-[14px] font-semibold text-ink hover:border-brand disabled:opacity-60";
-const label = "flex flex-col gap-1 text-[12.5px] text-ink-3";
+export const control = "min-h-10 w-full rounded-ctl border border-line bg-surface px-3 text-[14px] text-ink";
+export const primary = "min-h-10 cursor-pointer rounded-ctl bg-brand px-4 text-[14px] font-semibold text-on-brand hover:bg-brand-deep disabled:opacity-60";
+export const quiet = "min-h-10 cursor-pointer rounded-ctl border border-line bg-surface px-4 text-[14px] font-semibold text-ink hover:border-brand disabled:opacity-60";
+export const label = "flex flex-col gap-1 text-[12.5px] text-ink-3";
 
 /** Runs a write, then refreshes the server page; a refusal shows inline. */
-function useWrite() {
+export function useWrite() {
   const router = useRouter();
   const toast = useToast();
   const t = useTranslations("workspace.queue");
@@ -46,7 +46,7 @@ function useWrite() {
   return { busy, error, setError, run };
 }
 
-function TeamSelect({ team, value, onChange, name }: { team: string[]; value: string; onChange: (v: string) => void; name: string }) {
+export function TeamSelect({ team, value, onChange, name }: { team: string[]; value: string; onChange: (v: string) => void; name: string }) {
   const t = useTranslations("workspace.queue");
   return (
     <select aria-label={name} value={value} onChange={(e) => onChange(e.target.value)} className={control}>

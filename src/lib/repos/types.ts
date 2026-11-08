@@ -1,5 +1,6 @@
 import type {
   SharedLocation,
+  HousekeepingTask,
   AddOnRequest,
   AppNotification,
   AuditEntry,
@@ -368,6 +369,9 @@ export interface WorkRepo {
   tickets(filter?: { listingId?: string; status?: MaintenanceTicket["status"][] }): Promise<MaintenanceTicket[]>;
   createTicket(t: Omit<MaintenanceTicket, "id" | "createdAt" | "status">): Promise<MaintenanceTicket>;
   updateTicket(id: string, patch: Partial<Omit<MaintenanceTicket, "id" | "createdAt">>): Promise<MaintenanceTicket>;
+  /** The day's cleans: turnovers from departures, mid-stay visits from booked extras. */
+  housekeeping(date: string): Promise<HousekeepingTask[]>;
+  updateHousekeeping(id: string, by: Role, patch: { assignee?: string; status?: HousekeepingTask["status"]; note?: string }): Promise<HousekeepingTask>;
 }
 
 export type Repositories = {

@@ -1680,6 +1680,100 @@
           "timing": "Muda unazingatiwa"
         }
       }
+    },
+    "work": {
+      "housekeeping": "Usafi",
+      "housekeepingBody": "Kila usafi nyumba zinahitaji, siku kwa siku. Usafi wa kubadilisha wageni mgeni mpya akifika mchana huo huja kwanza; uweke tayari ili mapokezi wakabidhi funguo.",
+      "days": "Siku",
+      "today": "Leo",
+      "cleans": "{count, plural, =0 {hakuna usafi} one {usafi #} other {usafi #}}",
+      "hk": {
+        "todo": "Ya kufanya",
+        "inProgress": "Inasafishwa",
+        "ready": "Tayari",
+        "issue": "Tatizo"
+      },
+      "hkDone": {
+        "todo": "Imerudishwa kwenye ya kufanya",
+        "inProgress": "Imewekwa inasafishwa",
+        "ready": "Tayari kwa mgeni",
+        "issue": "Tatizo limeripotiwa mapokezi"
+      },
+      "kind": {
+        "turnover": "Kubadilisha wageni",
+        "midStay": "Usafi katikati ya kukaa",
+        "deep": "Usafi wa kina"
+      },
+      "tight": "Mgeni anafika leo",
+      "window": "Muda",
+      "leaving": "Anaondoka",
+      "staying": "Anakaa",
+      "arriving": "Anafika",
+      "around": "karibu {time}",
+      "noCleans": "Hakuna usafi siku hii.",
+      "cleaner": "Msafishaji",
+      "assignedTo": "Amepewa {name}",
+      "nobody": "Bado hakuna",
+      "progress": "Maendeleo",
+      "noteSaved": "Maelezo yamehifadhiwa",
+      "note": "Maelezo",
+      "notePlaceholder": "Chochote mapokezi au msafishaji anayefuata anapaswa kujua",
+      "saveNote": "Hifadhi maelezo",
+      "maintenance": "Matengenezo",
+      "maintenanceBody": "Matengenezo katika nyumba, ya dharura kwanza. Fungua moja umpe mtu, panga ziara, au ondoa nyumba sokoni kazi ikiendelea.",
+      "active": "Ya kutengeneza",
+      "all": "Zote",
+      "ticket": {
+        "open": "Wazi",
+        "scheduled": "Imepangwa",
+        "inProgress": "Inaendelea",
+        "done": "Imekamilika"
+      },
+      "priorityName": {
+        "urgent": "Dharura",
+        "normal": "Kawaida",
+        "low": "Chini"
+      },
+      "source": {
+        "tenant": "Kutoka kwa mpangaji",
+        "guest": "Kutoka kwa mgeni",
+        "staff": "Kutoka kwa timu",
+        "inspection": "Kutoka ukaguzi"
+      },
+      "offSale": "Imeondolewa sokoni kwa kazi",
+      "visitOn": "Ziara {date}",
+      "home": "Nyumba",
+      "reported": "Imeripotiwa",
+      "photo": "Picha",
+      "fromIncident": "Kutoka tukio",
+      "noTickets": "Hakuna kitu hapa.",
+      "status": "Hali",
+      "priority": "Kipaumbele",
+      "fixer": "Anayetengeneza",
+      "moved": "Imesasishwa",
+      "visit": "Siku ya ziara",
+      "setVisit": "Panga ziara",
+      "scheduledFor": "Ziara imepangwa {date}",
+      "unscheduled": "Ziara imeondolewa",
+      "blockTitle": "Ondoa nyumba sokoni",
+      "blockedFor": "Imeondolewa sokoni kwa {count, plural, one {usiku #} other {usiku #}}, {first} hadi {last}.",
+      "unblock": "Irudishe sokoni",
+      "unblocked": "Imerudishwa sokoni",
+      "blockBooked": "Wageni wamehifadhi {dates}. Hamisha kazi, si mgeni.",
+      "blockInvalid": "Chagua siku ya kuanza na usiku kati ya 1 na 30.",
+      "from": "Kuanzia",
+      "nights": "Usiku",
+      "block": "Ondoa sokoni",
+      "blockHint": "Usiku ambao mgeni yuko nyumbani unakataliwa: kazi inahamishwa, si mgeni.",
+      "addNote": "Ongeza maelezo",
+      "ticketNotePlaceholder": "Kilichopatikana, kilichofanyika, kinachobaki",
+      "newTicket": "Tiketi mpya",
+      "ticketCreated": "Tiketi imeundwa",
+      "what": "Kinachohitaji kutengenezwa",
+      "whatPlaceholder": "Bafu inatoa maji polepole",
+      "details": "Maelezo",
+      "create": "Unda tiketi",
+      "cancel": "Ghairi"
     }
   },
   "account": {

@@ -1680,6 +1680,100 @@
           "timing": "Horaires tenables"
         }
       }
+    },
+    "work": {
+      "housekeeping": "Ménage",
+      "housekeepingBody": "Chaque ménage dont les logements ont besoin, jour par jour. Une rotation avec un client qui arrive l'après-midi même passe en premier ; marquez-la prête pour que l'accueil remette les clés.",
+      "days": "Jours",
+      "today": "Aujourd'hui",
+      "cleans": "{count, plural, =0 {aucun ménage} one {# ménage} other {# ménages}}",
+      "hk": {
+        "todo": "À faire",
+        "inProgress": "En cours",
+        "ready": "Prêt",
+        "issue": "Problème"
+      },
+      "hkDone": {
+        "todo": "Remis à faire",
+        "inProgress": "Marqué en cours",
+        "ready": "Prêt pour le client",
+        "issue": "Problème signalé à l'accueil"
+      },
+      "kind": {
+        "turnover": "Rotation",
+        "midStay": "Ménage en cours de séjour",
+        "deep": "Grand ménage"
+      },
+      "tight": "Client attendu aujourd'hui",
+      "window": "Créneau",
+      "leaving": "Départ",
+      "staying": "Séjourne",
+      "arriving": "Arrivée",
+      "around": "vers {time}",
+      "noCleans": "Aucun ménage ce jour-là.",
+      "cleaner": "Agent de ménage",
+      "assignedTo": "Confié à {name}",
+      "nobody": "Personne pour l'instant",
+      "progress": "Avancement",
+      "noteSaved": "Note enregistrée",
+      "note": "Note",
+      "notePlaceholder": "Ce que l'accueil ou le prochain agent doit savoir",
+      "saveNote": "Enregistrer la note",
+      "maintenance": "Maintenance",
+      "maintenanceBody": "Les réparations dans les logements, les urgentes d'abord. Ouvrez-en une pour la confier, fixer la visite ou retirer le logement de la vente pendant les travaux.",
+      "active": "À réparer",
+      "all": "Tout",
+      "ticket": {
+        "open": "Ouvert",
+        "scheduled": "Planifié",
+        "inProgress": "En cours",
+        "done": "Terminé"
+      },
+      "priorityName": {
+        "urgent": "Urgent",
+        "normal": "Normal",
+        "low": "Faible"
+      },
+      "source": {
+        "tenant": "D'un locataire",
+        "guest": "D'un client",
+        "staff": "De l'équipe",
+        "inspection": "D'une inspection"
+      },
+      "offSale": "Retiré de la vente pour les travaux",
+      "visitOn": "Visite le {date}",
+      "home": "Logement",
+      "reported": "Signalé",
+      "photo": "Photo",
+      "fromIncident": "Depuis l'incident",
+      "noTickets": "Rien ici.",
+      "status": "Statut",
+      "priority": "Priorité",
+      "fixer": "Qui répare",
+      "moved": "Ticket mis à jour",
+      "visit": "Jour de visite",
+      "setVisit": "Fixer la visite",
+      "scheduledFor": "Visite fixée au {date}",
+      "unscheduled": "Visite retirée",
+      "blockTitle": "Retirer le logement de la vente",
+      "blockedFor": "Retiré de la vente pour {count, plural, one {# nuit} other {# nuits}}, du {first} au {last}.",
+      "unblock": "Le remettre en vente",
+      "unblocked": "Remis en vente",
+      "blockBooked": "Des clients ont réservé le {dates}. Déplacez les travaux, pas le client.",
+      "blockInvalid": "Choisissez un jour de début et entre 1 et 30 nuits.",
+      "from": "À partir du",
+      "nights": "Nuits",
+      "block": "Retirer de la vente",
+      "blockHint": "Les nuits où un client occupe le logement sont refusées : on déplace les travaux, pas le client.",
+      "addNote": "Ajouter une note",
+      "ticketNotePlaceholder": "Ce qui a été constaté, fait, ce qu'il reste à faire",
+      "newTicket": "Nouveau ticket",
+      "ticketCreated": "Ticket créé",
+      "what": "Ce qu'il faut réparer",
+      "whatPlaceholder": "La douche s'écoule mal",
+      "details": "Détails",
+      "create": "Créer le ticket",
+      "cancel": "Annuler"
     }
   },
   "account": {

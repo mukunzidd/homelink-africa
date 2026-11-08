@@ -1,4 +1,5 @@
 import type {
+  HousekeepingTask,
   AddOnRequest,
   AppNotification,
   AuditEntry,
@@ -80,6 +81,8 @@ export type FixtureStore = {
   tickets: MaintenanceTicket[];
   drafts: ListingDraft[];
   /** Photos uploaded to a thread, held until (and after) a message uses them. */
+  /** Who has each housekeeping task and how far it got, by task id. */
+  housekeeping: Record<string, { assignee?: string; status: HousekeepingTask["status"]; note?: string }>;
   uploads: { id: string; conversationId: string; by: Role; mime: string; bytes: Uint8Array; messageId?: string }[];
   /** Filled lazily from the catalog's defaults the first time a role asks. */
   prefs: Partial<Record<Role, NotificationPrefs>>;
@@ -121,6 +124,7 @@ function seed(): FixtureStore {
     tickets: seedTickets(now),
     drafts: [],
     uploads: [],
+    housekeeping: {},
     prefs: {},
   };
 }
@@ -151,7 +155,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 10;
+const SHAPE = 11;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {
