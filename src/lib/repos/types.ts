@@ -1,6 +1,7 @@
 import type {
   AddOnRequest,
   AppNotification,
+  AuditEntry,
   NotificationCategory,
   NotificationPrefs,
   Booking,
@@ -206,6 +207,12 @@ export interface NotificationsRepo {
   setPrefs(role: Role, prefs: NotificationPrefs): Promise<void>;
 }
 
+/** Who did what. Written by every staff action, read by the admin audit log. */
+export interface AuditRepo {
+  record(entry: Omit<AuditEntry, "id" | "at">): Promise<AuditEntry>;
+  list(filter?: { actor?: Role; action?: string; from?: string; to?: string }): Promise<AuditEntry[]>;
+}
+
 export type Repositories = {
   stays: StaysRepo;
   sales: SalesRepo;
@@ -216,5 +223,6 @@ export type Repositories = {
   messaging: MessagingRepo;
   ops: OpsRepo;
   notifications: NotificationsRepo;
+  audit: AuditRepo;
   fx: FxRepo;
 };

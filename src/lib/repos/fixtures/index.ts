@@ -1,4 +1,5 @@
 import type {
+  AuditRepo,
   BookingRepo,
   ExperiencesRepo,
   FxRepo,
@@ -15,7 +16,7 @@ import type { Conversation, Role } from "@/lib/domain/types";
 import { readsAs } from "@/lib/preferences/role";
 import { convert } from "@/lib/domain/money";
 import { FX_RATES } from "./data";
-import { nextId, store } from "./store";
+import { nextId, recordAudit, store } from "./store";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
 /**
@@ -401,6 +402,23 @@ const notifications: NotificationsRepo = {
   },
 };
 
+const audit: AuditRepo = {
+  async record(entry) {
+    return recordAudit(entry);
+  },
+  async list(filter = {}) {
+    return store()
+      .audit.filter(
+        (e) =>
+          (!filter.actor || e.actor === filter.actor) &&
+          (!filter.action || e.action.startsWith(filter.action)) &&
+          (!filter.from || e.at >= filter.from) &&
+          (!filter.to || e.at <= filter.to),
+      )
+      .sort((a, b) => b.at.localeCompare(a.at));
+  },
+};
+
 export const fixtureRepositories: Repositories = {
   stays,
   sales,
@@ -411,5 +429,6 @@ export const fixtureRepositories: Repositories = {
   messaging,
   ops,
   notifications,
+  audit,
   fx,
 };
