@@ -267,3 +267,56 @@ describe("bookings.refund and goodwill cancel (admin)", () => {
     expect(goodwill.refund).toEqual(again.total);
   });
 });
+
+describe("money back never exceeds money in (security review, Task 34)", () => {
+  beforeEach(() => resetStore());
+
+  async function placed() {
+    const d = readyDraft(oneUnitSlug());
+    const r = await repos.bookings.place({ draft: d, clientTotal: serverTotal(d), payment });
+    if (!r.ok) throw new Error("expected ok");
+    return r.booking;
+  }
+  const refunded = (bookingId: string) =>
+    store().payments.filter((p) => p.bookingId === bookingId && p.kind === "refund" && p.status === "succeeded").reduce((n, p) => n + p.amount.minor, 0);
+
+  it("a part refund then a cancel returns what was paid, not more", async () => {
+    const bk = await placed();
+    const quarter = Math.round(bk.total.minor / 4);
+    await repos.bookings.refund(bk.reference, "admin", { minor: quarter, currency: bk.total.currency }, "goodwill");
+    const c = await repos.bookings.cancel(bk.reference, "ops", "plansChanged", today);
+    expect(refunded(bk.id)).toBe(bk.total.minor);
+    expect(c.refund).toEqual(bk.total);
+  });
+
+  it("a part refund then a goodwill cancel returns what was paid, not more", async () => {
+    const bk = await placed();
+    await repos.bookings.refund(bk.reference, "admin", { minor: 1000, currency: bk.total.currency }, "x");
+    await repos.bookings.cancel(bk.reference, "admin", "x", today, { goodwill: true });
+    expect(refunded(bk.id)).toBe(bk.total.minor);
+  });
+
+  it("a shorter stay after a refund gives back no more than is left", async () => {
+    const bk = await placed();
+    // The returned booking is the stored one, and moving it changes its total.
+    const paid = bk.total.minor;
+    await repos.bookings.refund(bk.reference, "admin", { minor: paid - 1, currency: bk.total.currency }, "x");
+    const moved = await repos.bookings.changeDates(bk.reference, bk.startDate, addDays(bk.endDate, -2), today, "ops");
+    expect(moved.ok).toBe(true);
+    expect(refunded(bk.id)).toBe(paid);
+  });
+
+  it("will not move a booking that has started, ended or been cancelled", async () => {
+    const started = store().bookings.find((b) => b.status === "active" && b.service === "stay")!;
+    expect(await repos.bookings.changeDates(started.reference, addDays(today, 40), addDays(today, 42), today, "ops")).toEqual({ ok: false, reason: "invalid" });
+    const bk = await placed();
+    await repos.bookings.cancel(bk.reference, "ops", "x", today);
+    expect(await repos.bookings.changeDates(bk.reference, addDays(today, 40), addDays(today, 42), today, "ops")).toEqual({ ok: false, reason: "invalid" });
+  });
+
+  it("records who moved it on the timeline", async () => {
+    const bk = await placed();
+    await repos.bookings.changeDates(bk.reference, bk.startDate, addDays(bk.endDate, 1), today, "ops");
+    expect((await repos.bookings.byReference(bk.reference))!.timeline!.at(-1)).toMatchObject({ kind: "datesChanged", actor: "ops" });
+  });
+});

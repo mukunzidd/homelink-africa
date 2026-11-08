@@ -360,11 +360,14 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
             ? money(supply.item.permitShare.minor * b.party, supply.item.permitShare.currency)
             : undefined,
       });
-      if (opts.goodwill) preview.refund = refundable(b);
+      // Never more than is left of what was paid: a part refund earlier
+      // has already given some of the policy's amount back.
+      const left = refundable(b);
+      preview.refund = opts.goodwill ? left : money(Math.min(preview.refund.minor, left.minor), left.currency);
       b.status = "cancelled";
       b.cancelledAt = new Date().toISOString();
       b.cancelReason = reason;
-      b.refund = preview.refund;
+      b.refund = money((b.refund?.minor ?? 0) + preview.refund.minor, preview.refund.currency);
       b.timeline = [...(b.timeline ?? []), event("cancelled", by, reason)];
       if (preview.refund.minor > 0) {
         b.timeline.push(event("refunded", by));
@@ -404,6 +407,9 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
     async changeDates(reference, start, end, today, by = "guest") {
       const b = find(reference);
       const supply = supplyById(b.supplyItemId);
+      // Only a booking that is still ahead can move: once it has begun, ended
+      // or been cancelled, new dates would be a new booking.
+      if (b.status !== "confirmed" || b.startDate <= today) return { ok: false, reason: "invalid" };
       if (!supply || !isIsoDate(start) || !isIsoDate(end) || start < today || end < start) {
         return { ok: false, reason: "invalid" };
       }
@@ -424,14 +430,16 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       b.total = after.total;
       b.lines = after.lines;
       b.escrowHeld = after.escrowHeld;
-      b.timeline = [...(b.timeline ?? []), event("datesChanged", "guest", `${start} → ${end}`)];
-      if (difference.minor !== 0) {
+      b.timeline = [...(b.timeline ?? []), event("datesChanged", by, `${start} → ${end}`)];
+      // A cheaper stay gives the difference back, capped at what is left.
+      const owed = difference.minor > 0 ? difference.minor : Math.min(-difference.minor, refundable(b).minor);
+      if (owed > 0) {
         store().payments.push({
           id: nextId("pmt"),
           bookingId: b.id,
           rail: "card",
           kind: difference.minor > 0 ? "change" : "refund",
-          amount: money(Math.abs(difference.minor), difference.currency),
+          amount: money(owed, difference.currency),
           status: "succeeded",
           at: new Date().toISOString(),
         });
