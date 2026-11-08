@@ -23,7 +23,8 @@
     "myHomeLink": "Mon HomeLink",
     "notifications": "Notifications",
     "settings": "Paramètres",
-    "workspace": "Espace de travail"
+    "workspace": "Espace de travail",
+    "languageCurrency": "Langue et devise"
   },
   "nav": {
     "stays": "Séjours",
@@ -619,9 +620,9 @@
     "readAt": "Lu à {time}",
     "delivered": "Remis",
     "replyLabel": "Écrire une réponse",
-    "replyPlaceholder": "Les réponses seront possibles dès l’ouverture de la messagerie",
+    "replyPlaceholder": "Écrire une réponse…",
     "attach": "Joindre une photo",
-    "attachLimits": "JPEG, PNG ou WebP, jusqu'à 15 Mo. Les données de localisation sont retirées avant tout stockage.",
+    "attachLimits": "JPEG, PNG ou WebP, jusqu'à 15 Mo, quatre par message. La localisation est retirée sur votre appareil avant l'envoi.",
     "subtitleFor": {
       "guest": "Chaque fil est rattaché à quelque chose que vous avez réservé, avec l’équipe de Kigali ou la personne qui vous accueille.",
       "supply": "Les fils sur les réservations de ce que vous proposez. L’équipe de Kigali participe à chacun.",
@@ -629,7 +630,30 @@
     },
     "party": "{name} · {role}",
     "send": "Envoyer",
-    "sendOff": "L’envoi est désactivé jusqu’à l’ouverture de la messagerie"
+    "enterHint": "Entrée pour envoyer · Maj+Entrée pour aller à la ligne",
+    "sending": "Envoi…",
+    "sendFailed": "Le message n'est pas parti. Vérifiez votre connexion et réessayez.",
+    "tooLong": "Un message peut compter jusqu'à {max} caractères.",
+    "emoji": "Ajouter un émoji",
+    "emojiGroups": {
+      "recent": "Utilisés récemment",
+      "smileys": "Visages",
+      "people": "Mains et cœurs",
+      "travel": "Voyage et lieux",
+      "food": "À boire et à manger",
+      "objects": "Objets"
+    },
+    "photoUploading": "Envoi…",
+    "photoFailed": "Échec de l'envoi",
+    "removePhoto": "Retirer la photo",
+    "photoAlt": "Ce qu'elle montre",
+    "photoAltLabel": "Décrire la photo {n} (facultatif)",
+    "wrongType": "{name} n'est pas une photo JPEG, PNG ou WebP.",
+    "tooBig": "{name} dépasse 15 Mo.",
+    "tooMany": "{max} photos au plus par message.",
+    "dropHere": "Déposez les photos pour les joindre",
+    "openPhoto": "Ouvrir la photo en grand",
+    "photoFrom": "Photo de {name}"
   },
   "queue": {
     "title": "La file",

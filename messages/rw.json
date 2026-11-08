@@ -23,7 +23,8 @@
     "myHomeLink": "HomeLink yanjye",
     "notifications": "Imenyesha",
     "settings": "Igenamiterere",
-    "workspace": "Umwanya w'akazi"
+    "workspace": "Umwanya w'akazi",
+    "languageCurrency": "Ururimi n'ifaranga"
   },
   "nav": {
     "stays": "Amacumbi",
@@ -619,9 +620,9 @@
     "readAt": "Bwasomwe saa {time}",
     "delivered": "Bwageze",
     "replyLabel": "Andika igisubizo",
-    "replyPlaceholder": "Gusubiza bizashoboka ubutumwa nibutangira gukora",
+    "replyPlaceholder": "Andika igisubizo…",
     "attach": "Omeka ifoto",
-    "attachLimits": "JPEG, PNG cyangwa WebP, kugeza kuri 15MB. Aho ifoto yafatiwe hakurwaho mbere yo kubikwa.",
+    "attachLimits": "JPEG, PNG cyangwa WebP, kugeza kuri 15MB, enye mu butumwa bumwe. Aho ifoto yafatiwe havanwamo kuri telefoni yawe mbere y'uko yoherezwa.",
     "subtitleFor": {
       "guest": "Buri kiganiro gifitanye isano n’icyo wabitse, n’itsinda rya Kigali cyangwa n’ugusanganira.",
       "supply": "Ibiganiro ku bwiyandikishe bw’ibyo utanga. Itsinda rifasha riri muri buri kimwe.",
@@ -629,7 +630,30 @@
     },
     "party": "{name} · {role}",
     "send": "Ohereza",
-    "sendOff": "Kohereza ntibirakora kugeza ubutumwa butangiye gukora"
+    "enterHint": "Enter wohereze · Shift+Enter ujye ku murongo mushya",
+    "sending": "Biroherezwa…",
+    "sendFailed": "Ubutumwa ntibwagiye. Reba interineti yawe wongere ugerageze.",
+    "tooLong": "Ubutumwa bushobora kugira inyuguti zigera kuri {max}.",
+    "emoji": "Ongeramo emoji",
+    "emojiGroups": {
+      "recent": "Izo wakoresheje vuba",
+      "smileys": "Mu maso",
+      "people": "Amaboko n'imitima",
+      "travel": "Ingendo n'ahantu",
+      "food": "Ibiryo n'ibinyobwa",
+      "objects": "Ibintu"
+    },
+    "photoUploading": "Irimo koherezwa…",
+    "photoFailed": "Ntiyoherejwe",
+    "removePhoto": "Kuraho ifoto",
+    "photoAlt": "Icyo yerekana",
+    "photoAltLabel": "Sobanura ifoto ya {n} (si ngombwa)",
+    "wrongType": "{name} si ifoto ya JPEG, PNG cyangwa WebP.",
+    "tooBig": "{name} irengeje 15MB.",
+    "tooMany": "Amafoto atarenze {max} mu butumwa bumwe.",
+    "dropHere": "Shyira amafoto hano uyomeke",
+    "openPhoto": "Fungura ifoto mu bunini bwayo",
+    "photoFrom": "Ifoto ya {name}"
   },
   "queue": {
     "title": "Umurongo",

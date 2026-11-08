@@ -255,7 +255,27 @@ export interface MessagingRepo {
   messages(conversationId: string): Promise<Message[]>;
   /** A booking can carry several threads; this returns the one `role` is in. */
   forBooking(bookingId: string, role: Role): Promise<Conversation | null>;
+  /**
+   * Posts as `role`, under that role's name in the thread. Throws when the
+   * role is not in the thread, when there is neither text nor a photo, or
+   * when a photo was not uploaded to this thread by this role. Tells every
+   * other role in the thread.
+   */
+  send(conversationId: string, role: Role, input: { body: string; attachments?: { id: string; alt: string }[] }): Promise<Message>;
+  /** Holds one photo for a message not yet sent. JPEG, PNG or WebP, checked by its bytes. */
+  upload(conversationId: string, role: Role, file: { mime: string; bytes: Uint8Array }): Promise<{ id: string; url: string }>;
+  /** A stored photo, only for a role that can see its thread. */
+  file(id: string, role: Role): Promise<{ mime: string; bytes: Uint8Array } | null>;
+  /** Marks what others wrote in the thread as read by `role`; returns how many. */
+  markRead(conversationId: string, role: Role): Promise<number>;
 }
+
+export const MESSAGE_LIMITS = {
+  body: 4000,
+  photos: 4,
+  bytes: 15 * 1024 * 1024,
+  mimes: ["image/jpeg", "image/png", "image/webp"],
+} as const;
 
 /**
  * The concierge team's own reads.

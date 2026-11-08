@@ -20,7 +20,7 @@ import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
 import { availability, makeBookings, makeTrips } from "./bookings";
-import type { IncidentsRepo, ReviewsRepo, ViewingsRepo, WorkRepo } from "@/lib/repos/types";
+import { MESSAGE_LIMITS, type IncidentsRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
 import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
@@ -275,7 +275,99 @@ const messaging: MessagingRepo = {
     );
     return found ? forReader(found, role) : null;
   },
+
+  async send(conversationId, role, input) {
+    const c = store().conversations.find((x) => x.id === conversationId && visibleTo(role)(x));
+    if (!c) throw new Error("Not in this thread");
+    const body = input.body.trim().slice(0, MESSAGE_LIMITS.body);
+    const wanted = input.attachments ?? [];
+    if (wanted.length > MESSAGE_LIMITS.photos) throw new Error("Too many photos");
+    const held = wanted.map((a) => {
+      const u = store().uploads.find((x) => x.id === a.id && x.conversationId === c.id && x.by === role && !x.messageId);
+      if (!u) throw new Error("No such photo");
+      return { u, alt: a.alt.trim().slice(0, 200) };
+    });
+    if (!body && !held.length) throw new Error("Nothing to send");
+
+    const reader = readsAs(role);
+    const at = new Date().toISOString();
+    const i = c.participantRoles.indexOf(reader);
+    const authorName = i >= 0 ? c.participantNames[i] : "HomeLink";
+    const id = nextId("msg");
+    const message = {
+      id,
+      conversationId: c.id,
+      authorName,
+      authorRole: reader,
+      body,
+      sentAt: at,
+      ...(held.length
+        ? { attachments: held.map(({ u, alt }) => ({ id: u.id, url: fileUrl(u.id), alt })) }
+        : {}),
+    };
+    for (const { u } of held) u.messageId = id;
+    store().messages.push(message);
+    c.lastMessagePreview = body ? body.slice(0, 120) : `📷 ${held.length}`;
+    c.lastMessageAt = at;
+
+    // Everyone else in the room hears about it; admin is in every room by
+    // visibility, but is only told about threads it is a party to.
+    for (const audience of new Set(c.participantRoles.filter((r) => r !== reader))) {
+      await notifications.create({
+        audience,
+        kind: "newMessage",
+        params: { from: authorName, subject: c.subject },
+        href: audience === "guest" ? `/messages?thread=${c.id}` : `/manage/inbox?thread=${c.id}`,
+      });
+    }
+    return message;
+  },
+
+  async upload(conversationId, role, file) {
+    const c = store().conversations.find((x) => x.id === conversationId && visibleTo(role)(x));
+    if (!c) throw new Error("Not in this thread");
+    if (!(MESSAGE_LIMITS.mimes as readonly string[]).includes(file.mime) || sniff(file.bytes) !== file.mime) throw new Error("Not a photo");
+    if (file.bytes.byteLength > MESSAGE_LIMITS.bytes) throw new Error("Too big");
+    const id = nextId("upl");
+    store().uploads.push({ id, conversationId: c.id, by: role, mime: file.mime, bytes: file.bytes });
+    return { id, url: fileUrl(id) };
+  },
+
+  async file(id, role) {
+    const u = store().uploads.find((x) => x.id === id);
+    if (!u) return null;
+    const c = store().conversations.find((x) => x.id === u.conversationId && visibleTo(role)(x));
+    // Before it is sent, a photo is only its uploader's.
+    if (!c || (!u.messageId && u.by !== role)) return null;
+    return { mime: u.mime, bytes: u.bytes };
+  },
+
+  async markRead(conversationId, role) {
+    const c = store().conversations.find((x) => x.id === conversationId && visibleTo(role)(x));
+    if (!c) return 0;
+    const reader = readsAs(role);
+    const at = new Date().toISOString();
+    let n = 0;
+    for (const m of store().messages) {
+      if (m.conversationId === c.id && m.authorRole !== reader && !m.readAt) {
+        m.readAt = at;
+        n++;
+      }
+    }
+    return n;
+  },
 };
+
+const fileUrl = (id: string) => `/api/messages/files/${id}`;
+
+/** What the bytes say they are; the browser's word for it is not enough. */
+function sniff(b: Uint8Array): string | null {
+  if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "image/jpeg";
+  if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return "image/png";
+  const ascii = (from: number, to: number) => String.fromCharCode(...b.slice(from, to));
+  if (b.length >= 12 && ascii(0, 4) === "RIFF" && ascii(8, 12) === "WEBP") return "image/webp";
+  return null;
+}
 
 /**
  * Ordered by what still needs doing, then oldest first inside that.

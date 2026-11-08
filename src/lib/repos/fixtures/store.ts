@@ -79,6 +79,8 @@ export type FixtureStore = {
   reviews: Review[];
   tickets: MaintenanceTicket[];
   drafts: ListingDraft[];
+  /** Photos uploaded to a thread, held until (and after) a message uses them. */
+  uploads: { id: string; conversationId: string; by: Role; mime: string; bytes: Uint8Array; messageId?: string }[];
   /** Filled lazily from the catalog's defaults the first time a role asks. */
   prefs: Partial<Record<Role, NotificationPrefs>>;
   audit: AuditEntry[];
@@ -107,6 +109,7 @@ function seed(): FixtureStore {
   fixed.bookings = [...seedPhaseBookings(fixed.listings, now), ...fixed.bookings].sort((a, b) =>
     b.startDate.localeCompare(a.startDate),
   );
+  settleThreads(fixed.conversations, fixed.messages, now);
   return {
     ...fixed,
     notifications: seedNotifications(now),
@@ -117,8 +120,28 @@ function seed(): FixtureStore {
     reviews: seedReviews(),
     tickets: seedTickets(now),
     drafts: [],
+    uploads: [],
     prefs: {},
   };
+}
+
+/**
+ * The fixture threads are written with fixed times, and some of them sit
+ * later than the moment the store is seeded. A reply sent now would then
+ * land above messages from "tomorrow". When that is so, every thread time
+ * moves back by the same amount, so the newest fixture message is 25
+ * minutes old and the gaps between them are kept.
+ */
+function settleThreads(conversations: Conversation[], messages: Message[], now: Date) {
+  const newest = Math.max(...messages.map((m) => Date.parse(m.sentAt)), ...conversations.map((c) => Date.parse(c.lastMessageAt)));
+  const shift = Math.min(0, now.getTime() - 25 * 60_000 - newest);
+  if (!shift) return;
+  const move = (iso: string) => new Date(Date.parse(iso) + shift).toISOString();
+  for (const m of messages) {
+    m.sentAt = move(m.sentAt);
+    if (m.readAt) m.readAt = move(m.readAt);
+  }
+  for (const c of conversations) c.lastMessageAt = move(c.lastMessageAt);
 }
 
 const KEY = "__homelinkStore";
@@ -128,7 +151,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 9;
+const SHAPE = 10;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {

@@ -23,7 +23,8 @@
     "myHomeLink": "HomeLink yangu",
     "notifications": "Arifa",
     "settings": "Mipangilio",
-    "workspace": "Eneo la kazi"
+    "workspace": "Eneo la kazi",
+    "languageCurrency": "Lugha na sarafu"
   },
   "nav": {
     "stays": "Malazi",
@@ -619,9 +620,9 @@
     "readAt": "Umesomwa saa {time}",
     "delivered": "Umefika",
     "replyLabel": "Andika jibu",
-    "replyPlaceholder": "Kujibu kutawezekana ujumbe utakapoanza kufanya kazi",
+    "replyPlaceholder": "Andika jibu…",
     "attach": "Ambatisha picha",
-    "attachLimits": "JPEG, PNG au WebP, hadi 15MB. Taarifa za mahali zinaondolewa kabla ya kuhifadhi chochote.",
+    "attachLimits": "JPEG, PNG au WebP, hadi 15MB, nne kwa ujumbe mmoja. Taarifa za mahali huondolewa kwenye kifaa chako kabla picha haijatumwa.",
     "subtitleFor": {
       "guest": "Kila mazungumzo yameunganishwa na kitu ulichohifadhi, pamoja na timu ya Kigali au mtu atakayekupokea.",
       "supply": "Mazungumzo kuhusu uhifadhi wa huduma unazotoa. Timu ya Kigali iko katika kila moja.",
@@ -629,7 +630,30 @@
     },
     "party": "{name} · {role}",
     "send": "Tuma",
-    "sendOff": "Kutuma kumezimwa hadi ujumbe utakapoanza kufanya kazi"
+    "enterHint": "Enter kutuma · Shift+Enter kwa mstari mpya",
+    "sending": "Inatuma…",
+    "sendFailed": "Ujumbe haukutumwa. Angalia mtandao wako ujaribu tena.",
+    "tooLong": "Ujumbe unaweza kuwa na herufi hadi {max}.",
+    "emoji": "Ongeza emoji",
+    "emojiGroups": {
+      "recent": "Zilizotumika karibuni",
+      "smileys": "Nyuso",
+      "people": "Mikono na mioyo",
+      "travel": "Safari na maeneo",
+      "food": "Chakula na vinywaji",
+      "objects": "Vitu"
+    },
+    "photoUploading": "Inapakia…",
+    "photoFailed": "Haikupakiwa",
+    "removePhoto": "Ondoa picha",
+    "photoAlt": "Inaonyesha nini",
+    "photoAltLabel": "Eleza picha ya {n} (si lazima)",
+    "wrongType": "{name} si picha ya JPEG, PNG au WebP.",
+    "tooBig": "{name} inazidi 15MB.",
+    "tooMany": "Picha zisizozidi {max} kwa ujumbe mmoja.",
+    "dropHere": "Weka picha hapa kuziambatisha",
+    "openPhoto": "Fungua picha kwa ukubwa kamili",
+    "photoFrom": "Picha kutoka kwa {name}"
   },
   "queue": {
     "title": "Foleni",

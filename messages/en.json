@@ -23,7 +23,8 @@
     "myHomeLink": "My HomeLink",
     "notifications": "Notifications",
     "settings": "Settings",
-    "workspace": "Workspace"
+    "workspace": "Workspace",
+    "languageCurrency": "Language and currency"
   },
   "nav": {
     "stays": "Stays",
@@ -619,9 +620,9 @@
     "readAt": "Read at {time}",
     "delivered": "Delivered",
     "replyLabel": "Write a reply",
-    "replyPlaceholder": "Replies open when messaging goes live",
+    "replyPlaceholder": "Write a reply…",
     "attach": "Attach a photo",
-    "attachLimits": "JPEG, PNG or WebP, up to 15MB. Location data is stripped before anything is stored.",
+    "attachLimits": "JPEG, PNG or WebP, up to 15MB, four to a message. Location data is removed on your device before a photo is sent.",
     "subtitleFor": {
       "guest": "Every thread is attached to something you have booked, with the Kigali team or the person meeting you.",
       "supply": "Threads about the bookings on what you supply. The Kigali team is in each one.",
@@ -629,7 +630,30 @@
     },
     "party": "{name} · {role}",
     "send": "Send",
-    "sendOff": "Sending is switched off until messaging goes live"
+    "enterHint": "Enter to send · Shift+Enter for a new line",
+    "sending": "Sending…",
+    "sendFailed": "That did not send. Check your connection and try again.",
+    "tooLong": "A message can be up to {max} characters.",
+    "emoji": "Add an emoji",
+    "emojiGroups": {
+      "recent": "Recently used",
+      "smileys": "Faces",
+      "people": "Hands and hearts",
+      "travel": "Travel and places",
+      "food": "Food and drink",
+      "objects": "Things"
+    },
+    "photoUploading": "Uploading…",
+    "photoFailed": "Did not upload",
+    "removePhoto": "Remove photo",
+    "photoAlt": "What it shows",
+    "photoAltLabel": "Describe photo {n} (optional)",
+    "wrongType": "{name} is not a JPEG, PNG or WebP photo.",
+    "tooBig": "{name} is over 15MB.",
+    "tooMany": "Up to {max} photos in one message.",
+    "dropHere": "Drop photos to attach them",
+    "openPhoto": "Open the photo full size",
+    "photoFrom": "Photo from {name}"
   },
   "queue": {
     "title": "The queue",
