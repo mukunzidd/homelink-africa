@@ -1676,7 +1676,10 @@
         "unknown": "Hatuutambui msimbo huo.",
         "expired": "Msimbo huo umeisha muda.",
         "notApplicable": "Msimbo huo hautumiki kwenye uhifadhi huu."
-      }
+      },
+      "rulesTitleCar": "Kanuni za kukodi gari",
+      "rulesTitleDay": "Kanuni za siku",
+      "rulesAcceptOther": "Nimesoma kanuni na ninazikubali"
     },
     "pay": {
       "title": "Lipa kwa usalama",
@@ -1733,6 +1736,32 @@
       "invalidTitle": "Kuna kitu kinahitaji kuangaliwa tena",
       "invalidBody": "Taarifa moja ya uhifadhi haikupita ukaguzi wetu. Pitia hatua tena; hakuna kilichotozwa."
     },
-    "booked": "Umehifadhi. Namba yako ya kumbukumbu ni {ref}."
+    "booked": "Umehifadhi. Namba yako ya kumbukumbu ni {ref}.",
+    "driver": {
+      "title": "Utakavyosafiri",
+      "withDriverBody": "Dereva wa HomeLink anayejua barabara. Mafuta na maegesho ni juu yetu.",
+      "selfDriveBody": "Unaendesha mwenyewe. Tunakagua leseni yako tena tunapokukabidhi gari.",
+      "licence": "Leseni yako ya udereva",
+      "licenceHint": "Picha au PDF, hadi MB 10. Leseni ya kimataifa na ya Rwanda zote zinakubalika.",
+      "licenceError": "Ongeza leseni yako ili uendeshe mwenyewe.",
+      "pickupTitle": "Tukutane wapi?",
+      "airport": "Uwanja wa Ndege wa Kimataifa wa Kigali",
+      "hotel": "Hoteli yako",
+      "address": "Anwani",
+      "hotelName": "Jina la hoteli",
+      "addressDetail": "Anwani au alama inayojulikana",
+      "flight": "Namba ya ndege (hiari)",
+      "flightHint": "Tunaifuatilia na tunasubiri ukichelewa kutua.",
+      "flightError": "Hii haionekani kama namba ya ndege. Kwa mfano: WB464."
+    },
+    "days": "{count, plural, one {Siku #} other {Siku #}}"
+  },
+  "files": {
+    "choose": "Chagua faili",
+    "drop": "au iweke hapa",
+    "type": "Aina hiyo ya faili haiwezi kutumika hapa. Tumia picha au PDF.",
+    "size": "Faili hiyo ni kubwa mno. Kikomo ni MB 10.",
+    "remove": "Ondoa faili",
+    "note": "Inahifadhiwa kwenye kifaa hiki hadi tuikague. Hakuna kinachopakiwa katika onyesho hili."
   }
 }

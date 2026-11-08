@@ -27,6 +27,7 @@ export function ReviewStep({
   text,
   quote,
   houseRules,
+  rulesLane,
   attempted,
   onEdit,
   editable,
@@ -36,6 +37,7 @@ export function ReviewStep({
   text: FlowText;
   quote: (Quote & { promo?: PromoResult }) | null;
   houseRules: string[];
+  rulesLane: "stay" | "car" | "experience";
   attempted: boolean;
   onEdit: (s: StepKey) => void;
   /** The steps this lane has, so Edit only points where it can go. */
@@ -90,7 +92,7 @@ export function ReviewStep({
       </StepSection>
 
       {houseRules.length > 0 && (
-        <StepSection title={t("rulesTitle")}>
+        <StepSection title={rulesLane === "stay" ? t("rulesTitle") : rulesLane === "car" ? t("rulesTitleCar") : t("rulesTitleDay")}>
           <ul className="flex flex-col gap-2">
             {houseRules.map((r) => (
               <li key={r} className="flex gap-2.5 text-[14px] leading-relaxed text-ink-2">
@@ -118,7 +120,7 @@ export function ReviewStep({
               aria-describedby={attempted && !draft.acceptedRules ? "accept-rules-error" : undefined}
               className="size-5 flex-none cursor-pointer accent-[var(--brand)]"
             />
-            {t("rulesAccept")}
+            {rulesLane === "stay" ? t("rulesAccept") : t("rulesAcceptOther")}
           </label>
           {attempted && !draft.acceptedRules && (
             <p id="accept-rules-error" className="-mt-2 text-xs text-crit">

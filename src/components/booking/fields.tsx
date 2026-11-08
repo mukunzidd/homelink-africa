@@ -128,9 +128,9 @@ export function ChoiceCards<T extends string>({
               {on && <span className="size-2 rounded-full bg-brand" />}
             </span>
             <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-              <span className={cn("flex items-center gap-2 text-[15px] font-semibold", on ? "text-brand-deep" : "text-ink")}>
-                {o.icon}
-                {o.title}
+              <span className={cn("flex items-start gap-2 text-[15px] font-semibold leading-snug", on ? "text-brand-deep" : "text-ink")}>
+                {o.icon && <span className="mt-[3px] flex-none">{o.icon}</span>}
+                <span>{o.title}</span>
               </span>
               {o.body && <span className="text-[13px] leading-snug text-ink-2">{o.body}</span>}
             </span>

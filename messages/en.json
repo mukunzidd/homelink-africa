@@ -1676,7 +1676,10 @@
         "unknown": "We don't recognise that code.",
         "expired": "That code has expired.",
         "notApplicable": "That code doesn't apply to this booking."
-      }
+      },
+      "rulesTitleCar": "Rules for the hire",
+      "rulesTitleDay": "Rules for the day",
+      "rulesAcceptOther": "I've read the rules and agree to them"
     },
     "pay": {
       "title": "Pay securely",
@@ -1733,6 +1736,32 @@
       "invalidTitle": "Something needs another look",
       "invalidBody": "A detail in the booking didn't check out on our side. Go back through the steps; nothing was charged."
     },
-    "booked": "Booked. Your reference is {ref}."
+    "booked": "Booked. Your reference is {ref}.",
+    "driver": {
+      "title": "How you'll travel",
+      "withDriverBody": "A HomeLink driver who knows the roads. Fuel and parking are on us.",
+      "selfDriveBody": "You drive. We check your licence again at handover.",
+      "licence": "Your driving licence",
+      "licenceHint": "A photo or PDF, up to 10 MB. International and Rwandan licences are both fine.",
+      "licenceError": "Add your licence to drive yourself.",
+      "pickupTitle": "Where should we meet you?",
+      "airport": "Kigali International Airport",
+      "hotel": "Your hotel",
+      "address": "An address",
+      "hotelName": "Hotel name",
+      "addressDetail": "Address or landmark",
+      "flight": "Flight number (optional)",
+      "flightHint": "We track it and wait if you land late.",
+      "flightError": "That doesn't look like a flight number. For example: WB464."
+    },
+    "days": "{count, plural, one {# day} other {# days}}"
+  },
+  "files": {
+    "choose": "Choose a file",
+    "drop": "or drop it here",
+    "type": "That kind of file can't be used here. Use a photo or a PDF.",
+    "size": "That file is too large. The limit is 10 MB.",
+    "remove": "Remove the file",
+    "note": "Kept on this device until we check it. Nothing is uploaded in this preview."
   }
 }

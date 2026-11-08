@@ -1676,7 +1676,10 @@
         "unknown": "Ntituzi iyo kode.",
         "expired": "Iyo kode yarangiye.",
         "notApplicable": "Iyo kode ntikora kuri ibi wafashe."
-      }
+      },
+      "rulesTitleCar": "Amategeko yo gukodesha imodoka",
+      "rulesTitleDay": "Amategeko y'urugendo",
+      "rulesAcceptOther": "Nasomye amategeko kandi ndayemera"
     },
     "pay": {
       "title": "Ishyura mu mutekano",
@@ -1733,6 +1736,32 @@
       "invalidTitle": "Hari icyo gukwiye kongera kurebwa",
       "invalidBody": "Hari amakuru mu byo wafashe atemewe iwacu. Ongera unyure mu ntambwe; nta mafaranga yakuweho."
     },
-    "booked": "Byafashwe. Nimero yawe ni {ref}."
+    "booked": "Byafashwe. Nimero yawe ni {ref}.",
+    "driver": {
+      "title": "Uko uzagenda",
+      "withDriverBody": "Umushoferi wa HomeLink uzi imihanda. Lisansi na parikingi ni ibyacu.",
+      "selfDriveBody": "Uratwara ubwawe. Twongera kugenzura uruhushya rwawe tukaguha imodoka.",
+      "licence": "Uruhushya rwawe rwo gutwara",
+      "licenceHint": "Ifoto cyangwa PDF, itarenze MB 10. Uruhushya mpuzamahanga n'urw'u Rwanda byombi biremewe.",
+      "licenceError": "Ongeraho uruhushya rwawe kugira ngo utware ubwawe.",
+      "pickupTitle": "Tuzahurira he?",
+      "airport": "Ikibuga cy'indege mpuzamahanga cya Kigali",
+      "hotel": "Hoteli yawe",
+      "address": "Aderesi",
+      "hotelName": "Izina rya hoteli",
+      "addressDetail": "Aderesi cyangwa ikimenyetso",
+      "flight": "Nimero y'indege (si ngombwa)",
+      "flightHint": "Turayikurikirana kandi tugutegereza niba utinze kugwa.",
+      "flightError": "Iyi ntisa n'inimero y'indege. Urugero: WB464."
+    },
+    "days": "{count, plural, one {Umunsi #} other {Iminsi #}}"
+  },
+  "files": {
+    "choose": "Hitamo dosiye",
+    "drop": "cyangwa uyishyire hano",
+    "type": "Ubwo bwoko bwa dosiye ntibukoreshwa hano. Koresha ifoto cyangwa PDF.",
+    "size": "Iyo dosiye ni nini cyane. Ntigomba kurenza MB 10.",
+    "remove": "Kuraho dosiye",
+    "note": "Ibikwa kuri iki gikoresho kugeza tuyigenzuye. Nta kintu cyoherezwa muri iri gerageza."
   }
 }

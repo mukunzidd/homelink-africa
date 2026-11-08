@@ -57,6 +57,7 @@ export function FlowShell({
   supply,
   text,
   houseRules,
+  rulesLane = "stay",
   people,
   rails,
   escrow,
@@ -68,6 +69,8 @@ export function FlowShell({
   supply: FlowSupply;
   text: FlowText;
   houseRules: string[];
+  /** Which heading the rules get: a home's house rules, a hire's, a day's. */
+  rulesLane?: "stay" | "car" | "experience";
   people?: PeopleRules;
   rails: PaymentRail[];
   escrow?: { title: string; body: string };
@@ -214,7 +217,7 @@ export function FlowShell({
     body = <ExtrasStep draft={draft} dispatch={dispatch} lane={supply.kind} />;
   } else if (step === "review") {
     body = (
-      <ReviewStep draft={draft} dispatch={dispatch} text={text} quote={quote} houseRules={houseRules} attempted={attempted} onEdit={go} editable={steps} />
+      <ReviewStep draft={draft} dispatch={dispatch} text={text} quote={quote} houseRules={houseRules} rulesLane={rulesLane} attempted={attempted} onEdit={go} editable={steps} />
     );
   } else if (step === "pay" && quote) {
     body = (

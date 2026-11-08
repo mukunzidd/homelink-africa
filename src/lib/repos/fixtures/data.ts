@@ -328,7 +328,15 @@ export const LISTINGS: Listing[] = RAW_LISTINGS.map((l) => ({
   houseRules: [...BASE_RULES, ...(EXTRA_RULES[l.id] ?? [])],
 }));
 
-export const VEHICLES: Vehicle[] = [
+/** What every hire agrees to. The ones people ask about, said up front. */
+const HIRE_RULES = [
+  "Return the car with the fuel it had at handover.",
+  "No smoking in the car.",
+  "Only the drivers named on the booking may drive.",
+  "Kigali and the main national roads; ask the team before taking it into a national park.",
+];
+
+const RAW_VEHICLES: Omit<Vehicle, "rules">[] = [
   {
     id: "veh_rav4",
     slug: "toyota-rav4",
@@ -406,6 +414,8 @@ export const VEHICLES: Vehicle[] = [
     unitsAvailable: 3,
   },
 ];
+
+export const VEHICLES: Vehicle[] = RAW_VEHICLES.map((v) => ({ ...v, rules: HIRE_RULES }));
 
 export const HOMES_FOR_SALE: HomeForSale[] = [
   {
@@ -552,7 +562,14 @@ export const HOMES_FOR_SALE: HomeForSale[] = [
   },
 ];
 
-export const EXPERIENCES: Experience[] = [
+/** What every day out agrees to. */
+const DAY_RULES = [
+  "Be at the pickup point 15 minutes before the start; the guide waits 20 minutes at most.",
+  "Wear closed shoes and bring water.",
+  "Follow the guide's instructions on safety, always.",
+];
+
+const RAW_EXPERIENCES: Omit<Experience, "rules">[] = [
   {
     id: "exp_gorillas",
     slug: "volcanoes-gorilla-trek",
@@ -657,6 +674,8 @@ export const EXPERIENCES: Experience[] = [
     location: { lat: -2.4781, lng: 29.2006 },
   },
 ];
+
+export const EXPERIENCES: Experience[] = RAW_EXPERIENCES.map((e) => ({ ...e, rules: DAY_RULES }));
 
 export const BOOKINGS: Booking[] = [
   {

@@ -1676,7 +1676,10 @@
         "unknown": "Nous ne reconnaissons pas ce code.",
         "expired": "Ce code a expiré.",
         "notApplicable": "Ce code ne s'applique pas à cette réservation."
-      }
+      },
+      "rulesTitleCar": "Règles de la location",
+      "rulesTitleDay": "Règles de la journée",
+      "rulesAcceptOther": "J'ai lu les règles et je les accepte"
     },
     "pay": {
       "title": "Paiement sécurisé",
@@ -1733,6 +1736,32 @@
       "invalidTitle": "Un détail est à revoir",
       "invalidBody": "Une information de la réservation n'a pas passé nos vérifications. Reprenez les étapes ; rien n'a été débité."
     },
-    "booked": "C'est réservé. Votre référence est {ref}."
+    "booked": "C'est réservé. Votre référence est {ref}.",
+    "driver": {
+      "title": "Comment vous voyagerez",
+      "withDriverBody": "Un chauffeur HomeLink qui connaît les routes. Carburant et parking à notre charge.",
+      "selfDriveBody": "Vous conduisez. Nous revérifions votre permis à la remise du véhicule.",
+      "licence": "Votre permis de conduire",
+      "licenceHint": "Une photo ou un PDF, 10 Mo maximum. Permis international ou rwandais acceptés.",
+      "licenceError": "Ajoutez votre permis pour conduire vous-même.",
+      "pickupTitle": "Où vous retrouver ?",
+      "airport": "Aéroport international de Kigali",
+      "hotel": "Votre hôtel",
+      "address": "Une adresse",
+      "hotelName": "Nom de l'hôtel",
+      "addressDetail": "Adresse ou point de repère",
+      "flight": "Numéro de vol (facultatif)",
+      "flightHint": "Nous le suivons et attendons si vous atterrissez en retard.",
+      "flightError": "Ce n'est pas un numéro de vol valide. Par exemple : WB464."
+    },
+    "days": "{count, plural, one {# jour} other {# jours}}"
+  },
+  "files": {
+    "choose": "Choisir un fichier",
+    "drop": "ou déposez-le ici",
+    "type": "Ce type de fichier n'est pas accepté. Utilisez une photo ou un PDF.",
+    "size": "Ce fichier est trop lourd. La limite est de 10 Mo.",
+    "remove": "Retirer le fichier",
+    "note": "Conservé sur cet appareil jusqu'à notre vérification. Rien n'est envoyé dans cet aperçu."
   }
 }

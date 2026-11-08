@@ -175,6 +175,8 @@ export type Vehicle = {
   images?: string[];
   summary: string;
   unitsAvailable: number;
+  /** Accepted at checkout, like a home's house rules. */
+  rules: string[];
 };
 
 /* ------------------------------------------------------------- experiences */
@@ -208,6 +210,8 @@ export type Experience = {
   driveHours: number;
   /** Start times a guest can pick, "HH:MM" Kigali. Absent means `departs` only. */
   slots?: string[];
+  /** Accepted at checkout, like a home's house rules. */
+  rules: string[];
   /** A park permit is bought in each person's name: passports needed, never refunded. */
   requiresPermit?: boolean;
   permitShare?: Money;

@@ -79,6 +79,7 @@ export default async function BookStay({
             changeHref: back,
           }}
           houseRules={listing.houseRules}
+          rulesLane="stay"
           rails={["card", "mobileMoney"]}
           escrow={{ title: tCheckout("escrowTitle"), body: tCheckout("escrowBody") }}
           signInHref={`/sign-in?next=${encodeURIComponent(here)}`}
