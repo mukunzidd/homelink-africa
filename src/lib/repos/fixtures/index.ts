@@ -1,6 +1,5 @@
 import type {
   AuditRepo,
-  BookingRepo,
   ExperiencesRepo,
   FxRepo,
   MessagingRepo,
@@ -17,6 +16,7 @@ import { readsAs } from "@/lib/preferences/role";
 import { convert } from "@/lib/domain/money";
 import { FX_RATES } from "./data";
 import { nextId, recordAudit, store } from "./store";
+import { availability, makeBookings } from "./bookings";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
 /**
@@ -205,20 +205,6 @@ const experiences: ExperiencesRepo = {
 };
 
 /** Newest first, so "coming up" and "earlier" both read outward from today. */
-
-const bookings: BookingRepo = {
-  async listForCurrentUser() {
-    return [...store().bookings];
-  },
-  async byId(id) {
-    return store().bookings.find((b) => b.id === id) ?? null;
-  },
-  async byReference(reference) {
-    // Case-insensitive: the code is printed in caps and will be typed in both.
-    const needle = reference.trim().toUpperCase();
-    return store().bookings.find((b) => b.reference.toUpperCase() === needle) ?? null;
-  },
-};
 
 const trips: TripRepo = {
   async listForCurrentUser() {
@@ -419,12 +405,15 @@ const audit: AuditRepo = {
   },
 };
 
+const bookings = makeBookings(notifications);
+
 export const fixtureRepositories: Repositories = {
   stays,
   sales,
   mobility,
   experiences,
   bookings,
+  availability,
   trips,
   messaging,
   ops,

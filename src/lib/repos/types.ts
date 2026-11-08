@@ -2,6 +2,12 @@ import type {
   AddOnRequest,
   AppNotification,
   AuditEntry,
+  Block,
+  BookingEvent,
+  BookingStatus,
+  PaymentRecord,
+  PaymentRail,
+  ServiceKind,
   NotificationCategory,
   NotificationPrefs,
   Booking,
@@ -20,6 +26,8 @@ import type {
   VerificationTask,
 } from "@/lib/domain/types";
 import type { CurrencyCode, FxTable, Money } from "@/lib/domain/money";
+import type { Quote } from "@/lib/domain/pricing";
+import type { BookingDraft } from "@/lib/booking/draft";
 
 /**
  * The seam between the UI and its data.
@@ -127,8 +135,60 @@ export interface ExperiencesRepo extends SupplyById<Experience> {
   bySlug(slug: string): Promise<Experience | null>;
 }
 
+export type PlaceBookingInput = {
+  draft: BookingDraft;
+  /** What the browser showed. Compared, never stored. */
+  clientTotal: Money;
+  payment: { rail: PaymentRail; outcome: "approved" };
+};
+
+export type PlaceResult =
+  | { ok: true; booking: Booking }
+  | { ok: false; reason: "unavailable" | "invalid" | "priceChanged"; quote?: Quote };
+
+export type BookingListQuery = {
+  status?: BookingStatus[];
+  service?: ServiceKind;
+  from?: string;
+  to?: string;
+  /** Matches a reference, the guest's name or email, or the title. */
+  q?: string;
+};
+
+export interface AvailabilityRepo {
+  /** Blocked days (maintenance, owner use) in [from, to). */
+  blocked(supplyId: string, from: string, to: string): Promise<Block[]>;
+  /** Nights (stays) or days (cars) in [from, to) with no unit left. */
+  bookedNights(supplyId: string, from: string, to: string): Promise<string[]>;
+  /**
+   * Whether this can be booked: every night free for a stay, every day of a
+   * hire, enough seats left on a day out. `exceptBookingId` leaves out a
+   * booking being moved, so it does not collide with itself.
+   */
+  isFree(supplyId: string, from: string, to: string, opts?: { party?: number; exceptBookingId?: string }): Promise<boolean>;
+  block(supplyId: string, dates: string[], reason: Block["reason"]): Promise<void>;
+  unblock(supplyId: string, dates: string[]): Promise<void>;
+}
+
 export interface BookingRepo {
   listForCurrentUser(): Promise<Booking[]>;
+  listAll(query?: BookingListQuery): Promise<Booking[]>;
+  /**
+   * Price on the server, check every step, check the dates are free, then
+   * store. A total that differs from the server's by more than one minor
+   * unit stores nothing and returns the new quote, so the guest sees a new
+   * price before paying it.
+   */
+  place(input: PlaceBookingInput): Promise<PlaceResult>;
+  cancel(reference: string, by: Role, reason: string, today: string): Promise<Booking>;
+  changeDates(
+    reference: string,
+    start: string,
+    end: string,
+    today: string,
+  ): Promise<{ ok: true; booking: Booking; difference: Money } | { ok: false; reason: "unavailable" | "invalid" }>;
+  addEvent(reference: string, event: Omit<BookingEvent, "at">): Promise<Booking>;
+  payments(bookingId?: string): Promise<PaymentRecord[]>;
   byId(id: string): Promise<Booking | null>;
   /**
    * By the code the guest actually holds.
@@ -219,6 +279,7 @@ export type Repositories = {
   mobility: MobilityRepo;
   experiences: ExperiencesRepo;
   bookings: BookingRepo;
+  availability: AvailabilityRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;

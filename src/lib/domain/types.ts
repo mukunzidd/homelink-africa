@@ -1,3 +1,4 @@
+import type { ExtraSelection } from "./extras";
 import type { CurrencyCode, Money } from "./money";
 
 /**
@@ -203,6 +204,11 @@ export type Experience = {
   departs: string;
   /** Hours on the road from Kigali, one way. A walk in the city is a quarter. */
   driveHours: number;
+  /** Start times a guest can pick, "HH:MM" Kigali. Absent means `departs` only. */
+  slots?: string[];
+  /** A park permit is bought in each person's name: passports needed, never refunded. */
+  requiresPermit?: boolean;
+  permitShare?: Money;
   /** Where the day happens, for the map of Rwanda on the list. */
   location: GeoPoint;
 };
@@ -237,7 +243,51 @@ export type Booking = {
   /** High-value stays hold funds until check-in is confirmed. */
   escrowHeld: boolean;
   stayMode?: StayMode;
+
+  /*
+   * Everything below arrives with the full booking flow and is optional, so
+   * the older fixtures still describe themselves without it.
+   */
+  guest?: GuestDetails;
+  extras?: ExtraSelection[];
+  promoCode?: string;
+  paymentPlan?: "full" | "deposit";
+  /** The server's quote lines at the moment of booking. */
+  lines?: import("./pricing").QuoteLine[];
+  timeline?: BookingEvent[];
+  tripId?: string;
+  driveMode?: DriveMode;
+  pickup?: { kind: "airport" | "hotel" | "address"; detail: string; flight?: string };
+  participants?: Participant[];
+  slot?: string;
+  dietary?: string;
+  application?: RentApplication;
+  checkedInAt?: string;
+  cancelledAt?: string;
+  cancelReason?: string;
+  refund?: Money;
+  staffNotes?: { at: string; by: Role; text: string }[];
 };
+
+export type PaymentRecord = {
+  id: string;
+  bookingId: string;
+  rail: PaymentRail;
+  kind: "full" | "deposit" | "balance" | "rent" | "change" | "refund";
+  amount: Money;
+  status: "pending" | "succeeded" | "failed" | "refunded";
+  /** ISO instant. */
+  at: string;
+};
+
+export type BookingEventKind =
+  | "placed" | "paid" | "datesChanged" | "guestsAdded" | "checkInReleased" | "checkedIn"
+  | "checkedOut" | "cancelled" | "refunded" | "reviewed" | "issueReported" | "noteAdded";
+
+export type BookingEvent = { at: string; kind: BookingEventKind; actor: Role; note?: string };
+
+/** A night or day a home or car cannot be booked, for a reason other than a booking. */
+export type Block = { supplyId: string; date: string; reason: "maintenance" | "owner" };
 
 export type TripStatus = "draft" | "booked" | "active" | "completed";
 
