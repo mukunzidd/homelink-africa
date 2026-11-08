@@ -12,6 +12,9 @@ import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { UsersIcon } from "@/components/ui/icons";
 import { Select } from "@/components/ui/select";
 import { QuoteBreakdown } from "./quote-breakdown";
+import { TripActions } from "@/components/cart/trip-actions";
+import { cartItemId } from "@/lib/cart-checks";
+
 
 /**
  * The booking panel on a listing page.
@@ -98,6 +101,27 @@ export function BookingPanel({
           <Button onClick={reserve} fullWidth size="lg">
             {tListing("reserve")}
           </Button>
+          <TripActions
+            offerPlan
+            item={
+              from && to
+                ? {
+                    id: cartItemId("stay", listing.slug, from, to, party),
+                    kind: "stay",
+                    slug: listing.slug,
+                    supplyId: listing.id,
+                    title: listing.name,
+                    start: from,
+                    end: to,
+                    party,
+                    image: listing.images?.[0],
+                    imageSeed: listing.imageSeed,
+                    quote,
+                    supply: listing,
+                  }
+                : null
+            }
+          />
           <p className="text-center text-xs text-ink-3">{tQuote("noHiddenFees")}</p>
         </>
       ) : (

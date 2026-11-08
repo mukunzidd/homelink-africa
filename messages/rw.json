@@ -1780,7 +1780,8 @@
       "dietary": "Allerjiya cyangwa imirire",
       "dietaryPlaceholder": "Ntarya inyama, nta bunyobwa…",
       "other": "Ikindi",
-      "choose": "Hitamo…"
+      "choose": "Hitamo…",
+      "slotError": "Hitamo isaha yo gutangira."
     },
     "application": {
       "title": "Ibyawe nk'ukodesha",
@@ -2029,5 +2030,52 @@
     "size": "Iyo dosiye ni nini cyane. Ntigomba kurenza MB 10.",
     "remove": "Kuraho dosiye",
     "note": "Ibikwa kuri iki gikoresho kugeza tuyigenzuye. Nta kintu cyoherezwa muri iri gerageza."
+  },
+  "cart": {
+    "planTitle": "Urateganya urugendo rwose?",
+    "planBody": "Ongeraho imodoka n'ingendo z'umunsi kuri iri cumbi, wishyure rimwe. Buri gice gishobora guhindurwa cyangwa guhagarikwa ukwacyo.",
+    "planButton": "Tegura urugendo ruzengurutse iri cumbi",
+    "add": "Ongera mu rugendo",
+    "inTrip": "Kiri mu rugendo rwawe",
+    "added": "Byongewe mu rugendo rwawe",
+    "view": "Reba urugendo",
+    "pill": "Urugendo",
+    "pillLabel": "Urugendo rwawe, {count, plural, one {ikintu #} other {ibintu #}}",
+    "title": "Urugendo rwawe",
+    "intro": "Ibyo ufata byose hamwe, umunsi ku munsi. Wishyura rimwe; buri gice kigumana ibyo wabitse byacyo, bityo gishobora guhindurwa cyangwa guhagarikwa ukwacyo.",
+    "empty": "Nta kintu kiri mu rugendo rwawe kugeza ubu. Ongeraho icumbi, imodoka cyangwa urugendo rw'umunsi uhereye ku rupapuro rwacyo.",
+    "browseStays": "Shaka icumbi",
+    "issues": {
+      "staysOverlap": "Aya macumbi yombi agongana ku matariki. Kuramo rimwe cyangwa uhindure amatariki yaryo.",
+      "carOutsideStay": "Iyi modoka yafashwe no ku minsi itari mu gihe cy'icumbi ryawe. Nta kibazo niba uzagera kare cyangwa ukagenda bitinze.",
+      "dayOutsideStay": "Uru rugendo rw'umunsi ruhurirana n'umunsi udafitiye icumbi.",
+      "inPast": "Aya matariki yarenze. Bikuremo wongere ubyongeremo ufite amatariki mashya."
+    },
+    "remove": "Kuramo {name}",
+    "booked": "Byamaze gufatwa",
+    "total": "Igiteranyo cy'urugendo",
+    "checkout": "Ishyura urugendo rwose",
+    "blocked": "Kosora ibyagaragajwe mu ibara ritukura kugira ngo wishyure.",
+    "suggestCar": "Kugenda mu nzira",
+    "suggestCarBody": "Imodoka n'umushoferi ugusanganira ku kibuga cy'indege.",
+    "suggestCarCta": "Reba imodoka",
+    "suggestDay": "Urugendo rw'umunsi",
+    "suggestDayBody": "Ingagi, Nyungwe, Lake Kivu cyangwa gutembera muri Kigali.",
+    "suggestDayCta": "Reba ingendo z'umunsi",
+    "turnOff": "Ahubwo fata buri kintu ukwacyo",
+    "turnOffTitle": "Uhagarike urugendo?",
+    "turnOffBody": "Ibi bisiba ibiri mu rugendo rwawe. Ibyamaze gufatwa biguma uko biri.",
+    "turnOffConfirm": "Siba kandi uhagarike",
+    "keep": "Gumana urugendo rwanjye",
+    "checkoutTitle": "Fata urugendo rwawe",
+    "stepItems": "Buri gice",
+    "stepItemsBody": "Amakuru make akenewe ku bice bimwe gusa: abazajya muri buri rugendo rw'umunsi, n'uruhushya rwo gutwara imodoka uzatwara.",
+    "nothingNeeded": "Nta kindi gikenewe kuri iki gice.",
+    "reviewItems": "Ibyo ufata",
+    "rulesAll": "Nasomye amabwiriza ya buri gice kandi ndayemera",
+    "booked_toast": "Urugendo rwawe rwafashwe: {count, plural, one {ibyafashwe #} other {ibyafashwe #}}.",
+    "failed": "Igice kimwe cy'urugendo nticyashoboye gufatwa, bityo nta mafaranga yakuweho. {name}: ayo matariki amaze gufatwa n'undi.",
+    "tripName": "Kigali, {month}",
+    "dayHeading": "{date}"
   }
 }

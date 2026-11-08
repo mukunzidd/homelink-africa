@@ -9,6 +9,8 @@ import { addDays, isIsoDate, type IsoDate } from "@/lib/domain/dates";
 import { Button } from "@/components/ui/button";
 import { MoneyText } from "@/components/ui/money-text";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
+import { TripActions } from "@/components/cart/trip-actions";
+import { cartItemId } from "@/lib/cart-checks";
 import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
 import { cn } from "@/lib/cn";
 
@@ -116,6 +118,27 @@ export function HirePanel({
           <Button onClick={hire} fullWidth size="lg">
             {t("book")}
           </Button>
+          <TripActions
+            item={
+              from && to
+                ? {
+                    id: cartItemId("car", vehicle.slug, from, to, 1),
+                    kind: "car",
+                    slug: vehicle.slug,
+                    supplyId: vehicle.id,
+                    title: vehicle.name,
+                    start: from,
+                    end: to,
+                    party: 1,
+                    driveMode,
+                    image: vehicle.images?.[0],
+                    imageSeed: vehicle.imageSeed,
+                    quote,
+                    supply: vehicle,
+                  }
+                : null
+            }
+          />
           <p className="text-center text-xs text-ink-3">
             {tQuote("noHiddenFees")}
           </p>

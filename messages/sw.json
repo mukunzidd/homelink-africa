@@ -1780,7 +1780,8 @@
       "dietary": "Mzio wa chakula au lishe",
       "dietaryPlaceholder": "Mboga tu, bila karanga…",
       "other": "Nyingine",
-      "choose": "Chagua…"
+      "choose": "Chagua…",
+      "slotError": "Chagua saa ya kuanza."
     },
     "application": {
       "title": "Kuhusu wewe kama mpangaji",
@@ -2029,5 +2030,52 @@
     "size": "Faili hiyo ni kubwa mno. Kikomo ni MB 10.",
     "remove": "Ondoa faili",
     "note": "Inahifadhiwa kwenye kifaa hiki hadi tuikague. Hakuna kinachopakiwa katika onyesho hili."
+  },
+  "cart": {
+    "planTitle": "Unapanga safari nzima?",
+    "planBody": "Ongeza gari na matembezi kwenye malazi haya na ulipe mara moja. Kila sehemu bado inaweza kubadilishwa au kughairiwa peke yake.",
+    "planButton": "Panga safari kuzunguka malazi haya",
+    "add": "Ongeza kwenye safari",
+    "inTrip": "Kiko kwenye safari yako",
+    "added": "Imeongezwa kwenye safari yako",
+    "view": "Angalia safari",
+    "pill": "Safari",
+    "pillLabel": "Safari yako, {count, plural, one {kitu #} other {vitu #}}",
+    "title": "Safari yako",
+    "intro": "Kila unachohifadhi pamoja, siku kwa siku. Unalipa mara moja; kila sehemu ina uhifadhi wake, kwa hiyo inaweza kubadilishwa au kughairiwa peke yake.",
+    "empty": "Bado hakuna kitu kwenye safari yako. Ongeza malazi, gari au matembezi kutoka kwenye ukurasa wake.",
+    "browseStays": "Tafuta malazi",
+    "issues": {
+      "staysOverlap": "Malazi haya mawili yanaingiliana. Ondoa moja au ubadilishe tarehe zake.",
+      "carOutsideStay": "Gari hili limehifadhiwa kwa siku zilizo nje ya malazi yako. Si tatizo ukifika mapema au ukiondoka baadaye.",
+      "dayOutsideStay": "Matembezi haya yanaangukia siku ambayo huna malazi uliyohifadhi.",
+      "inPast": "Tarehe hizi zimeshapita. Kiondoe kisha ukiongeze tena ukiwa na tarehe mpya."
+    },
+    "remove": "Ondoa {name}",
+    "booked": "Tayari imehifadhiwa",
+    "total": "Jumla ya safari",
+    "checkout": "Lipia safari nzima",
+    "blocked": "Rekebisha vitu vilivyowekwa alama nyekundu ili ulipe.",
+    "suggestCar": "Usafiri",
+    "suggestCarBody": "Gari na dereva atakayekupokea uwanja wa ndege.",
+    "suggestCarCta": "Angalia magari",
+    "suggestDay": "Siku ya matembezi",
+    "suggestDayBody": "Sokwe mtu, Nyungwe, Lake Kivu au matembezi ndani ya Kigali.",
+    "suggestDayCta": "Angalia matembezi",
+    "turnOff": "Badala yake hifadhi kila kitu peke yake",
+    "turnOffTitle": "Uzime safari?",
+    "turnOffBody": "Hii inaondoa kila kitu kwenye safari yako. Kilichokwisha kuhifadhiwa kinabaki kama kilivyo.",
+    "turnOffConfirm": "Ondoa vyote na uzime",
+    "keep": "Baki na safari yangu",
+    "checkoutTitle": "Hifadhi safari yako",
+    "stepItems": "Kila sehemu",
+    "stepItemsBody": "Maelezo machache yanayohitajika kwa baadhi ya sehemu tu: nani yuko kwenye kila matembezi, na leseni kwa gari utakaloendesha.",
+    "nothingNeeded": "Hakuna kingine kinachohitajika kwa sehemu hii.",
+    "reviewItems": "Unachohifadhi",
+    "rulesAll": "Nimesoma masharti ya kila sehemu na ninayakubali",
+    "booked_toast": "Safari yako imehifadhiwa: {count, plural, one {uhifadhi #} other {uhifadhi #}}.",
+    "failed": "Sehemu ya safari haikuweza kuhifadhiwa, kwa hiyo hakuna kilichotozwa. {name}: tarehe hizo zimechukuliwa sasa hivi.",
+    "tripName": "Kigali, {month}",
+    "dayHeading": "{date}"
   }
 }

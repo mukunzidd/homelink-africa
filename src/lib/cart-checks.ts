@@ -1,4 +1,4 @@
-import type { DriveMode, ServiceKind } from "@/lib/domain/types";
+import type { DriveMode, Experience, Listing, ServiceKind, Vehicle } from "@/lib/domain/types";
 import type { CurrencyCode, FxTable, Money } from "@/lib/domain/money";
 import { add, money } from "@/lib/domain/money";
 import type { Quote } from "@/lib/domain/pricing";
@@ -27,7 +27,13 @@ export type CartItem = {
   /** Already paid (a stay booked before the cart was turned on): shown, never charged. */
   bookedReference?: string;
   quote: Quote;
+  /** A snapshot of what is being booked, so checkout can ask the right questions without a fetch. */
+  supply?: Listing | Vehicle | Experience;
 };
+
+export function cartItemId(kind: ServiceKind, slug: string, start: string, end: string, party: number): string {
+  return `${kind}:${slug}:${start}:${end}:${party}`;
+}
 
 export type CartIssue = {
   code: "staysOverlap" | "carOutsideStay" | "dayOutsideStay" | "inPast";

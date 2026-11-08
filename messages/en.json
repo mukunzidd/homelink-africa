@@ -1780,7 +1780,8 @@
       "dietary": "Food allergies or diet",
       "dietaryPlaceholder": "Vegetarian, no nuts…",
       "other": "Other",
-      "choose": "Choose…"
+      "choose": "Choose…",
+      "slotError": "Choose a start time."
     },
     "application": {
       "title": "About you as a tenant",
@@ -2029,5 +2030,52 @@
     "size": "That file is too large. The limit is 10 MB.",
     "remove": "Remove the file",
     "note": "Kept on this device until we check it. Nothing is uploaded in this preview."
+  },
+  "cart": {
+    "planTitle": "Planning a full trip?",
+    "planBody": "Add a car and days out to this stay and pay once. Each part can still be changed or cancelled on its own.",
+    "planButton": "Plan a trip around this stay",
+    "add": "Add to trip",
+    "inTrip": "In your trip",
+    "added": "Added to your trip",
+    "view": "View trip",
+    "pill": "Trip",
+    "pillLabel": "Your trip, {count, plural, one {# item} other {# items}}",
+    "title": "Your trip",
+    "intro": "Everything you're booking together, day by day. You pay once; each part keeps its own booking, so it can be changed or cancelled on its own.",
+    "empty": "Nothing in your trip yet. Add a stay, a car or a day out from its page.",
+    "browseStays": "Find a stay",
+    "issues": {
+      "staysOverlap": "These two stays overlap. Remove one or change its dates.",
+      "carOutsideStay": "This car is booked for days outside your stay. That's fine if you arrive early or leave late.",
+      "dayOutsideStay": "This day out falls on a day you have no stay booked.",
+      "inPast": "These dates have passed. Remove it and add it again with new dates."
+    },
+    "remove": "Remove {name}",
+    "booked": "Already booked",
+    "total": "Trip total",
+    "checkout": "Check out the whole trip",
+    "blocked": "Fix the items marked in red to check out.",
+    "suggestCar": "Getting around",
+    "suggestCarBody": "A car with a driver who meets you at the airport.",
+    "suggestCarCta": "Browse cars",
+    "suggestDay": "A day out",
+    "suggestDayBody": "Gorillas, Nyungwe, Lake Kivu or a walk through Kigali.",
+    "suggestDayCta": "Browse days out",
+    "turnOff": "Book items one at a time instead",
+    "turnOffTitle": "Turn off the trip?",
+    "turnOffBody": "This empties your trip. Anything already booked stays booked.",
+    "turnOffConfirm": "Empty and turn off",
+    "keep": "Keep my trip",
+    "checkoutTitle": "Book your trip",
+    "stepItems": "Each part",
+    "stepItemsBody": "A few details only some parts need: who is on each day out, and a licence for a car you'll drive.",
+    "nothingNeeded": "Nothing else needed for this part.",
+    "reviewItems": "What you're booking",
+    "rulesAll": "I've read the rules for every part and agree to them",
+    "booked_toast": "Your trip is booked: {count, plural, one {# booking} other {# bookings}}.",
+    "failed": "Part of the trip couldn't be booked, so nothing was charged. {name}: those dates were just taken.",
+    "tripName": "Kigali, {month}",
+    "dayHeading": "{date}"
   }
 }

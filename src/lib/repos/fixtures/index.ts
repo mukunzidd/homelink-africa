@@ -17,7 +17,7 @@ import { convert } from "@/lib/domain/money";
 import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
-import { availability, makeBookings } from "./bookings";
+import { availability, makeBookings, makeTrips } from "./bookings";
 import type { IncidentsRepo, ReviewsRepo, ViewingsRepo } from "@/lib/repos/types";
 import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
@@ -209,7 +209,7 @@ const experiences: ExperiencesRepo = {
 
 /** Newest first, so "coming up" and "earlier" both read outward from today. */
 
-const trips: TripRepo = {
+const tripReads: Pick<TripRepo, "listForCurrentUser" | "byId"> = {
   async listForCurrentUser() {
     return [...store().trips];
   },
@@ -409,6 +409,7 @@ const audit: AuditRepo = {
 };
 
 const bookings = makeBookings(notifications);
+const trips = makeTrips(notifications, tripReads);
 
 const incidents: IncidentsRepo = {
   async forBooking(bookingId) {

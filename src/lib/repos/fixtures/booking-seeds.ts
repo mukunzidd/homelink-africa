@@ -1,5 +1,5 @@
 import type { Block, Booking, Listing, PaymentRecord, Review } from "@/lib/domain/types";
-import { quoteStay } from "@/lib/domain/pricing";
+import { quoteRent, quoteStay } from "@/lib/domain/pricing";
 import { addDays } from "@/lib/domain/dates";
 import { kigaliDay } from "@/lib/domain/instants";
 
@@ -43,7 +43,8 @@ export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
     const l = listings.find((x) => x.id === listingId)!;
     const start = addDays(today, from);
     const end = addDays(today, to);
-    const q = quoteStay(l, start, end)!;
+    // A year of renting is a month plus the deposit up front, not 365 nights.
+    const q = lease ? quoteRent(l, 12)! : quoteStay(l, start, end)!;
     return {
       id: `bkg_phase_${id}`,
       reference: `HL-P${id.slice(0, 3).toUpperCase()}-${String(Math.abs(from) % 100).padStart(2, "0")}`,

@@ -65,12 +65,21 @@ export function PeopleStep({
     <div className="flex flex-col gap-5">
       <StepSection title={t("slot")}>
         {slots.length > 1 ? (
-          <ChoiceCards
-            name={t("slot")}
-            value={draft.slot}
-            onChange={(v) => dispatch({ type: "slot", value: v })}
-            options={slots.map((s) => ({ value: s, title: <span className="tnum">{s}</span>, icon: <ClockIcon size={15} /> }))}
-          />
+          <>
+            <ChoiceCards
+              name={t("slot")}
+              value={draft.slot}
+              onChange={(v) => dispatch({ type: "slot", value: v })}
+              options={slots.map((s) => ({ value: s, title: <span className="tnum">{s}</span>, icon: <ClockIcon size={15} /> }))}
+            />
+            {/* Without this, Continue did nothing and said nothing when the
+                time was the only thing missing. */}
+            {attempted && !draft.slot && (
+              <p className="text-xs text-crit" aria-invalid="true" tabIndex={-1}>
+                {t("slotError")}
+              </p>
+            )}
+          </>
         ) : (
           <p className="flex items-center gap-2 text-[15px] text-ink">
             <ClockIcon size={16} className="text-ink-3" />

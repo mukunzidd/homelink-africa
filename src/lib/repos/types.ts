@@ -206,9 +206,23 @@ export interface BookingRepo {
   byReference(reference: string): Promise<Booking | null>;
 }
 
+export type PlaceTripInput = {
+  drafts: BookingDraft[];
+  /** The browser's trip total, in RWF. Compared, never stored. */
+  clientTotal: Money;
+  payment: { rail: PaymentRail; outcome: "approved" };
+  /** Bookings already paid before the trip, to group into it. */
+  bookedReferences: string[];
+};
+
 export interface TripRepo {
   listForCurrentUser(): Promise<Trip[]>;
   byId(id: string): Promise<Trip | null>;
+  /** All parts or none: every part is checked before any is written. */
+  place(input: PlaceTripInput): Promise<
+    | { ok: true; trip: Trip; bookings: Booking[] }
+    | { ok: false; failed: { index: number; reason: "unavailable" | "invalid" | "priceChanged" }[] }
+  >;
 }
 
 export interface MessagingRepo {

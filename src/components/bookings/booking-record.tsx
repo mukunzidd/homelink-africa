@@ -17,6 +17,8 @@ import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon, CheckIcon, ClockIcon, NoteIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
+import { TripActions } from "@/components/cart/trip-actions";
+import { cartItemId } from "@/lib/cart-checks";
 
 /** Placed in the last quarter of an hour: still "you're booked", not the record. */
 function placedRecently(at: string | undefined): boolean {
@@ -258,6 +260,29 @@ export async function BookingRecord({
             <Link href={conversation ? `/messages?thread=${conversation.id}` : "/messages"} className="mt-1">
               <Button variant="trust">{conversation ? tTrips("openThread") : tc("arrangeAction")}</Button>
             </Link>
+            {/* Or build the rest of the trip around this stay: it goes in as
+                already booked, so it is shown and never charged again. */}
+            {booking.service === "stay" && !lease && upcoming && quote && supply && (
+              <div className="w-full max-w-[420px] pt-2">
+                <TripActions
+                  offerPlan
+                  item={{
+                    id: cartItemId("stay", booking.supplyItemId, booking.startDate, booking.endDate, booking.party),
+                    kind: "stay",
+                    slug: supply.href.split("/").pop() ?? "",
+                    supplyId: booking.supplyItemId,
+                    title: supply.name,
+                    start: booking.startDate,
+                    end: booking.endDate,
+                    party: booking.party,
+                    image: supply.image,
+                    imageSeed: supply.imageSeed,
+                    bookedReference: booking.reference,
+                    quote,
+                  }}
+                />
+              </div>
+            )}
           </section>
         </div>
 

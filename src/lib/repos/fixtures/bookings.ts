@@ -4,14 +4,15 @@ import type {
   Experience,
   Listing,
   NotificationKind,
+  PaymentRail,
   Role,
   ServiceKind,
   Vehicle,
 } from "@/lib/domain/types";
-import type { AvailabilityRepo, BookingRepo, NotificationsRepo } from "@/lib/repos/types";
+import type { AvailabilityRepo, BookingRepo, NotificationsRepo, TripRepo } from "@/lib/repos/types";
 import type { Quote } from "@/lib/domain/pricing";
 import { bookingReference, quoteBooking } from "@/lib/domain/pricing";
-import { formatMoney, money } from "@/lib/domain/money";
+import { convert, formatMoney, money } from "@/lib/domain/money";
 import { addDays, isIsoDate, monthsBetween, nightsBetween } from "@/lib/domain/dates";
 import { kigaliDay } from "@/lib/domain/instants";
 import { depositPlan } from "@/lib/domain/payment-plan";
@@ -152,6 +153,140 @@ function storedQuote(b: Booking): Quote {
 }
 
 /**
+ * Every check a booking must pass before anything is written: the item
+ * exists, the dates are sane, the term (for renting) is the server's, each
+ * step is complete, and the nights are free. Shared by a single booking
+ * and a trip, so a trip can check all its parts before writing any.
+ */
+type Prepared = { ok: true; supply: Supply; quote: NonNullable<ReturnType<typeof quoteFor>>; end: string; today: string };
+async function prepare(draft: BookingDraft): Promise<Prepared | { ok: false; reason: "invalid" | "unavailable" }> {
+      const today = kigaliDay();
+  const supply = supplyForDraft(draft);
+  if (!supply || !isIsoDate(draft.start) || !isIsoDate(draft.end)) return { ok: false, reason: "invalid" };
+  if (draft.start < today || (supply.kind !== "experience" && draft.end < draft.start)) {
+    return { ok: false, reason: "invalid" };
+  }
+  if (!Number.isInteger(draft.party) || draft.party < 1) return { ok: false, reason: "invalid" };
+
+  // A long-term stay's term is the server's to decide, not the URL's: a
+  // 12- or 24-month term, starting on the 1st of a month the home is free,
+  // with the application saying the same thing as the dates.
+  if (draft.flow === "rent") {
+    const terms = supply.kind === "stay" ? supply.item.leaseTerms : undefined;
+    const months = monthsBetween(draft.start, draft.end);
+    const freeFrom = terms ? `${terms.availableFrom.slice(0, 7)}-01` : "";
+    const firstFree = terms && terms.availableFrom !== freeFrom ? `${addDays(freeFrom, 32).slice(0, 7)}-01` : freeFrom;
+    if (
+      supply.kind !== "stay" ||
+      !supply.item.monthlyRate ||
+      !terms ||
+      !draft.start.endsWith("-01") ||
+      draft.end.slice(8) !== "01" ||
+      (months !== 12 && months !== 24) ||
+      draft.start < firstFree ||
+      draft.application?.moveIn !== draft.start ||
+      draft.application?.months !== months
+    ) {
+      return { ok: false, reason: "invalid" };
+    }
+  }
+
+  // Every step before pay, checked again here: the browser's say-so is not enough.
+  const people: PeopleRules | undefined =
+    supply.kind === "experience"
+      ? { minAge: supply.item.minAge, requiresPermit: !!supply.item.requiresPermit }
+      : undefined;
+  const steps = STEPS[draft.flow].filter((s) => s !== "pay");
+  if (!steps.every((s) => stepComplete(draft, s, people))) return { ok: false, reason: "invalid" };
+
+  const quote = quoteFor(supply, draft, today);
+  if (!quote) return { ok: false, reason: "invalid" };
+
+  const end = supply.kind === "experience" ? draft.start : draft.end;
+  if (!(await availability.isFree(supply.item.id, draft.start, end, { party: draft.party }))) {
+    return { ok: false, reason: "unavailable" };
+  }
+  return { ok: true, supply, quote, end, today };
+
+}
+
+/** Writes a prepared booking: the row, its payment, the notifications, the audit entry. */
+async function commit(
+  draft: BookingDraft,
+  { supply, quote, end, today }: Prepared,
+  payment: { rail: PaymentRail },
+  notify: (audiences: Role[], kind: NotificationKind, params: Record<string, string | number>, href: string) => Promise<void>,
+  tripId?: string,
+): Promise<Booking> {
+      const id = nextId("bkg");
+  const plan =
+    draft.plan === "deposit" ? depositPlan(quote, draft.start, today, FX_RATES) : ({ offered: false } as const);
+  const paidNow = plan.offered ? plan.now : quote.total;
+  const pending = payment.rail === "bankTransfer";
+
+  const booking: Booking = {
+    id,
+    reference: bookingReference(`${id}:${draft.id}`),
+    service: supply.kind,
+    supplyItemId: supply.item.id,
+    title: supply.item.name,
+    startDate: draft.start,
+    endDate: end,
+    party: draft.party,
+    total: quote.total,
+    status: "confirmed",
+    escrowHeld: quote.escrowHeld,
+    ...(tripId ? { tripId } : {}),
+    ...(supply.kind === "stay" ? { stayMode: draft.flow === "rent" ? "lease" : "nightly" } : {}),
+    guest: {
+      name: draft.guest.name ?? "",
+      email: draft.guest.email ?? "",
+      phone: draft.guest.phone ?? "",
+      ...draft.guest,
+    },
+    extras: quote.lines.filter((l) => l.extra).map((l) => ({
+      key: l.extra!,
+      quantity: draft.extras.find((e) => e.key === l.extra)?.quantity ?? 1,
+    })),
+    ...(quote.promo?.ok ? { promoCode: quote.promo.code } : {}),
+    paymentPlan: plan.offered ? "deposit" : "full",
+    lines: quote.lines,
+    timeline: [event("placed", "guest"), ...(pending ? [] : [event("paid", "guest")])],
+    ...(draft.driveMode ? { driveMode: draft.driveMode } : {}),
+    ...(draft.pickup ? { pickup: draft.pickup } : {}),
+    ...(draft.participants.length ? { participants: draft.participants } : {}),
+    ...(draft.slot ? { slot: draft.slot } : {}),
+    ...(draft.dietary ? { dietary: draft.dietary } : {}),
+    ...(draft.application ? { application: draft.application } : {}),
+  };
+
+  const s = store();
+  s.bookings.unshift(booking);
+  s.payments.push({
+    id: nextId("pmt"),
+    bookingId: id,
+    rail: payment.rail,
+    kind: plan.offered ? "deposit" : "full",
+    amount: paidNow,
+    status: pending ? "pending" : "succeeded",
+    at: new Date().toISOString(),
+  });
+
+  const href = `/bookings/${booking.reference}`;
+  await notify(["guest"], "bookingConfirmed", { name: booking.title, ref: booking.reference }, href);
+  if (!pending) await notify(["guest"], "paymentReceived", { amount: fmt(paidNow), ref: booking.reference }, href);
+  await notify(
+    ["ops", "admin"],
+    "newBooking",
+    { guest: booking.guest?.name ?? "", name: booking.title, ref: booking.reference },
+    `/manage/bookings/${booking.reference}`,
+  );
+  recordAudit({ actor: "guest", action: "booking.place", target: booking.reference });
+
+  return booking;
+}
+
+/**
  * Builds the bookings repo around the notifications repo, so placing a
  * booking can tell the guest and the desk without either module importing
  * the other's internals.
@@ -202,125 +337,12 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
     },
 
     async place({ draft, clientTotal, payment }) {
-      const today = kigaliDay();
-      const supply = supplyForDraft(draft);
-      if (!supply || !isIsoDate(draft.start) || !isIsoDate(draft.end)) return { ok: false, reason: "invalid" };
-      if (draft.start < today || (supply.kind !== "experience" && draft.end < draft.start)) {
-        return { ok: false, reason: "invalid" };
+      const ready = await prepare(draft);
+      if (!ready.ok) return ready;
+      if (clientTotal.currency !== ready.quote.total.currency || Math.abs(clientTotal.minor - ready.quote.total.minor) > 1) {
+        return { ok: false, reason: "priceChanged", quote: ready.quote };
       }
-      if (!Number.isInteger(draft.party) || draft.party < 1) return { ok: false, reason: "invalid" };
-
-      // A long-term stay's term is the server's to decide, not the URL's: a
-      // 12- or 24-month term, starting on the 1st of a month the home is free,
-      // with the application saying the same thing as the dates.
-      if (draft.flow === "rent") {
-        const terms = supply.kind === "stay" ? supply.item.leaseTerms : undefined;
-        const months = monthsBetween(draft.start, draft.end);
-        const freeFrom = terms ? `${terms.availableFrom.slice(0, 7)}-01` : "";
-        const firstFree = terms && terms.availableFrom !== freeFrom ? `${addDays(freeFrom, 32).slice(0, 7)}-01` : freeFrom;
-        if (
-          supply.kind !== "stay" ||
-          !supply.item.monthlyRate ||
-          !terms ||
-          !draft.start.endsWith("-01") ||
-          draft.end.slice(8) !== "01" ||
-          (months !== 12 && months !== 24) ||
-          draft.start < firstFree ||
-          draft.application?.moveIn !== draft.start ||
-          draft.application?.months !== months
-        ) {
-          return { ok: false, reason: "invalid" };
-        }
-      }
-
-      // Every step before pay, checked again here: the browser's say-so is not enough.
-      const people: PeopleRules | undefined =
-        supply.kind === "experience"
-          ? { minAge: supply.item.minAge, requiresPermit: !!supply.item.requiresPermit }
-          : undefined;
-      const steps = STEPS[draft.flow].filter((s) => s !== "pay");
-      if (!steps.every((s) => stepComplete(draft, s, people))) return { ok: false, reason: "invalid" };
-
-      const quote = quoteFor(supply, draft, today);
-      if (!quote) return { ok: false, reason: "invalid" };
-
-      if (
-        clientTotal.currency !== quote.total.currency ||
-        Math.abs(clientTotal.minor - quote.total.minor) > 1
-      ) {
-        return { ok: false, reason: "priceChanged", quote };
-      }
-
-      const end = supply.kind === "experience" ? draft.start : draft.end;
-      if (!(await availability.isFree(supply.item.id, draft.start, end, { party: draft.party }))) {
-        return { ok: false, reason: "unavailable" };
-      }
-
-      const id = nextId("bkg");
-      const plan =
-        draft.plan === "deposit" ? depositPlan(quote, draft.start, today, FX_RATES) : ({ offered: false } as const);
-      const paidNow = plan.offered ? plan.now : quote.total;
-      const pending = payment.rail === "bankTransfer";
-
-      const booking: Booking = {
-        id,
-        reference: bookingReference(`${id}:${draft.id}`),
-        service: supply.kind,
-        supplyItemId: supply.item.id,
-        title: supply.item.name,
-        startDate: draft.start,
-        endDate: end,
-        party: draft.party,
-        total: quote.total,
-        status: "confirmed",
-        escrowHeld: quote.escrowHeld,
-        ...(supply.kind === "stay" ? { stayMode: draft.flow === "rent" ? "lease" : "nightly" } : {}),
-        guest: {
-          name: draft.guest.name ?? "",
-          email: draft.guest.email ?? "",
-          phone: draft.guest.phone ?? "",
-          ...draft.guest,
-        },
-        extras: quote.lines.filter((l) => l.extra).map((l) => ({
-          key: l.extra!,
-          quantity: draft.extras.find((e) => e.key === l.extra)?.quantity ?? 1,
-        })),
-        ...(quote.promo?.ok ? { promoCode: quote.promo.code } : {}),
-        paymentPlan: plan.offered ? "deposit" : "full",
-        lines: quote.lines,
-        timeline: [event("placed", "guest"), ...(pending ? [] : [event("paid", "guest")])],
-        ...(draft.driveMode ? { driveMode: draft.driveMode } : {}),
-        ...(draft.pickup ? { pickup: draft.pickup } : {}),
-        ...(draft.participants.length ? { participants: draft.participants } : {}),
-        ...(draft.slot ? { slot: draft.slot } : {}),
-        ...(draft.dietary ? { dietary: draft.dietary } : {}),
-        ...(draft.application ? { application: draft.application } : {}),
-      };
-
-      const s = store();
-      s.bookings.unshift(booking);
-      s.payments.push({
-        id: nextId("pmt"),
-        bookingId: id,
-        rail: payment.rail,
-        kind: plan.offered ? "deposit" : "full",
-        amount: paidNow,
-        status: pending ? "pending" : "succeeded",
-        at: new Date().toISOString(),
-      });
-
-      const href = `/bookings/${booking.reference}`;
-      await notify(["guest"], "bookingConfirmed", { name: booking.title, ref: booking.reference }, href);
-      if (!pending) await notify(["guest"], "paymentReceived", { amount: fmt(paidNow), ref: booking.reference }, href);
-      await notify(
-        ["ops", "admin"],
-        "newBooking",
-        { guest: booking.guest?.name ?? "", name: booking.title, ref: booking.reference },
-        `/manage/bookings/${booking.reference}`,
-      );
-      recordAudit({ actor: "guest", action: "booking.place", target: booking.reference });
-
-      return { ok: true, booking };
+      return { ok: true, booking: await commit(draft, ready, payment, notify) };
     },
 
     async cancel(reference, by, reason, today) {
@@ -452,4 +474,61 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
     },
   };
   return repo;
+}
+
+/**
+ * A trip: several bookings paid at once, placed all together or not at all.
+ *
+ * Every part is prepared (checked, priced, its nights confirmed free)
+ * before any is written, and the trip's own stays are checked against each
+ * other, so a trip either becomes all its bookings or none of them. The
+ * total is compared in RWF, the currency it is charged in, allowing a
+ * minor unit of rounding per part.
+ */
+export function makeTrips(notifications: NotificationsRepo, read: Pick<TripRepo, "listForCurrentUser" | "byId">): TripRepo {
+  async function notify(audiences: Role[], kind: NotificationKind, params: Record<string, string | number>, href: string) {
+    for (const audience of audiences) await notifications.create({ audience, kind, params, href });
+  }
+  return {
+    ...read,
+    async place({ drafts, clientTotal, payment, bookedReferences }) {
+      if (!drafts.length) return { ok: false, failed: [] };
+      const prepared: Prepared[] = [];
+      const failed: { index: number; reason: "unavailable" | "invalid" | "priceChanged" }[] = [];
+      for (const [index, d] of drafts.entries()) {
+        const r = await prepare(d);
+        if (r.ok) prepared.push(r);
+        else failed.push({ index, reason: r.reason });
+      }
+      // The trip's own stays must not overlap one another.
+      drafts.forEach((a, i) =>
+        drafts.forEach((b, j) => {
+          if (j <= i || (a.flow !== "stay" && a.flow !== "rent") || (b.flow !== "stay" && b.flow !== "rent")) return;
+          if (a.start < b.end && b.start < a.end) failed.push({ index: j, reason: "unavailable" });
+        }),
+      );
+      if (failed.length) return { ok: false, failed };
+
+      const sum = prepared.reduce((n, p) => n + convert(p.quote.total, "RWF", FX_RATES).minor, 0);
+      if (clientTotal.currency !== "RWF" || Math.abs(clientTotal.minor - sum) > drafts.length) {
+        return { ok: false, failed: [{ index: -1, reason: "priceChanged" }] };
+      }
+
+      const tripId = nextId("trp");
+      const bookings = [];
+      for (const [i, d] of drafts.entries()) bookings.push(await commit(d, prepared[i], payment, notify, tripId));
+      const already = store().bookings.filter((b) => bookedReferences.includes(b.reference));
+      for (const b of already) b.tripId = tripId;
+      const month = new Intl.DateTimeFormat("en-GB", { month: "long", timeZone: "UTC" }).format(new Date(`${drafts[0].start}T00:00:00Z`));
+      const trip = {
+        id: tripId,
+        name: `Kigali, ${month}`,
+        displayCurrency: "RWF" as const,
+        status: "booked" as const,
+        bookingIds: [...bookings.map((b) => b.id), ...already.map((b) => b.id)],
+      };
+      store().trips.unshift(trip);
+      return { ok: true, trip, bookings };
+    },
+  };
 }

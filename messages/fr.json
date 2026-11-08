@@ -1780,7 +1780,8 @@
       "dietary": "Allergies ou régime alimentaire",
       "dietaryPlaceholder": "Végétarien, sans noix…",
       "other": "Autre",
-      "choose": "Choisir…"
+      "choose": "Choisir…",
+      "slotError": "Choisissez une heure de départ."
     },
     "application": {
       "title": "À propos de vous, futur locataire",
@@ -2029,5 +2030,52 @@
     "size": "Ce fichier est trop lourd. La limite est de 10 Mo.",
     "remove": "Retirer le fichier",
     "note": "Conservé sur cet appareil jusqu'à notre vérification. Rien n'est envoyé dans cet aperçu."
+  },
+  "cart": {
+    "planTitle": "Vous préparez tout un voyage ?",
+    "planBody": "Ajoutez une voiture et des sorties à ce séjour, et payez en une fois. Chaque partie peut toujours être modifiée ou annulée séparément.",
+    "planButton": "Organiser un voyage autour de ce séjour",
+    "add": "Ajouter au voyage",
+    "inTrip": "Dans votre voyage",
+    "added": "Ajouté à votre voyage",
+    "view": "Voir le voyage",
+    "pill": "Voyage",
+    "pillLabel": "Votre voyage, {count, plural, one {# élément} other {# éléments}}",
+    "title": "Votre voyage",
+    "intro": "Tout ce que vous réservez ensemble, jour par jour. Vous payez une seule fois ; chaque partie garde sa propre réservation, et peut donc être modifiée ou annulée séparément.",
+    "empty": "Rien dans votre voyage pour l'instant. Ajoutez un séjour, une voiture ou une sortie depuis sa page.",
+    "browseStays": "Trouver un logement",
+    "issues": {
+      "staysOverlap": "Ces deux séjours se chevauchent. Retirez-en un ou changez ses dates.",
+      "carOutsideStay": "Cette voiture est réservée pour des jours en dehors de votre séjour. Pas de souci si vous arrivez tôt ou partez tard.",
+      "dayOutsideStay": "Cette sortie tombe un jour où vous n'avez aucun séjour réservé.",
+      "inPast": "Ces dates sont passées. Retirez cet élément et ajoutez-le de nouveau avec d'autres dates."
+    },
+    "remove": "Retirer {name}",
+    "booked": "Déjà réservé",
+    "total": "Total du voyage",
+    "checkout": "Payer tout le voyage",
+    "blocked": "Corrigez les éléments marqués en rouge pour passer au paiement.",
+    "suggestCar": "Pour vous déplacer",
+    "suggestCarBody": "Une voiture avec un chauffeur qui vous attend à l'aéroport.",
+    "suggestCarCta": "Voir les voitures",
+    "suggestDay": "Une sortie",
+    "suggestDayBody": "Gorilles, Nyungwe, Lake Kivu ou une balade dans Kigali.",
+    "suggestDayCta": "Voir les sorties",
+    "turnOff": "Réserver plutôt chaque élément séparément",
+    "turnOffTitle": "Désactiver le voyage ?",
+    "turnOffBody": "Votre voyage sera vidé. Ce qui est déjà réservé le reste.",
+    "turnOffConfirm": "Vider et désactiver",
+    "keep": "Garder mon voyage",
+    "checkoutTitle": "Réservez votre voyage",
+    "stepItems": "Chaque partie",
+    "stepItemsBody": "Quelques détails dont seules certaines parties ont besoin : qui participe à chaque sortie, et un permis pour une voiture que vous conduirez.",
+    "nothingNeeded": "Rien d'autre à fournir pour cette partie.",
+    "reviewItems": "Ce que vous réservez",
+    "rulesAll": "J'ai lu les règles de chaque partie et je les accepte",
+    "booked_toast": "Votre voyage est réservé : {count, plural, one {# réservation} other {# réservations}}.",
+    "failed": "Une partie du voyage n'a pas pu être réservée, donc rien n'a été prélevé. {name} : ces dates viennent d'être prises.",
+    "tripName": "Kigali, {month}",
+    "dayHeading": "{date}"
   }
 }
