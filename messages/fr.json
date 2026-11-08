@@ -1482,6 +1482,56 @@
       "today": "Aujourd'hui",
       "yesterday": "Hier",
       "earlier": "Plus tôt"
+    },
+    "prefs": {
+      "title": "Paramètres des notifications",
+      "intro": "Choisissez comment chaque type d'information vous parvient. L'application en garde toujours une copie.",
+      "channels": {
+        "inApp": "Application",
+        "email": "E-mail",
+        "sms": "SMS",
+        "whatsapp": "WhatsApp",
+        "push": "Téléphone"
+      },
+      "cellLabel": "{channel} pour « {kind} »",
+      "locked": "Toujours activé : celle-ci demande une action de votre part.",
+      "quietTitle": "Heures calmes",
+      "quietBody": "Pas de SMS, WhatsApp ni alertes téléphone entre ces heures. Les problèmes de paiement urgents passent quand même.",
+      "quietOn": "Activer les heures calmes",
+      "from": "De",
+      "to": "À",
+      "kigaliTime": "Heure de Kigali",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…",
+      "saved": "Paramètres enregistrés",
+      "pushTitle": "Notifications sur ce téléphone",
+      "pushBody": "Recevez une alerte quand quelque chose vous attend, même HomeLink fermé.",
+      "pushButton": "Activer les notifications",
+      "pushGranted": "Activées. Ce navigateur affichera les notifications HomeLink.",
+      "pushDenied": "Bloquées dans ce navigateur. Pour changer, ouvrez les paramètres du site depuis le cadenas de la barre d'adresse.",
+      "pushUnsupported": "Ce navigateur ne peut pas afficher de notifications. E-mail, SMS et WhatsApp fonctionnent toujours.",
+      "back": "Toutes les notifications",
+      "link": "Paramètres"
+    },
+    "categoriesKinds": {
+      "bookingConfirmed": "Réservation confirmée",
+      "paymentReceived": "Paiement reçu",
+      "paymentFailed": "Paiement refusé",
+      "momoPending": "Mobile Money en attente de validation",
+      "checkInReady": "Infos d'arrivée prêtes",
+      "rentDue": "Loyer à payer",
+      "newMessage": "Nouveau message",
+      "reviewRequest": "Demande d'avis",
+      "viewingConfirmed": "Visite confirmée",
+      "newBooking": "Nouvelle réservation",
+      "arrivalToday": "Arrivées du jour",
+      "newAsk": "Nouvelle demande",
+      "newIncident": "Incident signalé",
+      "inspectionDue": "Inspection à prévoir",
+      "jobOffered": "Nouvelle mission",
+      "jobChanged": "Mission modifiée",
+      "payoutSent": "Versement envoyé",
+      "documentExpiring": "Document bientôt expiré"
     }
   }
 }

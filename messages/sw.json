@@ -1482,6 +1482,56 @@
       "today": "Leo",
       "yesterday": "Jana",
       "earlier": "Awali"
+    },
+    "prefs": {
+      "title": "Mipangilio ya arifa",
+      "intro": "Chagua jinsi kila aina ya habari inavyokufikia. Programu daima huweka nakala kwenye arifa zako.",
+      "channels": {
+        "inApp": "Kwenye programu",
+        "email": "Barua pepe",
+        "sms": "SMS",
+        "whatsapp": "WhatsApp",
+        "push": "Simu"
+      },
+      "cellLabel": "{channel} kwa {kind}",
+      "locked": "Huwa imewashwa kila wakati: hii inahitaji uchukue hatua.",
+      "quietTitle": "Saa za utulivu",
+      "quietBody": "Hakuna SMS, WhatsApp wala arifa za simu kati ya saa hizi. Matatizo ya dharura ya malipo bado yanakuja.",
+      "quietOn": "Tumia saa za utulivu",
+      "from": "Kuanzia",
+      "to": "Hadi",
+      "kigaliTime": "Saa za Kigali",
+      "save": "Hifadhi mipangilio",
+      "saving": "Inahifadhi…",
+      "saved": "Mipangilio imehifadhiwa",
+      "pushTitle": "Arifa kwenye simu hii",
+      "pushBody": "Pata mtetemo kitu kinapokuhitaji, hata HomeLink ikiwa imefungwa.",
+      "pushButton": "Washa arifa za simu",
+      "pushGranted": "Zimewashwa. Kivinjari hiki kitaonyesha arifa za HomeLink.",
+      "pushDenied": "Zimezuiwa kwenye kivinjari hiki. Kubadilisha, fungua mipangilio ya tovuti kupitia kufuli kwenye upau wa anwani.",
+      "pushUnsupported": "Kivinjari hiki hakiwezi kuonyesha arifa. Barua pepe, SMS na WhatsApp bado zinafanya kazi.",
+      "back": "Arifa zote",
+      "link": "Mipangilio"
+    },
+    "categoriesKinds": {
+      "bookingConfirmed": "Uhifadhi umethibitishwa",
+      "paymentReceived": "Malipo yamepokelewa",
+      "paymentFailed": "Malipo yameshindwa",
+      "momoPending": "Mobile Money inasubiri idhini",
+      "checkInReady": "Maelezo ya kuingia tayari",
+      "rentDue": "Kodi inadaiwa",
+      "newMessage": "Ujumbe mpya",
+      "reviewRequest": "Ombi la maoni",
+      "viewingConfirmed": "Kutazama kumethibitishwa",
+      "newBooking": "Uhifadhi mpya",
+      "arrivalToday": "Wanaowasili leo",
+      "newAsk": "Ombi jipya",
+      "newIncident": "Tukio limeripotiwa",
+      "inspectionDue": "Ukaguzi unakaribia",
+      "jobOffered": "Ofa mpya ya kazi",
+      "jobChanged": "Kazi imebadilika",
+      "payoutSent": "Malipo yametumwa",
+      "documentExpiring": "Hati inakaribia kuisha"
     }
   }
 }

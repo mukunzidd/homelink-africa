@@ -1482,6 +1482,56 @@
       "today": "Uyu munsi",
       "yesterday": "Ejo hashize",
       "earlier": "Mbere"
+    },
+    "prefs": {
+      "title": "Igenamiterere ry'imenyesha",
+      "intro": "Hitamo uko buri bwoko bw'amakuru bukugeraho. Porogaramu ihora ibika kopi mu menyesha ryawe.",
+      "channels": {
+        "inApp": "Muri porogaramu",
+        "email": "Imeyili",
+        "sms": "SMS",
+        "whatsapp": "WhatsApp",
+        "push": "Telefoni"
+      },
+      "cellLabel": "{channel} kuri {kind}",
+      "locked": "Buri gihe birakora: iri risaba ko ugira icyo ukora.",
+      "quietTitle": "Amasaha y'ituze",
+      "quietBody": "Nta SMS, WhatsApp cyangwa imenyesha rya telefoni hagati y'aya masaha. Ibibazo byihutirwa by'ubwishyu biraza uko byagenda kose.",
+      "quietOn": "Koresha amasaha y'ituze",
+      "from": "Kuva",
+      "to": "Kugeza",
+      "kigaliTime": "Isaha ya Kigali",
+      "save": "Bika",
+      "saving": "Birabikwa…",
+      "saved": "Igenamiterere ryabitswe",
+      "pushTitle": "Imenyesha kuri iyi telefoni",
+      "pushBody": "Menyeshwa igihe hari ikigukeneye, n'iyo HomeLink ifunze.",
+      "pushButton": "Fungura imenyesha rya telefoni",
+      "pushGranted": "Birakora. Iyi mushakisha izerekana imenyesha rya HomeLink.",
+      "pushDenied": "Byahagaritswe muri iyi mushakisha. Kugira ngo uhindure, fungura igenamiterere ry'urubuga uhereye ku gafunguzo kari mu mwanya wa aderesi.",
+      "pushUnsupported": "Iyi mushakisha ntishobora kwerekana imenyesha. Imeyili, SMS na WhatsApp biracyakora.",
+      "back": "Imenyesha ryose",
+      "link": "Igenamiterere"
+    },
+    "categoriesKinds": {
+      "bookingConfirmed": "Gufata byemejwe",
+      "paymentReceived": "Ubwishyu bwakiriwe",
+      "paymentFailed": "Kwishyura byanze",
+      "momoPending": "Mobile Money itegereje kwemezwa",
+      "checkInReady": "Amakuru yo kwinjira yateguwe",
+      "rentDue": "Ubukode bugomba kwishyurwa",
+      "newMessage": "Ubutumwa bushya",
+      "reviewRequest": "Gusaba igitekerezo",
+      "viewingConfirmed": "Gusura byemejwe",
+      "newBooking": "Gufata gushya",
+      "arrivalToday": "Abagera uyu munsi",
+      "newAsk": "Icyifuzo gishya",
+      "newIncident": "Ikibazo cyatanzwe",
+      "inspectionDue": "Igenzura rigeze",
+      "jobOffered": "Akazi gashya",
+      "jobChanged": "Akazi kahindutse",
+      "payoutSent": "Amafaranga yoherejwe",
+      "documentExpiring": "Inyandiko igiye guta agaciro"
     }
   }
 }

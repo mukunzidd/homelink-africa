@@ -54,7 +54,17 @@ export async function NotificationsPage({
 
   return (
     <div className="flex flex-col gap-6">
-      {heading(unread > 0 ? <MarkAllRead /> : null)}
+      {heading(
+        <>
+          <Link
+            href={`${base === "/notifications" ? "/account/settings/notifications" : "/manage/notifications/settings"}`}
+            className="inline-flex h-9 items-center rounded-ctl px-3 text-[14px] font-semibold text-ink-2 hover:bg-surface-2 hover:text-ink"
+          >
+            {t("prefs.link")}
+          </Link>
+          {unread > 0 ? <MarkAllRead /> : null}
+        </>,
+      )}
 
       <nav aria-label={t("filterLabel")} className="flex flex-wrap items-center gap-2">
         <Link href={href({ unread: false, page: 1 })} className={chip(!unreadOnly)} aria-current={!unreadOnly ? "true" : undefined}>

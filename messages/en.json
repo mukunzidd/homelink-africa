@@ -1482,6 +1482,56 @@
       "today": "Today",
       "yesterday": "Yesterday",
       "earlier": "Earlier"
+    },
+    "prefs": {
+      "title": "Notification settings",
+      "intro": "Choose how each kind of news reaches you. In-app always keeps a copy in your notifications.",
+      "channels": {
+        "inApp": "In-app",
+        "email": "Email",
+        "sms": "SMS",
+        "whatsapp": "WhatsApp",
+        "push": "Phone"
+      },
+      "cellLabel": "{channel} for {kind}",
+      "locked": "Always on: this one needs you to act.",
+      "quietTitle": "Quiet hours",
+      "quietBody": "No SMS, WhatsApp or phone alerts between these times. Urgent payment problems still come through.",
+      "quietOn": "Use quiet hours",
+      "from": "From",
+      "to": "To",
+      "kigaliTime": "Kigali time",
+      "save": "Save settings",
+      "saving": "Saving…",
+      "saved": "Notification settings saved",
+      "pushTitle": "Notifications on this phone",
+      "pushBody": "Get a buzz when something needs you, even with HomeLink closed.",
+      "pushButton": "Turn on phone notifications",
+      "pushGranted": "On. This browser will show HomeLink notifications.",
+      "pushDenied": "Blocked in this browser. To change it, open the site settings from the padlock in the address bar.",
+      "pushUnsupported": "This browser cannot show notifications. Email, SMS and WhatsApp still work.",
+      "back": "All notifications",
+      "link": "Settings"
+    },
+    "categoriesKinds": {
+      "bookingConfirmed": "Booking confirmed",
+      "paymentReceived": "Payment received",
+      "paymentFailed": "Payment failed",
+      "momoPending": "Mobile Money waiting for approval",
+      "checkInReady": "Check-in details ready",
+      "rentDue": "Rent due",
+      "newMessage": "New message",
+      "reviewRequest": "Review request",
+      "viewingConfirmed": "Viewing confirmed",
+      "newBooking": "New booking",
+      "arrivalToday": "Arrivals today",
+      "newAsk": "New guest ask",
+      "newIncident": "Incident reported",
+      "inspectionDue": "Inspection due",
+      "jobOffered": "New job offer",
+      "jobChanged": "Job changed",
+      "payoutSent": "Payout sent",
+      "documentExpiring": "Document expiring"
     }
   }
 }
