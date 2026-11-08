@@ -1331,7 +1331,6 @@
     "comparePicked": "{count, plural, one {Inzu # wahisemo} other {Amazu # wahisemo}}",
     "compareOpen": "Gereranya",
     "compareTitle": "Kimwe iruhande rw'ikindi",
-    "compareClose": "Funga igereranya",
     "compare": {
       "price": "Igiciro",
       "neighbourhood": "Agace",
@@ -1355,7 +1354,8 @@
     },
     "budgetPlaceholder": "Igiciro ntarengwa, urugero {example}",
     "bandBack": "Reba uduce twabanje",
-    "bandMore": "Reba utundi duce"
+    "bandMore": "Reba utundi duce",
+    "comparePickMore": "hitamo indi imwe"
   },
   "notFound": {
     "title": "Iyi paji ntiboneka",

@@ -1263,7 +1263,6 @@
     "comparePicked": "{count, plural, one {Nyumba # imechaguliwa} other {Nyumba # zimechaguliwa}}",
     "compareOpen": "Linganisha",
     "compareTitle": "Ubavu kwa ubavu",
-    "compareClose": "Funga ulinganisho",
     "compare": {
       "price": "Bei",
       "neighbourhood": "Mtaa",
@@ -1287,7 +1286,8 @@
     },
     "budgetPlaceholder": "Kiasi cha juu utakacholipa, mfano {example}",
     "bandBack": "Onyesha mitaa iliyotangulia",
-    "bandMore": "Onyesha mitaa zaidi"
+    "bandMore": "Onyesha mitaa zaidi",
+    "comparePickMore": "chagua moja zaidi"
   },
   "abroad": {
     "title": "Kununua ukiwa nje ya nchi",

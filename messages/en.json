@@ -1263,7 +1263,6 @@
     "comparePicked": "{count, plural, one {# home picked} other {# homes picked}}",
     "compareOpen": "Compare",
     "compareTitle": "Side by side",
-    "compareClose": "Close the comparison",
     "compare": {
       "price": "Price",
       "neighbourhood": "Neighbourhood",
@@ -1287,7 +1286,8 @@
     },
     "budgetPlaceholder": "Most you would pay, e.g. {example}",
     "bandBack": "Show earlier neighbourhoods",
-    "bandMore": "Show more neighbourhoods"
+    "bandMore": "Show more neighbourhoods",
+    "comparePickMore": "pick one more"
   },
   "abroad": {
     "title": "Buying from abroad",

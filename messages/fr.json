@@ -1331,7 +1331,6 @@
     "comparePicked": "{count, plural, one {# logement choisi} other {# logements choisis}}",
     "compareOpen": "Comparer",
     "compareTitle": "Côte à côte",
-    "compareClose": "Fermer la comparaison",
     "compare": {
       "price": "Prix",
       "neighbourhood": "Quartier",
@@ -1355,7 +1354,8 @@
     },
     "budgetPlaceholder": "Votre maximum, par ex. {example}",
     "bandBack": "Voir les quartiers précédents",
-    "bandMore": "Voir plus de quartiers"
+    "bandMore": "Voir plus de quartiers",
+    "comparePickMore": "choisissez-en un autre"
   },
   "notFound": {
     "title": "Cette page n’existe pas",
