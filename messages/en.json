@@ -148,7 +148,7 @@
       "photographed": "Photographed by us",
       "photographedBody": "Every image here was shot by the HomeLink team. No owner-supplied photos appear on a verified listing.",
       "identity": "Owner identity confirmed",
-      "identityBody": "Title or lease authority verified against national ID. Identity checks complete before any payout is possible.",
+      "identityBody": "Title deed or the right to rent it out verified against national ID. Identity checks complete before any payout is possible.",
       "escrow": "Your money is held",
       "escrowBody": "Payment sits in escrow until you confirm check-in. Not as described means a full refund and another home the same night."
     },
@@ -198,7 +198,7 @@
     "fibre": "Fibre internet",
     "furnished": "Furnished",
     "parking": "Parking",
-    "longTerm": "Long-term lease",
+    "longTerm": "Long-term stay",
     "selfDrive": "Self-drive",
     "withDriver": "With driver",
     "clear": "Clear filters",
@@ -252,9 +252,9 @@
     "unavailable": "Choose dates to see the total",
     "nightlyFrom": "From",
     "monthlyFrom": "Long-term from",
-    "leaseAvailable": "Available as a long-term lease",
-    "leaseBody": "Twelve months or more is handled as a lease application rather than a nightly booking: documents, a deposit, and a signed agreement.",
-    "applyForLease": "Apply for a lease",
+    "leaseAvailable": "Available to rent long-term",
+    "leaseBody": "Twelve months or more is handled as a rental application rather than a nightly booking: documents, a deposit, and a signed rental agreement.",
+    "applyForLease": "Apply to rent",
     "highlights": "What stands out",
     "thingsToKnow": "Things to know",
     "houseRules": "House rules",
@@ -269,10 +269,10 @@
     "hostedBy": "Verified by",
     "lease": {
       "moveInTitle": "Moving in",
-      "moveInBody": "Free from {date}. The lease runs for at least twelve months, from the month you choose when you apply.",
-      "depositBody": "{deposit}, held as a deposit and returned when the lease ends. The deposit terms come with the lease.",
+      "moveInBody": "Free from {date}. You rent it for at least twelve months, from the month you choose when you apply.",
+      "depositBody": "{deposit}, held as a deposit and returned when you move out. The deposit terms are in the rental agreement.",
       "viewingTitle": "The viewing",
-      "viewingBody": "The Kigali team arranges a viewing and sends the lease to read before it. Nothing is charged here."
+      "viewingBody": "The Kigali team arranges a viewing and sends the rental agreement to read before it. Nothing is charged here."
     }
   },
   "quote": {
@@ -467,7 +467,7 @@
     "longStay": "Longer than that",
     "goAnytime": "Go anytime",
     "monthsUnit": "{count, plural, one {month} other {months}}",
-    "leaseNote": "A year or more is a lease, not a nightly booking. We'll take you through documents and a deposit instead.",
+    "leaseNote": "A year or more is renting, not a nightly booking. We'll take you through documents and a deposit instead.",
     "adults": "Adults",
     "adultsHint": "Ages 13 or above",
     "children": "Children",
@@ -500,7 +500,7 @@
     "photos": "Photos we took",
     "photosBody": "Shot by our team. Nothing here came from the owner's phone.",
     "deposit": "A deposit that comes back",
-    "depositBody": "{deposit}, held as a deposit and returned when the lease ends."
+    "depositBody": "{deposit}, held as a deposit and returned when you move out."
   },
   "carHighlight": {
     "inspected": "Someone drove it first",
@@ -816,7 +816,7 @@
     "perNightShort": "/night",
     "perMonthShort": "/month",
     "perDayShort": "/day",
-    "chipLease": "Long-term lease",
+    "chipLease": "Long-term stay",
     "chipText": "Mentions “{text}”",
     "drive": {
       "withDriver": "With a driver",
@@ -1014,12 +1014,12 @@
   "lease": {
     "perMonth": "per month",
     "moveIn": "Move in",
-    "term": "Lease length",
+    "term": "How long",
     "months": "{count} months",
     "nameLabel": "Your name",
     "contactLabel": "Email or phone",
-    "apply": "Apply for a lease",
-    "whatNext": "The Kigali team sends the lease, the deposit terms and a viewing time. Nothing is charged here.",
+    "apply": "Apply to rent",
+    "whatNext": "The Kigali team sends the rental agreement, the deposit terms and a viewing time. Nothing is charged here.",
     "noted": "Application noted",
     "preview": "This preview does not send applications yet. When messaging goes live, this opens a thread with the concierge, who replies within a working day.",
     "shorter": "Staying less than a year? Book by the night",
@@ -1078,7 +1078,7 @@
     "noMatchText": "Nothing we list mentions “{text}”. Try a neighbourhood, a budget, or what the place should have.",
     "noCarBody": "No vehicle matches all of those. Fewer seats, or either gearbox, usually opens it up.",
     "stayPromise": "Every place was inspected in person, and your payment is held until you confirm check-in.",
-    "rentPromise": "Monthly prices for leases of twelve months or more, with the documents checked before you sign.",
+    "rentPromise": "Monthly prices for homes rented for twelve months or more, with the documents checked before you sign.",
     "rentCount": "{count, plural, one {# verified home to rent in Kigali} other {# verified homes to rent in Kigali}}",
     "carsCount": "{count, plural, one {# vetted car in Kigali} other {# vetted cars in Kigali}}",
     "daysCount": "{count, plural, one {# day out from Kigali} other {# days out from Kigali}}",
@@ -1143,11 +1143,11 @@
     "minutesShort": "{minutes} min",
     "travelTitle": "Getting around",
     "travelNote": "By car on a weekday, estimated from the map. Rush hour on KN 5 adds more.",
-    "leaseTermsTitle": "The lease",
+    "leaseTermsTitle": "Renting terms",
     "deposit": "Deposit",
     "depositMonths": "{count, plural, one {# month of rent} other {# months of rent}}",
     "availableFrom": "Free from",
-    "minimumTerm": "Shortest lease",
+    "minimumTerm": "Shortest stay",
     "twelveMonths": "12 months",
     "includedInRent": "Included in the rent",
     "included": {

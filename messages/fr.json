@@ -198,7 +198,7 @@
     "fibre": "Internet fibre",
     "furnished": "Meublé",
     "parking": "Parking",
-    "longTerm": "Bail long terme",
+    "longTerm": "Location longue durée",
     "selfDrive": "Sans chauffeur",
     "withDriver": "Avec chauffeur",
     "clear": "Effacer les filtres",
@@ -252,9 +252,9 @@
     "unavailable": "Choisissez des dates pour voir le total",
     "nightlyFrom": "À partir de",
     "monthlyFrom": "Long terme à partir de",
-    "leaseAvailable": "Disponible en bail long terme",
-    "leaseBody": "Douze mois ou plus passent par une demande de bail plutôt qu'une réservation à la nuit : documents, dépôt de garantie et contrat signé.",
-    "applyForLease": "Demander un bail",
+    "leaseAvailable": "Disponible en location longue durée",
+    "leaseBody": "Douze mois ou plus passent par une demande de location plutôt qu'une réservation à la nuit : documents, dépôt de garantie et contrat de location signé.",
+    "applyForLease": "Demander à louer",
     "highlights": "Ce qui ressort",
     "thingsToKnow": "À savoir",
     "houseRules": "Règlement intérieur",
@@ -269,10 +269,10 @@
     "hostedBy": "Vérifié par",
     "lease": {
       "moveInTitle": "Emménagement",
-      "moveInBody": "Libre dès le {date}. Le bail dure au moins douze mois, à partir du mois choisi dans votre demande.",
-      "depositBody": "{deposit}, versés en caution et rendus à la fin du bail. Les conditions de caution arrivent avec le bail.",
+      "moveInBody": "Libre dès le {date}. La location dure au moins douze mois, à partir du mois choisi dans votre demande.",
+      "depositBody": "{deposit}, versés en caution et rendus à votre départ. Les conditions de caution figurent dans le contrat de location.",
       "viewingTitle": "La visite",
-      "viewingBody": "L’équipe de Kigali organise une visite et envoie le bail à lire avant. Rien n’est débité ici."
+      "viewingBody": "L’équipe de Kigali organise une visite et envoie le contrat de location à lire avant. Rien n’est débité ici."
     }
   },
   "quote": {
@@ -467,7 +467,7 @@
     "longStay": "Plus longtemps",
     "goAnytime": "N'importe quand",
     "monthsUnit": "{count, plural, one {mois} other {mois}}",
-    "leaseNote": "Un an ou plus relève du bail, pas de la réservation à la nuit. Nous vous accompagnons pour les documents et le dépôt.",
+    "leaseNote": "Un an ou plus, c'est une location longue durée, pas une réservation à la nuit. Nous vous accompagnons pour les documents et le dépôt.",
     "adults": "Adultes",
     "adultsHint": "13 ans et plus",
     "children": "Enfants",
@@ -500,7 +500,7 @@
     "photos": "Nos propres photos",
     "photosBody": "Prises par notre équipe. Rien ne vient du téléphone du propriétaire.",
     "deposit": "Une caution qui vous revient",
-    "depositBody": "{deposit}, versés en caution et rendus à la fin du bail."
+    "depositBody": "{deposit}, versés en caution et rendus à votre départ."
   },
   "carHighlight": {
     "inspected": "Quelqu'un l'a conduite avant vous",
@@ -1014,12 +1014,12 @@
   "lease": {
     "perMonth": "par mois",
     "moveIn": "Emménagement",
-    "term": "Durée du bail",
+    "term": "Durée",
     "months": "{count} mois",
     "nameLabel": "Votre nom",
     "contactLabel": "E-mail ou téléphone",
-    "apply": "Demander un bail",
-    "whatNext": "L’équipe de Kigali envoie le bail, les conditions de caution et un horaire de visite. Rien n’est débité ici.",
+    "apply": "Demander à louer",
+    "whatNext": "L’équipe de Kigali envoie le contrat de location, les conditions de caution et un horaire de visite. Rien n’est débité ici.",
     "noted": "Demande enregistrée",
     "preview": "Cet aperçu n’envoie pas encore de demandes. Une fois la messagerie en ligne, cela ouvrira une conversation avec le concierge, qui répond sous un jour ouvré.",
     "shorter": "Moins d’un an ? Réservez à la nuit",
@@ -1147,7 +1147,7 @@
     "noMatchText": "Rien de ce que nous proposons ne mentionne « {text} ». Essayez un quartier, un budget, ou ce que le logement doit avoir.",
     "noCarBody": "Aucun véhicule ne réunit tout cela. Moins de places, ou n'importe quelle boîte, élargit souvent le choix.",
     "stayPromise": "Chaque logement a été inspecté sur place, et votre paiement est retenu jusqu'à ce que vous confirmiez l'arrivée.",
-    "rentPromise": "Loyers mensuels pour des baux de douze mois ou plus, avec les documents vérifiés avant la signature.",
+    "rentPromise": "Loyers mensuels pour des locations de douze mois ou plus, avec les documents vérifiés avant la signature.",
     "rentCount": "{count, plural, one {# logement vérifié à louer à Kigali} other {# logements vérifiés à louer à Kigali}}",
     "carsCount": "{count, plural, one {# voiture vérifiée à Kigali} other {# voitures vérifiées à Kigali}}",
     "daysCount": "{count, plural, one {# sortie depuis Kigali} other {# sorties depuis Kigali}}",
@@ -1211,11 +1211,11 @@
     "daysMapLabel": "Carte du Rwanda avec chaque sortie et sa route depuis Kigali",
     "travelTitle": "Se déplacer",
     "travelNote": "En voiture un jour de semaine, estimé d'après la carte. L'heure de pointe sur la KN 5 ajoute du temps.",
-    "leaseTermsTitle": "Le bail",
+    "leaseTermsTitle": "Conditions de location",
     "deposit": "Caution",
     "depositMonths": "{count, plural, one {# mois de loyer} other {# mois de loyer}}",
     "availableFrom": "Libre dès",
-    "minimumTerm": "Bail le plus court",
+    "minimumTerm": "Durée minimale",
     "twelveMonths": "12 mois",
     "includedInRent": "Compris dans le loyer",
     "included": {

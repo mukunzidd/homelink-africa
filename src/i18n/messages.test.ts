@@ -92,6 +92,13 @@ describe("message files", () => {
     expect(wrong).toEqual([]);
   });
 
+  it("never says lease to a reader", () => {
+    // Rwandans use the word less and less; the copy says renting, a long-term
+    // stay, and a rental agreement. Code identifiers keep `lease`.
+    expect(values("en").filter((v) => /\blease/i.test(v))).toEqual([]);
+    expect(values("fr").filter((v) => /\bbail\b|\bbaux\b/i.test(v))).toEqual([]);
+  });
+
   it("no string is empty", () => {
     const empty: string[] = [];
     for (const l of LOCALES) for (const [k, v] of flat(l)) if (!v.trim()) empty.push(`${l}:${k}`);
