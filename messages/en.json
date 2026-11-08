@@ -2275,6 +2275,77 @@
       "target": "On",
       "detail": "Detail",
       "noEntries": "Nothing recorded for these filters."
+    },
+    "partner": {
+      "ranOut": "This offer has run out",
+      "answerWithin": "Answer within {h}h {m}m",
+      "accepted": "Accepted; the desk knows",
+      "declined": "Declined; the desk will offer it to someone else",
+      "accept": "Accept",
+      "decline": "Decline",
+      "why": "Why not?",
+      "whyPlaceholder": "Already driving that evening",
+      "sendDecline": "Decline",
+      "back": "Back",
+      "cannotAnswer": "That offer can no longer be answered.",
+      "replace": "Send a newer copy",
+      "replaced": "Sent; the desk will check it",
+      "newCopy": "The new copy",
+      "validUntil": "Valid until",
+      "send": "Send",
+      "replaceRefused": "Not sent: the new copy must be valid past today.",
+      "state": {
+        "offered": "Offered to you",
+        "accepted": "Yours",
+        "declined": "Declined",
+        "done": "Done"
+      },
+      "kind": {
+        "hire": "Car handover",
+        "transfer": "Transfer",
+        "dayOut": "Day out"
+      },
+      "people": "{count, plural, one {# person} other {# people}}",
+      "jobs": "Jobs",
+      "jobsBody": "Offers to answer first, then what you have taken on, then what is done.",
+      "offers": "Offers",
+      "noOffers": "No offers waiting.",
+      "upcoming": "Coming up",
+      "noUpcoming": "Nothing taken on yet.",
+      "done": "Done",
+      "schedule": "Schedule",
+      "scheduleBody": "The next two weeks, a day at a time.",
+      "today": "Today",
+      "free": "Free",
+      "earnings": "Earnings",
+      "earningsBody": "What you are owed and what has been paid. Pay for a job is held until the guest checks in.",
+      "paidThisMonth": "Paid this month",
+      "paidLastMonth": "Paid last month",
+      "dueNow": "Due to you",
+      "held": "Held",
+      "heldHint": "Until the guest checks in",
+      "payout": {
+        "held": "Held until check-in",
+        "due": "Due",
+        "paid": "Paid"
+      },
+      "noPayouts": "Nothing yet.",
+      "documents": "Documents",
+      "documentsBody": "The papers that let you work, soonest to run out first. Send a newer copy before one runs out.",
+      "doc": {
+        "licence": "Driving licence",
+        "insurance": "Insurance",
+        "permit": "Guide certification",
+        "id": "National ID",
+        "vehicleInspection": "Vehicle inspection"
+      },
+      "until": "Valid until {date}",
+      "daysLeft": "{count, plural, one {# day left} other {# days left}}",
+      "expiry": {
+        "valid": "Valid",
+        "expired": "Expired"
+      },
+      "carReturn": "Car return"
     }
   },
   "account": {
@@ -2450,6 +2521,10 @@
       "viewingChanged": {
         "title": "Viewing {state, select, moved {moved} done {done, thank you} cancelled {cancelled} other {updated}}",
         "body": "{name}: {when}."
+      },
+      "jobAccepted": {
+        "title": "{name} took a job",
+        "body": "{what}, {date}."
       }
     },
     "title": "Notifications",
@@ -2525,7 +2600,8 @@
       "jobChanged": "Job changed",
       "payoutSent": "Payout sent",
       "documentExpiring": "Document expiring",
-      "viewingChanged": "Viewing moved or done"
+      "viewingChanged": "Viewing moved or done",
+      "jobAccepted": "Job accepted by a driver or guide"
     }
   },
   "extras": {

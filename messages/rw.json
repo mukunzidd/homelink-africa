@@ -2275,6 +2275,77 @@
       "target": "Kuri",
       "detail": "Ibisobanuro",
       "noEntries": "Nta cyanditswe kuri ibi bishungura."
+    },
+    "partner": {
+      "ranOut": "Iki cyifuzo cyarangiye",
+      "answerWithin": "Subiza mu masaha {h} n'iminota {m}",
+      "accepted": "Byemewe; abakira barabizi",
+      "declined": "Byanzwe; abakira bazabiha undi",
+      "accept": "Emera",
+      "decline": "Anga",
+      "why": "Kubera iki?",
+      "whyPlaceholder": "Nzaba ntwaye indi modoka uwo mugoroba",
+      "sendDecline": "Anga",
+      "back": "Subira inyuma",
+      "cannotAnswer": "Iki cyifuzo ntikigisubizwa.",
+      "replace": "Ohereza kopi nshya",
+      "replaced": "Byoherejwe; abakira bazabigenzura",
+      "newCopy": "Kopi nshya",
+      "validUntil": "Ifite agaciro kugeza",
+      "send": "Ohereza",
+      "replaceRefused": "Ntibyoherejwe: kopi nshya igomba kuba ifite agaciro nyuma y'uyu munsi.",
+      "state": {
+        "offered": "Wabihawe",
+        "accepted": "Ni ibyawe",
+        "declined": "Byanzwe",
+        "done": "Byarangiye"
+      },
+      "kind": {
+        "hire": "Gutanga imodoka",
+        "transfer": "Gutwara",
+        "dayOut": "Urugendo rw'umunsi"
+      },
+      "people": "Abantu {count}",
+      "jobs": "Imirimo",
+      "jobsBody": "Ibyifuzo byo gusubiza mbere, hanyuma ibyo wemeye, hanyuma ibyarangiye.",
+      "offers": "Ibyifuzo",
+      "noOffers": "Nta byifuzo bitegereje.",
+      "upcoming": "Biri imbere",
+      "noUpcoming": "Nta cyo uremera.",
+      "done": "Byarangiye",
+      "schedule": "Gahunda",
+      "scheduleBody": "Ibyumweru bibiri biri imbere, umunsi ku wundi.",
+      "today": "Uyu munsi",
+      "free": "Nta kazi",
+      "earnings": "Ibyo winjiza",
+      "earningsBody": "Ibyo ugomba guhabwa n'ibyishyuwe. Amafaranga y'umurimo afatwa kugeza umushyitsi ahageze.",
+      "paidThisMonth": "Byishyuwe uku kwezi",
+      "paidLastMonth": "Byishyuwe ukwezi gushize",
+      "dueNow": "Ugomba guhabwa",
+      "held": "Bifashwe",
+      "heldHint": "Kugeza umushyitsi ahageze",
+      "payout": {
+        "held": "Bifashwe kugeza ahageze",
+        "due": "Bigomba kwishyurwa",
+        "paid": "Byishyuwe"
+      },
+      "noPayouts": "Nta kintu kirabaho.",
+      "documents": "Impapuro",
+      "documentsBody": "Impapuro zikwemerera gukora, izigiye kurangira mbere. Ohereza kopi nshya mbere y'uko irangira.",
+      "doc": {
+        "licence": "Uruhushya rwo gutwara",
+        "insurance": "Ubwishingizi",
+        "permit": "Icyemezo cy'umuyobozi w'ingendo",
+        "id": "Indangamuntu",
+        "vehicleInspection": "Isuzuma ry'imodoka"
+      },
+      "until": "Ifite agaciro kugeza {date}",
+      "daysLeft": "Hasigaye iminsi {count}",
+      "expiry": {
+        "valid": "Ifite agaciro",
+        "expired": "Yarangiye"
+      },
+      "carReturn": "Gusubiza imodoka"
     }
   },
   "account": {
@@ -2450,6 +2521,10 @@
       "viewingChanged": {
         "title": "Gusura {state, select, moved {kwimuwe} done {kwarangiye, murakoze} cancelled {kwahagaritswe} other {kwavuguruwe}}",
         "body": "{name}: {when}."
+      },
+      "jobAccepted": {
+        "title": "{name} yemeye umurimo",
+        "body": "{what}, {date}."
       }
     },
     "title": "Imenyesha",
@@ -2525,7 +2600,8 @@
       "jobChanged": "Akazi kahindutse",
       "payoutSent": "Amafaranga yoherejwe",
       "documentExpiring": "Inyandiko igiye guta agaciro",
-      "viewingChanged": "Gusura kwimuwe cyangwa kwarangiye"
+      "viewingChanged": "Gusura kwimuwe cyangwa kwarangiye",
+      "jobAccepted": "Umurimo wemewe n'umushoferi cyangwa umuyobozi w'ingendo"
     }
   },
   "extras": {

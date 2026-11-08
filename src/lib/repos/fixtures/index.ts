@@ -998,6 +998,40 @@ const partners: PartnersRepo = {
       (j) => (!filter.partnerId || j.partnerId === filter.partnerId) && (!filter.unassigned || !j.partnerId) && (!filter.role || j.role === filter.role),
     );
   },
+  async offers(partnerId) {
+    return store().jobOffers.filter((j) => j.partnerId === partnerId).sort((a, b) => a.start.localeCompare(b.start));
+  },
+  async respond(offerId, partnerId, accept, reason) {
+    const j = store().jobOffers.find((x) => x.id === offerId);
+    if (!j || j.partnerId !== partnerId) throw new Error("Not your offer");
+    if (j.status !== "offered") throw new Error("Already answered");
+    if (j.offerExpiresAt && Date.parse(j.offerExpiresAt) < Date.now()) throw new Error("This offer has run out");
+    const why = (reason ?? "").trim().slice(0, 300);
+    if (!accept && !why) throw new Error("A reason is needed");
+    j.status = accept ? "accepted" : "declined";
+    if (!accept) j.declineReason = why;
+    const b = store().bookings.find((x) => x.id === j.bookingId);
+    const p = store().partners.find((x) => x.id === partnerId);
+    if (accept && b) {
+      b.partnerId = partnerId;
+      for (const audience of ["ops", "admin"] as const) {
+        await notifications.create({ audience, kind: "jobAccepted", params: { name: p?.shortName ?? "", what: b.title, date: j.start }, href: `/manage/bookings/${b.reference}` });
+      }
+    }
+    recordAudit({ actor: p?.role ?? "driver", action: accept ? "job.accept" : "job.decline", target: b?.reference ?? j.bookingId, detail: why });
+    return { ...j };
+  },
+  async replaceDocument(docId, partnerId, doc) {
+    const d = store().partnerDocs.find((x) => x.id === docId);
+    if (!d || d.partnerId !== partnerId) throw new Error("Not your document");
+    if (!isIsoDate(doc.expires) || doc.expires <= kigaliDay()) throw new Error("Must be valid past today");
+    const name = doc.fileName.trim().slice(0, 120);
+    if (!name) throw new Error("No file");
+    d.expires = doc.expires;
+    d.fileName = name;
+    recordAudit({ actor: store().partners.find((x) => x.id === partnerId)?.role ?? "driver", action: "document.replace", target: docId, detail: `${name} until ${doc.expires}` });
+    return { ...d };
+  },
   async assign(bookingId, partnerId, by) {
     const job = jobsOf().find((j) => j.bookingId === bookingId);
     const b = store().bookings.find((x) => x.id === bookingId);

@@ -1,6 +1,7 @@
 import type { ListingPatch } from "@/lib/workspace/listing-patch";
 import type { PricingCatalog } from "@/lib/domain/catalog";
 import type {
+  JobOffer,
   StaffMember,
   SiteContent,
   StatementLine,
@@ -438,6 +439,12 @@ export interface PartnersRepo {
   jobs(filter?: { partnerId?: string; unassigned?: boolean; role?: Partner["role"] }): Promise<PartnerJob[]>;
   /** Gives a job to a partner in its lane, or takes it back with null. */
   assign(bookingId: string, partnerId: string | null, by: Role): Promise<void>;
+  /** Everything offered to this partner: open offers, accepted, declined and done. */
+  offers(partnerId: string): Promise<JobOffer[]>;
+  /** Accept, or decline with a reason. Only their own, only while open and not run out. Accepting tells the desk. */
+  respond(offerId: string, partnerId: string, accept: boolean, reason?: string): Promise<JobOffer>;
+  /** A newer copy of one of their own documents, valid past today. */
+  replaceDocument(docId: string, partnerId: string, doc: { fileName: string; expires: string }): Promise<PartnerDocument>;
 }
 
 /** Per-night rates over the base rate, set on the rates grid; quoteStay reads them from the listing. */

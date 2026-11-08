@@ -29,6 +29,7 @@ export const NOTIFICATION_CATALOG: Record<
   inspectionDue: { category: "work", audiences: ["ops", "admin"], defaultChannels: ["inApp", "email"] },
   jobOffered: { category: "work", audiences: ["driver", "guide"], defaultChannels: ["inApp", "push", "sms"] },
   jobChanged: { category: "work", audiences: ["driver", "guide"], defaultChannels: ["inApp", "push", "sms"] },
+  jobAccepted: { category: "work", audiences: ["ops", "admin"], defaultChannels: ["inApp"] },
   payoutSent: { category: "payment", audiences: ["driver", "guide"], defaultChannels: ["inApp", "sms"] },
   documentExpiring: { category: "system", audiences: ["driver", "guide", "admin"], defaultChannels: ["inApp", "email"] },
 };

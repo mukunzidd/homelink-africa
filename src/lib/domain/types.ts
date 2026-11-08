@@ -506,7 +506,7 @@ export type NotificationKind =
   | "bookingConfirmed" | "paymentReceived" | "paymentFailed" | "momoPending" | "checkInReady"
   | "rentDue" | "newMessage" | "reviewRequest" | "viewingConfirmed" | "viewingChanged"
   | "newBooking" | "arrivalToday" | "newAsk" | "newIncident" | "inspectionDue"
-  | "jobOffered" | "jobChanged" | "payoutSent" | "documentExpiring";
+  | "jobOffered" | "jobChanged" | "jobAccepted" | "payoutSent" | "documentExpiring";
 
 export type Channel = "inApp" | "email" | "sms" | "whatsapp" | "push";
 
@@ -681,8 +681,28 @@ export type Partner = {
 export type PartnerDocument = {
   id: string;
   partnerId: string;
-  kind: "licence" | "insurance" | "permit" | "id";
+  kind: "licence" | "insurance" | "permit" | "id" | "vehicleInspection";
   expires: string;
+  /** The file sent in for it. Kept by name until the backend stores files. */
+  fileName?: string;
+};
+
+/** Work offered to one driver or guide, which they accept or decline before it runs out. */
+export type JobOffer = {
+  id: string;
+  partnerId: string;
+  bookingId: string;
+  kind: "hire" | "transfer" | "dayOut";
+  start: string;
+  end: string;
+  /** "HH:MM" Kigali, and where. */
+  time: string;
+  pickup: string;
+  party: number;
+  status: "offered" | "accepted" | "declined" | "done";
+  offerExpiresAt?: string;
+  declineReason?: string;
+  pay: Money;
 };
 
 /** A booking seen as work for a driver or a guide. */

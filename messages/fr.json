@@ -2275,6 +2275,77 @@
       "target": "Sur",
       "detail": "Détail",
       "noEntries": "Rien de consigné pour ces filtres."
+    },
+    "partner": {
+      "ranOut": "Cette offre a expiré",
+      "answerWithin": "Répondre sous {h} h {m} min",
+      "accepted": "Acceptée ; l'accueil est prévenu",
+      "declined": "Refusée ; l'accueil la proposera à quelqu'un d'autre",
+      "accept": "Accepter",
+      "decline": "Refuser",
+      "why": "Pourquoi pas ?",
+      "whyPlaceholder": "Je conduis déjà ce soir-là",
+      "sendDecline": "Refuser",
+      "back": "Retour",
+      "cannotAnswer": "Cette offre ne peut plus recevoir de réponse.",
+      "replace": "Envoyer une copie plus récente",
+      "replaced": "Envoyé ; l'accueil va vérifier",
+      "newCopy": "La nouvelle copie",
+      "validUntil": "Valable jusqu'au",
+      "send": "Envoyer",
+      "replaceRefused": "Non envoyé : la nouvelle copie doit être valable après aujourd'hui.",
+      "state": {
+        "offered": "Proposé",
+        "accepted": "À vous",
+        "declined": "Refusé",
+        "done": "Fait"
+      },
+      "kind": {
+        "hire": "Remise de voiture",
+        "transfer": "Transfert",
+        "dayOut": "Excursion"
+      },
+      "people": "{count, plural, one {# personne} other {# personnes}}",
+      "jobs": "Missions",
+      "jobsBody": "Les offres à traiter d'abord, puis ce que vous avez accepté, puis ce qui est fait.",
+      "offers": "Offres",
+      "noOffers": "Aucune offre en attente.",
+      "upcoming": "À venir",
+      "noUpcoming": "Rien d'accepté pour l'instant.",
+      "done": "Fait",
+      "schedule": "Planning",
+      "scheduleBody": "Les deux prochaines semaines, jour par jour.",
+      "today": "Aujourd'hui",
+      "free": "Libre",
+      "earnings": "Revenus",
+      "earningsBody": "Ce qui vous est dû et ce qui a été versé. Le paiement d'une mission est retenu jusqu'à l'arrivée du client.",
+      "paidThisMonth": "Versé ce mois-ci",
+      "paidLastMonth": "Versé le mois dernier",
+      "dueNow": "Dû",
+      "held": "Retenu",
+      "heldHint": "Jusqu'à l'arrivée du client",
+      "payout": {
+        "held": "Retenu jusqu'à l'arrivée",
+        "due": "Dû",
+        "paid": "Versé"
+      },
+      "noPayouts": "Rien pour l'instant.",
+      "documents": "Documents",
+      "documentsBody": "Les papiers qui vous permettent de travailler, les plus proches de l'expiration d'abord. Envoyez une copie plus récente avant l'expiration.",
+      "doc": {
+        "licence": "Permis de conduire",
+        "insurance": "Assurance",
+        "permit": "Certification de guide",
+        "id": "Carte d'identité",
+        "vehicleInspection": "Contrôle technique"
+      },
+      "until": "Valable jusqu'au {date}",
+      "daysLeft": "{count, plural, one {# jour restant} other {# jours restants}}",
+      "expiry": {
+        "valid": "Valide",
+        "expired": "Expiré"
+      },
+      "carReturn": "Retour de voiture"
     }
   },
   "account": {
@@ -2450,6 +2521,10 @@
       "viewingChanged": {
         "title": "Visite {state, select, moved {déplacée} done {terminée, merci} cancelled {annulée} other {mise à jour}}",
         "body": "{name} : {when}."
+      },
+      "jobAccepted": {
+        "title": "{name} a accepté une mission",
+        "body": "{what}, {date}."
       }
     },
     "title": "Notifications",
@@ -2525,7 +2600,8 @@
       "jobChanged": "Mission modifiée",
       "payoutSent": "Versement envoyé",
       "documentExpiring": "Document bientôt expiré",
-      "viewingChanged": "Visite déplacée ou terminée"
+      "viewingChanged": "Visite déplacée ou terminée",
+      "jobAccepted": "Mission acceptée par un chauffeur ou un guide"
     }
   },
   "extras": {

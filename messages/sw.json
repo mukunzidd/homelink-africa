@@ -2275,6 +2275,77 @@
       "target": "Kwenye",
       "detail": "Maelezo",
       "noEntries": "Hakuna kilichorekodiwa kwa vichujio hivi."
+    },
+    "partner": {
+      "ranOut": "Ofa hii imeisha muda",
+      "answerWithin": "Jibu ndani ya saa {h} dakika {m}",
+      "accepted": "Imekubaliwa; mapokezi wanajua",
+      "declined": "Imekataliwa; mapokezi watampa mwingine",
+      "accept": "Kubali",
+      "decline": "Kataa",
+      "why": "Kwa nini?",
+      "whyPlaceholder": "Tayari ninaendesha jioni hiyo",
+      "sendDecline": "Kataa",
+      "back": "Rudi",
+      "cannotAnswer": "Ofa hiyo haiwezi kujibiwa tena.",
+      "replace": "Tuma nakala mpya",
+      "replaced": "Imetumwa; mapokezi wataikagua",
+      "newCopy": "Nakala mpya",
+      "validUntil": "Halali hadi",
+      "send": "Tuma",
+      "replaceRefused": "Haijatumwa: nakala mpya lazima iwe halali baada ya leo.",
+      "state": {
+        "offered": "Umepewa ofa",
+        "accepted": "Ni yako",
+        "declined": "Imekataliwa",
+        "done": "Imekamilika"
+      },
+      "kind": {
+        "hire": "Kukabidhi gari",
+        "transfer": "Usafiri",
+        "dayOut": "Matembezi ya siku"
+      },
+      "people": "{count, plural, one {mtu #} other {watu #}}",
+      "jobs": "Kazi",
+      "jobsBody": "Ofa za kujibu kwanza, kisha ulizokubali, kisha zilizokamilika.",
+      "offers": "Ofa",
+      "noOffers": "Hakuna ofa zinazosubiri.",
+      "upcoming": "Zinazokuja",
+      "noUpcoming": "Bado hujakubali chochote.",
+      "done": "Zilizokamilika",
+      "schedule": "Ratiba",
+      "scheduleBody": "Wiki mbili zijazo, siku kwa siku.",
+      "today": "Leo",
+      "free": "Huru",
+      "earnings": "Mapato",
+      "earningsBody": "Unachodai na kilicholipwa. Malipo ya kazi yanashikiliwa hadi mgeni afike.",
+      "paidThisMonth": "Yaliyolipwa mwezi huu",
+      "paidLastMonth": "Yaliyolipwa mwezi uliopita",
+      "dueNow": "Unachodai",
+      "held": "Yanayoshikiliwa",
+      "heldHint": "Hadi mgeni afike",
+      "payout": {
+        "held": "Yamezuiwa hadi afike",
+        "due": "Yanadaiwa",
+        "paid": "Yamelipwa"
+      },
+      "noPayouts": "Bado hakuna kitu.",
+      "documents": "Hati",
+      "documentsBody": "Hati zinazokuruhusu kufanya kazi, zinazokaribia kuisha kwanza. Tuma nakala mpya kabla moja haijaisha.",
+      "doc": {
+        "licence": "Leseni ya udereva",
+        "insurance": "Bima",
+        "permit": "Cheti cha uongozaji",
+        "id": "Kitambulisho",
+        "vehicleInspection": "Ukaguzi wa gari"
+      },
+      "until": "Halali hadi {date}",
+      "daysLeft": "{count, plural, one {siku # imebaki} other {siku # zimebaki}}",
+      "expiry": {
+        "valid": "Halali",
+        "expired": "Imeisha muda"
+      },
+      "carReturn": "Kurudisha gari"
     }
   },
   "account": {
@@ -2450,6 +2521,10 @@
       "viewingChanged": {
         "title": "Ziara {state, select, moved {imehamishwa} done {imekamilika, asante} cancelled {imeghairiwa} other {imesasishwa}}",
         "body": "{name}: {when}."
+      },
+      "jobAccepted": {
+        "title": "{name} amekubali kazi",
+        "body": "{what}, {date}."
       }
     },
     "title": "Arifa",
@@ -2525,7 +2600,8 @@
       "jobChanged": "Kazi imebadilika",
       "payoutSent": "Malipo yametumwa",
       "documentExpiring": "Hati inakaribia kuisha",
-      "viewingChanged": "Ziara imehamishwa au imekamilika"
+      "viewingChanged": "Ziara imehamishwa au imekamilika",
+      "jobAccepted": "Kazi imekubaliwa na dereva au mwongozaji"
     }
   },
   "extras": {

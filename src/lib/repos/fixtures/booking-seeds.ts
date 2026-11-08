@@ -1,6 +1,7 @@
-import type { Block, Booking, Incident, Listing, MaintenanceTicket, Partner, PartnerDocument, PaymentRecord, Review, StaffMember, StatementLine, Viewing } from "@/lib/domain/types";
+import type { Block, Booking, Incident, Listing, MaintenanceTicket, Partner, PartnerDocument, PaymentRecord, Review, StaffMember, StatementLine, Viewing, Vehicle, Experience, JobOffer, Payout } from "@/lib/domain/types";
 import { quoteRent, quoteStay } from "@/lib/domain/pricing";
 import { addDays } from "@/lib/domain/dates";
+import { money } from "@/lib/domain/money";
 import { kigaliDay } from "@/lib/domain/instants";
 
 /** One payment per fixture booking, so the payments screens have rows. */
@@ -301,6 +302,8 @@ export function seedPartners(now: Date): { partners: Partner[]; docs: PartnerDoc
   const docs: PartnerDocument[] = [
     d("doc_eric_licence", "ptn_eric", "licence", 24),
     d("doc_eric_id", "ptn_eric", "id", 900),
+    d("doc_eric_insurance", "ptn_eric", "insurance", 190),
+    d("doc_eric_inspection", "ptn_eric", "vehicleInspection", 62),
     d("doc_jp_licence", "ptn_jeanpaul", "licence", 410),
     d("doc_jp_insurance", "ptn_jeanpaul", "insurance", 75),
     d("doc_emm_permit", "ptn_emmanuel", "permit", 160),
@@ -371,4 +374,53 @@ export function seedStaff(now: Date): StaffMember[] {
     { id: "stf_emmanuel", name: "Emmanuel Rukundo", email: "emmanuel@homelink.rw", role: "guide", status: "active", lastActiveAt: ago(80) },
     { id: "stf_didier", name: "Didier Bizimana", email: "didier@homelink.rw", role: "guide", status: "deactivated", lastActiveAt: ago(600) },
   ];
+}
+
+/**
+ * Work for the preview's driver (Eric H.) and guide (Solange K.): one open
+ * offer each, one accepted job each still to come, and one done each with
+ * its payout paid, so every partner screen has all its states. The extra
+ * bookings are ordinary bookings, dated from today.
+ */
+export function seedPartnerWork(listings: { vehicles: Vehicle[]; experiences: Experience[] }, existing: Booking[], now: Date): { bookings: Booking[]; offers: JobOffer[]; payouts: Payout[] } {
+  const today = kigaliDay(now);
+  const at = (d: string, t = "08:00") => `${d}T${t}:00.000Z`;
+  const cruiser = listings.vehicles.find((v) => v.id === "veh_landcruiser")!;
+  const walk = listings.experiences.find((e) => e.id === "exp_kigali_walk")!;
+  const mk = (id: string, ref: string, supply: Vehicle | Experience, service: "car" | "experience", from: number, to: number, status: Booking["status"], guest: { name: string; email: string; phone: string }, party: number, partnerId?: string): Booking => {
+    const start = addDays(today, from);
+    const end = addDays(today, to);
+    const total = service === "car" ? money((supply as Vehicle).dailyRate.minor * (to - from + 1) + ((supply as Vehicle).withDriverSupplement?.minor ?? 0) * (to - from + 1), (supply as Vehicle).dailyRate.currency) : money((supply as Experience).pricePerPerson.minor * party, (supply as Experience).pricePerPerson.currency);
+    return {
+      id, reference: ref, service, supplyItemId: supply.id, title: supply.name, startDate: start, endDate: end, party, total, status,
+      escrowHeld: false, guest, paymentPlan: "full", ...(service === "car" ? { driveMode: "withDriver" as const } : {}), ...(partnerId ? { partnerId } : {}),
+      timeline: [{ at: at(addDays(start, -10)), kind: "placed", actor: "guest" }, { at: at(addDays(start, -10)), kind: "paid", actor: "guest" }],
+    };
+  };
+  const g = (n: number) => ({ name: HISTORY_GUESTS[n][0], email: HISTORY_GUESTS[n][1], phone: HISTORY_GUESTS[n][2] });
+  const bookings = [
+    mk("bkg_work_drive", "HL-DRV4-07P", cruiser, "car", 4, 4, "confirmed", g(1), 3, "ptn_eric"),
+    mk("bkg_work_drove", "HL-DRV9-21P", cruiser, "car", -9, -9, "completed", g(6), 2, "ptn_eric"),
+    mk("bkg_work_walk", "HL-WLK6-33P", walk, "experience", 6, 6, "confirmed", g(9), 4),
+    mk("bkg_work_walked", "HL-WLK2-12P", walk, "experience", -12, -12, "completed", g(3), 2, "ptn_solange"),
+  ];
+  const all = [...existing, ...bookings];
+  const rav4 = all.find((b) => b.id === "bkg_002");
+  const kigali = all.find((b) => b.id === "bkg_003");
+  const pay = (b: Booking, share: number) => money(Math.round((b.total.minor * share) / 1000) * 1000, b.total.currency);
+  const iso = (hours: number) => new Date(now.getTime() + hours * 3_600_000).toISOString();
+  const offers: JobOffer[] = [
+    ...(rav4 ? [{ id: "job_rav4", partnerId: "ptn_eric", bookingId: rav4.id, kind: "hire" as const, start: rav4.startDate, end: rav4.endDate, time: "23:40", pickup: "Kigali International Airport, arrivals, bay 12", party: rav4.party, status: "offered" as const, offerExpiresAt: iso(6), pay: money(25_000, "RWF") }] : []),
+    { id: "job_drive", partnerId: "ptn_eric", bookingId: "bkg_work_drive", kind: "dayOut", start: bookings[0].startDate, end: bookings[0].endDate, time: "07:30", pickup: "Kigali Marriott Hotel, Kiyovu", party: 3, status: "accepted", pay: pay(bookings[0], 0.45) },
+    { id: "job_drove", partnerId: "ptn_eric", bookingId: "bkg_work_drove", kind: "transfer", start: bookings[1].startDate, end: bookings[1].endDate, time: "05:15", pickup: "Nyarutarama to Kigali International Airport", party: 2, status: "done", pay: pay(bookings[1], 0.45) },
+    { id: "job_walk", partnerId: "ptn_solange", bookingId: "bkg_work_walk", kind: "dayOut", start: bookings[2].startDate, end: bookings[2].endDate, time: "09:00", pickup: "Kigali Genocide Memorial, main gate", party: 4, status: "offered", offerExpiresAt: iso(20), pay: pay(bookings[2], 0.6) },
+    ...(kigali ? [{ id: "job_kigali", partnerId: "ptn_solange", bookingId: kigali.id, kind: "dayOut" as const, start: kigali.startDate, end: kigali.endDate, time: "09:00", pickup: "Kigali Genocide Memorial, main gate", party: kigali.party, status: "accepted" as const, pay: pay(kigali, 0.6) }] : []),
+    { id: "job_walked", partnerId: "ptn_solange", bookingId: "bkg_work_walked", kind: "dayOut", start: bookings[3].startDate, end: bookings[3].endDate, time: "09:00", pickup: "Kigali Genocide Memorial, main gate", party: 2, status: "done", pay: pay(bookings[3], 0.6) },
+  ];
+  if (kigali) kigali.partnerId = "ptn_solange";
+  const payouts: Payout[] = [
+    { id: "pay_work_eric", bookingId: "bkg_work_drove", payee: "Eric H.", amount: offers.find((o) => o.id === "job_drove")!.pay, status: "paid", releaseOn: addDays(today, -8) },
+    { id: "pay_work_solange", bookingId: "bkg_work_walked", payee: "Solange K.", amount: offers.find((o) => o.id === "job_walked")!.pay, status: "paid", releaseOn: addDays(today, -11) },
+  ];
+  return { bookings, offers, payouts };
 }

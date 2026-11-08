@@ -1,4 +1,5 @@
 import type {
+  JobOffer,
   StaffMember,
   SiteContent,
   StatementLine,
@@ -44,7 +45,7 @@ import {
   VERIFICATION_QUEUE,
 } from "./data";
 import { seedNotifications } from "./notifications";
-import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents, seedHistory, seedPartners, seedViewings, seedStatement, seedPendingRefunds, seedStaff } from "./booking-seeds";
+import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents, seedHistory, seedPartners, seedViewings, seedStatement, seedPendingRefunds, seedStaff, seedPartnerWork } from "./booking-seeds";
 import { DEFAULT_CATALOG } from "@/lib/domain/catalog";
 import type { SiteSettings } from "@/lib/repos/types";
 
@@ -90,6 +91,7 @@ export type FixtureStore = {
   drafts: ListingDraft[];
   /** Photos uploaded to a thread, held until (and after) a message uses them. */
   partners: Partner[];
+  jobOffers: JobOffer[];
   staff: StaffMember[];
   settings: SiteSettings;
   content: SiteContent;
@@ -124,7 +126,9 @@ function seed(): FixtureStore {
   const now = new Date();
   // Bookings in every phase a guest's booking page has, dated from today.
   const phased = [...seedPhaseBookings(fixed.listings, now), ...fixed.bookings];
-  fixed.bookings = [...phased, ...seedHistory(fixed.listings, phased, now)].sort((a, b) =>
+  const work = seedPartnerWork({ vehicles: fixed.vehicles, experiences: fixed.experiences }, phased, now);
+  fixed.payouts = [...fixed.payouts, ...work.payouts];
+  fixed.bookings = [...phased, ...work.bookings, ...seedHistory(fixed.listings, [...phased, ...work.bookings], now)].sort((a, b) =>
     b.startDate.localeCompare(a.startDate),
   );
   settleThreads(fixed.conversations, fixed.messages, now);
@@ -144,6 +148,7 @@ function seed(): FixtureStore {
     drafts: [],
     uploads: [],
     housekeeping: {},
+    jobOffers: work.offers,
     staff: seedStaff(now),
     settings: { catalog: structuredClone(DEFAULT_CATALOG), fxDisplay: { ...FX_RATES }, bank: { bankName: "Bank of Kigali", accountName: "HomeLink Africa Ltd", accountNumber: "00040-0695781-29", swift: "BKIGRWRW" } },
     content: { announcements: [], featured: [], neighbourhoods: {} },
@@ -178,7 +183,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 16;
+const SHAPE = 17;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {
