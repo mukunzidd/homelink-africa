@@ -80,7 +80,7 @@ export function FlowShell({
   const pathname = usePathname();
   const params = useSearchParams();
   const toast = useToast();
-  const { fx, currency } = usePreferences();
+  const { fx, currency, role, setRole } = usePreferences();
   const [draft, dispatch, { restored, reset }] = useBookingDraft({ flow, ...init });
   const steps = STEPS[flow];
 
@@ -163,6 +163,9 @@ export function FlowShell({
     setBusy(false);
     if (result.ok) {
       reset();
+      // The server signed the preview in as the guest; the header reads the
+      // role from the browser's copy, so it has to hear about it too.
+      if (role === "visitor") setRole("guest");
       toast.show({ title: t("booked", { ref: result.booking.reference }), tone: "ok" });
       router.push(`/bookings/${result.booking.reference}`);
       router.refresh();

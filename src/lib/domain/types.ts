@@ -101,6 +101,8 @@ export type Listing = {
    * a company, and a company does not pick up at eleven at night.
    */
   propertyManager: { name: string; since: string };
+  /** Accepted at checkout. Plain sentences, in the order a guest needs them. */
+  houseRules: string[];
   /** Colour seed, used when no photograph exists yet. */
   imageSeed: string;
   /** Photographs, first is the hero. Empty until our team has shot the place. */

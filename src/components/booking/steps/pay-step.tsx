@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { BookingDraft, DraftAction } from "@/lib/booking/draft";
 import type { Quote } from "@/lib/domain/pricing";
@@ -74,6 +74,7 @@ export function PayStep({
   const [code, setCode] = useState("");
   const [codeTried, setCodeTried] = useState(false);
   const [left, setLeft] = useState(MOMO_WAIT_SECONDS);
+  const alertRef = useRef<HTMLDivElement>(null);
 
   const rail = draft.rail;
   const useDeposit = plan.offered && draft.plan === "deposit";
@@ -97,6 +98,28 @@ export function PayStep({
       });
     }, 1000);
     return () => window.clearInterval(id);
+  }, [phase]);
+
+  // The stored draft arrives a moment after the first render (after a
+  // refresh, say); fill the name on the card and the Mobile Money number
+  // from it then, without overwriting anything already typed.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setValues((v) => ({
+      ...v,
+      "card-name": v["card-name"] || draft.guest.name || "",
+      "momo-number": v["momo-number"] || draft.guest.phone || "",
+    }));
+  }, [draft.guest.name, draft.guest.phone]);
+
+  // A failure is announced where the person is looking. They pressed Pay at
+  // the bottom of the step; the message sits at the top, so it is brought
+  // into view and given focus rather than left to be found.
+  useEffect(() => {
+    if (phase === "declined" || phase === "momoTimeout" || phase === "momoDeclined") {
+      alertRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      alertRef.current?.focus({ preventScroll: true });
+    }
   }, [phase]);
 
   function set(id: FieldId, raw: string) {
@@ -205,7 +228,7 @@ export function PayStep({
   return (
     <div className="flex flex-col gap-5">
       {alert && (
-        <div role="alert" className="flex flex-col gap-1 rounded-card border border-crit/40 bg-crit-tint px-5 py-4">
+        <div ref={alertRef} tabIndex={-1} role="alert" className="flex flex-col gap-1 rounded-card border border-crit/40 bg-crit-tint px-5 py-4">
           <p className="text-[15px] font-semibold text-crit">{alert.title}</p>
           <p className="text-[14px] text-ink-2">{alert.body}</p>
         </div>

@@ -55,7 +55,25 @@ const MANAGER_BY_AREA: Record<string, Listing["propertyManager"]> = {
   Gikondo: MANAGERS.south, Kicukiro: MANAGERS.south, Nyamirambo: MANAGERS.south, Rebero: MANAGERS.south,
 };
 
-const RAW_LISTINGS: Omit<Listing, "propertyManager">[] = [
+/**
+ * The rules every home shares, then a line or two that only one home needs.
+ * Short and concrete: a rule a guest has to interpret is a rule they break.
+ */
+const BASE_RULES = [
+  "Check-in from 14:00, checkout by 11:00.",
+  "No smoking indoors, including balconies.",
+  "Quiet from 22:00 to 07:00; neighbours are close in most Kigali compounds.",
+  "No parties or events. Visitors leave by 22:00.",
+];
+
+const EXTRA_RULES: Record<string, string[]> = {
+  lst_nyarutarama_villa: ["The pool is unfenced: children must be supervised at all times."],
+  lst_gikondo_family: ["Pets are welcome on request, outside the bedrooms."],
+  lst_rebero_hilltop: ["The road up is steep and unlit; arrive before dark on the first night if you can."],
+  lst_kimihurura_studio: ["One guest pass for the building's front desk per guest; show it on the way in."],
+};
+
+const RAW_LISTINGS: Omit<Listing, "propertyManager" | "houseRules">[] = [
   {
     id: "lst_kacyiru_garden",
     slug: "kacyiru-garden-apartment",
@@ -307,6 +325,7 @@ const RAW_LISTINGS: Omit<Listing, "propertyManager">[] = [
 export const LISTINGS: Listing[] = RAW_LISTINGS.map((l) => ({
   ...l,
   propertyManager: MANAGER_BY_AREA[l.neighbourhood] ?? MANAGERS.north,
+  houseRules: [...BASE_RULES, ...(EXTRA_RULES[l.id] ?? [])],
 }));
 
 export const VEHICLES: Vehicle[] = [

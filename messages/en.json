@@ -1713,7 +1713,7 @@
     },
     "momo": {
       "waitTitle": "Approve the payment on your phone",
-      "waitBody": "We sent a {provider} request for {amount} to {number}. Enter your Mobile Money PIN on the phone to approve it.",
+      "waitBody": "We sent a payment request for {amount} to {number} on {provider} Mobile Money. Enter your PIN on the phone to approve it.",
       "remaining": "{seconds, plural, one {# second left} other {# seconds left}}",
       "approved": "I've approved it",
       "other": "Use another number",
