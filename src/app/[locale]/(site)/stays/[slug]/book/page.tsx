@@ -1,3 +1,4 @@
+import { CatalogProvider } from "@/components/booking/catalog-context";
 import { Suspense } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -62,28 +63,30 @@ export default async function BookStay({
       />
       <h1 className="font-display text-3xl font-semibold text-ink sm:text-4xl">{tCheckout("title")}</h1>
       <Suspense fallback={<div className="h-96" />}>
-        <FlowShell
-          flow="stay"
-          init={{ slug, start: from, end: to, party }}
-          supply={{ kind: "stay", item: listing }}
-          text={{
-            ...policy,
-            facts: [
-              tSearch("guestCount", { count: party }),
-              tListing("nightsTotal", { count: nightsBetween(from, to) }),
-              `${listing.neighbourhood}, ${listing.city}`,
-            ],
-            title: listing.name,
-            image: listing.images?.[0],
-            imageSeed: listing.imageSeed,
-            changeHref: back,
-          }}
-          houseRules={listing.houseRules}
-          rulesLane="stay"
-          rails={["card", "mobileMoney"]}
-          escrow={{ title: tCheckout("escrowTitle"), body: tCheckout("escrowBody") }}
-          signInHref={`/sign-in?next=${encodeURIComponent(here)}`}
-        />
+        <CatalogProvider catalog={(await repos().admin.settings()).catalog}>
+          <FlowShell
+            flow="stay"
+            init={{ slug, start: from, end: to, party }}
+            supply={{ kind: "stay", item: listing }}
+            text={{
+              ...policy,
+              facts: [
+                tSearch("guestCount", { count: party }),
+                tListing("nightsTotal", { count: nightsBetween(from, to) }),
+                `${listing.neighbourhood}, ${listing.city}`,
+              ],
+              title: listing.name,
+              image: listing.images?.[0],
+              imageSeed: listing.imageSeed,
+              changeHref: back,
+            }}
+            houseRules={listing.houseRules}
+            rulesLane="stay"
+            rails={["card", "mobileMoney"]}
+            escrow={{ title: tCheckout("escrowTitle"), body: tCheckout("escrowBody") }}
+            signInHref={`/sign-in?next=${encodeURIComponent(here)}`}
+          />
+        </CatalogProvider>
       </Suspense>
     </div>
   );

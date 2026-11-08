@@ -642,6 +642,28 @@ export type HousekeepingTask = {
   note?: string;
 };
 
+/** Someone who signs in to the workspace. Guests are not here: they are customers, not staff. */
+export type StaffMember = {
+  id: string;
+  name: string;
+  email: string;
+  role: "ops" | "admin" | "driver" | "guide";
+  status: "active" | "invited" | "deactivated";
+  lastActiveAt?: string;
+};
+
+/** A line across the top of the site, between two dates. */
+export type Announcement = { id: string; text: string; start: string; end: string };
+
+/** What admin edits about the public site without a deploy. */
+export type SiteContent = {
+  announcements: Announcement[];
+  /** Listing ids for the landing page, in order; the rest fill in by recency. */
+  featured: string[];
+  /** Per neighbourhood: a line of our own, a photo from one of its homes, and whether its landmarks show. */
+  neighbourhoods: Record<string, { text?: string; photo?: string; showLandmarks?: boolean }>;
+};
+
 /** A driver or guide who works HomeLink's cars and days out. */
 export type Partner = {
   id: string;

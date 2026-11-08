@@ -1,3 +1,4 @@
+import { CatalogProvider } from "@/components/booking/catalog-context";
 import { Suspense } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -71,38 +72,40 @@ export default async function RentHome({
       <Breadcrumbs trail={[{ label: tB("rent"), href: "/stays?band=long" }, { label: home, href: back }, { label: tLease("apply") }]} />
       <h1 className="font-display text-3xl font-semibold text-ink sm:text-4xl">{tLease("apply")}</h1>
       <Suspense fallback={<div className="h-96" />}>
-        <RentFlow
-          listing={listing}
-          init={{ slug, start: moveIn, end, party: 1 }}
-          monthLabel={monthLabel}
-          text={{
-            range: `${day(moveIn)} – ${day(end)}`,
-            facts: [tR("facts", { count: months, month: monthLabel }), `${listing.neighbourhood}, ${listing.city}`],
-            stages: [
-              { tone: "ok", title: tR("stageFull"), when: tR("stageFullWhen") },
-              { tone: "warn", title: tR("stageDeposit"), when: tR("stageDepositWhen") },
-            ],
-            title: home,
-            image: listing.images?.[0],
-            imageSeed: listing.imageSeed,
-            changeHref: back,
-          }}
-          agreement={{
-            heading: t("heading", { home }),
-            dateLabel: day(kigaliDay()),
-            clauses: [
-              t("clauseHome", { home, area: `${listing.neighbourhood}, ${listing.city}` }),
-              t("clauseTerm", { count: months, start: day(moveIn) }),
-              t("clauseRent", { rent }),
-              t("clauseDeposit", { deposit }),
-              t("clauseIncludes", { includes }),
-              t("clauseCare"),
-              t("clauseRules"),
-              t("clauseLaw"),
-            ],
-          }}
-          signInHref={`/sign-in?next=${encodeURIComponent(here)}`}
-        />
+        <CatalogProvider catalog={(await repos().admin.settings()).catalog}>
+          <RentFlow
+            listing={listing}
+            init={{ slug, start: moveIn, end, party: 1 }}
+            monthLabel={monthLabel}
+            text={{
+              range: `${day(moveIn)} – ${day(end)}`,
+              facts: [tR("facts", { count: months, month: monthLabel }), `${listing.neighbourhood}, ${listing.city}`],
+              stages: [
+                { tone: "ok", title: tR("stageFull"), when: tR("stageFullWhen") },
+                { tone: "warn", title: tR("stageDeposit"), when: tR("stageDepositWhen") },
+              ],
+              title: home,
+              image: listing.images?.[0],
+              imageSeed: listing.imageSeed,
+              changeHref: back,
+            }}
+            agreement={{
+              heading: t("heading", { home }),
+              dateLabel: day(kigaliDay()),
+              clauses: [
+                t("clauseHome", { home, area: `${listing.neighbourhood}, ${listing.city}` }),
+                t("clauseTerm", { count: months, start: day(moveIn) }),
+                t("clauseRent", { rent }),
+                t("clauseDeposit", { deposit }),
+                t("clauseIncludes", { includes }),
+                t("clauseCare"),
+                t("clauseRules"),
+                t("clauseLaw"),
+              ],
+            }}
+            signInHref={`/sign-in?next=${encodeURIComponent(here)}`}
+          />
+        </CatalogProvider>
       </Suspense>
     </div>
   );

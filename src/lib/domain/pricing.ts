@@ -4,6 +4,7 @@ import { add, convert, money, multiply, subtract } from "./money";
 import { nightsBetween, type IsoDate } from "./dates";
 import { priceExtras, type ExtraKey, type ExtraSelection } from "./extras";
 import { applyPromo, type PromoResult } from "./promo";
+import type { PricingCatalog } from "./catalog";
 
 /**
  * Quote arithmetic, in the supplier's own currency.
@@ -285,6 +286,7 @@ export function quoteBooking(
   supply: Listing | Vehicle | Experience,
   input: QuoteInput,
   on: IsoDate,
+  catalog?: PricingCatalog,
 ): (Quote & { promo?: PromoResult }) | null {
   if (input.kind === "stay" && input.rentMonths) return quoteRent(supply as Listing, input.rentMonths);
   const base =
@@ -296,7 +298,7 @@ export function quoteBooking(
   if (!base) return null;
 
   const currency = base.total.currency;
-  const extras = priceExtras(input.kind, input.extras ?? [], base.nights).filter(
+  const extras = priceExtras(input.kind, input.extras ?? [], base.nights, catalog).filter(
     // Extras are priced in RWF; a lane priced in another currency has none.
     (l) => l.amount.currency === currency,
   );
@@ -304,7 +306,7 @@ export function quoteBooking(
 
   let promo: PromoResult | undefined;
   if (input.promoCode?.trim()) {
-    promo = applyPromo(input.promoCode, base, on);
+    promo = applyPromo(input.promoCode, base, on, catalog, input.kind);
     if (promo.ok && promo.discount.minor > 0) {
       lines.push({ key: "discount", amount: money(-promo.discount.minor, currency) });
     }

@@ -29,6 +29,7 @@ import { FlowSpine } from "./flow-spine";
 import { FlowSummary, FlowSummaryBar } from "./flow-summary";
 import { DetailsStep } from "./steps/details-step";
 import { ExtrasStep } from "./steps/extras-step";
+import { useCatalog } from "./catalog-context";
 import { ReviewStep } from "./steps/review-step";
 import { PayStep } from "./steps/pay-step";
 import type { FlowSupply, FlowText } from "./types";
@@ -96,6 +97,7 @@ export function FlowShell({
   const [busy, setBusy] = useState(false);
   const [outcome, setOutcome] = useState<null | "datesTaken" | "invalid" | { priceChanged: Quote }>(null);
   const top = useRef<HTMLDivElement>(null);
+  const catalog = useCatalog();
 
   const quote = useMemo(
     () =>
@@ -112,8 +114,9 @@ export function FlowShell({
           ...(flow === "rent" ? { rentMonths: monthsBetween(draft.start, draft.end) } : {}),
         },
         kigaliDay(),
+        catalog,
       ),
-    [supply, flow, draft.start, draft.end, draft.party, draft.driveMode, draft.extras, draft.promoCode],
+    [supply, flow, draft.start, draft.end, draft.party, draft.driveMode, draft.extras, draft.promoCode, catalog],
   );
   const plan = useMemo(
     () => (quote ? depositPlan(quote, draft.start, kigaliDay(), fx) : ({ offered: false } as const)),

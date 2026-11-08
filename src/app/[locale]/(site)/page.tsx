@@ -52,6 +52,7 @@ export default async function LandingPage({
     r.experiences.list(),
     r.stays.neighbourhoodsWithCounts(),
   ]);
+  const own = (await r.admin.content()).neighbourhoods;
 
   // "From" is the cheapest nightly rate actually listed there, not a
   // marketing floor. Compared in minor units within one currency, which is
@@ -235,7 +236,7 @@ export default async function LandingPage({
                       </span>
                     </span>
                     <span className="line-clamp-2 text-[13px] leading-relaxed text-ink-2">
-                      {tPlaces.has(p.name) ? tPlaces(p.name) : ""}
+                      {own[p.name]?.text || (tPlaces.has(p.name) ? tPlaces(p.name) : "")}
                     </span>
                     {price && (
                       <span className="mt-auto pt-1 text-[13px] text-ink-3">

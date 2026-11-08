@@ -1,5 +1,8 @@
 import type { ListingPatch } from "@/lib/workspace/listing-patch";
+import type { PricingCatalog } from "@/lib/domain/catalog";
 import type {
+  StaffMember,
+  SiteContent,
   StatementLine,
   Partner,
   PartnerDocument,
@@ -388,6 +391,27 @@ export interface ReviewsRepo {
   create(r: Pick<Review, "bookingId" | "ratings" | "text">): Promise<Review>;
 }
 
+export type SiteSettings = {
+  catalog: PricingCatalog;
+  /** Display-only rates; settlement rates come from the payment provider on each transaction. */
+  fxDisplay: FxTable;
+  bank: { bankName: string; accountName: string; accountNumber: string; swift: string };
+};
+
+export interface AdminRepo {
+  staff(): Promise<StaffMember[]>;
+  invite(email: string, role: StaffMember["role"], by: Role): Promise<StaffMember>;
+  /** Refuses to leave the workspace without an active admin. */
+  setRole(id: string, role: StaffMember["role"], by: Role): Promise<StaffMember>;
+  deactivate(id: string, by: Role): Promise<StaffMember>;
+  settings(): Promise<SiteSettings>;
+  /** Checked as a whole; a bad value anywhere changes nothing. */
+  updateSettings(patch: Partial<SiteSettings>, by: Role): Promise<SiteSettings>;
+  content(): Promise<SiteContent>;
+  updateContent(patch: Partial<SiteContent>, by: Role): Promise<SiteContent>;
+  activeAnnouncements(on: string): Promise<SiteContent["announcements"]>;
+}
+
 /** Money in and out, for the finance pages. Every write is audited. */
 export interface FinanceRepo {
   payments(filter?: { rail?: PaymentRecord["rail"]; status?: PaymentRecord["status"] }): Promise<PaymentRecord[]>;
@@ -447,6 +471,7 @@ export type Repositories = {
   rates: RatesRepo;
   partners: PartnersRepo;
   finance: FinanceRepo;
+  admin: AdminRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;

@@ -65,7 +65,7 @@ export default async function StaffBooking({ params }: { params: Promise<{ local
     ? refundPreview(b.service, quote, b.startDate, today, {
         hireDays: nightsBetween(b.startDate, b.endDate) + 1,
         permitShare: experience?.permitShare ? money(experience.permitShare.minor * b.party, experience.permitShare.currency) : undefined,
-      }).refund
+      }, (await repos().admin.settings()).catalog).refund
     : null;
   const notes = b.staffNotes ?? [];
   const events = (b.timeline ?? []).filter((e) => e.kind !== "noteAdded");

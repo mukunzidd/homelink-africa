@@ -2,6 +2,7 @@ import type { Money } from "./money";
 import { money } from "./money";
 import type { Quote } from "./pricing";
 import type { IsoDate } from "./dates";
+import type { ServiceKind } from "./types";
 
 export type PromoResult =
   | { ok: true; code: string; discount: Money }
@@ -12,15 +13,19 @@ export type PromoResult =
  * A code takes a share of the accommodation line only, never of fees or
  * extras, and is capped, so a long stay cannot turn it into a large refund.
  */
-const CODES: Record<string, { percent: number; capRwf: number; validUntil: IsoDate }> = {
+export type PromoSetting = { percent: number; capRwf: number; validUntil: IsoDate; lane?: ServiceKind };
+
+export const DEFAULT_PROMOS: Record<string, PromoSetting> = {
   KARIBU10: { percent: 10, capRwf: 50_000, validUntil: "2027-12-31" },
 };
 
-export function applyPromo(raw: string, quote: Quote, on: IsoDate): PromoResult {
+/** With a catalog, its codes are the whole list; a code limited to a lane works only there. */
+export function applyPromo(raw: string, quote: Quote, on: IsoDate, catalog?: { promos: Record<string, PromoSetting> }, lane?: ServiceKind): PromoResult {
   const code = raw.trim().toUpperCase();
-  const promo = CODES[code];
+  const promo = (catalog?.promos ?? DEFAULT_PROMOS)[code];
   if (!promo) return { ok: false, code, reason: "unknown" };
   if (on > promo.validUntil) return { ok: false, code, reason: "expired" };
+  if (promo.lane && lane && promo.lane !== lane) return { ok: false, code, reason: "notApplicable" };
   const base = quote.lines.find((l) => l.key === "accommodation");
   // The cap is in RWF. A stay priced in anything else is refused rather than
   // compared across currencies, which would let the cap mean 50,000 dollars.

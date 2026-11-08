@@ -3,7 +3,8 @@
 import { useTranslations } from "next-intl";
 import type { ServiceKind } from "@/lib/domain/types";
 import type { BookingDraft, DraftAction } from "@/lib/booking/draft";
-import { EXTRAS, extrasFor, type ExtraKey } from "@/lib/domain/extras";
+import { EXTRAS, extraPrice, extrasFor, type ExtraKey } from "@/lib/domain/extras";
+import { useCatalog } from "../catalog-context";
 import { MoneyText } from "@/components/ui/money-text";
 import {
   BowlIcon,
@@ -50,7 +51,8 @@ export function ExtrasStep({
 }) {
   const t = useTranslations("booking.extras");
   const tx = useTranslations("extras");
-  const keys = extrasFor(lane);
+  const catalog = useCatalog();
+  const keys = extrasFor(lane, catalog);
   const qty = (k: ExtraKey) => draft.extras.find((e) => e.key === k)?.quantity ?? 0;
   const setQty = (k: ExtraKey, n: number) =>
     dispatch({
@@ -70,7 +72,7 @@ export function ExtrasStep({
     <StepSection title={t("title")} body={t("body")}>
       <ul className="grid gap-3 sm:grid-cols-2">
         {keys.map((k) => {
-          const extra = EXTRAS[k];
+          const extra = { ...EXTRAS[k], price: extraPrice(k, catalog) };
           const n = qty(k);
           const Icon = ICON[k];
           const name = tx(`${k}.name`);

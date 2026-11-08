@@ -1,4 +1,4 @@
-import type { Block, Booking, Incident, Listing, MaintenanceTicket, Partner, PartnerDocument, PaymentRecord, Review, StatementLine, Viewing } from "@/lib/domain/types";
+import type { Block, Booking, Incident, Listing, MaintenanceTicket, Partner, PartnerDocument, PaymentRecord, Review, StaffMember, StatementLine, Viewing } from "@/lib/domain/types";
 import { quoteRent, quoteStay } from "@/lib/domain/pricing";
 import { addDays } from "@/lib/domain/dates";
 import { kigaliDay } from "@/lib/domain/instants";
@@ -355,4 +355,20 @@ export function seedPendingRefunds(bookings: Booking[], payments: PaymentRecord[
       status: "pending" as const,
       at: b.timeline?.find((e) => e.kind === "cancelled")?.at ?? new Date().toISOString(),
     }));
+}
+
+/** The team who sign in to the workspace, under the names the threads and asks already use. */
+export function seedStaff(now: Date): StaffMember[] {
+  const ago = (h: number) => new Date(now.getTime() - h * 3_600_000).toISOString();
+  return [
+    { id: "stf_placide", name: "Placide K.", email: "placide@homelink.rw", role: "admin", status: "active", lastActiveAt: ago(1) },
+    { id: "stf_aline", name: "Aline M.", email: "aline@homelink.rw", role: "ops", status: "active", lastActiveAt: ago(0.2) },
+    { id: "stf_patrick", name: "Patrick N.", email: "patrick@homelink.rw", role: "ops", status: "active", lastActiveAt: ago(5) },
+    { id: "stf_claudine", name: "Claudine U.", email: "claudine@homelink.rw", role: "ops", status: "active", lastActiveAt: ago(26) },
+    { id: "stf_eric", name: "Eric Hakizimana", email: "eric@homelink.rw", role: "driver", status: "active", lastActiveAt: ago(3) },
+    { id: "stf_jeanpaul", name: "Jean-Paul Nshimiyimana", email: "jeanpaul@homelink.rw", role: "driver", status: "active", lastActiveAt: ago(50) },
+    { id: "stf_solange", name: "Solange Kamikazi", email: "solange@homelink.rw", role: "guide", status: "active", lastActiveAt: ago(8) },
+    { id: "stf_emmanuel", name: "Emmanuel Rukundo", email: "emmanuel@homelink.rw", role: "guide", status: "active", lastActiveAt: ago(80) },
+    { id: "stf_didier", name: "Didier Bizimana", email: "didier@homelink.rw", role: "guide", status: "deactivated", lastActiveAt: ago(600) },
+  ];
 }

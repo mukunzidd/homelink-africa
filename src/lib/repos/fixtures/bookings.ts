@@ -147,6 +147,7 @@ function quoteFor(supply: Supply, d: BookingDraft, today: string) {
       ...(d.flow === "rent" ? { rentMonths: monthsBetween(d.start, d.end) } : {}),
     },
     today,
+    store().settings.catalog,
   );
 }
 
@@ -373,7 +374,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
           supply?.kind === "experience" && supply.item.permitShare
             ? money(supply.item.permitShare.minor * b.party, supply.item.permitShare.currency)
             : undefined,
-      });
+      }, store().settings.catalog);
       // Never more than is left of what was paid: a part refund earlier
       // has already given some of the policy's amount back.
       const left = refundable(b);
@@ -435,6 +436,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
         supply.item,
         { kind: supply.kind, start, end, party: b.party, driveMode: b.driveMode, extras: b.extras, promoCode: b.promoCode },
         today,
+        store().settings.catalog,
       );
       if (!after) return { ok: false, reason: "invalid" };
       const difference = money(after.total.minor - b.total.minor, b.total.currency);
@@ -479,7 +481,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       // A day out is priced per person, so more people cost more; a stay or
       // a hire is not, and its price stays as it is.
       if (supply?.kind === "experience") {
-        const q = quoteBooking(supply.item, { kind: "experience", start: b.startDate, end: b.startDate, party, promoCode: b.promoCode }, kigaliDay());
+        const q = quoteBooking(supply.item, { kind: "experience", start: b.startDate, end: b.startDate, party, promoCode: b.promoCode }, kigaliDay(), store().settings.catalog);
         if (!q) throw new Error("Cannot price");
         const diff = q.total.minor - b.total.minor;
         if (diff !== 0) {

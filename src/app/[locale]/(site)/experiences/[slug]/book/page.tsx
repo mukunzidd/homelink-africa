@@ -1,3 +1,4 @@
+import { CatalogProvider } from "@/components/booking/catalog-context";
 import { Suspense } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -47,19 +48,21 @@ export default async function BookDay({
       <Breadcrumbs trail={[{ label: tB("experiences"), href: "/experiences" }, { label: experience.name, href: back }, { label: tB("book") }]} />
       <h1 className="font-display text-3xl font-semibold text-ink sm:text-4xl">{tCheckout("title")}</h1>
       <Suspense fallback={<div className="h-96" />}>
-        <DayFlow
-          experience={experience}
-          init={{ slug, start: date, end: date, party }}
-          text={{
-            ...policy,
-            facts: [tSearch("guestCount", { count: party }), experience.meetingPoint],
-            title: experience.name,
-            image: experience.images?.[0],
-            imageSeed: experience.imageSeed,
-            changeHref: back,
-          }}
-          signInHref={`/sign-in?next=${encodeURIComponent(here)}`}
-        />
+        <CatalogProvider catalog={(await repos().admin.settings()).catalog}>
+          <DayFlow
+            experience={experience}
+            init={{ slug, start: date, end: date, party }}
+            text={{
+              ...policy,
+              facts: [tSearch("guestCount", { count: party }), experience.meetingPoint],
+              title: experience.name,
+              image: experience.images?.[0],
+              imageSeed: experience.imageSeed,
+              changeHref: back,
+            }}
+            signInHref={`/sign-in?next=${encodeURIComponent(here)}`}
+          />
+        </CatalogProvider>
       </Suspense>
     </div>
   );

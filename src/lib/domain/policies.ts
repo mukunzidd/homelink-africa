@@ -24,9 +24,9 @@ export type RefundRule =
 
 export type RefundPreview = { refund: Money; kept: Money; rule: RefundRule; freeUntil: IsoDate | null };
 
-const STAY_FREE_DAYS = 7;
-const CAR_FREE_DAYS = 2;
-const DAY_FREE_DAYS = 3;
+const STAY_FREE_DEFAULT = 7;
+const CAR_FREE_DEFAULT = 2;
+const DAY_FREE_DEFAULT = 3;
 
 const lineSum = (q: Quote, keys: string[]) =>
   q.lines.filter((l) => keys.includes(l.key)).reduce((s, l) => s + l.amount.minor, 0);
@@ -42,8 +42,12 @@ export function refundPreview(
   start: IsoDate,
   today: IsoDate,
   opts: { permitShare?: Money; hireDays?: number } = {},
+  catalog?: { windows: Record<ServiceKind, number> },
 ): RefundPreview {
   const daysOut = nightsBetween(today, start);
+  const STAY_FREE_DAYS = catalog?.windows.stay ?? STAY_FREE_DEFAULT;
+  const CAR_FREE_DAYS = catalog?.windows.car ?? CAR_FREE_DEFAULT;
+  const DAY_FREE_DAYS = catalog?.windows.experience ?? DAY_FREE_DEFAULT;
   const total = quote.total;
 
   if (service === "stay") {

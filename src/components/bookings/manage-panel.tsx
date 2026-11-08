@@ -38,7 +38,7 @@ export async function ManagePanel({ booking, intlLocale }: { booking: Booking; i
       ? refundPreview(booking.service, quote, booking.startDate, today, {
           hireDays: nightsBetween(booking.startDate, booking.endDate) + 1,
           permitShare: experience?.permitShare ? money(experience.permitShare.minor * booking.party, experience.permitShare.currency) : undefined,
-        })
+        }, (await repos().admin.settings()).catalog)
       : null;
 
   const [review, issues] = await Promise.all([

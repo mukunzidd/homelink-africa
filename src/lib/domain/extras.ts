@@ -34,8 +34,14 @@ export const EXTRAS: Record<ExtraKey, { lane: ServiceKind; price: Money; unit: E
   fullInsurance: { lane: "car", price: money(15_000, "RWF"), unit: "perDay", maxQuantity: 1 },
 };
 
-export function extrasFor(lane: ServiceKind): ExtraKey[] {
-  return (Object.keys(EXTRAS) as ExtraKey[]).filter((k) => EXTRAS[k].lane === lane);
+/** This lane's extras that are switched on in the catalog (all of them, when none is given). */
+export function extrasFor(lane: ServiceKind, catalog?: { extras: Partial<Record<ExtraKey, { enabled: boolean }>> }): ExtraKey[] {
+  return (Object.keys(EXTRAS) as ExtraKey[]).filter((k) => EXTRAS[k].lane === lane && catalog?.extras[k]?.enabled !== false);
+}
+
+/** An extra's price in the catalog, or the constant when the catalog has none. */
+export function extraPrice(key: ExtraKey, catalog?: { extras: Partial<Record<ExtraKey, { price: Money }>> }): Money {
+  return catalog?.extras[key]?.price ?? EXTRAS[key].price;
 }
 
 /**
@@ -45,14 +51,22 @@ export function extrasFor(lane: ServiceKind): ExtraKey[] {
  * A free extra (the cot) stays on the bill at zero, so the guest can see it
  * was asked for.
  */
-export function priceExtras(lane: ServiceKind, selected: ExtraSelection[], days: number): QuoteLine[] {
+export function priceExtras(
+  lane: ServiceKind,
+  selected: ExtraSelection[],
+  days: number,
+  catalog?: { extras: Partial<Record<ExtraKey, { price: Money; enabled: boolean }>> },
+): QuoteLine[] {
   const lines: QuoteLine[] = [];
   for (const { key, quantity } of selected) {
     const extra = EXTRAS[key];
     if (!extra || extra.lane !== lane || !(quantity > 0)) continue;
+    // Switched off in settings: not on the menu, so not on the bill.
+    if (catalog?.extras[key]?.enabled === false) continue;
+    const price = extraPrice(key, catalog);
     const qty = Math.min(Math.floor(quantity), extra.maxQuantity);
     const times = extra.unit === "perDay" ? qty * Math.max(1, days) : qty;
-    lines.push({ key: "extra", extra: key, amount: money(extra.price.minor * times, extra.price.currency) });
+    lines.push({ key: "extra", extra: key, amount: money(price.minor * times, price.currency) });
   }
   return lines;
 }

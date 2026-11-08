@@ -11,7 +11,7 @@ import type {
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
-import type { Conversation, HousekeepingTask, Listing, PartnerJob, Role, SharedLocation } from "@/lib/domain/types";
+import type { Conversation, HousekeepingTask, Listing, PartnerJob, Role, SharedLocation, StaffMember } from "@/lib/domain/types";
 import { turnoverTasks } from "@/lib/workspace/day-board";
 import { readsAs } from "@/lib/preferences/role";
 import { convert, formatMoney, money, type Money } from "@/lib/domain/money";
@@ -22,7 +22,7 @@ import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
 import { availability, makeBookings, makeTrips } from "./bookings";
-import { MESSAGE_LIMITS, type IncidentsRepo, type FinanceRepo, type PartnersRepo, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
+import { MESSAGE_LIMITS, type IncidentsRepo, type AdminRepo, type FinanceRepo, type PartnersRepo, type SiteSettings, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
 import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
@@ -163,11 +163,12 @@ const stays: StaysRepo = {
   },
 
   async featured(limit = 3) {
-    return live()
-      .sort((a, b) =>
-        b.verification.inspectedAt.localeCompare(a.verification.inspectedAt),
-      )
-      .slice(0, limit);
+    // Admin's picks first, in admin's order; the most recently inspected fill the rest.
+    const picks = store().content.featured.map((id) => live().find((l) => l.id === id)).filter((l): l is Listing => !!l);
+    const rest = live()
+      .filter((l) => !picks.includes(l))
+      .sort((a, b) => b.verification.inspectedAt.localeCompare(a.verification.inspectedAt));
+    return [...picks, ...rest].slice(0, limit);
   },
 
   async neighbourhoods() {
@@ -624,7 +625,7 @@ const ops: OpsRepo = {
 
 const fx: FxRepo = {
   async rates() {
-    return FX_RATES;
+    return store().settings.fxDisplay;
   },
   base() {
     return "RWF";
@@ -860,6 +861,77 @@ function jobsOf(): PartnerJob[] {
     .sort((a, b) => a.start.localeCompare(b.start));
 }
 
+const WORK_ROLES: StaffMember["role"][] = ["ops", "admin", "driver", "guide"];
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const activeAdmins = () => store().staff.filter((m) => m.role === "admin" && m.status === "active");
+
+function checkSettings(s: SiteSettings) {
+  const ok = (cond: boolean, what: string) => {
+    if (!cond) throw new Error(`Invalid ${what}`);
+  };
+  for (const [k, e] of Object.entries(s.catalog.extras)) ok(!!e && Number.isInteger(e.price.minor) && e.price.minor >= 0 && e.price.minor <= 10_000_000 && e.price.currency === "RWF" && typeof e.enabled === "boolean", `extra ${k}`);
+  for (const [code, p] of Object.entries(s.catalog.promos)) ok(/^[A-Z0-9]{3,20}$/.test(code) && Number.isInteger(p.percent) && p.percent >= 1 && p.percent <= 90 && Number.isInteger(p.capRwf) && p.capRwf >= 0 && isIsoDate(p.validUntil) && (!p.lane || ["stay", "car", "experience"].includes(p.lane)), `promo ${code}`);
+  for (const [lane, d] of Object.entries(s.catalog.windows)) ok(Number.isInteger(d) && d >= 0 && d <= 60, `window ${lane}`);
+  ok(s.fxDisplay.RWF === 1 && Object.values(s.fxDisplay).every((r) => typeof r === "number" && r > 0 && Number.isFinite(r)), "rates");
+  ok(Object.values(s.bank).every((v) => typeof v === "string" && v.length <= 80), "bank");
+}
+
+const admin: AdminRepo = {
+  async staff() {
+    return [...store().staff].sort((a, b) => a.status.localeCompare(b.status) || a.role.localeCompare(b.role) || a.name.localeCompare(b.name));
+  },
+  async invite(email, role, by) {
+    const e = email.trim().toLowerCase();
+    if (!EMAIL.test(e) || e.length > 120) throw new Error("Bad email");
+    if (!WORK_ROLES.includes(role)) throw new Error("Bad role");
+    if (store().staff.some((m) => m.email === e)) throw new Error("Already on the team");
+    const made: StaffMember = { id: nextId("stf"), name: e.split("@")[0], email: e, role, status: "invited" };
+    store().staff.push(made);
+    recordAudit({ actor: by, action: "staff.invite", target: made.id, detail: `${e} as ${role}` });
+    return made;
+  },
+  async setRole(id, role, by) {
+    const m = store().staff.find((x) => x.id === id);
+    if (!m || !WORK_ROLES.includes(role)) throw new Error("No such person or role");
+    if (m.role === "admin" && role !== "admin" && m.status === "active" && activeAdmins().length <= 1) throw new Error("The last admin cannot be demoted");
+    m.role = role;
+    recordAudit({ actor: by, action: "staff.role", target: id, detail: role });
+    return m;
+  },
+  async deactivate(id, by) {
+    const m = store().staff.find((x) => x.id === id);
+    if (!m) throw new Error("No such person");
+    if (m.role === "admin" && m.status === "active" && activeAdmins().length <= 1) throw new Error("The last admin cannot be deactivated");
+    m.status = "deactivated";
+    recordAudit({ actor: by, action: "staff.deactivate", target: id, detail: m.email });
+    return m;
+  },
+  async settings() {
+    return structuredClone(store().settings);
+  },
+  async updateSettings(patch, by) {
+    const next: SiteSettings = { ...structuredClone(store().settings), ...structuredClone(patch) };
+    checkSettings(next);
+    store().settings = next;
+    recordAudit({ actor: by, action: "settings.update", target: Object.keys(patch).join(","), detail: "" });
+    return structuredClone(next);
+  },
+  async content() {
+    return structuredClone(store().content);
+  },
+  async updateContent(patch, by) {
+    const next = { ...structuredClone(store().content), ...structuredClone(patch) };
+    for (const a of next.announcements) if (!a.text.trim() || a.text.length > 200 || !isIsoDate(a.start) || !isIsoDate(a.end) || a.end < a.start) throw new Error("Bad announcement");
+    next.featured = next.featured.filter((id, i, all) => all.indexOf(id) === i && store().listings.some((l) => l.id === id)).slice(0, 12);
+    store().content = next;
+    recordAudit({ actor: by, action: "content.update", target: Object.keys(patch).join(","), detail: "" });
+    return structuredClone(next);
+  },
+  async activeAnnouncements(on) {
+    return store().content.announcements.filter((a) => a.start <= on && on <= a.end);
+  },
+};
+
 const finance: FinanceRepo = {
   async payments(filter = {}) {
     return store()
@@ -1048,6 +1120,7 @@ export const fixtureRepositories: Repositories = {
   rates,
   partners,
   finance,
+  admin,
   trips,
   messaging,
   ops,

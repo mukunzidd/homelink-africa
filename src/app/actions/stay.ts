@@ -28,7 +28,7 @@ export async function previewChange(reference: string, start: string, end: strin
   if (!free) return { ok: false as const, reason: "unavailable" as const };
   const supply = (await repos().stays.byId(b.supplyItemId)) ?? (await repos().mobility.byId(b.supplyItemId));
   if (!supply) return { ok: false as const, reason: "invalid" as const };
-  const q = quoteBooking(supply, { kind: b.service, start, end, party: b.party, driveMode: b.driveMode, extras: b.extras, promoCode: b.promoCode }, kigaliDay());
+  const q = quoteBooking(supply, { kind: b.service, start, end, party: b.party, driveMode: b.driveMode, extras: b.extras, promoCode: b.promoCode }, kigaliDay(), (await repos().admin.settings()).catalog);
   if (!q) return { ok: false as const, reason: "invalid" as const };
   return { ok: true as const, difference: { ...q.total, minor: q.total.minor - b.total.minor }, total: q.total };
 }

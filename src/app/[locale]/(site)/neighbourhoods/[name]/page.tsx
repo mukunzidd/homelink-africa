@@ -48,6 +48,8 @@ export default async function NeighbourhoodPage({ params }: { params: Promise<{ 
   const tMap = await getTranslations("map");
   const tListing = await getTranslations("listing");
   const q = `neighbourhood=${encodeURIComponent(p.name)}`;
+  // Admin's own line for the place, and whether its travel times show, from Content.
+  const own = (await repos().admin.content()).neighbourhoods[p.name];
 
   const modes = [
     { key: "stay", icon: BedIcon, href: `/stays?${q}`, count: p.stays.length, price: p.stayFrom, label: t("stayFrom"), unit: tListing("perNight") },
@@ -64,7 +66,7 @@ export default async function NeighbourhoodPage({ params }: { params: Promise<{ 
           <p className="text-[14px] text-ink-3">{t("district", { district: DISTRICTS[p.name] ?? "Kigali" })}</p>
           <h1 className="font-display text-4xl font-semibold leading-[1.06] tracking-tight text-ink sm:text-5xl">{p.name}</h1>
           <p className="max-w-[56ch] text-[17px] leading-relaxed text-ink-2">
-            {tPlaces.has(p.name) ? tPlaces(p.name) : ""} {t.has(`goodFor.${p.name}`) ? t(`goodFor.${p.name}`) : ""}
+            {own?.text || <>{tPlaces.has(p.name) ? tPlaces(p.name) : ""} {t.has(`goodFor.${p.name}`) ? t(`goodFor.${p.name}`) : ""}</>}
           </p>
         </div>
         {/* The area itself, not a room in it: the hero used to be a
@@ -112,7 +114,7 @@ export default async function NeighbourhoodPage({ params }: { params: Promise<{ 
           <Locator points={all} current={p.name} label={t("whereInCity", { place: p.name })} className="rounded-card border border-line" />
           <figcaption className="text-[13px] text-ink-3">{t("locatorCaption", { place: p.name, count: all.length })}</figcaption>
         </figure>
-        <TravelTimes point={p.centre} />
+        {own?.showLandmarks !== false && <TravelTimes point={p.centre} />}
       </section>
 
       {p.stays.length > 0 && (

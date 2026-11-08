@@ -1,4 +1,6 @@
 import type {
+  StaffMember,
+  SiteContent,
   StatementLine,
   HousekeepingTask,
   Partner,
@@ -33,6 +35,7 @@ import {
   EXPERIENCES,
   HOMES_FOR_SALE,
   LISTINGS,
+  FX_RATES,
   MESSAGES,
   PAST_BOOKINGS,
   PAYOUTS,
@@ -41,7 +44,9 @@ import {
   VERIFICATION_QUEUE,
 } from "./data";
 import { seedNotifications } from "./notifications";
-import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents, seedHistory, seedPartners, seedViewings, seedStatement, seedPendingRefunds } from "./booking-seeds";
+import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents, seedHistory, seedPartners, seedViewings, seedStatement, seedPendingRefunds, seedStaff } from "./booking-seeds";
+import { DEFAULT_CATALOG } from "@/lib/domain/catalog";
+import type { SiteSettings } from "@/lib/repos/types";
 
 /**
  * The fixtures, as data that can change.
@@ -85,6 +90,9 @@ export type FixtureStore = {
   drafts: ListingDraft[];
   /** Photos uploaded to a thread, held until (and after) a message uses them. */
   partners: Partner[];
+  staff: StaffMember[];
+  settings: SiteSettings;
+  content: SiteContent;
   statement: StatementLine[];
   partnerDocs: PartnerDocument[];
   /** Who has each housekeeping task and how far it got, by task id. */
@@ -136,6 +144,9 @@ function seed(): FixtureStore {
     drafts: [],
     uploads: [],
     housekeeping: {},
+    staff: seedStaff(now),
+    settings: { catalog: structuredClone(DEFAULT_CATALOG), fxDisplay: { ...FX_RATES }, bank: { bankName: "Bank of Kigali", accountName: "HomeLink Africa Ltd", accountNumber: "00040-0695781-29", swift: "BKIGRWRW" } },
+    content: { announcements: [], featured: [], neighbourhoods: {} },
     ...(({ partners, docs }) => ({ partners, partnerDocs: docs }))(seedPartners(now)),
     prefs: {},
   };
@@ -167,7 +178,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 15;
+const SHAPE = 16;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {
