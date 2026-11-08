@@ -59,7 +59,9 @@ export async function ManagePanel({ booking, intlLocale }: { booking: Booking; i
     refund: preview?.refund ?? null,
     kept: preview?.kept ?? null,
     releaseWhen: formatDate(addDays(booking.startDate, -2), intlLocale, { weekday: "long", day: "numeric", month: "long" }),
-    checkIn: stay && phase !== "before" && listing?.checkIn ? listing.checkIn : null,
+    // Only between release and checkout: the code is not sent to the page
+    // before 48 hours out, nor once the stay is over.
+    checkIn: stay && (phase === "released" || phase === "during") && listing?.checkIn ? listing.checkIn : null,
     manager: listing?.propertyManager.name ?? null,
     reviewed: !!review,
     issues: issues.length,

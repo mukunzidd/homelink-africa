@@ -406,10 +406,31 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       const supply = supplyById(b.supplyItemId);
       const max = supply?.kind === "stay" ? supply.item.sleeps : supply?.kind === "car" ? supply.item.seats : supply?.kind === "experience" ? supply.item.groupMax : 0;
       if (!Number.isInteger(party) || party < 1 || party > max) throw new Error(`Party of ${party} does not fit`);
-      if (party !== b.party) {
-        b.timeline = [...(b.timeline ?? []), event("guestsAdded", "guest", `${b.party} → ${party}`)];
-        b.party = party;
+      // Only before it starts: a party is what was planned, not a tally.
+      if (b.status !== "confirmed" || b.startDate <= kigaliDay()) throw new Error("Too late to change the party");
+      if (party === b.party) return b;
+      // A day out is priced per person, so more people cost more; a stay or
+      // a hire is not, and its price stays as it is.
+      if (supply?.kind === "experience") {
+        const q = quoteBooking(supply.item, { kind: "experience", start: b.startDate, end: b.startDate, party, promoCode: b.promoCode }, kigaliDay());
+        if (!q) throw new Error("Cannot price");
+        const diff = q.total.minor - b.total.minor;
+        if (diff !== 0) {
+          store().payments.push({
+            id: nextId("pmt"),
+            bookingId: b.id,
+            rail: store().payments.find((p) => p.bookingId === b.id)?.rail ?? "card",
+            kind: diff > 0 ? "change" : "refund",
+            amount: money(Math.abs(diff), q.total.currency),
+            status: "succeeded",
+            at: new Date().toISOString(),
+          });
+        }
+        b.total = q.total;
+        b.lines = q.lines;
       }
+      b.timeline = [...(b.timeline ?? []), event("guestsAdded", "guest", `${b.party} → ${party}`)];
+      b.party = party;
       return b;
     },
 

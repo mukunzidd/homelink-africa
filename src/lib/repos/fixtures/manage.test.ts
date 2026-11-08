@@ -51,3 +51,20 @@ describe("reviews", () => {
     expect((await repos.reviews.forSupply(ended.supplyItemId)).length).toBeGreaterThan(0);
   });
 });
+
+describe("addGuests: priced and only before it starts", () => {
+  beforeEach(() => resetStore());
+  it("charges for the extra seats on a day out", async () => {
+    const walk = store().experiences.find((e) => e.slug === "kigali-city-walk")!;
+    const b = store().bookings.find((x) => x.supplyItemId === walk.id && x.status === "confirmed")!;
+    b.startDate = b.endDate = addDays(today, 10);
+    const before = b.total.minor;
+    const after = await repos.bookings.addGuests(b.reference, b.party + 1);
+    expect(after.total.minor).toBeGreaterThan(before);
+    expect((await repos.bookings.payments(b.id)).some((p) => p.kind === "change")).toBe(true);
+  });
+  it("refuses once the stay has started or is over", async () => {
+    await expect(repos.bookings.addGuests(phase("during").reference, 2)).rejects.toThrow();
+    await expect(repos.bookings.addGuests(phase("ended").reference, 2)).rejects.toThrow();
+  });
+});
