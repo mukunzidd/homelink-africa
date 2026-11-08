@@ -20,8 +20,8 @@ export function Logo({
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
       <svg
-        width="34"
-        height="27"
+        width="30"
+        height="24"
         viewBox="0 0 58 46"
         aria-hidden="true"
         className="flex-none"
@@ -54,9 +54,11 @@ export function Logo({
         <rect x="32" y="21" width="4.6" height="4.6" fill={MARK_GOLD} />
       </svg>
       {showWordmark && (
-        <span className="text-[15px] font-bold leading-none tracking-tight text-ink">
+        // One line at every width: it used to wrap to "HomeLink / Africa" at
+        // 768 and below, which made the bar's tallest item the logo.
+        <span className="whitespace-nowrap text-[16px] font-semibold leading-none text-ink">
           HomeLink
-          <span className="text-ink-3 font-semibold"> Africa</span>
+          <span className="font-medium text-ink-3"> Africa</span>
         </span>
       )}
     </span>

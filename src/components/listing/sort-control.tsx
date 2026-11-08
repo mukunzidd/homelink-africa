@@ -7,7 +7,20 @@ import { SORTS, type Sort } from "@/lib/search-params";
 import { Select } from "@/components/ui/select";
 import { SortIcon } from "@/components/ui/icons";
 
-export function SortControl({ value }: { value: Sort }) {
+/**
+ * `options` and `labels` let the Buy lane reuse this with its own sorts —
+ * "largest" there means floor area, not bedrooms — while the stay pages keep
+ * the defaults.
+ */
+export function SortControl({
+  value,
+  options = SORTS,
+  labels,
+}: {
+  value: Sort | string;
+  options?: readonly string[];
+  labels?: Record<string, string>;
+}) {
   const t = useTranslations("results");
   const router = useRouter();
   const pathname = usePathname();
@@ -20,7 +33,7 @@ export function SortControl({ value }: { value: Sort }) {
       size="sm"
       value={value}
       icon={<SortIcon size={15} />}
-      options={SORTS.map((sort) => ({ value: sort, label: t(`sort.${sort}`) }))}
+      options={options.map((sort) => ({ value: sort, label: labels?.[sort] ?? t(`sort.${sort as Sort}`) }))}
       onChange={(next) => {
         const params2 = new URLSearchParams(params.toString());
         if (next === "recommended") params2.delete("sort");
@@ -28,7 +41,7 @@ export function SortControl({ value }: { value: Sort }) {
         const qs = params2.toString();
         router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
       }}
-      className="w-52"
+      className="min-w-0 flex-1 sm:w-52 sm:flex-none"
     />
   );
 }

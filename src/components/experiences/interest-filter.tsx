@@ -12,8 +12,13 @@ import { FilterChip } from "@/components/ui/filter-chip";
  */
 export function InterestFilter({
   interests,
+  counts,
+  total,
 }: {
   interests: readonly string[];
+  /** Trips per interest, so a chip says what pressing it leaves. */
+  counts?: Record<string, number>;
+  total?: number;
 }) {
   const t = useTranslations("experiences");
   const router = useRouter();
@@ -35,6 +40,7 @@ export function InterestFilter({
 
       <FilterChip pressed={!current} onToggle={() => select(null)}>
         {t("allInterests")}
+        {total !== undefined && <Count n={total} />}
       </FilterChip>
 
       {interests.map((interest) => (
@@ -44,8 +50,13 @@ export function InterestFilter({
           onToggle={() => select(interest)}
         >
           {t(`interest.${interest}`)}
+          {counts?.[interest] !== undefined && <Count n={counts[interest]} />}
         </FilterChip>
       ))}
     </fieldset>
   );
+}
+
+function Count({ n }: { n: number }) {
+  return <span className="tnum ml-1.5 text-[12px] font-normal opacity-70">{n}</span>;
 }

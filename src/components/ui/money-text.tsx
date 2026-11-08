@@ -14,10 +14,13 @@ import { cn } from "@/lib/cn";
 export function MoneyText({
   amount,
   className,
+  rounded,
 }: {
   amount: Money;
   className?: string;
+  /** Whole units, for a ceiling or a pin. Never for a price someone pays. */
+  rounded?: boolean;
 }) {
-  const { display } = usePreferences();
-  return <span className={cn("tnum", className)}>{display(amount)}</span>;
+  const { display, displayRounded } = usePreferences();
+  return <span className={cn("tnum", className)}>{rounded ? displayRounded(amount) : display(amount)}</span>;
 }

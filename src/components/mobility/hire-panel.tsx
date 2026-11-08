@@ -58,7 +58,7 @@ export function HirePanel({
       <div className="flex items-baseline gap-1.5">
         <MoneyText
           amount={vehicle.dailyRate}
-          className="text-xl font-bold text-ink"
+          className="text-xl font-semibold text-ink"
         />
         <span className="text-sm text-ink-3">{t("perDay")}</span>
       </div>

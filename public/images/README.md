@@ -24,7 +24,7 @@ through Nyungwe and the tea that rings it. They are the right country and the
 right subject, and still the wrong specific outing — a photograph of somebody
 else's trek, not of ours.
 
-The interiors are place-neutral and read fine anywhere.
+The home sets are covered under Homes below.
 
 The vehicles are now the right make and the right model, five frames each, and
 each set reads as one car rather than five. Not one of the four they replaced
@@ -61,6 +61,25 @@ URLs; nothing else in the app changes.
 Filenames are per subject, not per slot — `outing-4.jpg` once stood in for both
 the gorilla trek and Nyungwe, which is how one European woodland ended up
 serving two different Rwandan forests.
+
+## Shot list for the fleet
+
+What a real shoot needs to produce so the four cars read as one company's
+fleet. Five frames per vehicle, because that is what the detail mosaic holds,
+and the first frame is the one every result card shows.
+
+| Frame | What | Why it is on the list |
+| --- | --- | --- |
+| 1 | Front three-quarter, driver's side, at standing eye height, on the same Kigali street for all four | The card image. Same angle and place is what makes four cars look like one fleet |
+| 2 | Side profile, same spot | Shows length and doors, which is how people judge a 7- or 12-seater |
+| 3 | Boot or rear load space, open, with a carry-on and a large suitcase in it | "Will our bags fit" is the question after "how many seats" |
+| 4 | Cabin from the rear door, second row | Seat condition and legroom |
+| 5 | Dashboard, engine on, odometer readable | The inspection claim: someone from the team drove this one |
+
+Shoot all four on one morning in flat light (overcast, or before 09:00), on
+a quiet street with Kigali's hills or red-earth verge behind, plates
+legible, nothing branded in frame. Note each file's vehicle and plate in the
+table below when it lands, so a frame can never drift to the wrong car.
 
 ## Provenance
 
@@ -109,7 +128,101 @@ Unsplash photo IDs, so any of these can be traced back or re-fetched.
 | `cars/hiace-4.jpg` | [lGOAzV8s_ko](https://unsplash.com/photos/lGOAzV8s_ko) | Kenneth Sonntag |
 | `cars/hiace-5.jpg` | [6SlIB057YQs](https://unsplash.com/photos/6SlIB057YQs) | Ewien van Bergeijk - Kwant |
 
-The interiors predate this table; their IDs were not recorded at the time and
-are not recoverable from the files. The four vehicles that used to sit here had
-the same gap, so there was no way to check what had been downloaded short of
-opening it — which is the argument for keeping this table current.
+The eight `listings/interior-N.jpg` files that predated this table were
+removed once every home had its own set. Their IDs had never been recorded, so
+there was no way to check what had been downloaded short of opening it, which
+is the argument for keeping this table current.
+
+Each car now shows only frames of one vehicle, because the detail page
+says "this exact vehicle" and five different RAV4s under that sentence broke
+the promise on the page that states it most plainly. The RAV4 keeps frames 1
+and 4 (same plate), the Corolla 3 and 4 (same car, same forest road; the
+seafront frame was another car in a landlocked country), and the Land Cruiser
+and the HiAce keep one frame each. The rest stay on disk and in this table
+for when a single-vehicle set replaces them; a matched set shot in Kigali
+needs a real shoot.
+
+## Homes
+
+Each of the 18 stays and homes for sale has its own set in `homes/<slug>-N.jpg`,
+so no room appears under two listings. Where one photographer shot several
+rooms of the same building, those frames are kept together: the Nyarutarama
+villa, the Rebero villa and the convention studio are each one property, and
+the Gacuriro estate living room and bedroom are one Nairobi flat. The other
+sets are matched by build, palette and light, not taken from a single house.
+
+The subjects are close in kind and still the wrong place. The exteriors are
+tropical and several are African (a Nairobi estate block, a brick bungalow on
+a Kenyan lawn, West African apartment blocks for Kiyovu); others come from
+Asia, Spain and Brazil. The interiors are place-neutral. Five sets carry three
+frames: the Remera studio, the Kiyovu city flat and the Sonatubes flat
+because they are small, and Kacyiru and the Kiyovu sale because the fourth
+candidate showed autumn trees or a legible foreign-language label.
+
+| File | Photo | Photographer |
+| --- | --- | --- |
+| `homes/kacyiru-garden-apartment-1.jpg` | [jzYccVkzqvU](https://unsplash.com/photos/jzYccVkzqvU) | Tim Wing |
+| `homes/kacyiru-garden-apartment-2.jpg` | [m3Vq2LEAkfQ](https://unsplash.com/photos/m3Vq2LEAkfQ) | Collov Home Design |
+| `homes/kacyiru-garden-apartment-3.jpg` | [7pCFUybP_P8](https://unsplash.com/photos/7pCFUybP_P8) | Minh Pham |
+| `homes/kimihurura-townhouse-1.jpg` | [LJtUhEonruY](https://unsplash.com/photos/LJtUhEonruY) | Mạnh Ngô |
+| `homes/kimihurura-townhouse-2.jpg` | [kjh70RMHDco](https://unsplash.com/photos/kjh70RMHDco) | Jonathan Borba |
+| `homes/kimihurura-townhouse-3.jpg` | [YdomJdFdbDo](https://unsplash.com/photos/YdomJdFdbDo) | Jonathan Borba |
+| `homes/kimihurura-townhouse-4.jpg` | [s2e8AiqYWOo](https://unsplash.com/photos/s2e8AiqYWOo) | Dinuka Lankaloka |
+| `homes/nyarutarama-lake-villa-1.jpg` | [2d4lAQAlbDA](https://unsplash.com/photos/2d4lAQAlbDA) | Frames For Your Heart |
+| `homes/nyarutarama-lake-villa-2.jpg` | [kToEIcYPky4](https://unsplash.com/photos/kToEIcYPky4) | Frames For Your Heart |
+| `homes/nyarutarama-lake-villa-3.jpg` | [doSeeEgedZg](https://unsplash.com/photos/doSeeEgedZg) | Frames For Your Heart |
+| `homes/nyarutarama-lake-villa-4.jpg` | [FqqiAvJejto](https://unsplash.com/photos/FqqiAvJejto) | Frames For Your Heart |
+| `homes/remera-studio-1.jpg` | [3EariUCKobw](https://unsplash.com/photos/3EariUCKobw) | laura adai |
+| `homes/remera-studio-2.jpg` | [kQjEq2bNFS0](https://unsplash.com/photos/kQjEq2bNFS0) | Christina Radevich |
+| `homes/remera-studio-3.jpg` | [zSXM2gc4Ti4](https://unsplash.com/photos/zSXM2gc4Ti4) | Lisa Anna |
+| `homes/kiyovu-city-apartment-1.jpg` | [GHCVUtBECuY](https://unsplash.com/photos/GHCVUtBECuY) | Michael Oxendine |
+| `homes/kiyovu-city-apartment-2.jpg` | [pU69J8G0kAo](https://unsplash.com/photos/pU69J8G0kAo) | Alex Tyson |
+| `homes/kiyovu-city-apartment-3.jpg` | [99XLWyMq_ns](https://unsplash.com/photos/99XLWyMq_ns) | Robert Arnar |
+| `homes/gikondo-family-house-1.jpg` | [OuwYbntTpec](https://unsplash.com/photos/OuwYbntTpec) | Mạnh Ngô |
+| `homes/gikondo-family-house-2.jpg` | [Vlo-6788S_M](https://unsplash.com/photos/Vlo-6788S_M) | Annie Spratt |
+| `homes/gikondo-family-house-3.jpg` | [in7sEZFeqEs](https://unsplash.com/photos/in7sEZFeqEs) | Annie Spratt |
+| `homes/gikondo-family-house-4.jpg` | [Ph2AIj8vOwo](https://unsplash.com/photos/Ph2AIj8vOwo) | Clay Banks |
+| `homes/kicukiro-sonatubes-flat-1.jpg` | [4Q9aOJF-6vI](https://unsplash.com/photos/4Q9aOJF-6vI) | Prydumano Design |
+| `homes/kicukiro-sonatubes-flat-2.jpg` | [DhFHtkECn7Q](https://unsplash.com/photos/DhFHtkECn7Q) | Sonnie Hiles |
+| `homes/kicukiro-sonatubes-flat-3.jpg` | [beUkiHC-sF8](https://unsplash.com/photos/beUkiHC-sF8) | Dulkimso Hakim Santoso |
+| `homes/nyamirambo-rooftop-flat-1.jpg` | [RLeA11D8J_U](https://unsplash.com/photos/RLeA11D8J_U) | Quang Tran |
+| `homes/nyamirambo-rooftop-flat-2.jpg` | [8e679XbGGy4](https://unsplash.com/photos/8e679XbGGy4) | Spacejoy |
+| `homes/nyamirambo-rooftop-flat-3.jpg` | [jbSTFmNG504](https://unsplash.com/photos/jbSTFmNG504) | Catherina Schürmann |
+| `homes/nyamirambo-rooftop-flat-4.jpg` | [free3W2D_Ms](https://unsplash.com/photos/free3W2D_Ms) | Luisa Brimble |
+| `homes/gacuriro-estate-apartment-1.jpg` | [e-oZ4yQelik](https://unsplash.com/photos/e-oZ4yQelik) | Kevin Menya |
+| `homes/gacuriro-estate-apartment-2.jpg` | [76JYlSoAYM4](https://unsplash.com/photos/76JYlSoAYM4) | Cytonn Photography |
+| `homes/gacuriro-estate-apartment-3.jpg` | [08ZgZuUwy2o](https://unsplash.com/photos/08ZgZuUwy2o) | Cytonn Photography |
+| `homes/gacuriro-estate-apartment-4.jpg` | [xsWOJGv_2eI](https://unsplash.com/photos/xsWOJGv_2eI) | Steven Ungermann |
+| `homes/kibagabaga-garden-bungalow-1.jpg` | [J25VGcZBPUE](https://unsplash.com/photos/J25VGcZBPUE) | david ouma |
+| `homes/kibagabaga-garden-bungalow-2.jpg` | [9M66C_w_ToM](https://unsplash.com/photos/9M66C_w_ToM) | Spacejoy |
+| `homes/kibagabaga-garden-bungalow-3.jpg` | [SXuLmYli53M](https://unsplash.com/photos/SXuLmYli53M) | Andrea Davis |
+| `homes/kibagabaga-garden-bungalow-4.jpg` | [w1ylyAGtdiA](https://unsplash.com/photos/w1ylyAGtdiA) | Spacejoy |
+| `homes/rebero-hilltop-house-1.jpg` | [gOcUODeHIhc](https://unsplash.com/photos/gOcUODeHIhc) | Polina Kuzovkova |
+| `homes/rebero-hilltop-house-2.jpg` | [TIgbwVzjQ80](https://unsplash.com/photos/TIgbwVzjQ80) | Polina Kuzovkova |
+| `homes/rebero-hilltop-house-3.jpg` | [7401sXEEegA](https://unsplash.com/photos/7401sXEEegA) | Polina Kuzovkova |
+| `homes/rebero-hilltop-house-4.jpg` | [FOd_Ay1hJYQ](https://unsplash.com/photos/FOd_Ay1hJYQ) | Polina Kuzovkova |
+| `homes/kimihurura-convention-studio-1.jpg` | [NoPzk4m4jHc](https://unsplash.com/photos/NoPzk4m4jHc) | Aquilion Property |
+| `homes/kimihurura-convention-studio-2.jpg` | [1EJXSLUfqU0](https://unsplash.com/photos/1EJXSLUfqU0) | Aquilion Property |
+| `homes/kimihurura-convention-studio-3.jpg` | [qbhF5gOzhVU](https://unsplash.com/photos/qbhF5gOzhVU) | Aquilion Property |
+| `homes/kimihurura-convention-studio-4.jpg` | [KUG5LLnuTbo](https://unsplash.com/photos/KUG5LLnuTbo) | Aquilion Property |
+| `homes/gacuriro-four-bedroom-house-1.jpg` | [yEwC3w6biTA](https://unsplash.com/photos/yEwC3w6biTA) | Sam E |
+| `homes/gacuriro-four-bedroom-house-2.jpg` | [DxM82rpy_6Q](https://unsplash.com/photos/DxM82rpy_6Q) | Caroline Badran |
+| `homes/gacuriro-four-bedroom-house-3.jpg` | [IcdvygLEzHU](https://unsplash.com/photos/IcdvygLEzHU) | Caroline Badran |
+| `homes/gacuriro-four-bedroom-house-4.jpg` | [IARlbQa6Kc8](https://unsplash.com/photos/IARlbQa6Kc8) | Spacejoy |
+| `homes/kimihurura-three-bedroom-apartment-1.jpg` | [WxEJYXMDYaE](https://unsplash.com/photos/WxEJYXMDYaE) | ERFAN HUSSAIN |
+| `homes/kimihurura-three-bedroom-apartment-2.jpg` | [Ci0LxMd5AOQ](https://unsplash.com/photos/Ci0LxMd5AOQ) | Michael Alake |
+| `homes/kimihurura-three-bedroom-apartment-3.jpg` | [BdZPID68yjM](https://unsplash.com/photos/BdZPID68yjM) | Emmanuel Ikwuegbu |
+| `homes/kimihurura-three-bedroom-apartment-4.jpg` | [OkUd53qusu8](https://unsplash.com/photos/OkUd53qusu8) | Franco Debartolo |
+| `homes/kicukiro-townhouse-for-sale-2.jpg` | [p-pVu8FKTxI](https://unsplash.com/photos/p-pVu8FKTxI) | Steven Ungermann |
+| `homes/kicukiro-townhouse-for-sale-3.jpg` | [arjqEzUMRbA](https://unsplash.com/photos/arjqEzUMRbA) | Andrea Davis |
+| `homes/kicukiro-townhouse-for-sale-4.jpg` | [I2v0DV-jqi8](https://unsplash.com/photos/I2v0DV-jqi8) | Alex Tyson |
+| `homes/rebero-villa-for-sale-1.jpg` | [FAE02RMBEjQ](https://unsplash.com/photos/FAE02RMBEjQ) | Alef Morais |
+| `homes/rebero-villa-for-sale-2.jpg` | [LtlBlCal4Fw](https://unsplash.com/photos/LtlBlCal4Fw) | Alef Morais |
+| `homes/rebero-villa-for-sale-3.jpg` | [RIbx4WEQ0rg](https://unsplash.com/photos/RIbx4WEQ0rg) | Alef Morais |
+| `homes/rebero-villa-for-sale-4.jpg` | [nq24NfTPU8c](https://unsplash.com/photos/nq24NfTPU8c) | Alef Morais |
+| `homes/kibagabaga-family-house-for-sale-1.jpg` | [W9NgQjRX7ZE](https://unsplash.com/photos/W9NgQjRX7ZE) | Anoop Surendran |
+| `homes/kibagabaga-family-house-for-sale-2.jpg` | [NFbwes_e-jI](https://unsplash.com/photos/NFbwes_e-jI) | Don Kaveen |
+| `homes/kibagabaga-family-house-for-sale-3.jpg` | [zCvlyeUfALc](https://unsplash.com/photos/zCvlyeUfALc) | Clay Banks |
+| `homes/kiyovu-two-bedroom-apartment-for-sale-1.jpg` | [-W9baa2VIBU](https://unsplash.com/photos/-W9baa2VIBU) | Joshua Oluwagbemiga |
+| `homes/kiyovu-two-bedroom-apartment-for-sale-2.jpg` | [0tl4Ju7tlYY](https://unsplash.com/photos/0tl4Ju7tlYY) | Habila Mazawaje |
+| `homes/kiyovu-two-bedroom-apartment-for-sale-3.jpg` | [mq0oUJRQTaQ](https://unsplash.com/photos/mq0oUJRQTaQ) | Mustafa Omar |

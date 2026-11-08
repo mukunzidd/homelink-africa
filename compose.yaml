@@ -1,0 +1,72 @@
+# Local stack: the web app and its search engine.
+#
+#   make up       start everything, wait until it answers
+#   make test     run the test suite inside the web container
+#   make down     stop
+#   make          list every target
+#
+# Ports avoid duda-dodo (55321–55329, 4000) and whatever holds host 3000.
+# 55421–55429 stays reserved for the Supabase CLI stack when it arrives.
+name: homelink
+
+x-meili-key: &meili-key homelink-dev-master-key-not-a-secret
+
+services:
+  web:
+    image: node:22.15-bookworm-slim
+    working_dir: /app
+    # Install only when the volume is empty or the lockfile moved since the
+    # last install, then run the dev server. Bound to 0.0.0.0 because the
+    # port is published to the host; the host side is pinned to 127.0.0.1.
+    command: >
+      sh -c "if ! cmp -s package-lock.json node_modules/.lock-snapshot; then
+               npm ci --no-audit --no-fund && cp package-lock.json node_modules/.lock-snapshot;
+             fi && exec npx next dev -p 3100 -H 0.0.0.0"
+    environment:
+      # Turbopack does not see host edits across a macOS bind mount without it.
+      WATCHPACK_POLLING: "true"
+      NEXT_TELEMETRY_DISABLED: "1"
+      # In-network name. Only server code uses it; the browser never talks to
+      # Meilisearch directly, so there is no host URL to get wrong.
+      MEILI_URL: http://meilisearch:7700
+      MEILI_MASTER_KEY: *meili-key
+    ports:
+      # Overridable so a second copy can run beside a host dev server.
+      - "127.0.0.1:${HOMELINK_PORT:-3100}:3100"
+    volumes:
+      - .:/app
+      # node_modules and the build cache live in named volumes: installing tens
+      # of thousands of files across a macOS bind mount is pathologically slow,
+      # and the Linux binaries in them must not collide with the host's.
+      - node_modules:/app/node_modules
+      - next_cache:/app/.next
+    depends_on:
+      meilisearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3100/api/search?q=').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 10s
+      retries: 60
+      start_period: 240s
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.56.1
+    environment:
+      MEILI_MASTER_KEY: *meili-key
+      MEILI_ENV: development
+      MEILI_NO_ANALYTICS: "true"
+    ports:
+      - "127.0.0.1:7710:7700"
+    volumes:
+      - meili_data:/meili_data
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:7700/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  node_modules:
+  next_cache:
+  meili_data:

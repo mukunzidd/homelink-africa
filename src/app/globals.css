@@ -166,7 +166,22 @@
   --font-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
 
   /* Radius carries the density rule: discovery rounds, transaction squares. */
+  /*
+   * One radius per kind of thing, used the same way on every screen:
+   *   full   pills — search fields, chips, tags, badges, avatars, and
+   *          anything that floats on a photograph or a map
+   *   card   14px — every surface: cards, result rows, panels, galleries,
+   *          maps, menus, dialogs
+   *   ctl    8px — every control: buttons, inputs, selects, segmented
+   *          controls, and thumbnails inside a card
+   *   inner  6px — items nested inside a control or a menu
+   *   chip   4px — keycaps
+   * An earlier rule rounded discovery and squared transaction, which in
+   * practice meant a 14px card and an 8px row for the same listing a click
+   * apart. One surface radius reads as one product.
+   */
   --radius-chip: 4px;
+  --radius-inner: 6px;
   --radius-ctl: 8px;
   --radius-card: 14px;
 
@@ -233,4 +248,50 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Motion for overlays. Short, and only on entry: leaving is instant, because
+   someone closing a dialog has already moved on. */
+@keyframes fade {
+  from { opacity: 0; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+}
+
+/*
+ * Map tiles carry no theme of their own. OpenStreetMap's standard style is
+ * louder than this palette, so light mode takes some colour out of it; dark
+ * mode inverts it and turns the hue back round, which keeps water blue and
+ * parks green while making the land dark.
+ */
+:root { --map-filter: saturate(0.55) contrast(0.95); }
+:root[data-theme="dark"] { --map-filter: invert(1) hue-rotate(180deg) saturate(0.5) brightness(0.9) contrast(0.88); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --map-filter: invert(1) hue-rotate(180deg) saturate(0.5) brightness(0.9) contrast(0.88); }
+}
+
+@keyframes slide {
+  from { transform: translateX(24px); opacity: 0; }
+}
+
+/*
+ * How tall the sticky site header is, measured at each breakpoint: the bar
+ * plus the lane strip below lg, the bar alone from lg. Anything that sticks
+ * under the header (the results toolbar) sits at this offset.
+ */
+:root { --header-offset: 102px; }
+@media (min-width: 640px) { :root { --header-offset: 110px; } }
+@media (min-width: 1024px) { :root { --header-offset: 65px; } }
+
+/*
+ * Things that float on a photograph or a map: the "Show on map" pill, the
+ * map's own price pins. Ink on light. In dark mode an inverted ink pill was
+ * the brightest object on the page, so it takes the raised surface instead.
+ */
+:root { --float-bg: #0c2119; --float-ink: #ffffff; --float-line: transparent; }
+:root[data-theme="dark"] { --float-bg: #1c372c; --float-ink: #e7efe9; --float-line: #2f4a3e; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --float-bg: #1c372c; --float-ink: #e7efe9; --float-line: #2f4a3e; }
 }

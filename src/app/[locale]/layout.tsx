@@ -11,6 +11,7 @@ import { SiteHeader } from "@/components/shell/site-header";
 import { SiteFooter } from "@/components/shell/site-footer";
 import { PreviewBar } from "@/components/shell/preview-bar";
 import { ThemeScript } from "@/components/shell/theme-script";
+import { SmartSearchProvider } from "@/components/search/smart-search";
 
 import "../globals.css";
 
@@ -94,12 +95,14 @@ export default async function LocaleLayout({
             fx={fx}
             initialSegment={initialSegment}
           >
-            <SiteHeader />
-            <main id="content" className="flex-1">
-              {children}
-            </main>
-            <SiteFooter />
-            <PreviewBar />
+            <SmartSearchProvider>
+              <SiteHeader />
+              <main id="content" className="flex-1">
+                {children}
+              </main>
+              <SiteFooter />
+              <PreviewBar />
+            </SmartSearchProvider>
           </PreferencesProvider>
         </NextIntlClientProvider>
       </body>

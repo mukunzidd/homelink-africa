@@ -6,6 +6,7 @@ import type {
   DurationBand,
   Experience,
   ExperienceInterest,
+  HomeForSale,
   Listing,
   Message,
   Payout,
@@ -14,7 +15,7 @@ import type {
   Vehicle,
   VerificationTask,
 } from "@/lib/domain/types";
-import type { CurrencyCode, FxTable } from "@/lib/domain/money";
+import type { CurrencyCode, FxTable, Money } from "@/lib/domain/money";
 
 /**
  * The seam between the UI and its data.
@@ -42,6 +43,13 @@ export type StayQuery = {
   minSleeps?: number;
   amenities?: string[];
   band?: DurationBand;
+  /**
+   * A ceiling in whatever currency the guest typed it in. Compared against the
+   * nightly rate, or the monthly one in the lease lane, after converting the
+   * ceiling into the listing's own currency, never the other way round: the
+   * listing's price is the authoritative number.
+   */
+  maxPrice?: Money;
   verifiedOnly?: boolean;
   sort?: StaySort;
   limit?: number;
@@ -68,6 +76,29 @@ export interface StaysRepo extends SupplyById<Listing> {
   /** Same, with counts — a suggestion that says how much is behind it is
    *  more useful than a bare name, and honest about thin inventory. */
   neighbourhoodsWithCounts(): Promise<{ name: string; count: number }[]>;
+}
+
+export type SaleSort = "recommended" | "priceAsc" | "priceDesc" | "newest" | "size";
+
+export type SaleQuery = {
+  neighbourhood?: string;
+  minBedrooms?: number;
+  /** A ceiling in any currency, converted into the home's own before comparing. */
+  maxPrice?: Money;
+  kind?: HomeForSale["kind"];
+  sort?: SaleSort;
+  limit?: number;
+};
+
+/**
+ * Homes for sale. A separate door from stays: nothing here is booked, the
+ * guest asks the Kigali team instead, and a sale's facts (price, floor area,
+ * plot, title) are not a stay's.
+ */
+export interface SalesRepo extends SupplyById<HomeForSale> {
+  list(query?: SaleQuery): Promise<HomeForSale[]>;
+  bySlug(slug: string): Promise<HomeForSale | null>;
+  neighbourhoods(): Promise<string[]>;
 }
 
 export type VehicleQuery = {
@@ -152,6 +183,7 @@ export interface FxRepo {
 
 export type Repositories = {
   stays: StaysRepo;
+  sales: SalesRepo;
   mobility: MobilityRepo;
   experiences: ExperiencesRepo;
   bookings: BookingRepo;

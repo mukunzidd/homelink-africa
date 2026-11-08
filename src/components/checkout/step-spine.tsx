@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import type { ServiceKind } from "@/lib/domain/types";
 import { cn } from "@/lib/cn";
 
 /**
@@ -7,20 +8,47 @@ import { cn } from "@/lib/cn";
  *
  * Completed steps are marked with a word as well as a colour, so progress does
  * not depend on hue alone.
+ *
+ * Three steps, not four. Review and Pay were separate, but the checkout page
+ * is both at once (it is titled "Confirm and pay" and takes the payment), so
+ * the spine sat on Review while the reader was paying and never reached Pay.
+ *
+ * The middle step is named for what that lane actually asked: a hire has no
+ * guests, it has a driver choice; a day out has people. Dates is Day for a
+ * day out because it is one date.
+ *
+ * `current` past the last step marks every step done, which is how the
+ * confirmation page shows a finished booking.
  */
-const STEPS = ["dates", "guests", "review", "pay"] as const;
+const STEPS: Record<ServiceKind, readonly string[]> = {
+  stay: ["dates", "guests", "reviewPay"],
+  car: ["dates", "driver", "reviewPay"],
+  experience: ["day", "people", "reviewPay"],
+};
 
-export async function StepSpine({ current }: { current: number }) {
+export async function StepSpine({
+  current,
+  lane,
+}: {
+  current: number;
+  lane: ServiceKind;
+}) {
   const t = await getTranslations("checkout");
+  const steps = STEPS[lane];
+  const finished = current > steps.length;
 
   return (
     <nav aria-label={t("title")} className="flex flex-col gap-2">
-      <p className="text-xs font-bold uppercase tracking-[0.1em] text-ink-3">
-        {t("step", { current, total: STEPS.length })}
-      </p>
+      {/* "Step 4 of 3" on the confirmation page is the counter's only way to
+          say done, so it says nothing there and the ticks carry it. */}
+      {!finished && (
+        <p className="text-xs font-medium text-ink-3">
+          {t("step", { current, total: steps.length })}
+        </p>
+      )}
 
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
-        {STEPS.map((step, index) => {
+        {steps.map((step, index) => {
           const position = index + 1;
           const done = position < current;
           const active = position === current;
@@ -50,7 +78,7 @@ export async function StepSpine({ current }: { current: number }) {
                 {t(`steps.${step}`)}
               </span>
 
-              {position < STEPS.length && (
+              {position < steps.length && (
                 <span aria-hidden="true" className="text-ink-3">
                   ›
                 </span>

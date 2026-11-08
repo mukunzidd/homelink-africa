@@ -2,28 +2,26 @@ import { getTranslations } from "next-intl/server";
 import type { Listing } from "@/lib/domain/types";
 import type { IsoDate } from "@/lib/domain/dates";
 import { quoteStay } from "@/lib/domain/pricing";
-import { Link } from "@/i18n/navigation";
-import { SupplyImage } from "@/components/ui/supply-image";
-import { VerifiedBadge } from "@/components/ui/verified-badge";
+import { minutesTo, type LandmarkKey } from "@/lib/domain/landmarks";
 import { StatusPill } from "@/components/ui/status-pill";
 import { MoneyText } from "@/components/ui/money-text";
-import { Button } from "@/components/ui/button";
+import { ResultCard, PriceBlock } from "@/components/results/result-card";
+import { TravelTime } from "@/components/results/travel-time";
 
 /**
- * Transaction density.
- *
- * Style guide: convention on transaction. Booking.com posture — 8px radius,
- * scannable rows, tabular figures, price where the eye already expects it.
+ * A stay or a rental in a result list.
  *
  * With dates the price is a real total for the stay; without them it can only
  * be a nightly rate, and it says so rather than implying a total that has not
- * been calculated.
+ * been calculated. In Rent the unit is the month, because a year of nights is
+ * not a price a tenant recognises.
  *
- * In the Renting lane the unit is the month. That lane exists because a lease
- * is a different transaction from a booking, and it was showing the same six
- * places at the same nightly prices as Stays — so the tab, the key icon and
- * the whole §5-C journey changed nothing anyone could see. A year of nights is
- * not a price a tenant recognises, and it is not what they would be quoted.
+ * Scarcity only appears once dates are chosen. "2 left for these dates" under
+ * "Any dates" was a sentence about no dates at all, and on a site whose whole
+ * case is honesty it read as a pressure tactic.
+ *
+ * Without dates the call to action is "Check dates" and lands on the booking
+ * panel, because "Reserve" promised a step the page could not take yet.
  */
 export async function ListingRow({
   listing,
@@ -32,20 +30,29 @@ export async function ListingRow({
   party,
   nights,
   lease,
+  near,
+  priority,
+  layout = "row",
+  moveIn,
 }: {
+  /** YYYY-MM from the Rent search, carried to the lease panel. */
+  moveIn?: string;
   listing: Listing;
   from?: IsoDate | null;
   to?: IsoDate | null;
   party?: number;
   nights?: number;
-  /** The Renting lane. Prices by the month and does not offer dates. */
+  /** The Rent mode. Prices by the month and does not offer dates. */
   lease?: boolean;
+  /** The landmark the person is measuring from; defaults to the city centre. */
+  near?: LandmarkKey;
+  priority?: boolean;
+  layout?: "row" | "tile";
 }) {
   const t = await getTranslations("listing");
   const tResults = await getTranslations("results");
-  const tVerify = await getTranslations("verification");
   const tStatus = await getTranslations("status");
-  const tDetail = await getTranslations("detail");
+  const tList = await getTranslations("list");
 
   // A lease is not priced by the night, so dates do not produce a total here
   // even when the search carries them.
@@ -56,91 +63,44 @@ export async function ListingRow({
   // on the dates they already chose rather than asking again.
   const query = new URLSearchParams();
   if (lease) query.set("band", "long");
+  if (lease && moveIn) query.set("movein", moveIn);
   if (from && !lease) query.set("from", from);
   if (to && !lease) query.set("to", to);
   if (party && party !== 2) query.set("party", String(party));
-  const href = `/stays/${listing.slug}${query.size ? `?${query}` : ""}`;
+  const href = `/stays/${listing.slug}${query.size ? `?${query}` : ""}${!lease && !quote ? "#book" : ""}`;
+
+  const landmark = near ?? "cityCentre";
 
   return (
-    <article className="flex flex-col gap-3 rounded-ctl border border-line bg-surface p-3 transition-colors duration-150 hover:border-ink-3/40 sm:flex-row sm:items-stretch sm:gap-4">
-      <Link href={href} className="flex-none">
-        <SupplyImage
-          seed={listing.imageSeed}
-          src={listing.images?.[0]}
-          alt={listing.name}
-          sizes="(max-width: 640px) 100vw, 176px"
-          className="h-32 w-full rounded-[6px] sm:h-full sm:w-44"
-        />
-      </Link>
-
-      <div className="flex min-w-0 flex-1 flex-col gap-1.5 py-1">
-        <Link href={href} className="rounded-ctl">
-          <h3 className="text-[15px] font-semibold leading-snug text-ink">
-            {listing.name}
-          </h3>
-        </Link>
-
-        <p className="text-[13px] text-ink-3">
-          {listing.neighbourhood} · {t("bedrooms", { count: listing.bedrooms })} ·{" "}
-          {t("sleeps", { count: listing.sleeps })}
-        </p>
-
-        <p className="line-clamp-2 max-w-[62ch] text-[13px] leading-relaxed text-ink-2">
-          {listing.summary}
-        </p>
-
-        <div className="mt-auto flex flex-wrap items-center gap-2 pt-1.5">
-          <VerifiedBadge label={tVerify("badge")} size="sm" />
-          {!lease && quote?.escrowHeld && (
-            <VerifiedBadge label={tVerify("escrow")} size="sm" />
-          )}
-          {/* "2 left for these dates" is a nightly-availability sentence and
-              says nothing true about a tenancy. */}
-          {!lease && listing.unitsAvailable <= 2 && (
-            <StatusPill tone="warn">
-              {tStatus("lowAvailability", { count: listing.unitsAvailable })}
-            </StatusPill>
-          )}
-        </div>
-      </div>
-
-      <div className="flex flex-row items-end justify-between gap-2 border-t border-line-soft pt-3 sm:flex-col sm:items-end sm:border-l sm:border-t-0 sm:pl-4 sm:pt-1">
-        <div className="flex flex-col items-start sm:items-end">
-          {monthly ? (
-            <>
-              <MoneyText
-                amount={monthly}
-                className="text-lg font-bold leading-tight text-ink"
-              />
-              <span className="text-xs text-ink-3">{t("perMonth")}</span>
-            </>
-          ) : quote ? (
-            <>
-              <MoneyText
-                amount={quote.total}
-                className="text-lg font-bold leading-tight text-ink"
-              />
-              <span className="text-right text-xs text-ink-3">
-                {tResults("totalFor", { count: nights ?? quote.nights })}
-              </span>
-            </>
-          ) : (
-            <>
-              <MoneyText
-                amount={listing.nightlyRate}
-                className="text-lg font-bold leading-tight text-ink"
-              />
-              <span className="text-xs text-ink-3">{t("perNight")}</span>
-            </>
-          )}
-        </div>
-
-        <Link href={href} className="sm:mt-auto">
-          <Button size="sm" variant={lease ? "secondary" : "primary"}>
-            {lease ? tDetail("applyForLease") : t("reserve")}
-          </Button>
-        </Link>
-      </div>
-    </article>
+    <ResultCard
+      layout={layout}
+      priority={priority}
+      href={href}
+      title={listing.name}
+      meta={`${listing.neighbourhood} · ${t("bedrooms", { count: listing.bedrooms })} · ${t("sleeps", { count: listing.sleeps })}`}
+      summary={layout === "row" ? listing.summary : undefined}
+      extra={<TravelTime minutes={minutesTo(listing.location, landmark)} landmark={landmark} />}
+      image={{ seed: listing.imageSeed, src: listing.images?.[0], count: listing.images?.length ?? 0 }}
+      save={{ id: listing.id, kind: "stay", name: listing.name }}
+      inspection={listing.verification}
+      tags={
+        quote && listing.unitsAvailable <= 2 ? (
+          <StatusPill tone="warn">{tStatus("lowAvailability", { count: listing.unitsAvailable })}</StatusPill>
+        ) : undefined
+      }
+      price={
+        monthly ? (
+          <PriceBlock figure={<MoneyText amount={monthly} rounded />} unit={t("perMonth")} />
+        ) : quote ? (
+          <PriceBlock
+            figure={<MoneyText amount={quote.total} rounded />}
+            unit={tResults("totalFor", { count: nights ?? quote.nights })}
+          />
+        ) : (
+          <PriceBlock figure={<MoneyText amount={listing.nightlyRate} rounded />} unit={t("perNight")} />
+        )
+      }
+      cta={lease ? tList("ctaApply") : quote ? t("reserve") : tList("ctaCheckDates")}
+    />
   );
 }

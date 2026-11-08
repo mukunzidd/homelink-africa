@@ -3,6 +3,7 @@ import type { Conversation, Message, Role } from "@/lib/domain/types";
 import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/domain/dates";
 import { dayOf, formatTimeOfDay } from "@/lib/domain/instants";
+import { readsAs } from "@/lib/preferences/role";
 import { PaperclipIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 
@@ -42,7 +43,12 @@ export async function ThreadView({
 }) {
   const t = await getTranslations("messaging");
 
-  const lastMine = [...messages].reverse().find((m) => m.authorRole === role);
+  // Admin reads from the ops side (see `readsAs`), so ops messages align
+  // right. They are still labelled with the author's name rather than "You":
+  // the admin did not write them.
+  const side = readsAs(role);
+  const isMe = side === role;
+  const lastMine = [...messages].reverse().find((m) => m.authorRole === side);
 
   return (
     <div className="flex flex-col">
@@ -65,13 +71,13 @@ export async function ThreadView({
 
       <ol className="flex flex-col gap-5 py-6">
         {messages.map((message, index) => {
-          const mine = message.authorRole === role;
+          const mine = message.authorRole === side;
           const newDay = index === 0 || dayOf(message.sentAt) !== dayOf(messages[index - 1].sentAt);
 
           return (
             <li key={message.id} className="flex flex-col gap-5">
               {newDay && (
-                <p className="flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.08em] text-ink-3">
+                <p className="flex items-center gap-3 text-[12px] font-medium text-ink-3">
                   <span aria-hidden="true" className="h-px flex-1 bg-line" />
                   {formatDate(dayOf(message.sentAt), locale, {
                     day: "numeric",
@@ -92,7 +98,7 @@ export async function ThreadView({
               >
                 <div className="flex items-baseline gap-2">
                   <p className="text-[13px] font-semibold text-ink">
-                    {mine ? t("you") : message.authorName}
+                    {mine && isMe ? t("you") : message.authorName}
                   </p>
                   <span className="tnum text-[12px] text-ink-3">
                     {formatTimeOfDay(message.sentAt, locale)}
@@ -124,7 +130,7 @@ export async function ThreadView({
                           decoding="async"
                           loading="lazy"
                           className={cn(
-                            "w-full rounded-[6px] border border-line object-cover",
+                            "w-full rounded-inner border border-line object-cover",
                             message.attachments!.length > 1 ? "h-28" : "h-48",
                           )}
                         />
@@ -150,10 +156,11 @@ export async function ThreadView({
       </ol>
 
       {/*
-        Inert, and says so. Sending needs a backend, and this milestone has
-        none — but leaving the composer out entirely would hide the one part of
-        the layout most likely to be wrong, which is how much room a reply box
-        takes from the transcript above it.
+        Inert, and the box itself says so. Leaving the composer out would hide
+        the one part of the layout most likely to be wrong, which is how much
+        room a reply box takes from the transcript above it. The disabled state
+        carries the explanation (placeholder, and a title on the send button)
+        so no developer note has to sit under it.
       */}
       <div className="flex flex-col gap-2 border-t border-line pt-5">
         <label htmlFor="reply" className="sr-only">
@@ -164,12 +171,16 @@ export async function ThreadView({
           rows={3}
           disabled
           placeholder={t("replyPlaceholder")}
+          aria-describedby="reply-off"
           className={cn(
             "w-full resize-none rounded-ctl border border-line bg-surface-2 px-4 py-3",
             "text-[15px] text-ink placeholder:text-ink-3",
             "disabled:cursor-not-allowed",
           )}
         />
+        <span id="reply-off" className="sr-only">
+          {t("sendOff")}
+        </span>
 
         {/*
           The attach control is here, and inert like the box above it, because
@@ -182,9 +193,13 @@ export async function ThreadView({
           front door to a thread is the moment that promise matters most, and
           the note is four screens away by then.
         */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        {/* Attach and Send share a row and the limits take their own line
+            under it: three items in one wrapping row left the limits a 60px
+            column between two buttons at 390. */}
+        <div className="flex items-center justify-between gap-3">
           <span
             aria-disabled="true"
+            title={t("sendOff")}
             className={cn(
               "inline-flex cursor-not-allowed items-center gap-2 rounded-ctl border border-line",
               "bg-surface-2 px-3.5 py-2 text-[13px] font-semibold text-ink-3",
@@ -193,10 +208,16 @@ export async function ThreadView({
             <PaperclipIcon size={15} />
             {t("attach")}
           </span>
-          <p className="text-[12.5px] text-ink-3">{t("attachLimits")}</p>
+          <button
+            type="button"
+            disabled
+            title={t("sendOff")}
+            className="min-h-9 cursor-not-allowed rounded-ctl bg-surface-2 px-4 py-2 text-[13px] font-semibold text-ink-3"
+          >
+            {t("send")}
+          </button>
         </div>
-
-        <p className="text-[13px] text-ink-3">{t("replyNote")}</p>
+        <p className="text-[12.5px] text-ink-3">{t("attachLimits")}</p>
       </div>
     </div>
   );

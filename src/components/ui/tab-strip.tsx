@@ -21,24 +21,31 @@ export type Tab = {
   key: string;
   label: string;
   href: string;
-  count?: number;
+  /** A number, or a phrase such as "11 of 14" when a screen has to show both
+   *  what is open and what exists, so the badge and a stat beside it agree. */
+  count?: number | string;
 };
 
 export function TabStrip({
   tabs,
   active,
   label,
+  wrap = false,
   className,
 }: {
   tabs: Tab[];
   active: string;
   /** Names the group for anyone not looking at it. */
   label: string;
+  /** Wrap onto a second line instead of scrolling sideways. A scrolled strip
+   *  hides its last tab at 390px with nothing to say it is there; wrapping
+   *  costs a line and hides nothing. */
+  wrap?: boolean;
   className?: string;
 }) {
   return (
-    <nav aria-label={label} className={cn("-mx-1 overflow-x-auto", className)}>
-      <ul className="flex min-w-max items-center gap-1 p-1">
+    <nav aria-label={label} className={cn("-mx-1", !wrap && "overflow-x-auto", className)}>
+      <ul className={cn("flex items-center gap-1 p-1", wrap ? "flex-wrap" : "min-w-max")}>
         {tabs.map((tab) => {
           const current = tab.key === active;
           return (
@@ -58,7 +65,7 @@ export function TabStrip({
                 {tab.count !== undefined && (
                   <span
                     className={cn(
-                      "tnum rounded-full px-1.5 py-0.5 text-[11px] font-bold",
+                      "tnum rounded-full px-1.5 py-0.5 text-[11px] font-semibold",
                       current ? "bg-ink/10 text-ink-2" : "bg-surface-2 text-ink-3",
                     )}
                   >

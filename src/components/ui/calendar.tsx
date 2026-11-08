@@ -206,7 +206,7 @@ function MonthGrid({
           key={`${day}-${i}`}
           role="columnheader"
           aria-label={day}
-          className="grid h-8 w-10 place-items-center text-[11px] font-bold uppercase text-ink-3"
+          className="grid h-8 w-10 place-items-center text-[12px] font-medium text-ink-3"
         >
           {day}
         </div>
@@ -252,12 +252,12 @@ function MonthGrid({
                 !disabled && !isEdge && "cursor-pointer text-ink hover:bg-surface-2",
                 !disabled && inRange && "font-medium text-brand",
                 isEdge &&
-                  "bg-brand font-bold text-on-brand shadow-[var(--shadow-card)] hover:bg-brand-deep",
+                  "bg-brand font-semibold text-on-brand shadow-[var(--shadow-card)] hover:bg-brand-deep",
                 // Today is ringed, never filled: a ring is never a selection
                 // anywhere in this system, so the two cannot be confused.
                 cell.date === now &&
                   !isEdge &&
-                  "font-bold text-brand ring-[1.5px] ring-inset ring-brand/45",
+                  "font-semibold text-brand ring-[1.5px] ring-inset ring-brand/45",
               )}
             >
               {Number(cell.date.slice(8))}

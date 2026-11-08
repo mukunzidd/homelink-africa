@@ -70,7 +70,7 @@ export function QuoteBreakdown({
         </div>
       ))}
 
-      <div className="mt-1 flex items-baseline justify-between gap-4 border-t border-line pt-2.5 text-[15px] font-bold">
+      <div className="mt-1 flex items-baseline justify-between gap-4 border-t border-line pt-2.5 text-[15px] font-semibold">
         <span>{t("totalIn", { currency })}</span>
         <MoneyText amount={shown.total} />
       </div>

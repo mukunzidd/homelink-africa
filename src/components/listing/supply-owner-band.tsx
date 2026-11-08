@@ -93,22 +93,22 @@ export async function SupplyOwnerBand({
 
       <dl className="mt-4 grid gap-x-8 gap-y-4 sm:grid-cols-4">
         <Facts label={rateLabel}>
-          <MoneyText amount={rate} className="text-[17px] font-bold text-ink" />
+          <MoneyText amount={rate} className="text-[17px] font-semibold text-ink" />
         </Facts>
 
         <Facts label={t("bookedNow")}>
-          <span className="tnum text-[17px] font-bold text-ink">
+          <span className="tnum text-[17px] font-semibold text-ink">
             {upcoming.length}
           </span>
         </Facts>
 
         <Facts label={t("coming")}>
-          <MoneyText amount={coming} className="text-[17px] font-bold text-ink" />
+          <MoneyText amount={coming} className="text-[17px] font-semibold text-ink" />
         </Facts>
 
         {extra && (
           <Facts label={extra.label}>
-            <span className="tnum text-[17px] font-bold text-ink">{extra.value}</span>
+            <span className="tnum text-[17px] font-semibold text-ink">{extra.value}</span>
           </Facts>
         )}
       </dl>

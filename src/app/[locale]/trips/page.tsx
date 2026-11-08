@@ -11,6 +11,7 @@ import { today } from "@/lib/domain/dates";
 import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
 import { BookingRow } from "@/components/bookings/booking-row";
 import { Button } from "@/components/ui/button";
+import { SignedOut } from "@/components/shell/signed-out";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("trips");
@@ -48,6 +49,7 @@ export default async function TripsPage({
   const intlLocale = INTL_LOCALES[locale as Locale];
 
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
+  if (role === "visitor") return <SignedOut screen="trips" />;
   if (role !== "guest") {
     return (
       <div className="mx-auto flex max-w-[1180px] flex-col gap-4 px-6 py-16">

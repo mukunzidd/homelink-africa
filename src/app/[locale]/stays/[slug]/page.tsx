@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { ViewTracker } from "@/components/ui/view-tracker";
 
 import { repos } from "@/lib/repos";
-import { Link } from "@/i18n/navigation";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { addDays, formatDate, today } from "@/lib/domain/dates";
 import { parseStaySearch, type RawParams } from "@/lib/search-params";
@@ -14,10 +15,17 @@ import { StatusPill } from "@/components/ui/status-pill";
 import { MoneyText } from "@/components/ui/money-text";
 import { AmenityIcon } from "@/components/listing/amenity-icon";
 import { BookingPanel } from "@/components/listing/booking-panel";
+import { LeasePanel } from "@/components/listing/lease-panel";
 import { Highlights } from "@/components/listing/highlights";
 import { InspectorRow } from "@/components/listing/inspector-row";
 import { VerificationRecordPanel } from "@/components/listing/verification-record";
 import { SupplyOwnerBand } from "@/components/listing/supply-owner-band";
+import { SaveButton } from "@/components/ui/save-button";
+import { ShareButton } from "@/components/ui/share-button";
+import { AreaMap } from "@/components/results/stays-map";
+import { TravelTimes } from "@/components/results/travel-times";
+import { MobileActionBar } from "@/components/ui/mobile-action-bar";
+import { DISTRICTS } from "@/lib/domain/neighbourhoods";
 
 export async function generateMetadata({
   params,
@@ -47,15 +55,20 @@ export default async function ListingDetailPage({
   const listing = await repos().stays.bySlug(slug);
   if (!listing) notFound();
 
-  const search = parseStaySearch(await searchParams);
+  const raw = await searchParams;
+  const search = parseStaySearch(raw);
+  const moveIn = typeof raw.movein === "string" && /^\d{4}-\d{2}$/.test(raw.movein) ? raw.movein : undefined;
 
   const t = await getTranslations("detail");
+  const tB = await getTranslations("breadcrumb");
   const tListing = await getTranslations("listing");
   const tVerify = await getTranslations("verification");
   const tAmenities = await getTranslations("amenities");
   const tStatus = await getTranslations("status");
   const tCheckout = await getTranslations("checkout");
   const tOwner = await getTranslations("owner");
+  const tMap = await getTranslations("map");
+  const tPlaces = await getTranslations("places");
 
   // Dates already chosen in search win; otherwise three nights a week out, so
   // the panel opens on a real price rather than asking before showing anything.
@@ -63,8 +76,16 @@ export default async function ListingDetailPage({
   const defaultTo = search.to ?? addDays(defaultFrom, 3);
 
   const sampleQuote = quoteStay(listing, defaultFrom, defaultTo);
-  const escrowApplies = sampleQuote?.escrowHeld ?? false;
   const canLease = listing.modes.includes("lease") && listing.monthlyRate;
+  const isLease = search.band === "long";
+  // A lease view reads as a lease from top to bottom. The escrow promise is
+  // about a nightly payment released at check-in, with another home the same
+  // night if it is wrong; none of that is something the fixtures say about a
+  // twelve-month tenancy, so the lease view talks about the deposit, the
+  // move-in date and the viewing, which they do.
+  const leaseTerms = isLease && canLease ? listing.leaseTerms : undefined;
+  const escrowApplies = !isLease && (sampleQuote?.escrowHeld ?? false);
+  const tList = await getTranslations("list");
 
   const intlLocale = INTL_LOCALES[locale as Locale];
   const cancelBy = addDays(defaultFrom, -7);
@@ -72,6 +93,29 @@ export default async function ListingDetailPage({
     cancelBy < today() ? today() : cancelBy,
     intlLocale,
   );
+
+  // The unglamorous facts. A tenant's are the move-in date, the deposit and
+  // the viewing; check-in times and a first-night refund belong to a stay.
+  const thingsToKnow = leaseTerms
+    ? [
+        {
+          title: t("lease.moveInTitle"),
+          body: t("lease.moveInBody", { date: formatDate(leaseTerms.availableFrom, intlLocale) }),
+        },
+        {
+          title: tList("deposit"),
+          body: t("lease.depositBody", { deposit: tList("depositMonths", { count: leaseTerms.depositMonths }) }),
+        },
+        { title: t("lease.viewingTitle"), body: t("lease.viewingBody") },
+      ]
+    : [
+        { title: t("houseRules"), body: t("houseRulesBody") },
+        { title: t("cancellationTitle"), body: tCheckout("cancellation", { date: cancellationDate }) },
+        {
+          title: t("safetyTitle"),
+          body: escrowApplies ? tVerify("steps.escrowBody") : tVerify("steps.identityBody"),
+        },
+      ];
 
   const specs = [
     tListing("bedrooms", { count: listing.bedrooms }),
@@ -83,18 +127,33 @@ export default async function ListingDetailPage({
       <SupplyOwnerBand
         kind="stay"
         supplyItemId={listing.id}
-        rate={listing.nightlyRate}
-        rateLabel={tListing("perNight")}
-        extra={{ label: tOwner("free"), value: String(listing.unitsAvailable) }}
+        // On the Rent view the owner is looking at a lease, so the band shows
+        // what a tenant pays a month and when the place is free, not tonight's
+        // rate and a count of free units that only means something nightly.
+        rate={isLease && listing.monthlyRate ? listing.monthlyRate : listing.nightlyRate}
+        rateLabel={isLease && listing.monthlyRate ? tListing("perMonth") : tListing("perNight")}
+        extra={
+          isLease && listing.leaseTerms
+            ? { label: tOwner("freeFrom"), value: formatDate(listing.leaseTerms.availableFrom, intlLocale, { day: "numeric", month: "short", year: "numeric" }) }
+            : { label: tOwner("free"), value: String(listing.unitsAvailable) }
+        }
         record={listing.verification}
       />
 
-      <Link
-        href="/stays"
-        className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
-      >
-        ← {t("backToStays")}
-      </Link>
+      <ViewTracker href={`/stays/${listing.slug}`} name={listing.name} kind="stay" image={listing.images?.[0]} />
+      <Breadcrumbs
+        trail={[
+          { label: tB("homes"), href: "/stays" },
+          search.band === "long"
+            ? { label: tB("rent"), href: "/stays?band=long" }
+            : { label: tB("stay"), href: "/stays" },
+          {
+            label: listing.neighbourhood,
+            href: `/stays?neighbourhood=${encodeURIComponent(listing.neighbourhood)}${search.band === "long" ? "&band=long" : ""}`,
+          },
+          { label: listing.name },
+        ]}
+      />
 
       {/*
         Title above the gallery, not below it. The name and the place are what
@@ -107,16 +166,23 @@ export default async function ListingDetailPage({
           {listing.name}
         </h1>
 
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <VerifiedBadge label={tVerify("badge")} size="sm" />
-          <span className="text-[15px] text-ink-2">
-            {listing.neighbourhood} · {listing.city}
-          </span>
-          {listing.unitsAvailable <= 2 && (
-            <StatusPill tone="warn">
-              {tStatus("lowAvailability", { count: listing.unitsAvailable })}
-            </StatusPill>
-          )}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <VerifiedBadge label={tVerify("badge")} size="sm" />
+            <span className="text-[15px] text-ink-2">
+              {listing.neighbourhood} · {listing.city}
+            </span>
+            {/* Only once dates are chosen: scarcity for no dates is no fact. */}
+            {search.from && search.to && listing.unitsAvailable <= 2 && (
+              <StatusPill tone="warn">
+                {tStatus("lowAvailability", { count: listing.unitsAvailable })}
+              </StatusPill>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <ShareButton title={listing.name} />
+            <SaveButton id={listing.id} kind="stay" name={listing.name} variant="inline" />
+          </div>
         </div>
       </header>
 
@@ -148,6 +214,7 @@ export default async function ListingDetailPage({
               listing={listing}
               record={listing.verification}
               escrowApplies={escrowApplies}
+              lease={leaseTerms}
             />
           </div>
 
@@ -179,6 +246,29 @@ export default async function ListingDetailPage({
             </ul>
           </section>
 
+          {/* An area, not a pin. The address goes to the guest with the
+              booking, or to a tenant with the viewing; before that, the
+              street is enough to judge the commute and too little to turn up
+              at the gate. */}
+          <section className="flex flex-col gap-4 border-t border-line py-6">
+            <div className="flex flex-col gap-1">
+              <h2 className="font-display text-2xl font-semibold text-ink">{tMap("whereTitle")}</h2>
+              <p className="text-[15px] text-ink-2">
+                {listing.neighbourhood}, {DISTRICTS[listing.neighbourhood] ?? listing.city} · {listing.city}
+              </p>
+            </div>
+            <AreaMap
+              label={tMap("areaLabel", { place: listing.neighbourhood })}
+              area={{ lat: listing.location.lat, lng: listing.location.lng, radiusM: 350 }}
+              className="h-72 rounded-card border border-line"
+            />
+            <p className="max-w-[62ch] text-[14px] leading-relaxed text-ink-2">
+              {tPlaces.has(listing.neighbourhood) ? `${tPlaces(listing.neighbourhood)} ` : ""}
+              {isLease ? tMap("areaNoteLease") : tMap("areaNote")}
+            </p>
+            <TravelTimes point={listing.location} />
+          </section>
+
           <div className="border-t border-line py-6">
             <VerificationRecordPanel
               record={listing.verification}
@@ -186,7 +276,38 @@ export default async function ListingDetailPage({
             />
           </div>
 
-          {canLease && (
+          {isLease && listing.leaseTerms && (
+            <section className="flex flex-col gap-4 border-t border-line py-6">
+              <h2 className="font-display text-2xl font-semibold text-ink">{tList("leaseTermsTitle")}</h2>
+              <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-3">
+                <div className="flex flex-col gap-0.5 bg-surface px-4 py-3">
+                  <dt className="text-[12px] text-ink-3">{tList("deposit")}</dt>
+                  <dd className="text-[15px] font-semibold text-ink">
+                    {tList("depositMonths", { count: listing.leaseTerms.depositMonths })}
+                  </dd>
+                </div>
+                <div className="flex flex-col gap-0.5 bg-surface px-4 py-3">
+                  <dt className="text-[12px] text-ink-3">{tList("availableFrom")}</dt>
+                  <dd className="text-[15px] font-semibold text-ink">{formatDate(listing.leaseTerms.availableFrom, intlLocale)}</dd>
+                </div>
+                <div className="col-span-2 flex flex-col gap-0.5 bg-surface px-4 py-3 sm:col-span-1">
+                  <dt className="text-[12px] text-ink-3">{tList("minimumTerm")}</dt>
+                  <dd className="text-[15px] font-semibold text-ink">{tList("twelveMonths")}</dd>
+                </div>
+              </dl>
+              <div className="flex flex-col gap-2">
+                <h3 className="text-[15px] font-semibold text-ink">{tList("includedInRent")}</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {listing.leaseTerms.includes.map((k) => (
+                    <li key={k} className="rounded-full border border-line px-3 py-1 text-[13px] text-ink-2">{tList(`included.${k}`)}</li>
+                  ))}
+                </ul>
+                <p className="text-[13px] text-ink-3">{tList("excludedNote")}</p>
+              </div>
+            </section>
+          )}
+
+          {canLease && !isLease && (
             <section className="flex flex-col gap-2.5 border-t border-line py-6">
               <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("leaseAvailable")}
@@ -198,7 +319,7 @@ export default async function ListingDetailPage({
                 <span className="text-sm text-ink-3">{t("monthlyFrom")}</span>
                 <MoneyText
                   amount={listing.monthlyRate!}
-                  className="text-lg font-bold text-ink"
+                  className="text-lg font-semibold text-ink"
                 />
                 <span className="text-sm text-ink-3">{tListing("perMonth")}</span>
               </p>
@@ -212,19 +333,7 @@ export default async function ListingDetailPage({
               {t("thingsToKnow")}
             </h2>
             <div className="grid gap-6 sm:grid-cols-3">
-              {[
-                { title: t("houseRules"), body: t("houseRulesBody") },
-                {
-                  title: t("cancellationTitle"),
-                  body: tCheckout("cancellation", { date: cancellationDate }),
-                },
-                {
-                  title: t("safetyTitle"),
-                  body: escrowApplies
-                    ? tVerify("steps.escrowBody")
-                    : tVerify("steps.identityBody"),
-                },
-              ].map((block) => (
+              {thingsToKnow.map((block) => (
                 <div key={block.title} className="flex flex-col gap-2">
                   <h3 className="text-[15px] font-semibold text-ink">
                     {block.title}
@@ -239,15 +348,32 @@ export default async function ListingDetailPage({
         </div>
 
         {/* Transaction density inside a discovery page. Intentional. */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <BookingPanel
-            listing={listing}
-            defaultFrom={defaultFrom}
-            defaultTo={defaultTo}
-            defaultParty={search.party}
-          />
+        <aside id="book" className="scroll-mt-[calc(var(--header-offset)+1rem)] lg:sticky lg:top-24 lg:self-start">
+          {isLease && canLease ? (
+            <LeasePanel
+              monthly={listing.monthlyRate!}
+              slug={listing.slug}
+              name={listing.name}
+              initialMoveIn={moveIn}
+              availableFrom={listing.leaseTerms?.availableFrom}
+            />
+          ) : (
+            <BookingPanel
+              listing={listing}
+              defaultFrom={defaultFrom}
+              defaultTo={defaultTo}
+              defaultParty={search.party}
+            />
+          )}
         </aside>
       </div>
+
+      <MobileActionBar target="book" cta={isLease && canLease ? tList("ctaApply") : tListing("reserve")}>
+        <span className="text-[16px] font-semibold text-ink">
+          <MoneyText amount={isLease && canLease ? listing.monthlyRate! : listing.nightlyRate} rounded />
+        </span>
+        <span className="text-[12px] text-ink-3">{isLease && canLease ? tListing("perMonth") : tListing("perNight")}</span>
+      </MobileActionBar>
     </div>
   );
 }

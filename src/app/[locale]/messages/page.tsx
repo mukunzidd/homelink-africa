@@ -5,7 +5,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { repos } from "@/lib/repos";
 import { Link } from "@/i18n/navigation";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
-import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
+import { ROLE_COOKIE, parseRole, supplyLaneFor } from "@/lib/preferences/role";
+import { SignedOut } from "@/components/shell/signed-out";
 import { ThreadList } from "@/components/messaging/thread-list";
 import { ThreadView } from "@/components/messaging/thread-view";
 import { cn } from "@/lib/cn";
@@ -42,6 +43,7 @@ export default async function MessagesPage({
   const t = await getTranslations("messaging");
   const intlLocale = INTL_LOCALES[locale as Locale];
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
+  if (role === "visitor") return <SignedOut screen="messages" />;
   const { thread } = await searchParams;
 
   const conversations = await repos().messaging.forRole(role);
@@ -58,15 +60,37 @@ export default async function MessagesPage({
   async function scopeFor(ref: { kind: "booking" | "trip"; id: string }) {
     if (ref.kind === "trip") {
       const trip = await repos().trips.byId(ref.id);
-      return trip ? { label: trip.name, href: "/trips" } : null;
+      return trip ? { label: trip.name, href: "/trips", tag: trip.name } : null;
     }
     const booking = await repos().bookings.byId(ref.id);
     return booking
-      ? { label: t("aboutBooking", { reference: booking.reference }), href: "/trips" }
+      ? {
+          label: t("aboutBooking", { reference: booking.reference }),
+          href: "/trips",
+          tag: booking.reference,
+        }
       : null;
   }
 
+  // The booking reference (or trip name) for every row, so a host with three
+  // threads about three bookings can tell them apart without opening each.
+  const scopeTags = Object.fromEntries(
+    await Promise.all(
+      conversations.map(async (c) => [c.id, (await scopeFor(c.scope))?.tag ?? null] as const),
+    ),
+  );
+
+  // "Selected" only when the URL names a thread. Without one, a desktop still
+  // shows the newest thread beside the list, but a phone shows the list alone,
+  // and highlighting its first row there claimed a thread was open when none
+  // was.
+  const selected = !!thread && active?.id === thread;
   const showListOnMobile = !thread;
+
+  // The subtitle has to describe the reader's threads, not the guest's. A host
+  // has booked nothing, and ops is in every thread on the books.
+  const audience =
+    role === "guest" ? "guest" : supplyLaneFor(role) ? "supply" : "ops";
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-6 px-6 py-6">
@@ -75,7 +99,7 @@ export default async function MessagesPage({
           {t("title")}
         </h1>
         <p className="max-w-[58ch] text-[15px] leading-relaxed text-ink-2">
-          {t("subtitle")}
+          {t(`subtitleFor.${audience}`)}
         </p>
       </header>
 
@@ -89,6 +113,9 @@ export default async function MessagesPage({
           <ThreadList
             conversations={conversations}
             activeId={active?.id}
+            selected={selected}
+            role={role}
+            scopeTags={scopeTags}
             locale={intlLocale}
           />
         </div>

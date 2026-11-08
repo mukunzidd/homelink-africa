@@ -59,7 +59,7 @@ export function BookingPanel({
         <span className="text-sm text-ink-3">{t("nightlyFrom")}</span>
         <MoneyText
           amount={listing.nightlyRate}
-          className="text-xl font-bold text-ink"
+          className="text-xl font-semibold text-ink"
         />
         <span className="text-sm text-ink-3">{tListing("perNight")}</span>
       </div>

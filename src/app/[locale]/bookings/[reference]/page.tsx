@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 import { repos } from "@/lib/repos";
 import { supplyRefFor } from "@/lib/repos/supply-ref";
@@ -8,7 +9,8 @@ import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import type { Booking, DriveMode, ServiceKind } from "@/lib/domain/types";
 import type { Money } from "@/lib/domain/money";
 import type { Quote } from "@/lib/domain/pricing";
-import { formatDate, formatDateRange, isIsoDate } from "@/lib/domain/dates";
+import { addDays, formatDate, formatDateRange, isIsoDate } from "@/lib/domain/dates";
+import { CarIcon, CompassIcon } from "@/components/ui/icons";
 import { quoteExperience, quoteStay, quoteVehicle } from "@/lib/domain/pricing";
 import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
 import { cookies } from "next/headers";
@@ -19,6 +21,7 @@ import { MoneyText } from "@/components/ui/money-text";
 import { StepSpine } from "@/components/checkout/step-spine";
 import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
 import { Button } from "@/components/ui/button";
+import { SignedOut } from "@/components/shell/signed-out";
 
 /**
  * One booking, at two moments in its life.
@@ -70,6 +73,7 @@ async function BookingRecord({
   locale: string;
 }) {
   const t = await getTranslations("confirmation");
+  const tB = await getTranslations("breadcrumb");
   const tStatus = await getTranslations("status");
   const tVerify = await getTranslations("verification");
   const tSearch = await getTranslations("search");
@@ -78,9 +82,13 @@ async function BookingRecord({
 
   const intlLocale = INTL_LOCALES[locale as Locale];
 
-  // A booking is the guest's record of their own money. Anyone else reaching
-  // it by guessing a six-character code gets the same refusal Trips gives.
+  // A booking is the guest's record of their own money. A visitor is most
+  // likely that guest on another device, following the link in their email,
+  // so they get the way in that Trips gives rather than a 404 that reads as
+  // "this booking does not exist". Any other role is signed in as someone
+  // who does not own it, and a guessed code still finds nothing.
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
+  if (role === "visitor") return <SignedOut screen="booking" />;
   if (role !== "guest") notFound();
 
   const [supply, conversation] = await Promise.all([
@@ -99,12 +107,7 @@ async function BookingRecord({
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
-      <Link
-        href="/trips"
-        className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
-      >
-        ← {tTrips("title")}
-      </Link>
+      <Breadcrumbs trail={[{ label: tB("trips"), href: "/trips" }, { label: booking.reference }]} />
 
       <header className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-2">
@@ -126,7 +129,7 @@ async function BookingRecord({
           {/* The code first, because it is the one thing on this page somebody
               came back to find. */}
           <section className="flex flex-col gap-1.5 pb-6">
-            <h2 className="text-xs font-bold uppercase tracking-[0.1em] text-ink-3">
+            <h2 className="text-xs font-medium text-ink-3">
               {t("reference")}
             </h2>
             <p className="font-mono text-2xl font-semibold tracking-tight text-ink">
@@ -170,7 +173,7 @@ async function BookingRecord({
                   <li key={index} className="flex gap-3">
                     <span
                       aria-hidden="true"
-                      className="tnum mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-surface-2 text-xs font-bold text-ink-3"
+                      className="tnum mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-surface-2 text-xs font-semibold text-ink-3"
                     >
                       {index + 1}
                     </span>
@@ -213,7 +216,7 @@ async function BookingRecord({
             src={supply?.image}
             alt={supply?.name ?? booking.title}
             sizes="320px"
-            className="h-28 rounded-[6px]"
+            className="h-28 rounded-inner"
           />
           <VerifiedBadge label={tVerify("badge")} size="sm" className="self-start" />
           {supply && (
@@ -334,9 +337,25 @@ async function JustBooked({
     t("next3"),
   ];
 
+  const tB = await getTranslations("breadcrumb");
+  const tList = await getTranslations("list");
+  const lane =
+    kind === "car"
+      ? { label: tB("cars"), href: "/cars", item: `/cars/${sp.slug}` }
+      : kind === "experience"
+        ? { label: tB("experiences"), href: "/experiences", item: `/experiences/${sp.slug}` }
+        : { label: tB("homes"), href: "/stays", item: `/stays/${sp.slug}` };
+
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-8 px-6 py-8">
-      <StepSpine current={4} />
+      <Breadcrumbs
+        trail={[
+          { label: lane.label, href: lane.href },
+          { label: resolved.title, href: lane.item },
+          { label: tB("booking") },
+        ]}
+      />
+      <StepSpine current={4} lane={kind} />
 
       <header className="flex flex-col gap-3">
         <StatusPill tone="ok" className="self-start">
@@ -353,7 +372,7 @@ async function JustBooked({
       <div className="grid items-start gap-8 lg:grid-cols-[1fr_360px]">
         <div className="flex flex-col gap-6">
           <section className="flex flex-col gap-1.5 rounded-card border border-line bg-surface p-5">
-            <h2 className="text-xs font-bold uppercase tracking-[0.1em] text-ink-3">
+            <h2 className="text-xs font-medium text-ink-3">
               {t("reference")}
             </h2>
             <p className="font-mono text-2xl font-semibold tracking-tight text-ink">
@@ -371,7 +390,7 @@ async function JustBooked({
                 <li key={index} className="flex gap-3">
                   <span
                     aria-hidden="true"
-                    className="tnum mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-surface-2 text-xs font-bold text-ink-3"
+                    className="tnum mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-surface-2 text-xs font-semibold text-ink-3"
                   >
                     {index + 1}
                   </span>
@@ -395,6 +414,47 @@ async function JustBooked({
             product today: a human arranges these, there is no second checkout
             behind them.
           */}
+          {/*
+            The rest of the trip, carried across. "Add a car" was removed once
+            because it opened an unfiltered search with nothing from this
+            booking in it. These two carry the dates and the party, so the car
+            list opens on arrival to departure with totals, and the days out
+            open on the first full day with the price for everyone.
+          */}
+          {kind !== "car" && kind !== "experience" && isIsoDate(sp.from) && isIsoDate(sp.to) && (
+            <section className="flex flex-col gap-3">
+              <h2 className="font-display text-xl font-semibold text-ink">{tList("tripTitle")}</h2>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Link
+                  href={`/cars?from=${sp.from}&to=${sp.to}`}
+                  className="group flex items-start gap-3 rounded-card border border-line bg-surface p-4 transition-colors hover:border-ink-3/40"
+                >
+                  <span className="grid size-10 flex-none place-items-center rounded-full bg-surface-2 text-ink-2">
+                    <CarIcon size={18} />
+                  </span>
+                  <span className="flex flex-col gap-0.5">
+                    <span className="text-[15px] font-semibold text-ink">{tList("tripCar")}</span>
+                    <span className="text-[13px] text-ink-2">{tList("tripCarBody", { when: resolved.when })}</span>
+                  </span>
+                </Link>
+                <Link
+                  href={`/experiences?date=${addDays(sp.from, 1)}&party=${resolved.party}`}
+                  className="group flex items-start gap-3 rounded-card border border-line bg-surface p-4 transition-colors hover:border-ink-3/40"
+                >
+                  <span className="grid size-10 flex-none place-items-center rounded-full bg-surface-2 text-ink-2">
+                    <CompassIcon size={18} />
+                  </span>
+                  <span className="flex flex-col gap-0.5">
+                    <span className="text-[15px] font-semibold text-ink">{tList("tripDay")}</span>
+                    <span className="text-[13px] text-ink-2">
+                      {tList("tripDayBody", { date: formatDate(addDays(sp.from, 1), intlLocale), count: resolved.party })}
+                    </span>
+                  </span>
+                </Link>
+              </div>
+            </section>
+          )}
+
           <section className="flex flex-col items-start gap-3 rounded-card border border-line bg-surface p-6">
             <h2 className="font-display text-xl font-semibold text-ink">
               {t("arrangeTitle")}
@@ -415,7 +475,7 @@ async function JustBooked({
             src={resolved.image}
             alt={resolved.title}
             sizes="320px"
-            className="h-28 rounded-[6px]"
+            className="h-28 rounded-inner"
           />
 
           <div className="flex flex-col gap-1">

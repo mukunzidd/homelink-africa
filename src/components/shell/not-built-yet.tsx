@@ -14,7 +14,7 @@ export async function NotBuiltYet({ title }: { title: string }) {
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-4 px-6 py-16">
-      <p className="text-xs font-bold uppercase tracking-[0.1em] text-ink-3">
+      <p className="text-xs font-medium text-ink-3">
         {t("comingSoon")}
       </p>
       <h1 className="font-display text-3xl font-semibold text-ink">{title}</h1>

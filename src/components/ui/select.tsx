@@ -67,6 +67,8 @@ export type SelectOption<T extends string | number> = {
   label: string;
   /** Optional second line, e.g. a hint under the label. */
   hint?: string;
+  /** Shown so the reader sees it exists, but cannot be chosen. */
+  disabled?: boolean;
 };
 
 export function Select<T extends string | number>({
@@ -126,7 +128,7 @@ export function Select<T extends string | number>({
 
   function commit(index: number) {
     const option = options[index];
-    if (!option) return;
+    if (!option || option.disabled) return;
     onChange(String(option.value));
     close();
   }
@@ -148,8 +150,8 @@ export function Select<T extends string | number>({
     typed.current.at = now;
 
     const needle = typed.current.buffer.toLowerCase();
-    const found = options.findIndex((o) =>
-      o.label.toLowerCase().startsWith(needle),
+    const found = options.findIndex(
+      (o) => !o.disabled && o.label.toLowerCase().startsWith(needle),
     );
     if (found >= 0) {
       setActiveIndex(found);
@@ -157,26 +159,32 @@ export function Select<T extends string | number>({
     }
   }
 
-  function onKeyDown(event: React.KeyboardEvent) {
-    const last = options.length - 1;
+  /** The nearest choosable option from `from` in direction `dir`, else `from`. */
+  function step(from: number, dir: 1 | -1): number {
+    for (let i = from + dir; i >= 0 && i < options.length; i += dir) {
+      if (!options[i].disabled) return i;
+    }
+    return from;
+  }
 
+  function onKeyDown(event: React.KeyboardEvent) {
     switch (event.key) {
       case "ArrowDown":
         event.preventDefault();
         if (!open) return openList();
-        return setActiveIndex((i) => Math.min(i + 1, last));
+        return setActiveIndex((i) => step(i, 1));
       case "ArrowUp":
         event.preventDefault();
         if (!open) return openList();
-        return setActiveIndex((i) => Math.max(i - 1, 0));
+        return setActiveIndex((i) => step(i, -1));
       case "Home":
         if (!open) return;
         event.preventDefault();
-        return setActiveIndex(0);
+        return setActiveIndex(step(-1, 1));
       case "End":
         if (!open) return;
         event.preventDefault();
-        return setActiveIndex(last);
+        return setActiveIndex(step(options.length, -1));
       case "Enter":
       case " ":
         event.preventDefault();
@@ -271,7 +279,7 @@ export function Select<T extends string | number>({
             drop.side === "above"
               ? "bottom-[calc(100%+0.375rem)]"
               : "top-[calc(100%+0.375rem)]",
-            "rounded-ctl border border-line bg-surface p-1 shadow-[var(--shadow-pop)]",
+            "rounded-card border border-line bg-surface p-1.5 shadow-[var(--shadow-pop)]",
           )}
         >
           {options.map((option, index) => {
@@ -285,14 +293,20 @@ export function Select<T extends string | number>({
                 role="option"
                 data-index={index}
                 aria-selected={isSelected}
+                aria-disabled={option.disabled || undefined}
                 onClick={() => commit(index)}
-                onMouseEnter={() => setActiveIndex(index)}
+                onMouseEnter={() => !option.disabled && setActiveIndex(index)}
                 className={cn(
-                  "flex cursor-pointer flex-col gap-0.5 rounded-[6px] px-2.5 py-2 text-[14px]",
+                  "flex flex-col gap-0.5 rounded-inner px-2.5 py-2 text-[14px]",
                   "transition-colors duration-100",
-                  isActive && !isSelected && "bg-surface-2 text-ink",
-                  isSelected && "bg-brand-tint font-semibold text-brand",
-                  !isActive && !isSelected && "text-ink",
+                  option.disabled
+                    ? "cursor-not-allowed text-ink-3"
+                    : cn(
+                        "cursor-pointer",
+                        isActive && !isSelected && "bg-surface-2 text-ink",
+                        isSelected && "bg-brand-tint font-semibold text-brand",
+                        !isActive && !isSelected && "text-ink",
+                      ),
                 )}
               >
                 <span className="flex items-center justify-between gap-2">

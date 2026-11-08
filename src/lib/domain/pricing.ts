@@ -1,6 +1,6 @@
-import type { DriveMode, Experience, Listing, Vehicle } from "./types";
+import type { DriveMode, Experience, Listing, ServiceKind, Vehicle } from "./types";
 import type { CurrencyCode, FxTable, Money } from "./money";
-import { add, convert, money, multiply } from "./money";
+import { add, convert, money, multiply, subtract } from "./money";
 import { nightsBetween, type IsoDate } from "./dates";
 
 /**
@@ -153,6 +153,31 @@ export function quoteExperience(
     // held. The refund policy carries the guarantee instead.
     escrowHeld: false,
   };
+}
+
+/**
+ * A guest's total, split into what HomeLink keeps and what reaches the supplier.
+ *
+ * The service fee is added on top of the supplier's price, so the supplier's
+ * share is everything except the fee: the rate times the units, plus the
+ * cleaning fee on a stay. A booking only stores its total, so the fee is
+ * recovered by inverting the quote arithmetic rather than by multiplying the
+ * total by the rate, which would charge commission on the commission and on
+ * the cleaning.
+ *
+ * The inversion is exact for any total a quote produced: the fee is rounded
+ * to a whole minor unit, so the error it puts into the base is under half a
+ * unit after dividing by (1 + rate), and rounding the base recovers it. A
+ * total typed into a fixture by hand comes out as the nearest quote would.
+ */
+export function supplierShare(
+  total: Money,
+  kind: ServiceKind,
+): { gross: Money; fee: Money; net: Money } {
+  const extras = kind === "stay" ? Math.min(CLEANING_FEE_RWF, total.minor) : 0;
+  const feeBase = Math.round((total.minor - extras) / (1 + SERVICE_FEE_RATE));
+  const fee = money(total.minor - extras - feeBase, total.currency);
+  return { gross: total, fee, net: subtract(total, fee) };
 }
 
 /**

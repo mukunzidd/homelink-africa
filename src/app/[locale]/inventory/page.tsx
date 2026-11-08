@@ -10,6 +10,7 @@ import type { Booking, ServiceKind } from "@/lib/domain/types";
 import type { Money } from "@/lib/domain/money";
 import { money, sum } from "@/lib/domain/money";
 import { formatDate, formatDateRange, today } from "@/lib/domain/dates";
+import { supplierShare } from "@/lib/domain/pricing";
 import { paginate, pageParam } from "@/lib/paginate";
 import { ROLE_COOKIE, parseRole, supplyLaneFor } from "@/lib/preferences/role";
 import { BookingRow } from "@/components/bookings/booking-row";
@@ -131,10 +132,23 @@ export default async function InventoryPage({
     .filter((b) => b.status === "cancelled")
     .sort((a, b) => b.startDate.localeCompare(a.startDate));
 
-  const held = sum(upcoming.filter((b) => b.escrowHeld).map((b) => b.total), "RWF");
-  const due = sum(upcoming.filter((b) => !b.escrowHeld).map((b) => b.total), "RWF");
-  const paid = sum(settled.map((b) => b.total), "RWF");
-  const lost = sum(cancelled.map((b) => b.total), "RWF");
+  // Every figure on this page is the supplier's share. `booking.total` is what
+  // the guest paid, service fee included, and showing that as "coming to you"
+  // promised a host money HomeLink keeps.
+  const net = (b: Booking) => supplierShare(b.total, b.service).net;
+  const held = sum(upcoming.filter((b) => b.escrowHeld).map(net), "RWF");
+  const due = sum(upcoming.filter((b) => !b.escrowHeld).map(net), "RWF");
+  const paid = sum(settled.map(net), "RWF");
+  const lost = sum(cancelled.map(net), "RWF");
+
+  // The arithmetic behind "Coming to you", for the Money tab. Upcoming only,
+  // because that is the figure in the stat band; settled money is already
+  // the supplier's and its fee is history.
+  const upcomingGross = sum(upcoming.map((b) => b.total), "RWF");
+  const upcomingFee = sum(
+    upcoming.map((b) => supplierShare(b.total, b.service).fee),
+    "RWF",
+  );
 
   const bookingList = [...upcoming, ...settled, ...cancelled];
 
@@ -167,6 +181,7 @@ export default async function InventoryPage({
         supply={supply}
         conversation={conversation}
         locale={intlLocale}
+        viewer="supply"
         muted={booking.status !== "confirmed" && booking.status !== "active"}
         aside={
           // The supplier's column. A guest wants to know their money is safe;
@@ -378,7 +393,7 @@ export default async function InventoryPage({
                   src={item.image}
                   alt={item.name}
                   sizes="(max-width: 640px) 100vw, 160px"
-                  className="h-32 w-full rounded-[6px] sm:h-20 sm:w-32 sm:flex-none"
+                  className="h-32 w-full rounded-inner sm:h-20 sm:w-32 sm:flex-none"
                 />
 
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -406,12 +421,19 @@ export default async function InventoryPage({
                   </div>
                 </div>
 
-                <div className="flex flex-none items-baseline gap-1.5 sm:flex-col sm:items-end sm:gap-0">
+                {/* The rate is already the supplier's figure: the service fee
+                    is added on top of it at checkout, not taken out of it. So
+                    the number stays, and the line under it says what the
+                    guest sees, which is the question a host asks next. */}
+                <div className="flex flex-none flex-wrap items-baseline gap-x-1.5 sm:flex-col sm:items-end sm:gap-0">
                   <MoneyText
                     amount={item.rate}
-                    className="text-[17px] font-bold text-ink"
+                    className="text-[17px] font-semibold text-ink"
                   />
                   <span className="text-[13px] text-ink-3">{item.rateLabel}</span>
+                  <span className="basis-full text-[12px] text-ink-3 sm:basis-auto">
+                    {t("rateYours")}
+                  </span>
                 </div>
               </li>
             ))}
@@ -446,6 +468,39 @@ export default async function InventoryPage({
             ))}
           </dl>
 
+          {/* Gross, fee, net, for the one figure the header leads with. A
+              supplier who knows what the guest paid will otherwise subtract
+              the two and wonder where the rest went. */}
+          {upcoming.length > 0 && (
+            <div className="flex flex-col gap-2 rounded-card border border-line bg-surface p-5">
+              <h2 className="text-xs font-medium text-ink-3">{t("breakdownTitle")}</h2>
+              <dl className="flex flex-col gap-1.5 text-[14px]">
+                <div className="flex items-baseline justify-between gap-4">
+                  <dt className="text-ink-2">{t("breakdownGross")}</dt>
+                  <dd>
+                    <MoneyText amount={upcomingGross} className="text-ink" />
+                  </dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-4">
+                  <dt className="text-ink-2">{t("breakdownFee")}</dt>
+                  <dd className="text-ink-2">
+                    −<MoneyText amount={upcomingFee} />
+                  </dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-4 border-t border-line pt-2">
+                  <dt className="font-semibold text-ink">{t("dueToYou")}</dt>
+                  <dd>
+                    <MoneyText
+                      amount={money(held.minor + due.minor, "RWF")}
+                      className="font-semibold text-ink"
+                    />
+                  </dd>
+                </div>
+              </dl>
+              <p className="text-[13px] leading-relaxed text-ink-3">{t("breakdownNote")}</p>
+            </div>
+          )}
+
           {/* Every line above, traced back to the booking it came from. Three
               sums with nothing behind them is a number you cannot check. */}
           <div className="flex flex-col">
@@ -453,29 +508,38 @@ export default async function InventoryPage({
               {t("whereFrom")}
             </h2>
             <ul className="flex flex-col">
-              {bookings.map((booking) => (
-                <li
-                  key={booking.id}
-                  className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-line py-3"
-                >
-                  <span className="font-mono text-[12px] tracking-tight text-ink-3">
-                    {booking.reference}
-                  </span>
-                  {/* No truncate. At 390 this cut the dates mid-year — and the
-                      dates are the reason anybody reads the line. Wrapping
-                      costs a second row on a narrow screen and loses nothing. */}
-                  <span className="tnum text-[14px] text-ink-2">
-                    {formatDateRange(booking.startDate, booking.endDate, intlLocale)}
-                  </span>
-                  <span className="ml-auto text-[13px] text-ink-3">
-                    {tStatus(booking.status)}
-                  </span>
-                  <MoneyText
-                    amount={booking.total}
-                    className="flex-none text-[14px] font-semibold text-ink"
-                  />
-                </li>
-              ))}
+              {bookings.map((booking) => {
+                const share = supplierShare(booking.total, booking.service);
+                return (
+                  <li
+                    key={booking.id}
+                    className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-line py-3"
+                  >
+                    <span className="font-mono text-[12px] text-ink-3">
+                      {booking.reference}
+                    </span>
+                    {/* No truncate. At 390 this cut the dates mid-year — and the
+                        dates are the reason anybody reads the line. Wrapping
+                        costs a second row on a narrow screen and loses nothing. */}
+                    <span className="tnum text-[14px] text-ink-2">
+                      {formatDateRange(booking.startDate, booking.endDate, intlLocale)}
+                    </span>
+                    <span className="ml-auto text-[13px] text-ink-3">
+                      {tStatus(booking.status)}
+                    </span>
+                    <span className="flex flex-none flex-col items-end">
+                      <MoneyText
+                        amount={share.net}
+                        className="text-[14px] font-semibold text-ink"
+                      />
+                      <span className="text-[12px] text-ink-3">
+                        {t("rowGross")} <MoneyText amount={share.gross} /> ·{" "}
+                        {t("rowFee")} <MoneyText amount={share.fee} />
+                      </span>
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

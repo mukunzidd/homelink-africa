@@ -357,3 +357,172 @@ export function HeartIcon({ className, size = 16 }: IconProps) {
     </svg>
   );
 }
+
+/** Smart search. Two marks, not a cluster of stars: it reads, not sparkles. */
+export function SparkIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M8.5 3.2 9.7 7a2 2 0 0 0 1.3 1.3l3.8 1.2-3.8 1.2a2 2 0 0 0-1.3 1.3l-1.2 3.8-1.2-3.8A2 2 0 0 0 6 10.7L2.2 9.5 6 8.3A2 2 0 0 0 7.3 7Z" />
+      <path d="M15.2 2.6v3M13.7 4.1h3" />
+    </svg>
+  );
+}
+
+export function MapIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M7.4 3.4 2.8 5v11.6l4.6-1.6 5.2 1.6 4.6-1.6V3.4L12.6 5Z" />
+      <path d="M7.4 3.4V15M12.6 5v11.6" />
+    </svg>
+  );
+}
+
+export function ListIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M7 5.5h9.5M7 10h9.5M7 14.5h9.5" />
+      <path d="M3.5 5.5h.01M3.5 10h.01M3.5 14.5h.01" strokeWidth={2.2} />
+    </svg>
+  );
+}
+
+export function ArrowRightIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5" />
+    </svg>
+  );
+}
+
+export function HistoryIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M3.3 10a6.7 6.7 0 1 0 2-4.8L3.3 7.2" />
+      <path d="M3.3 3.6v3.6h3.6M10 6.6V10l2.4 1.6" />
+    </svg>
+  );
+}
+
+export function PlusIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M10 4.5v11M4.5 10h11" />
+    </svg>
+  );
+}
+
+export function MinusIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M4.5 10h11" />
+    </svg>
+  );
+}
+
+export function CheckIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="m4.5 10.4 3.6 3.6 7.4-8" />
+    </svg>
+  );
+}
+
+export function MenuIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M3.5 6h13M3.5 10h13M3.5 14h13" />
+    </svg>
+  );
+}
+
+/** Buying: a house, as opposed to a bed (a night) or a key (a lease). */
+export function HouseIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M3.5 9 10 3.8 16.5 9" />
+      <path d="M5.2 7.8v8.4h9.6V7.8" />
+      <path d="M8.4 16.2v-4.4h3.2v4.4" />
+    </svg>
+  );
+}
+
+export function HomeIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M3.2 9.2 10 3.6l6.8 5.6" />
+      <path d="M5 7.8V16h10V7.8" />
+    </svg>
+  );
+}
+
+/** A photograph count on a thumbnail. */
+export function ImageIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <rect x="3" y="4" width="14" height="12" rx="2" />
+      <circle cx="7.5" cy="8.5" r="1.25" />
+      <path d="m3.5 14.5 4-4 3 3 2-2 4 4" />
+    </svg>
+  );
+}
+
+/** Tell me when one is listed. */
+export function BellIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M5.5 13.5V9a4.5 4.5 0 0 1 9 0v4.5l1.5 1.5H4l1.5-1.5Z" />
+      <path d="M8.5 17a1.75 1.75 0 0 0 3 0" />
+    </svg>
+  );
+}
+
+/** Side by side. */
+export function ColumnsIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <rect x="3" y="4" width="14" height="12" rx="2" />
+      <path d="M10 4v12" />
+    </svg>
+  );
+}
+
+/** A drive or travel time. */
+export function RouteIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <circle cx="5.5" cy="15" r="1.75" />
+      <circle cx="14.5" cy="5" r="1.75" />
+      <path d="M7.25 15h5a2.5 2.5 0 0 0 0-5h-4.5a2.5 2.5 0 0 1 0-5h5" />
+    </svg>
+  );
+}
+
+/** A landmark the city is navigated by. */
+export function FlagIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M5 17V3.5" />
+      <path d="M5 4h9l-1.75 3L14 10H5" />
+    </svg>
+  );
+}
+
+/** A note on a saved item. */
+export function NoteIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M4 4.5A1.5 1.5 0 0 1 5.5 3h9A1.5 1.5 0 0 1 16 4.5v7L11.5 16h-6A1.5 1.5 0 0 1 4 14.5v-10Z" />
+      <path d="M11.5 16v-3a1.5 1.5 0 0 1 1.5-1.5h3" />
+      <path d="M7 7h6M7 10h3.5" />
+    </svg>
+  );
+}
+
+/** A conversation. */
+export function MessageIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h9A1.5 1.5 0 0 1 16 5.5v6a1.5 1.5 0 0 1-1.5 1.5H9l-3.5 3v-3h0A1.5 1.5 0 0 1 4 11.5v-6Z" />
+    </svg>
+  );
+}

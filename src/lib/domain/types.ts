@@ -46,6 +46,8 @@ export type VerificationRecord = {
 
 /* ------------------------------------------------------------------- stays */
 
+export type GeoPoint = { lat: number; lng: number };
+
 export type StayMode = "nightly" | "lease";
 
 export type DurationBand = "short" | "medium" | "long";
@@ -60,18 +62,37 @@ export type Amenity =
   | "garden"
   | "workspace";
 
+export type LeaseIncluded = "water" | "security" | "internet" | "garden";
+
+export type LeaseTerms = {
+  /** Months of rent held as a deposit, returned at the end of the lease. */
+  depositMonths: number;
+  /** Paid by the owner, not on top of the rent. */
+  includes: LeaseIncluded[];
+  /** ISO date the home is free from. */
+  availableFrom: string;
+};
+
 export type Listing = {
   id: string;
   slug: string;
   name: string;
   neighbourhood: string;
   city: string;
+  /**
+   * The middle of the street, not the door. A guest sees the area before they
+   * book and the address after; anything finer than ~150m would give the
+   * second away with the first.
+   */
+  location: GeoPoint;
   bedrooms: number;
   sleeps: number;
   amenities: Amenity[];
   /** Authoritative price, in the currency the supplier is actually paid in. */
   nightlyRate: Money;
   monthlyRate?: Money;
+  /** What a tenant agrees to, for places offered on a lease. */
+  leaseTerms?: LeaseTerms;
   modes: StayMode[];
   verification: VerificationRecord;
   /** Colour seed, used when no photograph exists yet. */
@@ -81,6 +102,49 @@ export type Listing = {
   summary: string;
   /** Remaining units for the shown dates. Honest scarcity only. */
   unitsAvailable: number;
+};
+
+/* -------------------------------------------------------------------- sale */
+
+/**
+ * A house or apartment for sale.
+ *
+ * Its own type rather than a third `StayMode`, because almost nothing about a
+ * sale matches a stay: there is no night, no quote, no check-in, no escrow on
+ * the booking path. What a buyer needs instead is the price, the floor and
+ * plot area, and evidence that the seller owns what they are selling.
+ */
+export type HomeForSale = {
+  id: string;
+  slug: string;
+  name: string;
+  neighbourhood: string;
+  city: string;
+  location: GeoPoint;
+  bedrooms: number;
+  bathrooms: number;
+  /** Built area, square metres. */
+  floorSqm: number;
+  /** Plot, square metres. Absent for an apartment. */
+  plotSqm?: number;
+  kind: "house" | "apartment" | "townhouse";
+  price: Money;
+  amenities: Amenity[];
+  verification: VerificationRecord;
+  /** The title was checked against the land registry, not taken from the seller. */
+  titleChecked: boolean;
+  imageSeed: string;
+  images?: string[];
+  summary: string;
+  /** ISO date the home came on the market. */
+  listedAt: string;
+  yearBuilt: number;
+  /**
+   * The land registry's Unique Parcel Identifier. Shown masked on the page:
+   * enough to show it exists and was checked, not enough to look up the owner
+   * before a viewing.
+   */
+  upi: string;
 };
 
 /* ---------------------------------------------------------------- mobility */
@@ -130,6 +194,12 @@ export type Experience = {
   images?: string[];
   summary: string;
   meetingPoint: string;
+  /** Local time the day starts, from the guest's door in Kigali. */
+  departs: string;
+  /** Hours on the road from Kigali, one way. A walk in the city is a quarter. */
+  driveHours: number;
+  /** Where the day happens, for the map of Rwanda on the list. */
+  location: GeoPoint;
 };
 
 /* -------------------------------------------------------- booking and trip */

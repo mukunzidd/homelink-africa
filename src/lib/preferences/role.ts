@@ -43,3 +43,17 @@ export function supplyLaneFor(role: Role): "stay" | "car" | "experience" | null 
   if (role === "guide") return "experience";
   return null;
 }
+
+/**
+ * Whose side of a thread a role reads from.
+ *
+ * Admin borrows the ops queue (there is no admin journey to build against), and
+ * its Threads tab read zero because no thread names admin as a participant.
+ * Writing admin into every fixture thread would make the data claim something
+ * about the product; reading as the ops desk is what an admin does today. So
+ * the mapping lives here once, for the repo's visibility and unread rules and
+ * for the transcript's left/right alignment, rather than in every screen.
+ */
+export function readsAs(role: Role): Role {
+  return role === "admin" ? "ops" : role;
+}

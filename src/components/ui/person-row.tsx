@@ -42,8 +42,8 @@ export function PersonRow({
         aria-hidden="true"
         className={
           tone === "trust"
-            ? "grid size-12 flex-none place-items-center rounded-full border-[1.5px] border-trust/55 bg-trust-tint text-[15px] font-bold text-trust"
-            : "grid size-12 flex-none place-items-center rounded-full bg-surface-2 text-[15px] font-bold text-ink-2"
+            ? "grid size-12 flex-none place-items-center rounded-full border-[1.5px] border-trust/55 bg-trust-tint text-[15px] font-semibold text-trust"
+            : "grid size-12 flex-none place-items-center rounded-full bg-surface-2 text-[15px] font-semibold text-ink-2"
         }
       >
         {initials}

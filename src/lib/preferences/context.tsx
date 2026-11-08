@@ -53,6 +53,12 @@ type PreferencesValue = {
 
   /** Convert into the display currency and format for the active locale. */
   display: (m: Money) => string;
+  /** Same, to the whole unit. For map pins and chips, where "$153" is the
+   *  information and ".49" is noise at 12px. Never for a total. */
+  displayRounded: (m: Money) => string;
+  /** "$248K", "RWF 320M". Map pins on sale prices only, where a full figure
+   *  will not fit a pin and nobody compares houses to the franc. */
+  displayCompact: (m: Money) => string;
   /** Convert without formatting, when the caller needs the raw Money. */
   toDisplayCurrency: (m: Money) => Money;
 };
@@ -114,6 +120,8 @@ export function PreferencesProvider({
   // stored values are applied in an effect rather than during render.
   useEffect(() => {
     const stored = readPersisted();
+    // Deliberate: see the comment above. One rehydration pass after mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (stored.segment) setSegmentState(stored.segment);
     if (stored.currency) setCurrencyState(stored.currency);
     if (stored.role) {
@@ -189,6 +197,19 @@ export function PreferencesProvider({
       fx,
       toDisplayCurrency,
       display: (m: Money) => formatMoney(toDisplayCurrency(m), numberLocale),
+      displayRounded: (m: Money) =>
+        formatMoney(toDisplayCurrency(m), numberLocale, { showDecimals: false }),
+      displayCompact: (m: Money) => {
+        const c = toDisplayCurrency(m);
+        const major = c.minor / 10 ** (c.currency === "RWF" ? 0 : 2);
+        return new Intl.NumberFormat(numberLocale, {
+          style: "currency",
+          currency: c.currency,
+          currencyDisplay: c.currency === "RWF" ? "code" : "narrowSymbol",
+          notation: "compact",
+          maximumFractionDigits: 1,
+        }).format(major);
+      },
     };
   }, [segment, currency, role, theme, fx, numberLocale, setSegment, setCurrency, setRole, setTheme]);
 

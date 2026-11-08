@@ -17,21 +17,57 @@
     "messages": "Ubutumwa",
     "help": "Ubufasha",
     "inventory": "Ibyo ntanga",
-    "queue": "Umurongo"
+    "queue": "Umurongo",
+    "preferences": "Ururimi, ifaranga n’isura",
+    "close": "Funga",
+    "yourScreens": "Amapaji yawe",
+    "messagesUnread": "Ubutumwa, hari ibisubizo bitarasomwa"
   },
   "nav": {
     "stays": "Amacumbi",
     "cars": "Imodoka",
     "experiences": "Ingendo",
     "howItWorks": "Uko bikora",
-    "homes": "Gukodesha"
+    "homes": "Gukodesha",
+    "lanes": "Ibyo ushobora kubika",
+    "homesLane": "Amacumbi",
+    "stay": "Kurara",
+    "rent": "Gukodesha",
+    "buy": "Kugura"
   },
   "landing": {
     "heroTitle": "Urugo rwiteguye igihe ugeze",
     "heroBody": "Buri cumbi, imodoka n'umuyobozi kuri HomeLink byagenzuwe imbonankubone n'itsinda ryacu i Kigali. Niba biri hano, twarabigezeho.",
     "feedTitle": "Byagenzuwe i Kigali muri iki cyumweru",
     "feedBody": "Bimaze kugenzurwa kandi biteguye gufatwa.",
-    "viewAll": "Reba amacumbi yose"
+    "viewAll": "Reba amacumbi yose",
+    "lanesTitle": "Ibyo ushobora kubika",
+    "lane": {
+      "stays": "Amacumbi {count} ku ijoro",
+      "homes": "Inzu {count} zo gukodesha",
+      "cars": "Imodoka {count}, n’umushoferi cyangwa utamufite",
+      "experiences": "Ingendo {count} n’abayobozi tuzi",
+      "buy": "Inzu {count} zigurishwa, ibyangombwa byagenzuwe"
+    },
+    "smartTitle": "Baza nk’uko wabaza inshuti i Kigali",
+    "smartBody": "Andika interuro. Ishakisha rimenya agace, ingano, ingengo y’imari n’amatariki, rikakwereka uko ryabyumvise, kandi rigashakira gusa mu byo itsinda ryacu ryagenzuye.",
+    "smartHint": "Kanda ⌘K cyangwa / kuri paji iyo ari yo yose.",
+    "placesTitle": "Uduce tuzi",
+    "placesBody": "Twose twasuwe n’itsinda ryacu. Umubare ni amacumbi yagenzuwe ahari uyu munsi.",
+    "fromPrice": "Guhera kuri",
+    "howTitle": "Uko HomeLink ikora",
+    "howBody": "Amasezerano atatu, buri rimwe ryubahirizwa n’umuntu kandi rigacungwa na porogaramu.",
+    "how": {
+      "inspectTitle": "Hari uwahageze",
+      "inspectBody": "Buri cumbi rigenzurwa ku ngingo 34: umuvuduko w’amazi, umuriro w’inyongera, umuhanda, igikoni. Amafoto tuyifatira ubwacu.",
+      "escrowTitle": "Amafaranga yawe arategereza",
+      "escrowBody": "Ubwishyu bufatwa kugeza wemeje ko wageze. Niba atari uko byavuzwe, usubizwa amafaranga yose ukabona n’indi nzu muri iryo joro.",
+      "peopleTitle": "Itsinda i Kigali",
+      "peopleBody": "Abakira abashyitsi, abagenzuzi n’abayobozi b’ingendo ushobora kwandikira mu mazina yabo."
+    },
+    "daysTitle": "Ingendo",
+    "daysBody": "Ingagi, ikiyaga, ishyamba n’umujyi, hamwe n’abayobozi tuzi ku giti cyabo.",
+    "daysAll": "Ingendo zose"
   },
   "search": {
     "where": "Aho",
@@ -75,7 +111,8 @@
     "bedroomsPlus": "{count}+",
     "totalFor": "igiteranyo cy'{count, plural, one {ijoro #} other {amajoro #}}",
     "filtersHeading": "Gabanya ibisubizo",
-    "activeFilters": "{count, plural, one {akayunguruzo #} other {utuyunguruzo #}} dukora"
+    "activeFilters": "{count, plural, one {akayunguruzo #} other {utuyunguruzo #}} dukora",
+    "clearAll": "Siba byose"
   },
   "gallery": {
     "label": "Amafoto",
@@ -119,7 +156,7 @@
       "car": {
         "inspectedBody": "Yasukuwe, yageragezwe mu muhanda, kandi igenzurwa hakurikijwe urutonde rw'ingingo 22: amapine, feri, ipine ry'inyongera, ikoresho ryo kuzamura, n'impapuro.",
         "identityBody": "Ubwo nyir'imodoka n'ubwishingizi byagenzuwe hifashishijwe icyangombwa cy'imodoka mbere yo gukodeshwa.",
-        "photographedBody": "Yafashwe amafoto n'itsinda rya HomeLink, iyi modoka nyirizina — si ifoto y'ubucuruzi y'ubwoko bwayo.",
+        "photographedBody": "Yafashwe amafoto n'itsinda rya HomeLink. Buri foto ni iy'iyi modoka nyirizina, si ifoto y'ubucuruzi y'ubwoko bwayo.",
         "title": "Yagenzuwe n'uwayitwaye"
       },
       "experience": {
@@ -127,8 +164,15 @@
         "identityBody": "Uruhushya rw'umuyobozi n'icyemezo cya pariki byagenzuwe, kandi bivugururwa buri gihembwe.",
         "photographedBody": "Yafashwe amafoto ku rugendo nyarwo n'itsinda rya HomeLink.",
         "title": "Rwagenzuwe n'uwarukoze"
+      },
+      "sale": {
+        "title": "Yagenzuwe n’uwagenze mu kibanza",
+        "inspectedBody": "Yasuwe yose ku ngingo 41: inyubako, igisenge, amazi, umuriro, imiyoboro n’umuhanda.",
+        "photographedBody": "Amafoto yafashwe n’itsinda rya HomeLink: iyi nzu n’iki kibanza, si igishushanyo.",
+        "identityBody": "Icyangombwa cy’ubutaka cyagenzuwe mu bitabo by’ubutaka n’indangamuntu y’ugurisha mbere yo gushyirwa ku rubuga."
       }
-    }
+    },
+    "escrowShortSupply": "Abikwa kugeza umushyitsi ageze"
   },
   "trust": {
     "listingsVerified": "Amacumbi {count} yagenzuwe",
@@ -157,7 +201,12 @@
     "longTerm": "Amasezerano y'igihe kirekire",
     "selfDrive": "Uyitwara ubwawe",
     "withDriver": "Hamwe n'umushoferi",
-    "clear": "Kuraho muyunguruzi"
+    "clear": "Kuraho muyunguruzi",
+    "maxPrice": "Ingengo y’imari",
+    "maxPerNight": "Ntarengwa ku ijoro",
+    "maxPerMonth": "Ntarengwa ku kwezi",
+    "amenitiesHeading": "Ibihari",
+    "stayType": "Ubwoko bw’icumbi"
   },
   "segment": {
     "label": "Urareba uri",
@@ -217,7 +266,14 @@
     "share": "Sangiza",
     "save": "Bika",
     "entirePlace": "Ahantu hose",
-    "hostedBy": "Byagenzuwe na"
+    "hostedBy": "Byagenzuwe na",
+    "lease": {
+      "moveInTitle": "Kwinjira mu nzu",
+      "moveInBody": "Iboneka guhera {date}. Ubukode bumara nibura amezi cumi n’abiri, uhereye ku kwezi uhitamo usaba.",
+      "depositBody": "{deposit}, abikwa nk’ingwate agasubizwa ubukode burangiye. Amabwiriza y’ingwate azana n’amasezerano.",
+      "viewingTitle": "Gusura inzu",
+      "viewingBody": "Itsinda ry’i Kigali rigutegurira gusura inzu rikakoherereza amasezerano ngo uyasome mbere. Nta mafaranga yishyurwa hano."
+    }
   },
   "quote": {
     "accommodation": "{rate} × {nights, plural, one {ijoro #} other {amajoro #}}",
@@ -234,8 +290,10 @@
     "steps": {
       "dates": "Amatariki",
       "guests": "Abashyitsi",
-      "review": "Kugenzura",
-      "pay": "Kwishyura"
+      "day": "Umunsi",
+      "driver": "Umushoferi",
+      "people": "Abantu",
+      "reviewPay": "Kugenzura no kwishyura"
     },
     "yourStay": "Aho uzacumbika",
     "changeDates": "Hindura",
@@ -252,7 +310,7 @@
     "cardHolder": "Izina riri ku ikarita",
     "payNow": "Ishyura {amount}",
     "processing": "Turimo kwakira ubwishyu…",
-    "stubNotice": "Nta mafaranga akurwaho. Uburyo bwo kwishyura buzaza mu cyiciro cya 2 — iyi buto yandika igifatwa mu byitegererezo.",
+    "stubNotice": "Iyi ni igerageza. Nta mafaranga azakurwaho.",
     "escrowTitle": "Amafaranga yawe abikwa kugeza ugeze",
     "escrowBody": "Tubika amafaranga yose kandi tukayaha nyir'inzu gusa nyuma yo kwemeza ko wageze. Niba ahantu hatameze nk'uko byasobanuwe, usubizwa amafaranga yose kandi tukagushakira ubundi bucumbi kuri uwo mugoroba.",
     "noEscrowBody": "Ubu bucumbi buri munsi y'urugero rwacu rwo kubika amafaranga, bityo ubwishyu bugera ako kanya. Ubwizerane ku byasobanuwe buracyariho.",
@@ -265,12 +323,29 @@
     },
     "kinds": {
       "car": {
-        "noEscrowBody": "Amafaranga y'ubukode ajya ako kanya kuri nyir'imodoka — kubika amafaranga ni ku macumbi arenze urugero rwacu. Icyemezo cy'ukuri kiracyariho: niba imodoka atari yo ivugwa hano, ntuyishyura."
+        "guaranteeTitle": "{name} yagenzuye iyi modoka imbonankubone",
+        "guaranteeBody": "Yasukuwe, yageragejwe mu muhanda kandi igenzurwa ku wa {date} hakurikijwe urutonde rwacu rw'ingingo {points}: amapine, feri, ipine ry'inyongera, ikoresho ryo kuzamura n'impapuro. Niba imodoka idahuye n'ibivugwa ku rupapuro rwayo, ntuyishyura."
       },
       "experience": {
-        "noEscrowBody": "Amafaranga y'urugendo ajya ako kanya ku muyobozi — kubika amafaranga ni ku macumbi arenze urugero rwacu. Icyemezo cy'ukuri kiracyariho: niba umunsi atari uwo uvugwa hano, ntuwishyura."
+        "guaranteeTitle": "{name} wo mu itsinda ryacu yakoze uru rugendo",
+        "guaranteeBody": "Rwakozwe rwose kandi rugenzurwa ku wa {date} hakurikijwe urutonde rwacu rw'ingingo {points}: umutekano, igihe n'ibirimo koko. Niba urugendo rudahuye n'ibivugwa ku rupapuro rwarwo, ntururiha.",
+        "cancellation": "Iyo umunsi uhagaritswe kubera umutekano, usubizwa amafaranga yose."
       }
-    }
+    },
+    "detailsTitle": "Amakuru yawe",
+    "fullName": "Amazina yose",
+    "fullNameError": "Andika amazina yawe yose.",
+    "email": "Imeyili",
+    "emailError": "Genzura imeyili. Igomba kugira @ n'izina rya domeni, nka izina@urugero.com.",
+    "phone": "Telefoni",
+    "phoneError": "Andika nimero tugushakiraho, ushyiremo kode y'igihugu niba atari iy'u Rwanda.",
+    "cardNumberError": "Nimero z'ikarita zigira imibare kuva kuri 13 kugeza kuri 19. Genzura nimero wongere ugerageze.",
+    "cardHolderError": "Andika izina nk'uko ryanditse ku ikarita.",
+    "expiry": "Itariki irangiriraho",
+    "expiryPlaceholder": "UK/UM",
+    "expiryError": "Andika itariki irangiriraho mu buryo UK/UM, kandi urebe ko ikarita itarata agaciro.",
+    "cvc": "Kode y'umutekano",
+    "cvcError": "Kode y'umutekano ni imibare 3 cyangwa 4 yanditse ku ikarita."
   },
   "confirmation": {
     "title": "Wafashe neza",
@@ -423,7 +498,9 @@
     "fibre": "Fibre ikora koko",
     "fibreBody": "Umuvuduko wageragezwe uwo munsi, ntabwo wavuye mu kwamamaza.",
     "photos": "Amafoto twafashe",
-    "photosBody": "Yafashwe n'itsinda ryacu. Nta na kimwe cyavuye kuri telefone ya nyir'inzu."
+    "photosBody": "Yafashwe n'itsinda ryacu. Nta na kimwe cyavuye kuri telefone ya nyir'inzu.",
+    "deposit": "Ingwate igusubizwa",
+    "depositBody": "{deposit}, abikwa nk’ingwate agasubizwa ubukode burangiye."
   },
   "carHighlight": {
     "inspected": "Hari uwayitwaye mbere yawe",
@@ -507,11 +584,18 @@
       "inspected": "Igenzura"
     },
     "payoutCancelled": "Byahagaritswe — nta cyo kwishyurwa",
-    "whereFrom": "Aho ayo mafaranga ava"
+    "whereFrom": "Aho ayo mafaranga ava",
+    "afterFee": "Nyuma y'amafaranga ya HomeLink",
+    "rateYours": "Umushyitsi yishyura iki giciro hiyongereyeho amafaranga ya serivisi",
+    "breakdownTitle": "Ibyo abashyitsi bishyuye, n'ibikugeraho",
+    "breakdownGross": "Abashyitsi bishyuye",
+    "breakdownFee": "Amafaranga ya serivisi ya HomeLink",
+    "breakdownNote": "Amafaranga ya serivisi yongerwa ku giciro cyawe igihe umushyitsi yishyura, ntakurwa ku giciro cyawe.",
+    "rowGross": "Umushyitsi yishyuye",
+    "rowFee": "Amafaranga ya serivisi"
   },
   "messaging": {
     "title": "Ubutumwa",
-    "subtitle": "Buri kiganiro gifitanye isano n'icyo wabitse. Nta na kimwe kihagaze cyonyine.",
     "noThreads": "Nta kiganiro kiraboneka. Gifungurwa ako kanya ubwiyandikishe bwemejwe.",
     "allThreads": "Ibiganiro byose",
     "you": "Wowe",
@@ -519,10 +603,17 @@
     "readAt": "Bwasomwe saa {time}",
     "delivered": "Bwageze",
     "replyLabel": "Andika igisubizo",
-    "replyPlaceholder": "Andika igisubizo…",
-    "replyNote": "Kohereza bizaza hamwe na sisitemu y'inyuma. Ikiganiro kiri hejuru ni amakuru y'igerageza, kandi aka kazu kari hano kugira ngo imiterere y'urupapuro isuzumwe hari aho basubiriza.",
+    "replyPlaceholder": "Gusubiza bizashoboka ubutumwa nibutangira gukora",
     "attach": "Omeka ifoto",
-    "attachLimits": "JPEG, PNG cyangwa WebP, kugeza kuri 15MB. Aho ifoto yafatiwe hakurwaho mbere yo kubikwa."
+    "attachLimits": "JPEG, PNG cyangwa WebP, kugeza kuri 15MB. Aho ifoto yafatiwe hakurwaho mbere yo kubikwa.",
+    "subtitleFor": {
+      "guest": "Buri kiganiro gifitanye isano n’icyo wabitse, n’itsinda rya Kigali cyangwa n’ugusanganira.",
+      "supply": "Ibiganiro ku bwiyandikishe bw’ibyo utanga. Itsinda rifasha riri muri buri kimwe.",
+      "ops": "Ibiganiro byose itsinda rifasha ririmo, buri kimwe gifitanye isano n’ubwiyandikishe cyangwa urugendo."
+    },
+    "party": "{name} · {role}",
+    "send": "Ohereza",
+    "sendOff": "Kohereza ntibirakora kugeza ubutumwa butangiye gukora"
   },
   "queue": {
     "title": "Umurongo",
@@ -560,7 +651,7 @@
     },
     "releasesOn": "Arekurwa ku wa {date}",
     "paidOn": "Yishyuwe ku wa {date}",
-    "readOnlyNote": "Nta kintu kuri iyi paji gihindura ikintu. Guteganya uruzinduko, gushyira ku rubuga no kurekura amafaranga byose bisaba sisitemu y'inyuma, kandi buto idakora iruhande rw'amafaranga nyayo yaba mbi kurusha kutagira buto.",
+    "readOnlyNote": "Igerageza: ibikorwa ntibirakora.",
     "notYours": "Iyi paji ni iy'itsinda ryo i Kigali",
     "notYoursBody": "Umurongo ni igikoresho cy'itsinda rya konsiyeji. Niba warabitse, biri muri Ingendo; niba utanga ikintu, biri muri Ibyo ntanga.",
     "tabsLabel": "Ibice by'umurongo",
@@ -578,6 +669,61 @@
       "asks": "Buri buto « andikira itsinda » buri ku cyemezo bugera hano nk'akazi k'umuntu. Urutonde rurerure ni impamvu yo gushyira kimwe muri ibi mu buryo bwo kwiyandikisha.",
       "payouts": "Ayo mafaranga abitswe umukiriya abona nk'umutekano, arebwa n'inyuma nk'akazi. Ayabitswe ategereza ko kugera kwemezwa.",
       "threads": "Ibiganiro byose itsinda ririmo. Akadomo kuzuye ni umuntu udutegereje."
+    },
+    "tabCount": "{open} kuri {total}",
+    "adminNote": "Urareba umurongo w’itsinda rifasha nk’umuyobozi mukuru",
+    "record": {
+      "what": "Icyo ari cyo",
+      "kind": {
+        "new": "Itangazo rishya",
+        "reinspection": "Uruzinduko rushya ku itangazo riri ku rubuga"
+      },
+      "requested": "Byasabwe",
+      "noVisit": "Nta ruzinduko rwateganyijwe",
+      "noInspector": "Nta muntu washinzwe",
+      "history": "Amateka",
+      "step": {
+        "requested": "Hasabwe igenzura",
+        "scheduled": "Uruzinduko rwateganyijwe",
+        "inspected": "Byasuwe n’umugenzuzi",
+        "published": "Biri kuri HomeLink"
+      },
+      "done": "byakozwe",
+      "notYet": "ntibirakorwa",
+      "askedBy": "Byasabwe na",
+      "nameRole": "{name} · {role}",
+      "theGuest": "Umushyitsi w’ubu bwiyandikishe",
+      "nobody": "Nta muntu urabyitaho",
+      "booking": "Ubwiyandikishe",
+      "dates": "Amatariki",
+      "amount": "Amafaranga",
+      "recipient": "Uyahabwa",
+      "why": {
+        "held": "Impamvu afashwe",
+        "due": "Igihe azoherezwa",
+        "paid": "Igihe yoherejwe"
+      },
+      "because": {
+        "held": "Abitswe kugeza umushyitsi yemeje ko yageze, biteganyijwe ku wa {date}.",
+        "due": "Azoherezwa ku wa {date}, umunsi ubwiyandikishe butangira.",
+        "paid": "Yoherejwe ku wa {date}."
+      },
+      "action": {
+        "schedule": "Teganya uruzinduko",
+        "reschedule": "Hindura igihe cy’uruzinduko",
+        "publish": "Shyira itangazo ku rubuga",
+        "assign": "Bifate",
+        "arrange": "Shyiraho ko byateguwe",
+        "release": "Rekura amafaranga"
+      },
+      "actionOff": {
+        "schedule": "Guteganya bizaza hamwe na sisitemu y’inyuma",
+        "reschedule": "Guteganya bizaza hamwe na sisitemu y’inyuma",
+        "publish": "Gushyira ku rubuga bizaza hamwe na sisitemu y’inyuma",
+        "assign": "Gushinga umuntu bizaza hamwe na sisitemu y’inyuma",
+        "arrange": "Kuvugurura icyifuzo bizaza hamwe na sisitemu y’inyuma",
+        "release": "Kurekura amafaranga bizaza hamwe na sisitemu y’inyuma"
+      }
     }
   },
   "pager": {
@@ -601,7 +747,558 @@
     "rewalkNote": "hafi umwaka, bityo biri mu murongo w'igenzura.",
     "seeInInventory": "Bireba mu byo utanga",
     "askToChange": "Saba itsinda guhindura ikintu",
-    "changesNote": "Ibiciro, amafoto n'uko biboneka bihindurwa n'itsinda ryo i Kigali mu gihe kwiyandikisha kwa ba nyirabyo bikorwa hanze y'urubuga. Baandikire bikorwe uwo munsi — nta fishi iri hano, kandi buto itabika ikintu yaba mbi kurusha kutayigira.",
-    "groupCap": "Ingano ntarengwa"
+    "changesNote": "Kugeza ubu ibiciro, amafoto n'uko biboneka bihindurwa n'itsinda ryo i Kigali. Baandikire bikorwe uwo munsi.",
+    "groupCap": "Ingano ntarengwa",
+    "freeFrom": "Iraboneka guhera"
+  },
+  "smart": {
+    "title": "Gushakisha by’ubwenge",
+    "open": "Fungura ishakisha",
+    "trigger": "Shakisha",
+    "placeholder": "Gerageza « inzu ifite ibyumba 2 i Kimihurura »",
+    "close": "Funga",
+    "clear": "Siba",
+    "heroButton": "Shakisha",
+    "example1": "Inzu ifite ibyumba 2 i Kimihurura munsi ya RWF 250,000",
+    "example1Short": "Ibyumba 2 i Kimihurura",
+    "example2": "Hafi ya KCC icyumweru gitaha abantu 2",
+    "example2Short": "Hafi ya KCC",
+    "example3": "Inzu ifite ubusitani abantu 6",
+    "example3Short": "Inzu ifite ubusitani",
+    "example4": "Imodoka n'umushoferi abantu 7",
+    "example4Short": "Imodoka n'umushoferi",
+    "understood": "Byumvikanye nka",
+    "recent": "Ibya vuba",
+    "tryAsking": "Gerageza",
+    "groupPlaces": "Uduce",
+    "groupStays": "Amacumbi",
+    "groupCars": "Imodoka",
+    "groupExperiences": "Ingendo",
+    "placeCount": "{count, plural, one {aho # hantu} other {ahantu #}}",
+    "seeAll": {
+      "stays": "Reba amacumbi yose ahuye",
+      "cars": "Reba imodoka zose zihuye",
+      "experiences": "Reba ingendo zose zihuye",
+      "buy": "Reba inzu zose zigurishwa zihuye"
+    },
+    "perPerson": "ku muntu",
+    "nothingTitle": "Nta na kimwe twagenzuye gihuye n’ibyo",
+    "nothingBody": "Dushyiraho gusa ibyo itsinda ryacu ryasuye. Gerageza amagambo make, agace, cyangwa ingengo y’imari.",
+    "relaxed": "Nta kintu cyahuye na byose, ibi ni byo byegereye utabaze {what}.",
+    "relaxedTitle": "Nta gihuye neza.",
+    "relaxedBody": "Aha ni ho hegereye utabaze {what}. Kuramo akayunguruzo hejuru kugira ngo wagure ishakisha.",
+    "relax": {
+      "text": "amagambo y’inyongera",
+      "maxPrice": "igiciro ntarengwa",
+      "amenities": "ibikoresho byose",
+      "bedrooms": "umubare w’ibyumba",
+      "party": "umubare w’abantu",
+      "neighbourhood": "agace",
+      "driveMode": "uburyo bwo gutwara",
+      "interest": "icyo ukunda"
+    },
+    "hintMove": "genda",
+    "hintOpen": "fungura",
+    "poweredBy": "{engine} · {ms} ms",
+    "engineLocal": "Ishakisha ryubatswemo",
+    "lane": {
+      "stays": "Amacumbi",
+      "cars": "Imodoka",
+      "experiences": "Ingendo",
+      "buy": "Zigurishwa"
+    },
+    "chipNear": "{place}, hafi ya {landmark}",
+    "chipTyped": "{place} (wanditse « {typed} »)",
+    "chipBedrooms": "Ibyumba {count}+",
+    "chipParty": "{count, plural, one {Umushyitsi #} other {Abashyitsi #}}",
+    "chipSeats": "Imyanya {count}+",
+    "chipUnder": "Munsi ya",
+    "perNightShort": "/ijoro",
+    "perMonthShort": "/ukwezi",
+    "perDayShort": "/umunsi",
+    "chipLease": "Ubukode bw’igihe kirekire",
+    "chipText": "Ivuga « {text} »",
+    "drive": {
+      "withDriver": "N’umushoferi",
+      "selfDrive": "Kwitwarira"
+    },
+    "landmark": {
+      "conventionCentre": "Kigali Convention Centre",
+      "stadium": "sitade",
+      "golf": "ikibuga cya golf",
+      "embassies": "ambasade",
+      "cityCentre": "mu mujyi rwagati",
+      "airport": "ikibuga cy’indege",
+      "market": "isoko rya Kimironko"
+    },
+    "removeChip": "Kuramo {what}",
+    "triggerShort": "Shakisha",
+    "relaxedText": "Nta na kimwe kivuga « {text} », ibi bihuye n’ibindi byose.",
+    "relaxedTextBody": "Nta hantu havuga « {text} ». Aha hahuye n’ibindi byose wasabye.",
+    "closestCount": "Ahantu {count} hegereye i Kigali",
+    "groupSales": "Zigurishwa",
+    "floorArea": "{sqm} m²",
+    "askingPrice": "igiciro gisabwa",
+    "recentlyViewed": "Ibyo warebye vuba",
+    "closestHeading": "Ibyegereye ibyo ushaka",
+    "nothingMentions": "Nta kintu dufite kivuga « {text} »",
+    "savedRow": "{count, plural, one {Ikintu # wabitse} other {Ibintu # wabitse}}",
+    "forNights": "{count, plural, one {ijoro #} other {amajoro #}}",
+    "forDays": "{count, plural, one {umunsi #} other {iminsi #}}",
+    "exampleRent": "Ibyumba 3 byo gukodesha i Kacyiru guhera muri Mutarama",
+    "exampleBuy": "Inzu yo kugura i Gacuriro munsi ya miliyoni 300",
+    "exampleCar1": "Imodoka yikoresha nta mushoferi mu mpera z'icyumweru",
+    "exampleCar2": "Minibisi ifite umushoferi y'abantu 10",
+    "exampleDay1": "Ingagi icyumweru gitaha ku bantu 2",
+    "exampleDay2": "Umunsi ku kiyaga kuri uyu wa Gatandatu",
+    "exampleDay3": "Gutembera mu mujyi no kurya",
+    "placeholderLane": {
+      "cars": "Gerageza « imodoka yikoresha mu mpera z'icyumweru »",
+      "experiences": "Gerageza « ingagi icyumweru gitaha ku bantu 2 »"
+    }
+  },
+  "saved": {
+    "title": "Ibyo wabitse",
+    "subtitle": "Ahantu wakunze, habitswe kuri iki gikoresho kugeza konti zibonetse.",
+    "save": "Bika",
+    "saved": "Byabitswe",
+    "remove": "Kuramo mu byabitswe",
+    "saveNamed": "Bika {name}",
+    "removeNamed": "Kuramo {name} mu byabitswe",
+    "link": "Ibyo wabitse",
+    "linkCount": "Ibyo wabitse, {count}",
+    "emptyTitle": "Nta cyo urabika",
+    "emptyBody": "Kanda umutima ku icumbi, imodoka cyangwa urugendo, bizagutegereza hano.",
+    "browse": "Reba amacumbi",
+    "ask": "Baza ishakisha",
+    "kind": {
+      "stay": "Icumbi",
+      "car": "Imodoka",
+      "experience": "Urugendo",
+      "sale": "Igurishwa"
+    }
+  },
+  "map": {
+    "zoomIn": "Egereza",
+    "zoomOut": "Igiza kure",
+    "resultsLabel": "Ikarita y’ibisubizo {count}",
+    "list": "Urutonde",
+    "map": "Ikarita",
+    "showMap": "Reba ku ikarita",
+    "whereTitle": "Aho uzaba uri",
+    "areaLabel": "Agace kegereye i {place}",
+    "areaNote": "Uruziga ni umuhanda, si umuryango: aderesi nyayo uyihabwa umaze kubika.",
+    "contributors": "abaterankunga",
+    "areaNoteLease": "Uruziga ni umuhanda, si umuryango. Aderesi nyayo uyihabwa hamwe n’igihe cyo gusura."
+  },
+  "share": {
+    "share": "Sangiza",
+    "copied": "Ihuza ryakoporowe",
+    "copyPrompt": "Koporora iri huza"
+  },
+  "places": {
+    "Gacuriro": "Inzu ziri mu ngo zirinzwe ku musozi wo mu majyaruguru, zikunzwe n’imiryango.",
+    "Gikondo": "Imihanda ituje, ifite imbuga nyazo, hafi y’umujyi.",
+    "Kacyiru": "Ambasade na minisiteri, inzira nini z’abanyamaguru, n’amagoroba atuje.",
+    "Kibagabaga": "Agace gatuwe kandi gafite ibiti, hafi y’isoko rya Kimironko.",
+    "Kicukiro": "Iminota cumi n’itanu uvuye ku kibuga cy’indege, kandi igiciro kiringaniye.",
+    "Kimihurura": "Amaresitora yo kuri KG 5, Convention Centre, n’imisozi ireba kure.",
+    "Kiyovu": "Umujyi wa kera: rwagati, ugenderwamo n’amaguru, kandi utuje nijoro.",
+    "Nyamirambo": "Umuhanda ufite ubuzima kurusha indi i Kigali: ikawa, umuziki n’amabara.",
+    "Nyarutarama": "Inzu nini hafi y’ikibuga cya golf n’umuhanda w’ikiyaga.",
+    "Rebero": "Umusozi muremure wo mu majyepfo, umujyi wose uri munsi yawo.",
+    "Remera": "Hafi ya sitade na BK Arena, ku mirongo yose ya bisi."
+  },
+  "footer": {
+    "explore": "Shakisha",
+    "yours": "Urugendo rwawe",
+    "saved": "Ibyo wabitse",
+    "kigali": "Uduce",
+    "promise": "Niba kiri hano, umwe mu itsinda ryacu yarakigezemo, yarakitwaye, cyangwa yaragenze muri cyo.",
+    "rights": "© {year} HomeLink Africa. Kigali, Rwanda.",
+    "prices": "Ibiciro bishyirwaho mu RWF bikerekanwa mu ifaranga ryawe ku gipimo cy’uyu munsi.",
+    "stayLink": "Kurara ijoro",
+    "rentLink": "Gukodesha ku kwezi",
+    "buyLink": "Kugura inzu",
+    "allNeighbourhoods": "Uduce twose",
+    "yoursSupply": "Amatangazo yawe",
+    "yoursOps": "Akazi kawe"
+  },
+  "homes": {
+    "modeLabel": "Igihe kingana iki",
+    "mode": {
+      "stay": "Kurara",
+      "rent": "Gukodesha",
+      "buy": "Kugura"
+    },
+    "modeUnit": {
+      "stay": "Ku ijoro",
+      "rent": "Ku kwezi",
+      "buy": "Kuba nyirayo"
+    },
+    "modeHint": {
+      "stay": "{count} ku ijoro",
+      "rent": "{count} ku kwezi",
+      "buy": "{count} zigurishwa"
+    }
+  },
+  "breadcrumb": {
+    "homes": "Amacumbi",
+    "stay": "Kurara",
+    "rent": "Gukodesha",
+    "buy": "Kugura",
+    "cars": "Imodoka",
+    "experiences": "Ingendo",
+    "book": "Kubika",
+    "booking": "Ibyabitswe",
+    "trips": "Ingendo zawe",
+    "neighbourhoods": "Uduce"
+  },
+  "sale": {
+    "metaTitle": "Inzu zigurishwa i Kigali",
+    "count": "Inzu {count} zagenzuwe zigurishwa i Kigali",
+    "subtitle": "Zasuwe n’itsinda ryacu, icyangombwa cy’ubutaka kigenzurwa mu bitabo by’ubutaka mbere yo gushyirwa ku rubuga.",
+    "emptyBody": "Dushyiraho gusa inzu twagenzuye ibyangombwa byazo. Gerageza ahandi cyangwa ingengo y’imari irenze.",
+    "bathrooms": "Ubwiherero {count}",
+    "floor": "{sqm} m²",
+    "plot": "ikibanza cya {sqm} m²",
+    "perSqm": "kuri m²",
+    "titleChecked": "Icyangombwa cyagenzuwe",
+    "view": "Reba inzu",
+    "askingPrice": "Igiciro gisabwa",
+    "kindLabel": "Ubwoko",
+    "kindAny": "Byose",
+    "kind": {
+      "house": "Inzu",
+      "apartment": "Apartema",
+      "townhouse": "Inzu ifatanye"
+    },
+    "maxPlaceholder": "Igiciro ntarengwa, urugero 200M",
+    "sort": {
+      "recommended": "Izishya mbere",
+      "size": "Nini kurusha izindi"
+    },
+    "bedroomsLabel": "Ibyumba",
+    "bathroomsLabel": "Ubwiherero",
+    "floorLabel": "Ubuso",
+    "plotLabel": "Ikibanza",
+    "listedLabel": "Yashyizwe ku isoko",
+    "about": "Ibyerekeye iyi nzu",
+    "areaNote": "Uruziga ni umuhanda, si irembo: ikibanza nyacyo ukibwirwa uri gusura, hamwe n’ibyangombwa.",
+    "howTitle": "Uko kugura binyuze kuri HomeLink bikorwa",
+    "how": {
+      "viewingTitle": "Gusura hamwe n’itsinda ryacu",
+      "viewingBody": "Imbonankubone, cyangwa kuri videwo uri mu mahanga, hamwe n’umugenzuzi wayisuye.",
+      "papersTitle": "Ibyangombwa twagenzuye",
+      "papersBody": "Icyangombwa cy’ubutaka, indangamuntu y’ugurisha n’imbibi z’ikibanza, ubyerekwa mbere yo gutanga igiciro.",
+      "notaryTitle": "Noteri wigenga",
+      "notaryBody": "Turakumuhuza na we; ihererekanya rinyura mu bitabo by’ubutaka, si kuri twe."
+    },
+    "viewingLabel": "Wifuza gusura ute",
+    "viewing": {
+      "inPerson": "Imbonankubone",
+      "video": "Kuri videwo"
+    },
+    "nameLabel": "Izina ryawe",
+    "contactLabel": "Imeyili cyangwa telefoni",
+    "messageLabel": "Ubutumwa",
+    "messageDefault": "Nifuza gusura « {name} ».",
+    "enquire": "Baza itsinda ryi Kigali",
+    "noFunds": "HomeLink ntijya ifata amafaranga yo kugura. Wishyura ugurisha binyuze kuri noteri.",
+    "enquiryNoted": "Icyifuzo cyakiriwe",
+    "enquiryPreview": "Iyi verisiyo ntiroherereza ubutumwa. Ubutumwa nibutangira gukora, ibi bizafungura ikiganiro n’umukozi wacu, usubiza mu munsi umwe w’akazi.",
+    "perSqmLabel": "Igiciro kuri m²",
+    "askingShort": "igiciro gisabwa",
+    "enquireShort": "Baza itsinda"
+  },
+  "lease": {
+    "perMonth": "ku kwezi",
+    "moveIn": "Igihe winjira",
+    "term": "Igihe cy’ubukode",
+    "months": "Amezi {count}",
+    "nameLabel": "Izina ryawe",
+    "contactLabel": "Imeyili cyangwa telefoni",
+    "apply": "Saba gukodesha",
+    "whatNext": "Itsinda ryi Kigali rikoherereza amasezerano, ingwate n’igihe cyo gusura. Nta mafaranga yishyurwa hano.",
+    "noted": "Icyifuzo cyakiriwe",
+    "preview": "Iyi verisiyo ntiroherereza ibyifuzo. Ubutumwa nibutangira gukora, ibi bizafungura ikiganiro n’umukozi wacu, usubiza mu munsi umwe w’akazi.",
+    "shorter": "Uzamara munsi y’umwaka? Bika ku ijoro",
+    "shorterLabel": "Bika {name} ku ijoro",
+    "notFreeYet": "Ntiraboneka"
+  },
+  "landmarks": {
+    "conventionCentre": "Kigali Convention Centre",
+    "cityCentre": "mu mujyi rwagati",
+    "airport": "ku kibuga cy'indege",
+    "embassies": "kuri za ambasade",
+    "stadium": "kuri sitade Amahoro",
+    "golf": "ku kibuga cya golf",
+    "market": "ku isoko rya Kimironko"
+  },
+  "signedOut": {
+    "trips": {
+      "title": "Ingendo zawe",
+      "body": "Injira urebe aho uzacumbika, imodoka n’ibikorwa by’umunsi, buri kimwe n’inomero yacyo, amatariki n’uwo wandikira."
+    },
+    "messages": {
+      "title": "Ubutumwa",
+      "body": "Injira usome ikiganiro kijyana na buri bwiyandikishe, n’itsinda rya Kigali n’ugucumbikira, umushoferi cyangwa umuyobozi w’urugendo."
+    },
+    "signIn": "Injira",
+    "previewNote": "Kwinjira mu igerageza",
+    "booking": {
+      "title": "Ibyo wafashe",
+      "body": "Injira urebe iyi reservation: nimero yayo, amatariki, ibyo wishyuye n’ikiganiro n’itsinda."
+    }
+  },
+  "abroad": {
+    "title": "Kugura uri mu mahanga",
+    "intro": "Benshi mu bagura inzu kuri twe baba hanze y'u Rwanda. Uku ni ko kugura bigenda iyo udashobora kuba i Kigali kuri buri ntambwe.",
+    "step": "Intambwe {n}",
+    "viewTitle": "Kuyireba kuri videwo",
+    "viewBody": "Umugenzuzi wazengurutse inzu agukorera isura kuri videwo, imbonankubone, agasubiza ibibazo byawe mu byumba.",
+    "papersTitle": "Banza urebe impapuro",
+    "papersBody": "Icyangombwa cy'ubutaka, imbibi z'ikibanza n'indangamuntu y'ugurisha uzibona mbere y'uko utanga igiciro.",
+    "poaTitle": "Gusinyirwa n'uwo wizeye",
+    "poaBody": "Ububasha bwemejwe na noteri butuma umuvandimwe cyangwa umunyamategeko i Kigali agusinyira.",
+    "moneyTitle": "Kohereza amafaranga mu buryo bwemewe",
+    "moneyBody": "Amafaranga anyura kuri banki ajya kuri konti ya noteri, ntanyura mu ntoki kandi ntanyura kuri HomeLink.",
+    "notaryTitle": "Ihererekanya mu biro by'ubutaka",
+    "notaryBody": "Noteri wigenga yandikisha ihererekanya mu biro by'ubutaka, ugahabwa icyangombwa gishya."
+  },
+  "hoods": {
+    "indexTitle": "Kigali, agace ku kandi",
+    "indexBody": "Uduce {count} itsinda ryacu ryagenzuyemo aho kuba, ibyo gukodesha cyangwa kugura.",
+    "district": "Akarere ka {district}, Kigali",
+    "stayFrom": "Kurara guhera",
+    "rentTypical": "Ubukode bugera kuri",
+    "buyFrom": "Kugura guhera",
+    "rentCount": "{count, plural, other {# byo gukodesha}}",
+    "saleCount": "{count, plural, other {# bigurishwa}}",
+    "mode": {
+      "stay": "{count, plural, =0 {Nta ho kurara ubu} one {Ahantu # ho kurara} other {Ahantu # ho kurara}}",
+      "rent": "{count, plural, =0 {Nta byo gukodesha ubu} one {Inzu # yo gukodesha} other {Amazu # yo gukodesha}}",
+      "buy": "{count, plural, =0 {Nta bigurishwa ubu} one {Inzu # igurishwa} other {Amazu # agurishwa}}"
+    },
+    "noneYet": "Ntiturabona aho tugenzura hano.",
+    "see": "Reba",
+    "staysHere": "Aho kurara hano",
+    "salesHere": "Ibigurishwa hano",
+    "others": "Utundi duce",
+    "goodFor": {
+      "Gacuriro": "Bibereye imiryango iba igihe kirekire ishaka umwanya n'igipangu.",
+      "Gikondo": "Bibereye kuba igihe kirekire ku mafaranga make, ufite urugo.",
+      "Kacyiru": "Bibereye ukorana na minisiteri cyangwa ambasade.",
+      "Kibagabaga": "Bibereye imiryango ishaka ubusitani n'isoko hafi.",
+      "Kicukiro": "Bibereye ugera bwije cyangwa ufata indege kare.",
+      "Kimihurura": "Bibereye icyumweru cy'inama, cyangwa ukwezi kwa mbere mu mujyi.",
+      "Kiyovu": "Bibereye kuba igihe gito, byose bigerwaho n'amaguru.",
+      "Nyamirambo": "Bibereye ushaka umujyi uko ubayeho mu muhanda.",
+      "Nyarutarama": "Bibereye umuryango wakira abashyitsi, cyangwa uba igihe kirekire.",
+      "Rebero": "Bibereye ushaka kureba umujyi wose kandi ntatinye umusozi.",
+      "Remera": "Bibereye akazi ka mbere i Kigali, hafi y'imodoka rusange."
+    },
+    "mapLabel": "Ikarita y’uduce {count} dufitemo amazu",
+    "whereInCity": "Aho {place} iherereye i Kigali",
+    "locatorCaption": "{place} mu duce {count} dufitemo amazu. Udusanduku twerekana umujyi rwagati n’ikibuga cy’indege.",
+    "rentalsHere": "Ibikodeshwa hano"
+  },
+  "list": {
+    "inspectedBy": "Yagenzuwe ku wa {date} na {name}",
+    "photos": "Amafoto {count}",
+    "minutesTo": "Iminota {minutes} ugana {place}",
+    "minutesShort": "Iminota {minutes}",
+    "ctaApply": "Saba",
+    "ctaCheckDates": "Reba amatariki",
+    "ctaHire": "Kodesha",
+    "ctaBookDay": "Fata umwanya",
+    "belowMedian": "{pct}% munsi y'igiciro rusange kuri m²",
+    "aboveMedian": "{pct}% hejuru y'igiciro rusange kuri m²",
+    "filters": "Muyunguruzi",
+    "closeFilters": "Funga muyunguruzi",
+    "showResults": "{count, plural, =0 {Nta bisubizo} one {Erekana igisubizo #} other {Erekana ibisubizo #}}",
+    "noFilters": "Nta muyunguruzi",
+    "chipFrom": "Ingendo uhereye {place}",
+    "measureFrom": "Ingendo uhereye",
+    "endCount": "{count, plural, one {Icyo dufite ni kimwe.} other {Ibyo dufite ni # byose.}}",
+    "endTitle": {
+      "stay": "Ntiwabonye aho ushaka?",
+      "rent": "Ntiwabonye inzu yo gukodesha ushaka?",
+      "buy": "Urashaka ikintu tutarashyiraho?",
+      "cars": "Ukeneye indi modoka?",
+      "experiences": "Urashaka umunsi tutarategura?"
+    },
+    "endBody": "Bwira itsinda rya Kigali icyo ushaka. Buri busabe busomwa n'umuntu, kandi akenshi tumenya ahantu mbere y'uko hashyirwaho.",
+    "endOthers": "Cyangwa urebe",
+    "requestWhat": "Urashaka iki?",
+    "requestPlaceholder": {
+      "stay": "Inzu ituje y'ibyumba bibiri hafi ya za ambasade, hagati mu Ukuboza",
+      "rent": "Ibyumba bitatu i Kacyiru guhera muri Werurwe, hafi $2,000 ku kwezi",
+      "buy": "Inzu y'umuryango ifite ubusitani, kugeza kuri RWF 250M",
+      "cars": "Imodoka y'imyanya irindwi n'umushoferi icyumweru i Musanze",
+      "experiences": "Umunsi mu mirima y'ikawa hafi ya Huye"
+    },
+    "requestContact": "Imeyili cyangwa telefoni",
+    "requestSend": "Bwira itsinda",
+    "requestNoted": "Byanditswe.",
+    "requestPreview": "Iri ni igerageza, nta kintu cyoherejwe. Konti nizimara kuboneka, bizagera ku itsinda rya Kigali uko wabyanditse.",
+    "notifyTitle": "Tubwire icyo ukeneye tuzakumenyesha nikiboneka",
+    "closestWeHave": "Ibyegereye ibyo ushaka",
+    "noMatchText": "Nta kintu dufite kivuga « {text} ». Gerageza agace, ingengo y'imari, cyangwa icyo ahantu hagomba kugira.",
+    "noCarBody": "Nta modoka ihuje n'ibyo byose. Imyanya mike, cyangwa vitesi iyo ari yo yose, akenshi bifungura amahitamo.",
+    "stayPromise": "Ahantu hose hagenzuwe imbonankubone, kandi amafaranga yawe abikwa kugeza wemeje ko wageze.",
+    "rentPromise": "Ibiciro by'ukwezi ku masezerano y'amezi cumi n'abiri cyangwa arenga, impapuro zigenzurwa mbere yo gusinya.",
+    "rentCount": "{count, plural, one {Inzu # yagenzuwe yo gukodesha i Kigali} other {Amazu # yagenzuwe yo gukodesha i Kigali}}",
+    "carsCount": "{count, plural, one {Imodoka # yagenzuwe i Kigali} other {Imodoka # zagenzuwe i Kigali}}",
+    "daysCount": "{count, plural, one {Umunsi # wo gutembera uvuye i Kigali} other {Iminsi # yo gutembera uvuye i Kigali}}",
+    "carsPromise": "Ikorerwa isuzuma mbere ya buri gukodeshwa n'umwe mu itsinda ryacu wayitwaye.",
+    "daysPromise": "Itsinda ryacu ryabikoze byose mbere yo kubishyiraho, hamwe n'abayobozi tuzi amazina.",
+    "bandLabel": "Uduce",
+    "fromShort": "guhera",
+    "placesShort": "{count, plural, one {ahantu #} other {ahantu #}}",
+    "rentBarsTitle": "Ubukode busanzwe kuri buri gace",
+    "rentBarsCaption": "Ubukode bwo hagati ku kwezi ku mazu dufite",
+    "perMonthShort": "/ukwezi",
+    "sqmTitle": "Igiciro kuri m², inzu ku nzu",
+    "sqmCaption": "Umurongo ni igiciro cyo hagati cy'ibyo dufite byose",
+    "medianLabel": "Hagati",
+    "perSqmShort": "/m²",
+    "abroadLink": "Kugura uri mu mahanga",
+    "addDatesForTotals": "Shyiramo amatariki ubone igiteranyo",
+    "staySearchTitle": "Ujya he?",
+    "rentSearchTitle": "Shaka inzu yo gukodesha",
+    "buySearchTitle": "Shaka inzu yo kugura",
+    "carSearchTitle": "Ukeneye imodoka ryari?",
+    "moveInLabel": "Kwimukira",
+    "moveInValue": "Ukwezi uko ari ko kose",
+    "bedroomsLabel": "Ibyumba",
+    "bedroomsValue": "Ibyumba {count}+",
+    "bedroomsAny": "Byose",
+    "wherePlaceholder": "Agace, cyangwa sobanura icyo ukeneye",
+    "askFor": "Shakisha « {text} »",
+    "askForHint": "Ishakiro ry'ubwenge risoma interuro yose",
+    "budgetLabel": "Ingengo y'imari",
+    "pickUp": "Kuyifata",
+    "return": "Kuyigarura",
+    "handOver": "Aho uyihererwa",
+    "place": {
+      "airport": "Ku kibuga cy'indege cya Kigali",
+      "hotel": "Kuri hoteli cyangwa iwawe",
+      "office": "Ku biro byacu i Kimihurura"
+    },
+    "anyDates": "Amatariki yose",
+    "seatsLabel": "Imyanya",
+    "gearLabel": "Vitesi",
+    "any": "Byose",
+    "totalForDays": "{count, plural, one {igiteranyo cy'umunsi #} other {igiteranyo cy'iminsi #}}",
+    "carIncludes": {
+      "insurance": "Ubwishingizi bwuzuye",
+      "mileage": "Ibirometero bitagira umupaka",
+      "handover": "Kuyihererwa ku kibuga cy'indege cyangwa iwawe",
+      "roadside": "Ubufasha mu nzira amanywa n'ijoro"
+    },
+    "dayLabel": "Itariki",
+    "peopleLabel": "Abantu",
+    "people": "{count, plural, one {Umuntu #} other {Abantu #}}",
+    "forPeople": "{count, plural, one {ku muntu #} other {ku bantu #}}",
+    "departsAt": "Guhaguruka {time} · amasaha {hours}",
+    "driveFromKigali": "Amasaha {hours} y'urugendo uvuye i Kigali",
+    "inKigaliLong": "I Kigali, nta rugendo rurerure",
+    "inKigali": "i Kigali",
+    "hoursShort": "Amasaha {hours}",
+    "guidedBy": "Uyobowe na {name}",
+    "groupMaxNote": "Kugeza ku bantu {count}",
+    "daysMapLabel": "Ikarita y'u Rwanda ifite buri munsi wo gutembera n'urugendo rwawo uvuye i Kigali",
+    "travelTitle": "Kugenda",
+    "travelNote": "Mu modoka ku munsi w'akazi, bigereranyijwe ku ikarita. Amasaha y'umuvundo kuri KN 5 yongeraho igihe.",
+    "leaseTermsTitle": "Amasezerano y'ubukode",
+    "deposit": "Ingwate",
+    "depositMonths": "{count, plural, one {Ukwezi # k'ubukode} other {Amezi # y'ubukode}}",
+    "availableFrom": "Iboneka guhera",
+    "minimumTerm": "Igihe gito gishoboka",
+    "twelveMonths": "Amezi 12",
+    "includedInRent": "Biri mu bukode",
+    "included": {
+      "water": "Amazi",
+      "security": "Umuzamu",
+      "internet": "Interineti ya fibre",
+      "garden": "Kwita ku busitani"
+    },
+    "excludedNote": "Amashanyarazi ari kuri cash power mu izina ry'ukodesha, nk'uko bimeze mu mazu menshi y'i Kigali.",
+    "yearBuilt": "Yubatswe",
+    "upi": "Nimero y'ikibanza (UPI)",
+    "inspectedFact": "Yagenzuwe",
+    "whenSuits": "Ni ryari bikunogeye?",
+    "viewingWhen": {
+      "thisWeek": "Iki cyumweru",
+      "nextWeek": "Icyumweru gitaha",
+      "weekend": "Mu mpera z'icyumweru"
+    },
+    "messagePlaceholder": "Icyo itsinda rikwiye kumenya, nk'ikibazo ku kibanza",
+    "tripTitle": "Urugendo rusigaye",
+    "tripCar": "Imodoka ivuye ku kibuga cy'indege",
+    "tripCarBody": "Imodoka ziboneka {when}, n'igiteranyo cy'igihe cyose.",
+    "tripDay": "Umunsi wo gutembera uri hano",
+    "tripDayBody": "Iminsi yo gutembera ku wa {date}, ku giciro cy'{count, plural, one {umuntu #} other {abantu #}}.",
+    "emptyStay": "Kurara ijoro",
+    "emptyRent": "Gukodesha inzu",
+    "emptyBuy": "Kugura inzu",
+    "emptyCars": "Gukodesha imodoka",
+    "emptyDays": "Shaka umunsi wo gutembera",
+    "savedAll": "Byose",
+    "compareHint": "Hitamo amazu abiri cyangwa atatu uyagereranye.",
+    "notePlaceholder": "Baza kuri moteri itanga umuriro, iyo ifite igiti cy'avoka…",
+    "noteLabel": "Icyo wanditse",
+    "noteSave": "Bika",
+    "noteCancel": "Reka",
+    "noteAdd": "Andika icyo wibuka",
+    "compareThis": "Gereranya",
+    "comparePicked": "{count, plural, one {Inzu # wahisemo} other {Amazu # wahisemo}}",
+    "compareOpen": "Gereranya",
+    "compareTitle": "Kimwe iruhande rw'ikindi",
+    "compareClose": "Funga igereranya",
+    "compare": {
+      "price": "Igiciro",
+      "neighbourhood": "Agace",
+      "bedrooms": "Ibyumba",
+      "size": "Ingano",
+      "toCentre": "Ugana mu mujyi rwagati",
+      "toAirport": "Ugana ku kibuga cy'indege",
+      "inspected": "Yagenzuwe",
+      "note": "Icyo wanditse"
+    },
+    "daySearchTitle": "Muzagenda ryari?",
+    "anyDate": "Itariki iyo ari yo yose",
+    "thisSaturday": "Kuwa gatandatu w’iki cyumweru",
+    "thisSunday": "Ku cyumweru w’iki cyumweru",
+    "peopleHint": "Abazaza bose",
+    "addDate": "Ongeraho itariki",
+    "budgetAny": "Ingengo y’imari iyo ari yo yose",
+    "placeHint": {
+      "airport": "Aho abagenzi basohokera, mukimara kugwa",
+      "hotel": "Aho mucumbitse hose i Kigali"
+    },
+    "budgetPlaceholder": "Igiciro ntarengwa, urugero {example}",
+    "bandBack": "Reba uduce twabanje",
+    "bandMore": "Reba utundi duce"
+  },
+  "notFound": {
+    "title": "Iyi paji ntiboneka",
+    "body": "Iyi link ishobora kuba ishaje, cyangwa iri tangazo ryavuye kuri HomeLink nyuma y’igenzura ryaryo rya nyuma. Ibyo dutanga byose biracyari hafi.",
+    "home": "Subira kuri HomeLink",
+    "stays": "Kurara",
+    "rent": "Gukodesha",
+    "buy": "Kugura",
+    "cars": "Imodoka",
+    "experiences": "Ingendo"
+  },
+  "landmarkNames": {
+    "conventionCentre": "Kigali Convention Centre",
+    "cityCentre": "Umujyi rwagati",
+    "airport": "Ikibuga cy’indege",
+    "embassies": "Ambasade",
+    "stadium": "Sitade Amahoro",
+    "golf": "Ikibuga cya golf",
+    "market": "Isoko rya Kimironko"
   }
 }

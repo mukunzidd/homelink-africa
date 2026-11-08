@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HomeLink Africa
 
-## Getting Started
+Verified stays, cars and days out in Kigali. The front end runs on fixtures
+behind `src/lib/repos`; search runs on Meilisearch, with a built-in engine
+over the same fixtures when Meilisearch is not running.
 
-First, run the development server:
+Start with `AGENTS.md`, which points at the current milestone.
+
+## Running it
+
+In Docker, which is the house default:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+make up        # web on http://localhost:3100, Meilisearch on :7710
+make check     # typecheck, lint and tests, inside the web container
+make logs      # follow the web server
+make down
+make           # list every target
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The first `make up` installs dependencies into a named volume and takes a few
+minutes. After that it starts in seconds. Run `make search-reset` after
+editing fixtures so the index is rebuilt.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+On the host, with no containers at all:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+make host-install
+make host-dev     # uses Meilisearch if it is up, else the built-in engine
+make host-test
+```
 
-## Learn More
+`docker compose up -d meilisearch` starts search on its own for a host dev
+server. Both copies of the web app want port 3100; `make up PORT=3101` runs the
+container on another one.
 
-To learn more about Next.js, take a look at the following resources:
+## Search
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`src/lib/search/parse.ts` turns a sentence into filters: place (with typo
+tolerance and landmarks such as "near the convention centre"), bedrooms,
+party size, a price ceiling in any of the four currencies, amenities, lease,
+dates and sort. The palette (⌘K or `/`) prints that reading as chips before it
+shows results, and the results page turns it into ordinary URL parameters.
+When nothing matches, constraints are relaxed one at a time and the page says
+which one went.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Map tiles
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Maps use OpenStreetMap's standard tiles, which allow light use with
+attribution. Production traffic needs a tile provider; set
+`NEXT_PUBLIC_MAP_TILES` to its URL template (`{z}`, `{x}`, `{y}`).

@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { ViewTracker } from "@/components/ui/view-tracker";
+import { MoneyText } from "@/components/ui/money-text";
+import { MobileActionBar } from "@/components/ui/mobile-action-bar";
+import { SaveButton } from "@/components/ui/save-button";
+import { ShareButton } from "@/components/ui/share-button";
 
 import { repos } from "@/lib/repos";
-import { Link } from "@/i18n/navigation";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { addDays, formatDate, isIsoDate, today } from "@/lib/domain/dates";
 import { Gallery } from "@/components/ui/gallery";
@@ -41,9 +46,11 @@ export default async function VehicleDetailPage({
 
   const sp = await searchParams;
   const t = await getTranslations("cars");
+  const tB = await getTranslations("breadcrumb");
   const tVerify = await getTranslations("verification");
   const tStatus = await getTranslations("status");
   const tOwner = await getTranslations("owner");
+  const tList = await getTranslations("list");
 
   const defaultFrom = isIsoDate(sp.from) ? sp.from : addDays(today(), 7);
   const defaultTo =
@@ -80,12 +87,8 @@ export default async function VehicleDetailPage({
         record={vehicle.verification}
       />
 
-      <Link
-        href="/cars"
-        className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
-      >
-        ← {t("backToCars")}
-      </Link>
+      <ViewTracker href={`/cars/${vehicle.slug}`} name={vehicle.name} kind="car" image={vehicle.images?.[0]} />
+      <Breadcrumbs trail={[{ label: tB("cars"), href: "/cars" }, { label: vehicle.name }]} />
 
       {/* Title above the gallery, for the same reason it is above the gallery
           on a stay: someone arriving from a result row needs to confirm they
@@ -100,11 +103,15 @@ export default async function VehicleDetailPage({
           <span className="text-[15px] text-ink-2">
             {t(`class.${vehicle.vehicleClass}`)} · {t("basedIn")}
           </span>
-          {vehicle.unitsAvailable <= 2 && (
+          {isIsoDate(sp.from) && isIsoDate(sp.to) && vehicle.unitsAvailable <= 2 && (
             <StatusPill tone="warn">
               {tStatus("lowAvailability", { count: vehicle.unitsAvailable })}
             </StatusPill>
           )}
+          <span className="ml-auto flex items-center gap-2">
+            <ShareButton title={vehicle.name} />
+            <SaveButton id={vehicle.id} kind="car" name={vehicle.name} variant="inline" />
+          </span>
         </div>
       </header>
 
@@ -187,7 +194,7 @@ export default async function VehicleDetailPage({
           </section>
         </div>
 
-        <aside className="lg:sticky lg:top-24 lg:self-start">
+        <aside id="book" className="scroll-mt-[calc(var(--header-offset)+1rem)] lg:sticky lg:top-24 lg:self-start">
           <HirePanel
             vehicle={vehicle}
             defaultFrom={defaultFrom}
@@ -195,6 +202,13 @@ export default async function VehicleDetailPage({
           />
         </aside>
       </div>
+
+      <MobileActionBar target="book" cta={tList("ctaHire")}>
+        <span className="text-[16px] font-semibold text-ink">
+          <MoneyText amount={vehicle.dailyRate} rounded />
+        </span>
+        <span className="text-[12px] text-ink-3">{t("perDay")}</span>
+      </MobileActionBar>
     </div>
   );
 }

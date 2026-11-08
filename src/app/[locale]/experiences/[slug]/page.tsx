@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { ViewTracker } from "@/components/ui/view-tracker";
+import { MobileActionBar } from "@/components/ui/mobile-action-bar";
+import { MoneyText } from "@/components/ui/money-text";
+import { isIsoDate, today } from "@/lib/domain/dates";
+import { SaveButton } from "@/components/ui/save-button";
+import { ShareButton } from "@/components/ui/share-button";
 
 import { repos } from "@/lib/repos";
-import { Link } from "@/i18n/navigation";
 import { Gallery } from "@/components/ui/gallery";
 import { PersonRow } from "@/components/ui/person-row";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
@@ -26,8 +32,10 @@ export async function generateMetadata({
 
 export default async function ExperienceDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; slug: string }>;
+  searchParams: Promise<{ date?: string; party?: string }>;
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
@@ -36,8 +44,12 @@ export default async function ExperienceDetailPage({
   if (!experience) notFound();
 
   const t = await getTranslations("experiences");
+  const tB = await getTranslations("breadcrumb");
   const tVerify = await getTranslations("verification");
   const tOwner = await getTranslations("owner");
+  const tList = await getTranslations("list");
+  const tExp = t;
+  const sp = await searchParams;
 
   const interests = experience.interests
     .map((i) => t(`interest.${i}`))
@@ -63,12 +75,8 @@ export default async function ExperienceDetailPage({
         record={experience.verification}
       />
 
-      <Link
-        href="/experiences"
-        className="self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
-      >
-        ← {t("backToExperiences")}
-      </Link>
+      <ViewTracker href={`/experiences/${experience.slug}`} name={experience.name} kind="experience" image={experience.images?.[0]} />
+      <Breadcrumbs trail={[{ label: tB("experiences"), href: "/experiences" }, { label: experience.name }]} />
 
       <header className="flex flex-col gap-3">
         <h1 className="max-w-[24ch] text-balance font-display text-4xl font-semibold leading-[1.06] tracking-tight text-ink sm:text-5xl">
@@ -82,6 +90,10 @@ export default async function ExperienceDetailPage({
           <VerifiedBadge label={tVerify("badge")} size="sm" />
           <span className="text-[15px] text-ink-2">
             {experience.meetingPoint}
+          </span>
+          <span className="ml-auto flex items-center gap-2">
+            <ShareButton title={experience.name} />
+            <SaveButton id={experience.id} kind="experience" name={experience.name} variant="inline" />
           </span>
         </div>
       </header>
@@ -174,10 +186,21 @@ export default async function ExperienceDetailPage({
           </section>
         </div>
 
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <SeatsPanel experience={experience} />
+        <aside id="book" className="scroll-mt-[calc(var(--header-offset)+1rem)] lg:sticky lg:top-24 lg:self-start">
+          <SeatsPanel
+            experience={experience}
+            initialDate={isIsoDate(sp.date) && sp.date >= today() ? sp.date : undefined}
+            initialParty={Number(sp.party) >= 1 && Number(sp.party) <= experience.groupMax ? Number(sp.party) : undefined}
+          />
         </aside>
       </div>
+
+      <MobileActionBar target="book" cta={tList("ctaBookDay")}>
+        <span className="text-[16px] font-semibold text-ink">
+          <MoneyText amount={experience.pricePerPerson} rounded />
+        </span>
+        <span className="text-[12px] text-ink-3">{tExp("perPerson")}</span>
+      </MobileActionBar>
     </div>
   );
 }

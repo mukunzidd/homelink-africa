@@ -18,7 +18,7 @@ import { formatDate } from "@/lib/domain/dates";
  * inspected for water pressure, and telling someone it was would undo the
  * specificity that makes the record worth reading.
  */
-export type VerificationKind = "stay" | "car" | "experience";
+export type VerificationKind = "stay" | "sale" | "car" | "experience";
 
 export async function VerificationRecordPanel({
   record,
@@ -97,7 +97,7 @@ export async function VerificationRecordPanel({
           >
             <span
               aria-hidden="true"
-              className="tnum grid size-7 place-items-center rounded-full border border-trust/45 bg-trust-tint text-xs font-extrabold text-trust"
+              className="tnum grid size-7 place-items-center rounded-full border border-trust/45 bg-trust-tint text-xs font-semibold text-trust"
             >
               {index + 1}
             </span>

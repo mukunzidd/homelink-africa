@@ -21,13 +21,13 @@ import { SingleDatePicker } from "@/components/ui/single-date-picker";
  * size rather than enforced silently — an age limit discovered at the trailhead
  * is a ruined day, and we know it before they book.
  */
-export function SeatsPanel({ experience }: { experience: Experience }) {
+export function SeatsPanel({ experience, initialDate, initialParty }: { experience: Experience; initialDate?: IsoDate; initialParty?: number }) {
   const t = useTranslations("experiences");
   const tQuote = useTranslations("quote");
   const router = useRouter();
 
-  const [date, setDate] = useState<IsoDate | null>(addDays(today(), 10));
-  const [party, setParty] = useState(2);
+  const [date, setDate] = useState<IsoDate | null>(initialDate ?? addDays(today(), 10));
+  const [party, setParty] = useState(initialParty ?? 2);
 
   const quote = useMemo(
     () => quoteExperience(experience, party),
@@ -45,7 +45,7 @@ export function SeatsPanel({ experience }: { experience: Experience }) {
       <div className="flex items-baseline gap-1.5">
         <MoneyText
           amount={experience.pricePerPerson}
-          className="text-xl font-bold text-ink"
+          className="text-xl font-semibold text-ink"
         />
         <span className="text-sm text-ink-3">{t("perPerson")}</span>
       </div>

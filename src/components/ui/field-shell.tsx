@@ -42,7 +42,7 @@ export function FieldContent({
 }) {
   return (
     <>
-      <span className="block text-[11px] font-bold uppercase leading-4 tracking-[0.08em] text-ink-3">
+      <span className="block text-[12px] font-medium leading-4 text-ink-3">
         {label}
       </span>
 

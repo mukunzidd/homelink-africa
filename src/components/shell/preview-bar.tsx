@@ -20,6 +20,11 @@ import { cn } from "@/lib/cn";
  * Product & UX §4 still holds: the segment override stays visible and
  * persistent, never buried in a settings page. A corner is not buried — it is
  * one click away and always in the same place.
+ *
+ * Desktop only. On a phone a button pinned over the page sat on top of card
+ * CTAs as the list scrolled, wherever it was moved to, because a phone has no
+ * spare corner. The same two controls live in the phone menu sheet instead
+ * (`PreviewControls`, below), which is where a phone keeps its settings.
  */
 const ROLES: Role[] = [
   "visitor",
@@ -35,15 +40,16 @@ const STORAGE_KEY = "homelink.previewBar.open";
 
 export function PreviewBar() {
   const t = useTranslations("dev");
-  const tRoles = useTranslations("roles");
   const tSegment = useTranslations("segment");
-  const { segment, setSegment, role, setRole } = usePreferences();
 
   // Starts collapsed. Anything pinned over the page should have to earn its
   // space, and most sessions never touch these.
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    // Read after mount on purpose: the server cannot see localStorage, and the
+    // first client render has to match it.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(window.localStorage.getItem(STORAGE_KEY) === "1");
   }, []);
 
@@ -51,11 +57,6 @@ export function PreviewBar() {
     setOpen(next);
     window.localStorage.setItem(STORAGE_KEY, next ? "1" : "0");
   }
-
-  const segments = [
-    { value: "abroad", label: tSegment("abroad"), icon: <PlaneIcon size={14} /> },
-    { value: "rwanda", label: tSegment("rwanda"), icon: <PinIcon size={14} /> },
-  ] as const;
 
   if (!open) {
     return (
@@ -65,7 +66,7 @@ export function PreviewBar() {
         aria-label={t("label")}
         title={t("label")}
         className={cn(
-          "fixed bottom-4 right-4 z-40 grid size-10 cursor-pointer place-items-center",
+          "fixed bottom-4 right-4 z-40 hidden size-10 cursor-pointer place-items-center lg:grid",
           "rounded-full border border-line bg-surface/95 text-ink-3 backdrop-blur",
           "shadow-[var(--shadow-card)] transition-colors duration-150",
           "hover:text-ink hover:shadow-[var(--shadow-pop)]",
@@ -79,11 +80,41 @@ export function PreviewBar() {
   return (
     <div
       className={cn(
-        "fixed bottom-4 right-4 z-40 flex max-w-[calc(100vw-2rem)] flex-wrap items-center gap-3",
+        "fixed bottom-4 right-4 z-40 hidden max-w-[calc(100vw-2rem)] flex-wrap items-center gap-3 lg:flex",
         "rounded-card border border-line bg-surface/95 p-2 pl-3 backdrop-blur",
         "shadow-[var(--shadow-pop)]",
       )}
     >
+      <PreviewControls />
+
+      <button
+        type="button"
+        onClick={() => toggle(false)}
+        aria-label={tSegment("hint")}
+        className={cn(
+          "grid size-8 flex-none cursor-pointer place-items-center rounded-full",
+          "text-ink-3 transition-colors duration-150 hover:bg-surface-2 hover:text-ink",
+        )}
+      >
+        <CloseIcon size={15} />
+      </button>
+    </div>
+  );
+}
+
+/** The segment switch and the role picker, for the bar and the phone menu. */
+export function PreviewControls({ className }: { className?: string }) {
+  const t = useTranslations("dev");
+  const tRoles = useTranslations("roles");
+  const tSegment = useTranslations("segment");
+  const { segment, setSegment, role, setRole } = usePreferences();
+  const segments = [
+    { value: "abroad", label: tSegment("abroad"), icon: <PlaneIcon size={14} /> },
+    { value: "rwanda", label: tSegment("rwanda"), icon: <PinIcon size={14} /> },
+  ] as const;
+
+  return (
+    <div className={cn("flex flex-wrap items-center gap-3", className)}>
       <div
         role="group"
         aria-label={tSegment("label")}
@@ -98,7 +129,7 @@ export function PreviewBar() {
               aria-pressed={active}
               onClick={() => setSegment(option.value)}
               className={cn(
-                "flex h-8 cursor-pointer items-center gap-1.5 rounded-[6px] px-2.5",
+                "flex h-8 cursor-pointer items-center gap-1.5 rounded-inner px-2.5",
                 "text-[13px] font-semibold transition-colors duration-150",
                 active ? "bg-brand-tint text-brand" : "text-ink-3 hover:text-ink",
               )}
@@ -122,17 +153,6 @@ export function PreviewBar() {
         />
       )}
 
-      <button
-        type="button"
-        onClick={() => toggle(false)}
-        aria-label={tSegment("hint")}
-        className={cn(
-          "grid size-8 flex-none cursor-pointer place-items-center rounded-full",
-          "text-ink-3 transition-colors duration-150 hover:bg-surface-2 hover:text-ink",
-        )}
-      >
-        <CloseIcon size={15} />
-      </button>
     </div>
   );
 }

@@ -16,22 +16,58 @@
     "trips": "Voyages",
     "messages": "Messages",
     "help": "Aide",
-    "inventory": "Mon offre",
-    "queue": "File d'attente"
+    "inventory": "Vos annonces",
+    "queue": "File d'attente",
+    "preferences": "Langue, devise et thème",
+    "close": "Fermer",
+    "yourScreens": "Vos écrans",
+    "messagesUnread": "Messages, avec des réponses non lues"
   },
   "nav": {
     "stays": "Séjours",
     "cars": "Voitures",
     "experiences": "Excursions",
     "howItWorks": "Comment ça marche",
-    "homes": "Location"
+    "homes": "Location",
+    "lanes": "Ce que vous pouvez réserver",
+    "homesLane": "Logements",
+    "stay": "Séjour",
+    "rent": "Louer",
+    "buy": "Acheter"
   },
   "landing": {
     "heroTitle": "Un logement prêt à votre arrivée",
     "heroBody": "Chaque logement, voiture et guide sur HomeLink a été inspecté en personne par notre équipe à Kigali. S'il est ici, nous y sommes allés.",
     "feedTitle": "Vérifiés à Kigali cette semaine",
     "feedBody": "Récemment inspectés et prêts à réserver.",
-    "viewAll": "Voir tous les logements"
+    "viewAll": "Voir tous les logements",
+    "lanesTitle": "Ce que vous pouvez réserver",
+    "lane": {
+      "stays": "{count} logements à la nuit",
+      "homes": "{count} logements à louer",
+      "cars": "{count} véhicules, avec ou sans chauffeur",
+      "experiences": "{count} sorties avec des guides connus",
+      "buy": "{count} biens à vendre, titre vérifié"
+    },
+    "smartTitle": "Demandez comme vous le feriez à un ami à Kigali",
+    "smartBody": "Tapez une phrase. La recherche repère le lieu, la taille, le budget et les dates, vous montre comment elle les a compris, et ne cherche que ce que notre équipe a inspecté.",
+    "smartHint": "Appuyez sur ⌘K ou / depuis n’importe quelle page.",
+    "placesTitle": "Les quartiers que nous connaissons",
+    "placesBody": "Tous parcourus par notre équipe. Le chiffre indique combien de logements vérifiés s’y trouvent aujourd’hui.",
+    "fromPrice": "À partir de",
+    "howTitle": "Comment fonctionne HomeLink",
+    "howBody": "Trois promesses, chacune tenue par une personne et garantie par le logiciel.",
+    "how": {
+      "inspectTitle": "Quelqu’un est venu sur place",
+      "inspectBody": "Chaque logement est vérifié sur 34 points : pression de l’eau, secours électrique, accès routier, cuisine. Nous le photographions nous-mêmes.",
+      "escrowTitle": "Votre argent attend",
+      "escrowBody": "Le paiement est bloqué jusqu’à ce que vous confirmiez votre arrivée. Si le logement ne correspond pas, remboursement complet et un autre logement le soir même.",
+      "peopleTitle": "Une équipe à Kigali",
+      "peopleBody": "Concierge, inspecteurs et guides que vous pouvez contacter par leur nom, avant et pendant votre séjour."
+    },
+    "daysTitle": "Sorties",
+    "daysBody": "Gorilles, lac, canopée et ville, avec des guides que nous connaissons personnellement.",
+    "daysAll": "Toutes les sorties"
   },
   "search": {
     "where": "Où",
@@ -75,7 +111,8 @@
     "bedroomsPlus": "{count}+",
     "totalFor": "au total pour {count, plural, one {# nuit} other {# nuits}}",
     "filtersHeading": "Affiner",
-    "activeFilters": "{count, plural, one {# filtre} other {# filtres}} actifs"
+    "activeFilters": "{count, plural, one {# filtre} other {# filtres}} actifs",
+    "clearAll": "Tout effacer"
   },
   "gallery": {
     "label": "Photos",
@@ -119,7 +156,7 @@
       "car": {
         "inspectedBody": "Révisé, essayé sur route et contrôlé selon une liste de 22 points : pneus, freins, roue de secours, cric et papiers.",
         "identityBody": "Propriété de l'exploitant et assurance vérifiées avec la carte grise avant toute location.",
-        "photographedBody": "Photographié par l'équipe HomeLink, ce véhicule précis — pas une photo de catalogue du modèle.",
+        "photographedBody": "Photographié par l'équipe HomeLink. Chaque photo montre ce véhicule précis, pas une photo de catalogue du modèle.",
         "title": "Vérifiée par quelqu'un qui l'a conduite"
       },
       "experience": {
@@ -127,8 +164,15 @@
         "identityBody": "Licence du guide et accréditation des parcs vérifiées, et renouvelées chaque saison.",
         "photographedBody": "Photographiée lors d'un vrai départ par l'équipe HomeLink.",
         "title": "Vérifiée par quelqu'un qui l'a faite"
+      },
+      "sale": {
+        "title": "Vérifié par quelqu’un qui a parcouru la parcelle",
+        "inspectedBody": "Visité en entier selon une liste de 41 points : structure, toiture, eau, électricité, évacuation et accès routier.",
+        "photographedBody": "Photographié par l’équipe HomeLink : ce bien, cette parcelle, pas un rendu.",
+        "identityBody": "Titre vérifié auprès du registre foncier et pièce d’identité du vendeur contrôlée avant la mise en ligne."
       }
-    }
+    },
+    "escrowShortSupply": "Retenu jusqu'à l'arrivée du voyageur"
   },
   "trust": {
     "listingsVerified": "{count} annonces vérifiées",
@@ -157,7 +201,12 @@
     "longTerm": "Bail long terme",
     "selfDrive": "Sans chauffeur",
     "withDriver": "Avec chauffeur",
-    "clear": "Effacer les filtres"
+    "clear": "Effacer les filtres",
+    "maxPrice": "Budget",
+    "maxPerNight": "Max par nuit",
+    "maxPerMonth": "Max par mois",
+    "amenitiesHeading": "Équipements",
+    "stayType": "Type de séjour"
   },
   "segment": {
     "label": "Vous consultez depuis",
@@ -217,7 +266,14 @@
     "share": "Partager",
     "save": "Enregistrer",
     "entirePlace": "Logement entier",
-    "hostedBy": "Vérifié par"
+    "hostedBy": "Vérifié par",
+    "lease": {
+      "moveInTitle": "Emménagement",
+      "moveInBody": "Libre dès le {date}. Le bail dure au moins douze mois, à partir du mois choisi dans votre demande.",
+      "depositBody": "{deposit}, versés en caution et rendus à la fin du bail. Les conditions de caution arrivent avec le bail.",
+      "viewingTitle": "La visite",
+      "viewingBody": "L’équipe de Kigali organise une visite et envoie le bail à lire avant. Rien n’est débité ici."
+    }
   },
   "quote": {
     "accommodation": "{rate} × {nights, plural, one {# nuit} other {# nuits}}",
@@ -234,8 +290,10 @@
     "steps": {
       "dates": "Dates",
       "guests": "Voyageurs",
-      "review": "Vérification",
-      "pay": "Paiement"
+      "day": "Jour",
+      "driver": "Conducteur",
+      "people": "Personnes",
+      "reviewPay": "Vérification et paiement"
     },
     "yourStay": "Votre séjour",
     "changeDates": "Modifier",
@@ -252,7 +310,7 @@
     "cardHolder": "Nom sur la carte",
     "payNow": "Payer {amount}",
     "processing": "Paiement en cours…",
-    "stubNotice": "Rien n'est débité. Les moyens de paiement arrivent en phase 2 — ce bouton enregistre la réservation sur des données de test.",
+    "stubNotice": "Ceci est un aperçu. Rien ne vous sera débité.",
     "escrowTitle": "Votre argent est retenu jusqu'à votre arrivée",
     "escrowBody": "Nous retenons la totalité du montant et ne le versons à l'hôte qu'après confirmation de votre arrivée. Si le logement ne correspond pas, remboursement intégral et un autre logement le soir même.",
     "noEscrowBody": "Ce séjour est en dessous de notre seuil de séquestre, le paiement est donc direct. La même garantie d'exactitude s'applique.",
@@ -265,12 +323,29 @@
     },
     "kinds": {
       "car": {
-        "noEscrowBody": "Une location est versée directement à l'opérateur — le séquestre concerne les séjours au-dessus de notre seuil. La même garantie d'exactitude s'applique : si la voiture n'est pas celle décrite ici, vous ne la payez pas."
+        "guaranteeTitle": "{name} a vérifié cette voiture en personne",
+        "guaranteeBody": "Révisée, essayée sur route et contrôlée le {date} selon notre liste de {points} points : pneus, freins, roue de secours, cric et papiers. Si la voiture ne correspond pas à sa fiche, vous ne la payez pas."
       },
       "experience": {
-        "noEscrowBody": "Une sortie est versée directement au guide — le séquestre concerne les séjours au-dessus de notre seuil. La même garantie d'exactitude s'applique : si la journée n'est pas celle décrite ici, vous ne la payez pas."
+        "guaranteeTitle": "{name}, de notre équipe, a fait cette sortie",
+        "guaranteeBody": "Faite en entier et contrôlée le {date} selon notre liste de {points} points : sécurité, horaires et ce qui est réellement inclus. Si la sortie ne correspond pas à sa fiche, vous ne la payez pas.",
+        "cancellation": "Si la sortie est annulée pour raison de sécurité, vous êtes remboursé intégralement."
       }
-    }
+    },
+    "detailsTitle": "Vos coordonnées",
+    "fullName": "Nom complet",
+    "fullNameError": "Indiquez votre nom complet.",
+    "email": "E-mail",
+    "emailError": "Vérifiez l'adresse e-mail. Elle doit contenir un @ et un domaine, par exemple nom@exemple.com.",
+    "phone": "Téléphone",
+    "phoneError": "Indiquez un numéro où vous joindre, avec l'indicatif du pays s'il n'est pas rwandais.",
+    "cardNumberError": "Un numéro de carte compte de 13 à 19 chiffres. Vérifiez-le et réessayez.",
+    "cardHolderError": "Indiquez le nom tel qu'il figure sur la carte.",
+    "expiry": "Date d'expiration",
+    "expiryPlaceholder": "MM/AA",
+    "expiryError": "Saisissez la date d'expiration au format MM/AA et vérifiez que la carte n'a pas expiré.",
+    "cvc": "Cryptogramme",
+    "cvcError": "Le cryptogramme correspond aux 3 ou 4 chiffres imprimés sur la carte."
   },
   "confirmation": {
     "title": "C'est réservé",
@@ -423,7 +498,9 @@
     "fibre": "Une fibre qui marche",
     "fibreBody": "Débit testé sur place, pas repris d'une annonce.",
     "photos": "Nos propres photos",
-    "photosBody": "Prises par notre équipe. Rien ne vient du téléphone du propriétaire."
+    "photosBody": "Prises par notre équipe. Rien ne vient du téléphone du propriétaire.",
+    "deposit": "Une caution qui vous revient",
+    "depositBody": "{deposit}, versés en caution et rendus à la fin du bail."
   },
   "carHighlight": {
     "inspected": "Quelqu'un l'a conduite avant vous",
@@ -507,11 +584,18 @@
       "inspected": "Inspection"
     },
     "payoutCancelled": "Annulé — rien à verser",
-    "whereFrom": "D'où cela vient"
+    "whereFrom": "D'où cela vient",
+    "afterFee": "Après les frais HomeLink",
+    "rateYours": "Le voyageur paie ce tarif plus les frais de service",
+    "breakdownTitle": "Ce que les voyageurs ont payé, et ce qui vous revient",
+    "breakdownGross": "Payé par les voyageurs",
+    "breakdownFee": "Frais de service HomeLink",
+    "breakdownNote": "Les frais de service s'ajoutent à votre tarif quand le voyageur paie : ils ne sont jamais retirés de votre prix.",
+    "rowGross": "Payé par le voyageur",
+    "rowFee": "Frais"
   },
   "messaging": {
     "title": "Messages",
-    "subtitle": "Chaque conversation est rattachée à une réservation. Rien ici ne flotte tout seul.",
     "noThreads": "Aucune conversation pour l'instant. Il s'en ouvre une dès qu'une réservation est confirmée.",
     "allThreads": "Toutes les conversations",
     "you": "Vous",
@@ -519,10 +603,17 @@
     "readAt": "Lu à {time}",
     "delivered": "Remis",
     "replyLabel": "Écrire une réponse",
-    "replyPlaceholder": "Écrire une réponse…",
-    "replyNote": "L'envoi arrivera avec le back-end. La conversation ci-dessus provient de données de test, et ce champ est là pour juger la mise en page avec une zone de réponse.",
+    "replyPlaceholder": "Les réponses seront possibles dès l’ouverture de la messagerie",
     "attach": "Joindre une photo",
-    "attachLimits": "JPEG, PNG ou WebP, jusqu'à 15 Mo. Les données de localisation sont retirées avant tout stockage."
+    "attachLimits": "JPEG, PNG ou WebP, jusqu'à 15 Mo. Les données de localisation sont retirées avant tout stockage.",
+    "subtitleFor": {
+      "guest": "Chaque fil est rattaché à quelque chose que vous avez réservé, avec l’équipe de Kigali ou la personne qui vous accueille.",
+      "supply": "Les fils sur les réservations de ce que vous proposez. L’équipe de Kigali participe à chacun.",
+      "ops": "Tous les fils auxquels l’équipe de Kigali participe, chacun rattaché à une réservation ou à un voyage."
+    },
+    "party": "{name} · {role}",
+    "send": "Envoyer",
+    "sendOff": "L’envoi est désactivé jusqu’à l’ouverture de la messagerie"
   },
   "queue": {
     "title": "La file",
@@ -560,7 +651,7 @@
     },
     "releasesOn": "Libéré le {date}",
     "paidOn": "Versé le {date}",
-    "readOnlyNote": "Rien sur cet écran ne modifie quoi que ce soit. Planifier une visite, publier une annonce et libérer un versement demandent tous un back-end, et un bouton mort à côté d'argent réel serait pire que pas de bouton.",
+    "readOnlyNote": "Aperçu : les actions sont désactivées.",
     "notYours": "Cet écran est celui de l'équipe de Kigali",
     "notYoursBody": "La file est l'outil de l'équipe concierge. Si vous avez réservé, c'est dans Voyages ; si vous proposez quelque chose, c'est dans Mon offre.",
     "tabsLabel": "Sections de la file",
@@ -578,6 +669,61 @@
       "asks": "Chaque bouton « écrire à l'équipe » d'une confirmation arrive ici comme une tâche humaine. Une liste longue est l'argument pour intégrer l'une de ces demandes au tunnel de réservation.",
       "payouts": "Le même séquestre que le voyageur lit comme une sécurité, vu de l'intérieur comme une tâche. L'argent retenu attend une arrivée confirmée.",
       "threads": "Toutes les conversations de l'équipe. Un point plein signale quelqu'un qui nous attend."
+    },
+    "tabCount": "{open} sur {total}",
+    "adminNote": "Vous consultez la file des opérations en tant qu’administrateur",
+    "record": {
+      "what": "De quoi il s’agit",
+      "kind": {
+        "new": "Nouvelle annonce",
+        "reinspection": "Nouvelle visite d’une annonce en ligne"
+      },
+      "requested": "Demandé le",
+      "noVisit": "Aucune visite prévue",
+      "noInspector": "Personne n’est assigné",
+      "history": "Historique",
+      "step": {
+        "requested": "Vérification demandée",
+        "scheduled": "Visite prévue",
+        "inspected": "Visitée par un inspecteur",
+        "published": "En ligne sur HomeLink"
+      },
+      "done": "fait",
+      "notYet": "pas encore",
+      "askedBy": "Demandé par",
+      "nameRole": "{name} · {role}",
+      "theGuest": "Le voyageur de cette réservation",
+      "nobody": "Personne ne s’en occupe encore",
+      "booking": "Réservation",
+      "dates": "Dates",
+      "amount": "Montant",
+      "recipient": "Bénéficiaire",
+      "why": {
+        "held": "Pourquoi il est retenu",
+        "due": "Date de versement",
+        "paid": "Date du versement"
+      },
+      "because": {
+        "held": "Bloqué sous séquestre jusqu’à ce que le voyageur confirme son arrivée, prévue le {date}.",
+        "due": "Versé le {date}, jour où commence la réservation.",
+        "paid": "Versé le {date}."
+      },
+      "action": {
+        "schedule": "Prévoir une visite",
+        "reschedule": "Déplacer la visite",
+        "publish": "Publier l’annonce",
+        "assign": "S’en occuper",
+        "arrange": "Marquer comme organisé",
+        "release": "Débloquer le versement"
+      },
+      "actionOff": {
+        "schedule": "La planification arrivera avec le backend",
+        "reschedule": "La planification arrivera avec le backend",
+        "publish": "La publication arrivera avec le backend",
+        "assign": "L’attribution arrivera avec le backend",
+        "arrange": "La mise à jour des demandes arrivera avec le backend",
+        "release": "Le déblocage des fonds arrivera avec le backend"
+      }
     }
   },
   "pager": {
@@ -601,7 +747,558 @@
     "rewalkNote": "bientôt un an, elle est donc dans la file de vérification.",
     "seeInInventory": "Voir dans mon offre",
     "askToChange": "Demander une modification à l'équipe",
-    "changesNote": "Les tarifs, les photos et les disponibilités sont modifiés par l'équipe de Kigali tant que l'intégration des propriétaires se fait hors ligne. Écrivez-leur et c'est fait le jour même : il n'y a pas encore de formulaire ici, et un bouton qui n'enregistre rien serait pire que rien.",
-    "groupCap": "Groupe max."
+    "changesNote": "Pour l'instant, les tarifs, les photos et les disponibilités sont modifiés par l'équipe de Kigali. Écrivez-leur et c'est fait le jour même.",
+    "groupCap": "Groupe max.",
+    "freeFrom": "Libre à partir du"
+  },
+  "smart": {
+    "title": "Recherche intelligente",
+    "open": "Ouvrir la recherche intelligente",
+    "trigger": "Recherche intelligente",
+    "placeholder": "Essayez « 2 chambres à Kimihurura sous 150 $ »",
+    "close": "Fermer",
+    "clear": "Effacer",
+    "heroButton": "Rechercher",
+    "example1": "2 chambres à Kimihurura avec groupe électrogène sous 150 $",
+    "example1Short": "2 chambres à Kimihurura",
+    "example2": "Près du centre de convention la semaine prochaine pour 2",
+    "example2Short": "Près du centre de convention",
+    "example3": "Maison avec jardin pour 6 personnes",
+    "example3Short": "Maison avec jardin",
+    "example4": "Voiture avec chauffeur pour 7",
+    "example4Short": "Voiture avec chauffeur",
+    "understood": "Compris comme",
+    "recent": "Récentes",
+    "tryAsking": "Essayez",
+    "groupPlaces": "Quartiers",
+    "groupStays": "Séjours",
+    "groupCars": "Voitures",
+    "groupExperiences": "Sorties",
+    "placeCount": "{count, plural, one {# logement} other {# logements}}",
+    "seeAll": {
+      "stays": "Voir tous les séjours correspondants",
+      "cars": "Voir toutes les voitures correspondantes",
+      "experiences": "Voir toutes les sorties correspondantes",
+      "buy": "Voir tous les biens à vendre correspondants"
+    },
+    "perPerson": "par personne",
+    "nothingTitle": "Rien de ce que nous avons inspecté ne correspond",
+    "nothingBody": "Nous ne listons que ce que notre équipe a visité. Essayez moins de mots, un quartier ou un budget.",
+    "relaxed": "Rien ne correspondait à tout : voici les plus proches, sans {what}.",
+    "relaxedTitle": "Aucune correspondance exacte.",
+    "relaxedBody": "Voici les logements les plus proches, sans {what}. Retirez un filtre ci-dessus pour élargir vous-même.",
+    "relax": {
+      "text": "les mots en plus",
+      "maxPrice": "la limite de prix",
+      "amenities": "tous les équipements",
+      "bedrooms": "le nombre de chambres",
+      "party": "le nombre de personnes",
+      "neighbourhood": "le quartier",
+      "driveMode": "l’option de conduite",
+      "interest": "le thème"
+    },
+    "hintMove": "naviguer",
+    "hintOpen": "ouvrir",
+    "poweredBy": "{engine} · {ms} ms",
+    "engineLocal": "Recherche intégrée",
+    "lane": {
+      "stays": "Séjours",
+      "cars": "Voitures",
+      "experiences": "Sorties",
+      "buy": "À vendre"
+    },
+    "chipNear": "{place}, près de : {landmark}",
+    "chipTyped": "{place} (vous avez tapé « {typed} »)",
+    "chipBedrooms": "{count}+ chambres",
+    "chipParty": "{count, plural, one {# voyageur} other {# voyageurs}}",
+    "chipSeats": "{count}+ places",
+    "chipUnder": "Moins de",
+    "perNightShort": "/nuit",
+    "perMonthShort": "/mois",
+    "perDayShort": "/jour",
+    "chipLease": "Location longue durée",
+    "chipText": "Mentionne « {text} »",
+    "drive": {
+      "withDriver": "Avec chauffeur",
+      "selfDrive": "Sans chauffeur"
+    },
+    "landmark": {
+      "conventionCentre": "centre de convention",
+      "stadium": "stade",
+      "golf": "golf",
+      "embassies": "ambassades",
+      "cityCentre": "centre-ville",
+      "airport": "aéroport",
+      "market": "marché de Kimironko"
+    },
+    "removeChip": "Retirer {what}",
+    "triggerShort": "Rechercher",
+    "relaxedText": "Rien ne mentionne « {text} » : voici ce qui correspond au reste.",
+    "relaxedTextBody": "Aucun logement ne mentionne « {text} ». Ceux-ci correspondent à tout le reste.",
+    "closestCount": "{count, plural, one {# résultat proche} other {# résultats proches}} à Kigali",
+    "groupSales": "À vendre",
+    "floorArea": "{sqm} m²",
+    "askingPrice": "prix demandé",
+    "recentlyViewed": "Vus récemment",
+    "closestHeading": "Ce qui s'en rapproche le plus",
+    "nothingMentions": "Rien de ce que nous proposons ne mentionne « {text} »",
+    "savedRow": "{count, plural, one {# élément enregistré} other {# éléments enregistrés}}",
+    "forNights": "{count, plural, one {pour # nuit} other {pour # nuits}}",
+    "forDays": "{count, plural, one {pour # jour} other {pour # jours}}",
+    "exampleRent": "3 chambres à louer à Kacyiru dès janvier",
+    "exampleBuy": "Maison à acheter à Gacuriro sous 300 millions",
+    "exampleCar1": "Automatique sans chauffeur pour le week-end",
+    "exampleCar2": "Minibus avec chauffeur pour 10 personnes",
+    "exampleDay1": "Gorilles la semaine prochaine pour 2",
+    "exampleDay2": "Une journée sur le lac ce samedi",
+    "exampleDay3": "Une balade en ville avec à manger",
+    "placeholderLane": {
+      "cars": "Essayez « automatique pour le week-end »",
+      "experiences": "Essayez « gorilles la semaine prochaine pour 2 »"
+    }
+  },
+  "saved": {
+    "title": "Favoris",
+    "subtitle": "Les lieux que vous avez aimés, gardés sur cet appareil en attendant les comptes.",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "remove": "Retirer des favoris",
+    "saveNamed": "Enregistrer {name}",
+    "removeNamed": "Retirer {name} des favoris",
+    "link": "Favoris",
+    "linkCount": "Favoris, {count, plural, one {# lieu} other {# lieux}}",
+    "emptyTitle": "Aucun favori pour l’instant",
+    "emptyBody": "Touchez le cœur d’un séjour, d’une voiture ou d’une sortie : il vous attendra ici.",
+    "browse": "Voir les séjours",
+    "ask": "Demander à la recherche",
+    "kind": {
+      "stay": "Séjour",
+      "car": "Voiture",
+      "experience": "Sortie",
+      "sale": "À vendre"
+    }
+  },
+  "map": {
+    "zoomIn": "Zoomer",
+    "zoomOut": "Dézoomer",
+    "resultsLabel": "Carte de {count, plural, one {# résultat} other {# résultats}}",
+    "list": "Liste",
+    "map": "Carte",
+    "showMap": "Voir sur la carte",
+    "whereTitle": "Où vous serez",
+    "areaLabel": "Zone approximative à {place}",
+    "areaNote": "Le cercle indique la rue, pas la porte : l’adresse exacte arrive avec votre réservation.",
+    "contributors": "contributeurs",
+    "areaNoteLease": "Le cercle indique la rue, pas la porte. L’adresse exacte arrive avec l’horaire de visite."
+  },
+  "share": {
+    "share": "Partager",
+    "copied": "Lien copié",
+    "copyPrompt": "Copiez ce lien"
+  },
+  "places": {
+    "Gacuriro": "Résidences sécurisées sur la crête nord, prisées des familles en poste longue durée.",
+    "Gikondo": "Rues plus anciennes et calmes, avec de vrais jardins, à deux pas du centre.",
+    "Kacyiru": "Ambassades et ministères, larges trottoirs et soirées tranquilles.",
+    "Kibagabaga": "Résidentiel et verdoyant, près du marché de Kimironko.",
+    "Kicukiro": "À quinze minutes de l’aéroport, et d’un bon rapport qualité-prix.",
+    "Kimihurura": "Les restaurants de la KG 5, le centre de convention et la vue sur les collines.",
+    "Kiyovu": "L’ancien centre : central, praticable à pied et calme le soir.",
+    "Nyamirambo": "La rue la plus animée de Kigali : café, musique et couleurs.",
+    "Nyarutarama": "Grandes maisons près du golf et de la route du lac.",
+    "Rebero": "La crête la plus haute du sud, avec toute la ville en contrebas.",
+    "Remera": "Près du stade et de la BK Arena, sur toutes les lignes de bus."
+  },
+  "footer": {
+    "explore": "Explorer",
+    "yours": "Votre voyage",
+    "saved": "Favoris",
+    "kigali": "Quartiers",
+    "promise": "Si c’est listé ici, quelqu’un de notre équipe l’a visité, conduit ou parcouru.",
+    "rights": "© {year} HomeLink Africa. Kigali, Rwanda.",
+    "prices": "Les prix sont fixés en RWF et affichés dans votre devise au taux du jour.",
+    "stayLink": "Séjourner",
+    "rentLink": "Louer au mois",
+    "buyLink": "Acheter",
+    "allNeighbourhoods": "Tous les quartiers",
+    "yoursSupply": "Vos annonces",
+    "yoursOps": "Votre travail"
+  },
+  "homes": {
+    "modeLabel": "Pour combien de temps",
+    "mode": {
+      "stay": "Séjour",
+      "rent": "Louer",
+      "buy": "Acheter"
+    },
+    "modeUnit": {
+      "stay": "À la nuit",
+      "rent": "Au mois",
+      "buy": "Pour posséder"
+    },
+    "modeHint": {
+      "stay": "{count} à la nuit",
+      "rent": "{count} au mois",
+      "buy": "{count} à vendre"
+    }
+  },
+  "breadcrumb": {
+    "homes": "Logements",
+    "stay": "Séjour",
+    "rent": "Louer",
+    "buy": "Acheter",
+    "cars": "Voitures",
+    "experiences": "Sorties",
+    "book": "Réserver",
+    "booking": "Réservation",
+    "trips": "Voyages",
+    "neighbourhoods": "Quartiers"
+  },
+  "sale": {
+    "metaTitle": "Maisons à vendre à Kigali",
+    "count": "{count, plural, one {# logement vérifié à vendre} other {# logements vérifiés à vendre}} à Kigali",
+    "subtitle": "Visités par notre équipe, titre vérifié auprès du registre foncier avant la mise en ligne.",
+    "emptyBody": "Nous ne listons que les biens dont nous avons vérifié les papiers. Essayez un autre quartier ou un budget plus élevé.",
+    "bathrooms": "{count, plural, one {# salle de bain} other {# salles de bain}}",
+    "floor": "{sqm} m²",
+    "plot": "terrain de {sqm} m²",
+    "perSqm": "le m²",
+    "titleChecked": "Titre vérifié",
+    "view": "Voir le bien",
+    "askingPrice": "Prix demandé",
+    "kindLabel": "Type",
+    "kindAny": "Tous",
+    "kind": {
+      "house": "Maison",
+      "apartment": "Appartement",
+      "townhouse": "Maison de ville"
+    },
+    "maxPlaceholder": "Prix max, ex. 200M",
+    "sort": {
+      "recommended": "Plus récents",
+      "size": "Plus grande surface"
+    },
+    "bedroomsLabel": "Chambres",
+    "bathroomsLabel": "Salles de bain",
+    "floorLabel": "Surface",
+    "plotLabel": "Terrain",
+    "listedLabel": "Mis en vente",
+    "about": "À propos de ce bien",
+    "areaNote": "Le cercle indique la rue, pas le portail : la parcelle exacte vous est montrée avec le titre lors de la visite.",
+    "howTitle": "Acheter avec HomeLink",
+    "how": {
+      "viewingTitle": "Une visite avec notre équipe",
+      "viewingBody": "Sur place, ou en visio depuis l’étranger, avec l’inspecteur qui l’a visité.",
+      "papersTitle": "Les papiers vérifiés",
+      "papersBody": "Le titre, la pièce d’identité du vendeur et les limites de la parcelle, partagés avant toute offre.",
+      "notaryTitle": "Un notaire indépendant",
+      "notaryBody": "Nous vous en présentons un ; le transfert passe par le registre foncier, pas par nous."
+    },
+    "viewingLabel": "Comment souhaitez-vous visiter",
+    "viewing": {
+      "inPerson": "Sur place",
+      "video": "En visio"
+    },
+    "nameLabel": "Votre nom",
+    "contactLabel": "E-mail ou téléphone",
+    "messageLabel": "Message",
+    "messageDefault": "Je souhaite organiser une visite de « {name} ».",
+    "enquire": "Contacter l’équipe à Kigali",
+    "noFunds": "HomeLink ne détient jamais l’argent de l’achat. Vous payez le vendeur via le notaire.",
+    "enquiryNoted": "Demande enregistrée",
+    "enquiryPreview": "Cet aperçu n’envoie pas encore de messages. Une fois la messagerie en ligne, cela ouvrira une conversation avec le concierge, qui répond sous un jour ouvré.",
+    "perSqmLabel": "Prix au m²",
+    "askingShort": "prix demandé",
+    "enquireShort": "Contacter l'équipe"
+  },
+  "lease": {
+    "perMonth": "par mois",
+    "moveIn": "Emménagement",
+    "term": "Durée du bail",
+    "months": "{count} mois",
+    "nameLabel": "Votre nom",
+    "contactLabel": "E-mail ou téléphone",
+    "apply": "Demander un bail",
+    "whatNext": "L’équipe de Kigali envoie le bail, les conditions de caution et un horaire de visite. Rien n’est débité ici.",
+    "noted": "Demande enregistrée",
+    "preview": "Cet aperçu n’envoie pas encore de demandes. Une fois la messagerie en ligne, cela ouvrira une conversation avec le concierge, qui répond sous un jour ouvré.",
+    "shorter": "Moins d’un an ? Réservez à la nuit",
+    "shorterLabel": "Réserver {name} à la nuit",
+    "notFreeYet": "Pas encore libre"
+  },
+  "landmarks": {
+    "conventionCentre": "le centre de convention",
+    "cityCentre": "le centre-ville",
+    "airport": "l'aéroport",
+    "embassies": "les ambassades",
+    "stadium": "le stade Amahoro",
+    "golf": "le golf",
+    "market": "le marché de Kimironko"
+  },
+  "signedOut": {
+    "trips": {
+      "title": "Vos voyages",
+      "body": "Connectez-vous pour voir vos séjours, voitures et sorties, chacun avec sa référence, ses dates et la personne à contacter."
+    },
+    "messages": {
+      "title": "Messages",
+      "body": "Connectez-vous pour lire la conversation liée à chaque réservation, avec l’équipe de Kigali et votre hôte, chauffeur ou guide."
+    },
+    "signIn": "Se connecter",
+    "previewNote": "Connexion d’aperçu",
+    "booking": {
+      "title": "Votre réservation",
+      "body": "Connectez-vous pour voir cette réservation : sa référence, ses dates, ce que vous avez payé et la conversation avec l’équipe."
+    }
+  },
+  "abroad": {
+    "title": "Acheter depuis l'étranger",
+    "intro": "Beaucoup de nos acheteurs vivent hors du Rwanda. Voici comment se passe un achat quand vous ne pouvez pas être à Kigali à chaque étape.",
+    "step": "Étape {n}",
+    "viewTitle": "Visiter en appel vidéo",
+    "viewBody": "L'inspecteur qui a parcouru la maison fait la visite en direct, en vidéo, et répond à vos questions pièce par pièce.",
+    "papersTitle": "Voir les papiers d'abord",
+    "papersBody": "Le titre, les limites de la parcelle et la pièce d'identité du vendeur vous sont transmis avant toute offre.",
+    "poaTitle": "Signer par une personne de confiance",
+    "poaBody": "Une procuration notariée permet à un proche ou à un avocat à Kigali de signer pour vous.",
+    "moneyTitle": "Faire circuler l'argent par la voie officielle",
+    "moneyBody": "Les fonds partent par virement sur le compte du notaire, jamais en espèces et jamais par HomeLink.",
+    "notaryTitle": "Le transfert au cadastre",
+    "notaryBody": "Un notaire indépendant enregistre le transfert auprès du registre foncier, et vous recevez le nouveau titre."
+  },
+  "hoods": {
+    "indexTitle": "Kigali, quartier par quartier",
+    "indexBody": "{count} quartiers où notre équipe a inspecté un logement à louer, à la nuit ou à acheter.",
+    "district": "District de {district}, Kigali",
+    "stayFrom": "Séjour dès",
+    "rentTypical": "Loyer autour de",
+    "buyFrom": "Achat dès",
+    "rentCount": "{count, plural, one {# à louer} other {# à louer}}",
+    "saleCount": "{count, plural, one {# à vendre} other {# à vendre}}",
+    "mode": {
+      "stay": "{count, plural, =0 {Aucun séjour pour l'instant} one {# logement pour un séjour} other {# logements pour un séjour}}",
+      "rent": "{count, plural, =0 {Rien à louer pour l'instant} one {# logement à louer} other {# logements à louer}}",
+      "buy": "{count, plural, =0 {Rien à vendre pour l'instant} one {# maison à vendre} other {# maisons à vendre}}"
+    },
+    "noneYet": "Nous n'en avons pas encore inspecté ici.",
+    "see": "Voir",
+    "staysHere": "Où séjourner ici",
+    "salesHere": "À vendre ici",
+    "others": "Autres quartiers",
+    "goodFor": {
+      "Gacuriro": "Convient aux familles en poste longue durée qui veulent de l'espace et un portail.",
+      "Gikondo": "Convient à un long séjour à petit budget, avec une cour.",
+      "Kacyiru": "Convient à qui travaille avec un ministère ou une ambassade.",
+      "Kibagabaga": "Convient aux familles qui veulent un jardin et un marché tout près.",
+      "Kicukiro": "Convient à une arrivée tardive ou à un vol matinal.",
+      "Kimihurura": "Convient à une semaine de conférence, ou à un premier mois en ville.",
+      "Kiyovu": "Convient à un court séjour avec tout à pied.",
+      "Nyamirambo": "Convient à qui veut la ville au niveau de la rue.",
+      "Nyarutarama": "Convient à une famille qui reçoit, ou à un long poste.",
+      "Rebero": "Convient à qui veut la vue et ne craint pas la montée.",
+      "Remera": "Convient à un premier emploi à Kigali, près des lignes de bus."
+    },
+    "mapLabel": "Carte des {count} quartiers où nous proposons des logements",
+    "whereInCity": "Où se trouve {place} dans Kigali",
+    "locatorCaption": "{place} parmi les {count} quartiers que nous proposons. Les losanges indiquent le centre-ville et l’aéroport.",
+    "rentalsHere": "À louer ici"
+  },
+  "list": {
+    "inspectedBy": "Inspecté le {date} par {name}",
+    "photos": "{count} photos",
+    "minutesTo": "{minutes} min jusqu'à {place}",
+    "minutesShort": "{minutes} min",
+    "ctaApply": "Postuler",
+    "ctaCheckDates": "Voir les dates",
+    "ctaHire": "Louer",
+    "ctaBookDay": "Réserver",
+    "belowMedian": "{pct} % sous la médiane au m²",
+    "aboveMedian": "{pct} % au-dessus de la médiane au m²",
+    "filters": "Filtres",
+    "closeFilters": "Fermer les filtres",
+    "showResults": "{count, plural, =0 {Aucun résultat} one {Voir # résultat} other {Voir # résultats}}",
+    "noFilters": "Aucun filtre",
+    "chipFrom": "Trajets depuis {place}",
+    "measureFrom": "Trajets depuis",
+    "endCount": "{count, plural, one {C'est le seul que nous avons.} other {C'est tout, # au total.}}",
+    "endTitle": {
+      "stay": "Vous ne trouvez pas le bon logement ?",
+      "rent": "Vous ne trouvez pas le bon logement à louer ?",
+      "buy": "Vous cherchez un bien que nous n'avons pas ?",
+      "cars": "Besoin d'un autre véhicule ?",
+      "experiences": "Envie d'une sortie que nous ne proposons pas encore ?"
+    },
+    "endBody": "Dites à l'équipe de Kigali ce que vous cherchez. Chaque demande est lue par une personne, et nous connaissons souvent un bien avant qu'il soit en ligne.",
+    "endOthers": "Ou voir",
+    "requestWhat": "Que cherchez-vous ?",
+    "requestPlaceholder": {
+      "stay": "Un deux-pièces calme près des ambassades, mi-décembre",
+      "rent": "Trois chambres à Kacyiru dès mars, environ 2 000 $ par mois",
+      "buy": "Une maison familiale avec jardin, jusqu'à 250 M RWF",
+      "cars": "Un sept places avec chauffeur pour une semaine à Musanze",
+      "experiences": "Une journée dans les plantations de café près de Huye"
+    },
+    "requestContact": "E-mail ou téléphone",
+    "requestSend": "Prévenir l'équipe",
+    "requestNoted": "C'est noté.",
+    "requestPreview": "Ceci est un aperçu, rien n'a encore été envoyé. Une fois les comptes en place, la demande arrive à l'équipe de Kigali telle que vous l'avez écrite.",
+    "notifyTitle": "Dites-nous ce qu'il vous faut et nous vous préviendrons dès qu'un bien correspond",
+    "closestWeHave": "Ce qui s'en rapproche le plus",
+    "noMatchText": "Rien de ce que nous proposons ne mentionne « {text} ». Essayez un quartier, un budget, ou ce que le logement doit avoir.",
+    "noCarBody": "Aucun véhicule ne réunit tout cela. Moins de places, ou n'importe quelle boîte, élargit souvent le choix.",
+    "stayPromise": "Chaque logement a été inspecté sur place, et votre paiement est retenu jusqu'à ce que vous confirmiez l'arrivée.",
+    "rentPromise": "Loyers mensuels pour des baux de douze mois ou plus, avec les documents vérifiés avant la signature.",
+    "rentCount": "{count, plural, one {# logement vérifié à louer à Kigali} other {# logements vérifiés à louer à Kigali}}",
+    "carsCount": "{count, plural, one {# voiture vérifiée à Kigali} other {# voitures vérifiées à Kigali}}",
+    "daysCount": "{count, plural, one {# sortie depuis Kigali} other {# sorties depuis Kigali}}",
+    "carsPromise": "Entretenue et vérifiée avant chaque location par quelqu'un de notre équipe qui l'a conduite.",
+    "daysPromise": "Faites en entier par notre équipe avant d'être proposées, avec des guides que nous connaissons par leur nom.",
+    "bandLabel": "Quartiers",
+    "fromShort": "dès",
+    "placesShort": "{count, plural, one {# logement} other {# logements}}",
+    "rentBarsTitle": "Le loyer courant par quartier",
+    "rentBarsCaption": "Loyer mensuel médian des logements que nous proposons",
+    "perMonthShort": "/mois",
+    "sqmTitle": "Prix au m², bien par bien",
+    "sqmCaption": "La ligne marque la médiane de tout ce que nous proposons",
+    "medianLabel": "Médiane",
+    "perSqmShort": "/m²",
+    "abroadLink": "Acheter depuis l'étranger",
+    "addDatesForTotals": "Ajoutez des dates pour les totaux",
+    "staySearchTitle": "Où allez-vous ?",
+    "rentSearchTitle": "Trouver un logement à louer",
+    "buySearchTitle": "Trouver une maison à acheter",
+    "carSearchTitle": "Quand vous faut-il une voiture ?",
+    "moveInLabel": "Emménagement",
+    "moveInValue": "N'importe quel mois",
+    "bedroomsLabel": "Chambres",
+    "bedroomsValue": "{count}+ chambres",
+    "bedroomsAny": "Toutes",
+    "wherePlaceholder": "Un quartier, ou décrivez ce qu'il vous faut",
+    "askFor": "Rechercher « {text} »",
+    "askForHint": "La recherche intelligente lit toute la phrase",
+    "budgetLabel": "Budget",
+    "pickUp": "Prise en charge",
+    "return": "Retour",
+    "handOver": "Remise",
+    "place": {
+      "airport": "Aéroport de Kigali",
+      "hotel": "Votre hôtel ou logement",
+      "office": "Notre bureau à Kimihurura"
+    },
+    "anyDates": "Toutes dates",
+    "seatsLabel": "Places",
+    "gearLabel": "Boîte",
+    "any": "Toutes",
+    "totalForDays": "{count, plural, one {total pour # jour} other {total pour # jours}}",
+    "carIncludes": {
+      "insurance": "Assurance tous risques",
+      "mileage": "Kilométrage illimité",
+      "handover": "Remise à l'aéroport ou à votre porte",
+      "roadside": "Assistance jour et nuit"
+    },
+    "dayLabel": "Date",
+    "peopleLabel": "Personnes",
+    "people": "{count, plural, one {# personne} other {# personnes}}",
+    "forPeople": "{count, plural, one {pour # personne} other {pour # personnes}}",
+    "departsAt": "Départ {time} · {hours} heures",
+    "driveFromKigali": "{hours} h de route depuis Kigali",
+    "inKigaliLong": "À Kigali, pas de long trajet",
+    "inKigali": "à Kigali",
+    "hoursShort": "{hours} h",
+    "guidedBy": "Guidé par {name}",
+    "groupMaxNote": "Jusqu'à {count} personnes",
+    "daysMapLabel": "Carte du Rwanda avec chaque sortie et sa route depuis Kigali",
+    "travelTitle": "Se déplacer",
+    "travelNote": "En voiture un jour de semaine, estimé d'après la carte. L'heure de pointe sur la KN 5 ajoute du temps.",
+    "leaseTermsTitle": "Le bail",
+    "deposit": "Caution",
+    "depositMonths": "{count, plural, one {# mois de loyer} other {# mois de loyer}}",
+    "availableFrom": "Libre dès",
+    "minimumTerm": "Bail le plus court",
+    "twelveMonths": "12 mois",
+    "includedInRent": "Compris dans le loyer",
+    "included": {
+      "water": "Eau",
+      "security": "Gardien",
+      "internet": "Internet par fibre",
+      "garden": "Entretien du jardin"
+    },
+    "excludedNote": "L'électricité est au compteur prépayé, au nom du locataire, comme dans la plupart des logements de Kigali.",
+    "yearBuilt": "Construit en",
+    "upi": "Numéro de parcelle (UPI)",
+    "inspectedFact": "Inspecté le",
+    "whenSuits": "Quand cela vous arrange-t-il ?",
+    "viewingWhen": {
+      "thisWeek": "Cette semaine",
+      "nextWeek": "La semaine prochaine",
+      "weekend": "Un week-end"
+    },
+    "messagePlaceholder": "Ce que l'équipe doit savoir, par exemple une question sur la parcelle",
+    "tripTitle": "La suite du voyage",
+    "tripCar": "Une voiture depuis l'aéroport",
+    "tripCarBody": "Voitures libres pour {when}, avec le total pour tout le séjour.",
+    "tripDay": "Une sortie pendant votre séjour",
+    "tripDayBody": "Sorties du {date}, au prix pour {count, plural, one {# personne} other {# personnes}}.",
+    "emptyStay": "Séjourner une nuit",
+    "emptyRent": "Louer un logement",
+    "emptyBuy": "Acheter une maison",
+    "emptyCars": "Louer une voiture",
+    "emptyDays": "Trouver une sortie",
+    "savedAll": "Tout",
+    "compareHint": "Cochez deux ou trois logements pour les comparer côte à côte.",
+    "notePlaceholder": "Demander pour le groupe électrogène, celui avec l'avocatier…",
+    "noteLabel": "Votre note",
+    "noteSave": "Enregistrer",
+    "noteCancel": "Annuler",
+    "noteAdd": "Ajouter une note",
+    "compareThis": "Comparer",
+    "comparePicked": "{count, plural, one {# logement choisi} other {# logements choisis}}",
+    "compareOpen": "Comparer",
+    "compareTitle": "Côte à côte",
+    "compareClose": "Fermer la comparaison",
+    "compare": {
+      "price": "Prix",
+      "neighbourhood": "Quartier",
+      "bedrooms": "Chambres",
+      "size": "Taille",
+      "toCentre": "Jusqu'au centre-ville",
+      "toAirport": "Jusqu'à l'aéroport",
+      "inspected": "Inspecté",
+      "note": "Votre note"
+    },
+    "daySearchTitle": "Quand partez-vous ?",
+    "anyDate": "N’importe quelle date",
+    "thisSaturday": "Ce samedi",
+    "thisSunday": "Ce dimanche",
+    "peopleHint": "Toutes les personnes du groupe",
+    "addDate": "Ajouter une date",
+    "budgetAny": "Tout budget",
+    "placeHint": {
+      "airport": "Dans le hall des arrivées, à l’atterrissage",
+      "hotel": "Là où vous logez à Kigali"
+    },
+    "budgetPlaceholder": "Votre maximum, par ex. {example}",
+    "bandBack": "Voir les quartiers précédents",
+    "bandMore": "Voir plus de quartiers"
+  },
+  "notFound": {
+    "title": "Cette page n’existe pas",
+    "body": "Le lien est peut-être ancien, ou l’annonce a été retirée de HomeLink après sa dernière inspection. Tout ce que nous proposons reste à un clic.",
+    "home": "Retour à HomeLink",
+    "stays": "Séjours",
+    "rent": "Location",
+    "buy": "Achat",
+    "cars": "Voitures",
+    "experiences": "Excursions"
+  },
+  "landmarkNames": {
+    "conventionCentre": "Centre de convention",
+    "cityCentre": "Centre-ville",
+    "airport": "Aéroport",
+    "embassies": "Ambassades",
+    "stadium": "Stade Amahoro",
+    "golf": "Golf",
+    "market": "Marché de Kimironko"
   }
 }

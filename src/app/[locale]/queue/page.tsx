@@ -8,6 +8,7 @@ import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import type { StatusTone } from "@/components/ui/status-pill";
 import type {
   AddOnRequest,
+  Booking,
   AddOnRequestStatus,
   Conversation,
   Payout,
@@ -15,7 +16,7 @@ import type {
   VerificationTask,
   VerificationTaskStatus,
 } from "@/lib/domain/types";
-import { formatDate } from "@/lib/domain/dates";
+import { formatDate, formatDateRange } from "@/lib/domain/dates";
 import { formatStamp } from "@/lib/domain/instants";
 import { sum } from "@/lib/domain/money";
 import { paginate, pageParam } from "@/lib/paginate";
@@ -24,6 +25,8 @@ import { StatusPill } from "@/components/ui/status-pill";
 import { MoneyText } from "@/components/ui/money-text";
 import { TabStrip } from "@/components/ui/tab-strip";
 import { Pager } from "@/components/ui/pager";
+import { CheckIcon } from "@/components/ui/icons";
+import { DisabledAction, QueueRow, RecordFact, RecordFacts } from "@/components/queue/queue-row";
 import { cn } from "@/lib/cn";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -53,9 +56,11 @@ export async function generateMetadata(): Promise<Metadata> {
  * the most-read text on a queue and the first thing an admin template leaves
  * out.
  *
- * Nothing here writes. The buttons an ops tool eventually needs — schedule,
- * publish, release — are exactly the parts that need a backend, and a shell
- * with a dead "Release funds" button would be worse than one without it.
+ * Nothing here writes. Each row opens in place to its read-only record, and
+ * the actions an ops tool eventually needs (schedule, publish, release) are
+ * drawn there switched off, each with its reason beside it. A live-looking
+ * "Release funds" that did nothing would be worse than no button; a disabled
+ * one that says why shows where the action goes without pretending.
  */
 const PER_PAGE = 8;
 
@@ -93,6 +98,7 @@ export default async function QueuePage({
   setRequestLocale(locale);
 
   const t = await getTranslations("queue");
+  const tRoles = await getTranslations("roles");
   const intlLocale = INTL_LOCALES[locale as Locale];
 
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
@@ -127,8 +133,27 @@ export default async function QueuePage({
     repos().bookings.listForCurrentUser(),
   ]);
 
-  const referenceOf = (bookingId: string) =>
-    bookings.find((b) => b.id === bookingId)?.reference ?? bookingId;
+  const factsOf = (bookingId: string): BookingFacts => {
+    const b = bookings.find((x) => x.id === bookingId);
+    return b
+      ? {
+          reference: b.reference,
+          title: b.title,
+          dates: formatDateRange(b.startDate, b.endDate, intlLocale),
+          service: b.service,
+        }
+      : { reference: bookingId };
+  };
+
+  // Who asked, by name. An ask carries no author, but the guest is named on
+  // the thread for the same booking, so the record can say "Marie L." rather
+  // than "the guest". Falls back to the plain phrase when no thread names one.
+  const guestOn = (bookingId: string) => {
+    const thread = threads.find(
+      (c) => c.scope.kind === "booking" && c.scope.id === bookingId && c.participantRoles.includes("guest"),
+    );
+    return thread?.participantNames[thread.participantRoles.indexOf("guest")];
+  };
 
   // "Open" means one thing per list and the same thing everywhere: still needs
   // a person. Keeping the predicates together is what lets one toggle serve all
@@ -195,6 +220,13 @@ export default async function QueuePage({
         <p className="max-w-[62ch] text-[17px] leading-relaxed text-ink-2">
           {t("subtitle")}
         </p>
+        {/* Admin borrows this screen until it has a journey of its own, and
+            should not have to wonder why it is looking at the ops desk. */}
+        {role === "admin" && (
+          <p className="self-start rounded-full bg-surface-2 px-3 py-1 text-[13px] font-medium text-ink-2">
+            {t("adminNote")}
+          </p>
+        )}
       </header>
 
       {/* Each number goes where it came from, with the open filter already on.
@@ -245,8 +277,17 @@ export default async function QueuePage({
             key,
             label: t(`tabs.${key}`),
             href: hrefFor({ tab: key }),
-            count: (openOnly ? openCounts[key] : counts[key]).length,
+            // Open of total, whatever the toggle says. A bare total beside a
+            // stat band counting open items read as two different queues
+            // ("To verify 11" over "Verification 14"); with both numbers the
+            // first one is always the stat, and the second says what the
+            // toggle will add.
+            count: t("tabCount", {
+              open: openCounts[key].length,
+              total: counts[key].length,
+            }),
           }))}
+          wrap
         />
 
         <Link
@@ -284,8 +325,10 @@ export default async function QueuePage({
                 <AskRow
                   key={request.id}
                   request={request}
-                  reference={referenceOf(request.bookingId)}
+                  booking={factsOf(request.bookingId)}
+                  askedBy={guestOn(request.bookingId)}
                   t={t}
+                  tRoles={tRoles}
                   day={day}
                 />
               ))}
@@ -295,8 +338,9 @@ export default async function QueuePage({
                 <PayoutRow
                   key={payout.id}
                   payout={payout}
-                  reference={referenceOf(payout.bookingId)}
+                  booking={factsOf(payout.bookingId)}
                   t={t}
+                  tRoles={tRoles}
                   day={day}
                 />
               ))}
@@ -311,7 +355,9 @@ export default async function QueuePage({
         <Pager page={page} hrefFor={(n) => hrefFor({ page: n })} className="mt-4" />
       </section>
 
-      <p className="border-t border-line pt-5 text-[13px] leading-relaxed text-ink-3">
+      {/* One quiet line. Each switched-off action says why beside itself, so
+          the page-level note only has to name the state. */}
+      <p className="border-t border-line pt-5 text-[13px] text-ink-3">
         {t("readOnlyNote")}
       </p>
     </div>
@@ -321,143 +367,275 @@ export default async function QueuePage({
 /* ------------------------------------------------------------------- rows */
 
 type T = Awaited<ReturnType<typeof getTranslations<"queue">>>;
+type TRoles = Awaited<ReturnType<typeof getTranslations<"roles">>>;
 type Day = (iso: string) => string;
+/** What the queue knows about a booking: enough to name it in a record. */
+type BookingFacts = { reference: string; title?: string; dates?: string; service?: Booking["service"] };
+
+/**
+ * The summary line of a row: state first, then what it is, then the dates on
+ * the right. Spans styled as blocks, because it sits inside a `<summary>`.
+ */
+function SummaryLayout({
+  main,
+  side,
+}: {
+  main: React.ReactNode;
+  side: React.ReactNode;
+}) {
+  return (
+    <span className="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-6">
+      <span className="flex min-w-0 flex-1 flex-col gap-1.5">{main}</span>
+      <span className="flex flex-none flex-wrap gap-x-6 gap-y-1 text-[13px] sm:w-56 sm:flex-col sm:gap-1">
+        {side}
+      </span>
+    </span>
+  );
+}
+
+function SideFact({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+  return (
+    <span className="flex gap-1.5">
+      <span className="text-ink-3">{label}</span>
+      <span className={cn("text-ink-2", mono ? "tnum" : "")}>{value}</span>
+    </span>
+  );
+}
+
+/** The four states a candidate passes through, in order. */
+const VERIFY_STEPS: VerificationTaskStatus[] = ["requested", "scheduled", "inspected", "published"];
 
 function VerifyRow({ task, t, day }: { task: VerificationTask; t: T; day: Day }) {
-  return (
-    <li
-      className={cn(
-        "flex flex-col gap-2 border-t border-line py-4 sm:flex-row sm:items-start sm:gap-6",
-        task.status === "published" && "opacity-60",
-      )}
-    >
-      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-        <div className="flex flex-wrap items-center gap-2">
-          <StatusPill tone={VERIFY_TONE[task.status]}>
-            {t(`verifyStatus.${task.status}`)}
-          </StatusPill>
-          {task.kind === "reinspection" && (
-            <StatusPill tone="idle">{t("reinspection")}</StatusPill>
-          )}
-          <span className="text-[12px] uppercase tracking-[0.06em] text-ink-3">
-            {t(`lane.${task.service}`)}
-          </span>
-        </div>
+  const reached = VERIFY_STEPS.indexOf(task.status);
+  // The date each step is known by, where the fixture has one. A step with no
+  // date is shown as reached without inventing when.
+  const stepDate: Partial<Record<VerificationTaskStatus, string>> = {
+    requested: task.requestedAt,
+    scheduled: task.scheduledFor,
+  };
+  const action =
+    task.status === "requested"
+      ? "schedule"
+      : task.status === "scheduled"
+        ? "reschedule"
+        : task.status === "inspected"
+          ? "publish"
+          : null;
 
-        <p className="text-[15px] font-semibold text-ink">{task.name}</p>
-        <p className="text-[13px] text-ink-2">{task.where}</p>
-        {/* The reason it has not moved. On a queue this is the row. */}
-        {task.note && (
-          <p className="max-w-[70ch] text-[13px] leading-relaxed text-ink-3">
-            {task.note}
-          </p>
-        )}
+  return (
+    <QueueRow
+      muted={task.status === "published"}
+      summary={
+        <SummaryLayout
+          main={
+            <>
+              <span className="flex flex-wrap items-center gap-2">
+                <StatusPill tone={VERIFY_TONE[task.status]}>
+                  {t(`verifyStatus.${task.status}`)}
+                </StatusPill>
+                {task.kind === "reinspection" && (
+                  <StatusPill tone="idle">{t("reinspection")}</StatusPill>
+                )}
+                <span className="text-[12px] text-ink-3">{t(`lane.${task.service}`)}</span>
+              </span>
+              <span className="text-[15px] font-semibold text-ink">{task.name}</span>
+              <span className="text-[13px] text-ink-2">{task.where}</span>
+              {/* The reason it has not moved. On a queue this is the row. */}
+              {task.note && (
+                <span className="max-w-[70ch] text-[13px] leading-relaxed text-ink-3">
+                  {task.note}
+                </span>
+              )}
+            </>
+          }
+          side={
+            <>
+              <SideFact label={t("asked")} value={day(task.requestedAt)} mono />
+              {task.scheduledFor && (
+                <SideFact label={t("scheduled")} value={day(task.scheduledFor)} mono />
+              )}
+              {task.inspectorName && (
+                <SideFact label={t("inspector")} value={task.inspectorName} />
+              )}
+            </>
+          }
+        />
+      }
+    >
+      <RecordFacts>
+        <RecordFact label={t("record.what")}>
+          {t(`record.kind.${task.kind}`)} · {t(`lane.${task.service}`)}
+        </RecordFact>
+        <RecordFact label={t("record.requested")}>{day(task.requestedAt)}</RecordFact>
+        <RecordFact label={t("scheduled")}>
+          {task.scheduledFor ? day(task.scheduledFor) : t("record.noVisit")}
+        </RecordFact>
+        <RecordFact label={t("inspector")}>
+          {task.inspectorName ?? t("record.noInspector")}
+        </RecordFact>
+      </RecordFacts>
+
+      <div className="flex flex-col gap-2">
+        <h3 className="text-[12px] font-medium text-ink-3">{t("record.history")}</h3>
+        <ol className="flex flex-col gap-1.5">
+          {VERIFY_STEPS.map((step, i) => {
+            const done = i <= reached;
+            const date = stepDate[step];
+            return (
+              <li
+                key={step}
+                className={cn("flex items-center gap-2.5 text-[14px]", done ? "text-ink" : "text-ink-3")}
+              >
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "grid size-4 flex-none place-items-center rounded-full border",
+                    done ? "border-ok bg-ok text-surface" : "border-line",
+                  )}
+                >
+                  {done && <CheckIcon size={10} />}
+                </span>
+                <span>{t(`record.step.${step}`)}</span>
+                {date && done && <span className="tnum text-[13px] text-ink-3">{day(date)}</span>}
+                <span className="sr-only">{done ? t("record.done") : t("record.notYet")}</span>
+              </li>
+            );
+          })}
+        </ol>
       </div>
 
-      <dl className="flex flex-none flex-wrap gap-x-6 gap-y-1 text-[13px] sm:w-56 sm:flex-col sm:gap-1">
-        <div className="flex gap-1.5">
-          <dt className="text-ink-3">{t("asked")}</dt>
-          <dd className="tnum text-ink-2">{day(task.requestedAt)}</dd>
-        </div>
-        {task.scheduledFor && (
-          <div className="flex gap-1.5">
-            <dt className="text-ink-3">{t("scheduled")}</dt>
-            <dd className="tnum text-ink-2">{day(task.scheduledFor)}</dd>
-          </div>
-        )}
-        {task.inspectorName && (
-          <div className="flex gap-1.5">
-            <dt className="text-ink-3">{t("inspector")}</dt>
-            <dd className="text-ink-2">{task.inspectorName}</dd>
-          </div>
-        )}
-      </dl>
-    </li>
+      {action && (
+        <DisabledAction label={t(`record.action.${action}`)} reason={t(`record.actionOff.${action}`)} />
+      )}
+    </QueueRow>
   );
 }
 
 function AskRow({
   request,
-  reference,
+  booking,
+  askedBy,
   t,
+  tRoles,
   day,
 }: {
   request: AddOnRequest;
-  reference: string;
+  booking: BookingFacts;
+  /** The guest's name, from the thread on the same booking, when there is one. */
+  askedBy?: string;
   t: T;
+  tRoles: TRoles;
   day: Day;
 }) {
-  return (
-    <li className="flex flex-col gap-2 border-t border-line py-4 sm:flex-row sm:items-start sm:gap-6">
-      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-        <div className="flex flex-wrap items-center gap-2">
-          <StatusPill tone={REQUEST_TONE[request.status]}>
-            {t(`askStatus.${request.status}`)}
-          </StatusPill>
-          <span className="font-mono text-[12px] tracking-tight text-ink-3">
-            {reference}
-          </span>
-        </div>
-        {/* In the guest's words. A category would lose the job. */}
-        <p className="max-w-[70ch] text-[15px] leading-relaxed text-ink">
-          “{request.asked}”
-        </p>
-      </div>
+  const action = request.status === "open" ? "assign" : request.status === "quoted" ? "arrange" : null;
 
-      <dl className="flex flex-none flex-wrap gap-x-6 gap-y-1 text-[13px] sm:w-56 sm:flex-col sm:gap-1">
-        <div className="flex gap-1.5">
-          <dt className="text-ink-3">{t("asked")}</dt>
-          <dd className="tnum text-ink-2">{day(request.requestedAt)}</dd>
-        </div>
-        {request.owner && (
-          <div className="flex gap-1.5">
-            <dt className="text-ink-3">{t("withWhom")}</dt>
-            <dd className="text-ink-2">{request.owner}</dd>
-          </div>
-        )}
-      </dl>
-    </li>
+  return (
+    <QueueRow
+      summary={
+        <SummaryLayout
+          main={
+            <>
+              <span className="flex flex-wrap items-center gap-2">
+                <StatusPill tone={REQUEST_TONE[request.status]}>
+                  {t(`askStatus.${request.status}`)}
+                </StatusPill>
+                <span className="font-mono text-[12px] text-ink-3">{booking.reference}</span>
+              </span>
+              {/* In the guest's words. A category would lose the job. */}
+              <span className="max-w-[70ch] text-[15px] leading-relaxed text-ink">
+                “{request.asked}”
+              </span>
+            </>
+          }
+          side={
+            <>
+              <SideFact label={t("asked")} value={day(request.requestedAt)} mono />
+              {request.owner && <SideFact label={t("withWhom")} value={request.owner} />}
+            </>
+          }
+        />
+      }
+    >
+      <RecordFacts>
+        <RecordFact label={t("record.askedBy")}>
+          {askedBy ? t("record.nameRole", { name: askedBy, role: tRoles("guest") }) : t("record.theGuest")}
+        </RecordFact>
+        <RecordFact label={t("record.requested")}>{day(request.requestedAt)}</RecordFact>
+        <RecordFact label={t("withWhom")}>{request.owner ?? t("record.nobody")}</RecordFact>
+        <RecordFact label={t("record.booking")}>
+          <span className="font-mono text-[13px]">{booking.reference}</span>
+          {booking.title && <span className="block text-ink-2">{booking.title}</span>}
+        </RecordFact>
+        {booking.dates && <RecordFact label={t("record.dates")}>{booking.dates}</RecordFact>}
+      </RecordFacts>
+
+      {action && (
+        <DisabledAction label={t(`record.action.${action}`)} reason={t(`record.actionOff.${action}`)} />
+      )}
+    </QueueRow>
   );
 }
 
+const PAYEE_ROLE = { stay: "host", car: "driver", experience: "guide" } as const;
+
 function PayoutRow({
   payout,
-  reference,
+  booking,
   t,
+  tRoles,
   day,
 }: {
   payout: Payout;
-  reference: string;
+  booking: BookingFacts;
   t: T;
+  tRoles: TRoles;
   day: Day;
 }) {
+  const when =
+    payout.status === "paid"
+      ? t("paidOn", { date: day(payout.releaseOn) })
+      : t("releasesOn", { date: day(payout.releaseOn) });
+
   return (
-    <li
-      className={cn(
-        "flex items-center gap-4 border-t border-line py-3.5",
-        payout.status === "paid" && "opacity-60",
-      )}
+    <QueueRow
+      muted={payout.status === "paid"}
+      summary={
+        <span className="flex items-center gap-4">
+          <StatusPill tone={PAYOUT_TONE[payout.status]} className="flex-none">
+            {t(`payoutStatus.${payout.status}`)}
+          </StatusPill>
+          <span className="flex min-w-0 flex-1 flex-col">
+            <span className="truncate text-[15px] font-semibold text-ink">{payout.payee}</span>
+            <span className="font-mono text-[12px] text-ink-3">{booking.reference}</span>
+          </span>
+          <span className="tnum hidden flex-none text-[13px] text-ink-2 sm:block">{when}</span>
+          <MoneyText amount={payout.amount} className="flex-none text-[15px] font-semibold text-ink" />
+        </span>
+      }
     >
-      <StatusPill tone={PAYOUT_TONE[payout.status]} className="flex-none">
-        {t(`payoutStatus.${payout.status}`)}
-      </StatusPill>
+      <RecordFacts>
+        <RecordFact label={t("record.amount")}>
+          <MoneyText amount={payout.amount} className="font-semibold" />
+        </RecordFact>
+        <RecordFact label={t("record.recipient")}>
+          {booking.service
+            ? t("record.nameRole", { name: payout.payee, role: tRoles(PAYEE_ROLE[booking.service]) })
+            : payout.payee}
+        </RecordFact>
+        <RecordFact label={t("record.booking")}>
+          <span className="font-mono text-[13px]">{booking.reference}</span>
+          {booking.title && <span className="block text-ink-2">{booking.title}</span>}
+        </RecordFact>
+        {booking.dates && <RecordFact label={t("record.dates")}>{booking.dates}</RecordFact>}
+        <RecordFact label={t(`record.why.${payout.status}`)}>
+          {t(`record.because.${payout.status}`, { date: day(payout.releaseOn) })}
+        </RecordFact>
+      </RecordFacts>
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <p className="truncate text-[15px] font-semibold text-ink">{payout.payee}</p>
-        <p className="font-mono text-[12px] tracking-tight text-ink-3">{reference}</p>
-      </div>
-
-      <p className="tnum hidden flex-none text-[13px] text-ink-2 sm:block">
-        {payout.status === "paid"
-          ? t("paidOn", { date: day(payout.releaseOn) })
-          : t("releasesOn", { date: day(payout.releaseOn) })}
-      </p>
-
-      <MoneyText
-        amount={payout.amount}
-        className="flex-none text-[15px] font-bold text-ink"
-      />
-    </li>
+      {payout.status !== "paid" && (
+        <DisabledAction label={t("record.action.release")} reason={t("record.actionOff.release")} />
+      )}
+    </QueueRow>
   );
 }
 
@@ -488,7 +666,7 @@ function ThreadRow({
             {thread.subject}
           </p>
           <p className="truncate text-[13px] text-ink-3">
-            {thread.participantNames.join(" · ")} — {thread.lastMessagePreview}
+            {thread.participantNames.join(" · ")} · {thread.lastMessagePreview}
           </p>
         </div>
         <span className="tnum flex-none text-[12px] text-ink-3">

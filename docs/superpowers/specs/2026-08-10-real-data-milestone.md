@@ -1,6 +1,7 @@
 # Real data milestone: the same screens, on Postgres
 
-**Status:** not started. Written 2026-08-09, for the session after.
+**Status:** paused behind `2026-11-03-search-and-polish-design.md`. Steps 1
+and 3 are done, step 2 is half done. Written 2026-08-09.
 
 ## Why this milestone exists
 
@@ -48,12 +49,17 @@ real sign-in, nothing else different.
 
 Tick these off and commit the tick with the work.
 
-- [ ] **1. Merge the UI milestone.**
+- [x] **1. Merge the UI milestone.** Done: as of 2026-11-03 `main` and
+      `ui-milestone` point at the same commit.
       `ui-milestone` is 23 commits ahead of `main` and has never been merged or
       opened as a PR. It only grows, and every day it sits there the merge gets
       worse. Do this before writing a line of anything else.
 
-- [ ] **2. The local stack, in containers.**
+- [ ] **2. The local stack, in containers.** Half done 2026-11-03:
+      `compose.yaml` and the `Makefile` run the web app and Meilisearch, with the
+      named `node_modules` volume, `WATCHPACK_POLLING` and port 3100. The
+      Supabase CLI stack, and moving the web service onto its network, are
+      still to do.
       Supabase CLI orchestrates its own stack; a `compose.yaml` adds our
       workloads to its network. `duda-dodo/` on this machine already runs
       exactly this shape and has paid for several lessons — copy them rather
@@ -81,7 +87,9 @@ Tick these off and commit the tick with the work.
       A `./dc`-style wrapper is worth stealing too. It is the difference between
       a documented workflow and one that lives in somebody's shell history.
 
-- [ ] **3. A test runner, and the first test.**
+- [x] **3. A test runner, and the first test.** Done 2026-11-03: Vitest,
+      with `paginate`, `parseRole` and `quoteStay` covered, plus the search
+      parser. Runs with `make test` or `make host-test`.
       There is no test infrastructure at all: four dependencies, no runner, no
       test files. That was survivable while every claim could be checked with a
       screenshot. It stops being survivable here — the first thing this

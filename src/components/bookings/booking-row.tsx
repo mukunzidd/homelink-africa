@@ -4,6 +4,7 @@ import type { SupplyRef } from "@/lib/repos/supply-ref";
 import type { StatusTone } from "@/components/ui/status-pill";
 import { Link } from "@/i18n/navigation";
 import { formatDateRange } from "@/lib/domain/dates";
+import { supplierShare } from "@/lib/domain/pricing";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { StatusPill } from "@/components/ui/status-pill";
 import { MoneyText } from "@/components/ui/money-text";
@@ -48,6 +49,13 @@ export async function BookingRow({
   muted,
   /** Where this booking's own record lives, for the person it belongs to. */
   recordHref,
+  /**
+   * Whose side of the money this row is read from. The same held funds are
+   * "until you confirm check-in" to the guest and "until the guest checks in"
+   * to the host, and the amount that matters to a supplier is what reaches
+   * them, not what the guest paid.
+   */
+  viewer = "guest",
 }: {
   booking: Booking;
   supply: SupplyRef | null;
@@ -56,12 +64,14 @@ export async function BookingRow({
   aside?: React.ReactNode;
   muted?: boolean;
   recordHref?: string;
+  viewer?: "guest" | "supply";
 }) {
   const t = await getTranslations("trips");
   const tConfirm = await getTranslations("confirmation");
   const tStatus = await getTranslations("status");
   const tVerify = await getTranslations("verification");
   const tSearch = await getTranslations("search");
+  const tInventory = await getTranslations("inventory");
 
   const when = formatDateRange(booking.startDate, booking.endDate, locale);
   const name = supply?.name ?? booking.title;
@@ -78,7 +88,7 @@ export async function BookingRow({
         src={supply?.image}
         alt={name}
         sizes="(max-width: 640px) 100vw, 160px"
-        className="h-32 w-full rounded-[6px] sm:h-24 sm:w-40 sm:flex-none"
+        className="h-32 w-full rounded-inner sm:h-24 sm:w-40 sm:flex-none"
       />
 
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
@@ -90,7 +100,11 @@ export async function BookingRow({
               own pill rather than replacing the status. A confirmed booking
               whose funds are held is two facts and reads as two. */}
           {booking.escrowHeld && (
-            <StatusPill tone="warn">{tVerify("escrowShort")}</StatusPill>
+            <StatusPill tone="warn">
+              {viewer === "supply"
+                ? tVerify("escrowShortSupply")
+                : tVerify("escrowShort")}
+            </StatusPill>
           )}
         </div>
 
@@ -129,17 +143,27 @@ export async function BookingRow({
             argument. */}
         <p className="flex items-baseline gap-2 pt-0.5 text-[13px] text-ink-3">
           <span>{t("reference")}</span>
-          <span className="font-mono tracking-tight text-ink-2">
+          <span className="font-mono text-ink-2">
             {booking.reference}
           </span>
         </p>
       </div>
 
       <div className="flex flex-none flex-row items-center justify-between gap-4 sm:flex-col sm:items-end sm:justify-start sm:gap-2">
-        <MoneyText
-          amount={booking.total}
-          className="text-[17px] font-bold text-ink"
-        />
+        {viewer === "supply" ? (
+          <span className="flex flex-col sm:items-end">
+            <MoneyText
+              amount={supplierShare(booking.total, booking.service).net}
+              className="text-[17px] font-semibold text-ink"
+            />
+            <span className="text-[12px] text-ink-3">{tInventory("afterFee")}</span>
+          </span>
+        ) : (
+          <MoneyText
+            amount={booking.total}
+            className="text-[17px] font-semibold text-ink"
+          />
+        )}
 
         {conversation ? (
           <Link
@@ -151,7 +175,7 @@ export async function BookingRow({
           >
             {t("openThread")}
             {conversation.unreadCount > 0 && (
-              <span className="tnum grid size-5 place-items-center rounded-full bg-brand text-[11px] font-bold text-on-brand">
+              <span className="tnum grid size-5 place-items-center rounded-full bg-brand text-[11px] font-semibold text-on-brand">
                 {conversation.unreadCount}
               </span>
             )}

@@ -6,16 +6,20 @@ import type {
   MobilityRepo,
   OpsRepo,
   Repositories,
+  SalesRepo,
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
 import type { Role } from "@/lib/domain/types";
+import { readsAs } from "@/lib/preferences/role";
+import { convert } from "@/lib/domain/money";
 import {
   ADDON_REQUESTS,
   BOOKINGS,
   CONVERSATIONS,
   EXPERIENCES,
   FX_RATES,
+  HOMES_FOR_SALE,
   LISTINGS,
   MESSAGES,
   PAST_BOOKINGS,
@@ -56,6 +60,16 @@ const stays: StaysRepo = {
     }
     if (query.band === "long") {
       out = out.filter((l) => l.modes.includes("lease"));
+    } else {
+      out = out.filter((l) => l.modes.includes("nightly"));
+    }
+    if (query.maxPrice) {
+      const ceiling = query.maxPrice;
+      const lease = query.band === "long";
+      out = out.filter((l) => {
+        const rate = lease ? l.monthlyRate : l.nightlyRate;
+        return !!rate && rate.minor <= convert(ceiling, rate.currency, FX_RATES).minor;
+      });
     }
     // `verifiedOnly` is a no-op today: nothing unverified is ever listed.
     // The filter exists because Phase 3 opens a vetted-marketplace lane.
@@ -115,6 +129,46 @@ const stays: StaysRepo = {
     return [...counts.entries()]
       .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  },
+};
+
+const sales: SalesRepo = {
+  async list(query = {}) {
+    let out = [...HOMES_FOR_SALE];
+    if (query.neighbourhood) {
+      const needle = query.neighbourhood.trim().toLowerCase();
+      out = out.filter((h) => h.neighbourhood.toLowerCase().includes(needle));
+    }
+    if (query.minBedrooms !== undefined) out = out.filter((h) => h.bedrooms >= query.minBedrooms!);
+    if (query.kind) out = out.filter((h) => h.kind === query.kind);
+    if (query.maxPrice) {
+      const ceiling = query.maxPrice;
+      out = out.filter((h) => h.price.minor <= convert(ceiling, h.price.currency, FX_RATES).minor);
+    }
+    switch (query.sort) {
+      case "priceAsc":
+        out.sort((a, b) => a.price.minor - b.price.minor);
+        break;
+      case "priceDesc":
+        out.sort((a, b) => b.price.minor - a.price.minor);
+        break;
+      case "size":
+        out.sort((a, b) => b.floorSqm - a.floorSqm);
+        break;
+      default:
+        // Recommended is newest on the market, named for what it is.
+        out.sort((a, b) => b.listedAt.localeCompare(a.listedAt));
+    }
+    return query.limit ? out.slice(0, query.limit) : out;
+  },
+  async bySlug(slug) {
+    return HOMES_FOR_SALE.find((h) => h.slug === slug) ?? null;
+  },
+  async byId(id) {
+    return HOMES_FOR_SALE.find((h) => h.id === id) ?? null;
+  },
+  async neighbourhoods() {
+    return [...new Set(HOMES_FOR_SALE.map((h) => h.neighbourhood))].sort((a, b) => a.localeCompare(b));
   },
 };
 
@@ -197,14 +251,16 @@ const trips: TripRepo = {
  * which is enough to make the state visible on the screen.
  */
 function unreadFor(conversationId: string, role: Role): number {
+  const reader = readsAs(role);
   return MESSAGES.filter(
-    (m) => m.conversationId === conversationId && m.authorRole !== role && !m.readAt,
+    (m) => m.conversationId === conversationId && m.authorRole !== reader && !m.readAt,
   ).length;
 }
 
 function visibleTo(role: Role) {
+  const reader = readsAs(role);
   return (c: (typeof CONVERSATIONS)[number]) =>
-    c.participantRoles.includes(role);
+    c.participantRoles.includes(reader);
 }
 
 function forReader(c: (typeof CONVERSATIONS)[number], role: Role) {
@@ -300,6 +356,7 @@ const fx: FxRepo = {
 
 export const fixtureRepositories: Repositories = {
   stays,
+  sales,
   mobility,
   experiences,
   bookings,

@@ -19,7 +19,7 @@ export function VerifiedBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-bold tracking-wide",
+        "inline-flex items-center gap-1.5 rounded-full font-semibold tracking-wide",
         "text-trust bg-trust-tint border-[1.5px] border-trust/55",
         size === "sm" ? "text-[11px] pl-1.5 pr-2.5 py-0.5" : "text-xs pl-2 pr-2.5 py-1",
         className,

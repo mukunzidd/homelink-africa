@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 import { repos } from "@/lib/repos";
 import { Link } from "@/i18n/navigation";
@@ -16,6 +17,7 @@ import { SupplyImage } from "@/components/ui/supply-image";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { StepSpine } from "@/components/checkout/step-spine";
 import { CheckoutForm } from "@/components/checkout/checkout-form";
+import { SummaryRow } from "@/components/checkout/summary-row";
 
 export default async function BookPage({
   params,
@@ -49,6 +51,7 @@ export default async function BookPage({
       : 2;
 
   const t = await getTranslations("checkout");
+  const tB = await getTranslations("breadcrumb");
   const tSearch = await getTranslations("search");
   const tListing = await getTranslations("listing");
   const tVerify = await getTranslations("verification");
@@ -65,11 +68,28 @@ export default async function BookPage({
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-6 px-6 py-8">
-      <StepSpine current={3} />
+      <Breadcrumbs
+        trail={[
+          { label: tB("homes"), href: "/stays" },
+          { label: tB("stay"), href: "/stays" },
+          { label: listing.name, href: `/stays/${listing.slug}` },
+          { label: tB("book") },
+        ]}
+      />
+      <StepSpine current={3} lane="stay" />
 
       <h1 className="font-display text-3xl font-semibold text-ink">
         {t("title")}
       </h1>
+
+      <SummaryRow
+        imageSeed={listing.imageSeed}
+        image={listing.images?.[0]}
+        title={listing.name}
+        facts={[stayRange, tSearch("guestCount", { count: party })]}
+        changeHref={`/stays/${listing.slug}`}
+        changeLabel={t("changeDates")}
+      />
 
       <div className="grid items-start gap-8 lg:grid-cols-[1fr_360px]">
         <CheckoutForm
@@ -85,11 +105,13 @@ export default async function BookPage({
           detailHref={`/stays/${listing.slug}`}
           confirmQuery={{ slug: listing.slug, from, to, party: String(party) }}
           referenceSeed={`${listing.id}:${from}:${to}:${party}`}
-          cancellationDate={cancellationDate}
+          cancellationNote={t("cancellation", { date: cancellationDate })}
         />
 
-        <aside className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5 lg:sticky lg:top-20">
-          <h2 className="text-xs font-bold uppercase tracking-[0.1em] text-ink-3">
+        {/* Below lg the summary row above stands in for this card, which would
+            otherwise arrive after the Pay button. */}
+        <aside className="hidden flex-col gap-3 rounded-card border border-line bg-surface p-5 lg:sticky lg:top-20 lg:flex">
+          <h2 className="text-xs font-medium text-ink-3">
             {t("summaryTitle.stay")}
           </h2>
 
@@ -98,7 +120,7 @@ export default async function BookPage({
             src={listing.images?.[0]}
             alt={listing.name}
             sizes="320px"
-            className="h-28 rounded-[6px]"
+            className="h-28 rounded-inner"
           />
 
           <div className="flex flex-col gap-1">

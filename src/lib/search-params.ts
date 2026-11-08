@@ -1,5 +1,7 @@
 import { isIsoDate, type IsoDate } from "@/lib/domain/dates";
-import type { DurationBand } from "@/lib/domain/types";
+import type { Amenity, DurationBand } from "@/lib/domain/types";
+import { isLandmark, type LandmarkKey } from "@/lib/domain/landmarks";
+import { CURRENCIES, fromMajor, toMajor, type CurrencyCode, type Money } from "@/lib/domain/money";
 
 /**
  * The search is the state of the page.
@@ -26,10 +28,28 @@ export type StaySearch = {
   to: IsoDate | null;
   party: number;
   bedrooms?: number;
-  amenities: string[];
+  amenities: Amenity[];
   band?: DurationBand;
+  /** A ceiling on the nightly rate, or the monthly one with `band=long`. */
+  maxPrice?: Money;
+  /**
+   * Words the guest typed that are not a filter: "quiet", "terrace", "view".
+   * Ranked by the search engine; never used to exclude on its own.
+   */
+  q?: string;
+  /** The landmark travel times are measured from. Not a filter. */
+  near?: LandmarkKey;
   sort: Sort;
 };
+
+/**
+ * Every amenity a filter can name. A value outside this list in the URL is
+ * dropped: `amenities=pool` used to render a chip reading "amenities.pool" and
+ * announce "1 close match" for a filter that does not exist.
+ */
+export const AMENITIES: readonly Amenity[] = [
+  "backupPower", "fibre", "furnished", "parking", "security", "workspace", "garden", "water",
+];
 
 export type RawParams = Record<string, string | string[] | undefined>;
 
@@ -44,6 +64,8 @@ export function parseStaySearch(params: RawParams): StaySearch {
   const bedrooms = Number(one(params.bedrooms));
   const band = one(params.band);
   const sort = one(params.sort);
+  const max = Number(one(params.max));
+  const cur = one(params.cur);
 
   // A departure that is not after the arrival is dropped rather than swapped.
   // Guessing what someone meant about dates is how you book the wrong week.
@@ -59,10 +81,18 @@ export function parseStaySearch(params: RawParams): StaySearch {
       Number.isInteger(bedrooms) && bedrooms >= 1 && bedrooms <= 6
         ? bedrooms
         : undefined,
-    amenities: (one(params.amenities) ?? "").split(",").filter(Boolean),
+    amenities: (one(params.amenities) ?? "")
+      .split(",")
+      .filter((a): a is Amenity => (AMENITIES as readonly string[]).includes(a)),
     band: (["short", "medium", "long"] as const).includes(band as DurationBand)
       ? (band as DurationBand)
       : undefined,
+    maxPrice:
+      Number.isFinite(max) && max > 0 && CURRENCIES.includes(cur as CurrencyCode)
+        ? fromMajor(max, cur as CurrencyCode)
+        : undefined,
+    q: one(params.q)?.trim().slice(0, 120) || undefined,
+    near: isLandmark(one(params.near)) ? (one(params.near) as LandmarkKey) : undefined,
     sort: SORTS.includes(sort as Sort) ? (sort as Sort) : "recommended",
   };
 }
@@ -78,6 +108,12 @@ export function staySearchToQuery(search: Partial<StaySearch>): string {
   if (search.bedrooms) params.set("bedrooms", String(search.bedrooms));
   if (search.amenities?.length) params.set("amenities", search.amenities.join(","));
   if (search.band) params.set("band", search.band);
+  if (search.maxPrice) {
+    params.set("max", String(toMajor(search.maxPrice)));
+    params.set("cur", search.maxPrice.currency);
+  }
+  if (search.q) params.set("q", search.q);
+  if (search.near) params.set("near", search.near);
   if (search.sort && search.sort !== "recommended") params.set("sort", search.sort);
 
   return params.toString();
@@ -89,6 +125,56 @@ export function countActiveFilters(search: StaySearch): number {
     search.amenities.length +
     (search.bedrooms ? 1 : 0) +
     (search.neighbourhood ? 1 : 0) +
-    (search.band ? 1 : 0)
+    (search.maxPrice ? 1 : 0)
   );
+}
+
+/* ------------------------------------------------------------------ buying */
+
+export const SALE_SORTS = ["recommended", "priceAsc", "priceDesc", "size"] as const;
+export type SaleSortKey = (typeof SALE_SORTS)[number];
+
+export type SaleSearch = {
+  neighbourhood?: string;
+  bedrooms?: number;
+  maxPrice?: Money;
+  kind?: "house" | "apartment" | "townhouse";
+  q?: string;
+  near?: LandmarkKey;
+  sort: SaleSortKey;
+};
+
+export function parseSaleSearch(params: RawParams): SaleSearch {
+  const bedrooms = Number(one(params.bedrooms));
+  const max = Number(one(params.max));
+  const cur = one(params.cur);
+  const kind = one(params.kind);
+  const sort = one(params.sort);
+  return {
+    neighbourhood: one(params.neighbourhood) || undefined,
+    bedrooms: Number.isInteger(bedrooms) && bedrooms >= 1 && bedrooms <= 6 ? bedrooms : undefined,
+    maxPrice:
+      Number.isFinite(max) && max > 0 && CURRENCIES.includes(cur as CurrencyCode)
+        ? fromMajor(max, cur as CurrencyCode)
+        : undefined,
+    kind: (["house", "apartment", "townhouse"] as const).includes(kind as never) ? (kind as SaleSearch["kind"]) : undefined,
+    q: one(params.q)?.trim().slice(0, 120) || undefined,
+    near: isLandmark(one(params.near)) ? (one(params.near) as LandmarkKey) : undefined,
+    sort: SALE_SORTS.includes(sort as SaleSortKey) ? (sort as SaleSortKey) : "recommended",
+  };
+}
+
+export function saleSearchToQuery(search: Partial<SaleSearch>): string {
+  const params = new URLSearchParams();
+  if (search.neighbourhood) params.set("neighbourhood", search.neighbourhood);
+  if (search.bedrooms) params.set("bedrooms", String(search.bedrooms));
+  if (search.maxPrice) {
+    params.set("max", String(toMajor(search.maxPrice)));
+    params.set("cur", search.maxPrice.currency);
+  }
+  if (search.kind) params.set("kind", search.kind);
+  if (search.q) params.set("q", search.q);
+  if (search.near) params.set("near", search.near);
+  if (search.sort && search.sort !== "recommended") params.set("sort", search.sort);
+  return params.toString();
 }
