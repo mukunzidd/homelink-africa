@@ -219,7 +219,8 @@
   "dev": {
     "label": "Tazama kama",
     "role": "Jukumu",
-    "note": "Kwa uundaji tu. Majukumu ni ya kuigiza hadi akaunti ziunganishwe."
+    "note": "Kwa uundaji tu. Majukumu ni ya kuigiza hadi akaunti ziunganishwe.",
+    "testNotification": "Tuma arifa ya majaribio"
   },
   "roles": {
     "visitor": "Hujaingia",

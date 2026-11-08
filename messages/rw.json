@@ -219,7 +219,8 @@
   "dev": {
     "label": "Reba nka",
     "role": "Uruhare",
-    "note": "Iby'iterambere gusa. Inshingano ni iz'agateganyo kugeza konti zishyizweho."
+    "note": "Iby'iterambere gusa. Inshingano ni iz'agateganyo kugeza konti zishyizweho.",
+    "testNotification": "Ohereza imenyesha ry'igerageza"
   },
   "roles": {
     "visitor": "Ntiwinjiye",

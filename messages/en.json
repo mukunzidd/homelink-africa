@@ -219,7 +219,8 @@
   "dev": {
     "label": "Preview as",
     "role": "Role",
-    "note": "Development only. Roles are mocked until accounts are wired up."
+    "note": "Development only. Roles are mocked until accounts are wired up.",
+    "testNotification": "Send a test notification"
   },
   "roles": {
     "visitor": "Signed out",

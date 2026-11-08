@@ -219,7 +219,8 @@
   "dev": {
     "label": "Aperçu en tant que",
     "role": "Rôle",
-    "note": "Développement uniquement. Les rôles sont simulés en attendant les comptes."
+    "note": "Développement uniquement. Les rôles sont simulés en attendant les comptes.",
+    "testNotification": "Envoyer une notification de test"
   },
   "roles": {
     "visitor": "Déconnecté",
