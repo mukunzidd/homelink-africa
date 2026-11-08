@@ -154,6 +154,8 @@ export type HomeForSale = {
   summary: string;
   /** ISO date the home came on the market. */
   listedAt: string;
+  /** Absent means on the market. A sold home leaves the public list. */
+  saleStatus?: "onMarket" | "underOffer" | "sold";
   yearBuilt: number;
   /**
    * The land registry's Unique Parcel Identifier. Shown masked on the page:
@@ -283,6 +285,10 @@ export type Booking = {
   cancelReason?: string;
   refund?: Money;
   staffNotes?: { at: string; by: Role; text: string }[];
+  /** The driver or guide on this job, once someone has been given it. */
+  partnerId?: string;
+  /** A renting coming to an end: the inspection booked, and the deposit to give back after it. */
+  moveOut?: { date: string; taskId: string; deposit: Money; status: "scheduled" | "returned"; returnedAt?: string };
 };
 
 export type PaymentRecord = {
@@ -498,7 +504,7 @@ export type NotificationCategory = "booking" | "payment" | "message" | "stay" | 
 
 export type NotificationKind =
   | "bookingConfirmed" | "paymentReceived" | "paymentFailed" | "momoPending" | "checkInReady"
-  | "rentDue" | "newMessage" | "reviewRequest" | "viewingConfirmed"
+  | "rentDue" | "newMessage" | "reviewRequest" | "viewingConfirmed" | "viewingChanged"
   | "newBooking" | "arrivalToday" | "newAsk" | "newIncident" | "inspectionDue"
   | "jobOffered" | "jobChanged" | "payoutSent" | "documentExpiring";
 
@@ -622,6 +628,41 @@ export type HousekeepingTask = {
   assignee?: string;
   status: "todo" | "inProgress" | "ready" | "issue";
   note?: string;
+};
+
+/** A driver or guide who works HomeLink's cars and days out. */
+export type Partner = {
+  id: string;
+  role: "driver" | "guide";
+  name: string;
+  /** The short form bookings and payouts use: "Eric H.". */
+  shortName: string;
+  phone: string;
+  /** The cars they drive or the days out they lead. */
+  supplyIds: string[];
+  rating: number;
+  joinedAt: string;
+};
+
+export type PartnerDocument = {
+  id: string;
+  partnerId: string;
+  kind: "licence" | "insurance" | "permit" | "id";
+  expires: string;
+};
+
+/** A booking seen as work for a driver or a guide. */
+export type PartnerJob = {
+  bookingId: string;
+  reference: string;
+  role: "driver" | "guide";
+  supplyId: string;
+  title: string;
+  start: string;
+  end: string;
+  guest: string;
+  party: number;
+  partnerId?: string;
 };
 
 export type MaintenanceTicket = {

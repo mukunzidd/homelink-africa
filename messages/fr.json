@@ -1978,6 +1978,118 @@
       "set": "Prix fixés",
       "backToBase": "Retour au tarif de base",
       "failed": "Non enregistré. Le prix doit être supérieur à zéro."
+    },
+    "homes": {
+      "tenants": "Locataires",
+      "tenantsBody": "Chaque location en cours, les retards de loyer d'abord. Ouvrez-en une pour relancer, enregistrer un virement ou lancer le départ.",
+      "rentings": "Locations",
+      "overdue": "En retard de loyer",
+      "dueSoon": "À payer dans les cinq jours",
+      "rent": {
+        "overdue": "En retard",
+        "due": "À payer",
+        "upcoming": "À jour",
+        "paid": "Tout payé"
+      },
+      "movingOut": "Départ prévu",
+      "movedOut": "Caution rendue",
+      "perMonth": "{amount} par mois",
+      "nextDue": "Prochaine échéance le {date}",
+      "allPaid": "Tous les mois payés",
+      "ends": "Fin le {date}",
+      "booking": "Réservation",
+      "paidMonths": "Mois payés",
+      "monthsOf": "{paid} sur {total}",
+      "deposit": "Caution détenue",
+      "phone": "Téléphone",
+      "noTenants": "Personne ne loue en ce moment.",
+      "remind": "Envoyer un rappel de loyer",
+      "reminded": "Rappel envoyé",
+      "received": "Reçu par virement ({currency})",
+      "record": "Enregistrer le paiement",
+      "recordHint": "Pour un loyer payé hors de l'application ; il compte pour le plus ancien mois impayé.",
+      "recorded": "Paiement enregistré",
+      "moveOutDate": "Jour du départ",
+      "startMoveOut": "Lancer le départ",
+      "moveOutBooked": "État des lieux de sortie prévu",
+      "moveOutOn": "État des lieux de sortie le {date}. Rendez la caution une fois fait.",
+      "returnDeposit": "Rendre la caution",
+      "depositReturned": "Caution rendue",
+      "depositDone": "Parti ; la caution a été rendue.",
+      "sales": "Logements à vendre",
+      "salesBody": "Les logements en vente et les personnes qui demandent à les voir. Chaque changement d'une visite prévient la personne.",
+      "viewings": "Demandes de visite",
+      "view": {
+        "requested": "Demandée",
+        "confirmed": "Confirmée",
+        "rescheduled": "Déplacée",
+        "done": "Faite",
+        "cancelled": "Annulée"
+      },
+      "mode": {
+        "inPerson": "Sur place",
+        "video": "En vidéo"
+      },
+      "noViewings": "Personne n'a encore demandé de visite.",
+      "onSale": "En vente",
+      "sale": {
+        "onMarket": "En vente",
+        "underOffer": "Sous offre",
+        "sold": "Vendu"
+      },
+      "viewingsCount": "{count, plural, =0 {aucune visite} one {# visite} other {# visites}}",
+      "viewOnSite": "Voir sur le site",
+      "askingPrice": "Prix demandé ({currency})",
+      "status": "Statut",
+      "save": "Enregistrer",
+      "saleSaved": "Enregistré",
+      "confirm": "Confirmer",
+      "viewingConfirmed": "Confirmée ; la personne a été prévenue",
+      "reschedule": "Déplacer",
+      "markDone": "Marquer comme faite",
+      "viewingDone": "Marquée faite",
+      "cancelViewing": "Annuler",
+      "viewingCancelled": "Annulée ; la personne a été prévenue",
+      "day": "Jour",
+      "time": "Heure",
+      "move": "Déplacer la visite",
+      "viewingMoved": "Déplacée ; la personne a été prévenue",
+      "viewingFailed": "Ce créneau est pris ou non autorisé. Choisissez-en un autre.",
+      "partners": "Chauffeurs et guides",
+      "partnersBody": "Qui conduit les voitures et mène les excursions, leurs notes, le travail à venir, et les documents qui expirent bientôt.",
+      "unassigned": "{count, plural, one {# mission} other {# missions}} sans personne",
+      "people": "{count, plural, one {# personne} other {# personnes}}",
+      "role": {
+        "driver": "Chauffeur",
+        "guide": "Guide"
+      },
+      "docExpired": "Document expiré",
+      "docSoon": "Expire dans {days} jours",
+      "upcomingJobs": "{count, plural, =0 {Aucune mission dans les deux semaines} one {# mission dans les deux semaines} other {# missions dans les deux semaines}}",
+      "since": "depuis le {date}",
+      "documents": "Documents",
+      "doc": {
+        "licence": "Permis de conduire",
+        "insurance": "Assurance",
+        "permit": "Licence de guide",
+        "id": "Carte d'identité"
+      },
+      "expires": "Expire le {date}",
+      "docValid": "Valide",
+      "theirJobs": "Ses missions · {count}",
+      "noJobs": "Rien ne lui a encore été confié.",
+      "openInLane": "Ouvertes dans son domaine · {count}",
+      "noOpen": "Rien en attente.",
+      "payouts": "Versements",
+      "payout": {
+        "held": "Retenu jusqu'à l'arrivée",
+        "due": "Dû",
+        "paid": "Versé"
+      },
+      "noPayouts": "Aucun versement pour l'instant.",
+      "assignTo": "Confier à",
+      "assigned": "Mission confiée",
+      "nobody": "Personne"
     }
   },
   "account": {
@@ -2149,6 +2261,10 @@
       "documentExpiring": {
         "title": "Document bientôt expiré",
         "body": "{doc} expire le {date}."
+      },
+      "viewingChanged": {
+        "title": "Visite {state, select, moved {déplacée} done {terminée, merci} cancelled {annulée} other {mise à jour}}",
+        "body": "{name} : {when}."
       }
     },
     "title": "Notifications",
@@ -2223,7 +2339,8 @@
       "jobOffered": "Nouvelle mission",
       "jobChanged": "Mission modifiée",
       "payoutSent": "Versement envoyé",
-      "documentExpiring": "Document bientôt expiré"
+      "documentExpiring": "Document bientôt expiré",
+      "viewingChanged": "Visite déplacée ou terminée"
     }
   },
   "extras": {

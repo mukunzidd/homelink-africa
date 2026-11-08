@@ -565,6 +565,53 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
         .payments.filter((p) => !bookingId || p.bookingId === bookingId)
         .sort((a, b) => b.at.localeCompare(a.at));
     },
+
+    async recordRentPayment(reference, by, amount) {
+      const b = store().bookings.find((x) => x.reference === reference);
+      const rent = b?.lines?.find((l) => l.key === "rent")?.amount;
+      if (!b || b.stayMode !== "lease" || !rent) throw new Error("Not a renting");
+      if (amount.currency !== rent.currency || !Number.isInteger(amount.minor) || amount.minor <= 0 || amount.minor > rent.minor * 12) throw new Error("Bad amount");
+      const made = { id: nextId("pmt"), bookingId: b.id, rail: "bankTransfer" as const, kind: "rent" as const, amount: { ...amount }, status: "succeeded" as const, at: new Date().toISOString() };
+      store().payments.push(made);
+      b.timeline = [...(b.timeline ?? []), event("paid", by, "rent")];
+      recordAudit({ actor: by, action: "rent.received", target: b.id, detail: `${amount.minor} ${amount.currency}` });
+      return made;
+    },
+
+    async startMoveOut(reference, by, date) {
+      const b = store().bookings.find((x) => x.reference === reference);
+      if (!b || b.stayMode !== "lease" || b.status !== "active") throw new Error("Not a renting under way");
+      if (b.moveOut) throw new Error("Move-out already booked");
+      if (!isIsoDate(date) || date < kigaliDay()) throw new Error("Bad date");
+      const l = store().listings.find((x) => x.id === b.supplyItemId);
+      const deposit = b.lines?.find((x) => x.key === "deposit")?.amount ?? money(0, b.total.currency);
+      const taskId = nextId("ver");
+      store().verificationQueue.push({
+        id: taskId,
+        kind: "reinspection",
+        service: "stay",
+        name: l?.name ?? b.title,
+        where: l?.neighbourhood ?? "",
+        requestedAt: new Date().toISOString(),
+        scheduledFor: date,
+        status: "scheduled",
+        note: `Move-out of ${b.guest?.name ?? b.reference}: check against the move-in record before the deposit goes back.`,
+      });
+      b.moveOut = { date, taskId, deposit, status: "scheduled" };
+      recordAudit({ actor: by, action: "moveout.start", target: b.id, detail: date });
+      return b;
+    },
+
+    async returnDeposit(reference, by) {
+      const b = store().bookings.find((x) => x.reference === reference);
+      if (!b?.moveOut || b.moveOut.status !== "scheduled") throw new Error("No move-out to settle");
+      const at = new Date().toISOString();
+      store().payments.push({ id: nextId("pmt"), bookingId: b.id, rail: "bankTransfer", kind: "refund", amount: { ...b.moveOut.deposit }, status: "succeeded", at });
+      b.moveOut = { ...b.moveOut, status: "returned", returnedAt: at };
+      b.timeline = [...(b.timeline ?? []), event("refunded", by, "deposit")];
+      recordAudit({ actor: by, action: "deposit.return", target: b.id, detail: `${b.moveOut.deposit.minor} ${b.moveOut.deposit.currency}` });
+      return b;
+    },
   };
   return repo;
 }

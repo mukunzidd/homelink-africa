@@ -1978,6 +1978,118 @@
       "set": "Ibiciro byashyizweho",
       "backToBase": "Byasubijwe ku giciro fatizo",
       "failed": "Ntibyabitswe. Igiciro kigomba kurenga zeru."
+    },
+    "homes": {
+      "tenants": "Abakodesha",
+      "tenantsBody": "Ubukode bwose buri gukorwa, abatinze kwishyura mbere. Fungura kimwe wibutse, wandike amafaranga yoherejwe, cyangwa utangire kuvamo.",
+      "rentings": "Ubukode",
+      "overdue": "Batinze kwishyura",
+      "dueSoon": "Bigomba kwishyurwa mu minsi itanu",
+      "rent": {
+        "overdue": "Byatinze",
+        "due": "Bigomba kwishyurwa",
+        "upcoming": "Ari ku gihe",
+        "paid": "Byose byishyuwe"
+      },
+      "movingOut": "Arimo kuvamo",
+      "movedOut": "Ingwate yasubijwe",
+      "perMonth": "{amount} ku kwezi",
+      "nextDue": "Ubutaha ni {date}",
+      "allPaid": "Amezi yose yishyuwe",
+      "ends": "Birangira {date}",
+      "booking": "Ifatwa",
+      "paidMonths": "Amezi yishyuwe",
+      "monthsOf": "{paid} kuri {total}",
+      "deposit": "Ingwate ifashwe",
+      "phone": "Telefoni",
+      "noTenants": "Nta ukodesha ubu.",
+      "remind": "Ohereza urwibutso rw'ubukode",
+      "reminded": "Urwibutso rwoherejwe",
+      "received": "Byakiriwe kuri banki ({currency})",
+      "record": "Andika ubwishyu",
+      "recordHint": "Ku bukode bwishyuwe hanze ya porogaramu; bubarirwa ku kwezi kwa kera kutishyuwe.",
+      "recorded": "Ubwishyu bwanditswe",
+      "moveOutDate": "Umunsi wo kuvamo",
+      "startMoveOut": "Tangira kuvamo",
+      "moveOutBooked": "Igenzura ryo kuvamo ryashyizweho",
+      "moveOutOn": "Igenzura ryo kuvamo ni {date}. Subiza ingwate rirangiye.",
+      "returnDeposit": "Subiza ingwate",
+      "depositReturned": "Ingwate yasubijwe",
+      "depositDone": "Yavuyemo; ingwate yasubijwe.",
+      "sales": "Amazu agurishwa",
+      "salesBody": "Amazu ari ku isoko n'abasaba kuyasura. Buri mpinduka ku gusura imenyesha uwabisabye.",
+      "viewings": "Ibisabwa byo gusura",
+      "view": {
+        "requested": "Byasabwe",
+        "confirmed": "Byemejwe",
+        "rescheduled": "Byimuwe",
+        "done": "Byakozwe",
+        "cancelled": "Byahagaritswe"
+      },
+      "mode": {
+        "inPerson": "Imbonankubone",
+        "video": "Kuri videwo"
+      },
+      "noViewings": "Nta wurasaba gusura inzu.",
+      "onSale": "Ku isoko",
+      "sale": {
+        "onMarket": "Ku isoko",
+        "underOffer": "Irimo kuganirwaho",
+        "sold": "Yagurishijwe"
+      },
+      "viewingsCount": "Gusura {count}",
+      "viewOnSite": "Reba ku rubuga",
+      "askingPrice": "Igiciro gisabwa ({currency})",
+      "status": "Aho bigeze",
+      "save": "Bika",
+      "saleSaved": "Byabitswe",
+      "confirm": "Emeza",
+      "viewingConfirmed": "Byemejwe; yamenyeshejwe",
+      "reschedule": "Imura",
+      "markDone": "Byakozwe",
+      "viewingDone": "Byemejwe ko byakozwe",
+      "cancelViewing": "Hagarika",
+      "viewingCancelled": "Byahagaritswe; yamenyeshejwe",
+      "day": "Umunsi",
+      "time": "Isaha",
+      "move": "Imura gusura",
+      "viewingMoved": "Byimuwe; yamenyeshejwe",
+      "viewingFailed": "Icyo gihe cyafashwe cyangwa ntikemewe. Hitamo ikindi.",
+      "partners": "Abashoferi n'abayobozi b'ingendo",
+      "partnersBody": "Abatwara imodoka n'abayobora ingendo, amanota yabo, imirimo iri imbere, n'impapuro zigiye kurangira.",
+      "unassigned": "Imirimo {count} nta wuyihawe",
+      "people": "Abantu {count}",
+      "role": {
+        "driver": "Umushoferi",
+        "guide": "Umuyobozi w'ingendo"
+      },
+      "docExpired": "Urupapuro rwarangiye",
+      "docSoon": "Rurangira mu minsi {days}",
+      "upcomingJobs": "Imirimo {count} mu byumweru bibiri biri imbere",
+      "since": "kuva {date}",
+      "documents": "Impapuro",
+      "doc": {
+        "licence": "Uruhushya rwo gutwara",
+        "insurance": "Ubwishingizi",
+        "permit": "Uruhushya rwo kuyobora",
+        "id": "Indangamuntu"
+      },
+      "expires": "Rurangira {date}",
+      "docValid": "Rukiri rwiza",
+      "theirJobs": "Imirimo ye · {count}",
+      "noJobs": "Nta kintu arahabwa.",
+      "openInLane": "Ifunguye mu kazi ke · {count}",
+      "noOpen": "Nta gitegereje.",
+      "payouts": "Ibyishyuwe",
+      "payout": {
+        "held": "Bifashwe kugeza umushyitsi ahageze",
+        "due": "Bigomba kwishyurwa",
+        "paid": "Byishyuwe"
+      },
+      "noPayouts": "Nta byishyuwe birabaho.",
+      "assignTo": "Biha",
+      "assigned": "Umurimo watanzwe",
+      "nobody": "Nta muntu"
     }
   },
   "account": {
@@ -2149,6 +2261,10 @@
       "documentExpiring": {
         "title": "Inyandiko igiye guta agaciro",
         "body": "{doc} izata agaciro ku wa {date}."
+      },
+      "viewingChanged": {
+        "title": "Gusura {state, select, moved {kwimuwe} done {kwarangiye, murakoze} cancelled {kwahagaritswe} other {kwavuguruwe}}",
+        "body": "{name}: {when}."
       }
     },
     "title": "Imenyesha",
@@ -2223,7 +2339,8 @@
       "jobOffered": "Akazi gashya",
       "jobChanged": "Akazi kahindutse",
       "payoutSent": "Amafaranga yoherejwe",
-      "documentExpiring": "Inyandiko igiye guta agaciro"
+      "documentExpiring": "Inyandiko igiye guta agaciro",
+      "viewingChanged": "Gusura kwimuwe cyangwa kwarangiye"
     }
   },
   "extras": {

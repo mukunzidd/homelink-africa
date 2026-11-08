@@ -11,7 +11,7 @@ import type {
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
-import type { Conversation, HousekeepingTask, Listing, Role, SharedLocation } from "@/lib/domain/types";
+import type { Conversation, HousekeepingTask, Listing, PartnerJob, Role, SharedLocation } from "@/lib/domain/types";
 import { turnoverTasks } from "@/lib/workspace/day-board";
 import { readsAs } from "@/lib/preferences/role";
 import { convert, formatMoney, money, type Money } from "@/lib/domain/money";
@@ -22,7 +22,7 @@ import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
 import { availability, makeBookings, makeTrips } from "./bookings";
-import { MESSAGE_LIMITS, type IncidentsRepo, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
+import { MESSAGE_LIMITS, type IncidentsRepo, type PartnersRepo, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
 import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
@@ -187,9 +187,23 @@ const stays: StaysRepo = {
   },
 };
 
+const SALE_STATUS = ["onMarket", "underOffer", "sold"] as const;
+
 const sales: SalesRepo = {
+  async all() {
+    return [...store().sales];
+  },
+  async update(id, patch) {
+    const h = store().sales.find((x) => x.id === id);
+    if (!h) throw new Error(`No home ${id}`);
+    if (patch.price && (patch.price.currency !== h.price.currency || !Number.isInteger(patch.price.minor) || patch.price.minor <= 0)) throw new Error("Bad price");
+    if (patch.saleStatus !== undefined && !SALE_STATUS.includes(patch.saleStatus as never)) throw new Error("Bad status");
+    if (patch.price) h.price = { ...patch.price };
+    if (patch.saleStatus) h.saleStatus = patch.saleStatus;
+    return h;
+  },
   async list(query = {}) {
-    let out = [...store().sales];
+    let out = store().sales.filter((h) => h.saleStatus !== "sold");
     if (query.neighbourhood) {
       const needle = query.neighbourhood.trim().toLowerCase();
       out = out.filter((h) => h.neighbourhood.toLowerCase().includes(needle));
@@ -826,6 +840,56 @@ function cleansOn(date: string): Omit<HousekeepingTask, "assignee" | "status" | 
   return [...turnovers, ...mid];
 }
 
+/** The bookings a driver or guide works: cars and days out still to come or under way. */
+function jobsOf(): PartnerJob[] {
+  const today = kigaliDay();
+  return store()
+    .bookings.filter((b) => (b.service === "car" || b.service === "experience") && (b.status === "confirmed" || b.status === "active") && b.endDate >= today)
+    .map((b) => ({
+      bookingId: b.id,
+      reference: b.reference,
+      role: b.service === "car" ? ("driver" as const) : ("guide" as const),
+      supplyId: b.supplyItemId,
+      title: b.title,
+      start: b.startDate,
+      end: b.endDate,
+      guest: b.guest?.name ?? "",
+      party: b.party,
+      ...(b.partnerId ? { partnerId: b.partnerId } : {}),
+    }))
+    .sort((a, b) => a.start.localeCompare(b.start));
+}
+
+const partners: PartnersRepo = {
+  async list() {
+    return [...store().partners].sort((a, b) => a.role.localeCompare(b.role) || a.name.localeCompare(b.name));
+  },
+  async byId(id) {
+    return store().partners.find((p) => p.id === id) ?? null;
+  },
+  async documents(partnerId) {
+    return store().partnerDocs.filter((d) => d.partnerId === partnerId).sort((a, b) => a.expires.localeCompare(b.expires));
+  },
+  async jobs(filter = {}) {
+    return jobsOf().filter(
+      (j) => (!filter.partnerId || j.partnerId === filter.partnerId) && (!filter.unassigned || !j.partnerId) && (!filter.role || j.role === filter.role),
+    );
+  },
+  async assign(bookingId, partnerId, by) {
+    const job = jobsOf().find((j) => j.bookingId === bookingId);
+    const b = store().bookings.find((x) => x.id === bookingId);
+    if (!job || !b) throw new Error("Not a job still to do");
+    if (partnerId === null) {
+      delete b.partnerId;
+    } else {
+      const p = store().partners.find((x) => x.id === partnerId);
+      if (!p || p.role !== job.role) throw new Error("Not this partner's kind of work");
+      b.partnerId = p.id;
+    }
+    recordAudit({ actor: by, action: "job.assign", target: bookingId, detail: partnerId ?? "nobody" });
+  },
+};
+
 const rates: RatesRepo = {
   async forRange(listingId, from, to) {
     const l = store().listings.find((x) => x.id === listingId);
@@ -898,10 +962,12 @@ const viewings: ViewingsRepo = {
     return made;
   },
   async forCurrentUser() {
-    return [...store().viewings].sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`));
+    // One preview account: viewings seeded for other people are the sales
+    // desk's to see, not hers. Anything requested in the preview is hers.
+    return (await viewings.all()).filter((v) => v.id !== "vwg_002" && v.id !== "vwg_003");
   },
   async all() {
-    return viewings.forCurrentUser();
+    return [...store().viewings].sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`));
   },
   async taken(saleId) {
     return store()
@@ -929,6 +995,7 @@ export const fixtureRepositories: Repositories = {
   reviews,
   work,
   rates,
+  partners,
   trips,
   messaging,
   ops,

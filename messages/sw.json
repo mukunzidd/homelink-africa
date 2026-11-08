@@ -1978,6 +1978,118 @@
       "set": "Bei zimewekwa",
       "backToBase": "Imerudi kwenye bei ya msingi",
       "failed": "Haijahifadhiwa. Bei lazima iwe zaidi ya sifuri."
+    },
+    "homes": {
+      "tenants": "Wapangaji",
+      "tenantsBody": "Kila upangaji unaoendelea, waliochelewa kodi kwanza. Fungua mmoja umkumbushe, rekodi uhamisho, au anza kuhama.",
+      "rentings": "Upangaji",
+      "overdue": "Wamechelewa kodi",
+      "dueSoon": "Inadaiwa ndani ya siku tano",
+      "rent": {
+        "overdue": "Imechelewa",
+        "due": "Inadaiwa",
+        "upcoming": "Iko sawa",
+        "paid": "Imelipwa yote"
+      },
+      "movingOut": "Anahama",
+      "movedOut": "Amana imerudishwa",
+      "perMonth": "{amount} kwa mwezi",
+      "nextDue": "Inayofuata {date}",
+      "allPaid": "Miezi yote imelipwa",
+      "ends": "Inaisha {date}",
+      "booking": "Uhifadhi",
+      "paidMonths": "Miezi iliyolipwa",
+      "monthsOf": "{paid} kati ya {total}",
+      "deposit": "Amana inayoshikiliwa",
+      "phone": "Simu",
+      "noTenants": "Hakuna anayepangisha sasa.",
+      "remind": "Tuma ukumbusho wa kodi",
+      "reminded": "Ukumbusho umetumwa",
+      "received": "Imepokelewa kwa uhamisho ({currency})",
+      "record": "Rekodi malipo",
+      "recordHint": "Kwa kodi iliyolipwa nje ya programu; inahesabiwa kwa mwezi wa zamani zaidi ambao haujalipwa.",
+      "recorded": "Malipo yamerekodiwa",
+      "moveOutDate": "Siku ya kuhama",
+      "startMoveOut": "Anza kuhama",
+      "moveOutBooked": "Ukaguzi wa kuhama umepangwa",
+      "moveOutOn": "Ukaguzi wa kuhama {date}. Rudisha amana ukishakamilika.",
+      "returnDeposit": "Rudisha amana",
+      "depositReturned": "Amana imerudishwa",
+      "depositDone": "Amehama; amana imerudishwa.",
+      "sales": "Nyumba zinazouzwa",
+      "salesBody": "Nyumba zilizo sokoni na watu wanaoomba kuziona. Kila badiliko la ziara humjulisha aliyeomba.",
+      "viewings": "Maombi ya ziara",
+      "view": {
+        "requested": "Imeombwa",
+        "confirmed": "Imethibitishwa",
+        "rescheduled": "Imehamishwa",
+        "done": "Imefanyika",
+        "cancelled": "Imeghairiwa"
+      },
+      "mode": {
+        "inPerson": "Ana kwa ana",
+        "video": "Kwa video"
+      },
+      "noViewings": "Hakuna aliyeomba kuona nyumba bado.",
+      "onSale": "Sokoni",
+      "sale": {
+        "onMarket": "Sokoni",
+        "underOffer": "Ina ofa",
+        "sold": "Imeuzwa"
+      },
+      "viewingsCount": "{count, plural, =0 {hakuna ziara} one {ziara #} other {ziara #}}",
+      "viewOnSite": "Tazama kwenye tovuti",
+      "askingPrice": "Bei inayoombwa ({currency})",
+      "status": "Hali",
+      "save": "Hifadhi",
+      "saleSaved": "Imehifadhiwa",
+      "confirm": "Thibitisha",
+      "viewingConfirmed": "Imethibitishwa; amejulishwa",
+      "reschedule": "Hamisha",
+      "markDone": "Weka imefanyika",
+      "viewingDone": "Imewekwa imefanyika",
+      "cancelViewing": "Ghairi",
+      "viewingCancelled": "Imeghairiwa; amejulishwa",
+      "day": "Siku",
+      "time": "Saa",
+      "move": "Hamisha ziara",
+      "viewingMoved": "Imehamishwa; amejulishwa",
+      "viewingFailed": "Muda huo umechukuliwa au hauruhusiwi. Chagua mwingine.",
+      "partners": "Madereva na waongozaji",
+      "partnersBody": "Wanaoendesha magari na kuongoza matembezi, alama zao, kazi zijazo, na hati zinazokaribia kuisha.",
+      "unassigned": "{count, plural, one {Kazi #} other {Kazi #}} bila mtu",
+      "people": "{count, plural, one {mtu #} other {watu #}}",
+      "role": {
+        "driver": "Dereva",
+        "guide": "Mwongozaji"
+      },
+      "docExpired": "Hati imeisha muda",
+      "docSoon": "Inaisha baada ya siku {days}",
+      "upcomingJobs": "{count, plural, =0 {Hakuna kazi katika wiki mbili zijazo} one {Kazi # katika wiki mbili zijazo} other {Kazi # katika wiki mbili zijazo}}",
+      "since": "tangu {date}",
+      "documents": "Hati",
+      "doc": {
+        "licence": "Leseni ya udereva",
+        "insurance": "Bima",
+        "permit": "Kibali cha uongozaji",
+        "id": "Kitambulisho"
+      },
+      "expires": "Inaisha {date}",
+      "docValid": "Halali",
+      "theirJobs": "Kazi zake · {count}",
+      "noJobs": "Hajapewa chochote bado.",
+      "openInLane": "Zilizo wazi kwenye kazi yake · {count}",
+      "noOpen": "Hakuna kinachosubiri.",
+      "payouts": "Malipo",
+      "payout": {
+        "held": "Yamezuiwa hadi mgeni afike",
+        "due": "Yanadaiwa",
+        "paid": "Yamelipwa"
+      },
+      "noPayouts": "Hakuna malipo bado.",
+      "assignTo": "Mpe",
+      "assigned": "Kazi imetolewa",
+      "nobody": "Hakuna"
     }
   },
   "account": {
@@ -2149,6 +2261,10 @@
       "documentExpiring": {
         "title": "Hati inakaribia kuisha",
         "body": "{doc} inaisha tarehe {date}."
+      },
+      "viewingChanged": {
+        "title": "Ziara {state, select, moved {imehamishwa} done {imekamilika, asante} cancelled {imeghairiwa} other {imesasishwa}}",
+        "body": "{name}: {when}."
       }
     },
     "title": "Arifa",
@@ -2223,7 +2339,8 @@
       "jobOffered": "Ofa mpya ya kazi",
       "jobChanged": "Kazi imebadilika",
       "payoutSent": "Malipo yametumwa",
-      "documentExpiring": "Hati inakaribia kuisha"
+      "documentExpiring": "Hati inakaribia kuisha",
+      "viewingChanged": "Ziara imehamishwa au imekamilika"
     }
   },
   "extras": {

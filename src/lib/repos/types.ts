@@ -1,5 +1,8 @@
 import type { ListingPatch } from "@/lib/workspace/listing-patch";
 import type {
+  Partner,
+  PartnerDocument,
+  PartnerJob,
   SharedLocation,
   HousekeepingTask,
   AddOnRequest,
@@ -123,7 +126,11 @@ export type SaleQuery = {
  * plot, title) are not a stay's.
  */
 export interface SalesRepo extends SupplyById<HomeForSale> {
+  /** On the market and under offer; sold homes are left out. */
   list(query?: SaleQuery): Promise<HomeForSale[]>;
+  /** Every home for sale, sold included: the workspace's view. */
+  all(): Promise<HomeForSale[]>;
+  update(id: string, patch: { price?: Money; saleStatus?: HomeForSale["saleStatus"] }): Promise<HomeForSale>;
   bySlug(slug: string): Promise<HomeForSale | null>;
   neighbourhoods(): Promise<string[]>;
 }
@@ -187,6 +194,12 @@ export interface AvailabilityRepo {
 }
 
 export interface BookingRepo {
+  /** Rent received outside the app (a bank transfer). Must be a renting, in its rent's currency, above zero. */
+  recordRentPayment(reference: string, by: Role, amount: Money): Promise<PaymentRecord>;
+  /** Books the move-out inspection and holds the deposit to return. Once per renting. */
+  startMoveOut(reference: string, by: Role, date: string): Promise<Booking>;
+  /** Gives the deposit back after a move-out has been booked. Once. */
+  returnDeposit(reference: string, by: Role): Promise<Booking>;
   listForCurrentUser(): Promise<Booking[]>;
   listAll(query?: BookingListQuery): Promise<Booking[]>;
   /**
@@ -374,6 +387,17 @@ export interface ReviewsRepo {
   create(r: Pick<Review, "bookingId" | "ratings" | "text">): Promise<Review>;
 }
 
+export interface PartnersRepo {
+  list(): Promise<Partner[]>;
+  byId(id: string): Promise<Partner | null>;
+  /** Soonest to expire first. */
+  documents(partnerId: string): Promise<PartnerDocument[]>;
+  /** Upcoming and current car and day-out bookings, as work. */
+  jobs(filter?: { partnerId?: string; unassigned?: boolean; role?: Partner["role"] }): Promise<PartnerJob[]>;
+  /** Gives a job to a partner in its lane, or takes it back with null. */
+  assign(bookingId: string, partnerId: string | null, by: Role): Promise<void>;
+}
+
 /** Per-night rates over the base rate, set on the rates grid; quoteStay reads them from the listing. */
 export interface RatesRepo {
   /** Every night in [from, to), with the rate it is sold at and whether that is its own or the base. */
@@ -403,6 +427,7 @@ export type Repositories = {
   reviews: ReviewsRepo;
   work: WorkRepo;
   rates: RatesRepo;
+  partners: PartnersRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;

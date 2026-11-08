@@ -21,6 +21,7 @@ export const NOTIFICATION_CATALOG: Record<
   newMessage: { category: "message", audiences: ["guest", "ops", "admin", "driver", "guide"], defaultChannels: ["inApp", "push"] },
   reviewRequest: { category: "booking", audiences: ["guest"], defaultChannels: ["inApp", "email"] },
   viewingConfirmed: { category: "booking", audiences: ["guest"], defaultChannels: ["inApp", "email", "whatsapp"] },
+  viewingChanged: { category: "booking", audiences: ["guest"], defaultChannels: ["inApp", "email", "whatsapp"] },
   newBooking: { category: "booking", audiences: ["ops", "admin"], defaultChannels: ["inApp"] },
   arrivalToday: { category: "stay", audiences: ["ops", "admin"], defaultChannels: ["inApp", "email"] },
   newAsk: { category: "work", audiences: ["ops", "admin"], defaultChannels: ["inApp", "push"] },

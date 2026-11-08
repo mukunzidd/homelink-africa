@@ -1978,6 +1978,118 @@
       "set": "Prices set",
       "backToBase": "Back to the base rate",
       "failed": "Not saved. The price must be above zero."
+    },
+    "homes": {
+      "tenants": "Tenants",
+      "tenantsBody": "Every renting under way, anyone behind on rent first. Open one to remind them, record a transfer, or start the move-out.",
+      "rentings": "Rentings",
+      "overdue": "Behind on rent",
+      "dueSoon": "Due in the next five days",
+      "rent": {
+        "overdue": "Overdue",
+        "due": "Due",
+        "upcoming": "Up to date",
+        "paid": "Paid in full"
+      },
+      "movingOut": "Moving out",
+      "movedOut": "Deposit returned",
+      "perMonth": "{amount} a month",
+      "nextDue": "Next due {date}",
+      "allPaid": "Every month paid",
+      "ends": "Ends {date}",
+      "booking": "Booking",
+      "paidMonths": "Months paid",
+      "monthsOf": "{paid} of {total}",
+      "deposit": "Deposit held",
+      "phone": "Phone",
+      "noTenants": "Nobody is renting right now.",
+      "remind": "Send a rent reminder",
+      "reminded": "Reminder sent",
+      "received": "Received by transfer ({currency})",
+      "record": "Record payment",
+      "recordHint": "For rent paid outside the app; it counts towards the oldest unpaid month.",
+      "recorded": "Payment recorded",
+      "moveOutDate": "Move-out day",
+      "startMoveOut": "Start the move-out",
+      "moveOutBooked": "Move-out inspection booked",
+      "moveOutOn": "Move-out inspection {date}. Return the deposit once it is done.",
+      "returnDeposit": "Return the deposit",
+      "depositReturned": "Deposit returned",
+      "depositDone": "Moved out; the deposit has gone back.",
+      "sales": "Homes for sale",
+      "salesBody": "Homes on the market and the people asking to see them. Every change to a viewing tells the person who asked.",
+      "viewings": "Viewing requests",
+      "view": {
+        "requested": "Requested",
+        "confirmed": "Confirmed",
+        "rescheduled": "Moved",
+        "done": "Done",
+        "cancelled": "Cancelled"
+      },
+      "mode": {
+        "inPerson": "In person",
+        "video": "By video"
+      },
+      "noViewings": "Nobody has asked to see a home yet.",
+      "onSale": "On the market",
+      "sale": {
+        "onMarket": "On the market",
+        "underOffer": "Under offer",
+        "sold": "Sold"
+      },
+      "viewingsCount": "{count, plural, =0 {no viewings} one {# viewing} other {# viewings}}",
+      "viewOnSite": "View on the site",
+      "askingPrice": "Asking price ({currency})",
+      "status": "Status",
+      "save": "Save",
+      "saleSaved": "Saved",
+      "confirm": "Confirm",
+      "viewingConfirmed": "Confirmed; they have been told",
+      "reschedule": "Move it",
+      "markDone": "Mark as done",
+      "viewingDone": "Marked done",
+      "cancelViewing": "Cancel",
+      "viewingCancelled": "Cancelled; they have been told",
+      "day": "Day",
+      "time": "Time",
+      "move": "Move the viewing",
+      "viewingMoved": "Moved; they have been told",
+      "viewingFailed": "That slot is taken or not allowed. Pick another.",
+      "partners": "Drivers and guides",
+      "partnersBody": "Who drives the cars and leads the days out, how they are rated, the work coming up, and any paper about to run out.",
+      "unassigned": "{count, plural, one {# job} other {# jobs}} with nobody on them",
+      "people": "{count, plural, one {# person} other {# people}}",
+      "role": {
+        "driver": "Driver",
+        "guide": "Guide"
+      },
+      "docExpired": "Document expired",
+      "docSoon": "Expires in {days} days",
+      "upcomingJobs": "{count, plural, =0 {No jobs in the next two weeks} one {# job in the next two weeks} other {# jobs in the next two weeks}}",
+      "since": "since {date}",
+      "documents": "Documents",
+      "doc": {
+        "licence": "Driving licence",
+        "insurance": "Insurance",
+        "permit": "Guide permit",
+        "id": "National ID"
+      },
+      "expires": "Expires {date}",
+      "docValid": "Valid",
+      "theirJobs": "Their jobs · {count}",
+      "noJobs": "Nothing given to them yet.",
+      "openInLane": "Open in their lane · {count}",
+      "noOpen": "Nothing waiting.",
+      "payouts": "Payouts",
+      "payout": {
+        "held": "Held until check-in",
+        "due": "Due",
+        "paid": "Paid"
+      },
+      "noPayouts": "No payouts yet.",
+      "assignTo": "Give to",
+      "assigned": "Job given",
+      "nobody": "Nobody"
     }
   },
   "account": {
@@ -2149,6 +2261,10 @@
       "documentExpiring": {
         "title": "Document expiring",
         "body": "{doc} expires on {date}."
+      },
+      "viewingChanged": {
+        "title": "Viewing {state, select, moved {moved} done {done, thank you} cancelled {cancelled} other {updated}}",
+        "body": "{name}: {when}."
       }
     },
     "title": "Notifications",
@@ -2223,7 +2339,8 @@
       "jobOffered": "New job offer",
       "jobChanged": "Job changed",
       "payoutSent": "Payout sent",
-      "documentExpiring": "Document expiring"
+      "documentExpiring": "Document expiring",
+      "viewingChanged": "Viewing moved or done"
     }
   },
   "extras": {

@@ -1,4 +1,4 @@
-import type { Block, Booking, Incident, Listing, MaintenanceTicket, PaymentRecord, Review } from "@/lib/domain/types";
+import type { Block, Booking, Incident, Listing, MaintenanceTicket, Partner, PartnerDocument, PaymentRecord, Review, Viewing } from "@/lib/domain/types";
 import { quoteRent, quoteStay } from "@/lib/domain/pricing";
 import { addDays } from "@/lib/domain/dates";
 import { kigaliDay } from "@/lib/domain/instants";
@@ -277,4 +277,43 @@ export function seedHistory(listings: Listing[], existing: Booking[], now: Date)
     }
   });
   return out;
+}
+
+/**
+ * The drivers and guides. Names match the bookings, threads and payouts
+ * already seeded ("Eric H.", "Solange K."), so every screen agrees on who
+ * is who. Eric's licence runs out in under a month: the expiring-document
+ * warning has something real to show.
+ */
+export function seedPartners(now: Date): { partners: Partner[]; docs: PartnerDocument[] } {
+  const today = kigaliDay(now);
+  const partners: Partner[] = [
+    { id: "ptn_eric", role: "driver", name: "Eric Hakizimana", shortName: "Eric H.", phone: "+250 788 300 411", supplyIds: ["veh_rav4", "veh_landcruiser"], rating: 4.9, joinedAt: "2025-03-10" },
+    { id: "ptn_jeanpaul", role: "driver", name: "Jean-Paul Nshimiyimana", shortName: "Jean-Paul N.", phone: "+250 788 300 522", supplyIds: ["veh_corolla", "veh_hiace"], rating: 4.7, joinedAt: "2025-08-02" },
+    { id: "ptn_emmanuel", role: "guide", name: "Emmanuel Rukundo", shortName: "Emmanuel R.", phone: "+250 788 300 633", supplyIds: ["exp_gorillas", "exp_nyungwe"], rating: 4.95, joinedAt: "2024-11-20" },
+    { id: "ptn_solange", role: "guide", name: "Solange Kamikazi", shortName: "Solange K.", phone: "+250 788 300 744", supplyIds: ["exp_kigali_walk"], rating: 4.9, joinedAt: "2025-01-15" },
+    { id: "ptn_didier", role: "guide", name: "Didier Bizimana", shortName: "Didier B.", phone: "+250 788 300 855", supplyIds: ["exp_kivu"], rating: 4.8, joinedAt: "2025-06-01" },
+  ];
+  const d = (id: string, partnerId: string, kind: PartnerDocument["kind"], days: number): PartnerDocument => ({ id, partnerId, kind, expires: addDays(today, days) });
+  const docs: PartnerDocument[] = [
+    d("doc_eric_licence", "ptn_eric", "licence", 24),
+    d("doc_eric_id", "ptn_eric", "id", 900),
+    d("doc_jp_licence", "ptn_jeanpaul", "licence", 410),
+    d("doc_jp_insurance", "ptn_jeanpaul", "insurance", 75),
+    d("doc_emm_permit", "ptn_emmanuel", "permit", 160),
+    d("doc_sol_permit", "ptn_solange", "permit", 300),
+    d("doc_did_permit", "ptn_didier", "permit", -3),
+  ];
+  return { partners, docs };
+}
+
+/** Three viewing requests on homes for sale, in the three states the sales page acts on. */
+export function seedViewings(now: Date): Viewing[] {
+  const today = kigaliDay(now);
+  const at = new Date(now.getTime() - 2 * 86_400_000).toISOString();
+  return [
+    { id: "vwg_001", saleId: "sale_gacuriro_house", mode: "inPerson", date: addDays(today, 3), time: "10:00", contact: { name: "Ange Uwase", email: "ange@example.rw", phone: "+250 788 123 456" }, notes: "Coming with my partner; we would like to see the garden.", status: "requested", createdAt: at },
+    { id: "vwg_002", saleId: "sale_kimihurura_apartment", mode: "video", date: addDays(today, 5), time: "15:30", contact: { name: "Jonas Becker", email: "jonas@example.de", phone: "+49 151 2345 6789" }, status: "confirmed", createdAt: at },
+    { id: "vwg_003", saleId: "sale_rebero_villa", mode: "inPerson", date: addDays(today, -4), time: "11:00", contact: { name: "Priya Nair", email: "priya@example.in", phone: "+91 98765 43210" }, status: "done", createdAt: at },
+  ];
 }

@@ -1,5 +1,7 @@
 import type {
   HousekeepingTask,
+  Partner,
+  PartnerDocument,
   AddOnRequest,
   AppNotification,
   AuditEntry,
@@ -38,7 +40,7 @@ import {
   VERIFICATION_QUEUE,
 } from "./data";
 import { seedNotifications } from "./notifications";
-import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents, seedHistory } from "./booking-seeds";
+import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents, seedHistory, seedPartners, seedViewings } from "./booking-seeds";
 
 /**
  * The fixtures, as data that can change.
@@ -81,6 +83,8 @@ export type FixtureStore = {
   tickets: MaintenanceTicket[];
   drafts: ListingDraft[];
   /** Photos uploaded to a thread, held until (and after) a message uses them. */
+  partners: Partner[];
+  partnerDocs: PartnerDocument[];
   /** Who has each housekeeping task and how far it got, by task id. */
   housekeeping: Record<string, { assignee?: string; status: HousekeepingTask["status"]; note?: string }>;
   uploads: { id: string; conversationId: string; by: Role; mime: string; bytes: Uint8Array; messageId?: string }[];
@@ -119,13 +123,14 @@ function seed(): FixtureStore {
     notifications: seedNotifications(now),
     payments: seedPayments(fixed.bookings),
     blocks: seedBlocks(now),
-    viewings: [],
+    viewings: seedViewings(now),
     incidents: seedIncidents(now),
     reviews: seedReviews(),
     tickets: seedTickets(now),
     drafts: [],
     uploads: [],
     housekeeping: {},
+    ...(({ partners, docs }) => ({ partners, partnerDocs: docs }))(seedPartners(now)),
     prefs: {},
   };
 }
@@ -156,7 +161,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 12;
+const SHAPE = 14;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {
