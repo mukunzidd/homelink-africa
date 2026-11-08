@@ -1774,6 +1774,38 @@
       "details": "Details",
       "create": "Create ticket",
       "cancel": "Cancel"
+    },
+    "overview": {
+      "title": "Overview",
+      "subtitle": "How the homes are doing, and what is waiting on you. {date}.",
+      "thisWeek": "Bookings this week",
+      "lastWeek": "{count} the week before",
+      "occupancy": "Occupancy",
+      "next30": "Next 30 days, all homes",
+      "revenue": "Revenue this month",
+      "revenueHint": "Placed this month, less refunds",
+      "openIncidents": "Open incidents",
+      "overdueRent": "Rent overdue",
+      "weeklyTitle": "Bookings placed, last 12 weeks",
+      "bookingsCount": "{count, plural, one {# booking} other {# bookings}}",
+      "occupancyTitle": "Occupancy by home, next 30 days",
+      "toCalendar": "Calendar",
+      "today": "Today",
+      "toToday": "Open the day",
+      "arrivals": "Arriving",
+      "departures": "Leaving",
+      "inHouse": "Staying",
+      "turnovers": "Same-day turnovers",
+      "todo": "Waiting on you",
+      "todos": {
+        "publish": "{count, plural, one {# inspected home} other {# inspected homes}} to put live",
+        "incidents": "{count, plural, one {# incident} other {# incidents}} with nobody on it",
+        "asks": "{count, plural, one {# guest ask} other {# guest asks}} with no owner",
+        "urgent": "{count, plural, one {# urgent repair} other {# urgent repairs}} not done",
+        "cleans": "{count, plural, one {# clean} other {# cleans}} not ready before an arrival",
+        "rent": "{count, plural, one {# tenant} other {# tenants}} behind on rent"
+      },
+      "allClear": "Nothing is waiting on you."
     }
   },
   "account": {

@@ -38,7 +38,7 @@ import {
   VERIFICATION_QUEUE,
 } from "./data";
 import { seedNotifications } from "./notifications";
-import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents } from "./booking-seeds";
+import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents, seedHistory } from "./booking-seeds";
 
 /**
  * The fixtures, as data that can change.
@@ -109,7 +109,8 @@ function seed(): FixtureStore {
   });
   const now = new Date();
   // Bookings in every phase a guest's booking page has, dated from today.
-  fixed.bookings = [...seedPhaseBookings(fixed.listings, now), ...fixed.bookings].sort((a, b) =>
+  const phased = [...seedPhaseBookings(fixed.listings, now), ...fixed.bookings];
+  fixed.bookings = [...phased, ...seedHistory(fixed.listings, phased, now)].sort((a, b) =>
     b.startDate.localeCompare(a.startDate),
   );
   settleThreads(fixed.conversations, fixed.messages, now);
@@ -155,7 +156,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 11;
+const SHAPE = 12;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {

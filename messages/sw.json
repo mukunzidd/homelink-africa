@@ -1774,6 +1774,38 @@
       "details": "Maelezo",
       "create": "Unda tiketi",
       "cancel": "Ghairi"
+    },
+    "overview": {
+      "title": "Muhtasari",
+      "subtitle": "Hali ya nyumba, na kinachokusubiri. {date}.",
+      "thisWeek": "Uhifadhi wiki hii",
+      "lastWeek": "{count} wiki iliyopita",
+      "occupancy": "Ukaliaji",
+      "next30": "Siku 30 zijazo, nyumba zote",
+      "revenue": "Mapato ya mwezi huu",
+      "revenueHint": "Uhifadhi wa mwezi huu, ukiondoa marejesho",
+      "openIncidents": "Matukio yaliyo wazi",
+      "overdueRent": "Kodi iliyochelewa",
+      "weeklyTitle": "Uhifadhi, wiki 12 zilizopita",
+      "bookingsCount": "{count, plural, one {uhifadhi #} other {uhifadhi #}}",
+      "occupancyTitle": "Ukaliaji kwa nyumba, siku 30 zijazo",
+      "toCalendar": "Kalenda",
+      "today": "Leo",
+      "toToday": "Fungua siku",
+      "arrivals": "Wanaofika",
+      "departures": "Wanaoondoka",
+      "inHouse": "Waliopo",
+      "turnovers": "Kubadilisha wageni siku moja",
+      "todo": "Kinachokusubiri",
+      "todos": {
+        "publish": "{count, plural, one {Nyumba # iliyokaguliwa} other {Nyumba # zilizokaguliwa}} kuwekwa hewani",
+        "incidents": "{count, plural, one {Tukio #} other {Matukio #}} bila mtu anayeshughulikia",
+        "asks": "{count, plural, one {Ombi # la mgeni} other {Maombi # ya wageni}} bila mwenyewe",
+        "urgent": "{count, plural, one {Tengenezo # la dharura} other {Matengenezo # ya dharura}} hayajakamilika",
+        "cleans": "{count, plural, one {Usafi #} other {Usafi #}} haujawa tayari kabla ya mgeni",
+        "rent": "{count, plural, one {Mpangaji #} other {Wapangaji #}} wamechelewa kodi"
+      },
+      "allClear": "Hakuna kinachokusubiri."
     }
   },
   "account": {

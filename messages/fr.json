@@ -1774,6 +1774,38 @@
       "details": "Détails",
       "create": "Créer le ticket",
       "cancel": "Annuler"
+    },
+    "overview": {
+      "title": "Vue d'ensemble",
+      "subtitle": "Comment vont les logements, et ce qui vous attend. {date}.",
+      "thisWeek": "Réservations cette semaine",
+      "lastWeek": "{count} la semaine d'avant",
+      "occupancy": "Taux d'occupation",
+      "next30": "30 prochains jours, tous logements",
+      "revenue": "Chiffre d'affaires du mois",
+      "revenueHint": "Réservé ce mois-ci, remboursements déduits",
+      "openIncidents": "Incidents ouverts",
+      "overdueRent": "Loyers en retard",
+      "weeklyTitle": "Réservations, 12 dernières semaines",
+      "bookingsCount": "{count, plural, one {# réservation} other {# réservations}}",
+      "occupancyTitle": "Occupation par logement, 30 prochains jours",
+      "toCalendar": "Calendrier",
+      "today": "Aujourd'hui",
+      "toToday": "Ouvrir la journée",
+      "arrivals": "Arrivées",
+      "departures": "Départs",
+      "inHouse": "Sur place",
+      "turnovers": "Rotations le jour même",
+      "todo": "Ce qui vous attend",
+      "todos": {
+        "publish": "{count, plural, one {# logement inspecté} other {# logements inspectés}} à mettre en ligne",
+        "incidents": "{count, plural, one {# incident} other {# incidents}} sans personne dessus",
+        "asks": "{count, plural, one {# demande client} other {# demandes client}} sans responsable",
+        "urgent": "{count, plural, one {# réparation urgente} other {# réparations urgentes}} pas terminée(s)",
+        "cleans": "{count, plural, one {# ménage} other {# ménages}} pas prêt(s) avant une arrivée",
+        "rent": "{count, plural, one {# locataire} other {# locataires}} en retard de loyer"
+      },
+      "allClear": "Rien ne vous attend."
     }
   },
   "account": {

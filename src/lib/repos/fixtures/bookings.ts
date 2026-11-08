@@ -58,6 +58,7 @@ function supplyForDraft(d: BookingDraft): Supply | null {
 }
 
 const ACTIVE = new Set(["confirmed", "active"]);
+const OTHER_GUESTS = (b: Booking) => b.id.startsWith("bkg_hist_") || b.id === "bkg_phase_leaveToday" || b.id === "bkg_phase_arriveToday";
 
 /** Days a booking occupies: a stay's nights [start, end), a hire's days [start, end]. */
 function occupies(b: Booking, date: string): boolean {
@@ -313,7 +314,10 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
 
   const repo: BookingRepo = {
     async listForCurrentUser() {
-      return [...store().bookings];
+      // There is one preview account. Bookings seeded for other guests (the
+      // desk's same-day changeover, twelve weeks of history) are the
+      // workspace's to see, not hers; anything placed in the preview is.
+      return store().bookings.filter((b) => !OTHER_GUESTS(b));
     },
 
     async listAll(query = {}) {

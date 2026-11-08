@@ -1774,6 +1774,38 @@
       "details": "Ibisobanuro",
       "create": "Andika",
       "cancel": "Reka"
+    },
+    "overview": {
+      "title": "Incamake",
+      "subtitle": "Uko amazu ahagaze, n'ibigutegereje. {date}.",
+      "thisWeek": "Ibyafashwe iki cyumweru",
+      "lastWeek": "{count} icyumweru gishize",
+      "occupancy": "Uko amazu atuwe",
+      "next30": "Iminsi 30 iri imbere, amazu yose",
+      "revenue": "Amafaranga y'uku kwezi",
+      "revenueHint": "Ibyafashwe uku kwezi, hakuwemo ibyasubijwe",
+      "openIncidents": "Ibibazo bifunguye",
+      "overdueRent": "Ubukode bwatinze",
+      "weeklyTitle": "Ibyafashwe, ibyumweru 12 bishize",
+      "bookingsCount": "{count, plural, one {ifatwa #} other {amafatwa #}}",
+      "occupancyTitle": "Uko buri nzu ituwe, iminsi 30 iri imbere",
+      "toCalendar": "Kalendari",
+      "today": "Uyu munsi",
+      "toToday": "Fungura umunsi",
+      "arrivals": "Abaza",
+      "departures": "Abagenda",
+      "inHouse": "Abahari",
+      "turnovers": "Isukura ry'umunsi umwe",
+      "todo": "Ibigutegereje",
+      "todos": {
+        "publish": "Inzu {count} zagenzuwe zo gushyira ku isoko",
+        "incidents": "Ibibazo {count} nta wubikurikirana",
+        "asks": "Ibisabwa {count} by'abashyitsi nta nyirabyo",
+        "urgent": "Ibisanwa byihutirwa {count} bitararangira",
+        "cleans": "Isuku {count} itararangira mbere y'umushyitsi",
+        "rent": "Abakodesha {count} batinze kwishyura"
+      },
+      "allClear": "Nta kigutegereje."
     }
   },
   "account": {

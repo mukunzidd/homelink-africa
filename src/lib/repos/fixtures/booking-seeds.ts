@@ -192,3 +192,89 @@ export function seedIncidents(now: Date): Incident[] {
     { id: "inc_002", bookingId: "bkg_phase_leaveToday", category: "internet", urgency: "whenever", description: "Wi-fi drops in the bedroom; fine in the living room.", status: "open", createdAt: ago(20), assignee: "Patrick N." },
   ];
 }
+
+const HISTORY_GUESTS = [
+  ["Claire Dubois", "claire@example.fr", "+33 6 12 34 56 78"],
+  ["Jonas Becker", "jonas@example.de", "+49 151 2345 6789"],
+  ["Amani Mwangi", "amani@example.ke", "+254 722 345 678"],
+  ["Sophie Martin", "sophie@example.be", "+32 470 12 34 56"],
+  ["Eric Habimana", "eric@example.rw", "+250 788 456 123"],
+  ["Priya Nair", "priya@example.in", "+91 98765 43210"],
+  ["Daniel Okafor", "daniel@example.ng", "+234 803 123 4567"],
+  ["Aline Mukamana", "aline@example.rw", "+250 788 987 654"],
+  ["Lucas Silva", "lucas@example.br", "+55 11 91234 5678"],
+  ["Fatou Diallo", "fatou@example.sn", "+221 77 123 45 67"],
+] as const;
+
+/** Bookings placed per week over the last twelve, oldest first: a slow August, a busier autumn. */
+const PER_WEEK = [2, 3, 2, 4, 3, 5, 4, 6, 5, 4, 6, 5];
+
+/**
+ * Twelve weeks of ordinary nightly bookings, so the overview's numbers and
+ * the finance pages have a history to show rather than one day's worth.
+ * Deterministic (no randomness, so screenshots compare), dated from today,
+ * and placed only where the home has a unit free on every night, checked
+ * against everything already booked.
+ */
+export function seedHistory(listings: Listing[], existing: Booking[], now: Date): Booking[] {
+  const today = kigaliDay(now);
+  const homes = listings.filter((l) => l.nightlyRate);
+  const out: Booking[] = [];
+  const all = () => [...existing, ...out];
+  const fits = (l: Listing, start: string, end: string) => {
+    const live = all().filter((b) => b.supplyItemId === l.id && b.status !== "cancelled");
+    for (let d = start; d < end; d = addDays(d, 1)) {
+      if (live.filter((b) => b.startDate <= d && d < b.endDate).length >= l.unitsAvailable) return false;
+    }
+    return true;
+  };
+  let n = 0;
+  PER_WEEK.forEach((count, w) => {
+    for (let k = 0; k < count; k++, n++) {
+      const placed = addDays(today, -7 * (11 - w) - ((k * 3) % 7));
+      if (placed > today) continue;
+      const lead = 4 + ((n * 7) % 26);
+      const nights = 2 + ((n * 5) % 5);
+      // Try homes in turn from a different one each time until one is free.
+      for (let tryNo = 0; tryNo < homes.length; tryNo++) {
+        const l = homes[(n + tryNo) % homes.length];
+        const start = addDays(placed, lead);
+        const end = addDays(start, nights);
+        if (!fits(l, start, end)) continue;
+        const q = quoteStay(l, start, end);
+        if (!q) continue;
+        const [name, email, phone] = HISTORY_GUESTS[n % HISTORY_GUESTS.length];
+        const status: Booking["status"] = n % 17 === 5 ? "cancelled" : end <= today ? "completed" : start <= today ? "active" : "confirmed";
+        const at = `${placed}T${String(8 + (n % 10)).padStart(2, "0")}:15:00.000Z`;
+        const code = (1_200_000 + n * 7919).toString(36).toUpperCase();
+        out.push({
+          id: `bkg_hist_${String(n).padStart(3, "0")}`,
+          reference: `HL-${code.slice(0, 4)}-${code.slice(-2)}H`,
+          service: "stay",
+          supplyItemId: l.id,
+          title: l.name,
+          startDate: start,
+          endDate: end,
+          party: 1 + (n % Math.max(1, l.sleeps)),
+          total: q.total,
+          lines: q.lines,
+          status,
+          escrowHeld: q.escrowHeld && status === "confirmed",
+          stayMode: "nightly",
+          guest: { name, email, phone },
+          paymentPlan: "full",
+          ...(status === "cancelled" ? { refund: q.total } : {}),
+          timeline: [
+            { at, kind: "placed", actor: "guest" },
+            { at, kind: "paid", actor: "guest" },
+            ...(status === "cancelled" ? [{ at, kind: "cancelled" as const, actor: "guest" as const }] : []),
+            ...(status === "active" || status === "completed" ? [{ at: `${start}T12:30:00.000Z`, kind: "checkedIn" as const, actor: "ops" as const }] : []),
+            ...(status === "completed" ? [{ at: `${end}T09:00:00.000Z`, kind: "checkedOut" as const, actor: "ops" as const }] : []),
+          ],
+        });
+        break;
+      }
+    }
+  });
+  return out;
+}
