@@ -62,8 +62,12 @@ export async function publishInspection(id: string) {
 
 export async function updateIncident(id: string, patch: { status?: Incident["status"]; assignee?: string }) {
   const by = await may("incidents");
-  await repos().incidents.update(id, patch);
-  await repos().audit.record({ actor: by, action: "incident.update", target: id, detail: JSON.stringify(patch) });
+  // Rebuilt from the two fields this form edits; the client's object is not passed on.
+  const clean: { status?: Incident["status"]; assignee?: string } = {};
+  if (patch.status !== undefined) clean.status = patch.status;
+  if (typeof patch.assignee === "string") clean.assignee = patch.assignee;
+  await repos().incidents.update(id, clean);
+  await repos().audit.record({ actor: by, action: "incident.update", target: id, detail: JSON.stringify(clean) });
   refresh();
 }
 

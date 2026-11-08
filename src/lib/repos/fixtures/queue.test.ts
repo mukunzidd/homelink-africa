@@ -108,3 +108,28 @@ describe("incidents.toTicket", () => {
     expect(await repos.incidents.toTicket(inc.id, "ops")).toBeNull();
   });
 });
+
+describe("security review after Task 35", () => {
+  beforeEach(() => resetStore());
+
+  it("never posts a guest's quote into a thread a driver or guide is in", async () => {
+    const car = store().bookings.find((b) => b.id === "bkg_002")!;
+    expect(store().conversations.some((c) => c.scope.id === car.id && c.participantRoles.includes("driver"))).toBe(true);
+    const ask = store().addOnRequests.find((a) => a.bookingId === car.id)!;
+    await repos.ops.quoteAsk(ask.id, "ops", { minor: 5000, currency: "RWF" }, "Child seat");
+    const withQuote = store().conversations.filter((c) => store().messages.some((m) => m.conversationId === c.id && m.body.includes("Child seat")));
+    expect(withQuote).toHaveLength(1);
+    expect([...withQuote[0].participantRoles].sort()).toEqual(["guest", "ops"]);
+  });
+
+  it("updates only an incident's status and assignee, whatever else is sent", async () => {
+    const inc = store().incidents[0];
+    const before = { ...inc };
+    await repos.incidents.update(inc.id, { status: "resolved", bookingId: "bkg_other", description: "x" } as never);
+    expect(store().incidents[0]).toMatchObject({ status: "resolved", bookingId: before.bookingId, description: before.description });
+  });
+
+  it("refuses a status that is not one", async () => {
+    await expect(repos.incidents.update(store().incidents[0].id, { status: "deleted" as never })).rejects.toThrow();
+  });
+});

@@ -320,7 +320,11 @@ function postToGuest(bookingId: string, authorName: string, authorRole: Role, bo
   const b = store().bookings.find((x) => x.id === bookingId);
   if (!b) throw new Error("No such booking");
   const at = new Date().toISOString();
-  let c = store().conversations.find((x) => x.scope.kind === "booking" && x.scope.id === bookingId && x.participantRoles.includes("guest"));
+  // Only the guest and the desk: a driver or guide on the same booking
+  // shares other threads, and must not read what the guest is charged.
+  let c = store().conversations.find(
+    (x) => x.scope.kind === "booking" && x.scope.id === bookingId && x.participantRoles.includes("guest") && x.participantRoles.every((r) => r === "guest" || r === "ops" || r === "admin"),
+  );
   if (!c) {
     c = {
       id: nextId("cnv"),
@@ -551,8 +555,15 @@ const incidents: IncidentsRepo = {
   async update(id, patch) {
     const i = store().incidents.find((x) => x.id === id);
     if (!i) throw new Error(`No incident ${id}`);
-    if (patch.assignee !== undefined && patch.assignee !== "" && !TEAM.includes(patch.assignee)) throw new Error("Not on the team");
-    Object.assign(i, patch);
+    // Named fields only: whatever else a caller sends is ignored.
+    if (patch.status !== undefined) {
+      if (!["open", "inProgress", "resolved"].includes(patch.status)) throw new Error("No such status");
+      i.status = patch.status;
+    }
+    if (patch.assignee !== undefined) {
+      if (typeof patch.assignee !== "string" || (patch.assignee !== "" && !TEAM.includes(patch.assignee))) throw new Error("Not on the team");
+      i.assignee = patch.assignee || undefined;
+    }
     return i;
   },
 
