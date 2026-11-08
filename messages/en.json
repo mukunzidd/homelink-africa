@@ -289,7 +289,8 @@
     "total": "Total",
     "totalIn": "Total ({currency})",
     "chargedIn": "Charged in {currency}. Converted at today's rate; the amount you are charged is confirmed before you pay.",
-    "noHiddenFees": "No booking fee is added at the end. This is the price."
+    "noHiddenFees": "No booking fee is added at the end. This is the price.",
+    "accommodationAvg": "{rate} average × {nights, plural, one {# night} other {# nights}}"
   },
   "checkout": {
     "title": "Confirm and pay",
@@ -1933,6 +1934,50 @@
       "yes": "Yes",
       "no": "No",
       "toInspections": "Go to inspections"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "bodyAdmin": "Every home against the next two weeks or month. A bar is a booking; tap a free night to hold it for the owner.",
+      "bodyOps": "Every home against the next two weeks or month. A bar is a booking; open it to see the guest.",
+      "home": "Home",
+      "earlier": "Earlier",
+      "later": "Later",
+      "today": "Today",
+      "span": "Days shown",
+      "days": "{count} days",
+      "held": "Night held",
+      "released": "Night released",
+      "cannot": "That night cannot be changed.",
+      "tapToHold": "Tap to hold for the owner",
+      "tapToRelease": "Held. Tap to release",
+      "repair": "Held for a repair",
+      "blocked": "Held for the owner",
+      "legendStay": "Booked",
+      "legendRent": "Renting",
+      "legendEnded": "Stayed",
+      "legendHeld": "Held",
+      "legendRepair": "Repair"
+    },
+    "rates": {
+      "title": "Rates",
+      "body": "What each night sells for, against the home's base rate. Tap a first and a last night, then set a price or put them back to the base.",
+      "homes": "Homes",
+      "prev": "Previous month",
+      "next": "Next month",
+      "base": "Base rate",
+      "ownCount": "{count, plural, =0 {no nights priced differently} one {# night priced differently} other {# nights priced differently}}",
+      "own": "its own rate",
+      "selected": "{from} to {to}",
+      "selectedOne": "{date}",
+      "pickEnd": "tap a last night, or set this one",
+      "pickStart": "Tap a first night to start.",
+      "price": "Price a night ({currency})",
+      "setButton": "Set the price",
+      "baseButton": "Back to base",
+      "clear": "Clear",
+      "set": "Prices set",
+      "backToBase": "Back to the base rate",
+      "failed": "Not saved. The price must be above zero."
     }
   },
   "account": {

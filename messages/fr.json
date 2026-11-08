@@ -289,7 +289,8 @@
     "total": "Total",
     "totalIn": "Total ({currency})",
     "chargedIn": "Débité en {currency}. Converti au taux du jour ; le montant débité est confirmé avant le paiement.",
-    "noHiddenFees": "Aucun frais de réservation n'est ajouté à la fin. C'est le prix."
+    "noHiddenFees": "Aucun frais de réservation n'est ajouté à la fin. C'est le prix.",
+    "accommodationAvg": "{rate} en moyenne × {nights, plural, one {# nuit} other {# nuits}}"
   },
   "checkout": {
     "title": "Confirmer et payer",
@@ -1933,6 +1934,50 @@
       "yes": "Oui",
       "no": "Non",
       "toInspections": "Aller aux inspections"
+    },
+    "calendar": {
+      "title": "Calendrier",
+      "bodyAdmin": "Chaque logement sur les deux semaines ou le mois à venir. Une barre est une réservation ; touchez une nuit libre pour la réserver au propriétaire.",
+      "bodyOps": "Chaque logement sur les deux semaines ou le mois à venir. Une barre est une réservation ; ouvrez-la pour voir le client.",
+      "home": "Logement",
+      "earlier": "Plus tôt",
+      "later": "Plus tard",
+      "today": "Aujourd'hui",
+      "span": "Jours affichés",
+      "days": "{count} jours",
+      "held": "Nuit réservée",
+      "released": "Nuit libérée",
+      "cannot": "Cette nuit ne peut pas être changée.",
+      "tapToHold": "Touchez pour réserver au propriétaire",
+      "tapToRelease": "Réservée. Touchez pour libérer",
+      "repair": "Bloquée pour une réparation",
+      "blocked": "Réservée au propriétaire",
+      "legendStay": "Réservé",
+      "legendRent": "Location",
+      "legendEnded": "Séjour passé",
+      "legendHeld": "Bloqué",
+      "legendRepair": "Réparation"
+    },
+    "rates": {
+      "title": "Tarifs",
+      "body": "Le prix de chaque nuit, comparé au tarif de base du logement. Touchez une première et une dernière nuit, puis fixez un prix ou revenez au tarif de base.",
+      "homes": "Logements",
+      "prev": "Mois précédent",
+      "next": "Mois suivant",
+      "base": "Tarif de base",
+      "ownCount": "{count, plural, =0 {aucune nuit à un autre prix} one {# nuit à un autre prix} other {# nuits à un autre prix}}",
+      "own": "son propre tarif",
+      "selected": "Du {from} au {to}",
+      "selectedOne": "{date}",
+      "pickEnd": "touchez une dernière nuit, ou fixez celle-ci",
+      "pickStart": "Touchez une première nuit pour commencer.",
+      "price": "Prix par nuit ({currency})",
+      "setButton": "Fixer le prix",
+      "baseButton": "Revenir au tarif de base",
+      "clear": "Effacer",
+      "set": "Prix fixés",
+      "backToBase": "Retour au tarif de base",
+      "failed": "Non enregistré. Le prix doit être supérieur à zéro."
     }
   },
   "account": {

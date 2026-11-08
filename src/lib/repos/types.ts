@@ -374,6 +374,14 @@ export interface ReviewsRepo {
   create(r: Pick<Review, "bookingId" | "ratings" | "text">): Promise<Review>;
 }
 
+/** Per-night rates over the base rate, set on the rates grid; quoteStay reads them from the listing. */
+export interface RatesRepo {
+  /** Every night in [from, to), with the rate it is sold at and whether that is its own or the base. */
+  forRange(listingId: string, from: string, to: string): Promise<{ date: string; rate: Money; own: boolean }[]>;
+  /** Sets nights in [from, to) to a rate, or back to the base with null. In the home's own currency, above zero, at most a year. */
+  setRange(listingId: string, from: string, to: string, rate: Money | null): Promise<void>;
+}
+
 export interface WorkRepo {
   tickets(filter?: { listingId?: string; status?: MaintenanceTicket["status"][] }): Promise<MaintenanceTicket[]>;
   createTicket(t: Omit<MaintenanceTicket, "id" | "createdAt" | "status">): Promise<MaintenanceTicket>;
@@ -394,6 +402,7 @@ export type Repositories = {
   incidents: IncidentsRepo;
   reviews: ReviewsRepo;
   work: WorkRepo;
+  rates: RatesRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;

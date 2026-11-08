@@ -289,7 +289,8 @@
     "total": "Igiteranyo",
     "totalIn": "Igiteranyo ({currency})",
     "chargedIn": "Bishyurwa muri {currency}. Bihinduwe ku giciro cy'uyu munsi; umubare wishyurwa wemezwa mbere yo kwishyura.",
-    "noHiddenFees": "Nta mafaranga yo gufata yongerwaho ku iherezo. Iki ni cyo giciro."
+    "noHiddenFees": "Nta mafaranga yo gufata yongerwaho ku iherezo. Iki ni cyo giciro.",
+    "accommodationAvg": "{rate} ugereranyije × amajoro {nights}"
   },
   "checkout": {
     "title": "Emeza kandi wishyure",
@@ -1933,6 +1934,50 @@
       "yes": "Yego",
       "no": "Oya",
       "toInspections": "Jya ku igenzura"
+    },
+    "calendar": {
+      "title": "Kalendari",
+      "bodyAdmin": "Buri nzu ku byumweru bibiri cyangwa ukwezi biri imbere. Umurongo ni ifatwa; kanda ijoro riri ubusa urigenere nyir'inzu.",
+      "bodyOps": "Buri nzu ku byumweru bibiri cyangwa ukwezi biri imbere. Umurongo ni ifatwa; ufungure ubone umushyitsi.",
+      "home": "Inzu",
+      "earlier": "Mbere",
+      "later": "Nyuma",
+      "today": "Uyu munsi",
+      "span": "Iminsi igaragara",
+      "days": "Iminsi {count}",
+      "held": "Ijoro ryafashwe",
+      "released": "Ijoro ryarekuwe",
+      "cannot": "Iri joro ntirishobora guhindurwa.",
+      "tapToHold": "Kanda urigenere nyir'inzu",
+      "tapToRelease": "Ryafashwe. Kanda urirekure",
+      "repair": "Ryafatiwe gusana",
+      "blocked": "Ryagenewe nyir'inzu",
+      "legendStay": "Ryafashwe",
+      "legendRent": "Gukodesha",
+      "legendEnded": "Byarangiye",
+      "legendHeld": "Ryafashwe",
+      "legendRepair": "Gusana"
+    },
+    "rates": {
+      "title": "Ibiciro",
+      "body": "Igiciro cya buri joro, ugereranyije n'igiciro fatizo cy'inzu. Kanda ijoro rya mbere n'irya nyuma, hanyuma ushyireho igiciro cyangwa usubize ku giciro fatizo.",
+      "homes": "Amazu",
+      "prev": "Ukwezi gushize",
+      "next": "Ukwezi gutaha",
+      "base": "Igiciro fatizo",
+      "ownCount": "Amajoro {count} afite ikindi giciro",
+      "own": "igiciro cyaryo",
+      "selected": "Kuva {from} kugeza {to}",
+      "selectedOne": "{date}",
+      "pickEnd": "kanda ijoro rya nyuma, cyangwa ushyireho iri",
+      "pickStart": "Kanda ijoro rya mbere utangire.",
+      "price": "Igiciro cy'ijoro ({currency})",
+      "setButton": "Shyiraho igiciro",
+      "baseButton": "Subiza ku giciro fatizo",
+      "clear": "Siba",
+      "set": "Ibiciro byashyizweho",
+      "backToBase": "Byasubijwe ku giciro fatizo",
+      "failed": "Ntibyabitswe. Igiciro kigomba kurenga zeru."
     }
   },
   "account": {

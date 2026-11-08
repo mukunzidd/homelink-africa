@@ -14,7 +14,7 @@ import type {
 import type { Conversation, HousekeepingTask, Listing, Role, SharedLocation } from "@/lib/domain/types";
 import { turnoverTasks } from "@/lib/workspace/day-board";
 import { readsAs } from "@/lib/preferences/role";
-import { convert, formatMoney, money } from "@/lib/domain/money";
+import { convert, formatMoney, money, type Money } from "@/lib/domain/money";
 import { listingPatchErrors } from "@/lib/workspace/listing-patch";
 import { addDays, isIsoDate, nightsBetween } from "@/lib/domain/dates";
 import { CHECKLIST } from "@/lib/workspace/inspection";
@@ -22,7 +22,7 @@ import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
 import { availability, makeBookings, makeTrips } from "./bookings";
-import { MESSAGE_LIMITS, type IncidentsRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
+import { MESSAGE_LIMITS, type IncidentsRepo, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
 import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
@@ -826,6 +826,32 @@ function cleansOn(date: string): Omit<HousekeepingTask, "assignee" | "status" | 
   return [...turnovers, ...mid];
 }
 
+const rates: RatesRepo = {
+  async forRange(listingId, from, to) {
+    const l = store().listings.find((x) => x.id === listingId);
+    if (!l) throw new Error(`No listing ${listingId}`);
+    const out: { date: string; rate: Money; own: boolean }[] = [];
+    for (let d = from; d < to; d = addDays(d, 1)) {
+      const own = l.nightlyRates?.[d];
+      out.push({ date: d, rate: own ?? l.nightlyRate, own: !!own });
+    }
+    return out;
+  },
+  async setRange(listingId, from, to, rate) {
+    const l = store().listings.find((x) => x.id === listingId);
+    if (!l) throw new Error(`No listing ${listingId}`);
+    if (!isIsoDate(from) || !isIsoDate(to) || to <= from || nightsBetween(from, to) > 366) throw new Error("Bad range");
+    if (rate && (rate.currency !== l.nightlyRate.currency || !(rate.minor > 0) || !Number.isInteger(rate.minor))) throw new Error("Bad rate");
+    const next = { ...(l.nightlyRates ?? {}) };
+    for (let d = from; d < to; d = addDays(d, 1)) {
+      // A rate equal to the base is the base: no point keeping it as an exception.
+      if (rate && rate.minor !== l.nightlyRate.minor) next[d] = { ...rate };
+      else delete next[d];
+    }
+    l.nightlyRates = next;
+  },
+};
+
 const work: WorkRepo = {
   async housekeeping(date) {
     const kept = store().housekeeping;
@@ -902,6 +928,7 @@ export const fixtureRepositories: Repositories = {
   incidents,
   reviews,
   work,
+  rates,
   trips,
   messaging,
   ops,

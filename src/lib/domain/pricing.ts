@@ -1,7 +1,7 @@
 import type { DriveMode, Experience, Listing, ServiceKind, Vehicle } from "./types";
 import type { CurrencyCode, FxTable, Money } from "./money";
 import { add, convert, money, multiply, subtract } from "./money";
-import { nightsBetween, type IsoDate } from "./dates";
+import { addDays, nightsBetween, type IsoDate } from "./dates";
 import { priceExtras, type ExtraKey, type ExtraSelection } from "./extras";
 import { applyPromo, type PromoResult } from "./promo";
 
@@ -65,7 +65,16 @@ export function quoteStay(
 
   const currency = listing.nightlyRate.currency;
 
-  const accommodation = multiply(listing.nightlyRate, nights);
+  // A night with its own rate (a weekend, a conference week) is priced at
+  // that rate; every other night at the base. Same currency throughout:
+  // the rates grid only ever sets rates in the home's own currency.
+  const overrides = listing.nightlyRates ?? {};
+  let minor = 0;
+  for (let d = from; d < to; d = addDays(d, 1)) {
+    const own = overrides[d];
+    minor += own && own.currency === currency ? own.minor : listing.nightlyRate.minor;
+  }
+  const accommodation = money(minor, currency);
   const cleaning = money(CLEANING_FEE_RWF, currency);
   const serviceFee = money(
     Math.round(accommodation.minor * SERVICE_FEE_RATE),

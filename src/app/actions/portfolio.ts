@@ -2,7 +2,7 @@
 
 import { refresh, revalidatePath } from "next/cache";
 import type { Amenity, LeaseTerms, Listing, StayMode } from "@/lib/domain/types";
-import { CURRENCIES, type CurrencyCode } from "@/lib/domain/money";
+import { CURRENCIES, exponentOf, type CurrencyCode } from "@/lib/domain/money";
 import { repos } from "@/lib/repos";
 import { currentRole } from "@/lib/workspace/guard";
 import { canAccess } from "@/lib/workspace/nav";
@@ -126,6 +126,24 @@ export async function setNightBlocked(id: string, date: string, blocked: boolean
     await repos().availability.unblock(id, [date]);
   }
   await repos().audit.record({ actor: by, action: blocked ? "listing.block" : "listing.unblock", target: id, detail: date });
+  await revalidateSite();
+  refresh();
+  return { ok: true };
+}
+
+/** Sets nights [from, to) to a rate in the home's currency, or back to the base with null. */
+export async function setRates(id: string, from: string, to: string, major: number | null): Promise<{ ok: boolean }> {
+  const role = await currentRole();
+  if (!canAccess(role, "rates")) throw new Error("Not allowed");
+  const l = (await repos().stays.all()).find((x) => x.id === id);
+  if (!l || !isIsoDate(from) || !isIsoDate(to)) return { ok: false };
+  try {
+    const rate = major === null ? null : { minor: Math.round(Number(major) * 10 ** exponentOf(l.nightlyRate.currency)), currency: l.nightlyRate.currency };
+    await repos().rates.setRange(id, from, to, rate);
+  } catch {
+    return { ok: false };
+  }
+  await repos().audit.record({ actor: role, action: "rates.set", target: id, detail: `${from}..${to} ${major ?? "base"}` });
   await revalidateSite();
   refresh();
   return { ok: true };

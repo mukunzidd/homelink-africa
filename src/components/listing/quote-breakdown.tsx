@@ -47,8 +47,16 @@ export function QuoteBreakdown({
   function label(key: QuoteLineKey, extra?: string): string {
     const rate = display(unitRate);
     switch (key) {
-      case "accommodation":
+      case "accommodation": {
+        // Nights priced differently (a weekend, an event week) do not
+        // multiply out from the base rate; restate the average instead, so
+        // the line still checks against its own total.
+        const line = quote.lines.find((l) => l.key === "accommodation")?.amount;
+        if (line && units > 0 && line.currency === unitRate.currency && line.minor !== unitRate.minor * units) {
+          return t("accommodationAvg", { rate: display({ minor: Math.round(line.minor / units), currency: line.currency }), nights: units });
+        }
         return t("accommodation", { rate, nights: units });
+      }
       case "hire":
         return tLines("hire", { rate, days: units });
       case "seats":

@@ -116,6 +116,8 @@ export type Listing = {
   published?: boolean;
   /** Shortest stay taken, in nights. Absent means one. */
   minNights?: number;
+  /** Nights priced differently from the base rate, by ISO date, set on the rates grid. */
+  nightlyRates?: Record<string, Money>;
 };
 
 /* -------------------------------------------------------------------- sale */

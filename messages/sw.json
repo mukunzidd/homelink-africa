@@ -289,7 +289,8 @@
     "total": "Jumla",
     "totalIn": "Jumla ({currency})",
     "chargedIn": "Utatozwa kwa {currency}. Imebadilishwa kwa kiwango cha leo; kiasi utakachotozwa kinathibitishwa kabla hujalipa.",
-    "noHiddenFees": "Hakuna ada ya uhifadhi inayoongezwa mwishoni. Hii ndiyo bei."
+    "noHiddenFees": "Hakuna ada ya uhifadhi inayoongezwa mwishoni. Hii ndiyo bei.",
+    "accommodationAvg": "{rate} kwa wastani × {nights, plural, one {usiku #} other {usiku #}}"
   },
   "checkout": {
     "title": "Thibitisha na ulipe",
@@ -1933,6 +1934,50 @@
       "yes": "Ndiyo",
       "no": "Hapana",
       "toInspections": "Nenda kwenye ukaguzi"
+    },
+    "calendar": {
+      "title": "Kalenda",
+      "bodyAdmin": "Kila nyumba kwa wiki mbili au mwezi ujao. Mstari ni uhifadhi; gusa usiku ulio wazi kumhifadhia mmiliki.",
+      "bodyOps": "Kila nyumba kwa wiki mbili au mwezi ujao. Mstari ni uhifadhi; uufungue kumwona mgeni.",
+      "home": "Nyumba",
+      "earlier": "Mapema",
+      "later": "Baadaye",
+      "today": "Leo",
+      "span": "Siku zinazoonyeshwa",
+      "days": "Siku {count}",
+      "held": "Usiku umehifadhiwa",
+      "released": "Usiku umeachiwa",
+      "cannot": "Usiku huo hauwezi kubadilishwa.",
+      "tapToHold": "Gusa kumhifadhia mmiliki",
+      "tapToRelease": "Umehifadhiwa. Gusa kuachia",
+      "repair": "Umezuiwa kwa matengenezo",
+      "blocked": "Umehifadhiwa kwa mmiliki",
+      "legendStay": "Imehifadhiwa",
+      "legendRent": "Kupangisha",
+      "legendEnded": "Imekamilika",
+      "legendHeld": "Imezuiwa",
+      "legendRepair": "Matengenezo"
+    },
+    "rates": {
+      "title": "Bei",
+      "body": "Bei ya kila usiku, ikilinganishwa na bei ya msingi ya nyumba. Gusa usiku wa kwanza na wa mwisho, kisha weka bei au rudisha kwenye bei ya msingi.",
+      "homes": "Nyumba",
+      "prev": "Mwezi uliopita",
+      "next": "Mwezi ujao",
+      "base": "Bei ya msingi",
+      "ownCount": "{count, plural, =0 {hakuna usiku wenye bei tofauti} one {usiku # wenye bei tofauti} other {usiku # wenye bei tofauti}}",
+      "own": "bei yake",
+      "selected": "{from} hadi {to}",
+      "selectedOne": "{date}",
+      "pickEnd": "gusa usiku wa mwisho, au weka huu",
+      "pickStart": "Gusa usiku wa kwanza kuanza.",
+      "price": "Bei ya usiku ({currency})",
+      "setButton": "Weka bei",
+      "baseButton": "Rudisha kwenye msingi",
+      "clear": "Futa",
+      "set": "Bei zimewekwa",
+      "backToBase": "Imerudi kwenye bei ya msingi",
+      "failed": "Haijahifadhiwa. Bei lazima iwe zaidi ya sifuri."
     }
   },
   "account": {

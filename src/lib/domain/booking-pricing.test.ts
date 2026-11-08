@@ -214,3 +214,18 @@ describe("monthsBetween", () => {
     expect(monthsBetween("2027-01-15", "2029-01-15")).toBe(24);
   });
 });
+
+describe("quoteStay with nightly rates set for some dates", () => {
+  it("sums each night at its own rate across a rate change", () => {
+    const base = listing.nightlyRate.minor;
+    const priced = { ...listing, nightlyRates: { "2027-03-05": { minor: base * 2, currency: listing.nightlyRate.currency }, "2027-03-06": { minor: base * 2, currency: listing.nightlyRate.currency } } };
+    // Four nights: the 3rd and 4th at the base rate, the 5th and 6th at double.
+    const q = quoteStay(priced, "2027-03-03", "2027-03-07")!;
+    expect(q.lines.find((l) => l.key === "accommodation")!.amount.minor).toBe(base * 2 + base * 2 * 2);
+  });
+
+  it("is unchanged where no night has its own rate", () => {
+    const q = quoteStay({ ...listing, nightlyRates: {} }, "2027-03-03", "2027-03-07")!;
+    expect(q.lines.find((l) => l.key === "accommodation")!.amount.minor).toBe(listing.nightlyRate.minor * 4);
+  });
+});
