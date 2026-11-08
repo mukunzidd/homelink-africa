@@ -176,6 +176,11 @@ async function prepare(draft: BookingDraft): Promise<Prepared | { ok: false; rea
     return { ok: false, reason: "invalid" };
   }
   if (!Number.isInteger(draft.party) || draft.party < 1) return { ok: false, reason: "invalid" };
+  // A home admin has taken down is not for sale, whatever link got here.
+  if (supply.kind === "stay" && supply.item.published === false) return { ok: false, reason: "unavailable" };
+  if (supply.kind === "stay" && draft.flow !== "rent" && nightsBetween(draft.start, draft.end) < (supply.item.minNights ?? 1)) {
+    return { ok: false, reason: "invalid" };
+  }
 
   // A long-term stay's term is the server's to decide, not the URL's: a
   // 12- or 24-month term, starting on the 1st of a month the home is free,

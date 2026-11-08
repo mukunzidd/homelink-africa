@@ -146,6 +146,20 @@ export function createMeiliEngine(opts: {
 
   return {
     name: "meilisearch",
+    // Posting documents updates them but never removes one, so a home taken
+    // down would stay findable. Clear the index's documents, then load again.
+    async refresh() {
+      ready = (async () => {
+        const cleared = await call(`/indexes/${INDEX}/documents`, { method: "DELETE" });
+        if (cleared?.taskUid !== undefined) await waitFor(cleared.taskUid);
+        const docs = await call(`/indexes/${INDEX}/documents`, { method: "POST", body: JSON.stringify(await opts.load()) });
+        await waitFor(docs.taskUid);
+      })().catch((err) => {
+        ready = null;
+        throw err;
+      });
+      await ready;
+    },
     async search(q: EngineQuery): Promise<EngineHit[]> {
       await ensureIndex();
       const body = {

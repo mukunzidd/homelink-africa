@@ -1,3 +1,4 @@
+import type { ListingPatch } from "@/lib/workspace/listing-patch";
 import type {
   SharedLocation,
   HousekeepingTask,
@@ -95,6 +96,13 @@ export interface StaysRepo extends SupplyById<Listing> {
   /** Same, with counts — a suggestion that says how much is behind it is
    *  more useful than a bare name, and honest about thin inventory. */
   neighbourhoodsWithCounts(): Promise<{ name: string; count: number }[]>;
+  /** Every home, live or not, both modes: the workspace's view. Every other read above leaves out unpublished homes. */
+  all(): Promise<Listing[]>;
+  /** Saves a patch after checking it (listingPatchErrors); throws and changes nothing if it breaks a rule. */
+  update(id: string, patch: ListingPatch): Promise<Listing>;
+  /** A new home, unpublished, with a unique slug. */
+  create(draft: { name: string; neighbourhood: string }): Promise<Listing>;
+  setPublished(id: string, published: boolean): Promise<Listing>;
 }
 
 export type SaleSort = "recommended" | "priceAsc" | "priceDesc" | "newest" | "size";

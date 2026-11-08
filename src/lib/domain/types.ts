@@ -112,6 +112,10 @@ export type Listing = {
   summary: string;
   /** Remaining units for the shown dates. Honest scarcity only. */
   unitsAvailable: number;
+  /** False while admin is still writing it; nothing public reads it then. Absent means live. */
+  published?: boolean;
+  /** Shortest stay taken, in nights. Absent means one. */
+  minNights?: number;
 };
 
 /* -------------------------------------------------------------------- sale */

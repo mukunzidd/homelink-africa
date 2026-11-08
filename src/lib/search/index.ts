@@ -51,6 +51,17 @@ async function run(query: Parameters<SearchEngine["search"]>[0]): Promise<{ hits
   return { hits: await built.local.search(query), engine: "local" };
 }
 
+/**
+ * After a write that changes what guests can find (a rate, a home taken
+ * down or put live), both engines read the documents again. Meilisearch
+ * being down is not the editor's problem: the local engine is refreshed
+ * regardless, and Meili's own index is rebuilt on its next first use.
+ */
+export async function searchChanged(): Promise<void> {
+  await built.local.refresh();
+  if (built.primary) await built.primary.refresh().catch((err) => console.warn(`[search] reindex failed: ${(err as Error).message}`));
+}
+
 /** Which constraint was given up to find something, in the order it is given up. */
 export type RelaxKey = "text" | "maxPrice" | "amenities" | "bedrooms" | "party" | "neighbourhood" | "driveMode" | "interest";
 

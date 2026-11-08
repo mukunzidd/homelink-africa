@@ -85,6 +85,9 @@ export function createLocalEngine(load: () => Promise<SearchDoc[]>): SearchEngin
 
   return {
     name: "local",
+    async refresh() {
+      docs = null;
+    },
     async search({ text, filters, sort, limit = 20 }: EngineQuery): Promise<EngineHit[]> {
       docs ??= load();
       const words = tokens(text);

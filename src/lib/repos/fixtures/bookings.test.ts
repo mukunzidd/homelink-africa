@@ -320,3 +320,22 @@ describe("money back never exceeds money in (security review, Task 34)", () => {
     expect((await repos.bookings.byReference(bk.reference))!.timeline!.at(-1)).toMatchObject({ kind: "datesChanged", actor: "ops" });
   });
 });
+
+describe("bookings.place against the listing editor's settings", () => {
+  beforeEach(() => resetStore());
+
+  it("refuses a stay shorter than the home's minimum", async () => {
+    const slug = oneUnitSlug();
+    const l = store().listings.find((x) => x.slug === slug)!;
+    l.minNights = 7;
+    const d = readyDraft(slug); // four nights
+    expect(await repos.bookings.place({ draft: d, clientTotal: serverTotal(d), payment })).toMatchObject({ ok: false, reason: "invalid" });
+  });
+
+  it("refuses a home that is not live, even from a direct link", async () => {
+    const slug = oneUnitSlug();
+    store().listings.find((x) => x.slug === slug)!.published = false;
+    const d = readyDraft(slug);
+    expect(await repos.bookings.place({ draft: d, clientTotal: serverTotal(d), payment })).toMatchObject({ ok: false, reason: "unavailable" });
+  });
+});

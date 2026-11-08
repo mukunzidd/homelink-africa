@@ -11,10 +11,11 @@ import type {
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
-import type { Conversation, HousekeepingTask, Role, SharedLocation } from "@/lib/domain/types";
+import type { Conversation, HousekeepingTask, Listing, Role, SharedLocation } from "@/lib/domain/types";
 import { turnoverTasks } from "@/lib/workspace/day-board";
 import { readsAs } from "@/lib/preferences/role";
-import { convert, formatMoney } from "@/lib/domain/money";
+import { convert, formatMoney, money } from "@/lib/domain/money";
+import { listingPatchErrors } from "@/lib/workspace/listing-patch";
 import { addDays, isIsoDate, nightsBetween } from "@/lib/domain/dates";
 import { CHECKLIST } from "@/lib/workspace/inspection";
 import { FX_RATES } from "./data";
@@ -33,9 +34,67 @@ import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog"
  * here is that the *signatures* are right, not that the filtering is fast.
  */
 
+/** Homes the public may see: anything not explicitly unpublished. */
+const live = () => store().listings.filter((l) => l.published !== false);
+
+const slugify = (s: string) =>
+  s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "home";
+
 const stays: StaysRepo = {
+  async all() {
+    return [...store().listings];
+  },
+
+  async update(id, patch) {
+    const l = store().listings.find((x) => x.id === id);
+    if (!l) throw new Error(`No listing ${id}`);
+    const errors = listingPatchErrors(patch, l);
+    if (errors.length) throw new Error(`Invalid: ${errors.join(", ")}`);
+    Object.assign(l, structuredClone(patch));
+    return l;
+  },
+
+  async create({ name, neighbourhood }) {
+    const base = slugify(name);
+    let slug = base;
+    for (let i = 2; store().listings.some((l) => l.slug === slug); i++) slug = `${base}-${i}`;
+    const made: Listing = {
+      id: nextId("lst"),
+      slug,
+      name: name.trim(),
+      neighbourhood: neighbourhood.trim(),
+      city: "Kigali",
+      location: { lat: -1.9441, lng: 30.0619 },
+      bedrooms: 1,
+      sleeps: 2,
+      amenities: [],
+      nightlyRate: money(50_000, "RWF"),
+      modes: ["nightly"],
+      // Not inspected yet: no inspector, no points. It cannot go live like this.
+      verification: { id: `ver_${slug}`, inspectorName: "", inspectedAt: new Date().toISOString().slice(0, 10), checklistPoints: 0, photographedByHomeLink: false, ownerIdentityConfirmed: false },
+      propertyManager: { name: "", since: new Date().toISOString().slice(0, 10) },
+      houseRules: [],
+      imageSeed: slug,
+      images: [],
+      summary: "",
+      unitsAvailable: 1,
+      published: false,
+    };
+    store().listings.push(made);
+    return made;
+  },
+
+  async setPublished(id, published) {
+    const l = store().listings.find((x) => x.id === id);
+    if (!l) throw new Error(`No listing ${id}`);
+    // Nothing unverified is ever listed: a home goes live only once someone has stood in it.
+    if (published && (!l.verification.inspectorName || l.verification.checklistPoints < 1)) throw new Error("Not inspected");
+    l.published = published;
+    return l;
+  },
+
   async list(query = {}) {
-    let out = [...store().listings];
+    let out = live();
 
     if (query.neighbourhood) {
       const needle = query.neighbourhood.trim().toLowerCase();
@@ -96,7 +155,7 @@ const stays: StaysRepo = {
   },
 
   async bySlug(slug) {
-    return store().listings.find((l) => l.slug === slug) ?? null;
+    return live().find((l) => l.slug === slug) ?? null;
   },
 
   async byId(id) {
@@ -104,7 +163,7 @@ const stays: StaysRepo = {
   },
 
   async featured(limit = 3) {
-    return [...store().listings]
+    return live()
       .sort((a, b) =>
         b.verification.inspectedAt.localeCompare(a.verification.inspectedAt),
       )
@@ -112,14 +171,14 @@ const stays: StaysRepo = {
   },
 
   async neighbourhoods() {
-    return [...new Set(store().listings.map((l) => l.neighbourhood))].sort((a, b) =>
+    return [...new Set(live().map((l) => l.neighbourhood))].sort((a, b) =>
       a.localeCompare(b),
     );
   },
 
   async neighbourhoodsWithCounts() {
     const counts = new Map<string, number>();
-    for (const l of store().listings) {
+    for (const l of live()) {
       counts.set(l.neighbourhood, (counts.get(l.neighbourhood) ?? 0) + 1);
     }
     return [...counts.entries()]
