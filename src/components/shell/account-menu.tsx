@@ -4,8 +4,8 @@ import { useCallback, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import type { Role } from "@/lib/domain/types";
+import { homeFor } from "@/lib/workspace/nav";
 import { usePreferences } from "@/lib/preferences/context";
-import { supplyLaneFor } from "@/lib/preferences/role";
 import { useDismissable } from "@/lib/use-dismissable";
 import { ChevronDownIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
@@ -32,30 +32,30 @@ import { cn } from "@/lib/cn";
 type Destination = { href: string; key: string };
 
 const GUEST: Destination[] = [
+  { href: "/account", key: "myHomeLink" },
   { href: "/trips", key: "trips" },
   { href: "/messages", key: "messages" },
+  { href: "/notifications", key: "notifications" },
+  { href: "/account/settings", key: "settings" },
 ];
 
-const SUPPLY: Destination[] = [
-  { href: "/inventory", key: "inventory" },
-  { href: "/messages", key: "messages" },
-];
-
-const OPS: Destination[] = [
-  { href: "/queue", key: "queue" },
-  { href: "/messages", key: "messages" },
+/**
+ * Everyone who works in the workspace reaches it from here, and their
+ * messages and notifications live inside it rather than on the public site.
+ */
+const workspace = (home: string): Destination[] => [
+  { href: home, key: "workspace" },
+  { href: "/manage/inbox", key: "messages" },
+  { href: "/manage/notifications", key: "notifications" },
 ];
 
 export const BY_ROLE: Record<Role, Destination[]> = {
   visitor: [],
   guest: GUEST,
-  driver: SUPPLY,
-  guide: SUPPLY,
-  ops: OPS,
-  // Admin has no journey written for it (Product & UX §5 covers four), so it
-  // borrows the ops destinations rather than inventing a fifth screen nobody
-  // has specified. Revisit when there is an admin journey to build against.
-  admin: OPS,
+  driver: workspace("/manage/jobs"),
+  guide: workspace("/manage/jobs"),
+  ops: workspace("/manage/today"),
+  admin: workspace("/manage/overview"),
 };
 
 export function AccountMenu({ className }: { className?: string }) {
@@ -196,18 +196,26 @@ export function AccountLinks({
   className?: string;
 }) {
   const t = useTranslations("header");
-  const tInventory = useTranslations("inventory");
   const { role } = usePreferences();
   const pathname = usePathname();
   if (role === "visitor") return null;
 
-  const lane = supplyLaneFor(role);
-  const primary =
-    role === "guest"
-      ? { href: "/trips", label: t("trips") }
-      : lane
-        ? { href: "/inventory", label: tInventory(`title.${lane}`) }
-        : { href: "/queue", label: t("queue") };
+  // A guest's two screens sit in the bar; everyone else has one door, into
+  // the workspace, where their messages are too.
+  const home = homeFor(role);
+  if (home) {
+    return (
+      <nav aria-label={t("yourScreens")} className={cn("items-center", className)}>
+        <Link
+          href={home}
+          className="flex h-9 items-center whitespace-nowrap rounded-ctl px-3 text-sm font-medium text-ink-2 transition-colors duration-150 hover:bg-surface-2 hover:text-ink"
+        >
+          {t("workspace")}
+        </Link>
+      </nav>
+    );
+  }
+  const primary = { href: "/trips", label: t("trips") };
   const hasUnread = !!unread[role];
 
   const link = (href: string, children: React.ReactNode, label?: string) => {

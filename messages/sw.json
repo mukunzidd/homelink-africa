@@ -16,12 +16,14 @@
     "trips": "Safari",
     "messages": "Ujumbe",
     "help": "Msaada",
-    "inventory": "Matangazo yako",
-    "queue": "Foleni",
     "preferences": "Lugha, sarafu na mandhari",
     "close": "Funga",
     "yourScreens": "Skrini zako",
-    "messagesUnread": "Ujumbe, kuna majibu ambayo hujasoma"
+    "messagesUnread": "Ujumbe, kuna majibu ambayo hujasoma",
+    "myHomeLink": "HomeLink yangu",
+    "notifications": "Arifa",
+    "settings": "Mipangilio",
+    "workspace": "Eneo la kazi"
   },
   "nav": {
     "stays": "Malazi",
@@ -1367,5 +1369,18 @@
     "signInTitle": "Ingia kwenye eneo la kazi",
     "signInBody": "Eneo la kazi ni mahali timu ya HomeLink, madereva na waongozaji wanapofanyia kazi.",
     "signInAs": "Onyesha kama"
+  },
+  "account": {
+    "nav": {
+      "label": "Akaunti yako",
+      "overview": "Muhtasari",
+      "trips": "Safari na uhifadhi",
+      "renting": "Nyumba unayopanga",
+      "viewings": "Kutazama nyumba",
+      "payments": "Malipo",
+      "saved": "Vilivyohifadhiwa",
+      "notifications": "Arifa",
+      "settings": "Mipangilio"
+    }
   }
 }

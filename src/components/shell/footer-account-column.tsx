@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { usePreferences } from "@/lib/preferences/context";
-import { supplyLaneFor } from "@/lib/preferences/role";
+import { homeFor } from "@/lib/workspace/nav";
 import { FOOTER_LINK } from "./footer-link";
 
 /**
@@ -20,35 +20,25 @@ import { FOOTER_LINK } from "./footer-link";
 export function FooterAccountColumn() {
   const t = useTranslations("footer");
   const tHeader = useTranslations("header");
-  const tInventory = useTranslations("inventory");
   const { role } = usePreferences();
-  const lane = supplyLaneFor(role);
+  const home = homeFor(role);
 
-  const { title, links } =
-    role === "visitor" || role === "guest"
-      ? {
-          title: t("yours"),
-          links: [
-            { href: "/saved", label: t("saved") },
-            { href: "/trips", label: tHeader("trips") },
-            { href: "/messages", label: tHeader("messages") },
-          ],
-        }
-      : lane
-        ? {
-            title: t("yoursSupply"),
-            links: [
-              { href: "/inventory", label: tInventory(`title.${lane}`) },
-              { href: "/messages", label: tHeader("messages") },
-            ],
-          }
-        : {
-            title: t("yoursOps"),
-            links: [
-              { href: "/queue", label: tHeader("queue") },
-              { href: "/messages", label: tHeader("messages") },
-            ],
-          };
+  const { title, links } = home
+    ? {
+        title: role === "driver" || role === "guide" ? t("yoursSupply") : t("yoursOps"),
+        links: [
+          { href: home, label: tHeader("workspace") },
+          { href: "/manage/inbox", label: tHeader("messages") },
+        ],
+      }
+    : {
+        title: t("yours"),
+        links: [
+          { href: "/saved", label: t("saved") },
+          { href: "/trips", label: tHeader("trips") },
+          { href: "/messages", label: tHeader("messages") },
+        ],
+      };
 
   return (
     <nav aria-label={title} className="flex flex-col gap-3">

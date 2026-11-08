@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { repos } from "@/lib/repos";
+import { AccountFrame } from "@/components/account/account-frame";
 import { SavedList, type SavedCatalogueItem } from "@/components/saved/saved-list";
 import { minutesTo } from "@/lib/domain/landmarks";
 import { formatDate } from "@/lib/domain/dates";
@@ -98,12 +99,14 @@ export default async function SavedPage({ params }: { params: Promise<{ locale: 
   ];
 
   return (
-    <div className="mx-auto flex max-w-[1180px] flex-col gap-6 px-6 py-10">
-      <header className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl font-semibold text-ink">{t("title")}</h1>
-        <p className="max-w-[60ch] text-[15px] text-ink-2">{t("subtitle")}</p>
-      </header>
-      <SavedList catalogue={catalogue} />
-    </div>
+    <AccountFrame>
+      <div className="flex flex-col gap-6">
+        <header className="flex flex-col gap-2">
+          <h1 className="font-display text-3xl font-semibold text-ink">{t("title")}</h1>
+          <p className="max-w-[60ch] text-[15px] text-ink-2">{t("subtitle")}</p>
+        </header>
+        <SavedList catalogue={catalogue} />
+      </div>
+    </AccountFrame>
   );
 }

@@ -16,12 +16,14 @@
     "trips": "Ingendo",
     "messages": "Ubutumwa",
     "help": "Ubufasha",
-    "inventory": "Ibyo ntanga",
-    "queue": "Umurongo",
     "preferences": "Ururimi, ifaranga n’isura",
     "close": "Funga",
     "yourScreens": "Amapaji yawe",
-    "messagesUnread": "Ubutumwa, hari ibisubizo bitarasomwa"
+    "messagesUnread": "Ubutumwa, hari ibisubizo bitarasomwa",
+    "myHomeLink": "HomeLink yanjye",
+    "notifications": "Imenyesha",
+    "settings": "Igenamiterere",
+    "workspace": "Umwanya w'akazi"
   },
   "nav": {
     "stays": "Amacumbi",
@@ -1367,5 +1369,18 @@
     "signInTitle": "Injira mu mwanya w'akazi",
     "signInBody": "Umwanya w'akazi ni aho itsinda rya HomeLink, abashoferi n'abayobozi bakorera.",
     "signInAs": "Reba nka"
+  },
+  "account": {
+    "nav": {
+      "label": "Konti yawe",
+      "overview": "Incamake",
+      "trips": "Ingendo n'ibyafashwe",
+      "renting": "Inzu ukodesha",
+      "viewings": "Gusura amazu",
+      "payments": "Kwishyura",
+      "saved": "Ibyabitswe",
+      "notifications": "Imenyesha",
+      "settings": "Igenamiterere"
+    }
   }
 }

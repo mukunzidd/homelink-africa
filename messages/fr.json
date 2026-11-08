@@ -16,12 +16,14 @@
     "trips": "Voyages",
     "messages": "Messages",
     "help": "Aide",
-    "inventory": "Vos annonces",
-    "queue": "File d'attente",
     "preferences": "Langue, devise et thème",
     "close": "Fermer",
     "yourScreens": "Vos écrans",
-    "messagesUnread": "Messages, avec des réponses non lues"
+    "messagesUnread": "Messages, avec des réponses non lues",
+    "myHomeLink": "Mon HomeLink",
+    "notifications": "Notifications",
+    "settings": "Paramètres",
+    "workspace": "Espace de travail"
   },
   "nav": {
     "stays": "Séjours",
@@ -1367,5 +1369,18 @@
     "signInTitle": "Connectez-vous à l'espace de travail",
     "signInBody": "L'espace de travail est l'endroit où l'équipe HomeLink, les chauffeurs et les guides travaillent.",
     "signInAs": "Aperçu en tant que"
+  },
+  "account": {
+    "nav": {
+      "label": "Votre compte",
+      "overview": "Vue d'ensemble",
+      "trips": "Voyages et réservations",
+      "renting": "Votre location",
+      "viewings": "Visites",
+      "payments": "Paiements",
+      "saved": "Favoris",
+      "notifications": "Notifications",
+      "settings": "Paramètres"
+    }
   }
 }

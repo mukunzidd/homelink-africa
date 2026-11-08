@@ -16,12 +16,14 @@
     "trips": "Trips",
     "messages": "Messages",
     "help": "Help",
-    "inventory": "Your listings",
-    "queue": "Queue",
     "preferences": "Language, currency and theme",
     "close": "Close",
     "yourScreens": "Your screens",
-    "messagesUnread": "Messages, with unread replies"
+    "messagesUnread": "Messages, with unread replies",
+    "myHomeLink": "My HomeLink",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "workspace": "Workspace"
   },
   "nav": {
     "stays": "Stays",
@@ -1367,5 +1369,18 @@
     "signInTitle": "Sign in to the workspace",
     "signInBody": "The workspace is where the HomeLink team, drivers and guides do their work.",
     "signInAs": "Preview as"
+  },
+  "account": {
+    "nav": {
+      "label": "Your account",
+      "overview": "Overview",
+      "trips": "Trips and bookings",
+      "renting": "Your rented home",
+      "viewings": "Viewings",
+      "payments": "Payments",
+      "saved": "Saved",
+      "notifications": "Notifications",
+      "settings": "Settings"
+    }
   }
 }

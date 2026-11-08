@@ -11,6 +11,7 @@ import { today } from "@/lib/domain/dates";
 import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
 import { BookingRow } from "@/components/bookings/booking-row";
 import { Button } from "@/components/ui/button";
+import { AccountFrame } from "@/components/account/account-frame";
 import { SignedOut } from "@/components/shell/signed-out";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -121,7 +122,8 @@ export default async function TripsPage({
   ]);
 
   return (
-    <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
+    <AccountFrame>
+    <div className="flex flex-col gap-7">
       <header className="flex flex-col gap-3">
         <h1 className="font-display text-4xl font-semibold leading-[1.06] tracking-tight text-ink sm:text-5xl">
           {t("title")}
@@ -131,7 +133,10 @@ export default async function TripsPage({
         </p>
       </header>
 
-      <div className="grid items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_340px]">
+      {/* Beside the account menu the list gets about 870px; the "anything
+          else" card only fits beside it from 1280px up, so below that it
+          follows the list instead of squeezing every row. */}
+      <div className="grid items-start gap-x-12 gap-y-10 xl:grid-cols-[minmax(0,1fr)_300px]">
         <div className="flex flex-col">
           <section className="flex flex-col pb-2">
             <h2 className="font-display text-2xl font-semibold text-ink">
@@ -171,7 +176,7 @@ export default async function TripsPage({
           argument does not weaken a week later when someone comes back to
           check their dates.
         */}
-        <aside className="flex flex-col items-start gap-3 rounded-card border border-line bg-surface p-6 lg:sticky lg:top-24">
+        <aside className="flex flex-col items-start gap-3 rounded-card border border-line bg-surface p-6 xl:sticky xl:top-24">
           <h2 className="font-display text-xl font-semibold text-ink">
             {tConfirm("arrangeTitle")}
           </h2>
@@ -185,5 +190,6 @@ export default async function TripsPage({
         </aside>
       </div>
     </div>
+    </AccountFrame>
   );
 }
