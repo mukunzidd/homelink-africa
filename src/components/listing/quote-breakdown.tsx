@@ -63,6 +63,13 @@ export function QuoteBreakdown({
         return extra ? tExtras(`${extra}.name`) : "";
       case "discount":
         return tLines("discount");
+      case "rent":
+        return tLines("rent");
+      case "deposit": {
+        const rent = quote.lines.find((l) => l.key === "rent")?.amount.minor ?? 0;
+        const deposit = quote.lines.find((l) => l.key === "deposit")?.amount.minor ?? 0;
+        return tLines("deposit", { count: rent ? Math.round(deposit / rent) : 0 });
+      }
     }
   }
 

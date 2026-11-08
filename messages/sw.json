@@ -375,7 +375,9 @@
     "driver": "Dereva",
     "seats": "{rate} × {count, plural, one {mtu #} other {watu #}}",
     "discount": "Msimbo wa punguzo",
-    "free": "Bure"
+    "free": "Bure",
+    "rent": "Kodi ya mwezi wa kwanza",
+    "deposit": "Amana ya {count, plural, one {mwezi #} other {miezi #}} (inarudishwa)"
   },
   "cars": {
     "title": "Magari",
@@ -1779,6 +1781,65 @@
       "dietaryPlaceholder": "Mboga tu, bila karanga…",
       "other": "Nyingine",
       "choose": "Chagua…"
+    },
+    "application": {
+      "title": "Kuhusu wewe kama mpangaji",
+      "body": "Timu ya Kigali inasoma kila ombi. Hiki ndicho inachohitaji ili ikukubalie haraka.",
+      "term": "Kuhamia {month}, kwa {count, plural, one {mwezi #} other {miezi #}}",
+      "occupants": "Watu wangapi wataishi hapo?",
+      "employer": "Mwajiri, shule au shirika",
+      "employerHint": "Unapofanya kazi au kusoma Kigali, au shirika linalokutuma hapa.",
+      "employerError": "Tuambie unapofanya kazi au kusoma.",
+      "income": "Kipato cha mwezi",
+      "incomeHint": "Kiwango cha takriban kinatosha. Kinabaki kati yako na timu ya Kigali.",
+      "incomeBands": {
+        "under500k": "Chini ya RWF 500,000",
+        "500kTo1m": "RWF 500,000 hadi milioni 1",
+        "1mTo2m": "RWF milioni 1 hadi 2",
+        "over2m": "Zaidi ya RWF milioni 2"
+      },
+      "incomeError": "Chagua kiwango.",
+      "id": "Pasipoti au kitambulisho cha taifa",
+      "idHint": "Picha ya ukurasa wenye picha yako. Si lazima sasa; inahitajika kabla ya kuhamia."
+    },
+    "agreement": {
+      "title": "Mkataba wa kupanga",
+      "body": "Usome hadi mwisho. Huu ndio mkataba utakaobaki na nakala yake.",
+      "heading": "Mkataba wa kupanga {home}",
+      "parties": "Kati ya HomeLink Africa Ltd, inayosimamia nyumba kwa niaba ya mmiliki wake, na {tenant}, mpangaji.",
+      "clauseHome": "Nyumba: {home}, {area}. Ina samani kama ilivyokaguliwa na kupigwa picha na HomeLink.",
+      "clauseTerm": "Muda: {count, plural, one {mwezi #} other {miezi #}} kuanzia {start}. Baada ya miezi sita ya kwanza, upande wowote unaweza kuusitisha kwa kutoa taarifa ya maandishi ya miezi miwili.",
+      "clauseRent": "Kodi: {rent} kwa mwezi, inalipwa mapema kabla ya tarehe 5 ya kila mwezi, kwa kadi, Mobile Money au uhamisho wa benki.",
+      "clauseDeposit": "Amana: {deposit}, inashikiliwa na HomeLink na kurudishwa ndani ya siku 14 baada ya kuhama, ukiondoa gharama ya uharibifu wowote unaozidi uchakavu wa kawaida, ulioorodheshwa kwa maandishi.",
+      "clauseIncludes": "Vilivyojumuishwa kwenye kodi: {includes}. Umeme ni wa mita ya malipo ya awali kwa jina la mpangaji.",
+      "clauseCare": "Mpangaji anaitunza nyumba ikiwa safi na kuripoti chochote kilichoharibika ndani ya saa 48 kupitia HomeLink; HomeLink inatengeneza kwa gharama zake kile ambacho si kosa la mpangaji.",
+      "clauseRules": "Kanuni za nyumba zilizokubaliwa wakati wa kuhakiki ni sehemu ya mkataba huu.",
+      "clauseLaw": "Mkataba huu unaongozwa na sheria za Rwanda.",
+      "scrollHint": "Shuka hadi mwisho ili kusaini.",
+      "read": "Nimesoma mkataba wote",
+      "sign": "Andika jina lako kamili ili kusaini",
+      "signHint": "Lazima lilingane na jina lililo kwenye taarifa zako: {name}.",
+      "signError": "Sahihi lazima ilingane na jina lako: {name}.",
+      "signed": "Imesainiwa na {name} tarehe {date}"
+    },
+    "bank": {
+      "title": "Lipa kwa uhamisho wa benki",
+      "body": "Hamisha kiasi kilicho hapa chini kutoka benki yoyote ya Rwanda au ya kimataifa. Tunathibitisha kwa barua pepe na SMS pesa zikifika, kwa kawaida ndani ya siku moja ya kazi; nyumba yako inashikiliwa hadi wakati huo.",
+      "accountName": "Jina la akaunti",
+      "bank": "Benki",
+      "account": "Namba ya akaunti",
+      "swift": "SWIFT",
+      "reference": "Kumbukumbu",
+      "referenceValue": "Namba ya kumbukumbu ya uhifadhi wako, itaonyeshwa kwenye skrini inayofuata",
+      "placeholder": "Taarifa za akaunti za mfano; si akaunti halisi.",
+      "confirm": "Nitafanya uhamisho"
+    },
+    "rent": {
+      "stageFull": "Unarudishiwa pesa zote ombi lako lisipokubaliwa",
+      "stageFullWhen": "Kabla mkataba haujasainiwa na upande wa pili",
+      "stageDeposit": "Amana inarudishwa unapohama",
+      "stageDepositWhen": "Ukiondoa uharibifu wowote, ulioorodheshwa kwa maandishi",
+      "facts": "{count, plural, one {Mwezi #} other {Miezi #}} kuanzia {month}"
     }
   },
   "files": {

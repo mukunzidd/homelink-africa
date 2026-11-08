@@ -20,6 +20,7 @@ import { BanknoteIcon, ShieldIcon } from "@/components/ui/icons";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { ChoiceCards, Field, StepSection, TextInput } from "../fields";
 import { cn } from "@/lib/cn";
+import { BANK_DETAILS } from "@/lib/booking/bank";
 
 type Phase = "form" | "processing" | "challenge" | "momoWait" | "declined" | "momoTimeout" | "momoDeclined";
 
@@ -62,6 +63,7 @@ export function PayStep({
   const t3 = useTranslations("booking.threeDs");
   const tc = useTranslations("checkout");
   const tv = useTranslations("verification");
+  const tb = useTranslations("booking.bank");
   const { display, currency, fx } = usePreferences();
 
   const [phase, setPhase] = useState<Phase>("form");
@@ -318,6 +320,28 @@ export function PayStep({
             )}
           </Field>
         )}
+        {rail === "bankTransfer" && (
+          <div className="flex flex-col gap-3 rounded-ctl border border-line bg-surface-2/50 p-4">
+            <p className="text-[14px] leading-relaxed text-ink-2">{tb("body")}</p>
+            <dl className="grid gap-x-6 gap-y-2 text-[14px] sm:grid-cols-[auto_1fr]">
+              {(
+                [
+                  ["accountName", BANK_DETAILS.accountName],
+                  ["bank", BANK_DETAILS.bank],
+                  ["account", BANK_DETAILS.account],
+                  ["swift", BANK_DETAILS.swift],
+                  ["reference", tb("referenceValue")],
+                ] as const
+              ).map(([k, v]) => (
+                <div key={k} className="contents">
+                  <dt className="text-ink-3">{tb(k)}</dt>
+                  <dd className={cn("text-ink", k === "account" || k === "swift" ? "tnum font-mono" : "font-medium")}>{v}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="text-[12px] text-warn">{tb("placeholder")}</p>
+          </div>
+        )}
       </StepSection>
 
       {escrowBody && (
@@ -336,14 +360,24 @@ export function PayStep({
           className="flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-ctl bg-brand px-5 text-[16px] font-semibold text-on-brand transition-colors hover:bg-brand-deep disabled:cursor-wait disabled:opacity-70"
         >
           {working && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-on-brand/40 border-t-on-brand" />}
-          {working ? t("processing") : useDeposit ? t("payDeposit", { amount: shownDue }) : t("payNow", { amount: shownDue })}
+          {working
+            ? t("processing")
+            : rail === "bankTransfer"
+              ? tb("confirm")
+              : useDeposit
+                ? t("payDeposit", { amount: shownDue })
+                : t("payNow", { amount: shownDue })}
         </button>
-        <p className="flex items-center justify-center gap-1.5 text-center text-[12.5px] text-ink-3">
-          <ShieldIcon size={13} />
-          {t("secure")}
-        </p>
+        {rail !== "bankTransfer" && (
+          <p className="flex items-center justify-center gap-1.5 text-center text-[12.5px] text-ink-3">
+            <ShieldIcon size={13} />
+            {t("secure")}
+          </p>
+        )}
         <p className="text-center text-[12.5px] text-ink-3">{t("agree")}</p>
-        <p className="rounded-ctl bg-warn-tint px-3 py-2 text-[12px] leading-relaxed text-warn">{t("testHint")}</p>
+        {rail !== "bankTransfer" && (
+          <p className="rounded-ctl bg-warn-tint px-3 py-2 text-[12px] leading-relaxed text-warn">{t("testHint")}</p>
+        )}
       </div>
 
       <Dialog

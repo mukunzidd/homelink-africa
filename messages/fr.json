@@ -375,7 +375,9 @@
     "driver": "Chauffeur",
     "seats": "{rate} × {count, plural, one {# personne} other {# personnes}}",
     "discount": "Code promo",
-    "free": "Gratuit"
+    "free": "Gratuit",
+    "rent": "Loyer du premier mois",
+    "deposit": "Caution, {count, plural, one {# mois} other {# mois}} (restituée)"
   },
   "cars": {
     "title": "Voitures",
@@ -1779,6 +1781,65 @@
       "dietaryPlaceholder": "Végétarien, sans noix…",
       "other": "Autre",
       "choose": "Choisir…"
+    },
+    "application": {
+      "title": "À propos de vous, futur locataire",
+      "body": "L'équipe de Kigali lit chaque demande. Voici ce qu'il lui faut pour vous répondre oui rapidement.",
+      "term": "Emménagement en {month}, pour {count, plural, one {# mois} other {# mois}}",
+      "occupants": "Combien de personnes y vivront ?",
+      "employer": "Employeur, école ou organisation",
+      "employerHint": "Où vous travaillez ou étudiez à Kigali, ou l'organisation qui vous y affecte.",
+      "employerError": "Indiquez où vous travaillez ou étudiez.",
+      "income": "Revenu mensuel",
+      "incomeHint": "Une fourchette suffit. Elle reste entre vous et l'équipe de Kigali.",
+      "incomeBands": {
+        "under500k": "Moins de 500 000 RWF",
+        "500kTo1m": "De 500 000 RWF à 1 million",
+        "1mTo2m": "De 1 à 2 millions RWF",
+        "over2m": "Plus de 2 millions RWF"
+      },
+      "incomeError": "Choisissez une fourchette.",
+      "id": "Passeport ou carte d'identité",
+      "idHint": "Une photo de la page avec votre portrait. Facultatif pour l'instant ; obligatoire avant l'emménagement."
+    },
+    "agreement": {
+      "title": "Contrat de location",
+      "body": "Lisez-le jusqu'au bout. C'est le contrat dont vous garderez une copie.",
+      "heading": "Contrat de location pour {home}",
+      "parties": "Entre HomeLink Africa Ltd, qui gère le logement pour le compte de son propriétaire, et {tenant}, le locataire.",
+      "clauseHome": "Le logement : {home}, {area}. Meublé tel qu'inspecté et photographié par HomeLink.",
+      "clauseTerm": "Durée : {count, plural, one {# mois} other {# mois}} à compter du {start}. Après les six premiers mois, chaque partie peut y mettre fin par écrit avec un préavis de deux mois.",
+      "clauseRent": "Loyer : {rent} par mois, payable d'avance au plus tard le 5 de chaque mois, par carte, Mobile Money ou virement bancaire.",
+      "clauseDeposit": "Caution : {deposit}, conservée par HomeLink et restituée dans les 14 jours suivant votre départ, déduction faite du coût des dégâts allant au-delà de l'usure normale, détaillés par écrit.",
+      "clauseIncludes": "Compris dans le loyer : {includes}. L'électricité passe par un compteur prépayé au nom du locataire.",
+      "clauseCare": "Le locataire maintient le logement propre et signale toute panne ou casse sous 48 heures via HomeLink ; HomeLink répare à ses frais ce qui n'est pas dû au locataire.",
+      "clauseRules": "Le règlement intérieur accepté lors de la vérification fait partie de ce contrat.",
+      "clauseLaw": "Ce contrat est régi par le droit rwandais.",
+      "scrollHint": "Faites défiler jusqu'en bas pour signer.",
+      "read": "J'ai lu tout le contrat",
+      "sign": "Saisissez votre nom complet pour signer",
+      "signHint": "Il doit correspondre au nom indiqué dans vos coordonnées : {name}.",
+      "signError": "La signature doit correspondre à votre nom : {name}.",
+      "signed": "Signé par {name} le {date}"
+    },
+    "bank": {
+      "title": "Payer par virement bancaire",
+      "body": "Virez le montant ci-dessous depuis n'importe quelle banque rwandaise ou étrangère. Nous confirmons par e-mail et SMS à réception, généralement sous un jour ouvré ; le logement vous est réservé d'ici là.",
+      "accountName": "Titulaire du compte",
+      "bank": "Banque",
+      "account": "Numéro de compte",
+      "swift": "SWIFT",
+      "reference": "Référence",
+      "referenceValue": "Votre référence de réservation, affichée à l'écran suivant",
+      "placeholder": "Coordonnées bancaires d'aperçu ; ce n'est pas un vrai compte.",
+      "confirm": "Je vais faire le virement"
+    },
+    "rent": {
+      "stageFull": "Remboursement intégral si votre demande n'est pas acceptée",
+      "stageFullWhen": "Avant la contresignature du contrat",
+      "stageDeposit": "Caution restituée à votre départ",
+      "stageDepositWhen": "Moins les éventuels dégâts, détaillés par écrit",
+      "facts": "{count, plural, one {# mois} other {# mois}} à partir de {month}"
     }
   },
   "files": {

@@ -9,6 +9,7 @@ import type { Quote } from "@/lib/domain/pricing";
 import { quoteBooking, toDisplayQuote } from "@/lib/domain/pricing";
 import { depositPlan } from "@/lib/domain/payment-plan";
 import { kigaliDay } from "@/lib/domain/instants";
+import { monthsBetween } from "@/lib/domain/dates";
 import {
   STEPS,
   canEnter,
@@ -108,10 +109,11 @@ export function FlowShell({
           driveMode: draft.driveMode,
           extras: draft.extras,
           promoCode: draft.promoCode,
+          ...(flow === "rent" ? { rentMonths: monthsBetween(draft.start, draft.end) } : {}),
         },
         kigaliDay(),
       ),
-    [supply, draft.start, draft.end, draft.party, draft.driveMode, draft.extras, draft.promoCode],
+    [supply, flow, draft.start, draft.end, draft.party, draft.driveMode, draft.extras, draft.promoCode],
   );
   const plan = useMemo(
     () => (quote ? depositPlan(quote, draft.start, kigaliDay(), fx) : ({ offered: false } as const)),

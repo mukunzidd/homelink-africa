@@ -375,7 +375,9 @@
     "driver": "Umushoferi",
     "seats": "{rate} × {count, plural, one {umuntu #} other {abantu #}}",
     "discount": "Kode y'igabanuka",
-    "free": "Ubuntu"
+    "free": "Ubuntu",
+    "rent": "Ubukode bw'ukwezi kwa mbere",
+    "deposit": "Ingwate y'{count, plural, one {ukwezi #} other {amezi #}} (isubizwa)"
   },
   "cars": {
     "title": "Imodoka",
@@ -1779,6 +1781,65 @@
       "dietaryPlaceholder": "Ntarya inyama, nta bunyobwa…",
       "other": "Ikindi",
       "choose": "Hitamo…"
+    },
+    "application": {
+      "title": "Ibyawe nk'ukodesha",
+      "body": "Itsinda rya Kigali risoma buri cyifuzo. Ibi ni byo rikeneye kugira ngo rikwemerere vuba.",
+      "term": "Winjira muri {month}, mu gihe {count, plural, one {cy'ukwezi #} other {cy'amezi #}}",
+      "occupants": "Hazaba abantu bangahe?",
+      "employer": "Umukoresha, ishuri cyangwa ikigo",
+      "employerHint": "Aho ukorera cyangwa wigira i Kigali, cyangwa ikigo cyakohereje hano.",
+      "employerError": "Tubwire aho ukorera cyangwa wigira.",
+      "income": "Amafaranga winjiza buri kwezi",
+      "incomeHint": "Urugero rurahagije. Biguma hagati yawe n'itsinda rya Kigali.",
+      "incomeBands": {
+        "under500k": "Munsi ya RWF 500,000",
+        "500kTo1m": "Kuva kuri RWF 500,000 kugeza kuri miliyoni 1",
+        "1mTo2m": "Kuva kuri miliyoni 1 kugeza kuri 2 RWF",
+        "over2m": "Hejuru ya miliyoni 2 RWF"
+      },
+      "incomeError": "Hitamo urugero.",
+      "id": "Pasiporo cyangwa indangamuntu",
+      "idHint": "Ifoto y'urupapuro ruriho ifoto yawe. Si ngombwa ubu; irakenerwa mbere yo kwinjira."
+    },
+    "agreement": {
+      "title": "Amasezerano y'ubukode",
+      "body": "Soma kugeza ku iherezo. Ni yo masezerano uzabikaho kopi.",
+      "heading": "Amasezerano y'ubukode bwa {home}",
+      "parties": "Hagati ya HomeLink Africa Ltd, icunga inzu mu izina rya nyirayo, na {tenant}, ukodesha.",
+      "clauseHome": "Inzu: {home}, {area}. Irimo ibikoresho nk'uko HomeLink yayigenzuye kandi ikayifotora.",
+      "clauseTerm": "Igihe: {count, plural, one {ukwezi #} other {amezi #}} uhereye ku wa {start}. Nyuma y'amezi atandatu ya mbere, buri ruhande rushobora kuyasesa rubimenyesheje mu nyandiko amezi abiri mbere.",
+      "clauseRent": "Ubukode: {rent} ku kwezi, bwishyurwa mbere bitarenze tariki 5 za buri kwezi, hakoreshejwe ikarita, Mobile Money cyangwa kohereza muri banki.",
+      "clauseDeposit": "Ingwate: {deposit}, ibikwa na HomeLink kandi igasubizwa mu minsi 14 nyuma yo kuvamo, havanywemo ikiguzi cy'ibyangiritse birenze ugusaza gusanzwe, byanditswe kimwe kimwe.",
+      "clauseIncludes": "Bibarirwa mu bukode: {includes}. Amashanyarazi akoresha mubazi y'ifatabuguzi iri mu izina ry'ukodesha.",
+      "clauseCare": "Ukodesha agira isuku mu nzu kandi akamenyesha HomeLink ikintu cyose cyangiritse mu masaha 48; HomeLink ikora ku mafaranga yayo ibyangiritse bitatewe n'ukodesha.",
+      "clauseRules": "Amabwiriza y'inzu wemeye mu igenzura ni kimwe mu bigize aya masezerano.",
+      "clauseLaw": "Aya masezerano agengwa n'amategeko y'u Rwanda.",
+      "scrollHint": "Manuka kugeza ku iherezo kugira ngo usinye.",
+      "read": "Nasomye amasezerano yose",
+      "sign": "Andika amazina yawe yose kugira ngo usinye",
+      "signHint": "Agomba guhura n'izina riri mu makuru yawe: {name}.",
+      "signError": "Umukono ugomba guhura n'izina ryawe: {name}.",
+      "signed": "Byasinywe na {name} ku wa {date}"
+    },
+    "bank": {
+      "title": "Kwishyura unyuze muri banki",
+      "body": "Ohereza amafaranga ari hasi aha uvuye muri banki iyo ari yo yose yo mu Rwanda cyangwa yo hanze. Tukwemerera kuri imeyili no kuri SMS iyo agezeho, akenshi mu munsi umwe w'akazi; inzu yawe irakubikirwa kugeza icyo gihe.",
+      "accountName": "Izina rya konti",
+      "bank": "Banki",
+      "account": "Nimero ya konti",
+      "swift": "SWIFT",
+      "reference": "Indango",
+      "referenceValue": "Indango y'ibyo wafashe, igaragara ku rupapuro rukurikira",
+      "placeholder": "Amakuru ya konti y'igerageza; si konti nyakuri.",
+      "confirm": "Ndohereza amafaranga muri banki"
+    },
+    "rent": {
+      "stageFull": "Usubizwa amafaranga yose niba icyifuzo cyawe kitemewe",
+      "stageFullWhen": "Mbere y'uko amasezerano asinywa n'impande zombi",
+      "stageDeposit": "Ingwate isubizwa iyo uvuyemo",
+      "stageDepositWhen": "Havanywemo ibyangiritse, byanditswe kimwe kimwe",
+      "facts": "{count, plural, one {Ukwezi #} other {Amezi #}} guhera muri {month}"
     }
   },
   "files": {

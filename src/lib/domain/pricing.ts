@@ -35,7 +35,11 @@ export type QuoteLineKey =
   /** One chosen extra; `QuoteLine.extra` says which. */
   | "extra"
   /** A promo code. Always negative. */
-  | "discount";
+  | "discount"
+  /** The first month of a long-term stay. */
+  | "rent"
+  /** Held for the length of a long-term stay and returned. */
+  | "deposit";
 
 export type QuoteLine = {
   key: QuoteLineKey;
@@ -255,6 +259,8 @@ export type QuoteInput = {
   driveMode?: DriveMode;
   extras?: ExtraSelection[];
   promoCode?: string;
+  /** Set for a long-term stay: priced by the month, not the night. */
+  rentMonths?: number;
 };
 
 /**
@@ -270,6 +276,7 @@ export function quoteBooking(
   input: QuoteInput,
   on: IsoDate,
 ): (Quote & { promo?: PromoResult }) | null {
+  if (input.kind === "stay" && input.rentMonths) return quoteRent(supply as Listing, input.rentMonths);
   const base =
     input.kind === "stay"
       ? quoteStay(supply as Listing, input.start, input.end)
@@ -300,5 +307,26 @@ export function quoteBooking(
     total,
     escrowHeld: input.kind === "stay" && total.minor >= ESCROW_THRESHOLD_RWF,
     ...(promo ? { promo } : {}),
+  };
+}
+
+/**
+ * What a long-term stay asks for up front: the first month and the deposit.
+ * No cleaning fee, no service fee on top, no extras and no promo code: a
+ * rent is a rent, and the agreement states exactly these two numbers.
+ * `nights` carries the number of months, for the breakdown's labels.
+ */
+export function quoteRent(listing: Listing, months: number): Quote | null {
+  if (!listing.monthlyRate || !listing.leaseTerms || months < 1) return null;
+  const rent = listing.monthlyRate;
+  const deposit = multiply(rent, listing.leaseTerms.depositMonths);
+  return {
+    nights: months,
+    lines: [
+      { key: "rent", amount: rent },
+      { key: "deposit", amount: deposit },
+    ],
+    total: add(rent, deposit),
+    escrowHeld: false,
   };
 }

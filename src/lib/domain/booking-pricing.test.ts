@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
+import { monthsBetween } from "./dates";
 import type { ExtraKey } from "./extras";
 import { extrasFor, priceExtras } from "./extras";
 import { applyPromo } from "./promo";
 import { depositPlan } from "./payment-plan";
-import { quoteBooking, quoteStay, quoteVehicle } from "./pricing";
+import { quoteBooking, quoteRent, quoteStay, quoteVehicle } from "./pricing";
 import { EXPERIENCES, FX_RATES, LISTINGS, VEHICLES } from "@/lib/repos/fixtures/data";
 
 const listing = LISTINGS[0];
@@ -180,5 +181,36 @@ describe("quoteBooking", () => {
   it("sets escrow on the final total, after extras", () => {
     const q = quoteBooking(listing, { kind: "stay", start: "2026-12-01", end: "2026-12-02", party: 2, extras: [{ key: "groceries", quantity: 1 }, { key: "airportPickup", quantity: 1 }, { key: "earlyCheckIn", quantity: 1 }, { key: "lateCheckout", quantity: 1 }] }, on)!;
     expect(q.escrowHeld).toBe(q.total.minor >= 300_000);
+  });
+});
+
+describe("quoteRent", () => {
+  const home = LISTINGS.find((l) => l.monthlyRate && l.leaseTerms)!;
+
+  it("asks for the first month and the deposit, nothing else", () => {
+    const q = quoteRent(home, 12)!;
+    const m = home.monthlyRate!.minor;
+    expect(q.lines.map((l) => [l.key, l.amount.minor])).toEqual([
+      ["rent", m],
+      ["deposit", m * home.leaseTerms!.depositMonths],
+    ]);
+    expect(q.total.minor).toBe(m * (1 + home.leaseTerms!.depositMonths));
+  });
+
+  it("refuses a home that is not offered by the month", () => {
+    const nightly = LISTINGS.find((l) => !l.monthlyRate)!;
+    expect(quoteRent(nightly, 12)).toBeNull();
+  });
+
+  it("is what quoteBooking returns for a long-term stay", () => {
+    const q = quoteBooking(home, { kind: "stay", start: "2027-01-01", end: "2028-01-01", party: 1, rentMonths: 12 }, on)!;
+    expect(q.total).toEqual(quoteRent(home, 12)!.total);
+  });
+});
+
+describe("monthsBetween", () => {
+  it("counts calendar months from a move-in to an end", () => {
+    expect(monthsBetween("2027-01-01", "2028-01-01")).toBe(12);
+    expect(monthsBetween("2027-01-15", "2029-01-15")).toBe(24);
   });
 });

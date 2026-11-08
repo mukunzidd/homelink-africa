@@ -375,7 +375,9 @@
     "driver": "Driver",
     "seats": "{rate} × {count, plural, one {# person} other {# people}}",
     "discount": "Promo code",
-    "free": "Free"
+    "free": "Free",
+    "rent": "First month's rent",
+    "deposit": "Deposit, {count, plural, one {# month} other {# months}} (returned)"
   },
   "cars": {
     "title": "Cars",
@@ -1779,6 +1781,65 @@
       "dietaryPlaceholder": "Vegetarian, no nuts…",
       "other": "Other",
       "choose": "Choose…"
+    },
+    "application": {
+      "title": "About you as a tenant",
+      "body": "The Kigali team reads every application. This is what they need to say yes quickly.",
+      "term": "Moving in {month}, for {count, plural, one {# month} other {# months}}",
+      "occupants": "How many people will live there?",
+      "employer": "Employer, school or organisation",
+      "employerHint": "Where you work or study in Kigali, or the organisation posting you here.",
+      "employerError": "Tell us where you work or study.",
+      "income": "Monthly income",
+      "incomeHint": "A band is enough. It stays between you and the Kigali team.",
+      "incomeBands": {
+        "under500k": "Under RWF 500,000",
+        "500kTo1m": "RWF 500,000 to 1 million",
+        "1mTo2m": "RWF 1 to 2 million",
+        "over2m": "Over RWF 2 million"
+      },
+      "incomeError": "Choose a band.",
+      "id": "Passport or national ID",
+      "idHint": "A photo of the page with your picture. Optional now; needed before you move in."
+    },
+    "agreement": {
+      "title": "Rental agreement",
+      "body": "Read it to the end. It is the agreement you will hold a copy of.",
+      "heading": "Rental agreement for {home}",
+      "parties": "Between HomeLink Africa Ltd, managing the home for its owner, and {tenant}, the tenant.",
+      "clauseHome": "The home: {home}, {area}. Furnished as inspected and photographed by HomeLink.",
+      "clauseTerm": "The term: {count, plural, one {# month} other {# months}} from {start}. Either side may end it with two months' written notice after the first six months.",
+      "clauseRent": "Rent: {rent} a month, paid in advance by the 5th of each month, by card, Mobile Money or bank transfer.",
+      "clauseDeposit": "Deposit: {deposit}, held by HomeLink and returned within 14 days of moving out, less the cost of any damage beyond normal wear, itemised in writing.",
+      "clauseIncludes": "Included in the rent: {includes}. Electricity is on a prepaid meter in the tenant's name.",
+      "clauseCare": "The tenant keeps the home clean and reports anything broken within 48 hours through HomeLink; HomeLink repairs what is not the tenant's fault at its own cost.",
+      "clauseRules": "The house rules agreed at review are part of this agreement.",
+      "clauseLaw": "This agreement is governed by the laws of Rwanda.",
+      "scrollHint": "Scroll to the end to sign.",
+      "read": "I have read the whole agreement",
+      "sign": "Type your full name to sign",
+      "signHint": "It must match the name on your details: {name}.",
+      "signError": "The signature must match your name: {name}.",
+      "signed": "Signed by {name} on {date}"
+    },
+    "bank": {
+      "title": "Pay by bank transfer",
+      "body": "Transfer the amount below from any Rwandan or international bank. We confirm by email and SMS when it arrives, usually within one working day; your home is held until then.",
+      "accountName": "Account name",
+      "bank": "Bank",
+      "account": "Account number",
+      "swift": "SWIFT",
+      "reference": "Reference",
+      "referenceValue": "Your booking reference, shown on the next screen",
+      "placeholder": "Preview account details; not a real account.",
+      "confirm": "I'll make the transfer"
+    },
+    "rent": {
+      "stageFull": "Full refund if your application isn't accepted",
+      "stageFullWhen": "Before the agreement is countersigned",
+      "stageDeposit": "Deposit returned when you move out",
+      "stageDepositWhen": "Less any damage, itemised in writing",
+      "facts": "{count, plural, one {# month} other {# months}} from {month}"
     }
   },
   "files": {

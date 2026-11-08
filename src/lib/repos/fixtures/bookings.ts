@@ -12,7 +12,7 @@ import type { AvailabilityRepo, BookingRepo, NotificationsRepo } from "@/lib/rep
 import type { Quote } from "@/lib/domain/pricing";
 import { bookingReference, quoteBooking } from "@/lib/domain/pricing";
 import { formatMoney, money } from "@/lib/domain/money";
-import { addDays, isIsoDate, nightsBetween } from "@/lib/domain/dates";
+import { addDays, isIsoDate, monthsBetween, nightsBetween } from "@/lib/domain/dates";
 import { kigaliDay } from "@/lib/domain/instants";
 import { depositPlan } from "@/lib/domain/payment-plan";
 import { refundPreview } from "@/lib/domain/policies";
@@ -134,6 +134,7 @@ function quoteFor(supply: Supply, d: BookingDraft, today: string) {
       driveMode: d.driveMode,
       extras: d.extras,
       promoCode: d.promoCode,
+      ...(d.flow === "rent" ? { rentMonths: monthsBetween(d.start, d.end) } : {}),
     },
     today,
   );

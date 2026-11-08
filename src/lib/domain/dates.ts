@@ -202,3 +202,10 @@ export function quickRanges(from: IsoDate = today()): QuickRange[] {
     { key: "nextWeek", from: nextMonday, to: addDays(nextMonday, 7) },
   ];
 }
+
+/** Whole calendar months from one date to another, by month number. */
+export function monthsBetween(from: IsoDate, to: IsoDate): number {
+  const [fy, fm] = from.split("-").map(Number);
+  const [ty, tm] = to.split("-").map(Number);
+  return (ty - fy) * 12 + (tm - fm);
+}
