@@ -67,6 +67,19 @@ export function ReviewStep({
             <p className="tnum">{text.range}</p>
             <p className="text-[14px] text-ink-2">{text.facts.join(" · ")}</p>
           </Row>
+          {draft.participants.length > 0 && (
+            <Row edit={t("edit")} editable={editable} onEdit={onEdit} label={t("people")} step="people">
+              <ul className="flex flex-col">
+                {draft.participants.map((p, i) => (
+                  <li key={i}>
+                    {p.name}
+                    <span className="text-ink-3"> · {p.age}</span>
+                  </li>
+                ))}
+              </ul>
+              {draft.slot && <p className="tnum text-[14px] text-ink-2">{t("startsAt", { time: draft.slot })}</p>}
+            </Row>
+          )}
           {editable.includes("extras") && (
             <Row edit={t("edit")} editable={editable} onEdit={onEdit} label={t("extras")} step="extras">
               {draft.extras.length ? (

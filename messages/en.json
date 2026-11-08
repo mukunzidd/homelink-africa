@@ -1679,7 +1679,10 @@
       },
       "rulesTitleCar": "Rules for the hire",
       "rulesTitleDay": "Rules for the day",
-      "rulesAcceptOther": "I've read the rules and agree to them"
+      "rulesAcceptOther": "I've read the rules and agree to them",
+      "cancelDayPermit": "Refund, less the park permits",
+      "people": "People",
+      "startsAt": "Starts at {time}"
     },
     "pay": {
       "title": "Pay securely",
@@ -1754,7 +1757,29 @@
       "flightHint": "We track it and wait if you land late.",
       "flightError": "That doesn't look like a flight number. For example: WB464."
     },
-    "days": "{count, plural, one {# day} other {# days}}"
+    "days": "{count, plural, one {# day} other {# days}}",
+    "people": {
+      "title": "Who's coming",
+      "body": "Names as they are on a passport or ID. The guide checks them at the start.",
+      "slot": "Start time",
+      "fixedSlot": "Starts at {time}",
+      "person": "Person {n}",
+      "name": "Full name",
+      "age": "Age",
+      "ageError": "Must be at least {min} on the day.",
+      "nameError": "Enter this person's full name.",
+      "nationality": "Nationality",
+      "nationalityError": "Choose a nationality.",
+      "passport": "Passport or ID number",
+      "passportError": "Enter the passport or ID number.",
+      "permitNote": "The park issues a permit in each person's name, so we need their passport details. A permit can't be moved to someone else or refunded.",
+      "pickup": "Pickup point",
+      "pickupHint": "We meet you here. Need collecting from Kigali? Say so in the next step.",
+      "dietary": "Food allergies or diet",
+      "dietaryPlaceholder": "Vegetarian, no nuts…",
+      "other": "Other",
+      "choose": "Choose…"
+    }
   },
   "files": {
     "choose": "Choose a file",

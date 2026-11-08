@@ -39,7 +39,12 @@ export async function flowPolicy(
   } else {
     free = addDays(start, -3);
     stages = [
-      { tone: "ok", title: t("review.cancelDayFree"), when: until(free) },
+      {
+        tone: "ok",
+        // Where the price is mostly a permit, "full refund" would be untrue.
+        title: opts.requiresPermit ? t("review.cancelDayPermit") : t("review.cancelDayFree"),
+        when: until(free),
+      },
       { tone: "crit", title: t("review.cancelDayNone"), when: from(addDays(start, -2)) },
     ];
   }

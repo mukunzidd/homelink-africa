@@ -143,3 +143,27 @@ describe("bookings.cancel and changeDates", () => {
     }
   });
 });
+
+describe("bookings.cancel: permits", () => {
+  beforeEach(() => resetStore());
+
+  it("keeps every person's permit on a cancelled gorilla trek", async () => {
+    const trek = store().experiences.find((e) => e.requiresPermit)!;
+    let d = newDraft({ flow: "experience", slug: trek.slug, start: addDays(today, 20), end: addDays(today, 20), party: 2 }, new Date());
+    d = draftReducer(d, { type: "guest", value: { name: "Ange Uwase", email: "ange@example.rw", phone: "0788123456" } });
+    d = draftReducer(d, { type: "slot", value: trek.slots![0] });
+    d = draftReducer(d, {
+      type: "participants",
+      value: [
+        { name: "Ange Uwase", age: 30, nationality: "RW", passport: "PC1234567" },
+        { name: "Jean Mugabo", age: 32, nationality: "RW", passport: "PC7654321" },
+      ],
+    });
+    d = draftReducer(d, { type: "acceptRules", value: true });
+    const total = quoteBooking(trek, { kind: "experience", start: d.start, end: d.start, party: 2 }, today)!.total;
+    const r = await repos.bookings.place({ draft: d, clientTotal: total, payment });
+    if (!r.ok) throw new Error(`expected ok, got ${r.reason}`);
+    const c = await repos.bookings.cancel(r.booking.reference, "guest", "plansChanged", today);
+    expect(c.refund!.minor).toBe(total.minor - trek.permitShare!.minor * 2);
+  });
+});

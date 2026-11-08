@@ -305,7 +305,11 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       const supply = supplyById(b.supplyItemId);
       const preview = refundPreview(b.service as ServiceKind, storedQuote(b), b.startDate, today, {
         hireDays: nightsBetween(b.startDate, b.endDate) + 1,
-        permitShare: supply?.kind === "experience" ? supply.item.permitShare : undefined,
+        // A permit is per person, so the share kept is one per head.
+        permitShare:
+          supply?.kind === "experience" && supply.item.permitShare
+            ? money(supply.item.permitShare.minor * b.party, supply.item.permitShare.currency)
+            : undefined,
       });
       b.status = "cancelled";
       b.cancelledAt = new Date().toISOString();

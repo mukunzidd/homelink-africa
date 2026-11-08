@@ -238,9 +238,19 @@ export function FlowShell({
 
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
         <div className="flex min-w-0 flex-col gap-5">
-          {/* The first paint is a fresh draft; the stored one arrives a tick
-              later. Fading the step in avoids a flash of empty fields. */}
-          <div className={restored ? "animate-[fade_160ms_ease-out]" : "opacity-0"}>{body}</div>
+          {/* The step mounts only once the stored draft has loaded. Mounted
+              earlier, a step's own defaults (the first participant's name,
+              the meeting point) were written to a fresh draft and then
+              replaced by the stored one: React runs a child's effects before
+              its parent's. */}
+          {restored ? (
+            <div className="animate-[fade_160ms_ease-out]">{body}</div>
+          ) : (
+            <div aria-busy="true" className="flex flex-col gap-4">
+              <div className="h-40 animate-pulse rounded-card bg-surface-2" />
+              <div className="h-64 animate-pulse rounded-card bg-surface-2" />
+            </div>
+          )}
 
           {showNav && (
             <div className="hidden items-center justify-between gap-3 lg:flex">

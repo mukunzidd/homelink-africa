@@ -1679,7 +1679,10 @@
       },
       "rulesTitleCar": "Amategeko yo gukodesha imodoka",
       "rulesTitleDay": "Amategeko y'urugendo",
-      "rulesAcceptOther": "Nasomye amategeko kandi ndayemera"
+      "rulesAcceptOther": "Nasomye amategeko kandi ndayemera",
+      "cancelDayPermit": "Gusubizwa, uretse impushya za pariki",
+      "people": "Abantu",
+      "startsAt": "Bitangira saa {time}"
     },
     "pay": {
       "title": "Ishyura mu mutekano",
@@ -1754,7 +1757,29 @@
       "flightHint": "Turayikurikirana kandi tugutegereza niba utinze kugwa.",
       "flightError": "Iyi ntisa n'inimero y'indege. Urugero: WB464."
     },
-    "days": "{count, plural, one {Umunsi #} other {Iminsi #}}"
+    "days": "{count, plural, one {Umunsi #} other {Iminsi #}}",
+    "people": {
+      "title": "Abazaza",
+      "body": "Amazina nk'uko ari ku pasiporo cyangwa ku ndangamuntu. Umuyobozi abigenzura mu ntangiriro.",
+      "slot": "Isaha yo gutangira",
+      "fixedSlot": "Bitangira saa {time}",
+      "person": "Umuntu wa {n}",
+      "name": "Amazina yose",
+      "age": "Imyaka",
+      "ageError": "Agomba kuba afite nibura imyaka {min} kuri uwo munsi.",
+      "nameError": "Andika amazina yose y'uyu muntu.",
+      "nationality": "Ubwenegihugu",
+      "nationalityError": "Hitamo ubwenegihugu.",
+      "passport": "Nimero ya pasiporo cyangwa y'indangamuntu",
+      "passportError": "Andika nimero ya pasiporo cyangwa y'indangamuntu.",
+      "permitNote": "Pariki itanga uruhushya mu izina rya buri muntu, ni yo mpamvu dukeneye amakuru ya pasiporo. Uruhushya ntirushobora guhabwa undi cyangwa gusubizwa.",
+      "pickup": "Aho guhurira",
+      "pickupHint": "Tuzahurira hano. Ukeneye ko tugufata i Kigali? Bivuge mu ntambwe ikurikira.",
+      "dietary": "Allerjiya cyangwa imirire",
+      "dietaryPlaceholder": "Ntarya inyama, nta bunyobwa…",
+      "other": "Ikindi",
+      "choose": "Hitamo…"
+    }
   },
   "files": {
     "choose": "Hitamo dosiye",

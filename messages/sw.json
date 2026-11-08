@@ -1679,7 +1679,10 @@
       },
       "rulesTitleCar": "Kanuni za kukodi gari",
       "rulesTitleDay": "Kanuni za siku",
-      "rulesAcceptOther": "Nimesoma kanuni na ninazikubali"
+      "rulesAcceptOther": "Nimesoma kanuni na ninazikubali",
+      "cancelDayPermit": "Kurudishiwa, ukiondoa vibali vya hifadhi",
+      "people": "Watu",
+      "startsAt": "Inaanza saa {time}"
     },
     "pay": {
       "title": "Lipa kwa usalama",
@@ -1754,7 +1757,29 @@
       "flightHint": "Tunaifuatilia na tunasubiri ukichelewa kutua.",
       "flightError": "Hii haionekani kama namba ya ndege. Kwa mfano: WB464."
     },
-    "days": "{count, plural, one {Siku #} other {Siku #}}"
+    "days": "{count, plural, one {Siku #} other {Siku #}}",
+    "people": {
+      "title": "Nani anakuja",
+      "body": "Majina kama yalivyo kwenye pasipoti au kitambulisho. Mwongozaji anayakagua mwanzoni.",
+      "slot": "Saa ya kuanza",
+      "fixedSlot": "Inaanza saa {time}",
+      "person": "Mtu wa {n}",
+      "name": "Jina kamili",
+      "age": "Umri",
+      "ageError": "Lazima awe na angalau miaka {min} siku hiyo.",
+      "nameError": "Weka jina kamili la mtu huyu.",
+      "nationality": "Uraia",
+      "nationalityError": "Chagua uraia.",
+      "passport": "Namba ya pasipoti au kitambulisho",
+      "passportError": "Weka namba ya pasipoti au kitambulisho.",
+      "permitNote": "Hifadhi inatoa kibali kwa jina la kila mtu, kwa hiyo tunahitaji maelezo ya pasipoti. Kibali hakiwezi kuhamishiwa mtu mwingine wala kurudishiwa pesa.",
+      "pickup": "Mahali pa kukutana",
+      "pickupHint": "Tutakutana hapa. Unahitaji kuchukuliwa Kigali? Sema katika hatua inayofuata.",
+      "dietary": "Mzio wa chakula au lishe",
+      "dietaryPlaceholder": "Mboga tu, bila karanga…",
+      "other": "Nyingine",
+      "choose": "Chagua…"
+    }
   },
   "files": {
     "choose": "Chagua faili",

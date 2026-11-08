@@ -1679,7 +1679,10 @@
       },
       "rulesTitleCar": "Règles de la location",
       "rulesTitleDay": "Règles de la journée",
-      "rulesAcceptOther": "J'ai lu les règles et je les accepte"
+      "rulesAcceptOther": "J'ai lu les règles et je les accepte",
+      "cancelDayPermit": "Remboursement, hors permis du parc",
+      "people": "Participants",
+      "startsAt": "Départ à {time}"
     },
     "pay": {
       "title": "Paiement sécurisé",
@@ -1754,7 +1757,29 @@
       "flightHint": "Nous le suivons et attendons si vous atterrissez en retard.",
       "flightError": "Ce n'est pas un numéro de vol valide. Par exemple : WB464."
     },
-    "days": "{count, plural, one {# jour} other {# jours}}"
+    "days": "{count, plural, one {# jour} other {# jours}}",
+    "people": {
+      "title": "Qui vient",
+      "body": "Les noms tels qu'ils figurent sur le passeport ou la pièce d'identité. Le guide les vérifie au départ.",
+      "slot": "Heure de départ",
+      "fixedSlot": "Départ à {time}",
+      "person": "Personne {n}",
+      "name": "Nom complet",
+      "age": "Âge",
+      "ageError": "Doit avoir au moins {min} ans le jour même.",
+      "nameError": "Saisissez le nom complet de cette personne.",
+      "nationality": "Nationalité",
+      "nationalityError": "Choisissez une nationalité.",
+      "passport": "Numéro de passeport ou de pièce d'identité",
+      "passportError": "Saisissez le numéro de passeport ou de pièce d'identité.",
+      "permitNote": "Le parc délivre un permis au nom de chaque personne : nous avons besoin des détails de passeport. Un permis ne peut être ni transféré ni remboursé.",
+      "pickup": "Point de rendez-vous",
+      "pickupHint": "Rendez-vous ici. Besoin d'être pris à Kigali ? Dites-le à l'étape suivante.",
+      "dietary": "Allergies ou régime alimentaire",
+      "dietaryPlaceholder": "Végétarien, sans noix…",
+      "other": "Autre",
+      "choose": "Choisir…"
+    }
   },
   "files": {
     "choose": "Choisir un fichier",
