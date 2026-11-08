@@ -1424,6 +1424,59 @@
       "empty": "Aucun paiement pour l'instant.",
       "totalPaid": "Payé cette année",
       "totalRefunded": "Remboursé"
+    },
+    "renting": {
+      "title": "Votre location",
+      "none": "Vous ne louez pas de logement chez nous en ce moment.",
+      "term": "Du {start} au {end}",
+      "depositHeld": "Caution conservée : {amount}",
+      "schedule": "Loyer",
+      "status": {
+        "paid": "Payé",
+        "due": "À payer",
+        "overdue": "En retard",
+        "upcoming": "À venir"
+      },
+      "pay": "Payer {amount}",
+      "paid": "Loyer payé. Le reçu est dans vos paiements.",
+      "repairs": "Réparations",
+      "repairsBody": "Quelque chose de cassé ? Dites-le ici et l'équipe planifie la réparation, sans frais pour vous sauf en cas de mauvaise utilisation.",
+      "newRepair": "Demander une réparation",
+      "repairTitle": "Qu'est-ce qui doit être réparé ?",
+      "repairDetail": "Dites-nous en plus",
+      "priority": "Dans quel délai ?",
+      "priorities": {
+        "urgent": "Urgent",
+        "normal": "Cette semaine",
+        "low": "Quand c'est possible"
+      },
+      "send": "Envoyer",
+      "sent": "Envoyé. L'équipe va planifier l'intervention.",
+      "ticketStatus": {
+        "open": "Reçue",
+        "scheduled": "Planifiée",
+        "inProgress": "En cours",
+        "done": "Réparée"
+      },
+      "noRepairs": "Aucune réparation demandée.",
+      "documents": "Documents",
+      "docAgreement": "Contrat de location",
+      "docReceipts": "Reçus"
+    },
+    "viewings": {
+      "title": "Visites",
+      "none": "Aucune visite réservée. Réservez-en une depuis n'importe quel bien à vendre.",
+      "status": {
+        "requested": "Demandée",
+        "confirmed": "Confirmée",
+        "rescheduled": "Déplacée",
+        "done": "Effectuée",
+        "cancelled": "Annulée"
+      },
+      "cancel": "Annuler la visite",
+      "move": "Choisir un autre horaire",
+      "video": "En vidéo",
+      "inPerson": "Sur place"
     }
   },
   "notifications": {

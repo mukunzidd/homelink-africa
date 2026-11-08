@@ -18,7 +18,7 @@ import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
 import { availability, makeBookings, makeTrips } from "./bookings";
-import type { IncidentsRepo, ReviewsRepo, ViewingsRepo } from "@/lib/repos/types";
+import type { IncidentsRepo, ReviewsRepo, ViewingsRepo, WorkRepo } from "@/lib/repos/types";
 import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
@@ -480,6 +480,25 @@ const reviews: ReviewsRepo = {
   },
 };
 
+const work: WorkRepo = {
+  async tickets(filter = {}) {
+    return store()
+      .tickets.filter((t) => (!filter.listingId || t.listingId === filter.listingId) && (!filter.status || filter.status.includes(t.status)))
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+  async createTicket(t) {
+    const made = { ...t, id: nextId("tkt"), status: "open" as const, createdAt: new Date().toISOString() };
+    store().tickets.push(made);
+    return made;
+  },
+  async updateTicket(id, patch) {
+    const t = store().tickets.find((x) => x.id === id);
+    if (!t) throw new Error(`No ticket ${id}`);
+    Object.assign(t, patch);
+    return t;
+  },
+};
+
 const viewings: ViewingsRepo = {
   async create(v) {
     const made = { ...v, id: nextId("vwg"), status: "requested" as const, createdAt: new Date().toISOString() };
@@ -516,6 +535,7 @@ export const fixtureRepositories: Repositories = {
   viewings,
   incidents,
   reviews,
+  work,
   trips,
   messaging,
   ops,

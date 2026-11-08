@@ -1424,6 +1424,59 @@
       "empty": "Bado hakuna malipo.",
       "totalPaid": "Imelipwa mwaka huu",
       "totalRefunded": "Imerudishwa"
+    },
+    "renting": {
+      "title": "Nyumba unayopanga",
+      "none": "Kwa sasa hupangi nyumba kwetu.",
+      "term": "Kuanzia {start} hadi {end}",
+      "depositHeld": "Amana inayoshikiliwa: {amount}",
+      "schedule": "Kodi",
+      "status": {
+        "paid": "Imelipwa",
+        "due": "Inadaiwa",
+        "overdue": "Imechelewa",
+        "upcoming": "Ijayo"
+      },
+      "pay": "Lipa {amount}",
+      "paid": "Kodi imelipwa. Risiti iko kwenye malipo yako.",
+      "repairs": "Matengenezo",
+      "repairsBody": "Kuna kilichoharibika? Tuambie hapa na timu itapanga kurekebisha, bila gharama kwako isipokuwa kama kimesababishwa na matumizi mabaya.",
+      "newRepair": "Omba matengenezo",
+      "repairTitle": "Nini kinahitaji kurekebishwa?",
+      "repairDetail": "Tuambie zaidi",
+      "priority": "Haraka kiasi gani?",
+      "priorities": {
+        "urgent": "Dharura",
+        "normal": "Wiki hii",
+        "low": "Wakati unaofaa"
+      },
+      "send": "Tuma ombi",
+      "sent": "Imetumwa. Timu itaipanga.",
+      "ticketStatus": {
+        "open": "Imepokelewa",
+        "scheduled": "Imepangwa",
+        "inProgress": "Inarekebishwa",
+        "done": "Imerekebishwa"
+      },
+      "noRepairs": "Hakuna matengenezo yaliyoombwa.",
+      "documents": "Nyaraka",
+      "docAgreement": "Mkataba wa kupanga",
+      "docReceipts": "Risiti"
+    },
+    "viewings": {
+      "title": "Kutazama nyumba",
+      "none": "Hakuna kutazama kulikopangwa. Unaweza kupanga kutoka kwa nyumba yoyote inayouzwa.",
+      "status": {
+        "requested": "Imeombwa",
+        "confirmed": "Imethibitishwa",
+        "rescheduled": "Imehamishwa",
+        "done": "Imefanyika",
+        "cancelled": "Imefutwa"
+      },
+      "cancel": "Ghairi kutazama",
+      "move": "Chagua wakati mwingine",
+      "video": "Kwa video",
+      "inPerson": "Ana kwa ana"
     }
   },
   "notifications": {

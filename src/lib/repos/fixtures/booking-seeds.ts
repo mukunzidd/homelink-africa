@@ -1,11 +1,11 @@
-import type { Block, Booking, Listing, PaymentRecord, Review } from "@/lib/domain/types";
+import type { Block, Booking, Listing, MaintenanceTicket, PaymentRecord, Review } from "@/lib/domain/types";
 import { quoteRent, quoteStay } from "@/lib/domain/pricing";
 import { addDays } from "@/lib/domain/dates";
 import { kigaliDay } from "@/lib/domain/instants";
 
 /** One payment per fixture booking, so the payments screens have rows. */
 export function seedPayments(bookings: Booking[]): PaymentRecord[] {
-  return bookings.map((b, i) => ({
+  const base: PaymentRecord[] = bookings.map((b, i) => ({
     id: `pmt_${String(i + 1).padStart(3, "0")}`,
     bookingId: b.id,
     rail: i % 2 ? "mobileMoney" : "card",
@@ -14,6 +14,26 @@ export function seedPayments(bookings: Booking[]): PaymentRecord[] {
     status: b.status === "cancelled" ? "refunded" : "succeeded",
     at: `${addDays(b.startDate, -21)}T09:30:00.000Z`,
   }));
+  // The renting tenant has paid the three months after the first, which
+  // leaves this month's rent showing as overdue.
+  const lease = bookings.find((b) => b.id === "bkg_phase_leaseActive");
+  if (lease?.lines) {
+    const rent = lease.lines.find((l) => l.key === "rent")!.amount;
+    for (let m = 1; m <= 3; m++) {
+      const [y, mo] = lease.startDate.split("-").map(Number);
+      const n = y * 12 + (mo - 1) + m;
+      base.push({
+        id: `pmt_rent_${m}`,
+        bookingId: lease.id,
+        rail: "mobileMoney",
+        kind: "rent",
+        amount: rent,
+        status: "succeeded",
+        at: `${Math.floor(n / 12)}-${String((n % 12) + 1).padStart(2, "0")}-01T08:00:00.000Z`,
+      });
+    }
+  }
+  return base;
 }
 
 /**
@@ -78,7 +98,42 @@ export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
     make("during", "lst_nyamirambo_rooftop", -2, 3, "active"),
     make("ended", "lst_remera_studio", -7, -3, "completed"),
     make("leaseEnd", "lst_gacuriro_estate", -372, -7, "completed", true),
+    activeLease(),
   ];
+
+  /** A year's renting that started on the 1st, four months ago, and is under way. */
+  function activeLease(): Booking {
+    const l = listings.find((x) => x.leaseTerms && x.monthlyRate && x.id !== "lst_gacuriro_estate")!;
+    const [y, m] = today.split("-").map(Number);
+    const n = y * 12 + (m - 1) - 4;
+    const start = `${Math.floor(n / 12)}-${String((n % 12) + 1).padStart(2, "0")}-01`;
+    const e = n + 12;
+    const end = `${Math.floor(e / 12)}-${String((e % 12) + 1).padStart(2, "0")}-01`;
+    const q = quoteRent(l, 12)!;
+    return {
+      id: "bkg_phase_leaseActive",
+      reference: "HL-PRNT-12",
+      service: "stay",
+      supplyItemId: l.id,
+      title: l.name,
+      startDate: start,
+      endDate: end,
+      party: 2,
+      total: q.total,
+      lines: q.lines,
+      status: "active",
+      escrowHeld: false,
+      stayMode: "lease",
+      guest,
+      paymentPlan: "full",
+      application: { occupants: 2, employer: "University of Rwanda", incomeBand: "1mTo2m", moveIn: start, months: 12 },
+      timeline: [
+        { at, kind: "placed", actor: "guest" },
+        { at, kind: "paid", actor: "guest" },
+        { at: `${start}T10:00:00.000Z`, kind: "checkedIn", actor: "ops" },
+      ],
+    };
+  }
 }
 
 /** A few reviews, so a listing's reviews section has something to show. */
@@ -106,5 +161,16 @@ export function seedReviews(): Review[] {
     r("rv4", "lst_kacyiru_garden", "Jonas", [5, 5, 5, 4, 4, 4], "The garden is the reason to book. Breakfast outside every morning.", "2026-10-11T08:00:00Z"),
     r("rv5", "lst_kacyiru_garden", "Amani", [5, 5, 4, 5, 4, 5], "Easy to reach the embassies; the team arranged a driver the same afternoon.", "2026-09-30T08:00:00Z"),
     r("rv6", "lst_kacyiru_garden", "Sophie", [4, 4, 5, 5, 4, 4], "Water pressure was low one morning and fixed by lunchtime.", "2026-09-03T08:00:00Z"),
+  ];
+}
+
+/** Repairs in flight across the homes, so maintenance and the tenant's page have rows. */
+export function seedTickets(now: Date): MaintenanceTicket[] {
+  const at = (daysAgo: number) => new Date(now.getTime() - daysAgo * 86_400_000).toISOString();
+  return [
+    { id: "tkt_001", listingId: "lst_kiyovu_apartment", title: "Generator not starting automatically", description: "Switch-over takes 3 minutes instead of 10 seconds.", priority: "urgent", status: "scheduled", createdAt: at(2), assignee: "Jean B. (electrician)", scheduledFor: kigaliDay(now), source: "inspection" },
+    { id: "tkt_002", listingId: "lst_rebero_hilltop", title: "Repaint the guest bathroom ceiling", description: "Damp patch after the rains; dried out, needs sealing and paint.", priority: "normal", status: "open", createdAt: at(5), source: "staff" },
+    { id: "tkt_003", listingId: "lst_nyamirambo_rooftop", title: "Shower drains slowly", description: "Guest reported water pooling.", priority: "normal", status: "inProgress", createdAt: at(1), assignee: "Eric P. (plumber)", source: "guest" },
+    { id: "tkt_004", listingId: "lst_kimihurura_studio", title: "Replace a cracked kitchen tile", description: "Next to the fridge.", priority: "low", status: "done", createdAt: at(12), assignee: "Jean B.", source: "inspection" },
   ];
 }

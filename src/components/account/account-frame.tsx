@@ -19,11 +19,10 @@ export async function AccountFrame({ children }: { children: ReactNode }) {
     return <div className="mx-auto flex w-full max-w-[1180px] flex-col px-6 py-6">{children}</div>;
   }
 
-  const bookings = await repos().bookings.listForCurrentUser();
+  const [bookings, viewings] = await Promise.all([repos().bookings.listForCurrentUser(), repos().viewings.forCurrentUser()]);
   const has = {
-    renting: bookings.some((b) => b.stayMode === "lease" && b.status !== "cancelled"),
-    // Viewings arrive with Task 25.
-    viewings: false,
+    renting: bookings.some((b) => b.stayMode === "lease" && b.status === "active"),
+    viewings: viewings.length > 0,
   };
 
   return (

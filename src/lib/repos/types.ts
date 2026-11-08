@@ -10,6 +10,7 @@ import type {
   ServiceKind,
   Viewing,
   Incident,
+  MaintenanceTicket,
   Review,
   NotificationCategory,
   NotificationPrefs,
@@ -195,6 +196,8 @@ export interface BookingRepo {
   /** More people on a stay; refused above what the home sleeps. Price is per night, not per head. */
   addGuests(reference: string, party: number): Promise<Booking>;
   submitOnlineCheckIn(reference: string, adults: { name: string; idFileName: string }[]): Promise<Booking>;
+  /** Pays the next unpaid month of a long-term stay. */
+  payRent(reference: string, rail: PaymentRail): Promise<PaymentRecord>;
   byId(id: string): Promise<Booking | null>;
   /**
    * By the code the guest actually holds.
@@ -317,6 +320,12 @@ export interface ReviewsRepo {
   create(r: Pick<Review, "bookingId" | "ratings" | "text">): Promise<Review>;
 }
 
+export interface WorkRepo {
+  tickets(filter?: { listingId?: string; status?: MaintenanceTicket["status"][] }): Promise<MaintenanceTicket[]>;
+  createTicket(t: Omit<MaintenanceTicket, "id" | "createdAt" | "status">): Promise<MaintenanceTicket>;
+  updateTicket(id: string, patch: Partial<Omit<MaintenanceTicket, "id" | "createdAt">>): Promise<MaintenanceTicket>;
+}
+
 export type Repositories = {
   stays: StaysRepo;
   sales: SalesRepo;
@@ -327,6 +336,7 @@ export type Repositories = {
   viewings: ViewingsRepo;
   incidents: IncidentsRepo;
   reviews: ReviewsRepo;
+  work: WorkRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;

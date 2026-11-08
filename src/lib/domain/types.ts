@@ -566,3 +566,19 @@ export type Review = {
   createdAt: string;
   guestFirstName: string;
 };
+
+/** Something to fix in a home: from a tenant, a guest's report, an inspection or the team. */
+export type MaintenanceTicket = {
+  id: string;
+  listingId: string;
+  bookingId?: string;
+  title: string;
+  description: string;
+  photoName?: string;
+  priority: "low" | "normal" | "urgent";
+  status: "open" | "scheduled" | "inProgress" | "done";
+  createdAt: string;
+  assignee?: string;
+  scheduledFor?: string;
+  source: "tenant" | "guest" | "staff" | "inspection";
+};

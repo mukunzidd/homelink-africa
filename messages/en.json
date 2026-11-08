@@ -1424,6 +1424,59 @@
       "empty": "No payments yet.",
       "totalPaid": "Paid this year",
       "totalRefunded": "Refunded"
+    },
+    "renting": {
+      "title": "Your rented home",
+      "none": "You're not renting a home with us right now.",
+      "term": "{start} to {end}",
+      "depositHeld": "Deposit held: {amount}",
+      "schedule": "Rent",
+      "status": {
+        "paid": "Paid",
+        "due": "Due",
+        "overdue": "Overdue",
+        "upcoming": "Upcoming"
+      },
+      "pay": "Pay {amount}",
+      "paid": "Rent paid. A receipt is in your payments.",
+      "repairs": "Repairs",
+      "repairsBody": "Something broken? Tell us here and the team schedules a fix, at no cost to you unless it was caused by misuse.",
+      "newRepair": "Ask for a repair",
+      "repairTitle": "What needs fixing?",
+      "repairDetail": "Tell us more",
+      "priority": "How soon?",
+      "priorities": {
+        "urgent": "Urgent",
+        "normal": "This week",
+        "low": "When convenient"
+      },
+      "send": "Send request",
+      "sent": "Sent. The team will schedule it.",
+      "ticketStatus": {
+        "open": "Received",
+        "scheduled": "Scheduled",
+        "inProgress": "Being fixed",
+        "done": "Fixed"
+      },
+      "noRepairs": "No repairs requested.",
+      "documents": "Documents",
+      "docAgreement": "Rental agreement",
+      "docReceipts": "Receipts"
+    },
+    "viewings": {
+      "title": "Viewings",
+      "none": "No viewings booked. You can book one from any home for sale.",
+      "status": {
+        "requested": "Requested",
+        "confirmed": "Confirmed",
+        "rescheduled": "Moved",
+        "done": "Done",
+        "cancelled": "Cancelled"
+      },
+      "cancel": "Cancel viewing",
+      "move": "Choose another time",
+      "video": "By video",
+      "inPerson": "In person"
     }
   },
   "notifications": {

@@ -467,6 +467,24 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       return b;
     },
 
+    async payRent(reference, rail) {
+      const b = find(reference);
+      const rent = b.lines?.find((l) => l.key === "rent")?.amount;
+      if (b.stayMode !== "lease" || b.status !== "active" || !rent) throw new Error("Not a renting booking under way");
+      const p = {
+        id: nextId("pmt"),
+        bookingId: b.id,
+        rail,
+        kind: "rent" as const,
+        amount: rent,
+        status: "succeeded" as const,
+        at: new Date().toISOString(),
+      };
+      store().payments.push(p);
+      await notify(["guest"], "paymentReceived", { amount: fmt(rent), ref: b.reference }, "/account/renting");
+      return p;
+    },
+
     async payments(bookingId) {
       return store()
         .payments.filter((p) => !bookingId || p.bookingId === bookingId)

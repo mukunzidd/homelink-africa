@@ -1424,6 +1424,59 @@
       "empty": "Nta bwishyu buraba.",
       "totalPaid": "Byishyuwe uyu mwaka",
       "totalRefunded": "Byasubijwe"
+    },
+    "renting": {
+      "title": "Inzu ukodesha",
+      "none": "Ubu nta nzu ukodesha iwacu.",
+      "term": "Kuva {start} kugeza {end}",
+      "depositHeld": "Ingwate ibitswe: {amount}",
+      "schedule": "Ubukode",
+      "status": {
+        "paid": "Byishyuwe",
+        "due": "Bigomba kwishyurwa",
+        "overdue": "Byarengeje igihe",
+        "upcoming": "Biri imbere"
+      },
+      "pay": "Ishyura {amount}",
+      "paid": "Ubukode bwishyuwe. Inyemezabwishyu iri mu bwishyu bwawe.",
+      "repairs": "Gusana",
+      "repairsBody": "Hari icyangiritse? Bitubwire hano itsinda riteganye gusana, nta kiguzi kuri wowe keretse cyatewe no kudakoresha neza.",
+      "newRepair": "Saba gusana",
+      "repairTitle": "Ni iki gikeneye gusanwa?",
+      "repairDetail": "Tubwire byinshi",
+      "priority": "Vuba gute?",
+      "priorities": {
+        "urgent": "Byihutirwa",
+        "normal": "Iki cyumweru",
+        "low": "Igihe bishoboka"
+      },
+      "send": "Ohereza",
+      "sent": "Byoherejwe. Itsinda rizabiteganya.",
+      "ticketStatus": {
+        "open": "Byakiriwe",
+        "scheduled": "Byateganyijwe",
+        "inProgress": "Birimo gukorwa",
+        "done": "Byakozwe"
+      },
+      "noRepairs": "Nta gusana kwasabwe.",
+      "documents": "Inyandiko",
+      "docAgreement": "Amasezerano y'ubukode",
+      "docReceipts": "Inyemezabwishyu"
+    },
+    "viewings": {
+      "title": "Gusura amazu",
+      "none": "Nta gusura kwateganyijwe. Ushobora kugusaba uhereye ku nzu iyo ari yo yose igurishwa.",
+      "status": {
+        "requested": "Byasabwe",
+        "confirmed": "Byemejwe",
+        "rescheduled": "Byimuwe",
+        "done": "Byakozwe",
+        "cancelled": "Byahagaritswe"
+      },
+      "cancel": "Hagarika gusura",
+      "move": "Hitamo ikindi gihe",
+      "video": "Kuri videwo",
+      "inPerson": "Imbonankubone"
     }
   },
   "notifications": {
