@@ -15,12 +15,14 @@ import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
 export async function POST(request: NextRequest) {
   const role = parseRole(request.cookies.get(ROLE_COOKIE)?.value);
   if (role === "visitor") return NextResponse.json({ error: "refused" }, { status: 401 });
-  const length = Number(request.headers.get("content-length") ?? 0);
-  if (length > MESSAGE_LIMITS.bytes + 64 * 1024) return NextResponse.json({ error: "tooBig" }, { status: 413 });
+  // Counted as it arrives, not taken from Content-Length: a chunked
+  // request has none, and the header is the sender's claim anyway.
+  const body = await readCapped(request, MESSAGE_LIMITS.bytes + 64 * 1024);
+  if (!body) return NextResponse.json({ error: "tooBig" }, { status: 413 });
 
   let form: FormData;
   try {
-    form = await request.formData();
+    form = await new Response(body, { headers: { "content-type": request.headers.get("content-type") ?? "" } }).formData();
   } catch {
     return NextResponse.json({ error: "refused" }, { status: 400 });
   }
@@ -36,4 +38,30 @@ export async function POST(request: NextRequest) {
   } catch {
     return NextResponse.json({ error: "wrongType" }, { status: 415 });
   }
+}
+
+/** The whole body, or null as soon as it passes `max` bytes. */
+async function readCapped(request: NextRequest, max: number): Promise<Uint8Array<ArrayBuffer> | null> {
+  if (Number(request.headers.get("content-length") ?? 0) > max) return null;
+  const reader = request.body?.getReader();
+  if (!reader) return new Uint8Array(0);
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > max) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(value);
+  }
+  const out = new Uint8Array(total);
+  let at = 0;
+  for (const c of chunks) {
+    out.set(c, at);
+    at += c.byteLength;
+  }
+  return out;
 }

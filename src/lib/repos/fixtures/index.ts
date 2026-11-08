@@ -328,6 +328,10 @@ const messaging: MessagingRepo = {
     if (!c) throw new Error("Not in this thread");
     if (!(MESSAGE_LIMITS.mimes as readonly string[]).includes(file.mime) || sniff(file.bytes) !== file.mime) throw new Error("Not a photo");
     if (file.bytes.byteLength > MESSAGE_LIMITS.bytes) throw new Error("Too big");
+    // Unsent photos are held in memory; without a ceiling a loop of uploads
+    // that never sends is a way to fill it.
+    const pending = store().uploads.filter((u) => u.conversationId === c.id && u.by === role && !u.messageId).length;
+    if (pending >= MESSAGE_LIMITS.pending) throw new Error("Too many unsent photos");
     const id = nextId("upl");
     store().uploads.push({ id, conversationId: c.id, by: role, mime: file.mime, bytes: file.bytes });
     return { id, url: fileUrl(id) };

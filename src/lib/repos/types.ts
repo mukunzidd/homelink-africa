@@ -273,6 +273,8 @@ export interface MessagingRepo {
 export const MESSAGE_LIMITS = {
   body: 4000,
   photos: 4,
+  /** Uploaded and not yet sent, per person per thread. */
+  pending: 8,
   bytes: 15 * 1024 * 1024,
   mimes: ["image/jpeg", "image/png", "image/webp"],
 } as const;

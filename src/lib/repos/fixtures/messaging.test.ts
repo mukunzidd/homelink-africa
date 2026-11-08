@@ -57,6 +57,12 @@ describe("messaging.send", () => {
     await expect(repos.messaging.upload(guestThread().id, "guest", { mime: "application/pdf", bytes: PNG })).rejects.toThrow();
   });
 
+  it("holds at most eight unsent photos per person per thread", async () => {
+    const c = guestThread();
+    for (let i = 0; i < 8; i++) await repos.messaging.upload(c.id, "guest", { mime: "image/png", bytes: PNG });
+    await expect(repos.messaging.upload(c.id, "guest", { mime: "image/png", bytes: PNG })).rejects.toThrow();
+  });
+
   it("serves a file only to someone who can see its thread", async () => {
     const c = guestThread();
     const up = await repos.messaging.upload(c.id, "guest", { mime: "image/png", bytes: PNG });
