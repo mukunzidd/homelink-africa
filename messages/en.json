@@ -1381,7 +1381,31 @@
     "toYourAccount": "Go to your account",
     "signInTitle": "Sign in to the workspace",
     "signInBody": "The workspace is where the HomeLink team, drivers and guides do their work.",
-    "signInAs": "Preview as"
+    "signInAs": "Preview as",
+    "today": {
+      "description": "Who arrives, who leaves, who is in, and the homes that turn over today.",
+      "yesterday": "Yesterday",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "arrivals": "Arrivals",
+      "departures": "Departures",
+      "inHouse": "In house",
+      "turnovers": "Turnovers",
+      "turnoverHint": "Out at 11:00, next guest in at 14:00",
+      "eta": "Arriving about {time}",
+      "etaUnknown": "Arrival time not given",
+      "checkIn": "Check in",
+      "checkOut": "Check out",
+      "checkedIn": "Checked in",
+      "checkedOut": "Checked out",
+      "open": "Open",
+      "none": "Nobody.",
+      "escrow": "Escrow releases on check-in",
+      "openAsks": "Open asks",
+      "openIncidents": "Open incidents",
+      "seeAll": "See all",
+      "nights": "{count, plural, one {# night} other {# nights}}"
+    }
   },
   "account": {
     "nav": {

@@ -1381,7 +1381,31 @@
     "toYourAccount": "Aller à votre compte",
     "signInTitle": "Connectez-vous à l'espace de travail",
     "signInBody": "L'espace de travail est l'endroit où l'équipe HomeLink, les chauffeurs et les guides travaillent.",
-    "signInAs": "Aperçu en tant que"
+    "signInAs": "Aperçu en tant que",
+    "today": {
+      "description": "Qui arrive, qui part, qui est là, et les logements à préparer aujourd'hui.",
+      "yesterday": "Hier",
+      "today": "Aujourd'hui",
+      "tomorrow": "Demain",
+      "arrivals": "Arrivées",
+      "departures": "Départs",
+      "inHouse": "Sur place",
+      "turnovers": "Rotations",
+      "turnoverHint": "Départ à 11 h, prochain client à 14 h",
+      "eta": "Arrivée vers {time}",
+      "etaUnknown": "Heure d'arrivée non précisée",
+      "checkIn": "Enregistrer l'arrivée",
+      "checkOut": "Enregistrer le départ",
+      "checkedIn": "Arrivé",
+      "checkedOut": "Parti",
+      "open": "Ouvrir",
+      "none": "Personne.",
+      "escrow": "L'escrow se libère à l'arrivée",
+      "openAsks": "Demandes ouvertes",
+      "openIncidents": "Incidents ouverts",
+      "seeAll": "Tout voir",
+      "nights": "{count, plural, one {# nuit} other {# nuits}}"
+    }
   },
   "account": {
     "nav": {

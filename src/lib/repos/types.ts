@@ -198,6 +198,10 @@ export interface BookingRepo {
   submitOnlineCheckIn(reference: string, adults: { name: string; idFileName: string }[]): Promise<Booking>;
   /** Pays the next unpaid month of a long-term stay. */
   payRent(reference: string, rail: PaymentRail): Promise<PaymentRecord>;
+  /** The desk records the guest inside: escrow is released and the guest is told. */
+  checkIn(reference: string, by: Role): Promise<Booking>;
+  checkOut(reference: string, by: Role): Promise<Booking>;
+  addNote(reference: string, by: Role, text: string): Promise<Booking>;
   byId(id: string): Promise<Booking | null>;
   /**
    * By the code the guest actually holds.

@@ -1381,7 +1381,31 @@
     "toYourAccount": "Nenda kwenye akaunti yako",
     "signInTitle": "Ingia kwenye eneo la kazi",
     "signInBody": "Eneo la kazi ni mahali timu ya HomeLink, madereva na waongozaji wanapofanyia kazi.",
-    "signInAs": "Onyesha kama"
+    "signInAs": "Onyesha kama",
+    "today": {
+      "description": "Wanaowasili, wanaoondoka, walio ndani, na nyumba za kuandaliwa leo.",
+      "yesterday": "Jana",
+      "today": "Leo",
+      "tomorrow": "Kesho",
+      "arrivals": "Wanaowasili",
+      "departures": "Wanaoondoka",
+      "inHouse": "Walio ndani",
+      "turnovers": "Mabadiliko",
+      "turnoverHint": "Kutoka saa 11:00, mgeni anayefuata saa 14:00",
+      "eta": "Atawasili karibu saa {time}",
+      "etaUnknown": "Saa ya kuwasili haijatolewa",
+      "checkIn": "Rekodi kuingia",
+      "checkOut": "Rekodi kutoka",
+      "checkedIn": "Ameingia",
+      "checkedOut": "Ametoka",
+      "open": "Fungua",
+      "none": "Hakuna mtu.",
+      "escrow": "Pesa zinaachiliwa akiingia",
+      "openAsks": "Maombi yaliyo wazi",
+      "openIncidents": "Matukio yaliyo wazi",
+      "seeAll": "Ona zote",
+      "nights": "{count, plural, one {usiku #} other {usiku #}}"
+    }
   },
   "account": {
     "nav": {

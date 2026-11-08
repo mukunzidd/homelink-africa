@@ -485,6 +485,36 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       return p;
     },
 
+    async checkIn(reference, by) {
+      const b = find(reference);
+      if (b.status !== "confirmed") return b;
+      b.status = "active";
+      b.checkedInAt = new Date().toISOString();
+      b.escrowHeld = false;
+      b.timeline = [...(b.timeline ?? []), event("checkedIn", by)];
+      recordAudit({ actor: by, action: "booking.checkIn", target: b.reference });
+      return b;
+    },
+
+    async checkOut(reference, by) {
+      const b = find(reference);
+      if (b.status !== "active") return b;
+      b.status = "completed";
+      b.timeline = [...(b.timeline ?? []), event("checkedOut", by)];
+      recordAudit({ actor: by, action: "booking.checkOut", target: b.reference });
+      await notify(["guest"], "reviewRequest", { name: b.title }, `/bookings/${b.reference}`);
+      return b;
+    },
+
+    async addNote(reference, by, text) {
+      const b = find(reference);
+      const note = { at: new Date().toISOString(), by, text: text.trim().slice(0, 1000) };
+      b.staffNotes = [...(b.staffNotes ?? []), note];
+      b.timeline = [...(b.timeline ?? []), event("noteAdded", by)];
+      recordAudit({ actor: by, action: "booking.note", target: b.reference });
+      return b;
+    },
+
     async payments(bookingId) {
       return store()
         .payments.filter((p) => !bookingId || p.bookingId === bookingId)

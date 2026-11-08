@@ -59,7 +59,7 @@ export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
   const today = kigaliDay(now);
   const at = new Date(now.getTime() - 21 * 86_400_000).toISOString();
   const guest = { name: "Ange Uwase", email: "ange@example.rw", phone: "+250 788 123 456" };
-  const make = (id: string, listingId: string, from: number, to: number, status: Booking["status"], lease = false): Booking => {
+  const make = (id: string, listingId: string, from: number, to: number, status: Booking["status"], lease = false, who = guest): Booking => {
     const l = listings.find((x) => x.id === listingId)!;
     const start = addDays(today, from);
     const end = addDays(today, to);
@@ -80,7 +80,7 @@ export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
       // Checking in is what releases escrow, so only bookings not yet begun hold it.
       escrowHeld: q.escrowHeld && status === "confirmed",
       stayMode: lease ? "lease" : "nightly",
-      guest,
+      guest: who,
       paymentPlan: "full",
       timeline: [
         { at, kind: "placed", actor: "guest" },
@@ -99,6 +99,10 @@ export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
     make("ended", "lst_remera_studio", -7, -3, "completed"),
     make("leaseEnd", "lst_gacuriro_estate", -372, -7, "completed", true),
     activeLease(),
+    // A turnover on today's board: one family out of the Sonatubes flat,
+    // another in, so the desk's day always has its tightest job on it.
+    make("leaveToday", "lst_kicukiro_flat", -4, 0, "active", false, { name: "Tomás Herrera", email: "tomas@example.es", phone: "+34 612 345 678" }),
+    { ...make("arriveToday", "lst_kicukiro_flat", 0, 3, "confirmed", false, { name: "Grace Wanjiru", email: "grace@example.ke", phone: "+254 712 345 678" }), guest: { name: "Grace Wanjiru", email: "grace@example.ke", phone: "+254 712 345 678", arrivalTime: "16:00" } },
   ];
 
   /** A year's renting that started on the 1st, four months ago, and is under way. */

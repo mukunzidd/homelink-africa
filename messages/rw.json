@@ -1381,7 +1381,31 @@
     "toYourAccount": "Jya kuri konti yawe",
     "signInTitle": "Injira mu mwanya w'akazi",
     "signInBody": "Umwanya w'akazi ni aho itsinda rya HomeLink, abashoferi n'abayobozi bakorera.",
-    "signInAs": "Reba nka"
+    "signInAs": "Reba nka",
+    "today": {
+      "description": "Abagera, abagenda, abari mu nzu, n'amazu agomba gutegurwa uyu munsi.",
+      "yesterday": "Ejo hashize",
+      "today": "Uyu munsi",
+      "tomorrow": "Ejo",
+      "arrivals": "Abagera",
+      "departures": "Abagenda",
+      "inHouse": "Bari mu nzu",
+      "turnovers": "Gusimburana",
+      "turnoverHint": "Gusohoka saa tanu, ukurikira yinjira saa munani",
+      "eta": "Azagera nka saa {time}",
+      "etaUnknown": "Isaha yo kugera ntiyatanzwe",
+      "checkIn": "Andika ko yinjiye",
+      "checkOut": "Andika ko yagiye",
+      "checkedIn": "Yinjiye",
+      "checkedOut": "Yagiye",
+      "open": "Fungura",
+      "none": "Nta muntu.",
+      "escrow": "Amafaranga arekurwa iyo yinjiye",
+      "openAsks": "Ibyifuzo bifunguye",
+      "openIncidents": "Ibibazo bifunguye",
+      "seeAll": "Reba byose",
+      "nights": "{count, plural, one {ijoro #} other {amajoro #}}"
+    }
   },
   "account": {
     "nav": {
