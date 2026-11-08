@@ -1382,5 +1382,105 @@
       "notifications": "Arifa",
       "settings": "Mipangilio"
     }
+  },
+  "notifications": {
+    "kinds": {
+      "bookingConfirmed": {
+        "title": "Uhifadhi umethibitishwa",
+        "body": "{name} imehifadhiwa. Namba yako ya kumbukumbu ni {ref}."
+      },
+      "paymentReceived": {
+        "title": "Malipo yamepokelewa",
+        "body": "Tumepokea {amount} kwa {ref}."
+      },
+      "paymentFailed": {
+        "title": "Malipo hayakufanikiwa",
+        "body": "Malipo ya {amount} kwa {ref} yamekataliwa. Hakuna kilichotozwa."
+      },
+      "momoPending": {
+        "title": "Idhinisha malipo kwenye simu yako",
+        "body": "Ombi la Mobile Money la {amount} linasubiri kwenye simu yako."
+      },
+      "checkInReady": {
+        "title": "Maelezo ya kuingia yako tayari",
+        "body": "Maelekezo, namba ya mlango na wifi ya {name}, unawasili {date}."
+      },
+      "rentDue": {
+        "title": "Kodi inadaiwa {date}",
+        "body": "{amount} ya kodi ya mwezi huu inadaiwa tarehe {date}."
+      },
+      "newMessage": {
+        "title": "Ujumbe mpya kutoka kwa {from}",
+        "body": "{subject}"
+      },
+      "reviewRequest": {
+        "title": "{name} ilikuwaje?",
+        "body": "Dakika mbili kuhusu kilichofaa na kisichofaa zinamsaidia mgeni anayefuata."
+      },
+      "viewingConfirmed": {
+        "title": "Kutazama kumethibitishwa",
+        "body": "{name}, {date}. Leta kitambulisho."
+      },
+      "newBooking": {
+        "title": "Uhifadhi mpya",
+        "body": "{guest} amehifadhi {name} ({ref})."
+      },
+      "arrivalToday": {
+        "title": "{count, plural, one {Mgeni # anawasili leo} other {Wageni # wanawasili leo}}",
+        "body": "Angalia ubao wa leo kwa nyakati na funguo."
+      },
+      "newAsk": {
+        "title": "Ombi jipya la mgeni",
+        "body": "{guest}: “{ask}”"
+      },
+      "newIncident": {
+        "title": "Tukio limeripotiwa",
+        "body": "{category} kwenye {name}."
+      },
+      "inspectionDue": {
+        "title": "Ukaguzi unakaribia",
+        "body": "{name} inahitaji kukaguliwa tena kabla ya {date}."
+      },
+      "jobOffered": {
+        "title": "Ofa mpya ya kazi",
+        "body": "{what} tarehe {date}. Kubali au kataa kabla muda haujaisha."
+      },
+      "jobChanged": {
+        "title": "Kazi imebadilika",
+        "body": "{what} tarehe {date} ina maelezo mapya."
+      },
+      "payoutSent": {
+        "title": "Malipo yametumwa",
+        "body": "{amount} iko njiani kwenda kwenye akaunti yako."
+      },
+      "documentExpiring": {
+        "title": "Hati inakaribia kuisha",
+        "body": "{doc} inaisha tarehe {date}."
+      }
+    },
+    "title": "Arifa",
+    "markAll": "Weka zote kuwa zimesomwa",
+    "seeAll": "Ona zote",
+    "all": "Zote",
+    "unread": "Hazijasomwa",
+    "bell": "{count, plural, =0 {Arifa} other {Arifa, # hazijasomwa}}",
+    "empty": "Bado hakuna kitu. Uhifadhi, malipo na ujumbe vitaonekana hapa.",
+    "emptyUnread": "Umesoma zote.",
+    "filterLabel": "Onyesha",
+    "allCategories": "Kila kitu",
+    "newCount": "{count} mpya",
+    "categories": {
+      "booking": "Uhifadhi",
+      "payment": "Malipo",
+      "message": "Ujumbe",
+      "stay": "Malazi",
+      "work": "Kazi",
+      "system": "Akaunti"
+    },
+    "groups": {
+      "today": "Leo",
+      "yesterday": "Jana",
+      "earlier": "Awali"
+    }
   }
 }

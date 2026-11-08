@@ -52,3 +52,13 @@ export function dayOf(iso: string): string {
     timeZone: OPERATING_TIMEZONE,
   }).format(new Date(iso));
 }
+
+/**
+ * Today, or the day of any instant, in Kigali. What every "today" in the
+ * product means: the arrivals board, refund windows, check-in release, the
+ * Today and Yesterday groups in notifications. At 22:30 UTC it is already
+ * tomorrow in Kigali, and a server in another zone must not decide otherwise.
+ */
+export function kigaliDay(instant: Date | string = new Date()): string {
+  return dayOf(typeof instant === "string" ? instant : instant.toISOString());
+}

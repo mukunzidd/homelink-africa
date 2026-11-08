@@ -4,6 +4,7 @@ import type {
   FxRepo,
   MessagingRepo,
   MobilityRepo,
+  NotificationsRepo,
   OpsRepo,
   Repositories,
   SalesRepo,
@@ -14,7 +15,8 @@ import type { Conversation, Role } from "@/lib/domain/types";
 import { readsAs } from "@/lib/preferences/role";
 import { convert } from "@/lib/domain/money";
 import { FX_RATES } from "./data";
-import { store } from "./store";
+import { nextId, store } from "./store";
+import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
 /**
  * In-memory implementations for Phase 1.
@@ -339,6 +341,66 @@ const fx: FxRepo = {
   },
 };
 
+const notifications: NotificationsRepo = {
+  async forRole(role, filter = {}) {
+    return store()
+      .notifications.filter(
+        (n) =>
+          n.audience === role &&
+          (!filter.category || n.category === filter.category) &&
+          (!filter.unreadOnly || !n.readAt),
+      )
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+
+  async unreadCount(role) {
+    return store().notifications.filter((n) => n.audience === role && !n.readAt).length;
+  },
+
+  async markRead(role, ids) {
+    const at = new Date().toISOString();
+    let marked = 0;
+    for (const n of store().notifications) {
+      // Another role's id is skipped silently: an error would confirm it exists.
+      if (n.audience === role && !n.readAt && ids.includes(n.id)) {
+        n.readAt = at;
+        marked++;
+      }
+    }
+    return marked;
+  },
+
+  async markAllRead(role) {
+    const ids = store().notifications.filter((n) => n.audience === role && !n.readAt).map((n) => n.id);
+    return notifications.markRead(role, ids);
+  },
+
+  async create(input) {
+    const entry = NOTIFICATION_CATALOG[input.kind];
+    if (!entry || !entry.audiences.includes(input.audience)) {
+      throw new Error(`${input.kind} is not sent to ${input.audience}`);
+    }
+    const made = {
+      ...input,
+      id: nextId("ntf"),
+      category: entry.category,
+      createdAt: new Date().toISOString(),
+    };
+    store().notifications.push(made);
+    return made;
+  },
+
+  async prefs(role) {
+    const s = store();
+    s.prefs[role] ??= defaultPrefs(role);
+    return structuredClone(s.prefs[role]);
+  },
+
+  async setPrefs(role, prefs) {
+    store().prefs[role] = structuredClone(prefs);
+  },
+};
+
 export const fixtureRepositories: Repositories = {
   stays,
   sales,
@@ -348,5 +410,6 @@ export const fixtureRepositories: Repositories = {
   trips,
   messaging,
   ops,
+  notifications,
   fx,
 };

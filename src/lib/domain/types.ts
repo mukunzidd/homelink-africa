@@ -397,3 +397,41 @@ export type AuditEntry = {
   target: string;
   detail?: string;
 };
+
+/* ----------------------------------------------------------- notifications */
+
+export type NotificationCategory = "booking" | "payment" | "message" | "stay" | "work" | "system";
+
+export type NotificationKind =
+  | "bookingConfirmed" | "paymentReceived" | "paymentFailed" | "momoPending" | "checkInReady"
+  | "rentDue" | "newMessage" | "reviewRequest" | "viewingConfirmed"
+  | "newBooking" | "arrivalToday" | "newAsk" | "newIncident" | "inspectionDue"
+  | "jobOffered" | "jobChanged" | "payoutSent" | "documentExpiring";
+
+export type Channel = "inApp" | "email" | "sms" | "whatsapp" | "push";
+
+/**
+ * Something that happened that a person should hear about.
+ *
+ * Addressed to a role, because there are no user accounts yet; Phase 2
+ * addresses it to a user. `params` are already formatted for reading (an
+ * amount is "RWF 165,000", not minor units), since a notification states
+ * what was true when it was sent, not what a converter says today.
+ */
+export type AppNotification = {
+  id: string;
+  audience: Role;
+  kind: NotificationKind;
+  category: NotificationCategory;
+  params: Record<string, string | number>;
+  href: string;
+  /** ISO instant. */
+  createdAt: string;
+  readAt?: string;
+};
+
+export type NotificationPrefs = {
+  channels: Partial<Record<NotificationKind, Channel[]>>;
+  /** Kigali times, "HH:MM". Null when off. */
+  quietHours: { from: string; to: string } | null;
+};

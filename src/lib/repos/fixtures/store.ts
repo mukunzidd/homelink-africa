@@ -1,5 +1,6 @@
 import type {
   AddOnRequest,
+  AppNotification,
   AuditEntry,
   Booking,
   Conversation,
@@ -7,7 +8,9 @@ import type {
   HomeForSale,
   Listing,
   Message,
+  NotificationPrefs,
   Payout,
+  Role,
   Trip,
   Vehicle,
   VerificationTask,
@@ -26,6 +29,7 @@ import {
   VEHICLES,
   VERIFICATION_QUEUE,
 } from "./data";
+import { seedNotifications } from "./notifications";
 
 /**
  * The fixtures, as data that can change.
@@ -59,13 +63,16 @@ export type FixtureStore = {
   messages: Message[];
   addOnRequests: AddOnRequest[];
   verificationQueue: VerificationTask[];
+  notifications: AppNotification[];
+  /** Filled lazily from the catalog's defaults the first time a role asks. */
+  prefs: Partial<Record<Role, NotificationPrefs>>;
   audit: AuditEntry[];
   /** Per-prefix counters for `nextId`. */
   ids: Record<string, number>;
 };
 
 function seed(): FixtureStore {
-  return structuredClone({
+  const fixed = structuredClone({
     listings: LISTINGS,
     sales: HOMES_FOR_SALE,
     vehicles: VEHICLES,
@@ -80,20 +87,28 @@ function seed(): FixtureStore {
     audit: [],
     ids: {},
   });
+  return { ...fixed, notifications: seedNotifications(new Date()), prefs: {} };
 }
 
 const KEY = "__homelinkStore";
-type Holder = { [KEY]?: FixtureStore };
+
+/**
+ * Bump when the store's shape changes. The store outlives code reloads on
+ * purpose, so without this a running dev server would keep serving a store
+ * from before a new collection existed, and the first read of it would crash.
+ */
+const SHAPE = 2;
+type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {
   const g = globalThis as Holder;
-  g[KEY] ??= seed();
-  return g[KEY];
+  if (g[KEY]?.shape !== SHAPE) g[KEY] = { shape: SHAPE, data: seed() };
+  return g[KEY].data;
 }
 
 /** Back to the seed. Tests only; nothing in the app calls it. */
 export function resetStore(): void {
-  (globalThis as Holder)[KEY] = seed();
+  (globalThis as Holder)[KEY] = { shape: SHAPE, data: seed() };
 }
 
 /** "bk_1001", "bk_1002", ... Starts above any id a fixture uses. */

@@ -1382,5 +1382,105 @@
       "notifications": "Notifications",
       "settings": "Paramètres"
     }
+  },
+  "notifications": {
+    "kinds": {
+      "bookingConfirmed": {
+        "title": "Réservation confirmée",
+        "body": "{name} est réservé. Votre référence est {ref}."
+      },
+      "paymentReceived": {
+        "title": "Paiement reçu",
+        "body": "Nous avons reçu {amount} pour {ref}."
+      },
+      "paymentFailed": {
+        "title": "Le paiement n'a pas abouti",
+        "body": "Le paiement de {amount} pour {ref} a été refusé. Rien n'a été débité."
+      },
+      "momoPending": {
+        "title": "Validez le paiement sur votre téléphone",
+        "body": "Une demande Mobile Money de {amount} attend sur votre téléphone."
+      },
+      "checkInReady": {
+        "title": "Les infos d'arrivée sont prêtes",
+        "body": "Itinéraire, code de la porte et wifi pour {name}, arrivée le {date}."
+      },
+      "rentDue": {
+        "title": "Loyer à payer le {date}",
+        "body": "{amount} de loyer pour ce mois est à payer le {date}."
+      },
+      "newMessage": {
+        "title": "Nouveau message de {from}",
+        "body": "{subject}"
+      },
+      "reviewRequest": {
+        "title": "Comment s'est passé {name} ?",
+        "body": "Deux minutes sur ce qui a marché ou non aident le prochain voyageur."
+      },
+      "viewingConfirmed": {
+        "title": "Visite confirmée",
+        "body": "{name}, {date}. Apportez une pièce d'identité."
+      },
+      "newBooking": {
+        "title": "Nouvelle réservation",
+        "body": "{guest} a réservé {name} ({ref})."
+      },
+      "arrivalToday": {
+        "title": "{count, plural, one {# arrivée aujourd'hui} other {# arrivées aujourd'hui}}",
+        "body": "Consultez le tableau du jour pour les horaires et les clés."
+      },
+      "newAsk": {
+        "title": "Nouvelle demande",
+        "body": "{guest} : « {ask} »"
+      },
+      "newIncident": {
+        "title": "Incident signalé",
+        "body": "{category} à {name}."
+      },
+      "inspectionDue": {
+        "title": "Inspection à prévoir",
+        "body": "{name} doit être réinspecté avant le {date}."
+      },
+      "jobOffered": {
+        "title": "Nouvelle mission proposée",
+        "body": "{what} le {date}. Acceptez ou refusez avant expiration."
+      },
+      "jobChanged": {
+        "title": "Mission modifiée",
+        "body": "{what} le {date} a de nouveaux détails."
+      },
+      "payoutSent": {
+        "title": "Versement envoyé",
+        "body": "{amount} est en route vers votre compte."
+      },
+      "documentExpiring": {
+        "title": "Document bientôt expiré",
+        "body": "{doc} expire le {date}."
+      }
+    },
+    "title": "Notifications",
+    "markAll": "Tout marquer comme lu",
+    "seeAll": "Tout voir",
+    "all": "Toutes",
+    "unread": "Non lues",
+    "bell": "{count, plural, =0 {Notifications} one {Notifications, # non lue} other {Notifications, # non lues}}",
+    "empty": "Rien pour l'instant. Réservations, paiements et messages apparaîtront ici.",
+    "emptyUnread": "Vous êtes à jour.",
+    "filterLabel": "Afficher",
+    "allCategories": "Tout",
+    "newCount": "{count} nouvelles",
+    "categories": {
+      "booking": "Réservations",
+      "payment": "Paiements",
+      "message": "Messages",
+      "stay": "Séjours",
+      "work": "Travail",
+      "system": "Compte"
+    },
+    "groups": {
+      "today": "Aujourd'hui",
+      "yesterday": "Hier",
+      "earlier": "Plus tôt"
+    }
   }
 }

@@ -1,5 +1,8 @@
 import type {
   AddOnRequest,
+  AppNotification,
+  NotificationCategory,
+  NotificationPrefs,
   Booking,
   Conversation,
   DriveMode,
@@ -181,6 +184,28 @@ export interface FxRepo {
   base(): CurrencyCode;
 }
 
+/**
+ * What happened that someone should hear about, per role.
+ *
+ * Every call takes the reader's role and only ever touches that role's
+ * rows: marking another role's id read is a silent no-op, not an error that
+ * would confirm the id exists.
+ */
+export interface NotificationsRepo {
+  forRole(
+    role: Role,
+    filter?: { category?: NotificationCategory; unreadOnly?: boolean },
+  ): Promise<AppNotification[]>;
+  unreadCount(role: Role): Promise<number>;
+  /** Returns how many were marked. */
+  markRead(role: Role, ids: string[]): Promise<number>;
+  markAllRead(role: Role): Promise<number>;
+  /** Fills in id, createdAt and category; refuses an audience the catalog does not list. */
+  create(input: Omit<AppNotification, "id" | "createdAt" | "readAt" | "category">): Promise<AppNotification>;
+  prefs(role: Role): Promise<NotificationPrefs>;
+  setPrefs(role: Role, prefs: NotificationPrefs): Promise<void>;
+}
+
 export type Repositories = {
   stays: StaysRepo;
   sales: SalesRepo;
@@ -190,5 +215,6 @@ export type Repositories = {
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;
+  notifications: NotificationsRepo;
   fx: FxRepo;
 };

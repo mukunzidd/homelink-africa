@@ -1382,5 +1382,105 @@
       "notifications": "Imenyesha",
       "settings": "Igenamiterere"
     }
+  },
+  "notifications": {
+    "kinds": {
+      "bookingConfirmed": {
+        "title": "Gufata byemejwe",
+        "body": "{name} cyafashwe. Nimero yawe ni {ref}."
+      },
+      "paymentReceived": {
+        "title": "Ubwishyu bwakiriwe",
+        "body": "Twakiriye {amount} kuri {ref}."
+      },
+      "paymentFailed": {
+        "title": "Kwishyura ntibyakunze",
+        "body": "Kwishyura {amount} kuri {ref} byanzwe. Nta mafaranga yakuweho."
+      },
+      "momoPending": {
+        "title": "Emeza kwishyura kuri telefoni",
+        "body": "Icyifuzo cya Mobile Money cya {amount} gitegereje kuri telefoni yawe."
+      },
+      "checkInReady": {
+        "title": "Amakuru yo kwinjira yateguwe",
+        "body": "Inzira, kode y'urugi na wifi bya {name}, uzagera {date}."
+      },
+      "rentDue": {
+        "title": "Ubukode bwishyurwa {date}",
+        "body": "{amount} by'ubukode bw'uku kwezi bigomba kwishyurwa ku wa {date}."
+      },
+      "newMessage": {
+        "title": "Ubutumwa bushya bwa {from}",
+        "body": "{subject}"
+      },
+      "reviewRequest": {
+        "title": "{name} byari bimeze bite?",
+        "body": "Iminota ibiri ku byagenze neza n'ibitaragenze neza bifasha umushyitsi ukurikira."
+      },
+      "viewingConfirmed": {
+        "title": "Gusura byemejwe",
+        "body": "{name}, {date}. Uzane indangamuntu."
+      },
+      "newBooking": {
+        "title": "Gufata gushya",
+        "body": "{guest} yafashe {name} ({ref})."
+      },
+      "arrivalToday": {
+        "title": "{count, plural, one {Umushyitsi # ugera uyu munsi} other {Abashyitsi # bagera uyu munsi}}",
+        "body": "Reba ikibaho cy'uyu munsi ku masaha n'imfunguzo."
+      },
+      "newAsk": {
+        "title": "Icyifuzo gishya",
+        "body": "{guest}: “{ask}”"
+      },
+      "newIncident": {
+        "title": "Ikibazo cyatanzwe",
+        "body": "{category} kuri {name}."
+      },
+      "inspectionDue": {
+        "title": "Igenzura rigeze",
+        "body": "{name} igomba kongera kugenzurwa mbere ya {date}."
+      },
+      "jobOffered": {
+        "title": "Akazi gashya kakugenewe",
+        "body": "{what} ku wa {date}. Emera cyangwa wange mbere y'uko igihe kirangira."
+      },
+      "jobChanged": {
+        "title": "Akazi kahindutse",
+        "body": "{what} ku wa {date} gafite amakuru mashya."
+      },
+      "payoutSent": {
+        "title": "Amafaranga yoherejwe",
+        "body": "{amount} ari mu nzira ajya kuri konti yawe."
+      },
+      "documentExpiring": {
+        "title": "Inyandiko igiye guta agaciro",
+        "body": "{doc} izata agaciro ku wa {date}."
+      }
+    },
+    "title": "Imenyesha",
+    "markAll": "Bimenyeshe ko byose byasomwe",
+    "seeAll": "Reba byose",
+    "all": "Byose",
+    "unread": "Bitarasomwa",
+    "bell": "{count, plural, =0 {Imenyesha} other {Imenyesha, # bitarasomwa}}",
+    "empty": "Nta kirahari. Ibyafashwe, ubwishyu n'ubutumwa bizagaragara hano.",
+    "emptyUnread": "Byose wabisomye.",
+    "filterLabel": "Erekana",
+    "allCategories": "Byose",
+    "newCount": "{count} bishya",
+    "categories": {
+      "booking": "Ibyafashwe",
+      "payment": "Ubwishyu",
+      "message": "Ubutumwa",
+      "stay": "Kuraramo",
+      "work": "Akazi",
+      "system": "Konti"
+    },
+    "groups": {
+      "today": "Uyu munsi",
+      "yesterday": "Ejo hashize",
+      "earlier": "Mbere"
+    }
   }
 }
