@@ -80,10 +80,11 @@ export const CAR_PHRASES = [
   "rent a car", "car hire", "hire a car", "self drive", "with driver", "with a driver",
   "land cruiser", "landcruiser", "rav4", "corolla", "hiace", "minibus", "suv", "4x4",
   "jeep", "car", "cars", "vehicle", "chauffeur", "driver", "voiture", "imodoka",
+  "gari", "magari", "kukodi gari",
 ];
 
 export const DRIVE_MODE_PHRASES: Record<DriveMode, string[]> = {
-  withDriver: ["with driver", "with a driver", "chauffeur", "driven", "avec chauffeur", "n umushoferi", "umushoferi"],
+  withDriver: ["with driver", "with a driver", "chauffeur", "driven", "avec chauffeur", "n umushoferi", "umushoferi", "na dereva", "dereva"],
   selfDrive: ["self drive", "self driven", "drive myself", "sans chauffeur"],
 };
 
@@ -112,6 +113,7 @@ export const LEASE_PHRASES = [
   "long term", "long stay", "lease", "monthly", "per month", "a month", "by the month",
   "for rent", "to rent", "renting", "rental", "6 months", "six months", "12 months",
   "twelve months", "a year", "one year", "par mois", "location longue", "ukwezi",
+  "kupanga kwa muda mrefu", "muda mrefu", "kwa mwezi", "kupanga",
 ];
 
 export const SORT_PHRASES: Record<"priceAsc" | "priceDesc" | "size" | "newest", string[]> = {
@@ -132,6 +134,7 @@ export const NUMBER_WORDS: Record<string, number> = {
   one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
   un: 1, une: 1, deux: 2, trois: 3, quatre: 4, cinq: 5, sept: 7, huit: 8,
   rimwe: 1, kabiri: 2, gatatu: 3, kane: 4, gatanu: 5,
+  moja: 1, mbili: 2, tatu: 3, nne: 4, tano: 5,
 };
 
 /**
@@ -153,4 +156,6 @@ export const STOP_WORDS = new Set([
   "et", "ou", "je", "cherche", "maison", "appartement", "logement", "nuit",
   // rw
   "inzu", "kuri", "na", "muri", "hafi", "ndashaka", "i", "ya", "ifite", "ku", "cyangwa",
+  // sw
+  "nyumba", "wa", "kwa", "karibu", "nataka", "natafuta", "usiku", "yenye", "au", "katika",
 ]);

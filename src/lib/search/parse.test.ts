@@ -214,3 +214,23 @@ describe("parseQuery: phrases a guest uses that a listing never says", () => {
     expect(parse("no stairs please").text).toBe("stairs");
   });
 });
+
+describe("parseQuery: Swahili", () => {
+  it("reads a Swahili sentence", () => {
+    const i = parse("nyumba vyumba 2 Kimihurura chini ya 150000 RWF");
+    expect(i.lane).toBe("stays");
+    expect(i.bedrooms).toBe(2);
+    expect(i.neighbourhood).toBe("Kimihurura");
+    expect(i.maxPrice).toEqual({ minor: 150000, currency: "RWF" });
+  });
+
+  it("reads gari as the cars lane", () => {
+    expect(parse("gari na dereva").lane).toBe("cars");
+  });
+
+  it("reads kupanga kwa muda mrefu as renting", () => {
+    const i = parse("nyumba ya kupanga kwa muda mrefu Kacyiru");
+    expect(i.lease).toBe(true);
+    expect(i.text).toBe("");
+  });
+});

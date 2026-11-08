@@ -157,7 +157,7 @@ function parsePrice(cur: Cursor, ctx: ParseContext): Money | undefined {
   const currencyAlternation = CURRENCY_WORDS.map(([w]) => escape(w)).join("|");
   const amount = `(\\d{1,3}(?:[ ,.]\\d{3})+|\\d+(?:\\.\\d+)?)\\s*(millions|million|miliyoni|bn|k|m)?`;
   const lead =
-    "(?:under|below|less than|max(?:imum)?|up to|at most|no more than|budget(?: of)?|moins de|sous|jusqu a|munsi ya)";
+    "(?:under|below|less than|max(?:imum)?|up to|at most|no more than|budget(?: of)?|moins de|sous|jusqu a|munsi ya|chini ya|isiyozidi)";
   const patterns = [
     // "under $150", "below 150 usd", "max 200k rwf"
     new RegExp(`${lead}\\s*(${currencyAlternation})?\\s*${amount}\\s*(${currencyAlternation})?`),
@@ -282,11 +282,11 @@ export function parseQuery(input: string, ctx: ParseContext): SearchIntent {
   Object.assign(intent, parseDates(cur, ctx));
 
   const bedrooms = cur.match(
-    new RegExp(`${NUM}\\s*(?:\\+\\s*)?(?:bed(?:room)?s?|br|bd|bhk|chambres?|ibyumba(?: byo kuraramo)?)(?=\\s)`),
+    new RegExp(`${NUM}\\s*(?:\\+\\s*)?(?:bed(?:room)?s?|br|bd|bhk|chambres?|ibyumba(?: byo kuraramo)?|vyumba(?: vya kulala)?)(?=\\s)`),
   );
   // Kinyarwanda and French also put the count after the noun: "ibyumba 2".
   const bedroomsAfter =
-    !bedrooms && cur.match(new RegExp(`(?:ibyumba|chambres?)\\s+${NUM}(?=\\s)`));
+    !bedrooms && cur.match(new RegExp(`(?:ibyumba|chambres?|vyumba(?: vya kulala)?|chumba)\\s+${NUM}(?=\\s)`));
   if (bedrooms) intent.bedrooms = Math.min(6, toNumber(bedrooms[1]));
   else if (bedroomsAfter) intent.bedrooms = Math.min(6, toNumber(bedroomsAfter[1]));
   if (cur.take("studio")) intent.text += " studio";
@@ -340,7 +340,7 @@ export function parseQuery(input: string, ctx: ParseContext): SearchIntent {
     intent.amenities.length > 0 ||
     intent.neighbourhood !== undefined ||
     leaseSignal ||
-    /\b(villa|apartment|flat|house|home|studio|room|stay|sleeps|nights?|bungalow|townhouse|appartement|maison|inzu)\b/.test(fold(raw));
+    /\b(villa|apartment|flat|house|home|studio|room|stay|sleeps|nights?|bungalow|townhouse|appartement|maison|inzu|nyumba|chumba)\b/.test(fold(raw));
 
   if (buySignal && !carSignal) intent.lane = "buy";
   else if (carSignal && !staySignal) intent.lane = "cars";

@@ -6,7 +6,7 @@ import { defineRouting } from "next-intl/routing";
  * language as one of five coordinated localization layers, not just strings.
  */
 export const routing = defineRouting({
-  locales: ["en", "fr", "rw"],
+  locales: ["en", "fr", "rw", "sw"],
   defaultLocale: "en",
   localePrefix: "always",
 });
@@ -17,6 +17,7 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   en: "English",
   fr: "Français",
   rw: "Kinyarwanda",
+  sw: "Kiswahili",
 };
 
 /**
@@ -27,6 +28,7 @@ export const INTL_LOCALES: Record<Locale, string> = {
   en: "en-US",
   fr: "fr-FR",
   rw: "rw-RW",
+  sw: "sw-RW",
 };
 
 /**
@@ -47,4 +49,7 @@ export const NUMBER_LOCALES: Record<Locale, string> = {
   en: "en-US",
   fr: "fr-FR",
   rw: "en-RW",
+  // Swahili groups with a comma in CLDR, so it keeps its own tag. Measured
+  // in Node and Chrome on 2026-11-08: "RWF 165,000".
+  sw: "sw-RW",
 };
