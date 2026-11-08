@@ -13,7 +13,9 @@ import type {
 } from "@/lib/repos/types";
 import type { Conversation, Role } from "@/lib/domain/types";
 import { readsAs } from "@/lib/preferences/role";
-import { convert } from "@/lib/domain/money";
+import { convert, formatMoney } from "@/lib/domain/money";
+import { isIsoDate } from "@/lib/domain/dates";
+import { CHECKLIST } from "@/lib/workspace/inspection";
 import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
@@ -295,7 +297,113 @@ function byState<T>(order: string[], stateOf: (item: T) => string) {
   return (a: T, b: T) => order.indexOf(stateOf(a)) - order.indexOf(stateOf(b));
 }
 
+/** The desk's people. Phase 2 reads them from staff accounts. */
+const TEAM = ["Aline M.", "Patrick N.", "Claudine U.", "Eric H."];
+
+function findAsk(id: string) {
+  const a = store().addOnRequests.find((x) => x.id === id);
+  if (!a) throw new Error(`No ask ${id}`);
+  return a;
+}
+
+function findTask(id: string) {
+  const t = store().verificationQueue.find((x) => x.id === id);
+  if (!t) throw new Error(`No inspection ${id}`);
+  return t;
+}
+
+/**
+ * Posts into the guest's thread on a booking, opening one if the booking has
+ * none yet: a quote the guest cannot see is not a quote.
+ */
+function postToGuest(bookingId: string, authorName: string, authorRole: Role, body: string) {
+  const b = store().bookings.find((x) => x.id === bookingId);
+  if (!b) throw new Error("No such booking");
+  const at = new Date().toISOString();
+  let c = store().conversations.find((x) => x.scope.kind === "booking" && x.scope.id === bookingId && x.participantRoles.includes("guest"));
+  if (!c) {
+    c = {
+      id: nextId("cnv"),
+      subject: b.title,
+      scope: { kind: "booking", id: bookingId },
+      participantNames: [b.guest?.name ?? "Guest", "HomeLink"],
+      participantRoles: ["guest", "ops"],
+      lastMessagePreview: "",
+      lastMessageAt: at,
+      unreadCount: 0,
+    };
+    store().conversations.push(c);
+  }
+  store().messages.push({ id: nextId("msg"), conversationId: c.id, authorName, authorRole, body, sentAt: at });
+  c.lastMessagePreview = body.slice(0, 120);
+  c.lastMessageAt = at;
+  return c;
+}
+
 const ops: OpsRepo = {
+  async team() {
+    return TEAM;
+  },
+
+  async updateAsk(id, by, patch) {
+    const a = findAsk(id);
+    if (patch.owner !== undefined && !TEAM.includes(patch.owner)) throw new Error("Not on the team");
+    if (patch.owner !== undefined) a.owner = patch.owner;
+    if (patch.status) a.status = patch.status;
+    recordAudit({ actor: by, action: "ask.update", target: id, detail: JSON.stringify(patch) });
+    return a;
+  },
+
+  async quoteAsk(id, by, price, note) {
+    const a = findAsk(id);
+    if (!Number.isInteger(price.minor) || price.minor <= 0) throw new Error("A quote needs a price");
+    a.quote = price;
+    a.quoteNote = note.trim().slice(0, 300);
+    a.status = "quoted";
+    const amount = formatMoney(price, "en-RW");
+    postToGuest(a.bookingId, a.owner ?? "HomeLink", readsAs(by), `${a.quoteNote ? `${a.quoteNote}. ` : ""}We can arrange this for ${amount}. Reply here to go ahead, or to change anything.`);
+    recordAudit({ actor: by, action: "ask.quote", target: id, detail: amount });
+    return a;
+  },
+
+  async scheduleInspection(id, by, date, inspector, today) {
+    const t = findTask(id);
+    if (!isIsoDate(date) || date < today || !TEAM.includes(inspector) || t.status === "published") return { ok: false, reason: "invalid" };
+    t.scheduledFor = date;
+    t.inspectorName = inspector;
+    if (t.status === "requested") t.status = "scheduled";
+    recordAudit({ actor: by, action: "inspection.schedule", target: id, detail: `${date} ${inspector}` });
+    return { ok: true };
+  },
+
+  async recordInspection(id, by, checklist, notes) {
+    const t = findTask(id);
+    if (t.status !== "scheduled" && t.status !== "inspected") throw new Error("Schedule the visit first");
+    t.checklist = Object.fromEntries(CHECKLIST[t.service].map((k) => [k, checklist[k] === true]));
+    t.inspectionNotes = notes.trim().slice(0, 1000);
+    t.status = "inspected";
+    recordAudit({ actor: by, action: "inspection.record", target: id });
+    return t;
+  },
+
+  async publishInspection(id, by) {
+    const t = findTask(id);
+    if (t.status !== "inspected") return { ok: false, reason: "notInspected" };
+    t.status = "published";
+    let draftId: string | undefined;
+    if (t.kind === "new") {
+      draftId = nextId("drf");
+      store().drafts.push({ id: draftId, taskId: t.id, service: t.service, name: t.name, where: t.where, createdAt: new Date().toISOString() });
+      t.draftId = draftId;
+    }
+    recordAudit({ actor: by, action: "inspection.publish", target: id });
+    return { ok: true, draftId };
+  },
+
+  async drafts() {
+    return [...store().drafts].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+
   async verificationQueue() {
     return [...store().verificationQueue].sort(
       (a, b) =>
@@ -443,8 +551,31 @@ const incidents: IncidentsRepo = {
   async update(id, patch) {
     const i = store().incidents.find((x) => x.id === id);
     if (!i) throw new Error(`No incident ${id}`);
+    if (patch.assignee !== undefined && patch.assignee !== "" && !TEAM.includes(patch.assignee)) throw new Error("Not on the team");
     Object.assign(i, patch);
     return i;
+  },
+
+  async toTicket(id, by) {
+    const i = store().incidents.find((x) => x.id === id);
+    if (!i) throw new Error(`No incident ${id}`);
+    if (i.ticketId) return store().tickets.find((t) => t.id === i.ticketId) ?? null;
+    const b = store().bookings.find((x) => x.id === i.bookingId);
+    if (!b || b.service !== "stay") return null;
+    const ticket = await work.createTicket({
+      listingId: b.supplyItemId,
+      bookingId: b.id,
+      title: i.description.slice(0, 80),
+      description: i.description,
+      photoName: i.photoName,
+      priority: i.urgency === "now" ? "urgent" : i.urgency === "today" ? "normal" : "low",
+      assignee: i.assignee,
+      source: "guest",
+    });
+    i.ticketId = ticket.id;
+    i.status = "inProgress";
+    recordAudit({ actor: by, action: "incident.toTicket", target: id, detail: ticket.id });
+    return ticket;
   },
 };
 

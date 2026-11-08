@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { isWorkspaceRole } from "@/lib/workspace/nav";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { repos } from "@/lib/repos";
@@ -45,6 +47,9 @@ export default async function MessagesPage({
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
   if (role === "visitor") return <SignedOut screen="messages" />;
   const { thread } = await searchParams;
+  // Staff and partners read their threads in the workspace, beside the
+  // rest of their work; an old link to /messages keeps its thread.
+  if (isWorkspaceRole(role)) redirect(`/${locale}/manage/inbox${thread ? `?thread=${encodeURIComponent(thread)}` : ""}`);
 
   const conversations = await repos().messaging.forRole(role);
 

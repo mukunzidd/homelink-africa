@@ -342,6 +342,21 @@ export type VerificationTask = {
   status: VerificationTaskStatus;
   /** Why this one is not simply moving through. Usually the whole story. */
   note?: string;
+  /** Point by point, against CHECKLIST for the lane. */
+  checklist?: Record<string, boolean>;
+  inspectionNotes?: string;
+  /** Set when a new candidate is published: the draft admin finishes in the editor. */
+  draftId?: string;
+};
+
+/** What publishing a new candidate leaves for admin: a name and a place, not yet a listing. */
+export type ListingDraft = {
+  id: string;
+  taskId: string;
+  service: ServiceKind;
+  name: string;
+  where: string;
+  createdAt: string;
 };
 
 /**
@@ -361,6 +376,9 @@ export type AddOnRequest = {
   requestedAt: string;
   status: AddOnRequestStatus;
   owner?: string;
+  /** The price the desk quoted, sent to the guest in the booking's thread. */
+  quote?: Money;
+  quoteNote?: string;
 };
 
 /** Money out to supply. Mirrors the escrow state a guest sees, from behind. */
@@ -553,6 +571,8 @@ export type Incident = {
   status: "open" | "inProgress" | "resolved";
   createdAt: string;
   assignee?: string;
+  /** The maintenance ticket this became, if it needed a repair. */
+  ticketId?: string;
 };
 
 export type ReviewAspect = "cleanliness" | "accuracy" | "checkIn" | "communication" | "location" | "value";

@@ -1519,7 +1519,114 @@
       "notAllowed": "Uruhare rwawe ntirwemerewe ibi."
     },
     "notFoundTitle": "Nta kintu kiri hano",
-    "notFoundBody": "Nta cyafashwe, inzu cyangwa ipaji bifite iyi aderesi. Reba ko nimero yuzuye, cyangwa uyishakishe na ⌘K."
+    "notFoundBody": "Nta cyafashwe, inzu cyangwa ipaji bifite iyi aderesi. Reba ko nimero yuzuye, cyangwa uyishakishe na ⌘K.",
+    "queue": {
+      "asks": {
+        "title": "Ibyo abashyitsi basaba",
+        "description": "Ibyo abashyitsi basabye umuntu, mu magambo yabo. Biha umuntu, ubishyirire igiciro, hanyuma ubisoze."
+      },
+      "inspections": {
+        "title": "Igenzura",
+        "description": "Amazu, imodoka n’ingendo bitegereje ko umuntu abisura mbere yo gushyirwa ahagaragara."
+      },
+      "incidents": {
+        "title": "Ibibazo",
+        "description": "Ibibazo abashyitsi batanze bari mu icumbi, ibyihutirwa mbere.",
+        "forBooking": "Ibibazo byatanzwe kuri {reference}."
+      },
+      "inbox": {
+        "title": "Ubutumwa"
+      },
+      "filter": {
+        "active": "Ibyo gukora",
+        "all": "Byose",
+        "open": "Bifunguye"
+      },
+      "nobody": "Nta muntu",
+      "owner": "Ubishinzwe",
+      "who": "Nde",
+      "status": "Uko bihagaze",
+      "guest": "Umushyitsi",
+      "booking": "Icyafashwe",
+      "dates": "Amatariki",
+      "quoted": "Igiciro cyatanzwe",
+      "assigned": "Byahawe {name}",
+      "notAllowed": "Uruhare rwawe ntirwemerewe ibi.",
+      "empty": "Nta kintu kiri hano.",
+      "quote": "Tanga igiciro",
+      "quoteAmount": "Igiciro (RWF)",
+      "quoteNote": "Icyo uzategura",
+      "quoteNoteHint": "Umushoferi n’imodoka icyumweru cyose, kuva ku kibuga",
+      "quoteHint": "Umushyitsi abibona mu butumwa bwe kuri iki cyafashwe, akanasubiza aho.",
+      "quoteSend": "Oherereza umushyitsi",
+      "quoteSent": "Igiciro cyoherejwe mu butumwa bw’umushyitsi",
+      "markArranged": "Byateguwe",
+      "markedArranged": "Byanditswe ko byateguwe",
+      "decline": "Banga",
+      "reopen": "Ongera ufungure",
+      "date": "Itariki",
+      "inspector": "Ugenzura",
+      "schedule": "Teganya gusura",
+      "reschedule": "Imura isura",
+      "visitBooked": "Isura yateganyijwe",
+      "visit": "Isura",
+      "checklist": "Ibyo kugenzura",
+      "points": "Ingingo {passed} kuri {total}",
+      "notes": "Inyandiko",
+      "saveInspection": "Bika igenzura",
+      "inspectionSaved": "Igenzura ryabitswe",
+      "publish": "Shyira ahagaragara",
+      "publishAdmin": "Admin ni we ubishyira ahagaragara.",
+      "publishedToast": "Byashyizwe ahagaragara",
+      "draft": "Umushinga",
+      "draftWaiting": "Bitegereje muri Amazu ko admin abirangiza",
+      "urgency": {
+        "now": "Bikeneye umuntu ubu",
+        "today": "Uyu munsi",
+        "whenever": "Igihe bishobokeye"
+      },
+      "incidentStatus": {
+        "open": "Gifunguye",
+        "inProgress": "Kirimo gukorwa",
+        "resolved": "Cyakemutse"
+      },
+      "toTicket": "Kora itike yo gusana",
+      "ticketOpened": "Itike yo gusana yafunguwe",
+      "ticket": "Itike",
+      "noHome": "Ibibazo by’inzu gusa ni byo bihinduka itike yo gusana.",
+      "check": {
+        "stay": {
+          "matchesPhotos": "Bihuye n’amafoto",
+          "power": "Amashanyarazi muri buri priza",
+          "backupPower": "Amashanyarazi y’inyunganizi arakora",
+          "water": "Umuvuduko w’amazi",
+          "hotWater": "Amazi ashyushye",
+          "internet": "Umuvuduko wa interineti",
+          "locks": "Ingufuri n’imfunguzo",
+          "smokeAlarm": "Icyuma kimenya umwotsi kirakora",
+          "cleanliness": "Birasukuye",
+          "access": "Biroroshye kubona no kugeraho"
+        },
+        "car": {
+          "documents": "Ibyangombwa by’imodoka",
+          "insurance": "Ubwishingizi bufite agaciro",
+          "tyres": "Amapine n’umwuka",
+          "brakes": "Feri",
+          "lights": "Amatara n’ibimenyetso",
+          "aircon": "Konditioneri",
+          "interior": "Imbere hasukuye",
+          "spare": "Ipine ry’inyongera na kirikiri"
+        },
+        "experience": {
+          "guideLicence": "Uruhushya rw’umuyobozi",
+          "route": "Inzira yagenzuwe",
+          "safety": "Amabwiriza y’umutekano",
+          "vehicle": "Imodoka yagenzuwe",
+          "firstAid": "Agasanduku k’ubutabazi",
+          "timing": "Amasaha arubahirizwa"
+        }
+      }
+    }
   },
   "account": {
     "nav": {

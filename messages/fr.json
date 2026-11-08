@@ -1519,7 +1519,114 @@
       "notAllowed": "Votre rôle ne permet pas cette action."
     },
     "notFoundTitle": "Rien ici",
-    "notFoundBody": "Aucune réservation, aucun logement ni aucune page n’a cette adresse. Vérifiez que la référence est complète, ou cherchez-la avec ⌘K."
+    "notFoundBody": "Aucune réservation, aucun logement ni aucune page n’a cette adresse. Vérifiez que la référence est complète, ou cherchez-la avec ⌘K.",
+    "queue": {
+      "asks": {
+        "title": "Demandes des clients",
+        "description": "Ce que les clients ont demandé à une personne, dans leurs mots. Confiez chaque demande, donnez un prix, puis clôturez."
+      },
+      "inspections": {
+        "title": "Inspections",
+        "description": "Logements, voitures et sorties en attente d’une visite avant leur mise en ligne."
+      },
+      "incidents": {
+        "title": "Incidents",
+        "description": "Problèmes signalés par les clients pendant un séjour, les plus urgents d’abord.",
+        "forBooking": "Problèmes signalés sur {reference}."
+      },
+      "inbox": {
+        "title": "Messagerie"
+      },
+      "filter": {
+        "active": "À traiter",
+        "all": "Tout",
+        "open": "Ouverts"
+      },
+      "nobody": "Personne",
+      "owner": "Responsable",
+      "who": "Qui",
+      "status": "Statut",
+      "guest": "Client",
+      "booking": "Réservation",
+      "dates": "Dates",
+      "quoted": "Devis",
+      "assigned": "Confié à {name}",
+      "notAllowed": "Votre rôle ne permet pas cette action.",
+      "empty": "Rien ici.",
+      "quote": "Proposer un prix",
+      "quoteAmount": "Prix (RWF)",
+      "quoteNote": "Ce que vous organisez",
+      "quoteNoteHint": "Chauffeur et voiture pour la semaine, depuis l’aéroport",
+      "quoteHint": "Le client le voit dans ses messages sur cette réservation et y répond.",
+      "quoteSend": "Envoyer au client",
+      "quoteSent": "Devis envoyé dans les messages du client",
+      "markArranged": "Marquer organisé",
+      "markedArranged": "Marqué organisé",
+      "decline": "Refuser",
+      "reopen": "Rouvrir",
+      "date": "Date",
+      "inspector": "Inspecteur",
+      "schedule": "Planifier la visite",
+      "reschedule": "Déplacer la visite",
+      "visitBooked": "Visite planifiée",
+      "visit": "Visite",
+      "checklist": "Liste de contrôle",
+      "points": "{passed} points sur {total}",
+      "notes": "Notes",
+      "saveInspection": "Enregistrer l’inspection",
+      "inspectionSaved": "Inspection enregistrée",
+      "publish": "Publier",
+      "publishAdmin": "Un admin met en ligne.",
+      "publishedToast": "Publié",
+      "draft": "Brouillon",
+      "draftWaiting": "En attente dans Logements, à finir par un admin",
+      "urgency": {
+        "now": "Il faut quelqu’un maintenant",
+        "today": "Aujourd’hui",
+        "whenever": "Quand c’est possible"
+      },
+      "incidentStatus": {
+        "open": "Ouvert",
+        "inProgress": "En réparation",
+        "resolved": "Résolu"
+      },
+      "toTicket": "Créer un ticket de maintenance",
+      "ticketOpened": "Ticket de maintenance ouvert",
+      "ticket": "Ticket",
+      "noHome": "Seuls les problèmes d’un logement deviennent des tickets de maintenance.",
+      "check": {
+        "stay": {
+          "matchesPhotos": "Conforme aux photos",
+          "power": "Courant dans chaque prise",
+          "backupPower": "Le secours électrique prend le relais",
+          "water": "Pression d’eau",
+          "hotWater": "Eau chaude",
+          "internet": "Débit internet",
+          "locks": "Serrures et clés",
+          "smokeAlarm": "Détecteur de fumée",
+          "cleanliness": "Propre",
+          "access": "Facile à trouver et à atteindre"
+        },
+        "car": {
+          "documents": "Carte grise et papiers",
+          "insurance": "Assurance valide",
+          "tyres": "Pneus et pression",
+          "brakes": "Freins",
+          "lights": "Feux et clignotants",
+          "aircon": "Climatisation",
+          "interior": "Intérieur propre",
+          "spare": "Roue de secours et cric"
+        },
+        "experience": {
+          "guideLicence": "Licence du guide",
+          "route": "Parcours reconnu",
+          "safety": "Consignes de sécurité",
+          "vehicle": "Véhicule vérifié",
+          "firstAid": "Trousse de secours",
+          "timing": "Horaires tenables"
+        }
+      }
+    }
   },
   "account": {
     "nav": {

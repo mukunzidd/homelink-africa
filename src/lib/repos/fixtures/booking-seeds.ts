@@ -1,4 +1,4 @@
-import type { Block, Booking, Listing, MaintenanceTicket, PaymentRecord, Review } from "@/lib/domain/types";
+import type { Block, Booking, Incident, Listing, MaintenanceTicket, PaymentRecord, Review } from "@/lib/domain/types";
 import { quoteRent, quoteStay } from "@/lib/domain/pricing";
 import { addDays } from "@/lib/domain/dates";
 import { kigaliDay } from "@/lib/domain/instants";
@@ -176,5 +176,18 @@ export function seedTickets(now: Date): MaintenanceTicket[] {
     { id: "tkt_002", listingId: "lst_rebero_hilltop", title: "Repaint the guest bathroom ceiling", description: "Damp patch after the rains; dried out, needs sealing and paint.", priority: "normal", status: "open", createdAt: at(5), source: "staff" },
     { id: "tkt_003", listingId: "lst_nyamirambo_rooftop", title: "Shower drains slowly", description: "Guest reported water pooling.", priority: "normal", status: "inProgress", createdAt: at(1), assignee: "Eric P. (plumber)", source: "guest" },
     { id: "tkt_004", listingId: "lst_kimihurura_studio", title: "Replace a cracked kitchen tile", description: "Next to the fridge.", priority: "low", status: "done", createdAt: at(12), assignee: "Jean B.", source: "inspection" },
+  ];
+}
+
+/**
+ * Two problems reported from stays under way, so the incidents page and the
+ * desk's day both have something open: one that needs someone now, one
+ * that can wait for the cleaner.
+ */
+export function seedIncidents(now: Date): Incident[] {
+  const ago = (hours: number) => new Date(now.getTime() - hours * 3_600_000).toISOString();
+  return [
+    { id: "inc_001", bookingId: "bkg_phase_during", category: "water", urgency: "now", description: "No hot water since this morning; the heater light is off.", status: "open", createdAt: ago(2) },
+    { id: "inc_002", bookingId: "bkg_phase_leaveToday", category: "internet", urgency: "whenever", description: "Wi-fi drops in the bedroom; fine in the living room.", status: "open", createdAt: ago(20), assignee: "Patrick N." },
   ];
 }

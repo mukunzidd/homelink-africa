@@ -1519,7 +1519,114 @@
       "notAllowed": "Your role cannot do that."
     },
     "notFoundTitle": "Nothing here",
-    "notFoundBody": "No booking, home or page has that address. Check a reference has all its characters, or search for it with ⌘K."
+    "notFoundBody": "No booking, home or page has that address. Check a reference has all its characters, or search for it with ⌘K.",
+    "queue": {
+      "asks": {
+        "title": "Guest asks",
+        "description": "What guests asked a person for, in their own words. Give each one to someone, price it, and close it."
+      },
+      "inspections": {
+        "title": "Inspections",
+        "description": "Homes, cars and days out waiting for someone to walk them before they go live."
+      },
+      "incidents": {
+        "title": "Incidents",
+        "description": "Problems guests reported during a stay, most urgent first.",
+        "forBooking": "Problems reported on {reference}."
+      },
+      "inbox": {
+        "title": "Inbox"
+      },
+      "filter": {
+        "active": "To do",
+        "all": "All",
+        "open": "Open"
+      },
+      "nobody": "Nobody",
+      "owner": "Owner",
+      "who": "Who",
+      "status": "Status",
+      "guest": "Guest",
+      "booking": "Booking",
+      "dates": "Dates",
+      "quoted": "Quoted",
+      "assigned": "Given to {name}",
+      "notAllowed": "Your role cannot do that.",
+      "empty": "Nothing here.",
+      "quote": "Quote a price",
+      "quoteAmount": "Price (RWF)",
+      "quoteNote": "What you will arrange",
+      "quoteNoteHint": "Driver and car for the week, from the airport",
+      "quoteHint": "The guest sees this in their messages on this booking, and replies there.",
+      "quoteSend": "Send to the guest",
+      "quoteSent": "Quote sent to the guest's messages",
+      "markArranged": "Mark arranged",
+      "markedArranged": "Marked arranged",
+      "decline": "Decline",
+      "reopen": "Reopen",
+      "date": "Date",
+      "inspector": "Inspector",
+      "schedule": "Book the visit",
+      "reschedule": "Move the visit",
+      "visitBooked": "Visit booked",
+      "visit": "Visit",
+      "checklist": "Checklist",
+      "points": "{passed} of {total} points",
+      "notes": "Notes",
+      "saveInspection": "Save the inspection",
+      "inspectionSaved": "Inspection saved",
+      "publish": "Publish",
+      "publishAdmin": "An admin puts this live.",
+      "publishedToast": "Published",
+      "draft": "Draft",
+      "draftWaiting": "Waiting in Homes for admin to finish",
+      "urgency": {
+        "now": "Needs someone now",
+        "today": "Today",
+        "whenever": "When convenient"
+      },
+      "incidentStatus": {
+        "open": "Open",
+        "inProgress": "Being fixed",
+        "resolved": "Resolved"
+      },
+      "toTicket": "Make a maintenance ticket",
+      "ticketOpened": "Maintenance ticket opened",
+      "ticket": "Ticket",
+      "noHome": "Only a home's problems become maintenance tickets.",
+      "check": {
+        "stay": {
+          "matchesPhotos": "Matches the photos",
+          "power": "Power on every socket",
+          "backupPower": "Backup power switches over",
+          "water": "Water pressure",
+          "hotWater": "Hot water",
+          "internet": "Internet speed",
+          "locks": "Locks and keys",
+          "smokeAlarm": "Smoke alarm works",
+          "cleanliness": "Clean",
+          "access": "Easy to find and reach"
+        },
+        "car": {
+          "documents": "Registration and papers",
+          "insurance": "Insurance in date",
+          "tyres": "Tyres and spare pressure",
+          "brakes": "Brakes",
+          "lights": "Lights and indicators",
+          "aircon": "Air conditioning",
+          "interior": "Clean inside",
+          "spare": "Spare wheel and jack"
+        },
+        "experience": {
+          "guideLicence": "Guide licence",
+          "route": "Route walked",
+          "safety": "Safety briefing",
+          "vehicle": "Vehicle checked",
+          "firstAid": "First-aid kit",
+          "timing": "Timings hold"
+        }
+      }
+    }
   },
   "account": {
     "nav": {

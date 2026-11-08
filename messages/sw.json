@@ -1519,7 +1519,114 @@
       "notAllowed": "Jukumu lako haliruhusu hilo."
     },
     "notFoundTitle": "Hakuna kitu hapa",
-    "notFoundBody": "Hakuna uhifadhi, nyumba wala ukurasa wenye anwani hii. Hakikisha namba imekamilika, au itafute kwa ⌘K."
+    "notFoundBody": "Hakuna uhifadhi, nyumba wala ukurasa wenye anwani hii. Hakikisha namba imekamilika, au itafute kwa ⌘K.",
+    "queue": {
+      "asks": {
+        "title": "Maombi ya wageni",
+        "description": "Kile wageni walichoomba kwa mtu, kwa maneno yao. Mpe mtu kila ombi, weka bei, kisha lifunge."
+      },
+      "inspections": {
+        "title": "Ukaguzi",
+        "description": "Nyumba, magari na matembezi yanayosubiri mtu ayakague kabla ya kuwekwa hewani."
+      },
+      "incidents": {
+        "title": "Matukio",
+        "description": "Matatizo yaliyoripotiwa na wageni wakati wa malazi, ya dharura kwanza.",
+        "forBooking": "Matatizo yaliyoripotiwa kwenye {reference}."
+      },
+      "inbox": {
+        "title": "Kikasha"
+      },
+      "filter": {
+        "active": "Ya kufanya",
+        "all": "Yote",
+        "open": "Yaliyo wazi"
+      },
+      "nobody": "Hakuna",
+      "owner": "Mhusika",
+      "who": "Nani",
+      "status": "Hali",
+      "guest": "Mgeni",
+      "booking": "Uhifadhi",
+      "dates": "Tarehe",
+      "quoted": "Bei iliyotolewa",
+      "assigned": "Amepewa {name}",
+      "notAllowed": "Jukumu lako haliruhusu hilo.",
+      "empty": "Hakuna kitu hapa.",
+      "quote": "Toa bei",
+      "quoteAmount": "Bei (RWF)",
+      "quoteNote": "Utakachopanga",
+      "quoteNoteHint": "Dereva na gari kwa wiki nzima, kutoka uwanja wa ndege",
+      "quoteHint": "Mgeni anaiona katika ujumbe wake kwenye uhifadhi huu, na anajibu hapo.",
+      "quoteSend": "Mtumie mgeni",
+      "quoteSent": "Bei imetumwa kwenye ujumbe wa mgeni",
+      "markArranged": "Weka kama imepangwa",
+      "markedArranged": "Imewekwa kama imepangwa",
+      "decline": "Kataa",
+      "reopen": "Fungua tena",
+      "date": "Tarehe",
+      "inspector": "Mkaguzi",
+      "schedule": "Panga ziara",
+      "reschedule": "Hamisha ziara",
+      "visitBooked": "Ziara imepangwa",
+      "visit": "Ziara",
+      "checklist": "Orodha ya ukaguzi",
+      "points": "Pointi {passed} kati ya {total}",
+      "notes": "Maelezo",
+      "saveInspection": "Hifadhi ukaguzi",
+      "inspectionSaved": "Ukaguzi umehifadhiwa",
+      "publish": "Chapisha",
+      "publishAdmin": "Msimamizi ndiye anayeweka hewani.",
+      "publishedToast": "Imechapishwa",
+      "draft": "Rasimu",
+      "draftWaiting": "Inasubiri kwenye Nyumba msimamizi aikamilishe",
+      "urgency": {
+        "now": "Inahitaji mtu sasa",
+        "today": "Leo",
+        "whenever": "Wakati wowote"
+      },
+      "incidentStatus": {
+        "open": "Wazi",
+        "inProgress": "Inarekebishwa",
+        "resolved": "Imetatuliwa"
+      },
+      "toTicket": "Fungua tiketi ya matengenezo",
+      "ticketOpened": "Tiketi ya matengenezo imefunguliwa",
+      "ticket": "Tiketi",
+      "noHome": "Matatizo ya nyumba pekee ndiyo huwa tiketi za matengenezo.",
+      "check": {
+        "stay": {
+          "matchesPhotos": "Inalingana na picha",
+          "power": "Umeme kwenye kila soketi",
+          "backupPower": "Umeme wa akiba unawaka",
+          "water": "Msukumo wa maji",
+          "hotWater": "Maji ya moto",
+          "internet": "Kasi ya intaneti",
+          "locks": "Kufuli na funguo",
+          "smokeAlarm": "Kengele ya moshi inafanya kazi",
+          "cleanliness": "Safi",
+          "access": "Rahisi kupata na kufika"
+        },
+        "car": {
+          "documents": "Usajili na nyaraka",
+          "insurance": "Bima iko hai",
+          "tyres": "Matairi na upepo",
+          "brakes": "Breki",
+          "lights": "Taa na indiketa",
+          "aircon": "Kiyoyozi",
+          "interior": "Ndani ni safi",
+          "spare": "Tairi la akiba na jeki"
+        },
+        "experience": {
+          "guideLicence": "Leseni ya kiongozi",
+          "route": "Njia imekaguliwa",
+          "safety": "Maelekezo ya usalama",
+          "vehicle": "Gari limekaguliwa",
+          "firstAid": "Sanduku la huduma ya kwanza",
+          "timing": "Muda unazingatiwa"
+        }
+      }
+    }
   },
   "account": {
     "nav": {

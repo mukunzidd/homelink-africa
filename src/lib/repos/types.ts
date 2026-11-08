@@ -11,6 +11,7 @@ import type {
   Viewing,
   Incident,
   MaintenanceTicket,
+  ListingDraft,
   Review,
   NotificationCategory,
   NotificationPrefs,
@@ -268,6 +269,16 @@ export interface OpsRepo {
   verificationQueue(): Promise<VerificationTask[]>;
   addOnRequests(): Promise<AddOnRequest[]>;
   payouts(): Promise<Payout[]>;
+  /** The people an ask, an inspection or an incident can be given to. */
+  team(): Promise<string[]>;
+  updateAsk(id: string, by: Role, patch: { owner?: string; status?: "arranged" | "declined" | "open" }): Promise<AddOnRequest>;
+  /** Prices an ask and says so to the guest in the booking's thread (opening one if there is none). */
+  quoteAsk(id: string, by: Role, price: Money, note: string): Promise<AddOnRequest>;
+  scheduleInspection(id: string, by: Role, date: string, inspector: string, today: string): Promise<{ ok: true } | { ok: false; reason: "invalid" }>;
+  recordInspection(id: string, by: Role, checklist: Record<string, boolean>, notes: string): Promise<VerificationTask>;
+  /** A new candidate leaves a draft listing for admin; a re-inspection just closes. */
+  publishInspection(id: string, by: Role): Promise<{ ok: true; draftId?: string } | { ok: false; reason: "notInspected" }>;
+  drafts(): Promise<ListingDraft[]>;
 }
 
 export interface FxRepo {
@@ -319,6 +330,8 @@ export interface IncidentsRepo {
   /** Files it, notes it on the booking's timeline, and tells both desks. */
   create(i: Omit<Incident, "id" | "status" | "createdAt">): Promise<Incident>;
   update(id: string, patch: Partial<Pick<Incident, "status" | "assignee">>): Promise<Incident>;
+  /** A repair for the home the stay is in; the same ticket if asked twice; null for cars and days out. */
+  toTicket(id: string, by: Role): Promise<MaintenanceTicket | null>;
 }
 
 export interface ReviewsRepo {

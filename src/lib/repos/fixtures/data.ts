@@ -1082,7 +1082,7 @@ export const CONVERSATIONS: Conversation[] = [
     id: "cnv_001",
     subject: "Arrival details, Garden apartment",
     scope: { kind: "booking", id: "bkg_001" },
-    participantNames: ["Marie L.", "Aline M."],
+    participantNames: ["Ange U.", "Aline M."],
     participantRoles: ["guest", "ops"],
     lastMessagePreview:
       "Your flight lands at 19:40, so I will have someone at the gate with the keys.",
@@ -1096,7 +1096,7 @@ export const CONVERSATIONS: Conversation[] = [
     // The concierge is in every thread, not only the ones it started: §8
     // has ops seeing and stepping into any conversation, and "sees
     // everything by being in everything" is how the repo models that.
-    participantNames: ["Marie L.", "Eric H.", "Aline M."],
+    participantNames: ["Ange U.", "Eric H.", "Aline M."],
     participantRoles: ["guest", "driver", "ops"],
     lastMessagePreview: "The RAV4 is booked out to you from Saturday morning.",
     lastMessageAt: "2026-11-08T09:05:00Z",
@@ -1106,7 +1106,7 @@ export const CONVERSATIONS: Conversation[] = [
     id: "cnv_003",
     subject: "Where we meet on Sunday",
     scope: { kind: "booking", id: "bkg_003" },
-    participantNames: ["Marie L.", "Solange K.", "Aline M."],
+    participantNames: ["Ange U.", "Solange K.", "Aline M."],
     participantRoles: ["guest", "guide", "ops"],
     // The last message in this thread is a photograph with no text. A preview
     // has to say something, and the alt text is the only sentence that exists —
@@ -1140,7 +1140,7 @@ export const CONVERSATIONS: Conversation[] = [
     id: "cnv_006",
     subject: "After the stay, Remera studio",
     scope: { kind: "booking", id: "bkg_004" },
-    participantNames: ["Marie L.", "Patrick N."],
+    participantNames: ["Ange U.", "Patrick N."],
     participantRoles: ["guest", "ops"],
     lastMessagePreview: "Glad it worked. The water tank complaint is with the owner.",
     lastMessageAt: "2026-03-10T08:05:00Z",
@@ -1150,9 +1150,9 @@ export const CONVERSATIONS: Conversation[] = [
     // Trip-scoped rather than booking-scoped. Rarer, and the one thread that
     // is about the shape of the week rather than about a single line of it.
     id: "cnv_007",
-    subject: "Marie L., November week",
+    subject: "Ange U., November week",
     scope: { kind: "trip", id: "trp_001" },
-    participantNames: ["Marie L.", "Aline M."],
+    participantNames: ["Ange U.", "Aline M."],
     participantRoles: ["guest", "ops"],
     lastMessagePreview:
       "I will come back to you about a week out, once you have the flight numbers.",
@@ -1165,7 +1165,7 @@ export const MESSAGES: Message[] = [
   {
     id: "msg_001",
     conversationId: "cnv_001",
-    authorName: "Marie L.",
+    authorName: "Ange U.",
     authorRole: "guest",
     body: "We land Saturday evening on RwandAir from Brussels. Is a late check-in workable?",
     sentAt: "2026-11-09T13:40:00Z",
@@ -1182,7 +1182,7 @@ export const MESSAGES: Message[] = [
   {
     id: "msg_003",
     conversationId: "cnv_002",
-    authorName: "Marie L.",
+    authorName: "Ange U.",
     authorRole: "guest",
     body: "Are we collecting the car at the airport or in town?",
     sentAt: "2026-11-08T08:31:00Z",
@@ -1279,7 +1279,7 @@ export const MESSAGES: Message[] = [
   {
     id: "msg_010",
     conversationId: "cnv_006",
-    authorName: "Marie L.",
+    authorName: "Ange U.",
     authorRole: "guest",
     body: "All fine, thank you. The only thing was the water pressure in the mornings.",
     sentAt: "2026-03-09T17:20:00Z",
