@@ -1,13 +1,14 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import type { Role } from "@/lib/domain/types";
 import { homeFor } from "@/lib/workspace/nav";
 import { usePreferences } from "@/lib/preferences/context";
 import { useDismissable } from "@/lib/use-dismissable";
-import { ChevronDownIcon, MessageIcon, SuitcaseIcon } from "@/components/ui/icons";
+import { BellIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, GlobeIcon, GridIcon, HomeIcon, MessageIcon, SlidersIcon, SuitcaseIcon } from "@/components/ui/icons";
+import { PreferencesPanel } from "./preference-controls";
 import { HoverLabel } from "@/components/ui/hover-label";
 import { cn } from "@/lib/cn";
 
@@ -31,6 +32,16 @@ import { cn } from "@/lib/cn";
  * same action, kept quiet so it does not read as an account system.
  */
 type Destination = { href: string; key: string };
+
+/** Each row says what it is twice, in a word and a shape, so the menu reads at a glance. */
+export const ICONS: Record<string, typeof HomeIcon> = {
+  myHomeLink: HomeIcon,
+  trips: SuitcaseIcon,
+  messages: MessageIcon,
+  notifications: BellIcon,
+  settings: SlidersIcon,
+  workspace: GridIcon,
+};
 
 const GUEST: Destination[] = [
   { href: "/account", key: "myHomeLink" },
@@ -62,12 +73,19 @@ export const BY_ROLE: Record<Role, Destination[]> = {
 export function AccountMenu({ className }: { className?: string }) {
   const t = useTranslations("header");
   const tRoles = useTranslations("roles");
-  const { role } = usePreferences();
+  const { role, currency } = usePreferences();
+  const locale = useLocale();
   const pathname = usePathname();
 
   const [open, setOpen] = useState(false);
+  // Language, currency and theme open in place, as a second view of the
+  // same menu, rather than as a menu of their own in the bar.
+  const [view, setView] = useState<"links" | "prefs">("links");
   const wrapRef = useRef<HTMLDivElement>(null);
-  const close = useCallback(() => setOpen(false), []);
+  const close = useCallback(() => {
+    setOpen(false);
+    setView("links");
+  }, []);
   useDismissable(wrapRef, open, close);
 
   const destinations = BY_ROLE[role];
@@ -77,9 +95,9 @@ export function AccountMenu({ className }: { className?: string }) {
   // On one of the account's own screens, the trigger says so: that is the
   // "you are here" for pages that belong to no lane.
   const inAccount = destinations.some((d) => pathname === d.href || pathname.startsWith("/bookings/"));
-  // From 1024px a guest's Trips and Messages icons mark those pages
-  // themselves; lighting the avatar as well would mark one place twice.
-  const barMarks = role === "guest" && (pathname === "/trips" || pathname === "/messages" || pathname.startsWith("/bookings/"));
+  // From 1024px a guest's Messages icon marks that page itself; lighting
+  // the avatar as well would mark one place twice.
+  const barMarks = role === "guest" && pathname === "/messages";
 
   return (
     <div ref={wrapRef} className={cn("relative", className)}>
@@ -87,7 +105,7 @@ export function AccountMenu({ className }: { className?: string }) {
         type="button"
         aria-haspopup="menu"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => (open ? close() : setOpen(true))}
         className={cn(
           "flex h-9 cursor-pointer items-center gap-1 rounded-ctl pl-1 pr-1.5",
           "transition-colors duration-150",
@@ -108,17 +126,33 @@ export function AccountMenu({ className }: { className?: string }) {
         <ChevronDownIcon size={13} />
       </button>
 
-      {open && (
+      {open && view === "prefs" && (
+        <div
+          role="dialog"
+          aria-label={t("preferences")}
+          className="absolute right-0 top-[calc(100%+8px)] z-50 w-72 rounded-card border border-line bg-surface p-3 shadow-[var(--shadow-pop)]"
+        >
+          <button
+            type="button"
+            onClick={() => setView("links")}
+            className="mb-2 flex h-8 cursor-pointer items-center gap-1 rounded-inner pr-2 text-[13px] font-semibold text-ink-2 hover:text-ink"
+          >
+            <ChevronLeftIcon size={14} />
+            {tRoles(role)}
+          </button>
+          <PreferencesPanel onDone={close} />
+        </div>
+      )}
+
+      {open && view === "links" && (
         <div
           role="menu"
           className={cn(
-            "absolute right-0 top-[calc(100%+8px)] z-50 flex w-52 flex-col",
+            "absolute right-0 top-[calc(100%+8px)] z-50 flex w-64 flex-col",
             "rounded-card border border-line bg-surface p-1.5 shadow-[var(--shadow-pop)]",
           )}
         >
-          {/* Who the menu belongs to, as the avatar and the role under it. The
-              trigger only shows an initial, and "G" alone does not say guest. */}
-          <div className="mb-1 flex flex-col items-start gap-1.5 border-b border-line-soft px-2.5 pb-2.5 pt-1.5">
+          <div className="mb-1 flex items-center gap-2.5 border-b border-line-soft px-2.5 pb-2.5 pt-1.5">
             <span
               aria-hidden="true"
               className="grid size-9 place-items-center rounded-full border border-line bg-brand-tint text-[14px] font-semibold text-brand-deep"
@@ -137,16 +171,37 @@ export function AccountMenu({ className }: { className?: string }) {
                 onClick={close}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "rounded-inner px-2.5 py-2 text-sm font-medium transition-colors duration-150",
+                  "flex items-center gap-2.5 rounded-inner px-2.5 py-2 text-sm font-medium transition-colors duration-150",
                   active
                     ? "bg-surface-2 text-ink"
                     : "text-ink-2 hover:bg-surface-2 hover:text-ink",
                 )}
               >
+                {(() => {
+                  const Icon = ICONS[destination.key];
+                  return Icon ? <Icon size={16} className={active ? "text-ink" : "text-ink-3"} /> : null;
+                })()}
                 {t(destination.key)}
               </Link>
             );
           })}
+          <div className="mt-1 border-t border-line-soft pt-1">
+            <button
+              type="button"
+              role="menuitem"
+              aria-haspopup="dialog"
+              aria-label={`${t("preferences")}: ${locale.toUpperCase()}, ${currency}`}
+              onClick={() => setView("prefs")}
+              className="flex w-full cursor-pointer items-center gap-2 rounded-inner px-2.5 py-2 text-left text-sm font-medium text-ink-2 transition-colors duration-150 hover:bg-surface-2 hover:text-ink"
+            >
+              <GlobeIcon size={15} className="text-ink-3" />
+              <span className="flex-1 whitespace-nowrap">{t("languageCurrency")}</span>
+              <span className="font-mono text-[12px] text-ink-3">
+                {locale.toUpperCase()} · {currency}
+              </span>
+              <ChevronRightIcon size={14} className="text-ink-3" />
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -184,11 +239,11 @@ export function SignInLink({ className }: { className?: string }) {
 /**
  * The role's own screens in the bar.
  *
- * A guest's Trips and Messages are icons, beside Saved and the bell. As
- * words they sat right after Homes, Cars and Experiences and read as two
- * more lanes, which made the bar look like eight things to browse when it
- * is three to browse and four that are yours. Each icon names itself on
- * hover and focus, and the avatar menu still lists both in words.
+ * A guest gets Messages as an icon, beside Saved and the bell: a reply is
+ * the one thing worth a dot in the bar. Trips lives in the avatar menu with
+ * the rest of the account, and so do language and currency; as words in
+ * the bar they read as more lanes beside Homes, Cars and Experiences.
+ * The icon names itself on hover and focus.
  *
  * Everyone else has one door, into the workspace, where their messages are
  * too. That stays a word: it is the only one, and there is no icon that
@@ -227,7 +282,7 @@ export function AccountLinks({
   const hasUnread = !!unread[role];
 
   const link = (href: string, icon: React.ReactNode, name: string, label: string, dot = false) => {
-    const active = pathname === href || (href === "/trips" && pathname.startsWith("/bookings/"));
+    const active = pathname === href;
     return (
       <Link
         href={href}
@@ -247,7 +302,6 @@ export function AccountLinks({
 
   return (
     <nav aria-label={t("yourScreens")} className={cn("items-center gap-1", className)}>
-      {link("/trips", <SuitcaseIcon size={17} />, t("trips"), t("trips"))}
       {link("/messages", <MessageIcon size={17} />, t("messages"), hasUnread ? t("messagesUnread") : t("messages"), hasUnread)}
     </nav>
   );

@@ -5,11 +5,15 @@ import { Link } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
 import { RouteIcon } from "@/components/ui/icons";
 
-/** In the header only while the cart is on: where the trip is, and how much is in it. */
+/**
+ * In the header only once a trip has something in it. Switching the cart on
+ * is not a trip yet; an empty pill would be one more thing in the bar that
+ * leads nowhere useful.
+ */
 export function TripPill() {
   const t = useTranslations("cart");
   const { enabled, items } = useCart();
-  if (!enabled) return null;
+  if (!enabled || items.length === 0) return null;
   return (
     <Link
       href="/trip"

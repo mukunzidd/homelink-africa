@@ -130,14 +130,20 @@ export function PreferencesPanel({ onDone }: { onDone?: () => void }) {
   );
 }
 
+/**
+ * In the bar only for a visitor. Anyone signed in finds the same panel in
+ * the avatar menu, which keeps the bar to the lanes and the few icons that
+ * are theirs; a visitor has no avatar menu, and still needs a language.
+ */
 export function PreferencesMenu({ className }: { className?: string }) {
   const t = useTranslations("header");
   const locale = useLocale();
-  const { currency } = usePreferences();
+  const { currency, role } = usePreferences();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const close = useCallback(() => setOpen(false), []);
   useDismissable(ref, open, close);
+  if (role !== "visitor") return null;
 
   return (
     <div ref={ref} className={cn("relative", className)}>

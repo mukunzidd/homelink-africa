@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/icons";
 import { IntentChips } from "./intent-chips";
 import { LANE_EXAMPLE_KEYS } from "@/lib/search/examples";
+import { HoverLabel } from "@/components/ui/hover-label";
 import { cn } from "@/lib/cn";
 
 /**
@@ -616,20 +617,15 @@ export function SmartSearchTrigger() {
       onClick={() => open()}
       aria-label={t("open")}
       aria-keyshortcuts={mac ? "Meta+K" : "Control+K"}
-      className={cn(
-        "inline-flex h-9 cursor-pointer items-center rounded-ctl text-ink-2 transition-colors duration-150",
-        // An icon button until there is room for a field. As a field it
-        // takes the only border in the bar, because it is the one control
-        // here that is about where you are going.
-        "w-9 justify-center hover:bg-surface-2 hover:text-ink",
-        "xl:w-56 xl:justify-start xl:gap-2 xl:border xl:border-line xl:bg-surface xl:pl-3 xl:pr-1.5 xl:hover:border-ink-3/40 xl:hover:bg-surface",
-      )}
+      className="group relative grid size-9 cursor-pointer place-items-center rounded-ctl text-ink-2 transition-colors duration-150 hover:bg-surface-2 hover:text-ink"
     >
-      <SearchIcon />
-      <span className="hidden flex-1 text-left text-sm text-ink-3 xl:inline">{t("triggerShort")}</span>
-      <kbd className="hidden rounded-chip border border-line bg-surface-2 px-1.5 py-0.5 font-mono text-[11px] leading-none text-ink-3 xl:inline">
-        {mac ? "⌘K" : "Ctrl K"}
-      </kbd>
+      {/* An icon at every width: the bar is for the lanes, and the palette
+          it opens is where searching happens. The shortcut is in the name
+          it shows on hover. */}
+      <SearchIcon size={17} />
+      <HoverLabel>
+        {t("triggerShort")} · {mac ? "⌘K" : "Ctrl K"}
+      </HoverLabel>
     </button>
   );
 }

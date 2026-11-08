@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { usePreferences } from "@/lib/preferences/context";
 import { CloseIcon, MenuIcon } from "@/components/ui/icons";
-import { BY_ROLE } from "./account-menu";
+import { BY_ROLE, ICONS } from "./account-menu";
 import { PreferencesPanel } from "./preference-controls";
 import { PreviewControls } from "./preview-bar";
 import { cn } from "@/lib/cn";
@@ -105,10 +105,14 @@ export function MobileMenu({ className }: { className?: string }) {
                       onClick={() => setOpen(false)}
                       aria-current={pathname === d.href ? "page" : undefined}
                       className={cn(
-                        "flex h-10 items-center rounded-inner px-2 text-[15px] transition-colors duration-150",
+                        "flex h-10 items-center gap-3 rounded-inner px-2 text-[15px] transition-colors duration-150",
                         pathname === d.href ? "bg-surface-2 font-medium text-ink" : "text-ink-2 hover:bg-surface-2 hover:text-ink",
                       )}
                     >
+                      {(() => {
+                        const Icon = ICONS[d.key];
+                        return Icon ? <Icon size={17} className="text-ink-3" /> : null;
+                      })()}
                       {t(d.key)}
                     </Link>
                   ))}
