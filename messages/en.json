@@ -1864,6 +1864,54 @@
       "seeViewings": "See your viewings",
       "back": "Back to the home",
       "button": "Book a viewing"
+    },
+    "record": {
+      "pendingTitle": "Your home is held until the transfer arrives",
+      "pendingBody": "Send {amount} to {account} at {bank}, with {ref} as the reference. We confirm by email and SMS, usually within one working day.",
+      "receipt": "Receipt",
+      "calendar": "Add to calendar",
+      "details": "Booking details",
+      "slot": "Starts at {time}",
+      "meet": "Meet at",
+      "price": "What you paid for",
+      "payments": "Payments",
+      "kinds": {
+        "full": "Paid in full",
+        "deposit": "Deposit",
+        "balance": "Balance",
+        "rent": "Rent",
+        "change": "Date change",
+        "refund": "Refund"
+      },
+      "status": {
+        "pending": "Waiting",
+        "succeeded": "Paid",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "rails": {
+        "card": "Card",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Bank transfer"
+      },
+      "balanceDue": "Balance of {amount} due on {date}",
+      "moveInTitle": "Moving in",
+      "moveInBody": "On the day, someone from the team walks through the home with you. These are done together and signed by both of you.",
+      "moveIn": {
+        "keys": "Keys and gate fobs handed over, counted",
+        "meters": "Water and electricity meters read and photographed",
+        "inventory": "Inventory of furniture and appliances checked",
+        "photos": "A photo of every room, before you unpack",
+        "contact": "Your property manager's number saved in your phone"
+      },
+      "receiptTitle": "Receipt {ref}",
+      "print": "Print or save as PDF",
+      "issued": "Issued {date}",
+      "billedTo": "Billed to",
+      "item": "Item",
+      "amount": "Amount",
+      "paid": "Paid",
+      "vatNote": "HomeLink Africa Ltd, Kigali, Rwanda. Prices include VAT where it applies. Preview receipt: no tax number yet."
     }
   },
   "files": {

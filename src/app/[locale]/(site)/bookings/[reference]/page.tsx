@@ -3,7 +3,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 import { repos } from "@/lib/repos";
-import { supplyRefFor } from "@/lib/repos/supply-ref";
 import { Link } from "@/i18n/navigation";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import type { Booking, DriveMode, ServiceKind } from "@/lib/domain/types";
@@ -17,11 +16,11 @@ import { cookies } from "next/headers";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { StatusPill } from "@/components/ui/status-pill";
-import { MoneyText } from "@/components/ui/money-text";
 import { StepSpine } from "@/components/checkout/step-spine";
 import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
 import { Button } from "@/components/ui/button";
 import { SignedOut } from "@/components/shell/signed-out";
+import { BookingRecord } from "@/components/bookings/booking-record";
 
 /**
  * One booking, at two moments in its life.
@@ -50,38 +49,14 @@ export default async function BookingPage({
   setRequestLocale(locale);
 
   const booking = await repos().bookings.byReference(reference);
-  if (booking) return <BookingRecord booking={booking} locale={locale} />;
+  if (booking) return <BookingRecordPage booking={booking} locale={locale} />;
 
   return <JustBooked reference={reference} locale={locale} searchParams={searchParams} />;
 }
 
 /* ------------------------------------------------------------- the record */
 
-const STATUS_TONE = {
-  draft: "idle",
-  confirmed: "ok",
-  active: "ok",
-  completed: "idle",
-  cancelled: "crit",
-} as const;
-
-async function BookingRecord({
-  booking,
-  locale,
-}: {
-  booking: Booking;
-  locale: string;
-}) {
-  const t = await getTranslations("confirmation");
-  const tB = await getTranslations("breadcrumb");
-  const tStatus = await getTranslations("status");
-  const tVerify = await getTranslations("verification");
-  const tSearch = await getTranslations("search");
-  const tQuote = await getTranslations("quote");
-  const tTrips = await getTranslations("trips");
-
-  const intlLocale = INTL_LOCALES[locale as Locale];
-
+async function BookingRecordPage({ booking, locale }: { booking: Booking; locale: string }) {
   // A booking is the guest's record of their own money. A visitor is most
   // likely that guest on another device, following the link in their email,
   // so they get the way in that Trips gives rather than a 404 that reads as
@@ -90,152 +65,7 @@ async function BookingRecord({
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
   if (role === "visitor") return <SignedOut screen="booking" />;
   if (role !== "guest") notFound();
-
-  const [supply, conversation] = await Promise.all([
-    supplyRefFor(booking),
-    repos().messaging.forBooking(booking.id, "guest"),
-  ]);
-
-  const upcoming = booking.status === "confirmed" || booking.status === "active";
-
-  // The three-step explanation belongs to a booking that has not happened yet.
-  // Telling someone what happens next about a stay they took in March is the
-  // sort of thing that makes a product feel like it is not paying attention.
-  const nextSteps = upcoming
-    ? [t("next1"), ...(booking.escrowHeld ? [t("next2")] : []), t("next3")]
-    : [];
-
-  return (
-    <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
-      <Breadcrumbs trail={[{ label: tB("trips"), href: "/trips" }, { label: booking.reference }]} />
-
-      <header className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <StatusPill tone={STATUS_TONE[booking.status]}>
-            {tStatus(booking.status)}
-          </StatusPill>
-          {booking.escrowHeld && (
-            <StatusPill tone="warn">{tVerify("escrowShort")}</StatusPill>
-          )}
-        </div>
-        <h1 className="max-w-[24ch] text-balance font-display text-4xl font-semibold leading-[1.06] tracking-tight text-ink sm:text-5xl">
-          {supply?.name ?? booking.title}
-        </h1>
-        {supply && <p className="text-[15px] text-ink-2">{supply.detail}</p>}
-      </header>
-
-      <div className="grid items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_340px]">
-        <div className="flex flex-col">
-          {/* The code first, because it is the one thing on this page somebody
-              came back to find. */}
-          <section className="flex flex-col gap-1.5 pb-6">
-            <h2 className="text-xs font-medium text-ink-3">
-              {t("reference")}
-            </h2>
-            <p className="font-mono text-2xl font-semibold tracking-tight text-ink">
-              {booking.reference}
-            </p>
-            <p className="text-sm text-ink-2">{t("referenceHint")}</p>
-          </section>
-
-          <dl className="grid gap-x-8 gap-y-4 border-t border-line py-6 sm:grid-cols-3">
-            {[
-              {
-                key: "when",
-                label: tSearch("when"),
-                value: formatDateRange(booking.startDate, booking.endDate, intlLocale),
-              },
-              {
-                key: "who",
-                label: tSearch("guests"),
-                value: tSearch("guestCount", { count: booking.party }),
-              },
-              { key: "total", label: tQuote("total"), value: null },
-            ].map((row) => (
-              <div key={row.key} className="flex flex-col gap-1">
-                <dt className="text-[13px] text-ink-3">{row.label}</dt>
-                <dd className="tnum text-[15px] font-semibold text-ink">
-                  {row.value ?? (
-                    <MoneyText amount={booking.total} className="font-semibold" />
-                  )}
-                </dd>
-              </div>
-            ))}
-          </dl>
-
-          {nextSteps.length > 0 && (
-            <section className="flex flex-col gap-3 border-t border-line py-6">
-              <h2 className="font-display text-2xl font-semibold text-ink">
-                {t("whatNext")}
-              </h2>
-              <ol className="flex flex-col gap-2.5">
-                {nextSteps.map((step, index) => (
-                  <li key={index} className="flex gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="tnum mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-surface-2 text-xs font-semibold text-ink-3"
-                    >
-                      {index + 1}
-                    </span>
-                    <p className="max-w-[62ch] text-[15px] leading-relaxed text-ink-2">
-                      {step}
-                    </p>
-                  </li>
-                ))}
-              </ol>
-            </section>
-          )}
-
-          {booking.status === "cancelled" && (
-            <p className="border-t border-line py-6 text-[15px] leading-relaxed text-ink-2">
-              {t("cancelledNote")}
-            </p>
-          )}
-
-          <section className="flex flex-col items-start gap-3 border-t border-line py-6">
-            <h2 className="font-display text-2xl font-semibold text-ink">
-              {t("arrangeTitle")}
-            </h2>
-            <p className="max-w-[58ch] text-[15px] leading-relaxed text-ink-2">
-              {t("arrangeBody")}
-            </p>
-            <Link
-              href={conversation ? `/messages?thread=${conversation.id}` : "/messages"}
-              className="mt-1"
-            >
-              <Button variant="trust">
-                {conversation ? tTrips("openThread") : t("arrangeAction")}
-              </Button>
-            </Link>
-          </section>
-        </div>
-
-        <aside className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5 lg:sticky lg:top-24">
-          <SupplyImage
-            seed={supply?.imageSeed ?? booking.supplyItemId}
-            src={supply?.image}
-            alt={supply?.name ?? booking.title}
-            sizes="320px"
-            className="h-28 rounded-inner"
-          />
-          <VerifiedBadge label={tVerify("badge")} size="sm" className="self-start" />
-          {supply && (
-            <Link
-              href={supply.href}
-              className="rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
-            >
-              {t("viewListing")}
-            </Link>
-          )}
-          <p className="border-t border-line pt-3 text-[13px] leading-relaxed text-ink-3">
-            {t("recordNote", {
-              date: formatDate(booking.startDate, intlLocale),
-            })}
-          </p>
-        </aside>
-      </div>
-    </div>
-  );
+  return <BookingRecord booking={booking} locale={locale} intlLocale={INTL_LOCALES[locale as Locale]} />;
 }
 
 /* ------------------------------------------------- straight out of checkout */

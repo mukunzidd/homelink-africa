@@ -300,3 +300,20 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) { --float-bg: #1c372c; --float-ink: #e7efe9; --float-line: #2f4a3e; }
 }
+
+/*
+ * Print: the receipt and nothing else. The site's header, footer, preview
+ * bar and toasts carry `print:hidden` through this rule rather than each
+ * component knowing about paper.
+ */
+@media print {
+  header.sticky,
+  footer,
+  [aria-live],
+  .print\:hidden {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+}

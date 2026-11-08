@@ -1864,6 +1864,54 @@
       "seeViewings": "Ona ziara zako",
       "back": "Rudi kwenye nyumba",
       "button": "Panga kutazama"
+    },
+    "record": {
+      "pendingTitle": "Nyumba yako imeshikiliwa hadi uhamisho ufike",
+      "pendingBody": "Tuma {amount} kwa akaunti {account} katika {bank}, ukitumia {ref} kama kumbukumbu. Tunathibitisha kwa barua pepe na SMS, kwa kawaida ndani ya siku moja ya kazi.",
+      "receipt": "Risiti",
+      "calendar": "Ongeza kwenye kalenda",
+      "details": "Maelezo ya uhifadhi",
+      "slot": "Inaanza saa {time}",
+      "meet": "Mahali pa kukutana",
+      "price": "Ulicholipia",
+      "payments": "Malipo",
+      "kinds": {
+        "full": "Imelipwa yote",
+        "deposit": "Malipo ya awali",
+        "balance": "Salio",
+        "rent": "Kodi",
+        "change": "Kubadilisha tarehe",
+        "refund": "Kurudishiwa pesa"
+      },
+      "status": {
+        "pending": "Inasubiri",
+        "succeeded": "Imelipwa",
+        "failed": "Imeshindwa",
+        "refunded": "Imerudishwa"
+      },
+      "rails": {
+        "card": "Kadi",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Uhamisho wa benki"
+      },
+      "balanceDue": "Salio la {amount} linadaiwa tarehe {date}",
+      "moveInTitle": "Kuhamia",
+      "moveInBody": "Siku hiyo, mtu wa timu anazunguka nyumba nawe. Haya yanafanywa pamoja na kusainiwa na nyote wawili.",
+      "moveIn": {
+        "keys": "Funguo na vifaa vya geti vimekabidhiwa na kuhesabiwa",
+        "meters": "Mita za maji na umeme zimesomwa na kupigwa picha",
+        "inventory": "Orodha ya samani na vifaa imekaguliwa",
+        "photos": "Picha ya kila chumba, kabla ya kufungua mizigo",
+        "contact": "Namba ya msimamizi wa nyumba imehifadhiwa kwenye simu yako"
+      },
+      "receiptTitle": "Risiti {ref}",
+      "print": "Chapisha au hifadhi kama PDF",
+      "issued": "Imetolewa {date}",
+      "billedTo": "Imetozwa kwa",
+      "item": "Kipengele",
+      "amount": "Kiasi",
+      "paid": "Imelipwa",
+      "vatNote": "HomeLink Africa Ltd, Kigali, Rwanda. Bei zinajumuisha VAT inapohusika. Risiti ya onyesho: bado hakuna namba ya kodi."
     }
   },
   "files": {

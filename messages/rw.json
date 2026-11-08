@@ -1864,6 +1864,54 @@
       "seeViewings": "Reba gusura kwawe",
       "back": "Subira ku nzu",
       "button": "Saba gusura"
+    },
+    "record": {
+      "pendingTitle": "Inzu yawe irabikiwe kugeza amafaranga yoherejwe agezeho",
+      "pendingBody": "Ohereza {amount} kuri konti {account} muri {bank}, ushyireho {ref} nk'irangamuntu y'ubwishyu. Twemeza kuri imeyili na SMS, akenshi mu munsi umwe w'akazi.",
+      "receipt": "Inyemezabwishyu",
+      "calendar": "Shyira kuri kalendari",
+      "details": "Amakuru y'ibyafashwe",
+      "slot": "Bitangira saa {time}",
+      "meet": "Aho guhurira",
+      "price": "Ibyo wishyuye",
+      "payments": "Ubwishyu",
+      "kinds": {
+        "full": "Byishyuwe byose",
+        "deposit": "Avansi",
+        "balance": "Asigaye",
+        "rent": "Ubukode",
+        "change": "Guhindura amatariki",
+        "refund": "Gusubizwa"
+      },
+      "status": {
+        "pending": "Bitegerejwe",
+        "succeeded": "Byishyuwe",
+        "failed": "Byanze",
+        "refunded": "Byasubijwe"
+      },
+      "rails": {
+        "card": "Ikarita",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Kohereza kuri banki"
+      },
+      "balanceDue": "Asigaye {amount} azishyurwa ku wa {date}",
+      "moveInTitle": "Kwimukira mu nzu",
+      "moveInBody": "Uwo munsi, umuntu wo mu itsinda azenguruka inzu nawe. Ibi bikorwa mwembi kandi mukabisinyira mwembi.",
+      "moveIn": {
+        "keys": "Imfunguzo n'ibikoresho by'irembo byatanzwe kandi bibarwa",
+        "meters": "Konteri z'amazi n'amashanyarazi zasomwe kandi zifotorwa",
+        "inventory": "Urutonde rw'ibikoresho rwagenzuwe",
+        "photos": "Ifoto ya buri cyumba, mbere yo gupakurura",
+        "contact": "Nimero y'ucunga inzu yabitswe muri telefoni yawe"
+      },
+      "receiptTitle": "Inyemezabwishyu {ref}",
+      "print": "Capa cyangwa ubike nka PDF",
+      "issued": "Yatanzwe ku wa {date}",
+      "billedTo": "Yishyuwe na",
+      "item": "Ikintu",
+      "amount": "Amafaranga",
+      "paid": "Byishyuwe",
+      "vatNote": "HomeLink Africa Ltd, Kigali, u Rwanda. Ibiciro birimo TVA aho bikenewe. Inyemezabwishyu y'igerageza: nta nimero y'umusoro iraboneka."
     }
   },
   "files": {

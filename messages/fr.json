@@ -1864,6 +1864,54 @@
       "seeViewings": "Voir vos visites",
       "back": "Retour au logement",
       "button": "Réserver une visite"
+    },
+    "record": {
+      "pendingTitle": "Votre logement est réservé jusqu'à réception du virement",
+      "pendingBody": "Envoyez {amount} au compte {account} chez {bank}, avec la référence {ref}. Nous confirmons par e-mail et SMS, en général sous un jour ouvré.",
+      "receipt": "Reçu",
+      "calendar": "Ajouter au calendrier",
+      "details": "Détails de la réservation",
+      "slot": "Départ à {time}",
+      "meet": "Rendez-vous",
+      "price": "Ce que vous avez payé",
+      "payments": "Paiements",
+      "kinds": {
+        "full": "Payé en totalité",
+        "deposit": "Acompte",
+        "balance": "Solde",
+        "rent": "Loyer",
+        "change": "Changement de dates",
+        "refund": "Remboursement"
+      },
+      "status": {
+        "pending": "En attente",
+        "succeeded": "Payé",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "rails": {
+        "card": "Carte",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Virement"
+      },
+      "balanceDue": "Solde de {amount} à payer le {date}",
+      "moveInTitle": "L'emménagement",
+      "moveInBody": "Le jour J, un membre de l'équipe fait le tour du logement avec vous. Ces points sont faits ensemble et signés par vous deux.",
+      "moveIn": {
+        "keys": "Clés et badges remis et comptés",
+        "meters": "Compteurs d'eau et d'électricité relevés et photographiés",
+        "inventory": "Inventaire des meubles et appareils vérifié",
+        "photos": "Une photo de chaque pièce, avant de déballer",
+        "contact": "Le numéro de votre gestionnaire enregistré dans votre téléphone"
+      },
+      "receiptTitle": "Reçu {ref}",
+      "print": "Imprimer ou enregistrer en PDF",
+      "issued": "Émis le {date}",
+      "billedTo": "Facturé à",
+      "item": "Article",
+      "amount": "Montant",
+      "paid": "Payé",
+      "vatNote": "HomeLink Africa Ltd, Kigali, Rwanda. Prix TTC le cas échéant. Reçu d'aperçu : pas encore de numéro fiscal."
     }
   },
   "files": {
