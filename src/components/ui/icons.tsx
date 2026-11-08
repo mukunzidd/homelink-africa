@@ -526,3 +526,42 @@ export function MessageIcon({ className, size = 16 }: IconProps) {
     </svg>
   );
 }
+
+/** Maintenance: something to fix. */
+export function WrenchIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M12.6 3.2a3.6 3.6 0 0 0-4.3 4.7L3.6 12.6a1.6 1.6 0 0 0 2.3 2.3l4.7-4.7a3.6 3.6 0 0 0 4.7-4.3l-2.1 2.1-2-.5-.5-2z" />
+    </svg>
+  );
+}
+
+/** Finance: money over time. */
+export function ChartIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M3.5 16.5h13" />
+      <path d="M5.5 13.5v-3M9 13.5v-6M12.5 13.5v-4.5M16 13.5V5" />
+    </svg>
+  );
+}
+
+/** Collapse a panel towards the left edge. */
+export function SidebarIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <rect x="3" y="4" width="14" height="12" rx="2" />
+      <path d="M8 4v12" />
+    </svg>
+  );
+}
+
+/** Leave this area, back to where you came from. */
+export function ExitIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M8 4H5.5A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8" />
+      <path d="M12 7l3 3-3 3M15 10H8" />
+    </svg>
+  );
+}

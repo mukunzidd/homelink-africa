@@ -276,6 +276,11 @@
   from { transform: translateX(24px); opacity: 0; }
 }
 
+/* The workspace drawer comes from the left, where the sidebar lives. */
+@keyframes slide-left {
+  from { transform: translateX(-24px); opacity: 0; }
+}
+
 /*
  * How tall the sticky site header is, measured at each breakpoint: the bar
  * plus the lane strip below lg, the bar alone from lg. Anything that sticks
