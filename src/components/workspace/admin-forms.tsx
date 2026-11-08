@@ -6,6 +6,7 @@ import type { Announcement, ServiceKind, StaffMember } from "@/lib/domain/types"
 import { deactivateStaff, inviteStaff, saveContent, saveSettings, setStaffRole } from "@/app/actions/admin";
 import { control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
 import { ChevronDownIcon, CloseIcon, PlusIcon } from "@/components/ui/icons";
+import { toCsv } from "@/lib/export/csv";
 import { cn } from "@/lib/cn";
 
 const ROLES: StaffMember["role"][] = ["ops", "admin", "driver", "guide"];
@@ -206,10 +207,7 @@ export function ExportCsv({ rows, name }: { rows: string[][]; name: string }) {
     <button
       type="button"
       onClick={() => {
-        const cell = (v: string) => (/[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
-        // A leading = + - @ would run as a formula in a spreadsheet; a quote makes it text.
-        const safe = (v: string) => (/^[=+\-@]/.test(v) ? `'${v}` : v);
-        const csv = rows.map((r) => r.map((c) => cell(safe(c))).join(",")).join("\n");
+        const csv = toCsv(rows);
         const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
         const a = Object.assign(document.createElement("a"), { href: url, download: name });
         a.click();
