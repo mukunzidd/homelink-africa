@@ -379,3 +379,21 @@ export type SegmentDefaults = {
   rail: "card" | "mobileMoney";
   tripPromptsOn: boolean;
 };
+
+/* ------------------------------------------------------------------- audit */
+
+/**
+ * Who did what, to which thing, and when. Every write a member of staff
+ * makes records one, and the admin audit log reads them back.
+ */
+export type AuditEntry = {
+  id: string;
+  /** ISO instant. */
+  at: string;
+  actor: Role;
+  /** Dotted verb, e.g. "booking.cancel", "listing.update". */
+  action: string;
+  /** The id or reference of the thing acted on. */
+  target: string;
+  detail?: string;
+};

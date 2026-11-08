@@ -1,0 +1,110 @@
+import type {
+  AddOnRequest,
+  AuditEntry,
+  Booking,
+  Conversation,
+  Experience,
+  HomeForSale,
+  Listing,
+  Message,
+  Payout,
+  Trip,
+  Vehicle,
+  VerificationTask,
+} from "@/lib/domain/types";
+import {
+  ADDON_REQUESTS,
+  BOOKINGS,
+  CONVERSATIONS,
+  EXPERIENCES,
+  HOMES_FOR_SALE,
+  LISTINGS,
+  MESSAGES,
+  PAST_BOOKINGS,
+  PAYOUTS,
+  TRIPS,
+  VEHICLES,
+  VERIFICATION_QUEUE,
+} from "./data";
+
+/**
+ * The fixtures, as data that can change.
+ *
+ * Until this pass nothing wrote: every screen read constants. Booking,
+ * cancelling, marking a notification read and editing a listing all need a
+ * place to put the result where the next request, and another person's
+ * screen, can see it. An ops board has to show the booking a guest made a
+ * minute ago, which neither the URL nor the guest's localStorage can do.
+ *
+ * So the constants in `data.ts` become a seed, deep-copied once into this
+ * store, and the repos read and write the copy. Writes survive navigation
+ * and reset when the server restarts. Phase 2 replaces this file with
+ * Supabase behind the same repo types, and no screen changes.
+ *
+ * Kept on `globalThis` rather than in module state: the dev server
+ * re-evaluates modules on every edit, which would wipe a session's bookings
+ * each time a file is saved.
+ */
+
+export type FixtureStore = {
+  listings: Listing[];
+  sales: HomeForSale[];
+  vehicles: Vehicle[];
+  experiences: Experience[];
+  /** Upcoming and past together, newest start first. */
+  bookings: Booking[];
+  trips: Trip[];
+  payouts: Payout[];
+  conversations: Conversation[];
+  messages: Message[];
+  addOnRequests: AddOnRequest[];
+  verificationQueue: VerificationTask[];
+  audit: AuditEntry[];
+  /** Per-prefix counters for `nextId`. */
+  ids: Record<string, number>;
+};
+
+function seed(): FixtureStore {
+  return structuredClone({
+    listings: LISTINGS,
+    sales: HOMES_FOR_SALE,
+    vehicles: VEHICLES,
+    experiences: EXPERIENCES,
+    bookings: [...BOOKINGS, ...PAST_BOOKINGS].sort((a, b) => b.startDate.localeCompare(a.startDate)),
+    trips: TRIPS,
+    payouts: PAYOUTS,
+    conversations: CONVERSATIONS,
+    messages: MESSAGES,
+    addOnRequests: ADDON_REQUESTS,
+    verificationQueue: VERIFICATION_QUEUE,
+    audit: [],
+    ids: {},
+  });
+}
+
+const KEY = "__homelinkStore";
+type Holder = { [KEY]?: FixtureStore };
+
+export function store(): FixtureStore {
+  const g = globalThis as Holder;
+  g[KEY] ??= seed();
+  return g[KEY];
+}
+
+/** Back to the seed. Tests only; nothing in the app calls it. */
+export function resetStore(): void {
+  (globalThis as Holder)[KEY] = seed();
+}
+
+/** "bk_1001", "bk_1002", ... Starts above any id a fixture uses. */
+export function nextId(prefix: string): string {
+  const s = store();
+  s.ids[prefix] = (s.ids[prefix] ?? 1000) + 1;
+  return `${prefix}_${s.ids[prefix]}`;
+}
+
+export function recordAudit(entry: Omit<AuditEntry, "id" | "at">): AuditEntry {
+  const full: AuditEntry = { id: nextId("aud"), at: new Date().toISOString(), ...entry };
+  store().audit.push(full);
+  return full;
+}

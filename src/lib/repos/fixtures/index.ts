@@ -10,24 +10,11 @@ import type {
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
-import type { Role } from "@/lib/domain/types";
+import type { Conversation, Role } from "@/lib/domain/types";
 import { readsAs } from "@/lib/preferences/role";
 import { convert } from "@/lib/domain/money";
-import {
-  ADDON_REQUESTS,
-  BOOKINGS,
-  CONVERSATIONS,
-  EXPERIENCES,
-  FX_RATES,
-  HOMES_FOR_SALE,
-  LISTINGS,
-  MESSAGES,
-  PAST_BOOKINGS,
-  PAYOUTS,
-  TRIPS,
-  VEHICLES,
-  VERIFICATION_QUEUE,
-} from "./data";
+import { FX_RATES } from "./data";
+import { store } from "./store";
 
 /**
  * In-memory implementations for Phase 1.
@@ -39,7 +26,7 @@ import {
 
 const stays: StaysRepo = {
   async list(query = {}) {
-    let out = [...LISTINGS];
+    let out = [...store().listings];
 
     if (query.neighbourhood) {
       const needle = query.neighbourhood.trim().toLowerCase();
@@ -100,15 +87,15 @@ const stays: StaysRepo = {
   },
 
   async bySlug(slug) {
-    return LISTINGS.find((l) => l.slug === slug) ?? null;
+    return store().listings.find((l) => l.slug === slug) ?? null;
   },
 
   async byId(id) {
-    return LISTINGS.find((l) => l.id === id) ?? null;
+    return store().listings.find((l) => l.id === id) ?? null;
   },
 
   async featured(limit = 3) {
-    return [...LISTINGS]
+    return [...store().listings]
       .sort((a, b) =>
         b.verification.inspectedAt.localeCompare(a.verification.inspectedAt),
       )
@@ -116,14 +103,14 @@ const stays: StaysRepo = {
   },
 
   async neighbourhoods() {
-    return [...new Set(LISTINGS.map((l) => l.neighbourhood))].sort((a, b) =>
+    return [...new Set(store().listings.map((l) => l.neighbourhood))].sort((a, b) =>
       a.localeCompare(b),
     );
   },
 
   async neighbourhoodsWithCounts() {
     const counts = new Map<string, number>();
-    for (const l of LISTINGS) {
+    for (const l of store().listings) {
       counts.set(l.neighbourhood, (counts.get(l.neighbourhood) ?? 0) + 1);
     }
     return [...counts.entries()]
@@ -134,7 +121,7 @@ const stays: StaysRepo = {
 
 const sales: SalesRepo = {
   async list(query = {}) {
-    let out = [...HOMES_FOR_SALE];
+    let out = [...store().sales];
     if (query.neighbourhood) {
       const needle = query.neighbourhood.trim().toLowerCase();
       out = out.filter((h) => h.neighbourhood.toLowerCase().includes(needle));
@@ -162,19 +149,19 @@ const sales: SalesRepo = {
     return query.limit ? out.slice(0, query.limit) : out;
   },
   async bySlug(slug) {
-    return HOMES_FOR_SALE.find((h) => h.slug === slug) ?? null;
+    return store().sales.find((h) => h.slug === slug) ?? null;
   },
   async byId(id) {
-    return HOMES_FOR_SALE.find((h) => h.id === id) ?? null;
+    return store().sales.find((h) => h.id === id) ?? null;
   },
   async neighbourhoods() {
-    return [...new Set(HOMES_FOR_SALE.map((h) => h.neighbourhood))].sort((a, b) => a.localeCompare(b));
+    return [...new Set(store().sales.map((h) => h.neighbourhood))].sort((a, b) => a.localeCompare(b));
   },
 };
 
 const mobility: MobilityRepo = {
   async list(query = {}) {
-    let out = [...VEHICLES];
+    let out = [...store().vehicles];
     if (query.driveMode) {
       out = out.filter((v) => v.driveModes.includes(query.driveMode!));
     }
@@ -185,17 +172,17 @@ const mobility: MobilityRepo = {
   },
 
   async bySlug(slug) {
-    return VEHICLES.find((v) => v.slug === slug) ?? null;
+    return store().vehicles.find((v) => v.slug === slug) ?? null;
   },
 
   async byId(id) {
-    return VEHICLES.find((v) => v.id === id) ?? null;
+    return store().vehicles.find((v) => v.id === id) ?? null;
   },
 };
 
 const experiences: ExperiencesRepo = {
   async list(query = {}) {
-    let out = [...EXPERIENCES];
+    let out = [...store().experiences];
     if (query.interest) {
       out = out.filter((e) => e.interests.includes(query.interest!));
     }
@@ -206,39 +193,36 @@ const experiences: ExperiencesRepo = {
   },
 
   async bySlug(slug) {
-    return EXPERIENCES.find((e) => e.slug === slug) ?? null;
+    return store().experiences.find((e) => e.slug === slug) ?? null;
   },
 
   async byId(id) {
-    return EXPERIENCES.find((e) => e.id === id) ?? null;
+    return store().experiences.find((e) => e.id === id) ?? null;
   },
 };
 
 /** Newest first, so "coming up" and "earlier" both read outward from today. */
-const ALL_BOOKINGS = [...BOOKINGS, ...PAST_BOOKINGS].sort((a, b) =>
-  b.startDate.localeCompare(a.startDate),
-);
 
 const bookings: BookingRepo = {
   async listForCurrentUser() {
-    return [...ALL_BOOKINGS];
+    return [...store().bookings];
   },
   async byId(id) {
-    return ALL_BOOKINGS.find((b) => b.id === id) ?? null;
+    return store().bookings.find((b) => b.id === id) ?? null;
   },
   async byReference(reference) {
     // Case-insensitive: the code is printed in caps and will be typed in both.
     const needle = reference.trim().toUpperCase();
-    return ALL_BOOKINGS.find((b) => b.reference.toUpperCase() === needle) ?? null;
+    return store().bookings.find((b) => b.reference.toUpperCase() === needle) ?? null;
   },
 };
 
 const trips: TripRepo = {
   async listForCurrentUser() {
-    return [...TRIPS];
+    return [...store().trips];
   },
   async byId(id) {
-    return TRIPS.find((t) => t.id === id) ?? null;
+    return store().trips.find((t) => t.id === id) ?? null;
   },
 };
 
@@ -252,7 +236,7 @@ const trips: TripRepo = {
  */
 function unreadFor(conversationId: string, role: Role): number {
   const reader = readsAs(role);
-  return MESSAGES.filter(
+  return store().messages.filter(
     (m) => m.conversationId === conversationId && m.authorRole !== reader && !m.readAt,
   ).length;
 }
@@ -260,36 +244,36 @@ function unreadFor(conversationId: string, role: Role): number {
 function visibleTo(role: Role) {
   const reader = readsAs(role);
   // Admin runs the homes and the desk both, so it is in every room.
-  return (c: (typeof CONVERSATIONS)[number]) =>
+  return (c: Conversation) =>
     reader === "admin" || c.participantRoles.includes(reader);
 }
 
-function forReader(c: (typeof CONVERSATIONS)[number], role: Role) {
+function forReader(c: Conversation, role: Role) {
   return { ...c, unreadCount: unreadFor(c.id, role) };
 }
 
 const messaging: MessagingRepo = {
   async forRole(role) {
-    return CONVERSATIONS.filter(visibleTo(role))
+    return store().conversations.filter(visibleTo(role))
       .map((c) => forReader(c, role))
       .sort((a, b) => b.lastMessageAt.localeCompare(a.lastMessageAt));
   },
 
   async byId(conversationId, role) {
-    const found = CONVERSATIONS.find(
+    const found = store().conversations.find(
       (c) => c.id === conversationId && visibleTo(role)(c),
     );
     return found ? forReader(found, role) : null;
   },
 
   async messages(conversationId) {
-    return MESSAGES.filter((m) => m.conversationId === conversationId).sort((a, b) =>
+    return store().messages.filter((m) => m.conversationId === conversationId).sort((a, b) =>
       a.sentAt.localeCompare(b.sentAt),
     );
   },
 
   async forBooking(bookingId, role) {
-    const found = CONVERSATIONS.find(
+    const found = store().conversations.find(
       (c) =>
         c.scope.kind === "booking" &&
         c.scope.id === bookingId &&
@@ -321,21 +305,21 @@ function byState<T>(order: string[], stateOf: (item: T) => string) {
 
 const ops: OpsRepo = {
   async verificationQueue() {
-    return [...VERIFICATION_QUEUE].sort(
+    return [...store().verificationQueue].sort(
       (a, b) =>
         byState(VERIFY_ORDER, (t: typeof a) => t.status)(a, b) ||
         a.requestedAt.localeCompare(b.requestedAt),
     );
   },
   async addOnRequests() {
-    return [...ADDON_REQUESTS].sort(
+    return [...store().addOnRequests].sort(
       (a, b) =>
         byState(REQUEST_ORDER, (r: typeof a) => r.status)(a, b) ||
         a.requestedAt.localeCompare(b.requestedAt),
     );
   },
   async payouts() {
-    return [...PAYOUTS].sort(
+    return [...store().payouts].sort(
       (a, b) =>
         byState(PAYOUT_ORDER, (p: typeof a) => p.status)(a, b) ||
         // Settled rows read most-recent-first; outstanding ones read soonest.

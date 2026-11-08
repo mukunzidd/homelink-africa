@@ -27,8 +27,10 @@ const PATHS = [
   ["/saved", 200],
   ["/trips", 200],
   ["/messages", 200],
-  ["/queue", 200],
-  ["/inventory", 200],
+  ["/queue", 307],
+  ["/inventory", 307],
+  ["/account", 200],
+  ["/manage", 200],
   ["/no-such-page", 404],
 ];
 
