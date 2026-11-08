@@ -99,8 +99,10 @@ export async function blockForTicket(id: string, from: string, nights: number) {
   const taken = nightsWithGuests(await repos().bookings.listAll(), t.listingId, from, nights);
   if (taken.length) return { ok: false as const, reason: "booked" as const, dates: taken };
   const dates = Array.from({ length: nights }, (_, i) => addDays(from, i));
-  await repos().availability.block(t.listingId, dates, "maintenance");
-  await repos().work.updateTicket(id, { blockedDates: [...new Set([...(t.blockedDates ?? []), ...dates])].sort() });
+  // Only the nights this ticket added are its own to give back later; a
+  // night already off sale for something else stays that thing's.
+  const added = await repos().availability.block(t.listingId, dates, "maintenance");
+  await repos().work.updateTicket(id, { blockedDates: [...new Set([...(t.blockedDates ?? []), ...added])].sort() });
   await recordAuditEntry(by, "ticket.block", id, `${from} +${nights}`);
   refresh();
   return { ok: true as const };

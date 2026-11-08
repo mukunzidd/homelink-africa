@@ -106,9 +106,14 @@ export const availability: AvailabilityRepo = {
 
   async block(supplyId, dates, reason) {
     const s = store();
+    const added: string[] = [];
     for (const date of dates) {
-      if (!s.blocks.some((b) => b.supplyId === supplyId && b.date === date)) s.blocks.push({ supplyId, date, reason });
+      if (!s.blocks.some((b) => b.supplyId === supplyId && b.date === date)) {
+        s.blocks.push({ supplyId, date, reason });
+        added.push(date);
+      }
     }
+    return added;
   },
 
   async unblock(supplyId, dates) {

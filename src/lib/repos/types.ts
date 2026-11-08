@@ -173,7 +173,8 @@ export interface AvailabilityRepo {
    * booking being moved, so it does not collide with itself.
    */
   isFree(supplyId: string, from: string, to: string, opts?: { party?: number; exceptBookingId?: string }): Promise<boolean>;
-  block(supplyId: string, dates: string[], reason: Block["reason"]): Promise<void>;
+  /** Returns the dates it added; dates already blocked (for any reason) are left as they were and not returned. */
+  block(supplyId: string, dates: string[], reason: Block["reason"]): Promise<string[]>;
   unblock(supplyId: string, dates: string[]): Promise<void>;
 }
 

@@ -36,3 +36,14 @@ describe("work.housekeeping", () => {
     await expect(repos.work.updateHousekeeping("hk_nope", "ops", { status: "ready" })).rejects.toThrow();
   });
 });
+
+describe("availability.block", () => {
+  beforeEach(() => resetStore());
+
+  it("returns only the nights it added, so a caller never claims someone else's block", async () => {
+    const seeded = store().blocks.find((b) => b.supplyId === "lst_kiyovu_apartment")!;
+    const fresh = addDays(seeded.date, 10);
+    const added = await repos.availability.block("lst_kiyovu_apartment", [seeded.date, fresh], "maintenance");
+    expect(added).toEqual([fresh]);
+  });
+});
