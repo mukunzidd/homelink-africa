@@ -13,6 +13,8 @@ type CartState = { enabled: boolean; items: CartItem[] };
 
 const KEY = "homelink.cart.v1";
 const EVENT = "homelink:cart";
+/** Fired when something is added, with its id; not on enable or remove. */
+export const ADDED = "homelink:cart-added";
 const OFF: CartState = { enabled: false, items: [] };
 
 let cache: { raw: string | null; state: CartState } = { raw: null, state: OFF };
@@ -59,12 +61,15 @@ export function useCart() {
 
   const enable = useCallback((seed?: CartItem) => {
     const cur = read();
-    write({ enabled: true, items: seed && !cur.items.some((i) => i.id === seed.id) ? [...cur.items, seed] : cur.items });
+    const adding = seed && !cur.items.some((i) => i.id === seed.id);
+    write({ enabled: true, items: adding ? [...cur.items, seed] : cur.items });
   }, []);
   const disable = useCallback(() => write(OFF), []);
   const add = useCallback((item: CartItem) => {
     const cur = read();
     write({ enabled: true, items: [...cur.items.filter((i) => i.id !== item.id), item] });
+    // The trip tray listens for this to say what just went in, and where the trip is.
+    window.dispatchEvent(new CustomEvent(ADDED, { detail: item.id }));
   }, []);
   const remove = useCallback((id: string) => {
     const cur = read();

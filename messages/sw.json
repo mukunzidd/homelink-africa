@@ -2398,7 +2398,6 @@
     "add": "Ongeza kwenye safari",
     "inTrip": "Kiko kwenye safari yako",
     "added": "Imeongezwa kwenye safari yako",
-    "view": "Angalia safari",
     "pill": "Safari",
     "pillLabel": "Safari yako, {count, plural, one {kitu #} other {vitu #}}",
     "title": "Safari yako",
@@ -2416,12 +2415,8 @@
     "total": "Jumla ya safari",
     "checkout": "Lipia safari nzima",
     "blocked": "Rekebisha vitu vilivyowekwa alama nyekundu ili ulipe.",
-    "suggestCar": "Usafiri",
     "suggestCarBody": "Gari na dereva atakayekupokea uwanja wa ndege.",
-    "suggestCarCta": "Angalia magari",
-    "suggestDay": "Siku ya matembezi",
     "suggestDayBody": "Sokwe mtu, Nyungwe, Lake Kivu au matembezi ndani ya Kigali.",
-    "suggestDayCta": "Angalia matembezi",
     "turnOff": "Badala yake hifadhi kila kitu peke yake",
     "turnOffTitle": "Uzime safari?",
     "turnOffBody": "Hii inaondoa kila kitu kwenye safari yako. Kilichokwisha kuhifadhiwa kinabaki kama kilivyo.",
@@ -2436,6 +2431,15 @@
     "booked_toast": "Safari yako imehifadhiwa: {count, plural, one {uhifadhi #} other {uhifadhi #}}.",
     "failed": "Sehemu ya safari haikuweza kuhifadhiwa, kwa hiyo hakuna kilichotozwa. {name}: tarehe hizo zimechukuliwa sasa hivi.",
     "tripName": "Kigali, {month}",
-    "dayHeading": "{date}"
+    "dayHeading": "{date}",
+    "trayClose": "Funga",
+    "trayAlso": "Pia kwenye safari yako: {count, plural, one {# zaidi} other {# zaidi}}",
+    "viewCount": "Tazama safari ({count})",
+    "addTitle": "Ongeza kwenye safari hii",
+    "addStay": "Mahali pa kukaa",
+    "addCar": "Gari",
+    "addDay": "Matembezi ya siku",
+    "addStayBody": "Nyumba kwa tarehe hizi, au usiku mmoja njiani.",
+    "addAnother": "Ongeza nyingine, kwa tarehe zile zile."
   }
 }

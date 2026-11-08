@@ -1,11 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
 import type { CartItem } from "@/lib/cart-checks";
-import { useToast } from "@/components/notifications/toaster";
-import { CheckIcon, PlusIcon, SparkIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, CheckIcon, PlusIcon, SparkIcon } from "@/components/ui/icons";
 
 /**
  * The cart's two doors, placed under a detail page's main button.
@@ -18,7 +17,6 @@ export function TripActions({ item, offerPlan = false }: { item: CartItem | null
   const t = useTranslations("cart");
   const cart = useCart();
   const router = useRouter();
-  const toast = useToast();
   if (!item) return null;
 
   if (!cart.enabled) {
@@ -45,22 +43,33 @@ export function TripActions({ item, offerPlan = false }: { item: CartItem | null
   }
 
   const inside = cart.items.some((i) => i.id === item.id);
+  if (inside) {
+    // Once it is in, the button's job is the way to the trip, with the
+    // count, so "where did it go" never needs the header.
+    return (
+      <div className="flex items-stretch gap-2">
+        <span className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-ctl bg-brand-tint px-3 text-[14px] font-semibold text-brand-deep">
+          <CheckIcon size={15} />
+          {t("inTrip")}
+        </span>
+        <Link
+          href="/trip"
+          className="flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-ctl border border-brand bg-surface px-3 text-[14px] font-semibold text-brand hover:bg-brand-tint"
+        >
+          {t("viewCount", { count: cart.items.length })}
+          <ArrowRightIcon size={14} />
+        </Link>
+      </div>
+    );
+  }
   return (
     <button
       type="button"
-      aria-pressed={inside}
-      onClick={() => {
-        if (inside) {
-          router.push("/trip");
-          return;
-        }
-        cart.add(item);
-        toast.show({ title: t("added"), body: item.title, href: "/trip", tone: "ok" });
-      }}
+      onClick={() => cart.add(item)}
       className="flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-ctl border border-brand bg-surface px-4 text-[15px] font-semibold text-brand hover:bg-brand-tint"
     >
-      {inside ? <CheckIcon size={15} /> : <PlusIcon size={15} />}
-      {inside ? t("inTrip") : t("add")}
+      <PlusIcon size={15} />
+      {t("add")}
     </button>
   );
 }

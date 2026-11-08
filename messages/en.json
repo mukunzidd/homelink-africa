@@ -2398,7 +2398,6 @@
     "add": "Add to trip",
     "inTrip": "In your trip",
     "added": "Added to your trip",
-    "view": "View trip",
     "pill": "Trip",
     "pillLabel": "Your trip, {count, plural, one {# item} other {# items}}",
     "title": "Your trip",
@@ -2416,12 +2415,8 @@
     "total": "Trip total",
     "checkout": "Check out the whole trip",
     "blocked": "Fix the items marked in red to check out.",
-    "suggestCar": "Getting around",
     "suggestCarBody": "A car with a driver who meets you at the airport.",
-    "suggestCarCta": "Browse cars",
-    "suggestDay": "A day out",
     "suggestDayBody": "Gorillas, Nyungwe, Lake Kivu or a walk through Kigali.",
-    "suggestDayCta": "Browse days out",
     "turnOff": "Book items one at a time instead",
     "turnOffTitle": "Turn off the trip?",
     "turnOffBody": "This empties your trip. Anything already booked stays booked.",
@@ -2436,6 +2431,15 @@
     "booked_toast": "Your trip is booked: {count, plural, one {# booking} other {# bookings}}.",
     "failed": "Part of the trip couldn't be booked, so nothing was charged. {name}: those dates were just taken.",
     "tripName": "Kigali, {month}",
-    "dayHeading": "{date}"
+    "dayHeading": "{date}",
+    "trayClose": "Close",
+    "trayAlso": "Also in your trip: {count, plural, one {# more} other {# more}}",
+    "viewCount": "View trip ({count})",
+    "addTitle": "Add to this trip",
+    "addStay": "A place to stay",
+    "addCar": "A car",
+    "addDay": "A day out",
+    "addStayBody": "A home for these dates, or a night somewhere on the way.",
+    "addAnother": "Add another, on the same dates."
   }
 }

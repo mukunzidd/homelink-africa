@@ -4,14 +4,14 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart";
-import { cartBlocked, cartIssues, cartTimeline, cartTotal, type CartIssue } from "@/lib/cart-checks";
+import { cartBlocked, cartIssues, cartTimeline, cartTotal, type CartIssue, type CartItem } from "@/lib/cart-checks";
 import { toDisplayQuote } from "@/lib/domain/pricing";
 import { usePreferences } from "@/lib/preferences/context";
 import { kigaliDay } from "@/lib/domain/instants";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { Dialog } from "@/components/ui/dialog";
 import { SupplyImage } from "@/components/ui/supply-image";
-import { CarIcon, CloseIcon, CompassIcon, HouseIcon } from "@/components/ui/icons";
+import { CarIcon, CloseIcon, CompassIcon, HouseIcon, PlusIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 
 const KIND_ICON = { stay: HouseIcon, car: CarIcon, experience: CompassIcon } as const;
@@ -20,7 +20,8 @@ const KIND_ICON = { stay: HouseIcon, car: CarIcon, experience: CompassIcon } as 
  * The trip, day by day. Problems sit on the item they concern, in red if
  * they stop checkout and in amber if they are only worth knowing; the
  * checkout button says why it is off when it is. Suggestions fill the gaps
- * a trip usually has: no car yet, no day out yet.
+ * a trip usually has: the add buttons at the top lead with what is missing
+ * (dashed, with a reason) and offer another of what is there.
  */
 export function TripPage() {
   const t = useTranslations("cart");
@@ -50,12 +51,50 @@ export function TripPage() {
     );
   }
 
-  const hasCar = cart.items.some((i) => i.kind === "car");
-  const hasDay = cart.items.some((i) => i.kind === "experience");
+  // The add buttons carry the trip's own dates and party, so what is found
+  // next already fits around what is in.
+  const open = cart.items.filter((i) => !i.bookedReference);
+  const span = open.length ? open : cart.items;
+  const first = span.map((i) => i.start).sort()[0];
+  const last = span.map((i) => i.end).sort().at(-1)!;
+  const party = Math.max(...cart.items.map((i) => i.party));
+  const has = (k: CartItem["kind"]) => cart.items.some((i) => i.kind === k);
+  const adds = [
+    { kind: "stay" as const, icon: HouseIcon, label: t("addStay"), hint: has("stay") ? t("addAnother") : t("addStayBody"), href: `/stays?from=${first}&to=${last}&party=${party}` },
+    { kind: "car" as const, icon: CarIcon, label: t("addCar"), hint: has("car") ? t("addAnother") : t("suggestCarBody"), href: `/cars?from=${first}&to=${last}` },
+    { kind: "experience" as const, icon: CompassIcon, label: t("addDay"), hint: has("experience") ? t("addAnother") : t("suggestDayBody"), href: `/experiences?date=${first}&party=${party}` },
+  ];
 
   return (
     <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
       <div className="flex min-w-0 flex-col gap-6">
+        <nav aria-label={t("addTitle")} className="flex flex-col gap-2">
+          <h2 className="text-[13px] font-semibold text-ink-3">{t("addTitle")}</h2>
+          <div className="grid gap-2 sm:grid-cols-3">
+            {adds.map((a) => (
+              <Link
+                key={a.kind}
+                href={a.href}
+                className={cn(
+                  "group flex items-start gap-3 rounded-card border bg-surface p-3.5 transition-colors hover:border-brand",
+                  has(a.kind) ? "border-line" : "border-dashed border-brand/50",
+                )}
+              >
+                <span className="grid size-9 flex-none place-items-center rounded-full bg-brand-tint text-brand-deep">
+                  <PlusIcon size={15} />
+                </span>
+                <span className="flex min-w-0 flex-col gap-0.5">
+                  <span className="flex items-center gap-1.5 text-[14.5px] font-semibold text-ink">
+                    <a.icon size={14} className="text-ink-3" />
+                    {a.label}
+                  </span>
+                  <span className="text-[12.5px] leading-snug text-ink-3">{a.hint}</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </nav>
+
         {cartTimeline(cart.items).map((g) => (
           <section key={g.date} className="flex flex-col gap-3">
             <h2 className="text-[13px] font-semibold text-ink-3">{day(g.date)}</h2>
@@ -109,24 +148,6 @@ export function TripPage() {
           </section>
         ))}
 
-        {(!hasCar || !hasDay) && (
-          <div className="grid gap-3 sm:grid-cols-2">
-            {!hasCar && (
-              <Link href="/cars" className="flex flex-col gap-1 rounded-card border border-dashed border-line bg-surface p-4 hover:border-brand">
-                <span className="flex items-center gap-2 text-[15px] font-semibold text-ink"><CarIcon size={16} />{t("suggestCar")}</span>
-                <span className="text-[13px] text-ink-2">{t("suggestCarBody")}</span>
-                <span className="text-[13px] font-semibold text-brand">{t("suggestCarCta")} →</span>
-              </Link>
-            )}
-            {!hasDay && (
-              <Link href="/experiences" className="flex flex-col gap-1 rounded-card border border-dashed border-line bg-surface p-4 hover:border-brand">
-                <span className="flex items-center gap-2 text-[15px] font-semibold text-ink"><CompassIcon size={16} />{t("suggestDay")}</span>
-                <span className="text-[13px] text-ink-2">{t("suggestDayBody")}</span>
-                <span className="text-[13px] font-semibold text-brand">{t("suggestDayCta")} →</span>
-              </Link>
-            )}
-          </div>
-        )}
       </div>
 
       <aside className="flex flex-col gap-4 rounded-card border border-line bg-surface p-5 shadow-[var(--shadow-card)] lg:sticky lg:top-[calc(var(--header-offset)+24px)]">

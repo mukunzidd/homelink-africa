@@ -2398,7 +2398,6 @@
     "add": "Ajouter au voyage",
     "inTrip": "Dans votre voyage",
     "added": "Ajouté à votre voyage",
-    "view": "Voir le voyage",
     "pill": "Voyage",
     "pillLabel": "Votre voyage, {count, plural, one {# élément} other {# éléments}}",
     "title": "Votre voyage",
@@ -2416,12 +2415,8 @@
     "total": "Total du voyage",
     "checkout": "Payer tout le voyage",
     "blocked": "Corrigez les éléments marqués en rouge pour passer au paiement.",
-    "suggestCar": "Pour vous déplacer",
     "suggestCarBody": "Une voiture avec un chauffeur qui vous attend à l'aéroport.",
-    "suggestCarCta": "Voir les voitures",
-    "suggestDay": "Une sortie",
     "suggestDayBody": "Gorilles, Nyungwe, Lake Kivu ou une balade dans Kigali.",
-    "suggestDayCta": "Voir les sorties",
     "turnOff": "Réserver plutôt chaque élément séparément",
     "turnOffTitle": "Désactiver le voyage ?",
     "turnOffBody": "Votre voyage sera vidé. Ce qui est déjà réservé le reste.",
@@ -2436,6 +2431,15 @@
     "booked_toast": "Votre voyage est réservé : {count, plural, one {# réservation} other {# réservations}}.",
     "failed": "Une partie du voyage n'a pas pu être réservée, donc rien n'a été prélevé. {name} : ces dates viennent d'être prises.",
     "tripName": "Kigali, {month}",
-    "dayHeading": "{date}"
+    "dayHeading": "{date}",
+    "trayClose": "Fermer",
+    "trayAlso": "Aussi dans votre voyage : {count, plural, one {# autre} other {# autres}}",
+    "viewCount": "Voir le voyage ({count})",
+    "addTitle": "Ajouter à ce voyage",
+    "addStay": "Un logement",
+    "addCar": "Une voiture",
+    "addDay": "Une excursion",
+    "addStayBody": "Un logement pour ces dates, ou une nuit sur la route.",
+    "addAnother": "En ajouter un autre, aux mêmes dates."
   }
 }

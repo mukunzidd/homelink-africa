@@ -1,5 +1,6 @@
 import { SiteHeader } from "@/components/shell/site-header";
 import { SiteFooter } from "@/components/shell/site-footer";
+import { TripTray } from "@/components/cart/trip-tray";
 
 /**
  * The public site's frame: the top bar, the page, the footer.
@@ -18,6 +19,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         {children}
       </main>
       <SiteFooter />
+      <TripTray />
     </>
   );
 }

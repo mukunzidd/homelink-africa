@@ -2398,7 +2398,6 @@
     "add": "Ongera mu rugendo",
     "inTrip": "Kiri mu rugendo rwawe",
     "added": "Byongewe mu rugendo rwawe",
-    "view": "Reba urugendo",
     "pill": "Urugendo",
     "pillLabel": "Urugendo rwawe, {count, plural, one {ikintu #} other {ibintu #}}",
     "title": "Urugendo rwawe",
@@ -2416,12 +2415,8 @@
     "total": "Igiteranyo cy'urugendo",
     "checkout": "Ishyura urugendo rwose",
     "blocked": "Kosora ibyagaragajwe mu ibara ritukura kugira ngo wishyure.",
-    "suggestCar": "Kugenda mu nzira",
     "suggestCarBody": "Imodoka n'umushoferi ugusanganira ku kibuga cy'indege.",
-    "suggestCarCta": "Reba imodoka",
-    "suggestDay": "Urugendo rw'umunsi",
     "suggestDayBody": "Ingagi, Nyungwe, Lake Kivu cyangwa gutembera muri Kigali.",
-    "suggestDayCta": "Reba ingendo z'umunsi",
     "turnOff": "Ahubwo fata buri kintu ukwacyo",
     "turnOffTitle": "Uhagarike urugendo?",
     "turnOffBody": "Ibi bisiba ibiri mu rugendo rwawe. Ibyamaze gufatwa biguma uko biri.",
@@ -2436,6 +2431,15 @@
     "booked_toast": "Urugendo rwawe rwafashwe: {count, plural, one {ibyafashwe #} other {ibyafashwe #}}.",
     "failed": "Igice kimwe cy'urugendo nticyashoboye gufatwa, bityo nta mafaranga yakuweho. {name}: ayo matariki amaze gufatwa n'undi.",
     "tripName": "Kigali, {month}",
-    "dayHeading": "{date}"
+    "dayHeading": "{date}",
+    "trayClose": "Funga",
+    "trayAlso": "Ibindi biri mu rugendo rwawe: {count}",
+    "viewCount": "Reba urugendo ({count})",
+    "addTitle": "Ongera kuri uru rugendo",
+    "addStay": "Aho kuba",
+    "addCar": "Imodoka",
+    "addDay": "Urugendo rw'umunsi",
+    "addStayBody": "Inzu y'aya matariki, cyangwa ijoro rimwe mu nzira.",
+    "addAnother": "Ongeraho ikindi, ku matariki amwe."
   }
 }
