@@ -229,3 +229,12 @@ describe("quoteStay with nightly rates set for some dates", () => {
     expect(q.lines.find((l) => l.key === "accommodation")!.amount.minor).toBe(listing.nightlyRate.minor * 4);
   });
 });
+
+describe("quoteStay on a range from a URL", () => {
+  it("costs the same however far apart the dates are", () => {
+    const started = performance.now();
+    const q = quoteStay({ ...listing, nightlyRates: { "2027-03-05": { minor: 1, currency: listing.nightlyRate.currency } } }, "2026-01-01", "9999-12-31");
+    expect(performance.now() - started).toBeLessThan(50);
+    expect(q).not.toBeNull();
+  });
+});
