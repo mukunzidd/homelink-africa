@@ -2090,6 +2090,91 @@
       "assignTo": "Confier à",
       "assigned": "Mission confiée",
       "nobody": "Personne"
+    },
+    "finance": {
+      "title": "Finances",
+      "body": "L'argent qui entre, qui sort, et celui détenu pour quelqu'un d'autre. Chaque action ici est consignée dans le journal d'audit.",
+      "tabs": {
+        "revenue": "Chiffre d'affaires",
+        "payments": "Paiements",
+        "reconciliation": "Rapprochement",
+        "refunds": "Remboursements",
+        "deposits": "Cautions détenues",
+        "payouts": "Versements",
+        "invoices": "Factures"
+      },
+      "revenueTitle": "Chiffre d'affaires par mois, francs (milliers)",
+      "lane": "Activité",
+      "lanes": {
+        "stay": "Séjours et locations",
+        "car": "Voitures",
+        "experience": "Excursions"
+      },
+      "total": "Total",
+      "revenueNote": "Réservations passées chaque mois, remboursements déduits, converties en francs au cours du jour.",
+      "allRails": "Tous les moyens",
+      "allStates": "Tous les états",
+      "pay": {
+        "succeeded": "Reçu",
+        "pending": "En attente",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "when": "Quand",
+      "booking": "Réservation",
+      "rail": "Moyen",
+      "kind": "Pour",
+      "amount": "Montant",
+      "state": "État",
+      "none": "Rien ici.",
+      "reconcileSummary": "{matched} rapprochés · {suggested} suggérés · {unmatched} à traiter à la main",
+      "statementLine": "Ligne du relevé",
+      "payment": "Notre paiement",
+      "rec": {
+        "matched": "Rapproché",
+        "suggested": "Suggéré",
+        "unmatched": "Non rapproché"
+      },
+      "needsPerson": "À traiter à la main",
+      "match": "Rapprocher",
+      "matched": "Rapproché",
+      "guest": "Client",
+      "refund": {
+        "awaiting": "En attente d'approbation",
+        "paid": "Versé",
+        "other": "Autre"
+      },
+      "approve": "Approuver",
+      "approved": "Remboursement approuvé et envoyé",
+      "rentingDeposits": "Cautions de location",
+      "endsOn": "fin le {date}",
+      "moveOutOn": "départ le {date}",
+      "escrow": "Séquestre des séjours",
+      "escrowNote": "Conservé jusqu'à l'arrivée du client, puis reversé au logement automatiquement.",
+      "arrives": "Arrivée",
+      "payee": "Bénéficiaire",
+      "releaseOn": "Versement",
+      "payout": {
+        "held": "Retenu jusqu'à l'arrivée",
+        "due": "Dû",
+        "paid": "Versé"
+      },
+      "markPaid": "Marquer versé",
+      "paidDone": "Versement marqué",
+      "issued": "Émise le",
+      "receipt": "Reçu",
+      "keep": "Retenir pour réparations ({currency})",
+      "reason": "Motif",
+      "reasonPlaceholder": "Repeindre le mur du couloir",
+      "release": "Rendre la caution",
+      "reasonNeeded": "Toute retenue demande un motif lisible par le locataire.",
+      "confirmTitle": "Envoyer ceci au locataire ?",
+      "confirmBody": "C'est ce qu'il lira, mot pour mot.",
+      "back": "Retour",
+      "send": "Rendre et envoyer",
+      "released": "Caution rendue ; le locataire a été prévenu",
+      "sentenceKept": "Nous vous rendons {back} sur votre caution de {deposit}. Nous avons retenu {kept} pour : {reason}.",
+      "sentenceFull": "Nous vous rendons l'intégralité de votre caution de {deposit}."
     }
   },
   "account": {

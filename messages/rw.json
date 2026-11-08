@@ -2090,6 +2090,91 @@
       "assignTo": "Biha",
       "assigned": "Umurimo watanzwe",
       "nobody": "Nta muntu"
+    },
+    "finance": {
+      "title": "Imari",
+      "body": "Amafaranga yinjira, asohoka, n'afashwe ku bw'undi muntu. Buri gikorwa hano cyandikwa mu bitabo by'igenzura.",
+      "tabs": {
+        "revenue": "Amafaranga yinjiye",
+        "payments": "Ubwishyu",
+        "reconciliation": "Guhuza",
+        "refunds": "Ibisubizwa",
+        "deposits": "Ingwate zifashwe",
+        "payouts": "Ibyishyurwa",
+        "invoices": "Inyemezabuguzi"
+      },
+      "revenueTitle": "Amafaranga yinjiye ku kwezi, mu bihumbi",
+      "lane": "Igice",
+      "lanes": {
+        "stay": "Kurara no gukodesha",
+        "car": "Imodoka",
+        "experience": "Ingendo"
+      },
+      "total": "Igiteranyo",
+      "revenueNote": "Ibyafashwe buri kwezi, hakuwemo ibyasubijwe, bihinduwe mu mafaranga y'u Rwanda ku gaciro k'uyu munsi.",
+      "allRails": "Uburyo bwose",
+      "allStates": "Uko bimeze kose",
+      "pay": {
+        "succeeded": "Byakiriwe",
+        "pending": "Bitegerejwe",
+        "failed": "Byanze",
+        "refunded": "Byasubijwe"
+      },
+      "when": "Igihe",
+      "booking": "Ifatwa",
+      "rail": "Uburyo",
+      "kind": "Ku",
+      "amount": "Amafaranga",
+      "state": "Uko bimeze",
+      "none": "Nta kintu kirimo.",
+      "reconcileSummary": "{matched} byahujwe · {suggested} byatanzweho igitekerezo · {unmatched} bikeneye umuntu",
+      "statementLine": "Umurongo w'inyandiko",
+      "payment": "Ubwishyu bwacu",
+      "rec": {
+        "matched": "Byahujwe",
+        "suggested": "Byatanzweho igitekerezo",
+        "unmatched": "Ntibihujwe"
+      },
+      "needsPerson": "Bikeneye umuntu",
+      "match": "Huza",
+      "matched": "Byahujwe",
+      "guest": "Umushyitsi",
+      "refund": {
+        "awaiting": "Bitegereje kwemezwa",
+        "paid": "Byishyuwe",
+        "other": "Ibindi"
+      },
+      "approve": "Emeza",
+      "approved": "Ibisubizwa byemejwe byoherezwa",
+      "rentingDeposits": "Ingwate z'ubukode",
+      "endsOn": "birangira {date}",
+      "moveOutOn": "kuvamo {date}",
+      "escrow": "Amafaranga abitswe ku kurara",
+      "escrowNote": "Abikwa kugeza umushyitsi ahageze, hanyuma agahabwa inzu ubwayo.",
+      "arrives": "Ahagera",
+      "payee": "Uwishyurwa",
+      "releaseOn": "Itariki",
+      "payout": {
+        "held": "Bifashwe kugeza ahageze",
+        "due": "Bigomba kwishyurwa",
+        "paid": "Byishyuwe"
+      },
+      "markPaid": "Byishyuwe",
+      "paidDone": "Byemejwe ko byishyuwe",
+      "issued": "Yatanzwe",
+      "receipt": "Inyemezabwishyu",
+      "keep": "Gumana kubera gusana ({currency})",
+      "reason": "Impamvu",
+      "reasonPlaceholder": "Gusiga irangi ku rukuta rw'inzira",
+      "release": "Subiza ingwate",
+      "reasonNeeded": "Ibyo ugumanye byose bikeneye impamvu ukodesha asoma.",
+      "confirmTitle": "Kohereza ibi ku ukodesha?",
+      "confirmBody": "Ibi ni byo azasoma, ijambo ku ijambo.",
+      "back": "Subira inyuma",
+      "send": "Subiza kandi wohereze",
+      "released": "Ingwate yasubijwe; ukodesha yamenyeshejwe",
+      "sentenceKept": "Turagusubiza {back} kuri ingwate yawe ya {deposit}. Twagumanye {kept} kubera: {reason}.",
+      "sentenceFull": "Turagusubiza ingwate yawe yose ya {deposit}."
     }
   },
   "account": {

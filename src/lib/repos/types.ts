@@ -1,5 +1,6 @@
 import type { ListingPatch } from "@/lib/workspace/listing-patch";
 import type {
+  StatementLine,
   Partner,
   PartnerDocument,
   PartnerJob,
@@ -387,6 +388,23 @@ export interface ReviewsRepo {
   create(r: Pick<Review, "bookingId" | "ratings" | "text">): Promise<Review>;
 }
 
+/** Money in and out, for the finance pages. Every write is audited. */
+export interface FinanceRepo {
+  payments(filter?: { rail?: PaymentRecord["rail"]; status?: PaymentRecord["status"] }): Promise<PaymentRecord[]>;
+  /** Refund payment records, newest first; pending ones await approval. */
+  refunds(): Promise<PaymentRecord[]>;
+  approveRefund(id: string, by: Role): Promise<void>;
+  /** The Mobile Money statement, newest first. */
+  statement(): Promise<{ lines: StatementLine[] }>;
+  /** Links a statement line to a Mobile Money payment of the same amount that no other line has. */
+  reconcile(lineId: string, paymentId: string, by: Role): Promise<void>;
+  /** Gives a renting deposit back less deductions; deductions need a reason. Once. */
+  releaseDeposit(bookingId: string, deductions: Money, reason: string, by: Role): Promise<void>;
+  payouts(): Promise<Payout[]>;
+  /** Due to paid. A payout still held (before check-in) cannot be paid. */
+  markPayoutPaid(id: string, by: Role): Promise<void>;
+}
+
 export interface PartnersRepo {
   list(): Promise<Partner[]>;
   byId(id: string): Promise<Partner | null>;
@@ -428,6 +446,7 @@ export type Repositories = {
   work: WorkRepo;
   rates: RatesRepo;
   partners: PartnersRepo;
+  finance: FinanceRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;

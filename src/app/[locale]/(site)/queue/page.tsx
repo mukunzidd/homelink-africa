@@ -5,8 +5,6 @@ import { homeFor } from "@/lib/workspace/nav";
 /**
  * The queue's four tabs became workspace pages. Old links and bookmarks land
  * on the page their tab turned into; anyone without a workspace goes home.
- * The previous screen lives on in `legacy-queue.tsx` until its parts move
- * into the workspace pages that replace it.
  */
 const TAB_TO_PAGE: Record<string, string> = {
   verify: "/manage/inspections",

@@ -2090,6 +2090,91 @@
       "assignTo": "Mpe",
       "assigned": "Kazi imetolewa",
       "nobody": "Hakuna"
+    },
+    "finance": {
+      "title": "Fedha",
+      "body": "Pesa zinazoingia, zinazotoka, na zinazoshikiliwa kwa ajili ya mtu mwingine. Kila hatua hapa inarekodiwa kwenye kumbukumbu za ukaguzi.",
+      "tabs": {
+        "revenue": "Mapato",
+        "payments": "Malipo",
+        "reconciliation": "Kulinganisha",
+        "refunds": "Marejesho",
+        "deposits": "Amana zinazoshikiliwa",
+        "payouts": "Malipo kwa washirika",
+        "invoices": "Ankara"
+      },
+      "revenueTitle": "Mapato kwa mwezi, faranga (maelfu)",
+      "lane": "Huduma",
+      "lanes": {
+        "stay": "Makazi na upangaji",
+        "car": "Magari",
+        "experience": "Matembezi"
+      },
+      "total": "Jumla",
+      "revenueNote": "Uhifadhi wa kila mwezi, ukiondoa marejesho, kwa faranga kwa kiwango cha leo.",
+      "allRails": "Njia zote",
+      "allStates": "Hali zote",
+      "pay": {
+        "succeeded": "Imepokelewa",
+        "pending": "Inasubiri",
+        "failed": "Imeshindwa",
+        "refunded": "Imerejeshwa"
+      },
+      "when": "Lini",
+      "booking": "Uhifadhi",
+      "rail": "Njia",
+      "kind": "Kwa",
+      "amount": "Kiasi",
+      "state": "Hali",
+      "none": "Hakuna kitu hapa.",
+      "reconcileSummary": "{matched} zimelinganishwa · {suggested} zimependekezwa · {unmatched} zinahitaji mtu",
+      "statementLine": "Mstari wa taarifa",
+      "payment": "Malipo yetu",
+      "rec": {
+        "matched": "Imelinganishwa",
+        "suggested": "Imependekezwa",
+        "unmatched": "Haijalinganishwa"
+      },
+      "needsPerson": "Inahitaji mtu",
+      "match": "Linganisha",
+      "matched": "Imelinganishwa",
+      "guest": "Mgeni",
+      "refund": {
+        "awaiting": "Inasubiri idhini",
+        "paid": "Imelipwa",
+        "other": "Nyingine"
+      },
+      "approve": "Idhinisha",
+      "approved": "Marejesho yameidhinishwa na kutumwa",
+      "rentingDeposits": "Amana za upangaji",
+      "endsOn": "inaisha {date}",
+      "moveOutOn": "kuhama {date}",
+      "escrow": "Escrow ya makazi",
+      "escrowNote": "Inashikiliwa hadi mgeni afike, kisha inapelekwa kwa nyumba yenyewe.",
+      "arrives": "Anafika",
+      "payee": "Analipwa",
+      "releaseOn": "Inatolewa",
+      "payout": {
+        "held": "Imezuiwa hadi afike",
+        "due": "Inadaiwa",
+        "paid": "Imelipwa"
+      },
+      "markPaid": "Weka imelipwa",
+      "paidDone": "Imewekwa imelipwa",
+      "issued": "Imetolewa",
+      "receipt": "Risiti",
+      "keep": "Baki kwa matengenezo ({currency})",
+      "reason": "Sababu",
+      "reasonPlaceholder": "Kupaka rangi ukuta wa korido",
+      "release": "Rudisha amana",
+      "reasonNeeded": "Chochote kinachobakizwa kinahitaji sababu ambayo mpangaji anaweza kusoma.",
+      "confirmTitle": "Tuma hii kwa mpangaji?",
+      "confirmBody": "Hiki ndicho atakachosoma, neno kwa neno.",
+      "back": "Rudi",
+      "send": "Rudisha na utume",
+      "released": "Amana imerudishwa; mpangaji amejulishwa",
+      "sentenceKept": "Tunakurudishia {back} kati ya amana yako ya {deposit}. Tumebakiza {kept} kwa: {reason}.",
+      "sentenceFull": "Tunakurudishia amana yako yote ya {deposit}."
     }
   },
   "account": {

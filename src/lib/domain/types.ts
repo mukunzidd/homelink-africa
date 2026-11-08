@@ -566,6 +566,18 @@ export type RentApplication = {
 
 export type PaymentRail = "card" | "mobileMoney" | "bankTransfer";
 
+/** One line of the Mobile Money statement the operator sends, matched to a payment or not yet. */
+export type StatementLine = {
+  id: string;
+  /** ISO instant. */
+  at: string;
+  amount: Money;
+  phone: string;
+  /** The operator's transaction reference. */
+  ref: string;
+  paymentId?: string;
+};
+
 /** A request to see a home for sale, in person or by video. */
 export type Viewing = {
   id: string;

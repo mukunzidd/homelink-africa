@@ -9,35 +9,30 @@
  */
 export function WeeklyBars({ values, labels, title, unit }: { values: number[]; labels: string[]; title: string; unit: (n: number) => string }) {
   const max = Math.max(1, ...values);
-  const W = 600;
-  const H = 140;
-  const gap = 6;
-  const bw = (W - gap * (values.length - 1)) / values.length;
+  // Drawn in HTML rather than a stretched SVG, so text stays the size it
+  // was set at whatever width the card is.
   return (
     <figure className="flex flex-col gap-2">
-      <svg viewBox={`0 0 ${W} ${H + 22}`} role="img" aria-label={title} className="h-auto w-full">
-        <line x1="0" x2={W} y1={H} y2={H} stroke="var(--line)" strokeWidth="1" />
+      {/* Headroom above the tallest bar for the latest value's label; every bar is in proportion. */}
+      <div role="img" aria-label={title} className="flex h-44 items-end gap-1.5 border-b border-line pt-6">
         {values.map((v, i) => {
-          const h = Math.max(v ? 4 : 0, (v / max) * (H - 22));
-          const x = i * (bw + gap);
           const last = i === values.length - 1;
           return (
-            <g key={labels[i]}>
-              <title>{`${labels[i]}: ${unit(v)}`}</title>
-              {/* A tall invisible target, so the hover answers above a short bar too. */}
-              <rect x={x} y={0} width={bw} height={H} fill="transparent" />
-              {h > 0 && <path d={`M${x},${H} V${H - h + 4} Q${x},${H - h} ${x + 4},${H - h} H${x + bw - 4} Q${x + bw},${H - h} ${x + bw},${H - h + 4} V${H} Z`} fill="var(--brand)" opacity={last ? 1 : 0.55} />}
-              {last && (
-                <text x={x + bw / 2} y={H - h - 6} textAnchor="middle" className="fill-[var(--ink)] text-[13px] font-semibold">
-                  {v}
-                </text>
-              )}
-            </g>
+            <div key={labels[i]} title={`${labels[i]}: ${unit(v)}`} className="flex h-full min-w-0 flex-1 flex-col justify-end">
+              <span
+                className={last ? "relative w-full rounded-t-[4px] bg-brand" : "w-full rounded-t-[4px] bg-brand/55"}
+                style={{ height: v ? `max(4px, ${(v / max) * 100}%)` : 0 }}
+              >
+                {last && <span className="tnum absolute -top-5 left-1/2 -translate-x-1/2 text-[13px] font-semibold text-ink">{v}</span>}
+              </span>
+            </div>
           );
         })}
-        <text x="0" y={H + 16} className="fill-[var(--ink-3)] text-[11px]">{labels[0]}</text>
-        <text x={W} y={H + 16} textAnchor="end" className="fill-[var(--ink-3)] text-[11px]">{labels.at(-1)}</text>
-      </svg>
+      </div>
+      <div className="flex justify-between text-[11.5px] text-ink-3">
+        <span>{labels[0]}</span>
+        <span>{labels.at(-1)}</span>
+      </div>
       <table className="sr-only">
         <caption>{title}</caption>
         <tbody>

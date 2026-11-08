@@ -1,4 +1,4 @@
-import type { Block, Booking, Incident, Listing, MaintenanceTicket, Partner, PartnerDocument, PaymentRecord, Review, Viewing } from "@/lib/domain/types";
+import type { Block, Booking, Incident, Listing, MaintenanceTicket, Partner, PartnerDocument, PaymentRecord, Review, StatementLine, Viewing } from "@/lib/domain/types";
 import { quoteRent, quoteStay } from "@/lib/domain/pricing";
 import { addDays } from "@/lib/domain/dates";
 import { kigaliDay } from "@/lib/domain/instants";
@@ -65,6 +65,9 @@ export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
     const end = addDays(today, to);
     // A year of renting is a month plus the deposit up front, not 365 nights.
     const q = lease ? quoteRent(l, 12)! : quoteStay(l, start, end)!;
+    // Placed three weeks ago, or two weeks before it began if that is
+    // earlier: a renting that started a year ago was not booked last month.
+    const placed = new Date(Math.min(now.getTime() - 21 * 86_400_000, Date.parse(`${addDays(start, -14)}T09:00:00Z`))).toISOString();
     return {
       id: `bkg_phase_${id}`,
       reference: `HL-P${id.slice(0, 3).toUpperCase()}-${String(Math.abs(from) % 100).padStart(2, "0")}`,
@@ -83,8 +86,8 @@ export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
       guest: who,
       paymentPlan: "full",
       timeline: [
-        { at, kind: "placed", actor: "guest" },
-        { at, kind: "paid", actor: "guest" },
+        { at: placed, kind: "placed", actor: "guest" },
+        { at: placed, kind: "paid", actor: "guest" },
         ...(status === "active" || status === "completed"
           ? [{ at: `${start}T12:30:00.000Z`, kind: "checkedIn" as const, actor: "ops" as const }]
           : []),
@@ -133,8 +136,8 @@ export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
       paymentPlan: "full",
       application: { occupants: 2, employer: "University of Rwanda", incomeBand: "1mTo2m", moveIn: start, months: 12 },
       timeline: [
-        { at, kind: "placed", actor: "guest" },
-        { at, kind: "paid", actor: "guest" },
+        { at: `${addDays(start, -20)}T09:00:00.000Z`, kind: "placed", actor: "guest" },
+        { at: `${addDays(start, -20)}T09:00:00.000Z`, kind: "paid", actor: "guest" },
         { at: `${start}T10:00:00.000Z`, kind: "checkedIn", actor: "ops" },
       ],
     };
@@ -316,4 +319,40 @@ export function seedViewings(now: Date): Viewing[] {
     { id: "vwg_002", saleId: "sale_kimihurura_apartment", mode: "video", date: addDays(today, 5), time: "15:30", contact: { name: "Jonas Becker", email: "jonas@example.de", phone: "+49 151 2345 6789" }, status: "confirmed", createdAt: at },
     { id: "vwg_003", saleId: "sale_rebero_villa", mode: "inPerson", date: addDays(today, -4), time: "11:00", contact: { name: "Priya Nair", email: "priya@example.in", phone: "+91 98765 43210" }, status: "done", createdAt: at },
   ];
+}
+
+/**
+ * The Mobile Money operator's statement for the last few weeks: three
+ * lines already matched, two that match a payment by amount but were never
+ * linked (the reconciliation page suggests them), and two that match
+ * nothing (a guest paid twice, and a transfer with no booking).
+ */
+export function seedStatement(payments: PaymentRecord[], now: Date): StatementLine[] {
+  const momo = payments.filter((p) => p.rail === "mobileMoney" && p.status === "succeeded").sort((a, b) => b.at.localeCompare(a.at));
+  const shift = (iso: string, minutes: number) => new Date(Date.parse(iso) + minutes * 60_000).toISOString();
+  const lines: StatementLine[] = [];
+  momo.slice(0, 5).forEach((p, i) => {
+    lines.push({ id: `stm_${String(i + 1).padStart(3, "0")}`, at: shift(p.at, i < 3 ? 4 : 600), amount: { ...p.amount }, phone: `+250 78${i} 55${i} 0${i}${i}`, ref: `MP${261108 - i * 37}.${1400 + i}`, ...(i < 3 ? { paymentId: p.id } : {}) });
+  });
+  const ago = (days: number) => new Date(now.getTime() - days * 86_400_000).toISOString();
+  lines.push({ id: "stm_901", at: ago(3), amount: { minor: 241_250, currency: "RWF" }, phone: "+250 788 123 456", ref: "MP260905.0917" });
+  lines.push({ id: "stm_902", at: ago(9), amount: { minor: 75_000, currency: "RWF" }, phone: "+250 722 900 114", ref: "MP260830.2211" });
+  return lines.sort((a, b) => b.at.localeCompare(a.at));
+}
+
+/** The two most recent cancellations' refunds wait for admin to approve them. */
+export function seedPendingRefunds(bookings: Booking[], payments: PaymentRecord[]): PaymentRecord[] {
+  return bookings
+    .filter((b) => b.status === "cancelled" && b.refund && b.refund.minor > 0)
+    .sort((a, b) => b.startDate.localeCompare(a.startDate))
+    .slice(0, 2)
+    .map((b, i) => ({
+      id: `pmt_refund_${i + 1}`,
+      bookingId: b.id,
+      rail: payments.find((p) => p.bookingId === b.id)?.rail ?? "card",
+      kind: "refund" as const,
+      amount: { ...b.refund! },
+      status: "pending" as const,
+      at: b.timeline?.find((e) => e.kind === "cancelled")?.at ?? new Date().toISOString(),
+    }));
 }

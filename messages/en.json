@@ -2090,6 +2090,91 @@
       "assignTo": "Give to",
       "assigned": "Job given",
       "nobody": "Nobody"
+    },
+    "finance": {
+      "title": "Finance",
+      "body": "Money in, money out, and money held for someone else. Every action here is recorded in the audit log.",
+      "tabs": {
+        "revenue": "Revenue",
+        "payments": "Payments",
+        "reconciliation": "Reconciliation",
+        "refunds": "Refunds",
+        "deposits": "Deposits held",
+        "payouts": "Payouts",
+        "invoices": "Invoices"
+      },
+      "revenueTitle": "Revenue by month, francs (thousands)",
+      "lane": "Lane",
+      "lanes": {
+        "stay": "Stays and renting",
+        "car": "Cars",
+        "experience": "Days out"
+      },
+      "total": "Total",
+      "revenueNote": "Bookings placed in each month, less refunds, converted to francs at today's rate.",
+      "allRails": "Every rail",
+      "allStates": "Every state",
+      "pay": {
+        "succeeded": "Received",
+        "pending": "Pending",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "when": "When",
+      "booking": "Booking",
+      "rail": "Rail",
+      "kind": "For",
+      "amount": "Amount",
+      "state": "State",
+      "none": "Nothing here.",
+      "reconcileSummary": "{matched} matched · {suggested} suggested · {unmatched} need a person",
+      "statementLine": "Statement line",
+      "payment": "Our payment",
+      "rec": {
+        "matched": "Matched",
+        "suggested": "Suggested",
+        "unmatched": "Unmatched"
+      },
+      "needsPerson": "Needs a person",
+      "match": "Match",
+      "matched": "Matched",
+      "guest": "Guest",
+      "refund": {
+        "awaiting": "Awaiting approval",
+        "paid": "Paid",
+        "other": "Other"
+      },
+      "approve": "Approve",
+      "approved": "Refund approved and sent",
+      "rentingDeposits": "Renting deposits",
+      "endsOn": "ends {date}",
+      "moveOutOn": "move-out {date}",
+      "escrow": "Escrow on stays",
+      "escrowNote": "Held until the guest checks in, then released to the home automatically.",
+      "arrives": "Arrives",
+      "payee": "Payee",
+      "releaseOn": "Releases",
+      "payout": {
+        "held": "Held until check-in",
+        "due": "Due",
+        "paid": "Paid"
+      },
+      "markPaid": "Mark paid",
+      "paidDone": "Payout marked paid",
+      "issued": "Issued",
+      "receipt": "Receipt",
+      "keep": "Keep for repairs ({currency})",
+      "reason": "Reason",
+      "reasonPlaceholder": "Repaint the hallway wall",
+      "release": "Return the deposit",
+      "reasonNeeded": "Anything kept needs a reason the tenant can read.",
+      "confirmTitle": "Send this to the tenant?",
+      "confirmBody": "This is what they will read, word for word.",
+      "back": "Back",
+      "send": "Return and send",
+      "released": "Deposit returned; the tenant has been told",
+      "sentenceKept": "We are returning {back} of your {deposit} deposit. We kept {kept} for: {reason}.",
+      "sentenceFull": "We are returning your {deposit} deposit in full."
     }
   },
   "account": {

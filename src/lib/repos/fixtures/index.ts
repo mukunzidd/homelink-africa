@@ -22,7 +22,7 @@ import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
 import { availability, makeBookings, makeTrips } from "./bookings";
-import { MESSAGE_LIMITS, type IncidentsRepo, type PartnersRepo, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
+import { MESSAGE_LIMITS, type IncidentsRepo, type FinanceRepo, type PartnersRepo, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
 import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
@@ -860,6 +860,57 @@ function jobsOf(): PartnerJob[] {
     .sort((a, b) => a.start.localeCompare(b.start));
 }
 
+const finance: FinanceRepo = {
+  async payments(filter = {}) {
+    return store()
+      .payments.filter((p) => p.kind !== "refund" && (!filter.rail || p.rail === filter.rail) && (!filter.status || p.status === filter.status))
+      .sort((a, b) => b.at.localeCompare(a.at));
+  },
+  async refunds() {
+    return store().payments.filter((p) => p.kind === "refund").sort((a, b) => b.at.localeCompare(a.at));
+  },
+  async approveRefund(id, by) {
+    const r = store().payments.find((p) => p.id === id && p.kind === "refund");
+    if (!r || r.status !== "pending") throw new Error("Nothing to approve");
+    r.status = "succeeded";
+    recordAudit({ actor: by, action: "refund.approve", target: id, detail: `${r.amount.minor} ${r.amount.currency}` });
+  },
+  async statement() {
+    return { lines: [...store().statement].sort((a, b) => b.at.localeCompare(a.at)) };
+  },
+  async reconcile(lineId, paymentId, by) {
+    const s = store();
+    const line = s.statement.find((l) => l.id === lineId);
+    const p = s.payments.find((x) => x.id === paymentId);
+    if (!line || line.paymentId) throw new Error("No open line");
+    if (!p || p.rail !== "mobileMoney" || p.amount.currency !== line.amount.currency || p.amount.minor !== line.amount.minor) throw new Error("Not this payment");
+    if (s.statement.some((l) => l.paymentId === paymentId)) throw new Error("Already matched");
+    line.paymentId = paymentId;
+    recordAudit({ actor: by, action: "payment.reconcile", target: paymentId, detail: line.ref });
+  },
+  async releaseDeposit(bookingId, deductions, reason, by) {
+    const b = store().bookings.find((x) => x.id === bookingId);
+    const deposit = b?.lines?.find((l) => l.key === "deposit")?.amount;
+    if (!b || b.stayMode !== "lease" || !deposit) throw new Error("No deposit held");
+    if (store().payments.some((p) => p.bookingId === b.id && p.kind === "refund" && p.status !== "failed")) throw new Error("Already returned");
+    if (deductions.currency !== deposit.currency || !Number.isInteger(deductions.minor) || deductions.minor < 0 || deductions.minor > deposit.minor) throw new Error("Bad deductions");
+    if (deductions.minor > 0 && !reason.trim()) throw new Error("A deduction needs a reason");
+    const at = new Date().toISOString();
+    store().payments.push({ id: nextId("pmt"), bookingId: b.id, rail: "bankTransfer", kind: "refund", amount: money(deposit.minor - deductions.minor, deposit.currency), status: "succeeded", at });
+    if (b.moveOut) b.moveOut = { ...b.moveOut, status: "returned", returnedAt: at };
+    recordAudit({ actor: by, action: "deposit.release", target: b.id, detail: `less ${deductions.minor} ${deductions.currency}${reason.trim() ? `: ${reason.trim().slice(0, 300)}` : ""}` });
+  },
+  async payouts() {
+    return [...store().payouts].sort((a, b) => a.releaseOn.localeCompare(b.releaseOn));
+  },
+  async markPayoutPaid(id, by) {
+    const p = store().payouts.find((x) => x.id === id);
+    if (!p || p.status !== "due") throw new Error("Not due");
+    p.status = "paid";
+    recordAudit({ actor: by, action: "payout.paid", target: id, detail: `${p.amount.minor} ${p.amount.currency} to ${p.payee}` });
+  },
+};
+
 const partners: PartnersRepo = {
   async list() {
     return [...store().partners].sort((a, b) => a.role.localeCompare(b.role) || a.name.localeCompare(b.name));
@@ -996,6 +1047,7 @@ export const fixtureRepositories: Repositories = {
   work,
   rates,
   partners,
+  finance,
   trips,
   messaging,
   ops,
