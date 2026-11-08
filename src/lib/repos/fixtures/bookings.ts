@@ -210,6 +210,29 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       }
       if (!Number.isInteger(draft.party) || draft.party < 1) return { ok: false, reason: "invalid" };
 
+      // A long-term stay's term is the server's to decide, not the URL's: a
+      // 12- or 24-month term, starting on the 1st of a month the home is free,
+      // with the application saying the same thing as the dates.
+      if (draft.flow === "rent") {
+        const terms = supply.kind === "stay" ? supply.item.leaseTerms : undefined;
+        const months = monthsBetween(draft.start, draft.end);
+        const freeFrom = terms ? `${terms.availableFrom.slice(0, 7)}-01` : "";
+        const firstFree = terms && terms.availableFrom !== freeFrom ? `${addDays(freeFrom, 32).slice(0, 7)}-01` : freeFrom;
+        if (
+          supply.kind !== "stay" ||
+          !supply.item.monthlyRate ||
+          !terms ||
+          !draft.start.endsWith("-01") ||
+          draft.end.slice(8) !== "01" ||
+          (months !== 12 && months !== 24) ||
+          draft.start < firstFree ||
+          draft.application?.moveIn !== draft.start ||
+          draft.application?.months !== months
+        ) {
+          return { ok: false, reason: "invalid" };
+        }
+      }
+
       // Every step before pay, checked again here: the browser's say-so is not enough.
       const people: PeopleRules | undefined =
         supply.kind === "experience"

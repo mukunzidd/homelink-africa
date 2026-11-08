@@ -167,3 +167,55 @@ describe("bookings.cancel: permits", () => {
     expect(c.refund!.minor).toBe(total.minor - trek.permitShare!.minor * 2);
   });
 });
+
+describe("bookings.place: renting terms are the server's to decide", () => {
+  beforeEach(() => resetStore());
+  const home = () => store().listings.find((l) => l.monthlyRate && l.leaseTerms)!;
+  const firstFree = () => {
+    const from = home().leaseTerms!.availableFrom;
+    const first = `${from.slice(0, 7)}-01`;
+    const next = addDays(first, 32).slice(0, 7) + "-01";
+    return from === first ? first : next;
+  };
+  function rentDraft(start: string, end: string, months = 12) {
+    let d = newDraft({ flow: "rent", slug: home().slug, start, end, party: 1 }, new Date());
+    d = draftReducer(d, { type: "guest", value: { name: "Ange Uwase", email: "ange@example.rw", phone: "0788123456" } });
+    d = draftReducer(d, { type: "application", value: { occupants: 1, employer: "UR", incomeBand: "1mTo2m", moveIn: start, months } });
+    d = draftReducer(d, { type: "acceptRules", value: true });
+    d = draftReducer(d, { type: "sign", signedName: "Ange Uwase", at: new Date().toISOString() });
+    return d;
+  }
+  const total = (months: number) => ({ ...home().monthlyRate!, minor: home().monthlyRate!.minor * (1 + home().leaseTerms!.depositMonths) });
+  const addMonthsIso = (d: string, m: number) => {
+    const [y, mo] = d.split("-").map(Number);
+    const n = y * 12 + (mo - 1) + m;
+    return `${Math.floor(n / 12)}-${String((n % 12) + 1).padStart(2, "0")}-01`;
+  };
+
+  it("takes a 12-month term starting on the 1st of a free month", async () => {
+    const s = firstFree();
+    expect((await repos.bookings.place({ draft: rentDraft(s, addMonthsIso(s, 12)), clientTotal: total(12), payment })).ok).toBe(true);
+  });
+
+  it("refuses a term that is not 12 or 24 months", async () => {
+    const s = firstFree();
+    const r = await repos.bookings.place({ draft: rentDraft(s, addMonthsIso(s, 3), 3), clientTotal: total(3), payment });
+    expect(r).toMatchObject({ ok: false, reason: "invalid" });
+  });
+
+  it("refuses a move-in that is not the 1st, or before the home is free", async () => {
+    const s = firstFree();
+    const mid = addDays(s, 9);
+    expect(await repos.bookings.place({ draft: rentDraft(mid, addDays(mid, 365)), clientTotal: total(12), payment })).toMatchObject({ ok: false, reason: "invalid" });
+    const early = addMonthsIso(s, -1) < kigaliDay() ? null : addMonthsIso(s, -1);
+    if (early && early < home().leaseTerms!.availableFrom) {
+      expect(await repos.bookings.place({ draft: rentDraft(early, addMonthsIso(early, 12)), clientTotal: total(12), payment })).toMatchObject({ ok: false, reason: "invalid" });
+    }
+  });
+
+  it("refuses an application that disagrees with the dates", async () => {
+    const s = firstFree();
+    const d = rentDraft(s, addMonthsIso(s, 12), 24);
+    expect(await repos.bookings.place({ draft: d, clientTotal: total(12), payment })).toMatchObject({ ok: false, reason: "invalid" });
+  });
+});

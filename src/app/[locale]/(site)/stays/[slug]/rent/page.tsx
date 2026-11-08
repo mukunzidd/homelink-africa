@@ -37,7 +37,11 @@ export default async function RentHome({
   const sp = await searchParams;
   const moveIn = isIsoDate(sp.moveIn) ? sp.moveIn : null;
   const months = sp.months === "24" ? 24 : 12;
-  if (!moveIn || moveIn < kigaliDay() || moveIn < listing.leaseTerms.availableFrom.slice(0, 7) + "-01") {
+  // The same rule the server applies when the booking is placed: the 1st of
+  // a month the home is free in, and not in the past.
+  const freeFrom = `${listing.leaseTerms.availableFrom.slice(0, 7)}-01`;
+  const firstFree = listing.leaseTerms.availableFrom === freeFrom ? freeFrom : addMonths(freeFrom, 1);
+  if (!moveIn || !moveIn.endsWith("-01") || moveIn < kigaliDay() || moveIn < firstFree) {
     redirect(`/${locale}/stays/${slug}?band=long`);
   }
   const end = addMonths(moveIn, months);
