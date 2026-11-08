@@ -119,13 +119,18 @@ export function createMeiliEngine(opts: {
     throw new Error(`Meilisearch task ${taskUid} did not finish`);
   }
 
+  // Builds run one after another, never side by side: two overlapping
+  // refreshes could otherwise post an older set of documents after a newer
+  // one and bring back a home that was just taken down. `generation`
+  // counts refresh requests; only the build for the latest one may say the
+  // index is fresh again.
   let ready: Promise<void> | null = null;
-  // Set when the documents may be out of date (a refresh was asked for and
-  // has not finished). Until it clears, every rebuild deletes first:
-  // re-posting alone would leave a home that was taken down findable.
+  let chain: Promise<void> = Promise.resolve();
+  let generation = 0;
   let stale = false;
-  function ensureIndex(): Promise<void> {
-    ready ??= (async () => {
+
+  function build(clearFirst: boolean, mine: number): Promise<void> {
+    const run = chain.then(async () => {
       const created = await call("/indexes", {
         method: "POST",
         body: JSON.stringify({ uid: INDEX, primaryKey: "id" }),
@@ -135,18 +140,25 @@ export function createMeiliEngine(opts: {
         method: "PATCH",
         body: JSON.stringify(SETTINGS),
       });
-      if (stale) {
+      if (clearFirst) {
         const cleared = await call(`/indexes/${INDEX}/documents`, { method: "DELETE" });
         if (cleared?.taskUid !== undefined) await waitFor(cleared.taskUid);
       }
+      // Loaded here, when this build's turn comes, so it reads the store as it is now.
       const docs = await call(`/indexes/${INDEX}/documents`, {
         method: "POST",
         body: JSON.stringify(await opts.load()),
       });
       await waitFor(settings.taskUid);
       await waitFor(docs.taskUid);
-      stale = false;
-    })().catch((err) => {
+      if (mine === generation) stale = false;
+    });
+    chain = run.catch(() => {});
+    return run;
+  }
+
+  function ensureIndex(): Promise<void> {
+    ready ??= build(stale, generation).catch((err) => {
       ready = null;
       throw err;
     });
@@ -159,8 +171,15 @@ export function createMeiliEngine(opts: {
     // down would stay findable. Clear the index's documents, then load again.
     async refresh() {
       stale = true;
-      ready = null;
-      await ensureIndex();
+      const mine = ++generation;
+      const run = build(true, mine);
+      ready = run.catch((err) => {
+        if (mine === generation) ready = null;
+        throw err;
+      });
+      // A failed refresh with no search after it must not surface as an unhandled rejection.
+      ready.catch(() => {});
+      await run;
     },
     async search(q: EngineQuery): Promise<EngineHit[]> {
       await ensureIndex();

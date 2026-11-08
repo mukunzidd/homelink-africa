@@ -35,4 +35,27 @@ describe("Meilisearch refresh", () => {
     expect(del).toBeGreaterThanOrEqual(0);
     expect(del).toBeLessThan(post);
   });
+
+  it("lets the newest of two overlapping refreshes land last, cleared first", async () => {
+    const posted: string[] = [];
+    vi.stubGlobal("fetch", async (url: string, init?: RequestInit) => {
+      const path = url.replace("http://meili", "");
+      if (init?.method === "POST" && path.endsWith("/documents")) {
+        // The first load is slow, so without ordering it would land after the second.
+        if (String(init.body).includes("old")) await new Promise((r) => setTimeout(r, 40));
+        posted.push(String(init.body));
+      }
+      if (init?.method === "DELETE") posted.push("DELETE");
+      if (path.startsWith("/tasks/")) return Response.json({ status: "succeeded" });
+      return Response.json({ taskUid: 1, hits: [] });
+    });
+    let version = "old";
+    const engine = createMeiliEngine({ url: "http://meili", key: "k", load: async () => [{ id: version } as never] });
+    const first = engine.refresh();
+    version = "new";
+    const second = engine.refresh();
+    await Promise.all([first, second]);
+    expect(posted.at(-1)).toContain("new");
+    expect(posted.at(-2)).toBe("DELETE");
+  });
 });
