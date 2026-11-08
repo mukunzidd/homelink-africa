@@ -550,7 +550,15 @@
     "noThread": "No messages yet",
     "partOf": "Part of {name}",
     "notYours": "This screen belongs to someone else",
-    "notYoursBody": "Trips is where your own bookings live. If you supply something to HomeLink it is under Inventory, and if you are on the Kigali team it is under Queue."
+    "notYoursBody": "Trips is where your own bookings live. If you supply something to HomeLink it is under Inventory, and if you are on the Kigali team it is under Queue.",
+    "tabs": {
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "cancelled": "Cancelled"
+    },
+    "tabsLabel": "Which bookings",
+    "emptyPast": "Nothing here yet. Stays, hires and days out you've finished will be listed here, with a review to leave.",
+    "emptyCancelled": "No cancelled bookings."
   },
   "inventory": {
     "metaTitle": "Your inventory",
@@ -1386,6 +1394,36 @@
       "saved": "Saved",
       "notifications": "Notifications",
       "settings": "Settings"
+    },
+    "overview": {
+      "hello": "Hello, {name}",
+      "next": "Next up",
+      "inDays": "{count, plural, =0 {Today} one {Tomorrow} other {In # days}}",
+      "underway": "Under way",
+      "checkInReady": "Check-in details are ready",
+      "checkInSoon": "Check-in details unlock {date}",
+      "viewBooking": "View booking",
+      "message": "Message the team",
+      "nothing": "Nothing booked yet. Homes, cars and days out are all a search away.",
+      "find": "Find a stay",
+      "latest": "Latest",
+      "seeAll": "See all",
+      "shortcuts": "Your account",
+      "rentDue": "Rent of {amount} due {date}",
+      "viewingOn": "Viewing on {date} at {time}"
+    },
+    "payments": {
+      "title": "Payments",
+      "intro": "Everything you've paid and been refunded, with a receipt for each booking.",
+      "date": "Date",
+      "what": "For",
+      "method": "Method",
+      "status": "Status",
+      "amount": "Amount",
+      "receipt": "Receipt",
+      "empty": "No payments yet.",
+      "totalPaid": "Paid this year",
+      "totalRefunded": "Refunded"
     }
   },
   "notifications": {

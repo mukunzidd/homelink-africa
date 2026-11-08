@@ -550,7 +550,15 @@
     "noThread": "Nta butumwa buraboneka",
     "partOf": "Bijyanye na {name}",
     "notYours": "Iyi paji ni iy'undi muntu",
-    "notYoursBody": "Ingendo ni aho ibyo wowe wabitse biba. Niba utanga ikintu kuri HomeLink biri muri Ibyo ntanga, kandi niba uri mu itsinda ryo i Kigali biri mu Murongo."
+    "notYoursBody": "Ingendo ni aho ibyo wowe wabitse biba. Niba utanga ikintu kuri HomeLink biri muri Ibyo ntanga, kandi niba uri mu itsinda ryo i Kigali biri mu Murongo.",
+    "tabs": {
+      "upcoming": "Biri imbere",
+      "past": "Byarangiye",
+      "cancelled": "Byahagaritswe"
+    },
+    "tabsLabel": "Ibyafashwe ibihe",
+    "emptyPast": "Nta kirahari. Ibyo warangije bizagaragara hano, hamwe n'igitekerezo cyo gutanga.",
+    "emptyCancelled": "Nta byafashwe byahagaritswe."
   },
   "inventory": {
     "metaTitle": "Ibyo utanga",
@@ -1386,6 +1394,36 @@
       "saved": "Ibyabitswe",
       "notifications": "Imenyesha",
       "settings": "Igenamiterere"
+    },
+    "overview": {
+      "hello": "Muraho, {name}",
+      "next": "Ibikurikira",
+      "inDays": "{count, plural, =0 {Uyu munsi} one {Ejo} other {Mu minsi #}}",
+      "underway": "Birakomeje",
+      "checkInReady": "Amakuru yo kwinjira yateguwe",
+      "checkInSoon": "Amakuru yo kwinjira azaboneka {date}",
+      "viewBooking": "Reba ibyafashwe",
+      "message": "Andikira itsinda",
+      "nothing": "Nta kirafatwa. Amazu, imodoka n'ingendo biri ku ishakisha rimwe.",
+      "find": "Shaka aho kuraramo",
+      "latest": "Ibiheruka",
+      "seeAll": "Reba byose",
+      "shortcuts": "Konti yawe",
+      "rentDue": "Ubukode bwa {amount} bwishyurwa {date}",
+      "viewingOn": "Gusura ku wa {date} saa {time}"
+    },
+    "payments": {
+      "title": "Ubwishyu",
+      "intro": "Ibyo wishyuye byose n'ibyo wasubijwe, hamwe n'inyemezabwishyu kuri buri cyafashwe.",
+      "date": "Itariki",
+      "what": "Kuri",
+      "method": "Uburyo",
+      "status": "Uko bimeze",
+      "amount": "Amafaranga",
+      "receipt": "Inyemezabwishyu",
+      "empty": "Nta bwishyu buraba.",
+      "totalPaid": "Byishyuwe uyu mwaka",
+      "totalRefunded": "Byasubijwe"
     }
   },
   "notifications": {

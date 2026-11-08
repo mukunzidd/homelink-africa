@@ -550,7 +550,15 @@
     "noThread": "Bado hakuna ujumbe",
     "partOf": "Sehemu ya {name}",
     "notYours": "Ukurasa huu ni wa mtu mwingine",
-    "notYoursBody": "Safari ni mahali uhifadhi wako mwenyewe ulipo. Kama unatoa huduma kwa HomeLink, angalia Bidhaa zako, na kama uko kwenye timu ya Kigali, angalia Foleni."
+    "notYoursBody": "Safari ni mahali uhifadhi wako mwenyewe ulipo. Kama unatoa huduma kwa HomeLink, angalia Bidhaa zako, na kama uko kwenye timu ya Kigali, angalia Foleni.",
+    "tabs": {
+      "upcoming": "Zijazo",
+      "past": "Zilizopita",
+      "cancelled": "Zilizoghairiwa"
+    },
+    "tabsLabel": "Uhifadhi upi",
+    "emptyPast": "Bado hakuna kitu. Ulichomaliza kitaonekana hapa, pamoja na maoni ya kuacha.",
+    "emptyCancelled": "Hakuna uhifadhi uliofutwa."
   },
   "inventory": {
     "metaTitle": "Bidhaa zako",
@@ -1386,6 +1394,36 @@
       "saved": "Vilivyohifadhiwa",
       "notifications": "Arifa",
       "settings": "Mipangilio"
+    },
+    "overview": {
+      "hello": "Habari, {name}",
+      "next": "Kinachofuata",
+      "inDays": "{count, plural, =0 {Leo} one {Kesho} other {Baada ya siku #}}",
+      "underway": "Inaendelea",
+      "checkInReady": "Maelezo ya kuingia yako tayari",
+      "checkInSoon": "Maelezo ya kuingia yatapatikana {date}",
+      "viewBooking": "Angalia uhifadhi",
+      "message": "Tuma ujumbe kwa timu",
+      "nothing": "Bado hakuna uhifadhi. Nyumba, magari na matembezi yako umbali wa utafutaji mmoja.",
+      "find": "Tafuta malazi",
+      "latest": "Za karibuni",
+      "seeAll": "Ona zote",
+      "shortcuts": "Akaunti yako",
+      "rentDue": "Kodi ya {amount} inadaiwa {date}",
+      "viewingOn": "Kutazama tarehe {date} saa {time}"
+    },
+    "payments": {
+      "title": "Malipo",
+      "intro": "Kila ulicholipa na kurudishiwa, na risiti kwa kila uhifadhi.",
+      "date": "Tarehe",
+      "what": "Kwa",
+      "method": "Njia",
+      "status": "Hali",
+      "amount": "Kiasi",
+      "receipt": "Risiti",
+      "empty": "Bado hakuna malipo.",
+      "totalPaid": "Imelipwa mwaka huu",
+      "totalRefunded": "Imerudishwa"
     }
   },
   "notifications": {

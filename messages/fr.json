@@ -550,7 +550,15 @@
     "noThread": "Aucun message",
     "partOf": "Fait partie de {name}",
     "notYours": "Cet écran est celui de quelqu'un d'autre",
-    "notYoursBody": "Voyages regroupe vos propres réservations. Si vous proposez quelque chose à HomeLink, c'est dans Mon offre ; si vous êtes de l'équipe de Kigali, c'est dans La file."
+    "notYoursBody": "Voyages regroupe vos propres réservations. Si vous proposez quelque chose à HomeLink, c'est dans Mon offre ; si vous êtes de l'équipe de Kigali, c'est dans La file.",
+    "tabs": {
+      "upcoming": "À venir",
+      "past": "Passés",
+      "cancelled": "Annulés"
+    },
+    "tabsLabel": "Quelles réservations",
+    "emptyPast": "Rien pour l'instant. Vos séjours, locations et sorties terminés apparaîtront ici, avec un avis à laisser.",
+    "emptyCancelled": "Aucune réservation annulée."
   },
   "inventory": {
     "metaTitle": "Votre offre",
@@ -1386,6 +1394,36 @@
       "saved": "Favoris",
       "notifications": "Notifications",
       "settings": "Paramètres"
+    },
+    "overview": {
+      "hello": "Bonjour, {name}",
+      "next": "À venir",
+      "inDays": "{count, plural, =0 {Aujourd'hui} one {Demain} other {Dans # jours}}",
+      "underway": "En cours",
+      "checkInReady": "Les infos d'arrivée sont prêtes",
+      "checkInSoon": "Les infos d'arrivée seront disponibles le {date}",
+      "viewBooking": "Voir la réservation",
+      "message": "Écrire à l'équipe",
+      "nothing": "Rien de réservé pour l'instant. Logements, voitures et sorties sont à une recherche près.",
+      "find": "Trouver un séjour",
+      "latest": "Dernières nouvelles",
+      "seeAll": "Tout voir",
+      "shortcuts": "Votre compte",
+      "rentDue": "Loyer de {amount} à payer le {date}",
+      "viewingOn": "Visite le {date} à {time}"
+    },
+    "payments": {
+      "title": "Paiements",
+      "intro": "Tout ce que vous avez payé et ce qui vous a été remboursé, avec un reçu par réservation.",
+      "date": "Date",
+      "what": "Pour",
+      "method": "Moyen",
+      "status": "Statut",
+      "amount": "Montant",
+      "receipt": "Reçu",
+      "empty": "Aucun paiement pour l'instant.",
+      "totalPaid": "Payé cette année",
+      "totalRefunded": "Remboursé"
     }
   },
   "notifications": {
