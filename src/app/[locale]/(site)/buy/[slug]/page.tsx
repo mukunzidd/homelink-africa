@@ -181,7 +181,7 @@ export default async function SaleDetailPage({ params }: { params: Promise<{ loc
         </div>
 
         <aside id="enquire" className="scroll-mt-[calc(var(--header-offset)+1rem)] lg:sticky lg:top-24">
-          <EnquiryPanel price={home.price} perSqm={perSqm} />
+          <EnquiryPanel price={home.price} perSqm={perSqm} slug={home.slug} />
         </aside>
       </div>
 

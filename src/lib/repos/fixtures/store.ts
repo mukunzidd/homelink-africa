@@ -15,6 +15,7 @@ import type {
   Role,
   Trip,
   Vehicle,
+  Viewing,
   VerificationTask,
 } from "@/lib/domain/types";
 import {
@@ -69,6 +70,7 @@ export type FixtureStore = {
   notifications: AppNotification[];
   payments: PaymentRecord[];
   blocks: Block[];
+  viewings: Viewing[];
   /** Filled lazily from the catalog's defaults the first time a role asks. */
   prefs: Partial<Record<Role, NotificationPrefs>>;
   audit: AuditEntry[];
@@ -98,6 +100,7 @@ function seed(): FixtureStore {
     notifications: seedNotifications(now),
     payments: seedPayments(fixed.bookings),
     blocks: seedBlocks(now),
+    viewings: [],
     prefs: {},
   };
 }
@@ -109,7 +112,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 3;
+const SHAPE = 4;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {

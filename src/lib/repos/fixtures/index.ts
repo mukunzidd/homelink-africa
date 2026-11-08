@@ -17,6 +17,7 @@ import { convert } from "@/lib/domain/money";
 import { FX_RATES } from "./data";
 import { nextId, recordAudit, store } from "./store";
 import { availability, makeBookings } from "./bookings";
+import type { ViewingsRepo } from "@/lib/repos/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
 /**
@@ -407,6 +408,32 @@ const audit: AuditRepo = {
 
 const bookings = makeBookings(notifications);
 
+const viewings: ViewingsRepo = {
+  async create(v) {
+    const made = { ...v, id: nextId("vwg"), status: "requested" as const, createdAt: new Date().toISOString() };
+    store().viewings.push(made);
+    return made;
+  },
+  async forCurrentUser() {
+    return [...store().viewings].sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`));
+  },
+  async all() {
+    return viewings.forCurrentUser();
+  },
+  async taken(saleId) {
+    return store()
+      .viewings.filter((v) => v.saleId === saleId && v.status !== "cancelled")
+      .map((v) => ({ date: v.date, time: v.time }));
+  },
+  async setStatus(id, status, move) {
+    const v = store().viewings.find((x) => x.id === id);
+    if (!v) throw new Error(`No viewing ${id}`);
+    v.status = status;
+    if (move) Object.assign(v, move);
+    return v;
+  },
+};
+
 export const fixtureRepositories: Repositories = {
   stays,
   sales,
@@ -414,6 +441,7 @@ export const fixtureRepositories: Repositories = {
   experiences,
   bookings,
   availability,
+  viewings,
   trips,
   messaging,
   ops,

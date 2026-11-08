@@ -1840,6 +1840,30 @@
       "stageDeposit": "Deposit returned when you move out",
       "stageDepositWhen": "Less any damage, itemised in writing",
       "facts": "{count, plural, one {# month} other {# months}} from {month}"
+    },
+    "viewing": {
+      "title": "Book a viewing",
+      "intro": "Someone from the Kigali team shows you round and answers questions about the title, the area and the price. Nothing is charged.",
+      "how": "How would you like to see it?",
+      "inPerson": "In person",
+      "inPersonBody": "Meet us at the gate. About 45 minutes.",
+      "video": "By video",
+      "videoBody": "A live walk-through from wherever you are. We send the link the day before.",
+      "day": "Day",
+      "time": "Time (Kigali)",
+      "timeError": "Choose a time.",
+      "contact": "Your details",
+      "notes": "Anything you'd like us to prepare?",
+      "notesPlaceholder": "Questions about the title, a second visit with a surveyor…",
+      "submit": "Request this viewing",
+      "sending": "Sending…",
+      "doneTitle": "Viewing requested",
+      "doneBody": "{date} at {time}. The Kigali team confirms by message within a few hours.",
+      "bringPerson": "Bring an ID; the guard at the gate will ask for it.",
+      "bringVideo": "We send the video link by email and WhatsApp the day before.",
+      "seeViewings": "See your viewings",
+      "back": "Back to the home",
+      "button": "Book a viewing"
     }
   },
   "files": {

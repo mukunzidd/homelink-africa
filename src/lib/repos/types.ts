@@ -8,6 +8,7 @@ import type {
   PaymentRecord,
   PaymentRail,
   ServiceKind,
+  Viewing,
   NotificationCategory,
   NotificationPrefs,
   Booking,
@@ -273,6 +274,15 @@ export interface AuditRepo {
   list(filter?: { actor?: Role; action?: string; from?: string; to?: string }): Promise<AuditEntry[]>;
 }
 
+export interface ViewingsRepo {
+  create(v: Omit<Viewing, "id" | "status" | "createdAt">): Promise<Viewing>;
+  forCurrentUser(): Promise<Viewing[]>;
+  all(): Promise<Viewing[]>;
+  /** Slots already taken for one home, so nobody is offered them. */
+  taken(saleId: string): Promise<{ date: string; time: string }[]>;
+  setStatus(id: string, status: Viewing["status"], move?: { date: string; time: string }): Promise<Viewing>;
+}
+
 export type Repositories = {
   stays: StaysRepo;
   sales: SalesRepo;
@@ -280,6 +290,7 @@ export type Repositories = {
   experiences: ExperiencesRepo;
   bookings: BookingRepo;
   availability: AvailabilityRepo;
+  viewings: ViewingsRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;

@@ -1840,6 +1840,30 @@
       "stageDeposit": "Caution restituée à votre départ",
       "stageDepositWhen": "Moins les éventuels dégâts, détaillés par écrit",
       "facts": "{count, plural, one {# mois} other {# mois}} à partir de {month}"
+    },
+    "viewing": {
+      "title": "Réserver une visite",
+      "intro": "Un membre de l'équipe de Kigali vous fait visiter et répond à vos questions sur le titre, le quartier et le prix. Rien n'est débité.",
+      "how": "Comment souhaitez-vous visiter ?",
+      "inPerson": "Sur place",
+      "inPersonBody": "Rendez-vous au portail. Environ 45 minutes.",
+      "video": "En vidéo",
+      "videoBody": "Une visite en direct où que vous soyez. Nous envoyons le lien la veille.",
+      "day": "Jour",
+      "time": "Heure (Kigali)",
+      "timeError": "Choisissez une heure.",
+      "contact": "Vos coordonnées",
+      "notes": "Quelque chose à préparer pour vous ?",
+      "notesPlaceholder": "Questions sur le titre, une seconde visite avec un géomètre…",
+      "submit": "Demander cette visite",
+      "sending": "Envoi…",
+      "doneTitle": "Visite demandée",
+      "doneBody": "Le {date} à {time}. L'équipe de Kigali confirme par message sous quelques heures.",
+      "bringPerson": "Apportez une pièce d'identité ; le gardien la demandera.",
+      "bringVideo": "Nous envoyons le lien vidéo par e-mail et WhatsApp la veille.",
+      "seeViewings": "Voir vos visites",
+      "back": "Retour au logement",
+      "button": "Réserver une visite"
     }
   },
   "files": {

@@ -1840,6 +1840,30 @@
       "stageDeposit": "Ingwate isubizwa iyo uvuyemo",
       "stageDepositWhen": "Havanywemo ibyangiritse, byanditswe kimwe kimwe",
       "facts": "{count, plural, one {Ukwezi #} other {Amezi #}} guhera muri {month}"
+    },
+    "viewing": {
+      "title": "Saba gusura",
+      "intro": "Umuntu wo mu itsinda rya Kigali azakuzengurutsa kandi asubize ibibazo ku cyangombwa cy'ubutaka, agace n'igiciro. Nta kwishyura.",
+      "how": "Wifuza kuyireba ute?",
+      "inPerson": "Imbonankubone",
+      "inPersonBody": "Duhurira ku irembo. Hafi iminota 45.",
+      "video": "Kuri videwo",
+      "videoBody": "Kuzenguruka imbonankubone aho uri hose. Tukoherereza link umunsi ubanziriza.",
+      "day": "Umunsi",
+      "time": "Isaha (Kigali)",
+      "timeError": "Hitamo isaha.",
+      "contact": "Amakuru yawe",
+      "notes": "Hari icyo wifuza ko dutegura?",
+      "notesPlaceholder": "Ibibazo ku cyangombwa, gusura ubwa kabiri hamwe n'umupimisha…",
+      "submit": "Saba uku gusura",
+      "sending": "Birimo koherezwa…",
+      "doneTitle": "Gusura byasabwe",
+      "doneBody": "{date} saa {time}. Itsinda rya Kigali riremeza mu butumwa mu masaha make.",
+      "bringPerson": "Uzane indangamuntu; umuzamu ku irembo azayigusaba.",
+      "bringVideo": "Twohereza link ya videwo kuri imeyili na WhatsApp umunsi ubanziriza.",
+      "seeViewings": "Reba gusura kwawe",
+      "back": "Subira ku nzu",
+      "button": "Saba gusura"
     }
   },
   "files": {

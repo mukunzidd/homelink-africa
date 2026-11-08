@@ -1840,6 +1840,30 @@
       "stageDeposit": "Amana inarudishwa unapohama",
       "stageDepositWhen": "Ukiondoa uharibifu wowote, ulioorodheshwa kwa maandishi",
       "facts": "{count, plural, one {Mwezi #} other {Miezi #}} kuanzia {month}"
+    },
+    "viewing": {
+      "title": "Panga kutazama",
+      "intro": "Mtu wa timu ya Kigali atakuonyesha nyumba na kujibu maswali kuhusu hati, eneo na bei. Hakuna malipo.",
+      "how": "Ungependa kuiona vipi?",
+      "inPerson": "Ana kwa ana",
+      "inPersonBody": "Tukutane getini. Takriban dakika 45.",
+      "video": "Kwa video",
+      "videoBody": "Kuzunguka moja kwa moja popote ulipo. Tunatuma kiungo siku moja kabla.",
+      "day": "Siku",
+      "time": "Saa (Kigali)",
+      "timeError": "Chagua saa.",
+      "contact": "Maelezo yako",
+      "notes": "Kuna chochote ungependa tuandae?",
+      "notesPlaceholder": "Maswali kuhusu hati, ziara ya pili na mpimaji…",
+      "submit": "Omba kutazama huku",
+      "sending": "Inatuma…",
+      "doneTitle": "Kutazama kumeombwa",
+      "doneBody": "{date} saa {time}. Timu ya Kigali itathibitisha kwa ujumbe ndani ya saa chache.",
+      "bringPerson": "Leta kitambulisho; mlinzi wa getini atakiomba.",
+      "bringVideo": "Tunatuma kiungo cha video kwa barua pepe na WhatsApp siku moja kabla.",
+      "seeViewings": "Ona ziara zako",
+      "back": "Rudi kwenye nyumba",
+      "button": "Panga kutazama"
     }
   },
   "files": {

@@ -521,3 +521,17 @@ export type RentApplication = {
 };
 
 export type PaymentRail = "card" | "mobileMoney" | "bankTransfer";
+
+/** A request to see a home for sale, in person or by video. */
+export type Viewing = {
+  id: string;
+  saleId: string;
+  mode: "inPerson" | "video";
+  date: string;
+  /** "HH:MM", Kigali. */
+  time: string;
+  contact: GuestDetails;
+  notes?: string;
+  status: "requested" | "confirmed" | "rescheduled" | "done" | "cancelled";
+  createdAt: string;
+};
