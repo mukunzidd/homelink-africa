@@ -125,7 +125,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 6;
+const SHAPE = 7;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {

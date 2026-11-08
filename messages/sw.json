@@ -875,7 +875,8 @@
     "placeholderLane": {
       "cars": "Jaribu “automatiki kwa wikendi”",
       "experiences": "Jaribu “sokwe wiki ijayo kwa watu 2”"
-    }
+    },
+    "groupBookings": "Uhifadhi"
   },
   "saved": {
     "title": "Vilivyohifadhiwa",
@@ -1405,7 +1406,120 @@
       "openIncidents": "Matukio yaliyo wazi",
       "seeAll": "Ona zote",
       "nights": "{count, plural, one {usiku #} other {usiku #}}"
-    }
+    },
+    "bookings": {
+      "title": "Uhifadhi",
+      "description": "{count, plural, one {Uhifadhi #} other {Uhifadhi #}}",
+      "search": "Tafuta",
+      "searchPlaceholder": "Namba ya uhifadhi, jina au barua pepe ya mgeni, au nyumba",
+      "all": "Zote",
+      "lane": "Aina",
+      "lanes": {
+        "stay": "Malazi",
+        "car": "Magari",
+        "experience": "Matembezi"
+      },
+      "from": "Kuanzia",
+      "to": "Hadi",
+      "apply": "Tumia",
+      "clear": "Futa",
+      "colReference": "Namba",
+      "colGuest": "Mgeni",
+      "colWhat": "Nini",
+      "colDates": "Tarehe",
+      "colStatus": "Hali",
+      "colTotal": "Jumla",
+      "colPaid": "Malipo",
+      "colEscrow": "Escrow",
+      "escrowHeld": "Escrow imeshikiliwa",
+      "paid": {
+        "paid": "Imelipwa",
+        "part": "Amana imelipwa",
+        "refunded": "Imerejeshwa",
+        "none": "Haijalipwa"
+      },
+      "empty": "Bado hakuna uhifadhi.",
+      "emptyFiltered": "Hakuna uhifadhi unaolingana na vichujio hivi.",
+      "pages": "Kurasa",
+      "pageOf": "Ukurasa {page} kati ya {pages}",
+      "prev": "Uliotangulia",
+      "next": "Unaofuata",
+      "back": "Uhifadhi wote",
+      "guest": "Mgeni",
+      "email": "Barua pepe",
+      "phone": "Simu",
+      "arrival": "Saa ya kuwasili",
+      "purpose": "Lengo la safari",
+      "purposes": {
+        "work": "Kazi",
+        "leisure": "Mapumziko"
+      },
+      "requests": "Maombi",
+      "price": "Bei",
+      "payments": "Malipo",
+      "noPayments": "Bado hakuna malipo.",
+      "timeline": "Historia",
+      "kinds": {
+        "full": "Malipo",
+        "deposit": "Amana",
+        "balance": "Salio",
+        "rent": "Kodi",
+        "change": "Mabadiliko ya tarehe",
+        "refund": "Marejesho"
+      },
+      "rails": {
+        "card": "Kadi",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Uhamisho wa benki"
+      },
+      "payStatus": {
+        "pending": "Inasubiri",
+        "succeeded": "Imefaulu",
+        "failed": "Imeshindwa",
+        "refunded": "Imerejeshwa"
+      },
+      "notes": "Maelezo ya timu",
+      "notesHint": "Timu pekee ndiyo inayoyaona.",
+      "notePlaceholder": "Anachopaswa kujua mtu anayefuata mapokezi",
+      "addNote": "Ongeza maelezo",
+      "related": "Yanayohusiana",
+      "thread": "Ujumbe na mgeni",
+      "noThread": "Bado hakuna ujumbe: fungua kikasha",
+      "incidents": "{count, plural, =0 {Hakuna tatizo lililoripotiwa} one {Tatizo # limeripotiwa} other {Matatizo # yameripotiwa}}",
+      "actions": "Vitendo",
+      "resend": "Tuma uthibitisho tena",
+      "resent": "Uthibitisho umetumwa tena kwa {name}",
+      "changeDates": "Badilisha tarehe",
+      "start": "Inaanza",
+      "end": "Inaisha",
+      "saveDates": "Hamisha uhifadhi",
+      "moved": "Imehamishwa. Tofauti ya bei: {amount}",
+      "unavailable": "Tarehe hizo zimechukuliwa.",
+      "invalid": "Tarehe hizo hazifai kwa uhifadhi huu.",
+      "changeParty": "Ongeza wageni",
+      "partySize": "Watu (hadi {max})",
+      "save": "Hifadhi",
+      "partySaved": "Idadi ya watu imebadilishwa",
+      "partyFailed": "Watu ni wengi mno, au uhifadhi umeshaanza.",
+      "refund": "Rejesha sehemu ya malipo",
+      "refundLeft": "Zimebaki {amount} zinazoweza kurejeshwa.",
+      "refundAmount": "Kiasi ({currency})",
+      "reason": "Sababu",
+      "refundReasonHint": "Atakachoambiwa mgeni",
+      "refundSubmit": "Rejesha",
+      "refunded": "{amount} zimerejeshwa",
+      "tooMuch": "Hicho ni zaidi ya kilichobaki kurejeshwa.",
+      "refundInvalid": "Angalia kiasi na utoe sababu.",
+      "cancel": "Ghairi uhifadhi",
+      "refundChoice": "Marejesho",
+      "cancelPolicy": "Kwa masharti: {amount}",
+      "cancelGoodwill": "Kwa nia njema: kila kilicholipwa, {amount}",
+      "confirmCancel": "Ghairi na urejeshe",
+      "cancelled": "Imeghairiwa. {amount} zimerejeshwa.",
+      "notAllowed": "Jukumu lako haliruhusu hilo."
+    },
+    "notFoundTitle": "Hakuna kitu hapa",
+    "notFoundBody": "Hakuna uhifadhi, nyumba wala ukurasa wenye anwani hii. Hakikisha namba imekamilika, au itafute kwa ⌘K."
   },
   "account": {
     "nav": {

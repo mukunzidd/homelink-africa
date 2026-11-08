@@ -875,7 +875,8 @@
     "placeholderLane": {
       "cars": "Gerageza « imodoka yikoresha mu mpera z'icyumweru »",
       "experiences": "Gerageza « ingagi icyumweru gitaha ku bantu 2 »"
-    }
+    },
+    "groupBookings": "Ibyafashwe"
   },
   "saved": {
     "title": "Ibyo wabitse",
@@ -1405,7 +1406,120 @@
       "openIncidents": "Ibibazo bifunguye",
       "seeAll": "Reba byose",
       "nights": "{count, plural, one {ijoro #} other {amajoro #}}"
-    }
+    },
+    "bookings": {
+      "title": "Ibyafashwe",
+      "description": "{count, plural, one {Icyafashwe #} other {Ibyafashwe #}}",
+      "search": "Shakisha",
+      "searchPlaceholder": "Nimero, izina cyangwa imeli y’umushyitsi, cyangwa inzu",
+      "all": "Byose",
+      "lane": "Ubwoko",
+      "lanes": {
+        "stay": "Amacumbi",
+        "car": "Imodoka",
+        "experience": "Ingendo"
+      },
+      "from": "Kuva",
+      "to": "Kugeza",
+      "apply": "Shyiraho",
+      "clear": "Siba",
+      "colReference": "Nimero",
+      "colGuest": "Umushyitsi",
+      "colWhat": "Icyo ari cyo",
+      "colDates": "Amatariki",
+      "colStatus": "Uko bihagaze",
+      "colTotal": "Igiteranyo",
+      "colPaid": "Kwishyura",
+      "colEscrow": "Amafaranga abitswe",
+      "escrowHeld": "Amafaranga arabitswe",
+      "paid": {
+        "paid": "Byishyuwe",
+        "part": "Avansi yishyuwe",
+        "refunded": "Byasubijwe",
+        "none": "Ntibirishyurwa"
+      },
+      "empty": "Nta byafashwe biraboneka.",
+      "emptyFiltered": "Nta cyafashwe gihuye n’ibi wahisemo.",
+      "pages": "Amapaji",
+      "pageOf": "Ipaji {page} kuri {pages}",
+      "prev": "Ibanza",
+      "next": "Ikurikira",
+      "back": "Ibyafashwe byose",
+      "guest": "Umushyitsi",
+      "email": "Imeli",
+      "phone": "Telefoni",
+      "arrival": "Isaha azagerera",
+      "purpose": "Impamvu y’urugendo",
+      "purposes": {
+        "work": "Akazi",
+        "leisure": "Kuruhuka"
+      },
+      "requests": "Ibyo yasabye",
+      "price": "Igiciro",
+      "payments": "Ubwishyu",
+      "noPayments": "Nta bwishyu buraboneka.",
+      "timeline": "Amateka",
+      "kinds": {
+        "full": "Ubwishyu",
+        "deposit": "Avansi",
+        "balance": "Asigaye",
+        "rent": "Ubukode",
+        "change": "Guhindura amatariki",
+        "refund": "Gusubizwa"
+      },
+      "rails": {
+        "card": "Ikarita",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Kohereza muri banki"
+      },
+      "payStatus": {
+        "pending": "Bitegerejwe",
+        "succeeded": "Byagenze neza",
+        "failed": "Byanze",
+        "refunded": "Byasubijwe"
+      },
+      "notes": "Inyandiko z’ikipe",
+      "notesHint": "Ikipe yonyine ni yo izibona.",
+      "notePlaceholder": "Icyo ukurikiraho ku kazi akwiye kumenya",
+      "addNote": "Ongeraho inyandiko",
+      "related": "Bifitanye isano",
+      "thread": "Ubutumwa n’umushyitsi",
+      "noThread": "Nta butumwa buraboneka: fungura ubutumwa",
+      "incidents": "{count, plural, =0 {Nta kibazo cyatanzwe} one {Ikibazo # cyatanzwe} other {Ibibazo # byatanzwe}}",
+      "actions": "Ibikorwa",
+      "resend": "Ongera wohereze icyemezo",
+      "resent": "Icyemezo cyongeye koherezwa kuri {name}",
+      "changeDates": "Hindura amatariki",
+      "start": "Bitangira",
+      "end": "Birangira",
+      "saveDates": "Imura icyafashwe",
+      "moved": "Byimuwe. Itandukaniro ry’igiciro: {amount}",
+      "unavailable": "Ayo matariki yafashwe.",
+      "invalid": "Ayo matariki ntakora kuri iki cyafashwe.",
+      "changeParty": "Ongeraho abantu",
+      "partySize": "Abantu (kugeza kuri {max})",
+      "save": "Bika",
+      "partySaved": "Umubare w’abantu wahinduwe",
+      "partyFailed": "Abantu ni benshi, cyangwa byatangiye.",
+      "refund": "Subiza igice cy’ubwishyu",
+      "refundLeft": "Hasigaye {amount} bishobora gusubizwa.",
+      "refundAmount": "Amafaranga ({currency})",
+      "reason": "Impamvu",
+      "refundReasonHint": "Icyo umushyitsi azabwirwa",
+      "refundSubmit": "Subiza",
+      "refunded": "{amount} byasubijwe",
+      "tooMuch": "Ibyo birenze ibisigaye byo gusubiza.",
+      "refundInvalid": "Reba amafaranga kandi utange impamvu.",
+      "cancel": "Hagarika icyafashwe",
+      "refundChoice": "Gusubizwa",
+      "cancelPolicy": "Ukurikije amategeko: {amount}",
+      "cancelGoodwill": "Ku bw’ubuntu: ibyishyuwe byose, {amount}",
+      "confirmCancel": "Hagarika usubize",
+      "cancelled": "Byahagaritswe. {amount} byasubijwe.",
+      "notAllowed": "Uruhare rwawe ntirwemerewe ibi."
+    },
+    "notFoundTitle": "Nta kintu kiri hano",
+    "notFoundBody": "Nta cyafashwe, inzu cyangwa ipaji bifite iyi aderesi. Reba ko nimero yuzuye, cyangwa uyishakishe na ⌘K."
   },
   "account": {
     "nav": {

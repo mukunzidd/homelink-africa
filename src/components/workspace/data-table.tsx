@@ -10,7 +10,7 @@ export type Column<T> = {
   /** Sortable columns become links that set ?sort=key&dir=… in the URL. */
   sortable?: boolean;
   /** Dropped from the table below this width; still shown on the phone card. */
-  hideBelow?: "md" | "lg";
+  hideBelow?: "md" | "lg" | "xl";
   /** The column that names the row; it leads the phone card. */
   primary?: boolean;
 };
@@ -42,11 +42,11 @@ export function DataTable<T>({
   caption?: string;
 }) {
   if (!rows.length) return <div className="rounded-card border border-dashed border-line bg-surface p-8 text-center text-[15px] text-ink-3">{empty}</div>;
-  const hide = (c: Column<T>) => (c.hideBelow === "lg" ? "hidden lg:table-cell" : c.hideBelow === "md" ? "hidden md:table-cell" : "");
+  const hide = (c: Column<T>) => (c.hideBelow === "xl" ? "hidden xl:table-cell" : c.hideBelow === "lg" ? "hidden lg:table-cell" : c.hideBelow === "md" ? "hidden md:table-cell" : "");
   const primary = columns.find((c) => c.primary) ?? columns[0];
   return (
     <>
-      <div className="hidden overflow-hidden rounded-card border border-line bg-surface sm:block">
+      <div className="hidden overflow-clip rounded-card border border-line bg-surface sm:block">
         <table className="w-full border-collapse text-left text-[14px]">
           {caption && <caption className="sr-only">{caption}</caption>}
           <thead className="sticky top-14 z-10 bg-surface-2/95 backdrop-blur">

@@ -875,7 +875,8 @@
     "placeholderLane": {
       "cars": "Essayez « automatique pour le week-end »",
       "experiences": "Essayez « gorilles la semaine prochaine pour 2 »"
-    }
+    },
+    "groupBookings": "Réservations"
   },
   "saved": {
     "title": "Favoris",
@@ -1405,7 +1406,120 @@
       "openIncidents": "Incidents ouverts",
       "seeAll": "Tout voir",
       "nights": "{count, plural, one {# nuit} other {# nuits}}"
-    }
+    },
+    "bookings": {
+      "title": "Réservations",
+      "description": "{count, plural, one {# réservation} other {# réservations}}",
+      "search": "Rechercher",
+      "searchPlaceholder": "Référence, nom ou e-mail du client, ou logement",
+      "all": "Toutes",
+      "lane": "Type",
+      "lanes": {
+        "stay": "Séjours",
+        "car": "Voitures",
+        "experience": "Sorties"
+      },
+      "from": "Du",
+      "to": "Au",
+      "apply": "Appliquer",
+      "clear": "Effacer",
+      "colReference": "Référence",
+      "colGuest": "Client",
+      "colWhat": "Quoi",
+      "colDates": "Dates",
+      "colStatus": "Statut",
+      "colTotal": "Total",
+      "colPaid": "Payé",
+      "colEscrow": "Séquestre",
+      "escrowHeld": "Séquestre en cours",
+      "paid": {
+        "paid": "Payé",
+        "part": "Acompte payé",
+        "refunded": "Remboursé",
+        "none": "Non payé"
+      },
+      "empty": "Aucune réservation pour l’instant.",
+      "emptyFiltered": "Aucune réservation ne correspond à ces filtres.",
+      "pages": "Pages",
+      "pageOf": "Page {page} sur {pages}",
+      "prev": "Précédente",
+      "next": "Suivante",
+      "back": "Toutes les réservations",
+      "guest": "Client",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "arrival": "Heure d’arrivée",
+      "purpose": "Motif du voyage",
+      "purposes": {
+        "work": "Travail",
+        "leisure": "Loisirs"
+      },
+      "requests": "Demandes",
+      "price": "Prix",
+      "payments": "Paiements",
+      "noPayments": "Aucun paiement pour l’instant.",
+      "timeline": "Historique",
+      "kinds": {
+        "full": "Paiement",
+        "deposit": "Acompte",
+        "balance": "Solde",
+        "rent": "Loyer",
+        "change": "Changement de dates",
+        "refund": "Remboursement"
+      },
+      "rails": {
+        "card": "Carte",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Virement bancaire"
+      },
+      "payStatus": {
+        "pending": "En attente",
+        "succeeded": "Réussi",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "notes": "Notes de l’équipe",
+      "notesHint": "Seule l’équipe les voit.",
+      "notePlaceholder": "Ce que la prochaine personne à l’accueil doit savoir",
+      "addNote": "Ajouter la note",
+      "related": "Liens",
+      "thread": "Messages avec le client",
+      "noThread": "Pas encore de messages : ouvrir la messagerie",
+      "incidents": "{count, plural, =0 {Aucun problème signalé} one {# problème signalé} other {# problèmes signalés}}",
+      "actions": "Actions",
+      "resend": "Renvoyer la confirmation",
+      "resent": "Confirmation renvoyée à {name}",
+      "changeDates": "Changer les dates",
+      "start": "Début",
+      "end": "Fin",
+      "saveDates": "Déplacer la réservation",
+      "moved": "Déplacée. Différence de prix : {amount}",
+      "unavailable": "Ces dates sont prises.",
+      "invalid": "Ces dates ne conviennent pas à cette réservation.",
+      "changeParty": "Ajouter des personnes",
+      "partySize": "Personnes (jusqu’à {max})",
+      "save": "Enregistrer",
+      "partySaved": "Nombre de personnes mis à jour",
+      "partyFailed": "Trop de personnes, ou la réservation a commencé.",
+      "refund": "Rembourser une partie",
+      "refundLeft": "Il reste {amount} remboursable.",
+      "refundAmount": "Montant ({currency})",
+      "reason": "Motif",
+      "refundReasonHint": "Ce que le client verra",
+      "refundSubmit": "Rembourser",
+      "refunded": "{amount} remboursé",
+      "tooMuch": "C’est plus que ce qui reste à rembourser.",
+      "refundInvalid": "Vérifiez le montant et indiquez un motif.",
+      "cancel": "Annuler la réservation",
+      "refundChoice": "Remboursement",
+      "cancelPolicy": "Selon les conditions : {amount}",
+      "cancelGoodwill": "Geste commercial : tout ce qui a été payé, {amount}",
+      "confirmCancel": "Annuler et rembourser",
+      "cancelled": "Annulée. {amount} remboursé.",
+      "notAllowed": "Votre rôle ne permet pas cette action."
+    },
+    "notFoundTitle": "Rien ici",
+    "notFoundBody": "Aucune réservation, aucun logement ni aucune page n’a cette adresse. Vérifiez que la référence est complète, ou cherchez-la avec ⌘K."
   },
   "account": {
     "nav": {

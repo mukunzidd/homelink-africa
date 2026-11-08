@@ -701,10 +701,14 @@ const RAW_EXPERIENCES: Omit<Experience, "rules">[] = [
 
 export const EXPERIENCES: Experience[] = RAW_EXPERIENCES.map((e) => ({ ...e, rules: DAY_RULES }));
 
+/** The preview's guest: the six bookings below are hers, and show in her Trips. */
+const ANGE = { name: "Ange Uwase", email: "ange@example.rw", phone: "+250 788 123 456" };
+
 export const BOOKINGS: Booking[] = [
   {
     id: "bkg_001",
     reference: "HL-4KQ2-8M",
+    guest: ANGE,
     service: "stay",
     supplyItemId: "lst_kacyiru_garden",
     title: "Garden apartment with hill view",
@@ -719,6 +723,7 @@ export const BOOKINGS: Booking[] = [
   {
     id: "bkg_002",
     reference: "HL-7XB1-2P",
+    guest: ANGE,
     service: "car",
     supplyItemId: "veh_rav4",
     title: "Toyota RAV4, self-drive",
@@ -732,6 +737,7 @@ export const BOOKINGS: Booking[] = [
   {
     id: "bkg_003",
     reference: "HL-9DL5-4T",
+    guest: ANGE,
     service: "experience",
     supplyItemId: "exp_kigali_walk",
     title: "Kigali on foot",
@@ -755,6 +761,7 @@ export const PAST_BOOKINGS: Booking[] = [
   {
     id: "bkg_004",
     reference: "HL-2RN8-6C",
+    guest: ANGE,
     service: "stay",
     supplyItemId: "lst_remera_studio",
     title: "Bright studio near the stadium",
@@ -769,6 +776,7 @@ export const PAST_BOOKINGS: Booking[] = [
   {
     id: "bkg_005",
     reference: "HL-6TS3-9J",
+    guest: ANGE,
     service: "experience",
     supplyItemId: "exp_kivu",
     title: "A day on Lake Kivu",
@@ -782,6 +790,7 @@ export const PAST_BOOKINGS: Booking[] = [
   {
     id: "bkg_006",
     reference: "HL-8WM4-1F",
+    guest: ANGE,
     service: "car",
     supplyItemId: "veh_corolla",
     title: "Toyota Corolla, self-drive",

@@ -875,7 +875,8 @@
     "placeholderLane": {
       "cars": "Try “automatic for the weekend”",
       "experiences": "Try “gorillas next week for 2”"
-    }
+    },
+    "groupBookings": "Bookings"
   },
   "saved": {
     "title": "Saved",
@@ -1405,7 +1406,120 @@
       "openIncidents": "Open incidents",
       "seeAll": "See all",
       "nights": "{count, plural, one {# night} other {# nights}}"
-    }
+    },
+    "bookings": {
+      "title": "Bookings",
+      "description": "{count, plural, one {# booking} other {# bookings}}",
+      "search": "Search",
+      "searchPlaceholder": "Reference, guest name or email, or home",
+      "all": "All",
+      "lane": "Lane",
+      "lanes": {
+        "stay": "Stays",
+        "car": "Cars",
+        "experience": "Days out"
+      },
+      "from": "From",
+      "to": "To",
+      "apply": "Apply",
+      "clear": "Clear",
+      "colReference": "Reference",
+      "colGuest": "Guest",
+      "colWhat": "What",
+      "colDates": "Dates",
+      "colStatus": "Status",
+      "colTotal": "Total",
+      "colPaid": "Paid",
+      "colEscrow": "Escrow",
+      "escrowHeld": "Escrow held",
+      "paid": {
+        "paid": "Paid",
+        "part": "Deposit paid",
+        "refunded": "Refunded",
+        "none": "Not paid"
+      },
+      "empty": "No bookings yet.",
+      "emptyFiltered": "No booking matches these filters.",
+      "pages": "Pages",
+      "pageOf": "Page {page} of {pages}",
+      "prev": "Previous",
+      "next": "Next",
+      "back": "All bookings",
+      "guest": "Guest",
+      "email": "Email",
+      "phone": "Phone",
+      "arrival": "Arrival time",
+      "purpose": "Trip purpose",
+      "purposes": {
+        "work": "Work",
+        "leisure": "Leisure"
+      },
+      "requests": "Requests",
+      "price": "Price",
+      "payments": "Payments",
+      "noPayments": "No payments yet.",
+      "timeline": "Timeline",
+      "kinds": {
+        "full": "Payment",
+        "deposit": "Deposit",
+        "balance": "Balance",
+        "rent": "Rent",
+        "change": "Date change",
+        "refund": "Refund"
+      },
+      "rails": {
+        "card": "Card",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Bank transfer"
+      },
+      "payStatus": {
+        "pending": "Pending",
+        "succeeded": "Succeeded",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "notes": "Staff notes",
+      "notesHint": "Only the team sees these.",
+      "notePlaceholder": "What the next person on the desk should know",
+      "addNote": "Add note",
+      "related": "Related",
+      "thread": "Messages with the guest",
+      "noThread": "No messages yet: open the inbox",
+      "incidents": "{count, plural, =0 {No problems reported} one {# problem reported} other {# problems reported}}",
+      "actions": "Actions",
+      "resend": "Resend confirmation",
+      "resent": "Confirmation sent again to {name}",
+      "changeDates": "Change dates",
+      "start": "Starts",
+      "end": "Ends",
+      "saveDates": "Move booking",
+      "moved": "Moved. Price difference: {amount}",
+      "unavailable": "Those dates are taken.",
+      "invalid": "Those dates do not work for this booking.",
+      "changeParty": "Add guests",
+      "partySize": "People (up to {max})",
+      "save": "Save",
+      "partySaved": "Party updated",
+      "partyFailed": "That many people do not fit, or the booking has started.",
+      "refund": "Refund part of a payment",
+      "refundLeft": "Up to {amount} is left to refund.",
+      "refundAmount": "Amount ({currency})",
+      "reason": "Reason",
+      "refundReasonHint": "What the guest is told",
+      "refundSubmit": "Refund",
+      "refunded": "Refunded {amount}",
+      "tooMuch": "That is more than is left to refund.",
+      "refundInvalid": "Check the amount and give a reason.",
+      "cancel": "Cancel booking",
+      "refundChoice": "Refund",
+      "cancelPolicy": "Policy refund: {amount}",
+      "cancelGoodwill": "Goodwill: everything paid, {amount}",
+      "confirmCancel": "Cancel and refund",
+      "cancelled": "Cancelled. Refunded {amount}.",
+      "notAllowed": "Your role cannot do that."
+    },
+    "notFoundTitle": "Nothing here",
+    "notFoundBody": "No booking, home or page has that address. Check a reference has all its characters, or search for it with ⌘K."
   },
   "account": {
     "nav": {

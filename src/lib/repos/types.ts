@@ -184,12 +184,16 @@ export interface BookingRepo {
    * price before paying it.
    */
   place(input: PlaceBookingInput): Promise<PlaceResult>;
-  cancel(reference: string, by: Role, reason: string, today: string): Promise<Booking>;
+  /** The policy's refund, or with `goodwill` (admin) everything paid that is not yet refunded. */
+  cancel(reference: string, by: Role, reason: string, today: string, opts?: { goodwill?: boolean }): Promise<Booking>;
+  /** Part of what was paid back, with a reason. Never more than is left, never in another currency. */
+  refund(reference: string, by: Role, amount: Money, reason: string): Promise<{ ok: true } | { ok: false; reason: "tooMuch" | "invalid" }>;
   changeDates(
     reference: string,
     start: string,
     end: string,
     today: string,
+    by?: Role,
   ): Promise<{ ok: true; booking: Booking; difference: Money } | { ok: false; reason: "unavailable" | "invalid" }>;
   addEvent(reference: string, event: Omit<BookingEvent, "at">): Promise<Booking>;
   payments(bookingId?: string): Promise<PaymentRecord[]>;

@@ -6,6 +6,9 @@ import { nightsBetween } from "@/lib/domain/dates";
 import { searchStays, smartSearch, type EngineHit, type Highlight } from "@/lib/search";
 import { fold } from "@/lib/search/parse";
 import { intentHref } from "@/lib/search/intent-url";
+import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
+import { canAccess } from "@/lib/workspace/nav";
+import { staffSearch, type StaffHit } from "@/lib/workspace/staff-search";
 
 /**
  * The palette's endpoint. GET, so a query is a URL and a browser can cache
@@ -39,6 +42,8 @@ export type PaletteResponse = {
   relaxed: string[];
   groups: { stays: PaletteRow[]; sales: PaletteRow[]; cars: PaletteRow[]; experiences: PaletteRow[]; closest?: PaletteRow[] };
   places: { name: string; count: number }[];
+  /** Only for the desk and admin: bookings by reference, guest or home. */
+  staff?: StaffHit[];
   tookMs: number;
 };
 
@@ -201,6 +206,11 @@ export async function GET(request: NextRequest) {
     ).filter((x): x is PaletteRow => !!x);
   }
 
+  // The desk's palette also finds bookings. Decided by the role cookie on
+  // the server, so a guest's request never carries anyone's booking.
+  const role = parseRole(request.cookies.get(ROLE_COOKIE)?.value);
+  const staff = q && canAccess(role, "bookings") ? staffSearch(q, await r.bookings.listAll()) : undefined;
+
   const body: PaletteResponse = {
     query: q,
     engine: result.engine,
@@ -209,10 +219,13 @@ export async function GET(request: NextRequest) {
     relaxed: scopedRelaxed,
     groups: { stays, sales, cars, experiences, closest },
     places: q ? matchedPlaces.slice(0, 4) : places.slice(0, 6),
+    staff,
     tookMs: Math.round(performance.now() - started),
   };
 
   return Response.json(body, {
-    headers: { "Cache-Control": "private, max-age=30" },
+    // Guest names are not cached: the preview switches roles in place, and a
+    // cached answer would outlive the role that was allowed to see it.
+    headers: { "Cache-Control": staff ? "private, no-store" : "private, max-age=30" },
   });
 }

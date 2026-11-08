@@ -69,7 +69,8 @@ export async function ManagePanel({ booking, intlLocale }: { booking: Booking; i
     guestName: booking.guest?.name ?? "",
     bookAgainHref: stay ? `/stays/${listing?.slug ?? ""}` : vehicle ? `/cars/${vehicle.slug}` : `/experiences/${experience?.slug ?? ""}`,
     deposit: lease && listing?.monthlyRate && listing.leaseTerms ? money(listing.monthlyRate.minor * listing.leaseTerms.depositMonths, listing.monthlyRate.currency) : null,
-    timeline: (booking.timeline ?? []).map((e) => ({ kind: e.kind, when: formatStamp(e.at, intlLocale), note: e.note })),
+    // Staff notes are the desk's; the guest's timeline does not announce them.
+    timeline: (booking.timeline ?? []).filter((e) => e.kind !== "noteAdded").map((e) => ({ kind: e.kind, when: formatStamp(e.at, intlLocale), note: e.note })),
   };
   return <ManageBooking {...props} />;
 }

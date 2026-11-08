@@ -20,6 +20,7 @@ import { refundPreview } from "@/lib/domain/policies";
 import { STEPS, stepComplete, type BookingDraft, type PeopleRules } from "@/lib/booking/draft";
 import { FX_RATES } from "./data";
 import { nextId, recordAudit, store } from "./store";
+import { refundableOf } from "@/lib/workspace/paid-state";
 
 /* --------------------------------------------------------------- lookups */
 
@@ -119,6 +120,8 @@ export const availability: AvailabilityRepo = {
 /* -------------------------------------------------------------- bookings */
 
 const fmt = (m: { minor: number; currency: "RWF" | "USD" | "EUR" | "GBP" }) => formatMoney(m, "en-US");
+
+const refundable = (b: Booking) => refundableOf(b, store().payments);
 
 function event(kind: BookingEvent["kind"], actor: Role, note?: string): BookingEvent {
   return { at: new Date().toISOString(), kind, actor, ...(note ? { note } : {}) };
@@ -345,7 +348,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       return { ok: true, booking: await commit(draft, ready, payment, notify) };
     },
 
-    async cancel(reference, by, reason, today) {
+    async cancel(reference, by, reason, today, opts = {}) {
       const b = find(reference);
       if (b.status === "cancelled") return b;
       const supply = supplyById(b.supplyItemId);
@@ -357,6 +360,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
             ? money(supply.item.permitShare.minor * b.party, supply.item.permitShare.currency)
             : undefined,
       });
+      if (opts.goodwill) preview.refund = refundable(b);
       b.status = "cancelled";
       b.cancelledAt = new Date().toISOString();
       b.cancelReason = reason;
@@ -374,11 +378,30 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
           at: new Date().toISOString(),
         });
       }
-      recordAudit({ actor: by, action: "booking.cancel", target: b.reference, detail: reason });
+      recordAudit({ actor: by, action: opts.goodwill ? "booking.cancelGoodwill" : "booking.cancel", target: b.reference, detail: reason });
       return b;
     },
 
-    async changeDates(reference, start, end, today) {
+    async refund(reference, by, amount, reason) {
+      const b = find(reference);
+      if (amount.currency !== b.total.currency || !(amount.minor > 0) || !Number.isInteger(amount.minor)) return { ok: false, reason: "invalid" };
+      if (amount.minor > refundable(b).minor) return { ok: false, reason: "tooMuch" };
+      store().payments.push({
+        id: nextId("pmt"),
+        bookingId: b.id,
+        rail: store().payments.find((p) => p.bookingId === b.id)?.rail ?? "card",
+        kind: "refund",
+        amount,
+        status: "succeeded",
+        at: new Date().toISOString(),
+      });
+      b.refund = money((b.refund?.minor ?? 0) + amount.minor, amount.currency);
+      b.timeline = [...(b.timeline ?? []), event("refunded", by, reason)];
+      recordAudit({ actor: by, action: "booking.refund", target: b.reference, detail: `${amount.minor} ${amount.currency}: ${reason}` });
+      return { ok: true };
+    },
+
+    async changeDates(reference, start, end, today, by = "guest") {
       const b = find(reference);
       const supply = supplyById(b.supplyItemId);
       if (!supply || !isIsoDate(start) || !isIsoDate(end) || start < today || end < start) {
@@ -413,7 +436,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
           at: new Date().toISOString(),
         });
       }
-      recordAudit({ actor: "guest", action: "booking.changeDates", target: b.reference });
+      recordAudit({ actor: by, action: "booking.changeDates", target: b.reference });
       return { ok: true, booking: b, difference };
     },
 

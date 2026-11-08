@@ -19,10 +19,14 @@ import { readViewed, type Viewed } from "@/lib/recently-viewed";
 import { useSaved } from "@/lib/saved";
 import { usePreferences } from "@/lib/preferences/context";
 import type { PaletteResponse, PaletteRow } from "@/app/api/search/route";
+import type { StaffHit } from "@/lib/workspace/staff-search";
+import { formatDate } from "@/lib/domain/dates";
+import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { MoneyText } from "@/components/ui/money-text";
 import {
   ArrowRightIcon,
+  CalendarIcon,
   CloseIcon,
   HeartIcon,
   HistoryIcon,
@@ -119,7 +123,8 @@ type Row =
   | { type: "example"; key: string; query: string }
   | { type: "viewed"; key: string; href: string; item: Viewed }
   | { type: "saved"; key: string; href: string; count: number }
-  | { type: "all"; key: string; href: string };
+  | { type: "all"; key: string; href: string }
+  | { type: "booking"; key: string; href: string; hit: StaffHit };
 
 function useSearch(query: string, currency: string) {
   const [data, setData] = useState<PaletteResponse | null>(null);
@@ -201,6 +206,8 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
     }
     if (!fresh) return [];
     const out: Row[] = [];
+    // The desk looks up bookings far more than it browses homes: theirs first.
+    for (const h of fresh.staff ?? []) out.push({ type: "booking", key: `b-${h.reference}`, href: `/manage/bookings/${h.reference}`, hit: h });
     for (const p of fresh.places) {
       if (fresh.intent.lane && fresh.intent.lane !== "stays" && fresh.intent.lane !== "buy") break;
       const base = fresh.intent.lane === "buy" ? "/buy" : "/stays";
@@ -273,7 +280,7 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
   };
 
   const totalHits = fresh
-    ? fresh.groups.stays.length + fresh.groups.sales.length + fresh.groups.cars.length + fresh.groups.experiences.length
+    ? fresh.groups.stays.length + fresh.groups.sales.length + fresh.groups.cars.length + fresh.groups.experiences.length + (fresh.staff?.length ?? 0)
     : 0;
 
   let lastHeading: string | null = null;
@@ -369,6 +376,8 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
                       ? t("tryAsking")
                       : row.type === "place"
                         ? t("groupPlaces")
+                        : row.type === "booking"
+                          ? t("groupBookings")
                         : row.type === "item"
                           ? row.key.startsWith("closest-")
                             ? t("closestHeading")
@@ -453,6 +462,7 @@ function RowBody({
   fresh: PaletteResponse | null;
 }) {
   const tListing = useTranslations("listing");
+  const intl = INTL_LOCALES[useLocale() as Locale];
 
   if (row.type === "recent" || row.type === "example") {
     return (
@@ -461,6 +471,26 @@ function RowBody({
           {row.type === "recent" ? <HistoryIcon /> : <SparkIcon />}
         </span>
         <span className="min-w-0 flex-1 truncate text-[15px] text-ink">{row.query}</span>
+        <ArrowRightIcon className={cn("text-ink-3", !active && "opacity-0")} />
+      </>
+    );
+  }
+
+  if (row.type === "booking") {
+    const h = row.hit;
+    return (
+      <>
+        <span className="grid h-8 w-8 flex-none place-items-center rounded-ctl bg-surface-2 text-ink-3">
+          <CalendarIcon size={16} />
+        </span>
+        <span className="flex min-w-0 flex-1 flex-col">
+          <span className="truncate text-[15px] text-ink">
+            <span className="font-mono text-[13.5px] font-semibold">{h.reference}</span> · {h.guest}
+          </span>
+          <span className="truncate text-[13px] text-ink-3">
+            {h.title} · {formatDate(h.start, intl, { day: "numeric", month: "short" })} → {formatDate(h.end, intl, { day: "numeric", month: "short" })}
+          </span>
+        </span>
         <ArrowRightIcon className={cn("text-ink-3", !active && "opacity-0")} />
       </>
     );

@@ -219,3 +219,51 @@ describe("bookings.place: renting terms are the server's to decide", () => {
     expect(await repos.bookings.place({ draft: d, clientTotal: total(), payment })).toMatchObject({ ok: false, reason: "invalid" });
   });
 });
+
+describe("bookings.refund and goodwill cancel (admin)", () => {
+  beforeEach(() => resetStore());
+
+  async function placed() {
+    const d = readyDraft(oneUnitSlug());
+    const r = await repos.bookings.place({ draft: d, clientTotal: serverTotal(d), payment });
+    if (!r.ok) throw new Error("expected ok");
+    return r.booking;
+  }
+
+  it("refunds part of a payment, records it, and says why", async () => {
+    const bk = await placed();
+    const part = { minor: Math.round(bk.total.minor / 4), currency: bk.total.currency };
+    const r = await repos.bookings.refund(bk.reference, "admin", part, "Hot water out for a night");
+    expect(r.ok).toBe(true);
+    const pays = await repos.bookings.payments(bk.id);
+    expect(pays.filter((p) => p.kind === "refund").map((p) => p.amount)).toEqual([part]);
+    const after = await repos.bookings.byReference(bk.reference);
+    expect(after!.timeline!.at(-1)).toMatchObject({ kind: "refunded", actor: "admin", note: "Hot water out for a night" });
+    expect(store().audit.at(-1)).toMatchObject({ actor: "admin", action: "booking.refund", target: bk.reference });
+  });
+
+  it("refuses to refund more than is left of what was paid", async () => {
+    const bk = await placed();
+    const most = { minor: bk.total.minor - 1, currency: bk.total.currency };
+    expect((await repos.bookings.refund(bk.reference, "admin", most, "a")).ok).toBe(true);
+    expect(await repos.bookings.refund(bk.reference, "admin", { minor: 2, currency: bk.total.currency }, "b")).toEqual({ ok: false, reason: "tooMuch" });
+  });
+
+  it("refuses a refund in another currency, or of nothing", async () => {
+    const bk = await placed();
+    const other = bk.total.currency === "RWF" ? "USD" : "RWF";
+    expect(await repos.bookings.refund(bk.reference, "admin", { minor: 1, currency: other }, "a")).toEqual({ ok: false, reason: "invalid" });
+    expect(await repos.bookings.refund(bk.reference, "admin", { minor: 0, currency: bk.total.currency }, "a")).toEqual({ ok: false, reason: "invalid" });
+  });
+
+  it("gives everything back on a goodwill cancel, even inside the no-refund window", async () => {
+    const bk = await placed();
+    const day = addDays(bk.startDate, 0); // arrival day: the policy keeps it all
+    const policy = await repos.bookings.cancel(bk.reference, "admin", "x", day);
+    expect(policy.refund?.minor ?? 0).toBeLessThan(bk.total.minor);
+    resetStore();
+    const again = await placed();
+    const goodwill = await repos.bookings.cancel(again.reference, "admin", "Family emergency", addDays(again.startDate, 0), { goodwill: true });
+    expect(goodwill.refund).toEqual(again.total);
+  });
+});
