@@ -15,9 +15,11 @@ import type { Conversation, Role } from "@/lib/domain/types";
 import { readsAs } from "@/lib/preferences/role";
 import { convert } from "@/lib/domain/money";
 import { FX_RATES } from "./data";
+import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
 import { availability, makeBookings } from "./bookings";
-import type { ViewingsRepo } from "@/lib/repos/types";
+import type { IncidentsRepo, ReviewsRepo, ViewingsRepo } from "@/lib/repos/types";
+import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
 /**
@@ -408,6 +410,75 @@ const audit: AuditRepo = {
 
 const bookings = makeBookings(notifications);
 
+const incidents: IncidentsRepo = {
+  async forBooking(bookingId) {
+    return store().incidents.filter((i) => i.bookingId === bookingId).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+  async all() {
+    return [...store().incidents].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+  async create(input) {
+    const b = store().bookings.find((x) => x.id === input.bookingId);
+    if (!b) throw new Error("No such booking");
+    const made = {
+      ...input,
+      description: input.description.slice(0, 1000),
+      id: nextId("inc"),
+      status: "open" as const,
+      createdAt: new Date().toISOString(),
+    };
+    store().incidents.push(made);
+    b.timeline = [...(b.timeline ?? []), { at: made.createdAt, kind: "issueReported", actor: "guest", note: input.category }];
+    for (const audience of ["ops", "admin"] as const) {
+      await notifications.create({
+        audience,
+        kind: "newIncident",
+        params: { name: b.title, category: input.category },
+        href: "/manage/incidents",
+      });
+    }
+    return made;
+  },
+  async update(id, patch) {
+    const i = store().incidents.find((x) => x.id === id);
+    if (!i) throw new Error(`No incident ${id}`);
+    Object.assign(i, patch);
+    return i;
+  },
+};
+
+const ASPECTS = ["cleanliness", "accuracy", "checkIn", "communication", "location", "value"] as const;
+
+const reviews: ReviewsRepo = {
+  async forSupply(supplyId) {
+    return store().reviews.filter((r) => r.supplyId === supplyId).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+  async forBooking(bookingId) {
+    return store().reviews.find((r) => r.bookingId === bookingId) ?? null;
+  },
+  async create({ bookingId, ratings, text }) {
+    const b = store().bookings.find((x) => x.id === bookingId);
+    if (!b) throw new Error("No such booking");
+    if (b.endDate >= kigaliDay() || b.status === "cancelled") throw new Error("Reviews open once it is over");
+    if (store().reviews.some((r) => r.bookingId === bookingId)) throw new Error("Already reviewed");
+    const clean = Object.fromEntries(
+      ASPECTS.map((a) => [a, Math.min(5, Math.max(1, Math.round(Number(ratings[a]) || 0)))]),
+    ) as Review["ratings"];
+    const made: Review = {
+      id: nextId("rev"),
+      bookingId,
+      supplyId: b.supplyItemId,
+      ratings: clean,
+      text: text.trim().slice(0, 2000),
+      createdAt: new Date().toISOString(),
+      guestFirstName: (b.guest?.name ?? "Guest").split(/\s+/)[0],
+    };
+    store().reviews.push(made);
+    b.timeline = [...(b.timeline ?? []), { at: made.createdAt, kind: "reviewed", actor: "guest" }];
+    return made;
+  },
+};
+
 const viewings: ViewingsRepo = {
   async create(v) {
     const made = { ...v, id: nextId("vwg"), status: "requested" as const, createdAt: new Date().toISOString() };
@@ -442,6 +513,8 @@ export const fixtureRepositories: Repositories = {
   bookings,
   availability,
   viewings,
+  incidents,
+  reviews,
   trips,
   messaging,
   ops,

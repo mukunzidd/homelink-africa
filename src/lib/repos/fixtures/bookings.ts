@@ -401,6 +401,29 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       return b;
     },
 
+    async addGuests(reference, party) {
+      const b = find(reference);
+      const supply = supplyById(b.supplyItemId);
+      const max = supply?.kind === "stay" ? supply.item.sleeps : supply?.kind === "car" ? supply.item.seats : supply?.kind === "experience" ? supply.item.groupMax : 0;
+      if (!Number.isInteger(party) || party < 1 || party > max) throw new Error(`Party of ${party} does not fit`);
+      if (party !== b.party) {
+        b.timeline = [...(b.timeline ?? []), event("guestsAdded", "guest", `${b.party} → ${party}`)];
+        b.party = party;
+      }
+      return b;
+    },
+
+    async submitOnlineCheckIn(reference, adults) {
+      const b = find(reference);
+      const clean = adults
+        .filter((a) => a.name.trim().length >= 2 && a.idFileName)
+        .slice(0, b.party)
+        .map((a) => ({ name: a.name.trim(), idFileName: a.idFileName }));
+      if (!clean.length) throw new Error("No adults to check in");
+      b.onlineCheckIn = { at: new Date().toISOString(), adults: clean };
+      return b;
+    },
+
     async payments(bookingId) {
       return store()
         .payments.filter((p) => !bookingId || p.bookingId === bookingId)

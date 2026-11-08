@@ -221,3 +221,7 @@ Off by default. Stored on the device until accounts exist.
 
 - Kinyarwanda and Swahili copy is assistant-written and needs native readers.
 - Server restarts clear everything written in a session; Phase 2 persists it.
+- Booking pages, receipts and calendar files are authorised by the preview's
+  role cookie, so anyone holding a reference can open one. There are no
+  accounts yet; Phase 2 must check that the booking belongs to the signed-in
+  user on every one of them (raised by the automated security review).

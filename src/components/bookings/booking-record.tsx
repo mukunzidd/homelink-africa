@@ -85,7 +85,8 @@ export async function BookingRecord({
   const unitRate = unit ? { ...unit.amount, minor: Math.round(unit.amount.minor / Math.max(units, 1)) } : booking.total;
   const deposit = payments.find((p) => p.kind === "deposit");
 
-  const nextSteps = upcoming ? [tc("next1"), ...(booking.escrowHeld ? [tc("next2")] : []), tc("next3")] : [];
+  // "What happens next" is about arriving; once someone is inside it is noise.
+  const nextSteps = booking.status === "confirmed" ? [tc("next1"), ...(booking.escrowHeld ? [tc("next2")] : []), tc("next3")] : [];
 
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-4 py-6 sm:px-6">

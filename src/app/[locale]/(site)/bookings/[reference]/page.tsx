@@ -21,6 +21,7 @@ import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
 import { Button } from "@/components/ui/button";
 import { SignedOut } from "@/components/shell/signed-out";
 import { BookingRecord } from "@/components/bookings/booking-record";
+import { ManagePanel } from "@/components/bookings/manage-panel";
 
 /**
  * One booking, at two moments in its life.
@@ -65,7 +66,15 @@ async function BookingRecordPage({ booking, locale }: { booking: Booking; locale
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
   if (role === "visitor") return <SignedOut screen="booking" />;
   if (role !== "guest") notFound();
-  return <BookingRecord booking={booking} locale={locale} intlLocale={INTL_LOCALES[locale as Locale]} />;
+  const intlLocale = INTL_LOCALES[locale as Locale];
+  return (
+    <BookingRecord
+      booking={booking}
+      locale={locale}
+      intlLocale={intlLocale}
+      manage={<ManagePanel booking={booking} intlLocale={intlLocale} />}
+    />
+  );
 }
 
 /* ------------------------------------------------- straight out of checkout */

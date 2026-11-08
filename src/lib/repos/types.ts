@@ -9,6 +9,8 @@ import type {
   PaymentRail,
   ServiceKind,
   Viewing,
+  Incident,
+  Review,
   NotificationCategory,
   NotificationPrefs,
   Booking,
@@ -190,6 +192,9 @@ export interface BookingRepo {
   ): Promise<{ ok: true; booking: Booking; difference: Money } | { ok: false; reason: "unavailable" | "invalid" }>;
   addEvent(reference: string, event: Omit<BookingEvent, "at">): Promise<Booking>;
   payments(bookingId?: string): Promise<PaymentRecord[]>;
+  /** More people on a stay; refused above what the home sleeps. Price is per night, not per head. */
+  addGuests(reference: string, party: number): Promise<Booking>;
+  submitOnlineCheckIn(reference: string, adults: { name: string; idFileName: string }[]): Promise<Booking>;
   byId(id: string): Promise<Booking | null>;
   /**
    * By the code the guest actually holds.
@@ -283,6 +288,21 @@ export interface ViewingsRepo {
   setStatus(id: string, status: Viewing["status"], move?: { date: string; time: string }): Promise<Viewing>;
 }
 
+export interface IncidentsRepo {
+  forBooking(bookingId: string): Promise<Incident[]>;
+  all(): Promise<Incident[]>;
+  /** Files it, notes it on the booking's timeline, and tells both desks. */
+  create(i: Omit<Incident, "id" | "status" | "createdAt">): Promise<Incident>;
+  update(id: string, patch: Partial<Pick<Incident, "status" | "assignee">>): Promise<Incident>;
+}
+
+export interface ReviewsRepo {
+  forSupply(supplyId: string): Promise<Review[]>;
+  forBooking(bookingId: string): Promise<Review | null>;
+  /** One per booking, and only once the stay, hire or day is over. */
+  create(r: Pick<Review, "bookingId" | "ratings" | "text">): Promise<Review>;
+}
+
 export type Repositories = {
   stays: StaysRepo;
   sales: SalesRepo;
@@ -291,6 +311,8 @@ export type Repositories = {
   bookings: BookingRepo;
   availability: AvailabilityRepo;
   viewings: ViewingsRepo;
+  incidents: IncidentsRepo;
+  reviews: ReviewsRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;

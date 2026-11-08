@@ -103,6 +103,8 @@ export type Listing = {
   propertyManager: { name: string; since: string };
   /** Accepted at checkout. Plain sentences, in the order a guest needs them. */
   houseRules: string[];
+  /** Released to the guest 48 hours before arrival, never shown before. */
+  checkIn?: { directions: string; doorCode: string; wifiName: string; wifiPassword: string };
   /** Colour seed, used when no photograph exists yet. */
   imageSeed: string;
   /** Photographs, first is the hero. Empty until our team has shot the place. */
@@ -269,6 +271,8 @@ export type Booking = {
   dietary?: string;
   application?: RentApplication;
   checkedInAt?: string;
+  /** Each adult's name and ID, sent ahead so arrival is a key handover. */
+  onlineCheckIn?: { at: string; adults: { name: string; idFileName: string }[] };
   cancelledAt?: string;
   cancelReason?: string;
   refund?: Money;
@@ -534,4 +538,31 @@ export type Viewing = {
   notes?: string;
   status: "requested" | "confirmed" | "rescheduled" | "done" | "cancelled";
   createdAt: string;
+};
+
+export type IncidentCategory = "power" | "water" | "internet" | "cleanliness" | "safety" | "noise" | "other";
+
+/** Something wrong during a stay, reported by the guest or the team. */
+export type Incident = {
+  id: string;
+  bookingId: string;
+  category: IncidentCategory;
+  urgency: "now" | "today" | "whenever";
+  description: string;
+  photoName?: string;
+  status: "open" | "inProgress" | "resolved";
+  createdAt: string;
+  assignee?: string;
+};
+
+export type ReviewAspect = "cleanliness" | "accuracy" | "checkIn" | "communication" | "location" | "value";
+
+export type Review = {
+  id: string;
+  bookingId: string;
+  supplyId: string;
+  ratings: Record<ReviewAspect, number>;
+  text: string;
+  createdAt: string;
+  guestFirstName: string;
 };

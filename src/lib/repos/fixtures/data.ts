@@ -326,7 +326,24 @@ export const LISTINGS: Listing[] = RAW_LISTINGS.map((l) => ({
   ...l,
   propertyManager: MANAGER_BY_AREA[l.neighbourhood] ?? MANAGERS.north,
   houseRules: [...BASE_RULES, ...(EXTRA_RULES[l.id] ?? [])],
+  checkIn: checkInFor(l.id, l.neighbourhood),
 }));
+
+/**
+ * Door codes and wifi for the preview. Derived from the listing's id so
+ * they are stable across restarts and differ between homes; the real ones
+ * live with the property manager and are set per stay in Phase 2.
+ */
+function checkInFor(id: string, area: string) {
+  let h = 0;
+  for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return {
+    directions: `From the ${area} roundabout, take the second paved road uphill; the gate is green, with a HomeLink plate beside the bell. Parking inside, on the left.`,
+    doorCode: String(1000 + (h % 9000)),
+    wifiName: `HomeLink-${area}`,
+    wifiPassword: `kigali-${(h % 100000).toString(36)}`,
+  };
+}
 
 /** What every hire agrees to. The ones people ask about, said up front. */
 const HIRE_RULES = [

@@ -16,6 +16,8 @@ import type {
   Trip,
   Vehicle,
   Viewing,
+  Incident,
+  Review,
   VerificationTask,
 } from "@/lib/domain/types";
 import {
@@ -33,7 +35,7 @@ import {
   VERIFICATION_QUEUE,
 } from "./data";
 import { seedNotifications } from "./notifications";
-import { seedBlocks, seedPayments } from "./booking-seeds";
+import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews } from "./booking-seeds";
 
 /**
  * The fixtures, as data that can change.
@@ -71,6 +73,8 @@ export type FixtureStore = {
   payments: PaymentRecord[];
   blocks: Block[];
   viewings: Viewing[];
+  incidents: Incident[];
+  reviews: Review[];
   /** Filled lazily from the catalog's defaults the first time a role asks. */
   prefs: Partial<Record<Role, NotificationPrefs>>;
   audit: AuditEntry[];
@@ -95,12 +99,18 @@ function seed(): FixtureStore {
     ids: {},
   });
   const now = new Date();
+  // Bookings in every phase a guest's booking page has, dated from today.
+  fixed.bookings = [...seedPhaseBookings(fixed.listings, now), ...fixed.bookings].sort((a, b) =>
+    b.startDate.localeCompare(a.startDate),
+  );
   return {
     ...fixed,
     notifications: seedNotifications(now),
     payments: seedPayments(fixed.bookings),
     blocks: seedBlocks(now),
     viewings: [],
+    incidents: [],
+    reviews: seedReviews(),
     prefs: {},
   };
 }
@@ -112,7 +122,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 4;
+const SHAPE = 5;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {
