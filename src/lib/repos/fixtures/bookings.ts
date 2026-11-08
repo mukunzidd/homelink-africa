@@ -500,6 +500,29 @@ export function makeTrips(notifications: NotificationsRepo, read: Pick<TripRepo,
         if (r.ok) prepared.push(r);
         else failed.push({ index, reason: r.reason });
       }
+      // Each part was checked against existing bookings; it must also fit
+      // alongside the trip's earlier parts on the same home, car or day out.
+      const taken = new Map<string, number>();
+      drafts.forEach((d, j) => {
+        const p = prepared[j];
+        if (!p) return;
+        const item = p.supply.item;
+        const live = store().bookings.filter((x) => x.supplyItemId === item.id && ACTIVE.has(x.status));
+        if (p.supply.kind === "experience") {
+          const key = `${item.id}|${d.start}`;
+          const existing = live.filter((x) => x.startDate === d.start).reduce((n, x) => n + x.party, 0);
+          const prior = taken.get(key) ?? 0;
+          if (existing + prior + d.party > (item as Experience).groupMax) failed.push({ index: j, reason: "unavailable" });
+          taken.set(key, prior + d.party);
+          return;
+        }
+        const units = (item as Listing | Vehicle).unitsAvailable;
+        const days = eachDay(d.start, p.end, p.supply.kind === "car");
+        const clash = days.some((day) => live.filter((x) => occupies(x, day)).length + (taken.get(`${item.id}|${day}`) ?? 0) >= units);
+        if (clash) failed.push({ index: j, reason: "unavailable" });
+        for (const day of days) taken.set(`${item.id}|${day}`, (taken.get(`${item.id}|${day}`) ?? 0) + 1);
+      });
+
       // The trip's own stays must not overlap one another.
       drafts.forEach((a, i) =>
         drafts.forEach((b, j) => {

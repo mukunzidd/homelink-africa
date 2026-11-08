@@ -73,3 +73,22 @@ describe("trips.place", () => {
     expect(store().trips.length).toBe(store().trips.length);
   });
 });
+
+describe("trips.place: parts count against each other", () => {
+  beforeEach(() => resetStore());
+  it("refuses more overlapping hires of one car than it has units", async () => {
+    const car = [...store().vehicles].sort((a, b) => a.unitsAvailable - b.unitsAvailable)[0];
+    const hire = (from: string, to: string) => {
+      let d = newDraft({ flow: "car", slug: car.slug, start: from, end: to, party: 1 }, new Date());
+      d = draftReducer(d, { type: "guest", value: guest });
+      d = draftReducer(d, { type: "driveMode", value: car.driveModes.includes("withDriver") ? "withDriver" : "selfDrive" });
+      d = draftReducer(d, { type: "licence", fileName: "l.png" });
+      return draftReducer(d, { type: "acceptRules", value: true });
+    };
+    const before = store().bookings.length;
+    const drafts = Array.from({ length: car.unitsAvailable + 1 }, (_, i) => hire(addDays(s, i % 2), addDays(s, 2 + (i % 2))));
+    const r = await repos.trips.place({ drafts, clientTotal: money(0, "RWF"), payment, bookedReferences: [] });
+    expect(r).toMatchObject({ ok: false, failed: [{ index: car.unitsAvailable, reason: "unavailable" }] });
+    expect(store().bookings.length).toBe(before);
+  });
+});
