@@ -437,3 +437,31 @@ export type NotificationPrefs = {
 };
 
 export type { ExtraKey, ExtraSelection } from "./extras";
+
+/* ----------------------------------------------------------- booking flow */
+
+export type GuestDetails = {
+  name: string;
+  email: string;
+  phone: string;
+  /** Booking for someone else; then `travellerName` is required. */
+  forSomeoneElse?: boolean;
+  travellerName?: string;
+  /** "HH:MM", Kigali time. */
+  arrivalTime?: string;
+  purpose?: "work" | "leisure";
+  requests?: string;
+};
+
+export type Participant = { name: string; age: number; nationality?: string; passport?: string };
+
+export type RentApplication = {
+  occupants: number;
+  employer: string;
+  incomeBand: "under500k" | "500kTo1m" | "1mTo2m" | "over2m";
+  idFileName?: string;
+  moveIn: string;
+  months: number;
+};
+
+export type PaymentRail = "card" | "mobileMoney" | "bankTransfer";
