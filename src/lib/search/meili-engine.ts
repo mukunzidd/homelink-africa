@@ -120,6 +120,10 @@ export function createMeiliEngine(opts: {
   }
 
   let ready: Promise<void> | null = null;
+  // Set when the documents may be out of date (a refresh was asked for and
+  // has not finished). Until it clears, every rebuild deletes first:
+  // re-posting alone would leave a home that was taken down findable.
+  let stale = false;
   function ensureIndex(): Promise<void> {
     ready ??= (async () => {
       const created = await call("/indexes", {
@@ -131,12 +135,17 @@ export function createMeiliEngine(opts: {
         method: "PATCH",
         body: JSON.stringify(SETTINGS),
       });
+      if (stale) {
+        const cleared = await call(`/indexes/${INDEX}/documents`, { method: "DELETE" });
+        if (cleared?.taskUid !== undefined) await waitFor(cleared.taskUid);
+      }
       const docs = await call(`/indexes/${INDEX}/documents`, {
         method: "POST",
         body: JSON.stringify(await opts.load()),
       });
       await waitFor(settings.taskUid);
       await waitFor(docs.taskUid);
+      stale = false;
     })().catch((err) => {
       ready = null;
       throw err;
@@ -149,16 +158,9 @@ export function createMeiliEngine(opts: {
     // Posting documents updates them but never removes one, so a home taken
     // down would stay findable. Clear the index's documents, then load again.
     async refresh() {
-      ready = (async () => {
-        const cleared = await call(`/indexes/${INDEX}/documents`, { method: "DELETE" });
-        if (cleared?.taskUid !== undefined) await waitFor(cleared.taskUid);
-        const docs = await call(`/indexes/${INDEX}/documents`, { method: "POST", body: JSON.stringify(await opts.load()) });
-        await waitFor(docs.taskUid);
-      })().catch((err) => {
-        ready = null;
-        throw err;
-      });
-      await ready;
+      stale = true;
+      ready = null;
+      await ensureIndex();
     },
     async search(q: EngineQuery): Promise<EngineHit[]> {
       await ensureIndex();

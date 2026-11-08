@@ -55,11 +55,21 @@ async function run(query: Parameters<SearchEngine["search"]>[0]): Promise<{ hits
  * After a write that changes what guests can find (a rate, a home taken
  * down or put live), both engines read the documents again. Meilisearch
  * being down is not the editor's problem: the local engine is refreshed
- * regardless, and Meili's own index is rebuilt on its next first use.
+ * regardless, searches fall back to it, and Meili's index is cleared and
+ * rebuilt the next time it is used.
  */
 export async function searchChanged(): Promise<void> {
   await built.local.refresh();
-  if (built.primary) await built.primary.refresh().catch((err) => console.warn(`[search] reindex failed: ${(err as Error).message}`));
+  if (!built.primary) return;
+  try {
+    await built.primary.refresh();
+  } catch (err) {
+    // Meilisearch may still hold what was just taken down. Answer from the
+    // local engine, which is fresh, until Meili has been rebuilt; its next
+    // rebuild deletes before it loads.
+    console.warn(`[search] reindex failed, using local engine: ${(err as Error).message}`);
+    meiliDownUntil = Date.now() + 30_000;
+  }
 }
 
 /** Which constraint was given up to find something, in the order it is given up. */
