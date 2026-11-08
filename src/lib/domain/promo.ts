@@ -22,7 +22,9 @@ export function applyPromo(raw: string, quote: Quote, on: IsoDate): PromoResult 
   if (!promo) return { ok: false, code, reason: "unknown" };
   if (on > promo.validUntil) return { ok: false, code, reason: "expired" };
   const base = quote.lines.find((l) => l.key === "accommodation");
-  if (!base) return { ok: false, code, reason: "notApplicable" };
+  // The cap is in RWF. A stay priced in anything else is refused rather than
+  // compared across currencies, which would let the cap mean 50,000 dollars.
+  if (!base || base.amount.currency !== "RWF") return { ok: false, code, reason: "notApplicable" };
   const off = Math.min(Math.round((base.amount.minor * promo.percent) / 100), promo.capRwf);
   return { ok: true, code, discount: money(off, base.amount.currency) };
 }

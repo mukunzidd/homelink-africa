@@ -92,6 +92,16 @@ describe("applyPromo", () => {
     });
   });
 
+  it("refuses a stay priced in another currency rather than compare a USD line with an RWF cap", () => {
+    const usd = {
+      nights: 10,
+      lines: [{ key: "accommodation" as const, amount: { minor: 900_000, currency: "USD" as const } }],
+      total: { minor: 900_000, currency: "USD" as const },
+      escrowHeld: false,
+    };
+    expect(applyPromo("KARIBU10", usd, on)).toMatchObject({ ok: false, reason: "notApplicable" });
+  });
+
   it("says unknown and expired apart", () => {
     expect(applyPromo("NOPE", quote(300_000), on)).toMatchObject({ ok: false, reason: "unknown" });
     expect(applyPromo("KARIBU10", quote(300_000), "2028-01-01")).toMatchObject({ ok: false, reason: "expired" });
