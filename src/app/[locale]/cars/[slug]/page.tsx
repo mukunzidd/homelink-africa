@@ -80,6 +80,7 @@ export default async function VehicleDetailPage({
     <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
       <SupplyOwnerBand
         kind="car"
+        slug={vehicle.slug}
         supplyItemId={vehicle.id}
         rate={vehicle.dailyRate}
         rateLabel={t("perDay")}

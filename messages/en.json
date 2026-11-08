@@ -222,7 +222,6 @@
   "roles": {
     "visitor": "Signed out",
     "guest": "Guest",
-    "host": "Host",
     "driver": "Driver",
     "guide": "Guide",
     "ops": "Concierge ops",
@@ -273,7 +272,9 @@
       "depositBody": "{deposit}, held as a deposit and returned when you move out. The deposit terms are in the rental agreement.",
       "viewingTitle": "The viewing",
       "viewingBody": "The Kigali team arranges a viewing and sends the rental agreement to read before it. Nothing is charged here."
-    }
+    },
+    "hostedByHomeLink": "Hosted by HomeLink",
+    "managedBy": "{name} looks after this home · on the team since {year}"
   },
   "quote": {
     "accommodation": "{rate} × {nights, plural, one {# night} other {# nights}}",
@@ -311,8 +312,8 @@
     "payNow": "Pay {amount}",
     "processing": "Taking payment…",
     "stubNotice": "This is a preview. Nothing will be charged.",
-    "escrowTitle": "Your money is held until you arrive",
-    "escrowBody": "We hold the full amount and release it to the host only after you confirm check-in. If the place is not as described, you are refunded in full and we find you another home the same night.",
+    "escrowTitle": "Your money stays refundable until you are inside",
+    "escrowBody": "We hold the full amount and only count it as ours once someone from the team confirms you are inside. If the place is not as described, you are refunded in full and we find you another home the same night.",
     "noEscrowBody": "This stay is below our escrow threshold, so payment settles directly. The same guarantee on accuracy still applies.",
     "cancellation": "Free cancellation until {date}. After that the first night is non-refundable.",
     "agree": "By paying you accept the booking terms and the cancellation policy above.",
@@ -492,7 +493,7 @@
     "inspected": "Someone walked through it",
     "inspectedBody": "{name} checked this place in person on {date}, not from a form.",
     "escrow": "Your money waits",
-    "escrowBody": "We hold it and release it to the host only once you confirm you're in.",
+    "escrowBody": "We hold it and only count it as ours once the team confirms you're in.",
     "power": "The power stays on",
     "powerBody": "Backup generator on site, started and fuelled at inspection.",
     "fibre": "Fibre that works",
@@ -569,7 +570,7 @@
     "dueOnStart": "Due on the start date",
     "moneyNote": "Nothing on this screen moves money. Payouts are run by the Kigali team, and the amounts here are what they are working from.",
     "notYours": "This screen belongs to someone else",
-    "notYoursBody": "Inventory is for hosts, drivers and guides. If you are a guest, your bookings are under Trips.",
+    "notYoursBody": "This screen is for drivers and guides. If you are a guest, your bookings are under Trips.",
     "ownershipNote": "Everything HomeLink has verified in this lane. Which supplier owns what is not modelled yet — in V1 inventory is listed by the concierge team, so there is effectively one supplier.",
     "tabsLabel": "Sections",
     "tabs": {
@@ -749,7 +750,11 @@
     "askToChange": "Ask the team to change something",
     "changesNote": "Rates, photographs and availability are changed by the Kigali team for now. Message them and it is done the same day.",
     "groupCap": "Group cap",
-    "freeFrom": "Free from"
+    "freeFrom": "Free from",
+    "adminLabel": "This listing, seen from the workspace",
+    "adminTitle": "You run this one",
+    "editInWorkspace": "Edit in the workspace",
+    "adminNote": "Changes made in the workspace show on this page as soon as they are saved."
   },
   "smart": {
     "title": "Smart search",
@@ -1236,7 +1241,7 @@
     },
     "messages": {
       "title": "Messages",
-      "body": "Sign in to read the conversation that comes with each booking, with the Kigali team and your host, driver or guide."
+      "body": "Sign in to read the conversation that comes with each booking, with the Kigali team, your driver or your guide."
     },
     "signIn": "Sign in",
     "previewNote": "Preview sign-in",

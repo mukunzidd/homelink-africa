@@ -576,7 +576,12 @@ function AskRow({
   );
 }
 
-const PAYEE_ROLE = { stay: "host", car: "driver", experience: "guide" } as const;
+/**
+ * HomeLink hosts every home itself, so a stay pays nobody outside; only
+ * partners who drive or guide are paid out. A stay payout here would be the
+ * company paying itself.
+ */
+const PAYEE_ROLE = { car: "driver", experience: "guide" } as const;
 
 function PayoutRow({
   payout,
@@ -618,7 +623,7 @@ function PayoutRow({
           <MoneyText amount={payout.amount} className="font-semibold" />
         </RecordFact>
         <RecordFact label={t("record.recipient")}>
-          {booking.service
+          {booking.service && booking.service !== "stay"
             ? t("record.nameRole", { name: payout.payee, role: tRoles(PAYEE_ROLE[booking.service]) })
             : payout.payee}
         </RecordFact>

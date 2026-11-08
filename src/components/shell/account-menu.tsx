@@ -49,7 +49,6 @@ const OPS: Destination[] = [
 export const BY_ROLE: Record<Role, Destination[]> = {
   visitor: [],
   guest: GUEST,
-  host: SUPPLY,
   driver: SUPPLY,
   guide: SUPPLY,
   ops: OPS,

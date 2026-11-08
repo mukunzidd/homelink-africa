@@ -222,7 +222,6 @@
   "roles": {
     "visitor": "Déconnecté",
     "guest": "Voyageur",
-    "host": "Hôte",
     "driver": "Chauffeur",
     "guide": "Guide",
     "ops": "Équipe conciergerie",
@@ -273,7 +272,9 @@
       "depositBody": "{deposit}, versés en caution et rendus à votre départ. Les conditions de caution figurent dans le contrat de location.",
       "viewingTitle": "La visite",
       "viewingBody": "L’équipe de Kigali organise une visite et envoie le contrat de location à lire avant. Rien n’est débité ici."
-    }
+    },
+    "hostedByHomeLink": "Hébergé par HomeLink",
+    "managedBy": "{name} s'occupe de ce logement · dans l'équipe depuis {year}"
   },
   "quote": {
     "accommodation": "{rate} × {nights, plural, one {# nuit} other {# nuits}}",
@@ -311,8 +312,8 @@
     "payNow": "Payer {amount}",
     "processing": "Paiement en cours…",
     "stubNotice": "Ceci est un aperçu. Rien ne vous sera débité.",
-    "escrowTitle": "Votre argent est retenu jusqu'à votre arrivée",
-    "escrowBody": "Nous retenons la totalité du montant et ne le versons à l'hôte qu'après confirmation de votre arrivée. Si le logement ne correspond pas, remboursement intégral et un autre logement le soir même.",
+    "escrowTitle": "Votre argent reste remboursable jusqu'à ce que vous soyez entré",
+    "escrowBody": "Nous conservons la totalité du montant et ne le considérons comme acquis qu'une fois que l'équipe a confirmé votre arrivée. Si le logement ne correspond pas à la description, vous êtes intégralement remboursé et nous vous trouvons un autre logement le soir même.",
     "noEscrowBody": "Ce séjour est en dessous de notre seuil de séquestre, le paiement est donc direct. La même garantie d'exactitude s'applique.",
     "cancellation": "Annulation gratuite jusqu'au {date}. Ensuite, la première nuit n'est pas remboursable.",
     "agree": "En payant, vous acceptez les conditions de réservation et la politique d'annulation ci-dessus.",
@@ -492,7 +493,7 @@
     "inspected": "Quelqu'un y est allé",
     "inspectedBody": "{name} a vérifié ce logement en personne le {date}, pas depuis un formulaire.",
     "escrow": "Votre argent attend",
-    "escrowBody": "Nous le retenons et ne le versons à l'hôte qu'une fois votre arrivée confirmée.",
+    "escrowBody": "Nous le conservons et ne le considérons comme acquis qu'une fois votre arrivée confirmée par l'équipe.",
     "power": "Le courant tient",
     "powerBody": "Groupe électrogène sur place, démarré et plein lors de l'inspection.",
     "fibre": "Une fibre qui marche",
@@ -569,7 +570,7 @@
     "dueOnStart": "Dû à la date de début",
     "moneyNote": "Rien sur cet écran ne déplace d'argent. Les versements sont effectués par l'équipe de Kigali, et ces montants sont ceux sur lesquels elle travaille.",
     "notYours": "Cet écran est celui de quelqu'un d'autre",
-    "notYoursBody": "Cette page est réservée aux hôtes, chauffeurs et guides. Si vous êtes voyageur, vos réservations sont dans Voyages.",
+    "notYoursBody": "Cet écran est réservé aux chauffeurs et aux guides. Si vous êtes voyageur, vos réservations sont dans Voyages.",
     "ownershipNote": "Tout ce que HomeLink a vérifié dans cette catégorie. La répartition entre prestataires n'est pas encore modélisée : en V1, l'offre est mise en ligne par l'équipe concierge, il n'y a donc qu'un seul prestataire.",
     "tabsLabel": "Sections",
     "tabs": {
@@ -749,7 +750,11 @@
     "askToChange": "Demander une modification à l'équipe",
     "changesNote": "Pour l'instant, les tarifs, les photos et les disponibilités sont modifiés par l'équipe de Kigali. Écrivez-leur et c'est fait le jour même.",
     "groupCap": "Groupe max.",
-    "freeFrom": "Libre à partir du"
+    "freeFrom": "Libre à partir du",
+    "adminLabel": "Cette annonce, vue depuis l'espace de travail",
+    "adminTitle": "C'est vous qui le gérez",
+    "editInWorkspace": "Modifier dans l'espace de travail",
+    "adminNote": "Les modifications faites dans l'espace de travail apparaissent ici dès leur enregistrement."
   },
   "smart": {
     "title": "Recherche intelligente",
@@ -1042,7 +1047,7 @@
     },
     "messages": {
       "title": "Messages",
-      "body": "Connectez-vous pour lire la conversation liée à chaque réservation, avec l’équipe de Kigali et votre hôte, chauffeur ou guide."
+      "body": "Connectez-vous pour lire la conversation liée à chaque réservation, avec l'équipe de Kigali, votre chauffeur ou votre guide."
     },
     "signIn": "Se connecter",
     "previewNote": "Connexion d’aperçu",

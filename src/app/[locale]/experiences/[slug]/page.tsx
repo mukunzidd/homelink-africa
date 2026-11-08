@@ -65,6 +65,7 @@ export default async function ExperienceDetailPage({
     <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
       <SupplyOwnerBand
         kind="experience"
+        slug={experience.slug}
         supplyItemId={experience.id}
         rate={experience.pricePerPerson}
         rateLabel={t("perPerson")}

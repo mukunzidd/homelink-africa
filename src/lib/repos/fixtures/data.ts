@@ -39,7 +39,23 @@ function verification(
   };
 }
 
-export const LISTINGS: Listing[] = [
+/**
+ * Three property managers split the homes by area, the way a real team
+ * would: one north of the city centre, one east, one south.
+ */
+const MANAGERS = {
+  north: { name: "Placide K.", since: "2024-03-01" },
+  east: { name: "Diane U.", since: "2025-01-15" },
+  south: { name: "Olivier N.", since: "2024-09-01" },
+} as const;
+
+const MANAGER_BY_AREA: Record<string, Listing["propertyManager"]> = {
+  Kacyiru: MANAGERS.north, Nyarutarama: MANAGERS.north, Gacuriro: MANAGERS.north, Kiyovu: MANAGERS.north,
+  Kimihurura: MANAGERS.east, Remera: MANAGERS.east, Kibagabaga: MANAGERS.east,
+  Gikondo: MANAGERS.south, Kicukiro: MANAGERS.south, Nyamirambo: MANAGERS.south, Rebero: MANAGERS.south,
+};
+
+const RAW_LISTINGS: Omit<Listing, "propertyManager">[] = [
   {
     id: "lst_kacyiru_garden",
     slug: "kacyiru-garden-apartment",
@@ -287,6 +303,11 @@ export const LISTINGS: Listing[] = [
     unitsAvailable: 2,
   },
 ];
+
+export const LISTINGS: Listing[] = RAW_LISTINGS.map((l) => ({
+  ...l,
+  propertyManager: MANAGER_BY_AREA[l.neighbourhood] ?? MANAGERS.north,
+}));
 
 export const VEHICLES: Vehicle[] = [
   {
@@ -951,20 +972,14 @@ export const ADDON_REQUESTS: AddOnRequest[] = [
 
 /*
  * The same escrow state a guest reads as safety, read from behind as a job.
+ * Only partners appear: HomeLink hosts every home, so a stay pays nobody
+ * outside the company.
  * Amounts are what supply is actually paid: the booking total less HomeLink's
  * service fee, as `supplierShare` in pricing.ts works it out. They are written
  * out rather than computed so the fixture reads on its own, and they used to
  * be round guesses that disagreed with the supplier's own Money tab.
  */
 export const PAYOUTS: Payout[] = [
-  {
-    id: "pay_001",
-    bookingId: "bkg_001",
-    payee: "Placide K.",
-    amount: money(450_021, "RWF"),
-    status: "held",
-    releaseOn: "2026-11-14",
-  },
   {
     id: "pay_002",
     bookingId: "bkg_002",
@@ -980,14 +995,6 @@ export const PAYOUTS: Payout[] = [
     amount: money(81_257, "RWF"),
     status: "due",
     releaseOn: "2026-11-15",
-  },
-  {
-    id: "pay_004",
-    bookingId: "bkg_004",
-    payee: "Placide K.",
-    amount: money(394_947, "RWF"),
-    status: "paid",
-    releaseOn: "2026-03-09",
   },
   {
     id: "pay_005",
@@ -1043,7 +1050,7 @@ export const CONVERSATIONS: Conversation[] = [
     subject: "Generator and keys, 14 November",
     scope: { kind: "booking", id: "bkg_001" },
     participantNames: ["Aline M.", "Placide K."],
-    participantRoles: ["ops", "host"],
+    participantRoles: ["ops", "admin"],
     lastMessagePreview: "Tank is full and I ran it for ten minutes this morning. Living room is made up for them.",
     lastMessageAt: "2026-11-09T11:15:00Z",
     unreadCount: 0,
@@ -1169,7 +1176,7 @@ export const MESSAGES: Message[] = [
     id: "msg_007",
     conversationId: "cnv_004",
     authorName: "Placide K.",
-    authorRole: "host",
+    authorRole: "admin",
     body: "Tank is full and I ran it for ten minutes this morning. Living room is made up for them.",
     attachments: [
       {

@@ -222,7 +222,6 @@
   "roles": {
     "visitor": "Ntiwinjiye",
     "guest": "Umushyitsi",
-    "host": "Nyir'inzu",
     "driver": "Umushoferi",
     "guide": "Umuyobozi",
     "ops": "Itsinda rifasha",
@@ -273,7 +272,9 @@
       "depositBody": "{deposit}, abikwa nk’ingwate agasubizwa ubukode burangiye. Amabwiriza y’ingwate azana n’amasezerano.",
       "viewingTitle": "Gusura inzu",
       "viewingBody": "Itsinda ry’i Kigali rigutegurira gusura inzu rikakoherereza amasezerano ngo uyasome mbere. Nta mafaranga yishyurwa hano."
-    }
+    },
+    "hostedByHomeLink": "Yakirwa na HomeLink",
+    "managedBy": "{name} ni we wita kuri iyi nzu · mu itsinda kuva {year}"
   },
   "quote": {
     "accommodation": "{rate} × {nights, plural, one {ijoro #} other {amajoro #}}",
@@ -311,8 +312,8 @@
     "payNow": "Ishyura {amount}",
     "processing": "Turimo kwakira ubwishyu…",
     "stubNotice": "Iyi ni igerageza. Nta mafaranga azakurwaho.",
-    "escrowTitle": "Amafaranga yawe abikwa kugeza ugeze",
-    "escrowBody": "Tubika amafaranga yose kandi tukayaha nyir'inzu gusa nyuma yo kwemeza ko wageze. Niba ahantu hatameze nk'uko byasobanuwe, usubizwa amafaranga yose kandi tukagushakira ubundi bucumbi kuri uwo mugoroba.",
+    "escrowTitle": "Amafaranga yawe aguma ashobora gusubizwa kugeza winjiye",
+    "escrowBody": "Tubika amafaranga yose, kandi tuyafata nk'ayacu ari uko umuntu wo mu itsinda yemeje ko winjiye. Niba inzu idahuye n'ibyavuzwe, usubizwa amafaranga yose kandi tukagushakira indi nzu muri iryo joro.",
     "noEscrowBody": "Ubu bucumbi buri munsi y'urugero rwacu rwo kubika amafaranga, bityo ubwishyu bugera ako kanya. Ubwizerane ku byasobanuwe buracyariho.",
     "cancellation": "Guhagarika ku buntu kugeza {date}. Nyuma y'aho, ijoro rya mbere ntirisubizwa.",
     "agree": "Mu kwishyura wemera amabwiriza yo gufata n'amabwiriza yo guhagarika ari hejuru.",
@@ -492,7 +493,7 @@
     "inspected": "Hari uwahageze",
     "inspectedBody": "{name} yagenzuye aha hantu imbonankubone ku wa {date}, atari ku rupapuro.",
     "escrow": "Amafaranga yawe aritegereza",
-    "escrowBody": "Turayabika, tukayaha nyir'inzu gusa numara kwemeza ko wageze.",
+    "escrowBody": "Turayabika, tukayafata nk'ayacu ari uko itsinda ryemeje ko winjiye.",
     "power": "Umuriro ntugucika",
     "powerBody": "Jenerateri iri aho, yakoreshejwe kandi yuzuyemo lisansi mu igenzura.",
     "fibre": "Fibre ikora koko",
@@ -569,7 +570,7 @@
     "dueOnStart": "Agomba kwishyurwa ku itariki byatangiriyeho",
     "moneyNote": "Nta kintu kuri iyi paji cyimura amafaranga. Kwishyura bikorwa n'itsinda ryo i Kigali, kandi izi ngano ni zo bakoresha.",
     "notYours": "Iyi paji ni iy'undi muntu",
-    "notYoursBody": "Iyi ni iy'abatanga amazu, abashoferi n'abayobozi. Niba uri umukiriya, ibyo wabitse biri muri Ingendo.",
+    "notYoursBody": "Iyi paji ni iy'abashoferi n'abayobozi b'ingendo. Niba uri umushyitsi, ibyo wafashe biri muri Ingendo.",
     "ownershipNote": "Ibyo HomeLink yagenzuye byose muri iki cyiciro. Uwo ari we utunze iki nticyarashyirwaho — muri V1 ibyatanzwe bishyirwaho n'itsinda rya konsiyeji, bityo nk'aho hari umutanzi umwe.",
     "tabsLabel": "Ibice",
     "tabs": {
@@ -749,7 +750,11 @@
     "askToChange": "Saba itsinda guhindura ikintu",
     "changesNote": "Kugeza ubu ibiciro, amafoto n'uko biboneka bihindurwa n'itsinda ryo i Kigali. Baandikire bikorwe uwo munsi.",
     "groupCap": "Ingano ntarengwa",
-    "freeFrom": "Iraboneka guhera"
+    "freeFrom": "Iraboneka guhera",
+    "adminLabel": "Iri tangazo, ribonwa uri mu mwanya w'akazi",
+    "adminTitle": "Ni wowe uyicunga",
+    "editInWorkspace": "Hindura mu mwanya w'akazi",
+    "adminNote": "Ibihinduwe mu mwanya w'akazi bigaragara kuri iyi paji ako kanya bimaze kubikwa."
   },
   "smart": {
     "title": "Gushakisha by’ubwenge",
@@ -1042,7 +1047,7 @@
     },
     "messages": {
       "title": "Ubutumwa",
-      "body": "Injira usome ikiganiro kijyana na buri bwiyandikishe, n’itsinda rya Kigali n’ugucumbikira, umushoferi cyangwa umuyobozi w’urugendo."
+      "body": "Injira usome ibiganiro bijyana na buri gufata, n'itsinda rya Kigali, umushoferi wawe cyangwa umuyobozi w'urugendo."
     },
     "signIn": "Injira",
     "previewNote": "Kwinjira mu igerageza",

@@ -20,6 +20,7 @@ import { Highlights } from "@/components/listing/highlights";
 import { InspectorRow } from "@/components/listing/inspector-row";
 import { VerificationRecordPanel } from "@/components/listing/verification-record";
 import { SupplyOwnerBand } from "@/components/listing/supply-owner-band";
+import { HostedBy } from "@/components/listing/hosted-by";
 import { SaveButton } from "@/components/ui/save-button";
 import { ShareButton } from "@/components/ui/share-button";
 import { AreaMap } from "@/components/results/stays-map";
@@ -126,6 +127,7 @@ export default async function ListingDetailPage({
     <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-6 py-6">
       <SupplyOwnerBand
         kind="stay"
+        slug={listing.slug}
         supplyItemId={listing.id}
         // On the Rent view the owner is looking at a lease, so the band shows
         // what a tenant pays a month and when the place is free, not tonight's
@@ -205,8 +207,9 @@ export default async function ListingDetailPage({
             <p className="text-[15px] text-ink-2">{specs}</p>
           </section>
 
-          <div className="border-t border-line py-6">
+          <div className="flex flex-col gap-5 border-t border-line py-6">
             <InspectorRow record={listing.verification} />
+            <HostedBy manager={listing.propertyManager} />
           </div>
 
           <div className="border-t border-line py-6">

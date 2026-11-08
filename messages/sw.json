@@ -222,7 +222,6 @@
   "roles": {
     "visitor": "Hujaingia",
     "guest": "Mgeni",
-    "host": "Mwenyeji",
     "driver": "Dereva",
     "guide": "Mwongozaji",
     "ops": "Huduma kwa wateja",
@@ -273,7 +272,9 @@
       "depositBody": "{deposit}, inashikiliwa kama amana na kurudishwa upangaji ukiisha. Masharti ya amana yanakuja pamoja na mkataba wa kupanga.",
       "viewingTitle": "Kuja kuona",
       "viewingBody": "Timu ya Kigali inapanga siku ya kuja kuona na inakutumia mkataba wa kupanga uusome kabla. Hakuna malipo hapa."
-    }
+    },
+    "hostedByHomeLink": "Mwenyeji ni HomeLink",
+    "managedBy": "{name} anaitunza nyumba hii · kwenye timu tangu {year}"
   },
   "quote": {
     "accommodation": "{rate} × {nights, plural, one {usiku #} other {usiku #}}",
@@ -311,8 +312,8 @@
     "payNow": "Lipa {amount}",
     "processing": "Tunapokea malipo…",
     "stubNotice": "Huu ni mfano tu. Hakuna kitakachotozwa.",
-    "escrowTitle": "Pesa zako zinashikiliwa hadi uwasili",
-    "escrowBody": "Tunashikilia kiasi chote na kumpa mwenyeji baada tu ya wewe kuthibitisha kuingia. Mahali pasipolingana na maelezo, unarudishiwa pesa zote na tunakutafutia nyumba nyingine usiku huo huo.",
+    "escrowTitle": "Pesa zako zinaweza kurudishwa hadi uingie ndani",
+    "escrowBody": "Tunashikilia kiasi chote na tunakihesabu kuwa chetu tu baada ya mtu wa timu kuthibitisha kuwa umeingia. Ikiwa mahali si kama ilivyoelezwa, unarudishiwa pesa zote na tunakutafutia nyumba nyingine usiku huo huo.",
     "noEscrowBody": "Malazi haya yako chini ya kiwango chetu cha kushikilia pesa, kwa hiyo malipo yanaenda moja kwa moja. Hakikisho lile lile la usahihi bado linatumika.",
     "cancellation": "Kughairi bure hadi {date}. Baada ya hapo, malipo ya usiku wa kwanza hayarudishwi.",
     "agree": "Kwa kulipa unakubali masharti ya uhifadhi na sera ya kughairi iliyo hapo juu.",
@@ -492,7 +493,7 @@
     "inspected": "Mtu alipita ndani yake",
     "inspectedBody": "{name} alikagua mahali hapa ana kwa ana tarehe {date}, si kupitia fomu.",
     "escrow": "Pesa yako inasubiri",
-    "escrowBody": "Tunaishikilia na kumpa mwenyeji pale tu utakapothibitisha kuwa umeingia.",
+    "escrowBody": "Tunazishikilia na kuzihesabu kuwa zetu tu baada ya timu kuthibitisha kuwa umeingia.",
     "power": "Umeme haukatiki",
     "powerBody": "Jenereta ya akiba ipo, iliwashwa na kujazwa mafuta wakati wa ukaguzi.",
     "fibre": "Intaneti ya fibre inayofanya kazi",
@@ -569,7 +570,7 @@
     "dueOnStart": "Inalipwa siku ya kuanza",
     "moneyNote": "Hakuna kitu kwenye ukurasa huu kinachohamisha pesa. Malipo yanafanywa na timu ya Kigali, na kiasi kilicho hapa ndicho wanachotumia.",
     "notYours": "Ukurasa huu ni wa mtu mwingine",
-    "notYoursBody": "Bidhaa ni kwa wenyeji, madereva na waongozaji. Kama wewe ni mgeni, uhifadhi wako uko kwenye Safari.",
+    "notYoursBody": "Ukurasa huu ni wa madereva na waongozaji. Ikiwa wewe ni mgeni, uhifadhi wako uko kwenye Safari.",
     "ownershipNote": "Kila kitu ambacho HomeLink imethibitisha katika sehemu hii. Bado haijaonyeshwa ni mtoa huduma yupi anamiliki nini. Katika V1, bidhaa zinatangazwa na timu ya huduma, kwa hiyo kwa kweli kuna mtoa huduma mmoja.",
     "tabsLabel": "Sehemu",
     "tabs": {
@@ -749,7 +750,11 @@
     "askToChange": "Iombe timu ibadilishe kitu",
     "changesNote": "Kwa sasa bei, picha na upatikanaji vinabadilishwa na timu ya Kigali. Waandikie na itafanyika siku hiyo hiyo.",
     "groupCap": "Kikomo cha kikundi",
-    "freeFrom": "Wazi kuanzia"
+    "freeFrom": "Wazi kuanzia",
+    "adminLabel": "Tangazo hili, kama linavyoonekana kwenye eneo la kazi",
+    "adminTitle": "Wewe ndiye unayeisimamia",
+    "editInWorkspace": "Hariri kwenye eneo la kazi",
+    "adminNote": "Mabadiliko yanayofanywa kwenye eneo la kazi yanaonekana hapa mara tu yanapohifadhiwa."
   },
   "smart": {
     "title": "Utafutaji mahiri",
@@ -1236,7 +1241,7 @@
     },
     "messages": {
       "title": "Ujumbe",
-      "body": "Ingia usome mazungumzo yanayoambatana na kila nafasi uliyoweka, pamoja na timu ya Kigali na mwenyeji, dereva au mwongozaji wako."
+      "body": "Ingia usome mazungumzo yanayokuja na kila uhifadhi, na timu ya Kigali, dereva wako au mwongozaji wako."
     },
     "signIn": "Ingia",
     "previewNote": "Kuingia kwa majaribio",

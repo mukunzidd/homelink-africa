@@ -259,8 +259,9 @@ function unreadFor(conversationId: string, role: Role): number {
 
 function visibleTo(role: Role) {
   const reader = readsAs(role);
+  // Admin runs the homes and the desk both, so it is in every room.
   return (c: (typeof CONVERSATIONS)[number]) =>
-    c.participantRoles.includes(reader);
+    reader === "admin" || c.participantRoles.includes(reader);
 }
 
 function forReader(c: (typeof CONVERSATIONS)[number], role: Role) {

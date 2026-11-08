@@ -24,7 +24,6 @@ export const ROLE_COOKIE = "homelink.role";
 const ROLES: Role[] = [
   "visitor",
   "guest",
-  "host",
   "driver",
   "guide",
   "ops",
@@ -36,9 +35,17 @@ export function parseRole(value: string | undefined): Role {
   return ROLES.includes(value as Role) ? (value as Role) : "visitor";
 }
 
-/** Which lane of supply a role owns. Null for anyone who owns none. */
-export function supplyLaneFor(role: Role): "stay" | "car" | "experience" | null {
-  if (role === "host") return "stay";
+/**
+ * Which lane of supply a role owns. Null for anyone who owns none.
+ *
+ * HomeLink hosts every home itself, so no outside role owns stays: they are
+ * managed by admin from the workspace, not owned by anyone who signs in.
+ * `host` was removed for that reason, and a cookie still carrying it reads as
+ * a visitor in `parseRole`, never as admin: mapping a retired role onto the
+ * most powerful one is the habit that becomes a privilege escalation once
+ * the cookie is a real claim.
+ */
+export function supplyLaneFor(role: Role): "car" | "experience" | null {
   if (role === "driver") return "car";
   if (role === "guide") return "experience";
   return null;
@@ -47,13 +54,11 @@ export function supplyLaneFor(role: Role): "stay" | "car" | "experience" | null 
 /**
  * Whose side of a thread a role reads from.
  *
- * Admin borrows the ops queue (there is no admin journey to build against), and
- * its Threads tab read zero because no thread names admin as a participant.
- * Writing admin into every fixture thread would make the data claim something
- * about the product; reading as the ops desk is what an admin does today. So
- * the mapping lives here once, for the repo's visibility and unread rules and
- * for the transcript's left/right alignment, rather than in every screen.
+ * Admin used to borrow the ops desk's side, because no thread named admin.
+ * Now admin is the property manager in the desk-to-home threads that used to
+ * be a host's, so it reads as itself; seeing every thread is a visibility
+ * rule in the messaging repo, not a disguise here.
  */
 export function readsAs(role: Role): Role {
-  return role === "admin" ? "ops" : role;
+  return role;
 }

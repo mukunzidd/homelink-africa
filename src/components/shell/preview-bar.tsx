@@ -29,7 +29,6 @@ import { cn } from "@/lib/cn";
 const ROLES: Role[] = [
   "visitor",
   "guest",
-  "host",
   "driver",
   "guide",
   "ops",

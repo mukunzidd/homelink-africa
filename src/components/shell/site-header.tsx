@@ -30,7 +30,7 @@ import { SmartSearchTrigger } from "@/components/search/smart-search";
  * links stay in the avatar menu: the bar there has the room for Sign in but
  * not for two more words beside the account.
  */
-const SIGNED_IN: Role[] = ["guest", "host", "driver", "guide", "ops", "admin"];
+const SIGNED_IN: Role[] = ["guest", "driver", "guide", "ops", "admin"];
 export async function SiteHeader() {
   const t = await getTranslations("header");
   const unread = Object.fromEntries(
