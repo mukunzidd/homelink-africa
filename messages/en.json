@@ -373,7 +373,9 @@
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {# day} other {# days}}",
     "driver": "Driver",
-    "seats": "{rate} × {count, plural, one {# person} other {# people}}"
+    "seats": "{rate} × {count, plural, one {# person} other {# people}}",
+    "discount": "Promo code",
+    "free": "Free"
   },
   "cars": {
     "title": "Cars",
@@ -1532,6 +1534,40 @@
       "jobChanged": "Job changed",
       "payoutSent": "Payout sent",
       "documentExpiring": "Document expiring"
+    }
+  },
+  "extras": {
+    "airportPickup": {
+      "name": "Airport pickup",
+      "body": "A driver meets you at arrivals with your name on a sign, any hour."
+    },
+    "earlyCheckIn": {
+      "name": "Early check-in",
+      "body": "In from 10:00 instead of 14:00, for an early flight."
+    },
+    "lateCheckout": {
+      "name": "Late checkout",
+      "body": "Leave at 16:00 instead of 11:00, for an evening flight."
+    },
+    "groceries": {
+      "name": "Groceries on arrival",
+      "body": "Bread, milk, eggs, fruit, coffee and water in the kitchen when you walk in."
+    },
+    "cot": {
+      "name": "Baby cot",
+      "body": "A travel cot made up with sheets. Free."
+    },
+    "midStayClean": {
+      "name": "Mid-stay clean",
+      "body": "A full clean and fresh towels and sheets, per visit."
+    },
+    "childSeat": {
+      "name": "Child seat",
+      "body": "Fitted before handover, for children up to 4 years. Per day."
+    },
+    "fullInsurance": {
+      "name": "Full insurance",
+      "body": "No excess to pay if the car is damaged. Per day."
     }
   }
 }

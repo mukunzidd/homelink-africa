@@ -373,7 +373,9 @@
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {umunsi #} other {iminsi #}}",
     "driver": "Umushoferi",
-    "seats": "{rate} × {count, plural, one {umuntu #} other {abantu #}}"
+    "seats": "{rate} × {count, plural, one {umuntu #} other {abantu #}}",
+    "discount": "Kode y'igabanuka",
+    "free": "Ubuntu"
   },
   "cars": {
     "title": "Imodoka",
@@ -1532,6 +1534,40 @@
       "jobChanged": "Akazi kahindutse",
       "payoutSent": "Amafaranga yoherejwe",
       "documentExpiring": "Inyandiko igiye guta agaciro"
+    }
+  },
+  "extras": {
+    "airportPickup": {
+      "name": "Kwakirwa ku kibuga cy'indege",
+      "body": "Umushoferi akwakira aho abagenzi basohokera afite izina ryawe, igihe icyo ari cyo cyose."
+    },
+    "earlyCheckIn": {
+      "name": "Kwinjira kare",
+      "body": "Winjira guhera saa yine aho kuba saa munani, ku ndege igera kare."
+    },
+    "lateCheckout": {
+      "name": "Gusohoka bitinze",
+      "body": "Sohoka saa kumi aho kuba saa tanu, ku ndege ya nimugoroba."
+    },
+    "groceries": {
+      "name": "Ibiribwa uhageze",
+      "body": "Umugati, amata, amagi, imbuto, ikawa n'amazi mu gikoni ukihagera."
+    },
+    "cot": {
+      "name": "Igitanda cy'umwana",
+      "body": "Igitanda cy'umwana giteguye n'amashuka. Ni ubuntu."
+    },
+    "midStayClean": {
+      "name": "Isuku mu gihe cyo kuraramo",
+      "body": "Isuku yose n'amasume n'amashuka mashya, buri gusura."
+    },
+    "childSeat": {
+      "name": "Intebe y'umwana",
+      "body": "Ishyirwamo mbere yo kuguha imodoka, ku bana bagejeje ku myaka 4. Ku munsi."
+    },
+    "fullInsurance": {
+      "name": "Ubwishingizi bwuzuye",
+      "body": "Nta mafaranga wishyura imodoka nibaramuka yangiritse. Ku munsi."
     }
   }
 }

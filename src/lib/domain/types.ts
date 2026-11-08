@@ -435,3 +435,5 @@ export type NotificationPrefs = {
   /** Kigali times, "HH:MM". Null when off. */
   quietHours: { from: string; to: string } | null;
 };
+
+export type { ExtraKey, ExtraSelection } from "./extras";

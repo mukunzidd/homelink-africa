@@ -373,7 +373,9 @@
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {# jour} other {# jours}}",
     "driver": "Chauffeur",
-    "seats": "{rate} × {count, plural, one {# personne} other {# personnes}}"
+    "seats": "{rate} × {count, plural, one {# personne} other {# personnes}}",
+    "discount": "Code promo",
+    "free": "Gratuit"
   },
   "cars": {
     "title": "Voitures",
@@ -1532,6 +1534,40 @@
       "jobChanged": "Mission modifiée",
       "payoutSent": "Versement envoyé",
       "documentExpiring": "Document bientôt expiré"
+    }
+  },
+  "extras": {
+    "airportPickup": {
+      "name": "Accueil à l'aéroport",
+      "body": "Un chauffeur vous attend aux arrivées avec votre nom, à toute heure."
+    },
+    "earlyCheckIn": {
+      "name": "Arrivée anticipée",
+      "body": "Accès dès 10 h au lieu de 14 h, pour un vol matinal."
+    },
+    "lateCheckout": {
+      "name": "Départ tardif",
+      "body": "Départ à 16 h au lieu de 11 h, pour un vol du soir."
+    },
+    "groceries": {
+      "name": "Courses à l'arrivée",
+      "body": "Pain, lait, œufs, fruits, café et eau dans la cuisine à votre arrivée."
+    },
+    "cot": {
+      "name": "Lit bébé",
+      "body": "Un lit parapluie avec draps. Gratuit."
+    },
+    "midStayClean": {
+      "name": "Ménage en cours de séjour",
+      "body": "Ménage complet, serviettes et draps propres, par passage."
+    },
+    "childSeat": {
+      "name": "Siège enfant",
+      "body": "Installé avant la remise du véhicule, jusqu'à 4 ans. Par jour."
+    },
+    "fullInsurance": {
+      "name": "Assurance complète",
+      "body": "Aucune franchise à payer en cas de dommage. Par jour."
     }
   }
 }

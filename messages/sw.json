@@ -373,7 +373,9 @@
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {siku #} other {siku #}}",
     "driver": "Dereva",
-    "seats": "{rate} × {count, plural, one {mtu #} other {watu #}}"
+    "seats": "{rate} × {count, plural, one {mtu #} other {watu #}}",
+    "discount": "Msimbo wa punguzo",
+    "free": "Bure"
   },
   "cars": {
     "title": "Magari",
@@ -1532,6 +1534,40 @@
       "jobChanged": "Kazi imebadilika",
       "payoutSent": "Malipo yametumwa",
       "documentExpiring": "Hati inakaribia kuisha"
+    }
+  },
+  "extras": {
+    "airportPickup": {
+      "name": "Kuchukuliwa uwanja wa ndege",
+      "body": "Dereva anakupokea sehemu ya wanaowasili akiwa na jina lako, saa yoyote."
+    },
+    "earlyCheckIn": {
+      "name": "Kuingia mapema",
+      "body": "Ingia kuanzia saa 10:00 badala ya 14:00, kwa ndege ya mapema."
+    },
+    "lateCheckout": {
+      "name": "Kutoka kwa kuchelewa",
+      "body": "Toka saa 16:00 badala ya 11:00, kwa ndege ya jioni."
+    },
+    "groceries": {
+      "name": "Vyakula ukifika",
+      "body": "Mkate, maziwa, mayai, matunda, kahawa na maji jikoni unapoingia."
+    },
+    "cot": {
+      "name": "Kitanda cha mtoto",
+      "body": "Kitanda cha safari kilichotandikwa. Bure."
+    },
+    "midStayClean": {
+      "name": "Usafi katikati ya kukaa",
+      "body": "Usafi kamili na taulo na shuka safi, kila ziara."
+    },
+    "childSeat": {
+      "name": "Kiti cha mtoto",
+      "body": "Kinawekwa kabla ya kukabidhiwa gari, kwa watoto hadi miaka 4. Kwa siku."
+    },
+    "fullInsurance": {
+      "name": "Bima kamili",
+      "body": "Hakuna ziada ya kulipa gari likiharibika. Kwa siku."
     }
   }
 }

@@ -2,6 +2,8 @@ import type { DriveMode, Experience, Listing, ServiceKind, Vehicle } from "./typ
 import type { CurrencyCode, FxTable, Money } from "./money";
 import { add, convert, money, multiply, subtract } from "./money";
 import { nightsBetween, type IsoDate } from "./dates";
+import { priceExtras, type ExtraKey, type ExtraSelection } from "./extras";
+import { applyPromo, type PromoResult } from "./promo";
 
 /**
  * Quote arithmetic, in the supplier's own currency.
@@ -29,11 +31,16 @@ export type QuoteLineKey =
   | "serviceFee"
   | "hire"
   | "driver"
-  | "seats";
+  | "seats"
+  /** One chosen extra; `QuoteLine.extra` says which. */
+  | "extra"
+  /** A promo code. Always negative. */
+  | "discount";
 
 export type QuoteLine = {
   key: QuoteLineKey;
   amount: Money;
+  extra?: ExtraKey;
 };
 
 export type Quote = {
@@ -202,7 +209,7 @@ export function toDisplayQuote(
   }
 
   const lines = quote.lines.map((line) => ({
-    key: line.key,
+    ...line,
     amount: convert(line.amount, currency, fx),
   }));
 
@@ -238,4 +245,60 @@ export function bookingReference(seed: string): string {
     hash = Math.floor(hash / ALPHABET.length) + i * 7919;
   }
   return `HL-${out.slice(0, 4)}-${out.slice(4)}`;
+}
+
+export type QuoteInput = {
+  kind: ServiceKind;
+  start: IsoDate;
+  end: IsoDate;
+  party: number;
+  driveMode?: DriveMode;
+  extras?: ExtraSelection[];
+  promoCode?: string;
+};
+
+/**
+ * The whole price of a booking: the lane's base quote, then the extras,
+ * then a promo code, then escrow decided on the final total.
+ *
+ * This is what the server runs when a booking is placed. The browser shows
+ * the same function's answer, but the server never takes the browser's
+ * number for it.
+ */
+export function quoteBooking(
+  supply: Listing | Vehicle | Experience,
+  input: QuoteInput,
+  on: IsoDate,
+): (Quote & { promo?: PromoResult }) | null {
+  const base =
+    input.kind === "stay"
+      ? quoteStay(supply as Listing, input.start, input.end)
+      : input.kind === "car"
+        ? quoteVehicle(supply as Vehicle, input.start, input.end, input.driveMode ?? "selfDrive")
+        : quoteExperience(supply as Experience, input.party);
+  if (!base) return null;
+
+  const currency = base.total.currency;
+  const extras = priceExtras(input.kind, input.extras ?? [], base.nights).filter(
+    // Extras are priced in RWF; a lane priced in another currency has none.
+    (l) => l.amount.currency === currency,
+  );
+  const lines: QuoteLine[] = [...base.lines, ...extras];
+
+  let promo: PromoResult | undefined;
+  if (input.promoCode?.trim()) {
+    promo = applyPromo(input.promoCode, base, on);
+    if (promo.ok && promo.discount.minor > 0) {
+      lines.push({ key: "discount", amount: money(-promo.discount.minor, currency) });
+    }
+  }
+
+  const total = lines.reduce<Money>((acc, l) => add(acc, l.amount), money(0, currency));
+  return {
+    nights: base.nights,
+    lines,
+    total,
+    escrowHeld: input.kind === "stay" && total.minor >= ESCROW_THRESHOLD_RWF,
+    ...(promo ? { promo } : {}),
+  };
 }
