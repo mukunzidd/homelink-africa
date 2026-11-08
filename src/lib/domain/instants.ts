@@ -62,3 +62,29 @@ export function dayOf(iso: string): string {
 export function kigaliDay(instant: Date | string = new Date()): string {
   return dayOf(typeof instant === "string" ? instant : instant.toISOString());
 }
+
+/**
+ * "12 minutes ago", "5 hours ago", "yesterday", "3 days ago", then a date.
+ *
+ * Yesterday means the Kigali calendar day before today, not 24 hours: a
+ * message at 23:30 last night is yesterday's even at 08:00 this morning,
+ * and that is how the notification panel's groups read too.
+ */
+export function formatAgo(iso: string, now: Date, locale: string): string {
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+  const seconds = (now.getTime() - new Date(iso).getTime()) / 1000;
+  if (seconds < 60) return rtf.format(0, "second");
+  if (seconds < 3600) return rtf.format(-Math.floor(seconds / 60), "minute");
+  const today = kigaliDay(now);
+  const day = kigaliDay(iso);
+  if (day === today) return rtf.format(-Math.floor(seconds / 3600), "hour");
+  const days = Math.round(
+    (Date.parse(`${today}T00:00:00Z`) - Date.parse(`${day}T00:00:00Z`)) / 86_400_000,
+  );
+  if (days <= 6) return rtf.format(-days, "day");
+  return new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "short",
+    timeZone: OPERATING_TIMEZONE,
+  }).format(new Date(iso));
+}

@@ -10,6 +10,7 @@ import { repos } from "@/lib/repos";
 import type { Role } from "@/lib/domain/types";
 import { MobileMenu } from "./mobile-menu";
 import { SmartSearchTrigger } from "@/components/search/smart-search";
+import { NotificationBell } from "@/components/notifications/bell";
 
 /**
  * One 64px bar on a desktop. Below 1024px the lanes drop to a 44px strip of
@@ -70,6 +71,7 @@ export async function SiteHeader() {
           <div className="ml-auto flex flex-none items-center gap-1 lg:ml-0">
             <AccountLinks unread={unread} className="hidden lg:flex" />
             <SmartSearchTrigger />
+            <NotificationBell allHref="/notifications" />
             <PreferencesMenu className="hidden sm:block" />
             <SavedLink />
             <AccountMenu className="hidden sm:block" />

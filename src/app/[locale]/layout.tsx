@@ -10,6 +10,7 @@ import { PreferencesProvider } from "@/lib/preferences/context";
 import { PreviewBar } from "@/components/shell/preview-bar";
 import { ThemeScript } from "@/components/shell/theme-script";
 import { SmartSearchProvider } from "@/components/search/smart-search";
+import { ToastProvider } from "@/components/notifications/toaster";
 
 import "../globals.css";
 
@@ -94,8 +95,10 @@ export default async function LocaleLayout({
             initialSegment={initialSegment}
           >
             <SmartSearchProvider>
-              {children}
-              <PreviewBar />
+              <ToastProvider>
+                {children}
+                <PreviewBar />
+              </ToastProvider>
             </SmartSearchProvider>
           </PreferencesProvider>
         </NextIntlClientProvider>

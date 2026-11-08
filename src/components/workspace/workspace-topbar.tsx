@@ -11,6 +11,7 @@ import { useDismissable } from "@/lib/use-dismissable";
 import { SmartSearchTrigger } from "@/components/search/smart-search";
 import { ChevronDownIcon, ExitIcon, MenuIcon, PlusIcon } from "@/components/ui/icons";
 import { Select } from "@/components/ui/select";
+import { NotificationBell } from "@/components/notifications/bell";
 import { cn } from "@/lib/cn";
 
 /**
@@ -54,7 +55,7 @@ export function WorkspaceTopbar({
       <div className="flex flex-none items-center gap-1">
         {role === "admin" && properties.length > 0 && <PropertySwitcher properties={properties} />}
         {staff && <SmartSearchTrigger />}
-        {bell}
+        {bell ?? <NotificationBell allHref="/manage/notifications" />}
         {staff && <NewMenu role={role} />}
         <WorkspaceAccount role={role} />
       </div>
