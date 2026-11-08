@@ -4,7 +4,9 @@ import { startTransition, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { sendMessage, markThreadRead } from "@/app/actions/messages";
 import { MESSAGE_LIMITS } from "@/lib/repos/types";
-import { CloseIcon, PaperclipIcon } from "@/components/ui/icons";
+import { CloseIcon, PaperclipIcon, PinIcon } from "@/components/ui/icons";
+import type { SharedLocation } from "@/lib/domain/types";
+import { LocationPicker } from "./location-picker";
 import { EmojiPicker } from "./emoji-picker";
 import { cn } from "@/lib/cn";
 
@@ -59,6 +61,7 @@ export function Composer({ conversationId }: { conversationId: string }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
+  const [placing, setPlacing] = useState(false);
   const box = useRef<HTMLTextAreaElement>(null);
   const picker = useRef<HTMLInputElement>(null);
 
@@ -169,6 +172,21 @@ export function Composer({ conversationId }: { conversationId: string }) {
     setText("");
     setPhotos([]);
     box.current?.focus();
+    window.setTimeout(() => document.getElementById("thread-end")?.scrollIntoView({ behavior: "smooth", block: "end" }), 80);
+  }
+
+  // A place goes as its own message, straight away: it is an answer to
+  // "where are you", and it should not wait behind a half-written reply.
+  async function shareLocation(location: SharedLocation) {
+    setBusy(true);
+    setError(null);
+    const r = await sendMessage(conversationId, "", [], location);
+    setBusy(false);
+    if (!r.ok) {
+      setError(t("sendFailed"));
+      return;
+    }
+    setPlacing(false);
     window.setTimeout(() => document.getElementById("thread-end")?.scrollIntoView({ behavior: "smooth", block: "end" }), 80);
   }
 
@@ -287,6 +305,16 @@ export function Composer({ conversationId }: { conversationId: string }) {
             <span className="hidden sm:inline">{t("attach")}</span>
             <span className="sr-only sm:hidden">{t("attach")}</span>
           </button>
+          <button
+            type="button"
+            onClick={() => setPlacing(true)}
+            disabled={busy}
+            className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-ctl px-2.5 text-[13px] font-semibold text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <PinIcon size={15} />
+            <span className="hidden sm:inline">{t("location.button")}</span>
+            <span className="sr-only sm:hidden">{t("location.button")}</span>
+          </button>
           <input
             ref={picker}
             type="file"
@@ -311,6 +339,8 @@ export function Composer({ conversationId }: { conversationId: string }) {
           </button>
         </div>
       </div>
+
+      <LocationPicker open={placing} onClose={() => setPlacing(false)} onShare={(l) => void shareLocation(l)} busy={busy} />
 
       {error && (
         <p role="alert" className="text-[13px] text-crit">

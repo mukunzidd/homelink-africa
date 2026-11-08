@@ -1,4 +1,5 @@
 import type {
+  SharedLocation,
   AddOnRequest,
   AppNotification,
   AuditEntry,
@@ -261,7 +262,7 @@ export interface MessagingRepo {
    * when a photo was not uploaded to this thread by this role. Tells every
    * other role in the thread.
    */
-  send(conversationId: string, role: Role, input: { body: string; attachments?: { id: string; alt: string }[] }): Promise<Message>;
+  send(conversationId: string, role: Role, input: { body: string; attachments?: { id: string; alt: string }[]; location?: SharedLocation }): Promise<Message>;
   /** Holds one photo for a message not yet sent. JPEG, PNG or WebP, checked by its bytes. */
   upload(conversationId: string, role: Role, file: { mime: string; bytes: Uint8Array }): Promise<{ id: string; url: string }>;
   /** A stored photo, only for a role that can see its thread. */

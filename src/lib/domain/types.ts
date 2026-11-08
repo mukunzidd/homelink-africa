@@ -435,6 +435,14 @@ export type Attachment = {
   alt: string;
 };
 
+/** A point someone shared, with the name and the directions people give. */
+export type SharedLocation = GeoPoint & {
+  /** "Nyabugogo Bus Park", or nothing for a dropped pin. */
+  name?: string;
+  /** What gets someone to the door: "KG 7 Ave, the blue gate". */
+  address?: string;
+};
+
 export type Message = {
   id: string;
   conversationId: string;
@@ -443,6 +451,8 @@ export type Message = {
   /** May be empty when the photograph is the whole message. */
   body: string;
   attachments?: Attachment[];
+  /** A place shared in the thread: where to meet, where the car is. */
+  location?: SharedLocation;
   sentAt: string;
   readAt?: string;
 };

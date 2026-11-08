@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
-import type { AppNotification, NotificationCategory } from "@/lib/domain/types";
+import type { AppNotification, NotificationCategory, Role } from "@/lib/domain/types";
 import { Link, useRouter } from "@/i18n/navigation";
 import { usePreferences } from "@/lib/preferences/context";
 import { groupByDay } from "@/lib/notifications/group";
@@ -25,9 +25,15 @@ const CATEGORIES: NotificationCategory[] = ["booking", "payment", "message", "st
  * when the panel opens, not with the page: the site header is static, and a
  * bell that made every page read the role cookie would undo that.
  */
-export function NotificationBell({ allHref }: { allHref: string }) {
+export function NotificationBell({ allHref, role: known }: { allHref: string; role?: Role }) {
   const t = useTranslations("notifications");
-  const { role } = usePreferences();
+  const prefs = usePreferences();
+  // Where the server already knows the role (the workspace reads the cookie),
+  // it is passed in, so the bell renders the same on both sides. The
+  // browser's stored role arrives after hydration, and a bell that waited for
+  // it rendered differently from the server's HTML whenever the bar
+  // hydrated late.
+  const role = known ?? prefs.role;
   const router = useRouter();
   const toast = useToast();
   const signedIn = role !== "visitor";

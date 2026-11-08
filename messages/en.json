@@ -653,7 +653,37 @@
     "tooMany": "Up to {max} photos in one message.",
     "dropHere": "Drop photos to attach them",
     "openPhoto": "Open the photo full size",
-    "photoFrom": "Photo from {name}"
+    "photoFrom": "Photo from {name}",
+    "location": {
+      "button": "Location",
+      "title": "Share a location",
+      "search": "Search a place or a street address",
+      "useMine": "Use where I am now",
+      "locating": "Finding you…",
+      "denied": "Location is blocked for this site. Allow it in your browser, or search instead.",
+      "unavailable": "Your device could not find you. Search, or move the map to the spot.",
+      "streetHint": "{district}. Move the map until the pin is on the door.",
+      "useTyped": "Use “{text}” as the address",
+      "useTypedHint": "Then move the map to the spot.",
+      "noMatch": "No place by that name here. Use it as the address and move the map to the spot.",
+      "mapHint": "Drag the map, or tap a spot, to put the pin where you mean.",
+      "mapLabel": "Map for choosing a place",
+      "name": "Name (optional)",
+      "namePlaceholder": "Nyabugogo Bus Park",
+      "address": "Address or directions (optional)",
+      "addressPlaceholder": "KG 7 Ave, the blue gate",
+      "share": "Share location",
+      "cancel": "Cancel",
+      "kinds": {
+        "landmark": "Place",
+        "transport": "Bus park or airport",
+        "neighbourhood": "Neighbourhood"
+      },
+      "dropped": "Shared location",
+      "open": "Open in Maps",
+      "directions": "Directions",
+      "mapOf": "Map of {name}, opens in Google Maps"
+    }
   },
   "queue": {
     "title": "The queue",

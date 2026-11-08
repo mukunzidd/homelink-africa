@@ -5,6 +5,7 @@ import { formatDate } from "@/lib/domain/dates";
 import { dayOf, formatTimeOfDay } from "@/lib/domain/instants";
 import { readsAs } from "@/lib/preferences/role";
 import { Composer } from "./composer";
+import { LocationCard } from "./location-card";
 import { cn } from "@/lib/cn";
 
 /**
@@ -108,6 +109,13 @@ export async function ThreadView({
                   <p className="whitespace-pre-line break-words text-[15px] leading-relaxed text-ink-2">
                     {message.body}
                   </p>
+                )}
+
+                {message.location && (
+                  <LocationCard
+                    location={message.location}
+                    labels={{ shared: t("location.dropped"), open: t("location.open"), directions: t("location.directions"), map: t("location.mapOf", { name: message.location.name || t("location.dropped") }) }}
+                  />
                 )}
 
                 {message.attachments && message.attachments.length > 0 && (

@@ -11,7 +11,7 @@ import type {
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
-import type { Conversation, Role } from "@/lib/domain/types";
+import type { Conversation, Role, SharedLocation } from "@/lib/domain/types";
 import { readsAs } from "@/lib/preferences/role";
 import { convert, formatMoney } from "@/lib/domain/money";
 import { isIsoDate } from "@/lib/domain/dates";
@@ -287,7 +287,8 @@ const messaging: MessagingRepo = {
       if (!u) throw new Error("No such photo");
       return { u, alt: a.alt.trim().slice(0, 200) };
     });
-    if (!body && !held.length) throw new Error("Nothing to send");
+    const location = input.location ? cleanLocation(input.location) : undefined;
+    if (!body && !held.length && !location) throw new Error("Nothing to send");
 
     const reader = readsAs(role);
     const at = new Date().toISOString();
@@ -301,13 +302,18 @@ const messaging: MessagingRepo = {
       authorRole: reader,
       body,
       sentAt: at,
+      ...(location ? { location } : {}),
       ...(held.length
         ? { attachments: held.map(({ u, alt }) => ({ id: u.id, url: fileUrl(u.id), alt })) }
         : {}),
     };
     for (const { u } of held) u.messageId = id;
     store().messages.push(message);
-    c.lastMessagePreview = body ? body.slice(0, 120) : `📷 ${held.length}`;
+    c.lastMessagePreview = body
+      ? body.slice(0, 120)
+      : location
+        ? `📍 ${location.name || location.address || `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`}`.slice(0, 120)
+        : `📷 ${held.length}`;
     c.lastMessageAt = at;
 
     // Everyone else in the room hears about it; admin is in every room by
@@ -361,6 +367,18 @@ const messaging: MessagingRepo = {
     return n;
   },
 };
+
+/** A point on the earth with short text, or a throw. */
+function cleanLocation(l: SharedLocation): SharedLocation {
+  const lat = Number(l.lat);
+  const lng = Number(l.lng);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) throw new Error("Not a place");
+  const name = typeof l.name === "string" ? l.name.trim().slice(0, 120) : "";
+  const address = typeof l.address === "string" ? l.address.trim().slice(0, 200) : "";
+  // Six decimals is ten centimetres; anything finer is noise from the phone.
+  const round = (n: number) => Math.round(n * 1e6) / 1e6;
+  return { lat: round(lat), lng: round(lng), ...(name ? { name } : {}), ...(address ? { address } : {}) };
+}
 
 const fileUrl = (id: string) => `/api/messages/files/${id}`;
 

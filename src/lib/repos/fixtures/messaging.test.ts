@@ -92,3 +92,22 @@ describe("seeded threads", () => {
     expect((await repos.messaging.forRole("guest"))[0].id).toBe(c.id);
   });
 });
+
+describe("messaging.send with a location", () => {
+  beforeEach(() => resetStore());
+
+  it("sends a place on its own, trimmed, and previews it by name", async () => {
+    const c = guestThread();
+    const m = await repos.messaging.send(c.id, "guest", {
+      body: "",
+      location: { lat: -1.9389, lng: 30.045, name: " Nyabugogo Bus Park ", address: "Gate 2, by the MTN kiosk" },
+    });
+    expect(m.location).toEqual({ lat: -1.9389, lng: 30.045, name: "Nyabugogo Bus Park", address: "Gate 2, by the MTN kiosk" });
+    expect((await repos.messaging.byId(c.id, "guest"))!.lastMessagePreview).toBe("📍 Nyabugogo Bus Park");
+  });
+
+  it("refuses a point that is not on the earth", async () => {
+    await expect(repos.messaging.send(guestThread().id, "guest", { body: "", location: { lat: 91, lng: 0 } })).rejects.toThrow();
+    await expect(repos.messaging.send(guestThread().id, "guest", { body: "", location: { lat: Number.NaN, lng: 0 } })).rejects.toThrow();
+  });
+});

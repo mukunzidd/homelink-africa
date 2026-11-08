@@ -653,7 +653,37 @@
     "tooMany": "Amafoto atarenze {max} mu butumwa bumwe.",
     "dropHere": "Shyira amafoto hano uyomeke",
     "openPhoto": "Fungura ifoto mu bunini bwayo",
-    "photoFrom": "Ifoto ya {name}"
+    "photoFrom": "Ifoto ya {name}",
+    "location": {
+      "button": "Aho ndi",
+      "title": "Sangiza aho uri",
+      "search": "Shakisha ahantu cyangwa aderesi y'umuhanda",
+      "useMine": "Koresha aho ndi ubu",
+      "locating": "Turimo kugushakisha…",
+      "denied": "Iyi mbuga yabujijwe kumenya aho uri. Byemere muri mushakisha, cyangwa ushakishe.",
+      "unavailable": "Telefoni yawe ntiyabashije kumenya aho uri. Shakisha, cyangwa wimure ikarita ugere aho ushaka.",
+      "streetHint": "{district}. Imura ikarita kugeza ipine igeze ku muryango.",
+      "useTyped": "Koresha “{text}” nk'aderesi",
+      "useTypedHint": "Hanyuma wimure ikarita ugere aho ushaka.",
+      "noMatch": "Nta hantu hitwa gutyo. Bikoreshe nk'aderesi maze wimure ikarita ugere aho ushaka.",
+      "mapHint": "Kurura ikarita, cyangwa ukande ahantu, ushyire ipine aho ushaka.",
+      "mapLabel": "Ikarita yo guhitamo ahantu",
+      "name": "Izina (si ngombwa)",
+      "namePlaceholder": "Gare ya Nyabugogo",
+      "address": "Aderesi cyangwa uko bahagera (si ngombwa)",
+      "addressPlaceholder": "KG 7 Ave, igipangu cy'ubururu",
+      "share": "Ohereza aho hantu",
+      "cancel": "Reka",
+      "kinds": {
+        "landmark": "Ahantu",
+        "transport": "Gare cyangwa ikibuga cy'indege",
+        "neighbourhood": "Agace"
+      },
+      "dropped": "Aho hantu hasangijwe",
+      "open": "Fungura muri Maps",
+      "directions": "Inzira",
+      "mapOf": "Ikarita ya {name}, ifungukira muri Google Maps"
+    }
   },
   "queue": {
     "title": "Umurongo",

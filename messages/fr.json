@@ -653,7 +653,37 @@
     "tooMany": "{max} photos au plus par message.",
     "dropHere": "Déposez les photos pour les joindre",
     "openPhoto": "Ouvrir la photo en grand",
-    "photoFrom": "Photo de {name}"
+    "photoFrom": "Photo de {name}",
+    "location": {
+      "button": "Lieu",
+      "title": "Partager un lieu",
+      "search": "Chercher un lieu ou une adresse",
+      "useMine": "Utiliser ma position",
+      "locating": "Localisation…",
+      "denied": "La localisation est bloquée pour ce site. Autorisez-la dans le navigateur, ou cherchez plutôt.",
+      "unavailable": "Votre appareil n'a pas pu vous localiser. Cherchez, ou déplacez la carte jusqu'au bon endroit.",
+      "streetHint": "{district}. Déplacez la carte jusqu'à ce que l'épingle soit sur la porte.",
+      "useTyped": "Utiliser « {text} » comme adresse",
+      "useTypedHint": "Puis déplacez la carte jusqu'au bon endroit.",
+      "noMatch": "Aucun lieu de ce nom ici. Utilisez-le comme adresse et déplacez la carte jusqu'au bon endroit.",
+      "mapHint": "Faites glisser la carte, ou touchez un point, pour placer l'épingle.",
+      "mapLabel": "Carte pour choisir un lieu",
+      "name": "Nom (facultatif)",
+      "namePlaceholder": "Gare routière de Nyabugogo",
+      "address": "Adresse ou indications (facultatif)",
+      "addressPlaceholder": "KG 7 Ave, le portail bleu",
+      "share": "Partager le lieu",
+      "cancel": "Annuler",
+      "kinds": {
+        "landmark": "Lieu",
+        "transport": "Gare routière ou aéroport",
+        "neighbourhood": "Quartier"
+      },
+      "dropped": "Lieu partagé",
+      "open": "Ouvrir dans Maps",
+      "directions": "Itinéraire",
+      "mapOf": "Carte de {name}, s'ouvre dans Google Maps"
+    }
   },
   "queue": {
     "title": "La file",

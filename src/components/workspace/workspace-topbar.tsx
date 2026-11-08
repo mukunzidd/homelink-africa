@@ -55,7 +55,7 @@ export function WorkspaceTopbar({
       <div className="flex flex-none items-center gap-1">
         {role === "admin" && properties.length > 0 && <PropertySwitcher properties={properties} />}
         {staff && <SmartSearchTrigger />}
-        {bell ?? <NotificationBell allHref="/manage/notifications" />}
+        {bell ?? <NotificationBell allHref="/manage/notifications" role={role} />}
         {staff && <NewMenu role={role} />}
         <WorkspaceAccount role={role} />
       </div>

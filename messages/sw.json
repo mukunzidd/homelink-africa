@@ -653,7 +653,37 @@
     "tooMany": "Picha zisizozidi {max} kwa ujumbe mmoja.",
     "dropHere": "Weka picha hapa kuziambatisha",
     "openPhoto": "Fungua picha kwa ukubwa kamili",
-    "photoFrom": "Picha kutoka kwa {name}"
+    "photoFrom": "Picha kutoka kwa {name}",
+    "location": {
+      "button": "Mahali",
+      "title": "Shiriki mahali",
+      "search": "Tafuta mahali au anwani ya mtaa",
+      "useMine": "Tumia nilipo sasa",
+      "locating": "Tunakutafuta…",
+      "denied": "Mahali pamezuiwa kwa tovuti hii. Ruhusu kwenye kivinjari, au tafuta badala yake.",
+      "unavailable": "Kifaa chako hakikuweza kukupata. Tafuta, au sogeza ramani hadi mahali hapo.",
+      "streetHint": "{district}. Sogeza ramani hadi pini iwe mlangoni.",
+      "useTyped": "Tumia “{text}” kama anwani",
+      "useTypedHint": "Kisha sogeza ramani hadi mahali hapo.",
+      "noMatch": "Hakuna mahali kwa jina hilo hapa. Litumie kama anwani na usogeze ramani hadi mahali hapo.",
+      "mapHint": "Buruta ramani, au gusa mahali, kuweka pini unapomaanisha.",
+      "mapLabel": "Ramani ya kuchagua mahali",
+      "name": "Jina (si lazima)",
+      "namePlaceholder": "Stendi ya Nyabugogo",
+      "address": "Anwani au maelekezo (si lazima)",
+      "addressPlaceholder": "KG 7 Ave, geti la bluu",
+      "share": "Shiriki mahali",
+      "cancel": "Ghairi",
+      "kinds": {
+        "landmark": "Mahali",
+        "transport": "Stendi au uwanja wa ndege",
+        "neighbourhood": "Mtaa"
+      },
+      "dropped": "Mahali paliposhirikiwa",
+      "open": "Fungua kwenye Maps",
+      "directions": "Maelekezo ya njia",
+      "mapOf": "Ramani ya {name}, inafunguka kwenye Google Maps"
+    }
   },
   "queue": {
     "title": "Foleni",
