@@ -565,3 +565,13 @@ export function ExitIcon({ className, size = 16 }: IconProps) {
     </svg>
   );
 }
+
+/** A trip: the bag you pack for it. */
+export function SuitcaseIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <rect x="3.5" y="6.5" width="13" height="9.5" rx="1.5" />
+      <path d="M7.5 6.5V5A1.5 1.5 0 0 1 9 3.5h2A1.5 1.5 0 0 1 12.5 5v1.5M3.5 10.5h13" />
+    </svg>
+  );
+}

@@ -9,6 +9,7 @@ import { usePreferences } from "@/lib/preferences/context";
 import { groupByDay } from "@/lib/notifications/group";
 import { markAllNotificationsRead, markNotificationsRead } from "@/app/actions/notifications";
 import { BellIcon, CloseIcon } from "@/components/ui/icons";
+import { HoverLabel } from "@/components/ui/hover-label";
 import { NotificationItem } from "./notification-item";
 import { notifyChanged, useUnread } from "./use-unread";
 import { useToast } from "./toaster";
@@ -236,7 +237,7 @@ export function NotificationBell({ allHref }: { allHref: string }) {
           setOpen((v) => !v);
         }}
         className={cn(
-          "relative grid size-9 cursor-pointer place-items-center rounded-ctl transition-colors",
+          "group relative grid size-9 cursor-pointer place-items-center rounded-ctl transition-colors",
           open ? "bg-surface-2 text-ink" : "text-ink-2 hover:bg-surface-2 hover:text-ink",
         )}
       >
@@ -249,6 +250,7 @@ export function NotificationBell({ allHref }: { allHref: string }) {
             {badge}
           </span>
         )}
+        {!open && <HoverLabel>{t("title")}</HoverLabel>}
       </button>
       {open && (phone ? createPortal(panel, document.body) : panel)}
     </div>

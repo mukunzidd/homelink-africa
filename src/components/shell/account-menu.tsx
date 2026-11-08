@@ -7,7 +7,8 @@ import type { Role } from "@/lib/domain/types";
 import { homeFor } from "@/lib/workspace/nav";
 import { usePreferences } from "@/lib/preferences/context";
 import { useDismissable } from "@/lib/use-dismissable";
-import { ChevronDownIcon } from "@/components/ui/icons";
+import { ChevronDownIcon, MessageIcon, SuitcaseIcon } from "@/components/ui/icons";
+import { HoverLabel } from "@/components/ui/hover-label";
 import { cn } from "@/lib/cn";
 
 /**
@@ -76,6 +77,9 @@ export function AccountMenu({ className }: { className?: string }) {
   // On one of the account's own screens, the trigger says so: that is the
   // "you are here" for pages that belong to no lane.
   const inAccount = destinations.some((d) => pathname === d.href || pathname.startsWith("/bookings/"));
+  // From 1024px a guest's Trips and Messages icons mark those pages
+  // themselves; lighting the avatar as well would mark one place twice.
+  const barMarks = role === "guest" && (pathname === "/trips" || pathname === "/messages" || pathname.startsWith("/bookings/"));
 
   return (
     <div ref={wrapRef} className={cn("relative", className)}>
@@ -88,6 +92,7 @@ export function AccountMenu({ className }: { className?: string }) {
           "flex h-9 cursor-pointer items-center gap-1 rounded-ctl pl-1 pr-1.5",
           "transition-colors duration-150",
           open || inAccount ? "bg-surface-2 text-ink" : "text-ink-2 hover:bg-surface-2 hover:text-ink",
+          !open && barMarks && "lg:bg-transparent lg:text-ink-2 lg:hover:bg-surface-2",
         )}
       >
         {/* Initial rather than a photograph, for the same reason the inspector
@@ -177,11 +182,17 @@ export function SignInLink({ className }: { className?: string }) {
 }
 
 /**
- * The role's own screen and Messages, as text in the bar.
+ * The role's own screens in the bar.
  *
- * The avatar menu already lists both, but a menu is a place people have to
- * think to open. The destination a role comes back for every day (a guest's
- * trips, a host's homes, the ops queue) earns a place on the bar itself.
+ * A guest's Trips and Messages are icons, beside Saved and the bell. As
+ * words they sat right after Homes, Cars and Experiences and read as two
+ * more lanes, which made the bar look like eight things to browse when it
+ * is three to browse and four that are yours. Each icon names itself on
+ * hover and focus, and the avatar menu still lists both in words.
+ *
+ * Everyone else has one door, into the workspace, where their messages are
+ * too. That stays a word: it is the only one, and there is no icon that
+ * says "where I work" without a label.
  *
  * `unread` comes from the server for every role at once, because the role is
  * client state here: the layout is static, and reading the role cookie in the
@@ -200,8 +211,6 @@ export function AccountLinks({
   const pathname = usePathname();
   if (role === "visitor") return null;
 
-  // A guest's two screens sit in the bar; everyone else has one door, into
-  // the workspace, where their messages are too.
   const home = homeFor(role);
   if (home) {
     return (
@@ -215,39 +224,31 @@ export function AccountLinks({
       </nav>
     );
   }
-  const primary = { href: "/trips", label: t("trips") };
   const hasUnread = !!unread[role];
 
-  const link = (href: string, children: React.ReactNode, label?: string) => {
-    const active = pathname === href;
+  const link = (href: string, icon: React.ReactNode, name: string, label: string, dot = false) => {
+    const active = pathname === href || (href === "/trips" && pathname.startsWith("/bookings/"));
     return (
       <Link
         href={href}
         aria-label={label}
         aria-current={active ? "page" : undefined}
         className={cn(
-          "relative flex h-9 items-center gap-1.5 whitespace-nowrap rounded-ctl px-3 text-sm font-medium transition-colors duration-150",
+          "group relative grid size-9 place-items-center rounded-ctl transition-colors duration-150",
           active ? "bg-surface-2 text-ink" : "text-ink-2 hover:bg-surface-2 hover:text-ink",
         )}
       >
-        {children}
+        {icon}
+        {dot && <span aria-hidden="true" className="absolute right-1.5 top-1.5 size-2 rounded-full bg-brand ring-2 ring-surface" />}
+        <HoverLabel>{name}</HoverLabel>
       </Link>
     );
   };
 
   return (
-    <nav aria-label={t("yourScreens")} className={cn("items-center", className)}>
-      {link(primary.href, primary.label)}
-      {link(
-        "/messages",
-        <>
-          {t("messages")}
-          {hasUnread && (
-            <span aria-hidden="true" className="size-1.5 rounded-full bg-brand" />
-          )}
-        </>,
-        hasUnread ? t("messagesUnread") : undefined,
-      )}
+    <nav aria-label={t("yourScreens")} className={cn("items-center gap-1", className)}>
+      {link("/trips", <SuitcaseIcon size={17} />, t("trips"), t("trips"))}
+      {link("/messages", <MessageIcon size={17} />, t("messages"), hasUnread ? t("messagesUnread") : t("messages"), hasUnread)}
     </nav>
   );
 }
