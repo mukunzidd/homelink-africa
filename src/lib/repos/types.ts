@@ -108,6 +108,12 @@ export interface StaysRepo extends SupplyById<Listing> {
   /** Same, with counts — a suggestion that says how much is behind it is
    *  more useful than a bare name, and honest about thin inventory. */
   neighbourhoodsWithCounts(): Promise<{ name: string; count: number }[]>;
+  /**
+   * Directions, door code and wifi for one home, or null. Every other read
+   * above leaves them out (and places the home by neighbourhood); only the
+   * booking page asks, and only once its release gate has opened.
+   */
+  checkInDetails(id: string): Promise<NonNullable<Listing["checkIn"]> | null>;
   /** Every home, live or not, both modes: the workspace's view. Every other read above leaves out unpublished homes. */
   all(): Promise<Listing[]>;
   /** Saves a patch after checking it (listingPatchErrors); throws and changes nothing if it breaks a rule. */

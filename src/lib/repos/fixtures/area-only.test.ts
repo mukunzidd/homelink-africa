@@ -66,3 +66,27 @@ describe("areaCentre", () => {
     }
   });
 });
+
+describe("check-in details stay private", () => {
+  beforeEach(() => resetStore());
+
+  it("never come back from a public read: no door code, wifi or directions", async () => {
+    const r = repos;
+    const withDetails = store().listings.filter((l) => l.checkIn);
+    expect(withDetails.length).toBeGreaterThan(0);
+    const reads = [
+      ...(await r.stays.list()),
+      ...(await r.stays.list({ band: "long" })),
+      ...(await r.stays.featured(12)),
+      ...(await Promise.all(withDetails.map((l) => r.stays.bySlug(l.slug)))),
+      ...(await Promise.all(withDetails.map((l) => r.stays.byId(l.id)))),
+    ].filter((l) => l !== null);
+    for (const l of reads) expect(l).not.toHaveProperty("checkIn");
+  });
+
+  it("are read on their own, for the booking page to show once released", async () => {
+    const l = store().listings.find((x) => x.checkIn)!;
+    expect(await repos.stays.checkInDetails(l.id)).toEqual(l.checkIn);
+    expect(await repos.stays.checkInDetails("lst_nope")).toBeNull();
+  });
+});

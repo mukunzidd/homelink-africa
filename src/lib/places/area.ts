@@ -32,3 +32,16 @@ export function inArea<T extends { neighbourhood: string; location: GeoPoint }>(
 
 /** Roughly how far a neighbourhood reaches from its centre, for the map's circle. */
 export const AREA_RADIUS_M = 900;
+
+/**
+ * A stay as the public site may see it: placed by neighbourhood, and without
+ * its check-in details (directions, door code, wifi). Those reach the guest
+ * through stays.checkInDetails, behind the booking page's release gate.
+ * A page that hands a listing to a client component sends every field to
+ * the browser, so nothing private may be on it.
+ */
+export function publicHome<T extends { neighbourhood: string; location: GeoPoint; checkIn?: unknown }>(home: T): Omit<T, "checkIn"> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { checkIn, ...rest } = inArea(home);
+  return rest;
+}
