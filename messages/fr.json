@@ -3604,5 +3604,31 @@
       "location": "Emplacement",
       "value": "Rapport qualité-prix"
     }
+  },
+  "heroPreview": {
+    "title": "Options de page d’accueil",
+    "body": "Chaque option est la vraie page d’accueil avec les annonces du jour. Ouvrez-en une pour essayer la recherche et la parcourir en taille réelle.",
+    "desktop": "Ordinateur",
+    "phone": "Téléphone",
+    "open": "Ouvrir en taille réelle",
+    "current": "Sur la page d’accueil",
+    "variants": {
+      "split": {
+        "name": "Plein jour",
+        "body": "Des maisons à flanc de colline en plein jour à côté du texte, avec la fiche d’inspection sur le bord de la photo"
+      },
+      "golden": {
+        "name": "Heure dorée",
+        "body": "La ville au coucher du soleil sur toute la largeur, le texte sur le ciel"
+      },
+      "street": {
+        "name": "Rue au crépuscule",
+        "body": "La version précédente : une rue sombre, la carte à droite"
+      },
+      "original": {
+        "name": "Version d’origine",
+        "body": "La première version : centrée sur la colline, avec un badge au-dessus"
+      }
+    }
   }
 }

@@ -3604,5 +3604,31 @@
       "location": "Aho biherereye",
       "value": "Agaciro ku giciro"
     }
+  },
+  "heroPreview": {
+    "title": "Amahitamo y’urupapuro rw’itangiriro",
+    "body": "Buri hitamo ni urupapuro nyakuri rw’itangiriro n’ibiri ku isoko uyu munsi. Fungura rimwe ugerageze gushakisha no kurimanura mu bunini bwaryo.",
+    "desktop": "Mudasobwa",
+    "phone": "Telefoni",
+    "open": "Fungura mu bunini bwuzuye",
+    "current": "Ruri ku rupapuro rw’itangiriro ubu",
+    "variants": {
+      "split": {
+        "name": "Ku manywa",
+        "body": "Amazu ku musozi ku manywa iruhande rw’amagambo, n’urupapuro rw’igenzura ku nkombe y’ifoto"
+      },
+      "golden": {
+        "name": "Izuba rirenga",
+        "body": "Umujyi izuba rirenga ku bugari bwose, amagambo ku kirere"
+      },
+      "street": {
+        "name": "Umuhanda nimugoroba",
+        "body": "Uburyo bwabanje: umuhanda wijimye, ikarita iburyo"
+      },
+      "original": {
+        "name": "Ubwa mbere",
+        "body": "Uburyo bwa mbere: hagati ku musozi, n’akarango hejuru"
+      }
+    }
   }
 }

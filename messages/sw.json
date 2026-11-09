@@ -3604,5 +3604,31 @@
       "location": "Mahali",
       "value": "Thamani"
     }
+  },
+  "heroPreview": {
+    "title": "Machaguo ya ukurasa wa mwanzo",
+    "body": "Kila chaguo ni ukurasa halisi wa mwanzo na matangazo ya leo. Fungua moja ujaribu kutafuta na kuusogeza kwa ukubwa kamili.",
+    "desktop": "Kompyuta",
+    "phone": "Simu",
+    "open": "Fungua kwa ukubwa kamili",
+    "current": "Kwenye ukurasa wa mwanzo sasa",
+    "variants": {
+      "split": {
+        "name": "Mchana",
+        "body": "Nyumba za kilimani mchana kando ya maneno, na hati ya ukaguzi ukingoni mwa picha"
+      },
+      "golden": {
+        "name": "Machweo",
+        "body": "Jiji wakati wa machweo kwa upana wote, maneno juu ya anga"
+      },
+      "street": {
+        "name": "Barabara jioni",
+        "body": "Toleo la awali: barabara yenye giza, kadi upande wa kulia"
+      },
+      "original": {
+        "name": "Toleo la kwanza",
+        "body": "Toleo la kwanza: katikati juu ya kilima, na beji juu"
+      }
+    }
   }
 }

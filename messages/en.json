@@ -3604,5 +3604,31 @@
       "location": "Location",
       "value": "Value"
     }
+  },
+  "heroPreview": {
+    "title": "Landing page options",
+    "body": "Each option is the real home page with today’s listings. Open one to try the search and scroll it at full size.",
+    "desktop": "Desktop",
+    "phone": "Phone",
+    "open": "Open full size",
+    "current": "On the home page now",
+    "variants": {
+      "split": {
+        "name": "Daylight split",
+        "body": "Hillside homes in daylight beside the words, with the inspection slip over the photo’s edge"
+      },
+      "golden": {
+        "name": "Golden hour",
+        "body": "The skyline at sunset across the whole hero, the words on the open sky"
+      },
+      "street": {
+        "name": "Dusk street",
+        "body": "The version before this pass: a dark street, the card on the right"
+      },
+      "original": {
+        "name": "Original",
+        "body": "The first version: centred over the hillside, with a badge above"
+      }
+    }
   }
 }
