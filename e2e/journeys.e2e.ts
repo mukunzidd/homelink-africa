@@ -195,3 +195,18 @@ test("a guest's payments page lists only their own bookings", async ({ page, con
   const receipts = page.locator("main ul > li").getByRole("link");
   expect(await receipts.count()).toBe(await lines.count());
 });
+
+for (const [role, path] of [["guest", "/en/stays"], ["ops", "/en/manage/today"]] as const) {
+  test(`${role} switches theme from the profile menu and it sticks`, async ({ page, context }) => {
+    await as(context, role);
+    await page.goto(path);
+    await hydrated(page);
+    await page.locator("button[aria-haspopup=menu]", { has: page.locator("span.sr-only") }).last().click();
+    const theme = page.getByRole("group", { name: "Theme" });
+    await theme.getByRole("button", { name: "Dark" }).click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    await expect(theme.getByRole("button", { name: "Dark" })).toHaveAttribute("aria-pressed", "true");
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  });
+}

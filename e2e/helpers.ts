@@ -6,7 +6,12 @@ export type Role = "visitor" | "guest" | "ops" | "admin" | "driver" | "guide";
 export async function as(context: BrowserContext, role: Role, extra: Record<string, unknown> = {}) {
   const base = process.env.BASE ?? "http://localhost:3100";
   await context.addCookies([{ name: "homelink.role", value: role, url: base }]);
-  await context.addInitScript(([r, x]) => localStorage.setItem("homelink.preferences", JSON.stringify({ role: r, ...x })), [role, extra] as const);
+  // Runs before every page load, so it merges rather than replaces: a
+  // theme or currency the test sets in the page must survive a reload.
+  await context.addInitScript(([r, x]) => {
+    const stored = JSON.parse(localStorage.getItem("homelink.preferences") || "{}");
+    localStorage.setItem("homelink.preferences", JSON.stringify({ ...stored, role: r, ...x }));
+  }, [role, extra] as const);
 }
 
 /** Collects console errors and page errors, ignoring the known dev-only notFound warning. */

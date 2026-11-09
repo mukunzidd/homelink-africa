@@ -13,6 +13,7 @@ import { ChevronDownIcon, ExitIcon, MenuIcon, PlusIcon } from "@/components/ui/i
 import { Select } from "@/components/ui/select";
 import { NotificationBell } from "@/components/notifications/bell";
 import { cn } from "@/lib/cn";
+import { ThemeSwitch } from "@/components/shell/preference-controls";
 
 /**
  * The workspace's top strip: where you are, then the tools that work on any
@@ -200,6 +201,7 @@ function WorkspaceAccount({ role }: { role: Role }) {
             <ExitIcon size={15} />
             {t("backToSite")}
           </Link>
+          <ThemeSwitch className="border-y border-line-soft my-1" />
           <button
             type="button"
             role="menuitem"

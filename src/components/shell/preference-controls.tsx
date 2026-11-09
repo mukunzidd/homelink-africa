@@ -36,7 +36,7 @@ const THEMES: { value: ThemeChoice; icon: typeof SunIcon }[] = [
   { value: "dark", icon: MoonIcon },
 ];
 
-export function PreferencesPanel({ onDone }: { onDone?: () => void }) {
+export function PreferencesPanel({ onDone, showTheme = true }: { onDone?: () => void; showTheme?: boolean }) {
   const t = useTranslations("header");
   const locale = useLocale() as Locale;
   const router = useRouter();
@@ -109,6 +109,7 @@ export function PreferencesPanel({ onDone }: { onDone?: () => void }) {
         </div>
       </div>
 
+      {showTheme && (
       <div role="group" aria-label={t("theme")} className="flex flex-col gap-0.5">
         <p className={heading}>{t("theme")}</p>
         <div className="grid grid-cols-3 gap-1 rounded-ctl bg-surface-2 p-1">
@@ -126,6 +127,55 @@ export function PreferencesPanel({ onDone }: { onDone?: () => void }) {
           ))}
         </div>
       </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Theme as one row of a profile menu: the word, then three icon buttons.
+ * One click changes it, and the row is in sight the moment the menu opens,
+ * rather than a level down behind "Language and currency" where nobody
+ * thought to look for it. The buttons carry their names for screen readers
+ * and as tooltips; the icons are the ones the settings page uses.
+ */
+export function ThemeSwitch({ className }: { className?: string }) {
+  const t = useTranslations("header");
+  const { theme, setTheme } = usePreferences();
+  const label: Record<ThemeChoice, string> = {
+    system: t("themeSystem"),
+    light: t("themeLight"),
+    dark: t("themeDark"),
+  };
+  const Current = THEMES.find((x) => x.value === theme)?.icon ?? MonitorIcon;
+  return (
+    <div
+      role="group"
+      aria-label={t("theme")}
+      className={cn("flex items-center gap-2.5 px-2.5 py-1.5 text-sm font-medium text-ink-2", className)}
+    >
+      <Current size={15} className="text-ink-3" />
+      <span className="flex-1">{t("theme")}</span>
+      <span className="flex gap-0.5 rounded-ctl bg-surface-2 p-0.5">
+        {THEMES.map(({ value, icon: Icon }) => (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={value === theme}
+            aria-label={label[value]}
+            title={label[value]}
+            onClick={() => setTheme(value)}
+            className={cn(
+              "grid size-7 cursor-pointer place-items-center rounded-inner transition-colors duration-150",
+              value === theme
+                ? "bg-surface text-ink shadow-[0_1px_2px_rgba(12,33,25,0.08)]"
+                : "text-ink-3 hover:text-ink",
+            )}
+          >
+            <Icon size={14} />
+          </button>
+        ))}
+      </span>
     </div>
   );
 }

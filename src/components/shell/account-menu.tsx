@@ -8,7 +8,7 @@ import { homeFor } from "@/lib/workspace/nav";
 import { usePreferences } from "@/lib/preferences/context";
 import { useDismissable } from "@/lib/use-dismissable";
 import { BellIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, GlobeIcon, GridIcon, HomeIcon, MessageIcon, SlidersIcon, SuitcaseIcon } from "@/components/ui/icons";
-import { PreferencesPanel } from "./preference-controls";
+import { PreferencesPanel, ThemeSwitch } from "./preference-controls";
 import { HoverLabel } from "@/components/ui/hover-label";
 import { cn } from "@/lib/cn";
 
@@ -78,7 +78,7 @@ export function AccountMenu({ className }: { className?: string }) {
   const pathname = usePathname();
 
   const [open, setOpen] = useState(false);
-  // Language, currency and theme open in place, as a second view of the
+  // Language and currency open in place, as a second view of the
   // same menu, rather than as a menu of their own in the bar.
   const [view, setView] = useState<"links" | "prefs">("links");
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -140,7 +140,7 @@ export function AccountMenu({ className }: { className?: string }) {
             <ChevronLeftIcon size={14} />
             {tRoles(role)}
           </button>
-          <PreferencesPanel onDone={close} />
+          <PreferencesPanel onDone={close} showTheme={false} />
         </div>
       )}
 
@@ -148,7 +148,7 @@ export function AccountMenu({ className }: { className?: string }) {
         <div
           role="menu"
           className={cn(
-            "absolute right-0 top-[calc(100%+8px)] z-50 flex w-64 flex-col",
+            "absolute right-0 top-[calc(100%+8px)] z-50 flex w-72 flex-col",
             "rounded-card border border-line bg-surface p-1.5 shadow-[var(--shadow-pop)]",
           )}
         >
@@ -186,6 +186,7 @@ export function AccountMenu({ className }: { className?: string }) {
             );
           })}
           <div className="mt-1 border-t border-line-soft pt-1">
+            <ThemeSwitch />
             <button
               type="button"
               role="menuitem"
@@ -196,7 +197,7 @@ export function AccountMenu({ className }: { className?: string }) {
             >
               <GlobeIcon size={15} className="text-ink-3" />
               <span className="flex-1 whitespace-nowrap">{t("languageCurrency")}</span>
-              <span className="font-mono text-[12px] text-ink-3">
+              <span className="whitespace-nowrap font-mono text-[12px] text-ink-3">
                 {locale.toUpperCase()} · {currency}
               </span>
               <ChevronRightIcon size={14} className="text-ink-3" />
