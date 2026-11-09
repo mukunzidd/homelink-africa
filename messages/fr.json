@@ -2080,7 +2080,8 @@
         "licence": "Permis de conduire",
         "insurance": "Assurance",
         "permit": "Licence de guide",
-        "id": "Carte d'identité"
+        "id": "Carte d'identité",
+        "vehicleInspection": "Contrôle technique"
       },
       "expires": "Expire le {date}",
       "docValid": "Valide",

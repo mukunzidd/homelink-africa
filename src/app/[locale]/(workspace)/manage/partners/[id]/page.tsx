@@ -50,7 +50,7 @@ export default async function PartnerPage({ params }: { params: Promise<{ locale
           {docs.map((d) => {
             const left = nightsBetween(today, d.expires);
             return (
-              <li key={d.id} className="flex items-center justify-between gap-3 border-t border-line-soft py-2 text-[14px] first:border-0">
+              <li key={d.id} className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-line-soft py-2 text-[14px] first:border-0">
                 <span className="text-ink">{t(`doc.${d.kind}`)}</span>
                 <span className="flex items-center gap-3">
                   <span className="text-ink-3">{t("expires", { date: day(d.expires) })}</span>

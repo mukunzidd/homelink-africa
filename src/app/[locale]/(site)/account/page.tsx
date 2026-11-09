@@ -87,7 +87,7 @@ export default async function AccountOverview({ params }: { params: Promise<{ lo
         )}
       </section>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
         <section className="flex flex-col gap-3">
           <div className="flex items-baseline justify-between">
             <h2 className="text-[13px] font-medium text-ink-3">{t("overview.latest")}</h2>

@@ -29,7 +29,7 @@ export default async function Earnings({ params }: { params: Promise<{ locale: s
   return (
     <div className="flex flex-col gap-5">
       <SectionHeader title={t("earnings")} description={t("earningsBody")} />
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <StatTile label={t("paidThisMonth")} value={formatMoney(sum(inMonth(thisMonth)), intl)} />
         <StatTile label={t("paidLastMonth")} value={formatMoney(sum(inMonth(lastMonth)), intl)} />
         <StatTile label={t("dueNow")} value={formatMoney(sum((x) => x.status === "due"), intl)} />

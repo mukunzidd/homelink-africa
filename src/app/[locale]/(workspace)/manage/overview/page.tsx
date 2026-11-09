@@ -74,7 +74,8 @@ export default async function Overview({ params, searchParams }: { params: Promi
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
         <StatTile label={t("thisWeek")} value={weeks.at(-1)} hint={t("lastWeek", { count: weeks.at(-2) ?? 0 })} href="/manage/bookings" />
         <StatTile label={t("occupancy")} value={pct(avgOcc)} hint={t("next30")} href="/manage/calendar" />
-        <StatTile label={t("revenue")} value={<MoneyText amount={month} rounded />} hint={t("revenueHint")} href="/manage/finance" />
+        {/* A month of francs is too long for half a phone; this one takes the row. */}
+        <StatTile label={t("revenue")} value={<MoneyText amount={month} rounded />} hint={t("revenueHint")} href="/manage/finance" className="col-span-2 md:col-span-1" />
         <StatTile label={t("openIncidents")} value={openIncidents.length} tone={openIncidents.some((i) => i.urgency === "now") ? "crit" : openIncidents.length ? "warn" : undefined} href="/manage/incidents" />
         <StatTile label={t("overdueRent")} value={overdue.length} tone={overdue.length ? "warn" : undefined} href="/manage/bookings?lane=lease" />
       </div>

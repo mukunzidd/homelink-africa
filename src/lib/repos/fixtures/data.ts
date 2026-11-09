@@ -197,7 +197,7 @@ const RAW_LISTINGS: Omit<Listing, "propertyManager" | "houseRules">[] = [
     imageSeed: "gikondo",
     images: ["/images/homes/gikondo-family-house-1.jpg", "/images/homes/gikondo-family-house-2.jpg", "/images/homes/gikondo-family-house-3.jpg", "/images/homes/gikondo-family-house-4.jpg"],
     summary:
-      "Older build, well kept, with the kind of yard children actually use. Long-term lease preferred.",
+      "Older build, well kept, with the kind of yard children actually use. Long-term stays preferred.",
     unitsAvailable: 4,
   },
   {

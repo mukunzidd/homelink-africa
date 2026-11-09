@@ -27,7 +27,7 @@ export async function Reviews({ supplyId, intl }: { supplyId: string; intl: stri
         <>
           <dl className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
             {ASPECTS.map((a) => (
-              <div key={a} className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_32px] items-center gap-3 text-[14px]">
+              <div key={a} className="grid grid-cols-[minmax(7rem,1fr)_minmax(0,1.2fr)_32px] items-center gap-3 text-[14px]">
                 <dt className="text-ink-2">{t(`aspects.${a}`)}</dt>
                 <dd className="h-1.5 overflow-hidden rounded-full bg-surface-2">
                   <span className="block h-full rounded-full bg-ink-2" style={{ width: `${(s.aspects[a] / 5) * 100}%` }} />

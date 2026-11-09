@@ -2080,7 +2080,8 @@
         "licence": "Uruhushya rwo gutwara",
         "insurance": "Ubwishingizi",
         "permit": "Uruhushya rwo kuyobora",
-        "id": "Indangamuntu"
+        "id": "Indangamuntu",
+        "vehicleInspection": "Isuzuma ry'imodoka"
       },
       "expires": "Rurangira {date}",
       "docValid": "Rukiri rwiza",

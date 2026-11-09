@@ -2080,7 +2080,8 @@
         "licence": "Leseni ya udereva",
         "insurance": "Bima",
         "permit": "Kibali cha uongozaji",
-        "id": "Kitambulisho"
+        "id": "Kitambulisho",
+        "vehicleInspection": "Ukaguzi wa gari"
       },
       "expires": "Inaisha {date}",
       "docValid": "Halali",

@@ -2080,7 +2080,8 @@
         "licence": "Driving licence",
         "insurance": "Insurance",
         "permit": "Guide permit",
-        "id": "National ID"
+        "id": "National ID",
+        "vehicleInspection": "Vehicle inspection"
       },
       "expires": "Expires {date}",
       "docValid": "Valid",
