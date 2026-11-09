@@ -42,7 +42,24 @@ function fieldsIn(date: Date, timeZone: string | undefined) {
   return { month, weekday };
 }
 
+/**
+ * Swahili weekday abbreviations, Sunday first, for a weekday on its own (a
+ * calendar's column header). CLDR's short form is the full name, too wide
+ * for a column, and its narrow form is the English letters. These are the
+ * abbreviations Swahili calendars print; a native reader should confirm.
+ */
+const SW_WEEKDAY_ABBR = ["Jpi", "Jtt", "Jnn", "Jtn", "Alh", "Iju", "Jmo"];
+
+function isSwahili(locale: string) {
+  return /^sw(-|$)/i.test(locale);
+}
+
 export function dateTimeFormat(locale: string, options: Intl.DateTimeFormatOptions = {}): DateFormatter {
+  const fields = Object.keys(options).filter((k) => k !== "timeZone");
+  if (isSwahili(locale) && fields.length === 1 && (options.weekday === "short" || options.weekday === "narrow")) {
+    const day = (d: Date) => SW_WEEKDAY_ABBR[fieldsIn(d, options.timeZone).weekday];
+    return { format: day, formatRange: (a, b) => `${day(a)}–${day(b)}` };
+  }
   if (!isKinyarwanda(locale)) {
     const f = new Intl.DateTimeFormat(locale, options);
     return { format: (d) => f.format(d), formatRange: (a, b) => f.formatRange(a, b) };
@@ -70,4 +87,26 @@ export function dateTimeFormat(locale: string, options: Intl.DateTimeFormatOptio
           .join(""),
       ),
   };
+}
+
+/**
+ * `Intl.RelativeTimeFormat` ("5 minutes ago", "yesterday"), with Kinyarwanda
+ * from a table for the same reason as dates: Chrome has no rw data, and
+ * Node's is worse than none ("-5 min", "-3 h", and "yesterday" in English).
+ * Past times only, the units formatAgo uses; one and many take different
+ * nouns (umunota 1, iminota 5). A native reader should confirm the wording.
+ */
+const RW_AGO: Record<"second" | "minute" | "hour" | "day", (n: number) => string> = {
+  second: () => "nonaha",
+  minute: (n) => `hashize ${n === 1 ? "umunota" : "iminota"} ${n}`,
+  hour: (n) => `hashize ${n === 1 ? "isaha" : "amasaha"} ${n}`,
+  day: (n) => (n === 1 ? "ejo hashize" : `hashize iminsi ${n}`),
+};
+
+export function relativeTimeFormat(locale: string): { format: (value: number, unit: "second" | "minute" | "hour" | "day") => string } {
+  if (!isKinyarwanda(locale)) {
+    const f = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+    return { format: (v, u) => f.format(v, u) };
+  }
+  return { format: (v, u) => (v === 0 ? (u === "day" ? "uyu munsi" : "nonaha") : RW_AGO[u](Math.abs(v))) };
 }

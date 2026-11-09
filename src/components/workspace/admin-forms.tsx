@@ -127,7 +127,7 @@ export function ExtrasForm({ rows }: { rows: ExtraRow[] }) {
   const [list, setList] = useState(rows);
   return (
     <form className="flex flex-col gap-3" onSubmit={(e) => { e.preventDefault(); w.run(() => must(saveSettings({ extras: Object.fromEntries(list.map((r) => [r.key, { francs: r.francs, enabled: r.enabled }])) })), t("saved")); }}>
-      <div className="grid gap-2 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         {list.map((r, i) => (
           <div key={r.key} className="flex items-center gap-3 rounded-ctl border border-line bg-surface px-3 py-2">
             <input type="checkbox" aria-label={t("offered", { name: tx(`${r.key}.name`) })} checked={r.enabled} onChange={(e) => setList(list.map((x, j) => (j === i ? { ...x, enabled: e.target.checked } : x)))} className="size-4 accent-[var(--brand)]" />

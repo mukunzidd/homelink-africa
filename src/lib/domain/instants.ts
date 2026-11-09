@@ -1,4 +1,4 @@
-import { dateTimeFormat } from "./date-format";
+import { dateTimeFormat, relativeTimeFormat } from "./date-format";
 /**
  * Timestamps, as opposed to dates.
  *
@@ -72,7 +72,7 @@ export function kigaliDay(instant: Date | string = new Date()): string {
  * and that is how the notification panel's groups read too.
  */
 export function formatAgo(iso: string, now: Date, locale: string): string {
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+  const rtf = relativeTimeFormat(locale);
   const seconds = (now.getTime() - new Date(iso).getTime()) / 1000;
   if (seconds < 60) return rtf.format(0, "second");
   if (seconds < 3600) return rtf.format(-Math.floor(seconds / 60), "minute");

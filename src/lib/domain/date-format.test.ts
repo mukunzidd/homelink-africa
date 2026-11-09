@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { dateTimeFormat } from "./date-format";
+import { dateTimeFormat, relativeTimeFormat } from "./date-format";
 import { formatDate, formatDateRange, formatMonthTitle, weekdayLabels } from "./dates";
 
 const nov16 = new Date(Date.UTC(2026, 10, 16, 10, 32));
@@ -50,5 +50,44 @@ describe("dateTimeFormat elsewhere", () => {
       const o = { day: "numeric", month: "long", year: "numeric", ...utc } as const;
       expect(dateTimeFormat(locale, o).format(nov16)).toBe(new Intl.DateTimeFormat(locale, o).format(nov16));
     }
+  });
+});
+
+describe("relativeTimeFormat in Kinyarwanda", () => {
+  afterEach(() => vi.restoreAllMocks());
+
+  it("says how long ago in Kinyarwanda, with the right noun for one and for many", () => {
+    const f = relativeTimeFormat("rw-RW");
+    expect(f.format(0, "second")).toBe("nonaha");
+    expect(f.format(-1, "minute")).toBe("hashize umunota 1");
+    expect(f.format(-5, "minute")).toBe("hashize iminota 5");
+    expect(f.format(-1, "hour")).toBe("hashize isaha 1");
+    expect(f.format(-3, "hour")).toBe("hashize amasaha 3");
+    expect(f.format(-1, "day")).toBe("ejo hashize");
+    expect(f.format(-4, "day")).toBe("hashize iminsi 4");
+  });
+
+  it("never asks the runtime for Kinyarwanda relative times", () => {
+    const spy = vi.spyOn(Intl, "RelativeTimeFormat");
+    relativeTimeFormat("rw-RW").format(-5, "minute");
+    for (const [locale] of spy.mock.calls) expect(String(locale)).not.toMatch(/^rw/);
+  });
+
+  it("is the runtime's own formatter elsewhere", () => {
+    expect(relativeTimeFormat("fr-FR").format(-1, "day")).toBe(new Intl.RelativeTimeFormat("fr-FR", { numeric: "auto" }).format(-1, "day"));
+  });
+});
+
+describe("weekday headers in Swahili", () => {
+  // CLDR's short Swahili weekday is the full name and its narrow form is the
+  // English letters, so neither fits or reads in a calendar header.
+  const monday = new Date(Date.UTC(2026, 10, 2));
+  it("abbreviates a weekday that stands alone, in either form", () => {
+    expect(dateTimeFormat("sw-RW", { weekday: "short", timeZone: "UTC" }).format(monday)).toBe("Jtt");
+    expect(dateTimeFormat("sw-RW", { weekday: "narrow", timeZone: "UTC" }).format(monday)).toBe("Jtt");
+    expect(weekdayLabels("sw-RW")).toEqual(["Jtt", "Jnn", "Jtn", "Alh", "Iju", "Jmo", "Jpi"]);
+  });
+  it("keeps the full name inside a date", () => {
+    expect(dateTimeFormat("sw-RW", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(monday)).toContain("Jumatatu");
   });
 });
