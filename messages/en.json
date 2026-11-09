@@ -2744,7 +2744,8 @@
       "payoutSent": "Payout sent",
       "documentExpiring": "Document expiring",
       "viewingChanged": "Viewing moved or done",
-      "jobAccepted": "Job accepted by a driver or guide"
+      "jobAccepted": "Job accepted by a driver or guide",
+      "bookingCancelled": "Booking cancelled"
     }
   },
   "extras": {

@@ -2744,7 +2744,8 @@
       "payoutSent": "Amafaranga yoherejwe",
       "documentExpiring": "Inyandiko igiye guta agaciro",
       "viewingChanged": "Gusura kwimuwe cyangwa kwarangiye",
-      "jobAccepted": "Umurimo wemewe n'umushoferi cyangwa umuyobozi w'ingendo"
+      "jobAccepted": "Umurimo wemewe n'umushoferi cyangwa umuyobozi w'ingendo",
+      "bookingCancelled": "Icyafashwe cyahagaritswe"
     }
   },
   "extras": {

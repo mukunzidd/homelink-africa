@@ -2744,7 +2744,8 @@
       "payoutSent": "Versement envoyé",
       "documentExpiring": "Document arrivant à expiration",
       "viewingChanged": "Visite déplacée ou effectuée",
-      "jobAccepted": "Mission acceptée par un chauffeur ou un guide"
+      "jobAccepted": "Mission acceptée par un chauffeur ou un guide",
+      "bookingCancelled": "Réservation annulée"
     }
   },
   "extras": {

@@ -35,7 +35,7 @@ const FORBIDDEN = /\b(lease[sd]?|leasing|bail|baux)\b/i;
 const SITE = [
   "", "/stays", "/stays?band=long", "/stays/kimihurura-convention-studio", "/stays/kacyiru-garden-apartment/rent",
   "/cars", "/cars/toyota-rav4", "/experiences", "/buy", "/neighbourhoods", "/neighbourhoods/Kimihurura",
-  "/saved", "/trip", "/trips", "/messages", "/notifications", "/account", "/account/renting", "/account/viewings",
+  "/saved", "/trip", "/trip/checkout", "/trips", "/messages", "/notifications", "/account", "/account/renting", "/account/viewings",
   "/account/payments", "/account/settings", "/account/settings/security", "/account/settings/payment-methods",
   "/account/settings/preferences", "/account/settings/privacy", "/account/settings/notifications", "/account/verify-id",
   "/help", "/help/cancel-stay", "/contact", "/legal/terms", "/legal/privacy", "/legal/cancellation",
@@ -125,6 +125,9 @@ async function sidebars(browser) {
     }
     if (paths.includes("/manage/portfolio")) paths.push("/manage/portfolio/kimihurura-convention-studio", "/manage/portfolio/kimihurura-convention-studio?tab=availability");
     if (paths.includes("/manage/partners")) paths.push("/manage/partners/ptn_eric");
+    // Reached from the bell, not the sidebar, so the sidebar walk misses it:
+    // it is where every notification kind needs a label.
+    if (paths.includes("/manage/notifications")) paths.push("/manage/notifications/settings");
     if (paths.includes("/manage/finance")) for (const tab of ["payouts", "refunds", "reconcile", "fx", "statement", "invoices"]) paths.push(`/manage/finance?tab=${tab}`);
     out[role] = paths;
     await context.close();

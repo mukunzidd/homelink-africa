@@ -2744,7 +2744,8 @@
       "payoutSent": "Malipo yametumwa",
       "documentExpiring": "Hati inakaribia kuisha",
       "viewingChanged": "Kuiona nyumba kumehamishwa au kumefanyika",
-      "jobAccepted": "Kazi imekubaliwa na dereva au mwongozaji"
+      "jobAccepted": "Kazi imekubaliwa na dereva au mwongozaji",
+      "bookingCancelled": "Uhifadhi umeghairiwa"
     }
   },
   "extras": {
