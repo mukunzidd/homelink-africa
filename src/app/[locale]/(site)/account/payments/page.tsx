@@ -26,7 +26,11 @@ export default async function Payments({ params }: { params: Promise<{ locale: s
   const [t, tr] = await Promise.all([getTranslations("account.payments"), getTranslations("booking.record")]);
   const intl = INTL_LOCALES[locale as Locale];
   const num = NUMBER_LOCALES[locale as Locale];
-  const [payments, bookings] = await Promise.all([repos().bookings.payments(), repos().bookings.listForCurrentUser()]);
+  const [all, bookings] = await Promise.all([repos().bookings.payments(), repos().bookings.listForCurrentUser()]);
+  // Payments are stored for everyone; a guest sees the ones on their own
+  // bookings, as the privacy export already does.
+  const mine = new Set(bookings.map((b) => b.id));
+  const payments = all.filter((p) => mine.has(p.bookingId));
   const byId = new Map(bookings.map((b) => [b.id, b]));
   const year = new Date().getUTCFullYear().toString();
   const rwf = (kind: "in" | "out") =>
@@ -49,7 +53,7 @@ export default async function Payments({ params }: { params: Promise<{ locale: s
         <h1 className="font-display text-3xl font-semibold text-ink">{t("title")}</h1>
         <p className="max-w-[62ch] text-[15px] text-ink-2">{t("intro")}</p>
       </header>
-      <dl className="grid grid-cols-2 gap-3 sm:max-w-md">
+      <dl className="grid grid-cols-1 gap-3 sm:max-w-md sm:grid-cols-2">
         <div className="rounded-card border border-line bg-surface p-4">
           <dt className="text-[13px] text-ink-3">{t("totalPaid")}</dt>
           <dd className="tnum text-xl font-semibold text-ink">{formatMoney(rwf("in"), num)}</dd>
@@ -82,7 +86,9 @@ export default async function Payments({ params }: { params: Promise<{ locale: s
                     )}
                   </span>
                 </span>
-                <StatusPill tone={p.status === "succeeded" ? "ok" : p.status === "pending" ? "warn" : p.status === "failed" ? "crit" : "idle"}>{tr(`status.${p.status}`)}</StatusPill>
+                <span className="justify-self-start">
+                  <StatusPill tone={p.status === "succeeded" ? "ok" : p.status === "pending" ? "warn" : p.status === "failed" ? "crit" : "idle"}>{tr(`status.${p.status}`)}</StatusPill>
+                </span>
                 <span className={cn("tnum text-right text-[15px] font-semibold sm:col-start-5", p.kind === "refund" ? "text-ok" : "text-ink")}>
                   {p.kind === "refund" ? "−" : ""}
                   {formatMoney(p.amount, num)}
