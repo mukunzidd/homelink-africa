@@ -40,7 +40,7 @@
   },
   "landing": {
     "heroTitle": "Nyumba iliyo tayari ukiwasili",
-    "heroBody": "Kila malazi, gari na mwongozaji kwenye HomeLink amekaguliwa ana kwa ana na timu yetu ya Kigali. Kama kipo hapa, tumesimama ndani ya chumba hicho.",
+    "heroBody": "Kila malazi, gari na mwongozaji kwenye HomeLink wamekaguliwa ana kwa ana na timu yetu ya Kigali. Kila kilichopo hapa, tumefika na kukiona kwa macho yetu.",
     "feedTitle": "Vilivyothibitishwa Kigali wiki hii",
     "feedBody": "Vimekaguliwa karibuni na viko tayari kuhifadhiwa.",
     "viewAll": "Tazama malazi yote",
@@ -56,12 +56,12 @@
     "smartBody": "Andika sentensi. Utafutaji mahiri unatambua mahali, ukubwa, bajeti na tarehe, unakuonyesha jinsi ulivyoyaelewa, na unatafuta tu kile ambacho timu yetu imekagua.",
     "smartHint": "Bonyeza ⌘K au / kwenye ukurasa wowote.",
     "placesTitle": "Mitaa tunayoijua",
-    "placesBody": "Kila mmoja umetembelewa na timu yetu. Namba inaonyesha ni malazi mangapi yaliyothibitishwa yaliyopo leo.",
+    "placesBody": "Kila mtaa umetembelewa na timu yetu. Namba inaonyesha ni malazi mangapi yaliyothibitishwa yaliyopo leo.",
     "fromPrice": "Kuanzia",
     "howTitle": "Jinsi HomeLink inavyofanya kazi",
     "howBody": "Ahadi tatu, kila moja inatimizwa na mtu na kusimamiwa na mfumo.",
     "how": {
-      "inspectTitle": "Mtu amesimama ndani ya chumba",
+      "inspectTitle": "Mtu wetu amefika mwenyewe",
       "inspectBody": "Kila malazi hukaguliwa kwa orodha ya vipengele 34: nguvu ya maji, umeme wa akiba, barabara ya kufika, jiko. Tunapiga picha sisi wenyewe.",
       "escrowTitle": "Pesa zako zinasubiri",
       "escrowBody": "Malipo yanashikiliwa hadi uthibitishe kuwa umeingia. Mahali pasipolingana na maelezo, unarudishiwa pesa zote na kupewa nyumba nyingine usiku huo huo.",
@@ -69,7 +69,7 @@
       "peopleBody": "Wahudumu, wakaguzi na waongozaji unaoweza kuwatumia ujumbe kwa majina yao, kabla hujawasili na ukiwa hapa."
     },
     "daysTitle": "Matembezi",
-    "daysBody": "Sokwe, ziwa, msitu wa juu na jiji, pamoja na waongozaji tunaowafahamu binafsi.",
+    "daysBody": "Sokwe mtu, ziwa, vilele vya miti msituni na jiji, pamoja na waongozaji tunaowafahamu binafsi.",
     "daysAll": "Matembezi yote"
   },
   "search": {
@@ -99,7 +99,7 @@
     "countNoDates": "{count, plural, one {malazi # yaliyothibitishwa} other {malazi # yaliyothibitishwa}} Kigali",
     "addDatesPrompt": "Weka tarehe uone jumla na kilicho wazi kweli",
     "addDatesAction": "Weka tarehe",
-    "sortLabel": "Panga",
+    "sortLabel": "Mpangilio",
     "sort": {
       "recommended": "Yanayopendekezwa",
       "priceAsc": "Bei, ya chini kwanza",
@@ -124,7 +124,7 @@
     "previous": "Picha iliyotangulia",
     "next": "Picha inayofuata",
     "counter": "{current} kati ya {total}",
-    "placeholderNote": "Picha zinapigwa kwa kila tangazo na bado hazijawekwa hapa. Visanduku hivi vinasimama badala ya picha halisi."
+    "placeholderNote": "Picha zinapigwa kwa kila tangazo na bado hazijawekwa hapa. Visanduku hivi vimewekwa badala ya picha halisi."
   },
   "listing": {
     "perNight": "kwa usiku",
@@ -138,13 +138,13 @@
     "seatCount": "{count, plural, one {kiti #} other {viti #}}",
     "durationHours": "{count, plural, one {saa #} other {saa #}}",
     "minStay": "Kukaa kwa usiku {count} au zaidi",
-    "tooShort": "Nyumba hii inachukua ukaaji wa usiku {count} au zaidi. Chagua tarehe ya kuondoka ya baadaye."
+    "tooShort": "Nyumba hii inahitaji ukaaji wa angalau usiku {count}. Chagua tarehe ya kuondoka iliyo mbele zaidi."
   },
   "verification": {
     "badge": "Imethibitishwa",
     "escrow": "Pesa zinashikiliwa",
     "escrowShort": "Zinashikiliwa hadi uthibitishe kuingia",
-    "title": "Imethibitishwa na mtu aliyesimama ndani ya chumba",
+    "title": "Imethibitishwa na mtu aliyefika mwenyewe",
     "inspectedBy": "Imekaguliwa na {name} tarehe {date}",
     "openRecord": "Tazama tulichokagua",
     "steps": {
@@ -159,16 +159,16 @@
     },
     "kinds": {
       "car": {
-        "inspectedBody": "Limefanyiwa huduma, limejaribiwa barabarani, na kukaguliwa kwa orodha ya vipengele 22 vinavyohusu matairi, breki, tairi la akiba, jeki na nyaraka.",
+        "inspectedBody": "Limefanyiwa matengenezo, limejaribiwa barabarani, na kukaguliwa kwa orodha ya vipengele 22 vinavyohusu matairi, breki, tairi la akiba, jeki na nyaraka.",
         "identityBody": "Umiliki wa mwendeshaji na bima vimelinganishwa na usajili wa gari kabla halijakodishwa.",
         "photographedBody": "Picha zimepigwa na timu ya HomeLink. Kila picha ni ya gari hili hasa, si picha ya jumla ya aina hiyo.",
         "title": "Limethibitishwa na mtu aliyeliendesha"
       },
       "experience": {
-        "inspectedBody": "Limefanywa lote na mtu wa timu yetu kabla halijatangazwa, kwa ukaguzi wa vipengele 18 unaohusu usalama, muda na kile kilichojumuishwa kweli.",
+        "inspectedBody": "Yamefanywa yote na mtu wa timu yetu kabla hayajatangazwa, kwa ukaguzi wa vipengele 18 unaohusu usalama, muda na kile kilichojumuishwa kweli.",
         "identityBody": "Leseni ya mwongozaji na idhini ya hifadhi zimethibitishwa, na hufanywa upya kila msimu.",
         "photographedBody": "Picha zimepigwa na timu ya HomeLink katika safari halisi.",
-        "title": "Limethibitishwa na mtu aliyekwenda"
+        "title": "Yamethibitishwa na mtu aliyeshiriki"
       },
       "sale": {
         "title": "Imethibitishwa na mtu aliyetembea kwenye kiwanja",
@@ -204,12 +204,12 @@
     "furnished": "Yenye samani",
     "parking": "Maegesho",
     "longTerm": "Kupanga kwa muda mrefu",
-    "selfDrive": "Jiendeshe mwenyewe",
+    "selfDrive": "Kujiendesha",
     "withDriver": "Na dereva",
     "clear": "Futa vichujio",
     "maxPrice": "Bajeti",
-    "maxPerNight": "Juu kabisa kwa usiku",
-    "maxPerMonth": "Juu kabisa kwa mwezi",
+    "maxPerNight": "Kiwango cha juu kwa usiku",
+    "maxPerMonth": "Kiwango cha juu kwa mwezi",
     "amenitiesHeading": "Kilichopo",
     "stayType": "Aina ya malazi"
   },
@@ -259,25 +259,25 @@
     "monthlyFrom": "Muda mrefu kuanzia",
     "leaseAvailable": "Inapatikana kwa kupanga kwa muda mrefu",
     "leaseBody": "Miezi kumi na miwili au zaidi hushughulikiwa kama ombi la kupanga, si kama uhifadhi wa kila usiku: nyaraka, amana, na mkataba wa kupanga uliosainiwa.",
-    "applyForLease": "Omba kupanga kwa muda mrefu",
+    "applyForLease": "Omba kupanga",
     "highlights": "Vinavyovutia",
     "thingsToKnow": "Mambo ya kujua",
     "houseRules": "Kanuni za nyumba",
-    "houseRulesBody": "Kuingia kuanzia saa 14:00, kutoka kabla ya saa 11:00. Hakuna sherehe. Kimya baada ya saa 22:00, majirani watakushukuru.",
+    "houseRulesBody": "Kuingia kuanzia 14:00 (saa nane mchana), kutoka kabla ya 11:00 (saa tano asubuhi). Hakuna sherehe. Kimya baada ya 22:00 (saa nne usiku), majirani watakushukuru.",
     "cancellationTitle": "Kughairi",
     "safetyTitle": "Usalama na pesa",
     "inspectorRole": "Mkaguzi wa HomeLink",
     "seeRecord": "Tazama ripoti kamili",
     "share": "Shiriki",
     "save": "Hifadhi",
-    "entirePlace": "Mahali pote",
+    "entirePlace": "Nyumba nzima",
     "hostedBy": "Imethibitishwa na",
     "lease": {
       "moveInTitle": "Kuhamia",
       "moveInBody": "Iko wazi kuanzia {date}. Upangaji ni wa angalau miezi kumi na miwili, kuanzia mwezi utakaouchagua unapoomba.",
-      "depositBody": "{deposit}, inashikiliwa kama amana na kurudishwa upangaji ukiisha. Masharti ya amana yanakuja pamoja na mkataba wa kupanga.",
-      "viewingTitle": "Kuja kuona",
-      "viewingBody": "Timu ya Kigali inapanga siku ya kuja kuona na inakutumia mkataba wa kupanga uusome kabla. Hakuna malipo hapa."
+      "depositBody": "{deposit}, inashikiliwa kama amana na kurudishwa unapohama. Masharti ya amana yamo kwenye mkataba wa kupanga.",
+      "viewingTitle": "Kuiona nyumba",
+      "viewingBody": "Timu ya Kigali inapanga siku ya kuiona nyumba na inakutumia mkataba wa kupanga uusome kabla. Hakuna malipo hapa."
     },
     "hostedByHomeLink": "Mwenyeji ni HomeLink",
     "managedBy": "{name} anaitunza nyumba hii · kwenye timu tangu {year}"
@@ -310,9 +310,9 @@
     "payWith": "Ungependa kulipa vipi",
     "card": "Kadi",
     "cardHint": "Visa, Mastercard, Amex",
-    "mobileMoney": "Pesa kwa simu",
+    "mobileMoney": "Mobile Money",
     "mobileMoneyHint": "MTN MoMo au Airtel Money",
-    "mobileNumber": "Namba ya pesa kwa simu",
+    "mobileNumber": "Namba ya Mobile Money",
     "mobileNumberError": "Namba za simu za Rwanda zina tarakimu 9. Angalia namba na ujaribu tena.",
     "cardNumber": "Namba ya kadi",
     "cardHolder": "Jina lililo kwenye kadi",
@@ -321,7 +321,7 @@
     "stubNotice": "Huu ni mfano tu. Hakuna kitakachotozwa.",
     "escrowTitle": "Pesa zako zinaweza kurudishwa hadi uingie ndani",
     "escrowBody": "Tunashikilia kiasi chote na tunakihesabu kuwa chetu tu baada ya mtu wa timu kuthibitisha kuwa umeingia. Ikiwa mahali si kama ilivyoelezwa, unarudishiwa pesa zote na tunakutafutia nyumba nyingine usiku huo huo.",
-    "noEscrowBody": "Malazi haya yako chini ya kiwango chetu cha kushikilia pesa, kwa hiyo malipo yanaenda moja kwa moja. Hakikisho lile lile la usahihi bado linatumika.",
+    "noEscrowBody": "Malazi haya yako chini ya kiwango chetu cha kushikilia pesa, kwa hiyo malipo yanaenda moja kwa moja. Hakikisho lile lile la usahihi bado linahusika.",
     "cancellation": "Kughairi bure hadi {date}. Baada ya hapo, malipo ya usiku wa kwanza hayarudishwi.",
     "agree": "Kwa kulipa unakubali masharti ya uhifadhi na sera ya kughairi iliyo hapo juu.",
     "summaryTitle": {
@@ -332,7 +332,7 @@
     "kinds": {
       "car": {
         "guaranteeTitle": "{name} amelikagua gari hili ana kwa ana",
-        "guaranteeBody": "Limefanyiwa huduma, limejaribiwa barabarani na kukaguliwa kwa orodha yetu ya vipengele {points} tarehe {date}, ikiwemo matairi, breki, tairi la akiba, jeki na nyaraka. Gari lisipolingana na ukurasa wake, hulipii."
+        "guaranteeBody": "Limefanyiwa matengenezo, limejaribiwa barabarani na kukaguliwa kwa orodha yetu ya vipengele {points} tarehe {date}, ikiwemo matairi, breki, tairi la akiba, jeki na nyaraka. Gari lisipolingana na ukurasa wake, hulipii."
       },
       "experience": {
         "guaranteeTitle": "{name} wa timu yetu ameshakwenda matembezi haya",
@@ -356,7 +356,7 @@
     "cvcError": "Msimbo wa usalama ni tarakimu 3 au 4 zilizochapishwa kwenye kadi."
   },
   "confirmation": {
-    "title": "Umeshahifadhi",
+    "title": "Uhifadhi umekamilika",
     "body": "Tumekutumia maelezo kwa barua pepe na kufungua mazungumzo na timu ya huduma.",
     "reference": "Namba ya uhifadhi",
     "referenceHint": "Itaje ukitupigia simu au ukituandikia.",
@@ -372,7 +372,7 @@
     "arrangeNote": "Pia watakuulizia takriban wiki moja kabla hujatua, ukishajua ndege yako.",
     "viewListing": "Angalia tangazo",
     "cancelledNote": "Uhifadhi huu ulighairiwa. Hudaiwi chochote, na pesa yoyote iliyokwisha kulipwa imerudishwa kwa njia ile ile ilivyolipwa.",
-    "recordNote": "Umehifadhiwa kwa {date}. Mabadiliko yoyote unayohitaji yanapitia timu ya Kigali, si fomu."
+    "recordNote": "Imehifadhiwa kwa {date}. Mabadiliko yoyote unayohitaji yanapitia timu ya Kigali, si fomu."
   },
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {siku #} other {siku #}}",
@@ -385,12 +385,12 @@
   },
   "cars": {
     "title": "Magari",
-    "subtitle": "{count, plural, one {Gari # lililokaguliwa} other {Magari # yaliyokaguliwa}} Kigali, yanahudumiwa na kukaguliwa kabla ya kila kukodishwa.",
+    "subtitle": "{count, plural, one {Gari # lililokaguliwa} other {Magari # yaliyokaguliwa}} Kigali. Kila gari hufanyiwa matengenezo na kukaguliwa kabla ya kukodishwa.",
     "seats": "{count, plural, one {kiti #} other {viti #}}",
     "perDay": "kwa siku",
     "transmission": {
       "manual": "Gia za mkono",
-      "automatic": "Automatiki"
+      "automatic": "Otomatiki"
     },
     "class": {
       "compact": "Dogo",
@@ -412,15 +412,15 @@
     "daysTotal": "jumla kwa {count, plural, one {siku #} other {siku #}}",
     "basedIn": "Kigali",
     "bothModesHeading": "Jiendeshe mwenyewe, au na dereva",
-    "driverOnlyHeading": "Na dereva, nje ya Kigali",
+    "driverOnlyHeading": "Na dereva, kuanzia Kigali",
     "thingsToKnow": "Mambo ya kujua",
     "paperworkTitle": "Leseni na nyaraka",
-    "paperworkSelfBody": "Leta leseni yako ya nchi yako, na kibali cha kimataifa kama wewe ni mgeni. Bima, usajili na pembetatu ya tahadhari viko kwenye kisanduku cha gari.",
+    "paperworkSelfBody": "Leta leseni ya nchi yako, na kibali cha kimataifa cha kuendesha kama unatembelea. Bima, kadi ya usajili na pembetatu ya tahadhari viko kwenye kisanduku cha mbele cha gari.",
     "paperworkDriverBody": "Huhitaji kuleta chochote. Dereva ana leseni, bima na nyaraka za kuingia hifadhini.",
     "fuelTitle": "Mafuta na umbali",
     "fuelBody": "Unalipokea likiwa na tanki kamili, unalirudisha likiwa kamili. Hakuna kikomo cha kilomita, wala malipo ya ziada kwa kutoka nje ya Kigali.",
     "cancellationTitle": "Kughairi",
-    "cancellationBody": "Kughairi ni bure hadi {date}. Baada ya hapo, siku ya kwanza hairudishwi."
+    "cancellationBody": "Kughairi ni bure hadi {date}. Baada ya hapo, malipo ya siku ya kwanza hayarudishwi."
   },
   "experiences": {
     "title": "Matembezi",
@@ -464,12 +464,12 @@
     "whoLabel": "Wageni",
     "whoValue": "Wangapi",
     "search": "Tafuta",
-    "suggested": "Tulipokagua makazi",
+    "suggested": "Maeneo tuliyokagua",
     "nearby": "Karibu nawe",
     "nearbyHint": "Tafuta kilicho karibu nawe",
     "anywhere": "Popote Kigali",
     "anywhereHint": "Kila mahali tulipoingia wenyewe",
-    "placesCount": "{count, plural, one {Makazi # yaliyothibitishwa} other {Makazi # yaliyothibitishwa}}",
+    "placesCount": "{count, plural, one {Malazi # yaliyothibitishwa} other {Malazi # yaliyothibitishwa}}",
     "modeDates": "Tarehe kamili",
     "modeFlexible": "Takriban",
     "howLong": "Utakaa kwa muda gani?",
@@ -501,9 +501,9 @@
     "clearGuests": "Anza upya"
   },
   "highlight": {
-    "inspected": "Mtu alipita ndani yake",
+    "inspected": "Mtu wetu alifika mwenyewe",
     "inspectedBody": "{name} alikagua mahali hapa ana kwa ana tarehe {date}, si kupitia fomu.",
-    "escrow": "Pesa yako inasubiri",
+    "escrow": "Pesa zako zinasubiri",
     "escrowBody": "Tunazishikilia na kuzihesabu kuwa zetu tu baada ya timu kuthibitisha kuwa umeingia.",
     "power": "Umeme haukatiki",
     "powerBody": "Jenereta ya akiba ipo, iliwashwa na kujazwa mafuta wakati wa ukaguzi.",
@@ -512,21 +512,21 @@
     "photos": "Picha tulizopiga sisi",
     "photosBody": "Zimepigwa na timu yetu. Hakuna hata moja iliyotoka kwenye simu ya mmiliki.",
     "deposit": "Amana inayorudi",
-    "depositBody": "{deposit}, inashikiliwa kama amana na kurudishwa mkataba wa kupanga unapoisha."
+    "depositBody": "{deposit}, inashikiliwa kama amana na kurudishwa unapohama."
   },
   "carHighlight": {
     "inspected": "Mtu aliliendesha kwanza",
-    "inspectedBody": "{name} alilifanyia huduma na kulijaribu barabarani gari hili hili tarehe {date}, kwa orodha ya vipengele {points}.",
+    "inspectedBody": "{name} alilifanyia matengenezo na kulijaribu barabarani gari hili hili tarehe {date}, kwa orodha ya vipengele {points}.",
     "driver": "Linakuja na dereva",
     "driverBody": "Bei inajumuisha mtu aliyeendesha barabara hizi kwa miaka. Kwenye njia za hifadhini hilo si anasa.",
-    "automatic": "Automatiki, kwenye vilima hivi",
+    "automatic": "Otomatiki, kwenye vilima hivi",
     "automaticBody": "Kigali imejengwa juu ya vilima na msongamano husimama katikati ya miinuko. Hili linabadilisha gia lenyewe.",
     "unpaved": "Limetengenezwa kwa mahali lami inapoishia",
-    "unpavedBody": "Liko juu kutoka ardhini na lina magurudumu manne yanayovuta, kwa sababu nusu ya maeneo yanayostahili kwenda hayana barabara nzuri.",
+    "unpavedBody": "Liko juu kutoka ardhini na ni 4x4, kwa sababu nusu ya maeneo yanayostahili kwenda hayana barabara nzuri.",
     "group": "Wote mnatosha kwenye gari moja",
     "groupBody": "Viti {count}, kwa hiyo hakuna anayefuata kwa gari la pili wala anayepotea njiani.",
-    "fleet": "Karibu kila mara kuna moja wazi",
-    "fleetBody": "{count} yapo kwenye kundi letu sasa hivi, kwa hiyo kubadilisha tarehe mara chache hukugharimu uhifadhi wako."
+    "fleet": "Karibu kila mara kuna gari lililo wazi",
+    "fleetBody": "Tuna magari {count} sasa hivi, kwa hiyo kubadilisha tarehe mara chache hukufanya ukose uhifadhi."
   },
   "experienceHighlight": {
     "inspected": "Mmoja wetu alifanya siku nzima",
@@ -547,25 +547,25 @@
     "subtitle": "Kila ulichohifadhi nasi, pamoja na mazungumzo ya kila kimoja.",
     "comingUp": "Zinazokuja",
     "earlier": "Zilizopita",
-    "emptyBody": "Bado hujahifadhi chochote. Kila kitu kwenye HomeLink kimekaguliwa ana kwa ana, kwa hiyo ni kichache kuliko unavyoweza kudhani, na hakuna kitakachokushangaza ukifika.",
-    "browse": "Angalia makazi yaliyothibitishwa",
+    "emptyBody": "Bado hujahifadhi chochote. Kila kitu kwenye HomeLink kimekaguliwa ana kwa ana, kwa hiyo ni vichache kuliko unavyoweza kudhani, na hakuna kitakachokushangaza ukifika.",
+    "browse": "Angalia malazi yaliyothibitishwa",
     "reference": "Namba",
     "openThread": "Fungua mazungumzo",
     "noThread": "Bado hakuna ujumbe",
     "partOf": "Sehemu ya {name}",
     "notYours": "Ukurasa huu ni wa mtu mwingine",
-    "notYoursBody": "Safari ni mahali uhifadhi wako mwenyewe ulipo. Kama unatoa huduma kwa HomeLink, angalia Bidhaa zako, na kama uko kwenye timu ya Kigali, angalia Foleni.",
+    "notYoursBody": "Safari ni mahali uhifadhi wako mwenyewe ulipo. Kama unatoa huduma kwa HomeLink, angalia Huduma zako, na kama uko kwenye timu ya Kigali, angalia Foleni.",
     "tabs": {
       "upcoming": "Zijazo",
       "past": "Zilizopita",
       "cancelled": "Zilizoghairiwa"
     },
     "tabsLabel": "Uhifadhi upi",
-    "emptyPast": "Bado hakuna kitu. Ulichomaliza kitaonekana hapa, pamoja na maoni ya kuacha.",
-    "emptyCancelled": "Hakuna uhifadhi uliofutwa."
+    "emptyPast": "Bado hakuna kitu. Malazi, magari na matembezi uliyomaliza yataonekana hapa, pamoja na nafasi ya kuacha maoni.",
+    "emptyCancelled": "Hakuna uhifadhi ulioghairiwa."
   },
   "inventory": {
-    "metaTitle": "Bidhaa zako",
+    "metaTitle": "Huduma zako",
     "title": {
       "stay": "Nyumba zako",
       "car": "Magari yako",
@@ -578,7 +578,7 @@
     },
     "listed": "Yaliyotangazwa",
     "bookedNow": "Yanayokuja",
-    "dueToYou": "Inakuja kwako",
+    "dueToYou": "Utakacholipwa",
     "nothingBooked": "Bado hakuna uhifadhi kwa haya. Uhifadhi unaonekana hapa mara tu mgeni anapolipa.",
     "inspectedOn": "Imekaguliwa {date}",
     "unitsFree": "{count, plural, one {# wazi} other {# wazi}}",
@@ -590,14 +590,14 @@
     "moneyNote": "Hakuna kitu kwenye ukurasa huu kinachohamisha pesa. Malipo yanafanywa na timu ya Kigali, na kiasi kilicho hapa ndicho wanachotumia.",
     "notYours": "Ukurasa huu ni wa mtu mwingine",
     "notYoursBody": "Ukurasa huu ni wa madereva na waongozaji. Ikiwa wewe ni mgeni, uhifadhi wako uko kwenye Safari.",
-    "ownershipNote": "Kila kitu ambacho HomeLink imethibitisha katika sehemu hii. Bado haijaonyeshwa ni mtoa huduma yupi anamiliki nini. Katika V1, bidhaa zinatangazwa na timu ya huduma, kwa hiyo kwa kweli kuna mtoa huduma mmoja.",
+    "ownershipNote": "Kila kitu ambacho HomeLink imethibitisha katika sehemu hii. Bado haijaonyeshwa ni mtoa huduma yupi anamiliki nini. Katika V1, huduma zinatangazwa na timu ya huduma, kwa hiyo kimsingi kuna mtoa huduma mmoja tu.",
     "tabsLabel": "Sehemu",
     "tabs": {
       "booked": "Zilizohifadhiwa",
       "listings": "Zilizotangazwa",
       "money": "Pesa"
     },
-    "sortLabel": "Panga",
+    "sortLabel": "Mpangilio",
     "sort": {
       "rate": "Bei",
       "name": "Jina",
@@ -663,13 +663,13 @@
       "search": "Tafuta mahali au anwani ya mtaa",
       "useMine": "Tumia nilipo sasa",
       "locating": "Tunakutafuta…",
-      "denied": "Mahali pamezuiwa kwa tovuti hii. Ruhusu kwenye kivinjari, au tafuta badala yake.",
+      "denied": "Ruhusa ya mahali imezuiwa kwa tovuti hii. Iruhusu kwenye kivinjari, au tafuta badala yake.",
       "unavailable": "Kifaa chako hakikuweza kukupata. Tafuta, au sogeza ramani hadi mahali hapo.",
       "streetHint": "{district}. Sogeza ramani hadi pini iwe mlangoni.",
       "useTyped": "Tumia “{text}” kama anwani",
       "useTypedHint": "Kisha sogeza ramani hadi mahali hapo.",
-      "noMatch": "Hakuna mahali kwa jina hilo hapa. Litumie kama anwani na usogeze ramani hadi mahali hapo.",
-      "mapHint": "Buruta ramani, au gusa mahali, kuweka pini unapomaanisha.",
+      "noMatch": "Hakuna mahali penye jina hilo hapa. Litumie kama anwani na usogeze ramani hadi mahali hapo.",
+      "mapHint": "Buruta ramani, au gusa mahali, kuweka pini unapokusudia.",
       "mapLabel": "Ramani ya kuchagua mahali",
       "name": "Jina (si lazima)",
       "namePlaceholder": "Stendi ya Nyabugogo",
@@ -696,7 +696,7 @@
     "countReplies": "Wanatusubiri",
     "countOwed": "Deni kwa watoa huduma",
     "lane": {
-      "stay": "Makazi",
+      "stay": "Malazi",
       "car": "Gari",
       "experience": "Matembezi"
     },
@@ -711,7 +711,7 @@
     "scheduled": "Ziara",
     "inspector": "Mkaguzi",
     "askStatus": {
-      "open": "Bado hakuna",
+      "open": "Bado hakuna mtu",
       "quoted": "Bei imetolewa",
       "arranged": "Imepangwa",
       "declined": "Imekataliwa"
@@ -726,7 +726,7 @@
     "paidOn": "Imelipwa {date}",
     "readOnlyNote": "Onyesho: vitendo vimezimwa.",
     "notYours": "Ukurasa huu ni wa timu ya Kigali",
-    "notYoursBody": "Foleni ni chombo cha timu ya huduma. Kama umehifadhi kitu, kiko kwenye Safari; kama unatoa huduma, iko kwenye Bidhaa.",
+    "notYoursBody": "Foleni ni chombo cha timu ya huduma. Kama umehifadhi kitu, kiko kwenye Safari; kama unatoa huduma, iko kwenye Huduma zako.",
     "tabsLabel": "Sehemu za foleni",
     "tabs": {
       "verify": "Uthibitishaji",
@@ -738,9 +738,9 @@
     "empty": "Hakuna kitu hapa.",
     "emptyOpen": "Hakuna kilicho wazi. Kila kitu katika sehemu hii kimeshughulikiwa.",
     "note": {
-      "verify": "Hakuna kinachowekwa hewani hadi mtu amesimama ndani yake. Ambavyo bado havijapangiwa ziara viko juu.",
+      "verify": "Hakuna kinachowekwa hewani hadi mtu wetu afike na kukiona mwenyewe. Ambavyo bado havijapangiwa ziara viko juu.",
       "asks": "Kila kitufe cha \"iandikie timu\" kwenye uthibitisho kinaletwa hapa kama kazi ya mtu. Orodha ndefu ni hoja ya kuweka kimoja kati ya hivi kwenye malipo.",
-      "payouts": "Ni ile ile pesa inayoshikiliwa ambayo mgeni anaiona kama usalama, ikionekana kwa nyuma kama kazi. Pesa iliyoshikiliwa inasubiri uthibitisho wa kuingia.",
+      "payouts": "Ni pesa ile ile inayoshikiliwa ambayo mgeni anaiona kama kinga, ila hapa inaonekana kama kazi. Pesa iliyoshikiliwa inasubiri uthibitisho wa kuingia.",
       "threads": "Kila mazungumzo ambayo timu imo. Kitone kilichojaa ni mtu anayetusubiri."
     },
     "tabCount": "{open} kati ya {total}",
@@ -785,7 +785,7 @@
         "schedule": "Panga ziara",
         "reschedule": "Hamisha ziara",
         "publish": "Weka tangazo hewani",
-        "assign": "Lichukue hili",
+        "assign": "Chukua hili",
         "arrange": "Weka alama kuwa imepangwa",
         "release": "Toa malipo"
       },
@@ -814,11 +814,11 @@
       "experience": "Haya ni yako"
     },
     "bookedNow": "Imehifadhiwa",
-    "coming": "Inakuja kwako",
+    "coming": "Utakacholipwa",
     "free": "Wazi",
     "dueForRewalk": "Inahitaji ukaguzi upya",
     "rewalkNote": "inakaribia mwaka mmoja, kwa hiyo iko kwenye foleni ya uthibitishaji.",
-    "seeInInventory": "Ione kwenye bidhaa zako",
+    "seeInInventory": "Ione kwenye huduma zako",
     "askToChange": "Iombe timu ibadilishe kitu",
     "changesNote": "Kwa sasa bei, picha na upatikanaji vinabadilishwa na timu ya Kigali. Waandikie na itafanyika siku hiyo hiyo.",
     "groupCap": "Kikomo cha kikundi",
@@ -844,7 +844,7 @@
     "example3Short": "Nyumba ya familia yenye bustani",
     "example4": "Gari lenye dereva kwa watu 7",
     "example4Short": "Gari lenye dereva",
-    "understood": "Tumeelewa",
+    "understood": "Tumeelewa hivi",
     "recent": "Za hivi karibuni",
     "tryAsking": "Jaribu kuuliza",
     "groupPlaces": "Mitaa",
@@ -897,7 +897,7 @@
     "chipText": "Inataja “{text}”",
     "drive": {
       "withDriver": "Na dereva",
-      "selfDrive": "Ujiendeshe mwenyewe"
+      "selfDrive": "Kujiendesha"
     },
     "landmark": {
       "conventionCentre": "kituo cha mikutano",
@@ -912,40 +912,40 @@
     "triggerShort": "Tafuta",
     "relaxedText": "Hakuna kinachotaja “{text}”, kwa hiyo hivi vinalingana na mengine yote.",
     "relaxedTextBody": "Hakuna hapa kinachotaja “{text}”. Hivi vinalingana na yote mengine uliyoomba.",
-    "closestCount": "{count, plural, one {chaguo # kilicho karibu} other {machaguo # yaliyo karibu}} Kigali",
+    "closestCount": "{count, plural, one {chaguo # lililo karibu} other {machaguo # yaliyo karibu}} Kigali",
     "groupSales": "Zinauzwa",
     "floorArea": "{sqm} m²",
     "askingPrice": "bei inayoombwa",
     "recentlyViewed": "Uliyotazama hivi karibuni",
     "closestHeading": "Vilivyo karibu zaidi tulivyo navyo",
     "nothingMentions": "Hakuna tunachoorodhesha kinachotaja “{text}”",
-    "savedRow": "{count, plural, one {kitu # kilichohifadhiwa} other {vitu # vilivyohifadhiwa}}",
+    "savedRow": "{count, plural, one {kipendwa #} other {vipendwa #}}",
     "forNights": "{count, plural, one {kwa usiku #} other {kwa usiku #}}",
     "forDays": "{count, plural, one {kwa siku #} other {kwa siku #}}",
     "exampleRent": "Vyumba 3 vya kupanga Kacyiru kuanzia Januari",
     "exampleBuy": "Nyumba ya kununua Gacuriro chini ya milioni 300",
-    "exampleCar1": "Gari la automatiki la kujiendesha kwa wikendi",
+    "exampleCar1": "Gari la otomatiki la kujiendesha kwa wikendi",
     "exampleCar2": "Basi dogo lenye dereva kwa watu 10",
-    "exampleDay1": "Sokwe wiki ijayo kwa watu 2",
+    "exampleDay1": "Sokwe mtu wiki ijayo kwa watu 2",
     "exampleDay2": "Kitu cha kufanya ziwani Jumamosi hii",
     "exampleDay3": "Matembezi mjini pamoja na chakula",
     "placeholderLane": {
-      "cars": "Jaribu “automatiki kwa wikendi”",
-      "experiences": "Jaribu “sokwe wiki ijayo kwa watu 2”"
+      "cars": "Jaribu “otomatiki kwa wikendi”",
+      "experiences": "Jaribu “sokwe mtu wiki ijayo kwa watu 2”"
     },
     "groupBookings": "Uhifadhi"
   },
   "saved": {
-    "title": "Vilivyohifadhiwa",
+    "title": "Vipendwa",
     "subtitle": "Maeneo uliyowekea moyo, yanahifadhiwa kwenye kifaa hiki hadi akaunti zitakapoanza.",
     "save": "Hifadhi",
-    "saved": "Imehifadhiwa",
-    "remove": "Ondoa kwenye vilivyohifadhiwa",
+    "saved": "Kwenye vipendwa",
+    "remove": "Ondoa kwenye vipendwa",
     "saveNamed": "Hifadhi {name}",
-    "removeNamed": "Ondoa {name} kwenye vilivyohifadhiwa",
-    "link": "Vilivyohifadhiwa",
-    "linkCount": "Vilivyohifadhiwa, {count, plural, one {mahali #} other {maeneo #}}",
-    "emptyTitle": "Bado hujahifadhi chochote",
+    "removeNamed": "Ondoa {name} kwenye vipendwa",
+    "link": "Vipendwa",
+    "linkCount": "Vipendwa, {count, plural, one {mahali #} other {maeneo #}}",
+    "emptyTitle": "Bado huna vipendwa",
     "emptyBody": "Gusa moyo kwenye malazi, gari au matembezi yoyote, nayo yatakusubiri hapa.",
     "browse": "Tazama malazi",
     "ask": "Uliza utafutaji mahiri",
@@ -965,11 +965,11 @@
     "list": "Orodha",
     "map": "Ramani",
     "showMap": "Onyesha kwenye ramani",
-    "whereTitle": "Utakapokuwa",
-    "areaLabel": "Eneo la takriban huko {place}",
-    "areaNote": "Duara linaonyesha eneo, si mtaa: anwani kamili inakuja pamoja na uhifadhi wako.",
+    "whereTitle": "Mahali utakapokaa",
+    "areaLabel": "Takriban eneo la {place}",
+    "areaNote": "Duara linaonyesha mtaa, si barabara halisi: anwani kamili inakuja pamoja na uhifadhi wako.",
     "contributors": "wachangiaji",
-    "areaNoteLease": "Duara linaonyesha eneo, si mtaa. Anwani kamili inakuja pamoja na muda wako wa kuja kuiona."
+    "areaNoteLease": "Duara linaonyesha mtaa, si barabara halisi. Anwani kamili inakuja pamoja na muda wako wa kuiona nyumba."
   },
   "share": {
     "share": "Shiriki",
@@ -978,7 +978,7 @@
   },
   "places": {
     "Gacuriro": "Makazi yenye lango kwenye kilima cha kaskazini, yanayopendwa na familia zilizo kazini kwa muda mrefu.",
-    "Gikondo": "Mitaa ya zamani na tulivu yenye viwanja halisi, safari fupi kutoka mjini.",
+    "Gikondo": "Mitaa ya zamani na tulivu yenye nyua halisi, safari fupi kutoka mjini.",
     "Kacyiru": "Balozi na wizara, njia pana za watembea kwa miguu, na jioni tulivu.",
     "Kibagabaga": "Yenye miti mingi na makazi, karibu na soko la Kimironko.",
     "Kicukiro": "Dakika kumi na tano kutoka uwanja wa ndege, na bei nafuu kwa hilo.",
@@ -992,9 +992,9 @@
   "footer": {
     "explore": "Gundua",
     "yours": "Safari yako",
-    "saved": "Vilivyohifadhiwa",
+    "saved": "Vipendwa",
     "kigali": "Mitaa",
-    "promise": "Kama kimeorodheshwa hapa, mtu wa timu yetu amefika ndani yake, amekiendesha, au amekitembea.",
+    "promise": "Kama kimeorodheshwa hapa, mtu wa timu yetu amefika ndani yake, amekiendesha, au amekitembelea.",
     "rights": "© {year} HomeLink Africa. Kigali, Rwanda.",
     "prices": "Bei zimewekwa kwa RWF na zinaonyeshwa kwa sarafu yako kwa kiwango cha leo.",
     "stayLink": "Lala usiku mmoja",
@@ -1057,7 +1057,7 @@
     "kindAny": "Yoyote",
     "kind": {
       "house": "Nyumba",
-      "apartment": "Ghorofa",
+      "apartment": "Fleti",
       "townhouse": "Nyumba ya safu"
     },
     "maxPlaceholder": "Bei ya juu, mf. 200M",
@@ -1071,7 +1071,7 @@
     "plotLabel": "Kiwanja",
     "listedLabel": "Imeorodheshwa",
     "about": "Kuhusu nyumba hii",
-    "areaNote": "Duara linaonyesha eneo, si mtaa: kiwanja kamili kinakuja pamoja na hati za umiliki wakati wa kuiona.",
+    "areaNote": "Duara linaonyesha mtaa, si barabara halisi: kiwanja kamili kinaonyeshwa pamoja na hati za umiliki wakati wa kuiona nyumba.",
     "howTitle": "Jinsi kununua kupitia HomeLink kunavyofanya kazi",
     "how": {
       "viewingTitle": "Kuiona pamoja na timu yetu",
@@ -1089,7 +1089,7 @@
     "nameLabel": "Jina lako",
     "contactLabel": "Barua pepe au simu",
     "messageLabel": "Ujumbe",
-    "messageDefault": "Ningependa kupanga muda wa kuona “{name}”.",
+    "messageDefault": "Ningependa kupanga muda wa kuiona “{name}”.",
     "enquire": "Uliza timu ya Kigali",
     "noFunds": "HomeLink haishikilii pesa za ununuzi kamwe. Unamlipa muuzaji kupitia wakili wa viapo.",
     "enquiryNoted": "Ombi limepokelewa",
@@ -1105,8 +1105,8 @@
     "months": "Miezi {count}",
     "nameLabel": "Jina lako",
     "contactLabel": "Barua pepe au simu",
-    "apply": "Omba kupanga kwa muda mrefu",
-    "whatNext": "Timu ya Kigali itakutumia mkataba wa kupanga, masharti ya amana na muda wa kuja kuiona. Hakuna malipo hapa.",
+    "apply": "Omba kupanga",
+    "whatNext": "Timu ya Kigali itakutumia mkataba wa kupanga, masharti ya amana na muda wa kuiona nyumba. Hakuna malipo hapa.",
     "noted": "Ombi limepokelewa",
     "preview": "Toleo hili la majaribio bado halitumi maombi. Ujumbe ukianza kufanya kazi, hapa patafungua mazungumzo na mhudumu, atakayejibu ndani ya siku moja ya kazi.",
     "shorter": "Unakaa chini ya mwaka mmoja? Hifadhi kwa usiku",
@@ -1129,7 +1129,7 @@
     "ctaApply": "Omba",
     "ctaCheckDates": "Angalia tarehe",
     "ctaHire": "Kodi",
-    "ctaBookDay": "Weka nafasi",
+    "ctaBookDay": "Hifadhi nafasi",
     "belowMedian": "{pct}% chini ya wastani kwa m²",
     "aboveMedian": "{pct}% juu ya wastani kwa m²",
     "filters": "Vichujio",
@@ -1144,7 +1144,7 @@
       "rent": "Hujapata nyumba ya kupanga inayokufaa?",
       "buy": "Unatafuta kitu ambacho hatujaorodhesha?",
       "cars": "Unahitaji gari tofauti?",
-      "experiences": "Unataka safari ya siku ambayo bado hatuiendeshi?"
+      "experiences": "Unataka matembezi ambayo bado hatuyaandai?"
     },
     "endBody": "Iambie timu ya Kigali unachotafuta. Kila ombi husomwa na mtu, na mara nyingi tunajua kitu kabla hakijaorodheshwa.",
     "endOthers": "Au angalia",
@@ -1168,7 +1168,7 @@
     "rentPromise": "Bei za kila mwezi kwa kupanga kwa muda wa miezi kumi na miwili au zaidi, na nyaraka zikiwa zimekaguliwa kabla hujasaini.",
     "rentCount": "{count, plural, one {Nyumba # iliyothibitishwa ya kupanga Kigali} other {Nyumba # zilizothibitishwa za kupanga Kigali}}",
     "carsCount": "{count, plural, one {Gari # lililokaguliwa Kigali} other {Magari # yaliyokaguliwa Kigali}}",
-    "daysCount": "{count, plural, one {Safari # ya siku kutoka Kigali} other {Safari # za siku kutoka Kigali}}",
+    "daysCount": "{count, plural, one {Siku # ya matembezi kutoka Kigali} other {Siku # za matembezi kutoka Kigali}}",
     "bandLabel": "Mitaa",
     "fromShort": "kuanzia",
     "rentBarsTitle": "Kodi ya kawaida kwa kila mtaa",
@@ -1223,9 +1223,9 @@
     "hoursShort": "saa {hours}",
     "guidedBy": "Mwongozaji: {name}",
     "groupMaxNote": "Hadi watu {count}",
-    "daysMapLabel": "Ramani ya Rwanda yenye kila safari ya siku na umbali wake kwa gari kutoka Kigali",
-    "carsPromise": "Hufanyiwa huduma na kukaguliwa kabla ya kila ukodishaji na mtu wa timu yetu aliyeliendesha.",
-    "daysPromise": "Tuliziendesha kikamilifu sisi wenyewe kabla ya kuziorodhesha, na waongozaji tunaowajua kwa majina.",
+    "daysMapLabel": "Ramani ya Rwanda yenye kila matembezi na umbali wake kwa gari kutoka Kigali",
+    "carsPromise": "Hufanyiwa matengenezo na kukaguliwa kabla ya kila ukodishaji na mtu wa timu yetu aliyeliendesha.",
+    "daysPromise": "Tuliyafanya yote sisi wenyewe kabla ya kuyaorodhesha, na waongozaji tunaowajua kwa majina.",
     "placesShort": "{count, plural, one {mahali #} other {maeneo #}}",
     "minutesShort": "dak {minutes}",
     "travelTitle": "Kuzunguka",
@@ -1240,7 +1240,7 @@
     "included": {
       "water": "Maji",
       "security": "Mlinzi",
-      "internet": "Intaneti ya fiber",
+      "internet": "Intaneti ya fibre",
       "garden": "Utunzaji wa bustani"
     },
     "excludedNote": "Umeme ni wa mita ya malipo kabla kwa jina la mpangaji, kama ilivyo kwa nyumba nyingi za Kigali.",
@@ -1257,13 +1257,13 @@
     "tripTitle": "Sehemu nyingine ya safari",
     "tripCar": "Gari kutoka uwanja wa ndege",
     "tripCarBody": "Magari yaliyo wazi kwa {when}, pamoja na jumla ya muda wote wa kukaa.",
-    "tripDay": "Safari ya siku ukiwa hapa",
-    "tripDayBody": "Safari za siku tarehe {date}, bei kwa {count, plural, one {mtu #} other {watu #}}.",
+    "tripDay": "Matembezi ukiwa hapa",
+    "tripDayBody": "Matembezi ya tarehe {date}, bei kwa {count, plural, one {mtu #} other {watu #}}.",
     "emptyStay": "Lala usiku mmoja",
     "emptyRent": "Panga nyumba",
     "emptyBuy": "Nunua nyumba",
     "emptyCars": "Kodi gari",
-    "emptyDays": "Tafuta safari ya siku",
+    "emptyDays": "Tafuta matembezi",
     "savedAll": "Zote",
     "compareHint": "Chagua nyumba mbili au tatu uzilinganishe ubavu kwa ubavu.",
     "notePlaceholder": "Uliza kuhusu jenereta, ile yenye mti wa parachichi…",
@@ -1319,7 +1319,7 @@
   "signedOut": {
     "trips": {
       "title": "Safari zako",
-      "body": "Ingia uone malazi, magari na safari zako za siku, kila moja na namba yake ya kumbukumbu, tarehe zake na wa kumtumia ujumbe."
+      "body": "Ingia uone malazi, magari na matembezi yako, kila kimoja na namba yake ya kumbukumbu, tarehe zake na wa kumtumia ujumbe."
     },
     "messages": {
       "title": "Ujumbe",
@@ -1354,7 +1354,7 @@
     "others": "Mitaa mingine",
     "goodFor": {
       "Gacuriro": "Inafaa familia zilizo kazini kwa muda mrefu zinazotaka nafasi na geti.",
-      "Gikondo": "Inafaa kukaa kwa muda mrefu kwa bajeti ndogo, pamoja na uwanja.",
+      "Gikondo": "Inafaa kukaa kwa muda mrefu kwa bajeti ndogo, pamoja na ua.",
       "Kacyiru": "Inafaa yeyote anayefanya kazi na wizara au ubalozi.",
       "Kibagabaga": "Inafaa familia zinazotaka bustani na soko karibu.",
       "Kicukiro": "Inafaa ukiwasili usiku au una ndege ya asubuhi mapema.",
@@ -1363,7 +1363,7 @@
       "Nyamirambo": "Inafaa anayetaka kuliishi jiji mtaani.",
       "Nyarutarama": "Inafaa familia inayopenda kukaribisha wageni, au kazi ya muda mrefu.",
       "Rebero": "Inafaa yeyote anayetaka mandhari na hajali mlima wa kupanda.",
-      "Remera": "Inafaa kazi ya kwanza Kigali, karibu na njia za basi."
+      "Remera": "Inafaa kwa anayeanza kazi Kigali, karibu na njia za basi."
     },
     "mapLabel": "Ramani ya mitaa {count} tunayoorodhesha",
     "whereInCity": "Mahali {place} ilipo Kigali",
@@ -1378,7 +1378,7 @@
     "rent": "Kupanga",
     "buy": "Kununua",
     "cars": "Magari",
-    "experiences": "Safari za siku"
+    "experiences": "Matembezi"
   },
   "landmarkNames": {
     "conventionCentre": "Kituo cha mikutano",
@@ -1411,7 +1411,7 @@
       "people": "Watu",
       "content": "Maudhui",
       "settings": "Mipangilio",
-      "audit": "Kumbukumbu ya ukaguzi",
+      "audit": "Kumbukumbu za mabadiliko",
       "jobs": "Kazi",
       "schedule": "Ratiba",
       "earnings": "Mapato",
@@ -1458,8 +1458,8 @@
       "arrivals": "Wanaowasili",
       "departures": "Wanaoondoka",
       "inHouse": "Walio ndani",
-      "turnovers": "Mabadiliko",
-      "turnoverHint": "Kutoka saa 11:00, mgeni anayefuata saa 14:00",
+      "turnovers": "Kubadilisha wageni",
+      "turnoverHint": "Kutoka 11:00, mgeni anayefuata 14:00",
       "eta": "Atawasili karibu saa {time}",
       "etaUnknown": "Saa ya kuwasili haijatolewa",
       "checkIn": "Rekodi kuingia",
@@ -1579,7 +1579,7 @@
       "refundInvalid": "Angalia kiasi na utoe sababu.",
       "cancel": "Ghairi uhifadhi",
       "refundChoice": "Marejesho",
-      "cancelPolicy": "Kwa masharti: {amount}",
+      "cancelPolicy": "Kwa mujibu wa sera: {amount}",
       "cancelGoodwill": "Kwa nia njema: kila kilicholipwa, {amount}",
       "confirmCancel": "Ghairi na urejeshe",
       "cancelled": "Imeghairiwa. {amount} zimerejeshwa.",
@@ -1665,7 +1665,7 @@
         "stay": {
           "matchesPhotos": "Inalingana na picha",
           "power": "Umeme kwenye kila soketi",
-          "backupPower": "Umeme wa akiba unawaka",
+          "backupPower": "Umeme wa akiba unaingia wenyewe",
           "water": "Msukumo wa maji",
           "hotWater": "Maji ya moto",
           "internet": "Kasi ya intaneti",
@@ -1677,7 +1677,7 @@
         "car": {
           "documents": "Usajili na nyaraka",
           "insurance": "Bima iko hai",
-          "tyres": "Matairi na upepo",
+          "tyres": "Upepo wa matairi na tairi la akiba",
           "brakes": "Breki",
           "lights": "Taa na indiketa",
           "aircon": "Kiyoyozi",
@@ -1685,7 +1685,7 @@
           "spare": "Tairi la akiba na jeki"
         },
         "experience": {
-          "guideLicence": "Leseni ya kiongozi",
+          "guideLicence": "Leseni ya mwongozaji",
           "route": "Njia imekaguliwa",
           "safety": "Maelekezo ya usalama",
           "vehicle": "Gari limekaguliwa",
@@ -1696,7 +1696,7 @@
     },
     "work": {
       "housekeeping": "Usafi",
-      "housekeepingBody": "Kila usafi nyumba zinahitaji, siku kwa siku. Usafi wa kubadilisha wageni mgeni mpya akifika mchana huo huja kwanza; uweke tayari ili mapokezi wakabidhi funguo.",
+      "housekeepingBody": "Kila usafi ambao nyumba zinahitaji, siku kwa siku. Kubadilisha wageni pale mgeni mpya anapofika mchana huo huo huja kwanza; iweke tayari ili mapokezi wamkabidhi funguo.",
       "days": "Siku",
       "today": "Leo",
       "cleans": "{count, plural, =0 {hakuna usafi} one {usafi #} other {usafi #}}",
@@ -1707,7 +1707,7 @@
         "issue": "Tatizo"
       },
       "hkDone": {
-        "todo": "Imerudishwa kwenye ya kufanya",
+        "todo": "Imerudishwa kwenye orodha ya kufanya",
         "inProgress": "Imewekwa inasafishwa",
         "ready": "Tayari kwa mgeni",
         "issue": "Tatizo limeripotiwa mapokezi"
@@ -1783,7 +1783,7 @@
       "newTicket": "Tiketi mpya",
       "ticketCreated": "Tiketi imeundwa",
       "what": "Kinachohitaji kutengenezwa",
-      "whatPlaceholder": "Bafu inatoa maji polepole",
+      "whatPlaceholder": "Mfereji wa bafu unapitisha maji polepole",
       "details": "Maelezo",
       "create": "Unda tiketi",
       "cancel": "Ghairi"
@@ -1813,10 +1813,10 @@
       "todos": {
         "publish": "{count, plural, one {Nyumba # iliyokaguliwa} other {Nyumba # zilizokaguliwa}} kuwekwa hewani",
         "incidents": "{count, plural, one {Tukio #} other {Matukio #}} bila mtu anayeshughulikia",
-        "asks": "{count, plural, one {Ombi # la mgeni} other {Maombi # ya wageni}} bila mwenyewe",
-        "urgent": "{count, plural, one {Tengenezo # la dharura} other {Matengenezo # ya dharura}} hayajakamilika",
+        "asks": "{count, plural, one {Ombi # la mgeni} other {Maombi # ya wageni}} bila mhusika",
+        "urgent": "{count, plural, one {Kazi # ya dharura ya matengenezo haijakamilika} other {Kazi # za dharura za matengenezo hazijakamilika}}",
         "cleans": "{count, plural, one {Usafi #} other {Usafi #}} haujawa tayari kabla ya mgeni",
-        "rent": "{count, plural, one {Mpangaji #} other {Wapangaji #}} wamechelewa kodi"
+        "rent": "{count, plural, one {Mpangaji # amechelewa kodi} other {Wapangaji # wamechelewa kodi}}"
       },
       "allClear": "Hakuna kinachokusubiri."
     },
@@ -1836,10 +1836,10 @@
         "name": "Nyumba inahitaji jina.",
         "nightlyRate": "Bei ya usiku lazima iwe zaidi ya sifuri.",
         "monthlyRate": "Kupangisha kunahitaji kodi ya mwezi zaidi ya sifuri.",
-        "sleeps": "Idadi ya kulala lazima iwe angalau sawa na vyumba, na angalau mmoja.",
-        "bedrooms": "Vyumba kati ya 0 na 20.",
+        "sleeps": "Idadi ya wanaolala lazima iwe angalau sawa na idadi ya vyumba, na isipungue mmoja.",
+        "bedrooms": "Idadi ya vyumba lazima iwe kati ya 0 na 20.",
         "modes": "Itoe kwa angalau aina moja ya kukaa.",
-        "minNights": "Kukaa kwa chini ni kati ya usiku 1 na 30."
+        "minNights": "Muda wa chini wa kukaa ni kati ya usiku 1 na 30."
       },
       "name": "Jina",
       "summary": "Muhtasari",
@@ -1848,13 +1848,13 @@
       "sleeps": "Wanaolala",
       "photosHint": "Picha ya kwanza ndiyo jalada kwenye kila kadi na juu ya ukurasa. Buruta kupanga upya, au tumia mishale.",
       "cover": "Jalada",
-      "makeCover": "Fanya jalada",
+      "makeCover": "Weka kuwa jalada",
       "moveEarlier": "Sogeza picha {n} mbele",
       "moveLater": "Sogeza picha {n} nyuma",
       "removePhoto": "Ondoa picha {n}",
       "noPhotos": "Hakuna picha bado. Timu yetu hupiga picha kila nyumba kabla haijawekwa hewani.",
       "addPhoto": "Ongeza picha",
-      "phase2Upload": "Inaonyeshwa hapa tu: kupakia picha kwenye hifadhi kunakuja na backend, kwa hivyo hii haijahifadhiwa.",
+      "phase2Upload": "Inaonyeshwa hapa tu: kupakia picha kwenye hifadhi kunakuja na mfumo wa nyuma, kwa hivyo hii haijahifadhiwa.",
       "amenitiesHint": "Kile tu ambacho mtu amekagua ana kwa ana.",
       "rulesHint": "Sentensi moja kila moja, kwa mpangilio mgeni anaohitaji. Wageni wanazikubali zote wanapolipa.",
       "ruleN": "Kanuni {n}",
@@ -1873,25 +1873,25 @@
       "rentingTerms": "Masharti ya kupangisha",
       "depositMonths": "Amana (miezi)",
       "availableFrom": "Inapatikana kuanzia",
-      "checkInHint": "Hutumwa kwa mgeni saa 48 kabla ya kufika, kamwe si kabla.",
+      "checkInHint": "Hutumwa kwa mgeni saa 48 kabla ya kufika, si mapema zaidi.",
       "directions": "Maelekezo",
-      "doorCode": "Namba ya mlango au kisanduku cha funguo",
+      "doorCode": "Namba ya siri ya mlango au kisanduku cha funguo",
       "wifiName": "Jina la wi-fi",
       "wifiPassword": "Nenosiri la wi-fi",
       "manager": "Anayeisimamia",
       "nobody": "Bado hakuna",
       "managerSince": "Tangu",
       "managerHint": "Ametajwa kwenye ukurasa wa nyumba: wageni wanajua nani anapokea simu saa tano usiku.",
-      "availabilityHint": "Gusa usiku ulio wazi kumhifadhia mmiliki; gusa tena kuuachia. Usiku wenye wageni, na uliozuiwa kwa matengenezo, hubadilishwa kutoka kwenye uhifadhi au tiketi.",
+      "availabilityHint": "Gusa usiku ulio wazi kumzuilia mmiliki; gusa tena kuuachia. Usiku wenye wageni, na uliozuiwa kwa matengenezo, hubadilishwa kutoka kwenye uhifadhi au tiketi.",
       "prevMonth": "Mwezi uliopita",
       "nextMonth": "Mwezi ujao",
-      "held": "{date} umehifadhiwa",
+      "held": "{date} umezuiwa",
       "released": "{date} umeachiwa",
       "cannotHold": "Usiku huo hauwezi kubadilishwa hapa.",
       "night": {
         "free": "Wazi",
         "booked": "Wageni",
-        "owner": "Umehifadhiwa kwa mmiliki",
+        "owner": "Umezuiwa kwa mmiliki",
         "maintenance": "Matengenezo",
         "past": "Umepita"
       },
@@ -1916,7 +1916,7 @@
       "home": "Nyumba",
       "rate": "Usiku",
       "next30": "Siku 30 zijazo",
-      "nextArrival": "Anayefika ijayo",
+      "nextArrival": "Mgeni anayefuata",
       "openTickets": "Matengenezo",
       "state": "Hali",
       "live": "Hewani",
@@ -1947,23 +1947,23 @@
     },
     "calendar": {
       "title": "Kalenda",
-      "bodyAdmin": "Kila nyumba kwa wiki mbili au mwezi ujao. Mstari ni uhifadhi; gusa usiku ulio wazi kumhifadhia mmiliki.",
-      "bodyOps": "Kila nyumba kwa wiki mbili au mwezi ujao. Mstari ni uhifadhi; uufungue kumwona mgeni.",
+      "bodyAdmin": "Kila nyumba kwa wiki mbili au mwezi ujao. Mstari ni uhifadhi; gusa usiku ulio wazi kumzuilia mmiliki.",
+      "bodyOps": "Kila nyumba kwa wiki mbili au mwezi ujao. Mstari ni uhifadhi; ufungue umwone mgeni.",
       "home": "Nyumba",
       "earlier": "Mapema",
       "later": "Baadaye",
       "today": "Leo",
       "span": "Siku zinazoonyeshwa",
       "days": "Siku {count}",
-      "held": "Usiku umehifadhiwa",
+      "held": "Usiku umezuiwa",
       "released": "Usiku umeachiwa",
       "cannot": "Usiku huo hauwezi kubadilishwa.",
-      "tapToHold": "Gusa kumhifadhia mmiliki",
-      "tapToRelease": "Umehifadhiwa. Gusa kuachia",
+      "tapToHold": "Gusa kumzuilia mmiliki",
+      "tapToRelease": "Umezuiwa. Gusa kuachia",
       "repair": "Umezuiwa kwa matengenezo",
-      "blocked": "Umehifadhiwa kwa mmiliki",
+      "blocked": "Umezuiwa kwa mmiliki",
       "legendStay": "Imehifadhiwa",
-      "legendRent": "Kupangisha",
+      "legendRent": "Upangaji",
       "legendEnded": "Imekamilika",
       "legendHeld": "Imezuiwa",
       "legendRepair": "Matengenezo"
@@ -1979,7 +1979,7 @@
       "own": "bei yake",
       "selected": "{from} hadi {to}",
       "selectedOne": "{date}",
-      "pickEnd": "gusa usiku wa mwisho, au weka huu",
+      "pickEnd": "gusa usiku wa mwisho, au weka bei ya huu",
       "pickStart": "Gusa usiku wa kwanza kuanza.",
       "price": "Bei ya usiku ({currency})",
       "setButton": "Weka bei",
@@ -1991,7 +1991,7 @@
     },
     "homes": {
       "tenants": "Wapangaji",
-      "tenantsBody": "Kila upangaji unaoendelea, waliochelewa kodi kwanza. Fungua mmoja umkumbushe, rekodi uhamisho, au anza kuhama.",
+      "tenantsBody": "Kila upangaji unaoendelea, waliochelewa kodi kwanza. Fungua mmoja umkumbushe, rekodi malipo ya benki, au anzisha mchakato wa kuhama.",
       "rentings": "Upangaji",
       "overdue": "Wamechelewa kodi",
       "dueSoon": "Inadaiwa ndani ya siku tano",
@@ -2012,7 +2012,7 @@
       "monthsOf": "{paid} kati ya {total}",
       "deposit": "Amana inayoshikiliwa",
       "phone": "Simu",
-      "noTenants": "Hakuna anayepangisha sasa.",
+      "noTenants": "Hakuna anayepanga sasa.",
       "remind": "Tuma ukumbusho wa kodi",
       "reminded": "Ukumbusho umetumwa",
       "received": "Imepokelewa kwa uhamisho ({currency})",
@@ -2020,15 +2020,15 @@
       "recordHint": "Kwa kodi iliyolipwa nje ya programu; inahesabiwa kwa mwezi wa zamani zaidi ambao haujalipwa.",
       "recorded": "Malipo yamerekodiwa",
       "moveOutDate": "Siku ya kuhama",
-      "startMoveOut": "Anza kuhama",
+      "startMoveOut": "Anzisha kuhama",
       "moveOutBooked": "Ukaguzi wa kuhama umepangwa",
       "moveOutOn": "Ukaguzi wa kuhama {date}. Rudisha amana ukishakamilika.",
       "returnDeposit": "Rudisha amana",
       "depositReturned": "Amana imerudishwa",
       "depositDone": "Amehama; amana imerudishwa.",
       "sales": "Nyumba zinazouzwa",
-      "salesBody": "Nyumba zilizo sokoni na watu wanaoomba kuziona. Kila badiliko la ziara humjulisha aliyeomba.",
-      "viewings": "Maombi ya ziara",
+      "salesBody": "Nyumba zilizo sokoni na watu wanaoomba kuziona. Kila badiliko la muda wa kuiona humjulisha aliyeomba.",
+      "viewings": "Maombi ya kuiona nyumba",
       "view": {
         "requested": "Imeombwa",
         "confirmed": "Imethibitishwa",
@@ -2062,7 +2062,7 @@
       "viewingCancelled": "Imeghairiwa; amejulishwa",
       "day": "Siku",
       "time": "Saa",
-      "move": "Hamisha ziara",
+      "move": "Hamisha muda wa kuiona",
       "viewingMoved": "Imehamishwa; amejulishwa",
       "viewingFailed": "Muda huo umechukuliwa au hauruhusiwi. Chagua mwingine.",
       "partners": "Madereva na waongozaji",
@@ -2081,7 +2081,7 @@
       "doc": {
         "licence": "Leseni ya udereva",
         "insurance": "Bima",
-        "permit": "Kibali cha uongozaji",
+        "permit": "Kibali cha mwongozaji",
         "id": "Kitambulisho",
         "vehicleInspection": "Ukaguzi wa gari"
       },
@@ -2104,7 +2104,7 @@
     },
     "finance": {
       "title": "Fedha",
-      "body": "Pesa zinazoingia, zinazotoka, na zinazoshikiliwa kwa ajili ya mtu mwingine. Kila hatua hapa inarekodiwa kwenye kumbukumbu za ukaguzi.",
+      "body": "Pesa zinazoingia, zinazotoka, na zinazoshikiliwa kwa ajili ya mtu mwingine. Kila hatua hapa inarekodiwa kwenye kumbukumbu za mabadiliko.",
       "tabs": {
         "revenue": "Mapato",
         "payments": "Malipo",
@@ -2117,7 +2117,7 @@
       "revenueTitle": "Mapato kwa mwezi, faranga (maelfu)",
       "lane": "Huduma",
       "lanes": {
-        "stay": "Makazi na upangaji",
+        "stay": "Malazi na upangaji",
         "car": "Magari",
         "experience": "Matembezi"
       },
@@ -2160,10 +2160,10 @@
       "rentingDeposits": "Amana za upangaji",
       "endsOn": "inaisha {date}",
       "moveOutOn": "kuhama {date}",
-      "escrow": "Escrow ya makazi",
-      "escrowNote": "Inashikiliwa hadi mgeni afike, kisha inapelekwa kwa nyumba yenyewe.",
+      "escrow": "Escrow ya malazi",
+      "escrowNote": "Inashikiliwa hadi mgeni afike, kisha inatolewa kiotomatiki kwa mwenye nyumba.",
       "arrives": "Anafika",
-      "payee": "Analipwa",
+      "payee": "Mlipwaji",
       "releaseOn": "Inatolewa",
       "payout": {
         "held": "Imezuiwa hadi afike",
@@ -2174,7 +2174,7 @@
       "paidDone": "Imewekwa imelipwa",
       "issued": "Imetolewa",
       "receipt": "Risiti",
-      "keep": "Baki kwa matengenezo ({currency})",
+      "keep": "Bakiza kwa matengenezo ({currency})",
       "reason": "Sababu",
       "reasonPlaceholder": "Kupaka rangi ukuta wa korido",
       "release": "Rudisha amana",
@@ -2221,7 +2221,7 @@
       "showTimes": "Onyesha muda wa safari",
       "offered": "Toa {name}",
       "lanes": {
-        "stay": "Makazi",
+        "stay": "Malazi",
         "car": "Magari",
         "experience": "Matembezi"
       },
@@ -2246,7 +2246,7 @@
         "invited": "Amealikwa",
         "deactivated": "Amezimwa"
       },
-      "lastActive": "Alikuwa hai {when}",
+      "lastActive": "Mara ya mwisho: {when}",
       "neverSignedIn": "Bado hajaingia",
       "content": "Maudhui",
       "contentBody": "Kile tovuti ya umma inachosema, kinachobadilishwa bila toleo jipya.",
@@ -2261,7 +2261,7 @@
       "windowsHint": "Siku ngapi kabla ya kuanza mgeni anaweza kughairi na kurejeshewa yote.",
       "windowFor": "{lane}, siku",
       "extras": "Ziada",
-      "promos": "Misimbo ya ofa",
+      "promos": "Misimbo ya punguzo",
       "promosHint": "Kwa usiku tu, kamwe si ada au ziada, na kwa kikomo.",
       "fx": "Viwango vya kuonyesha",
       "fxHint": "Kwa kuonyesha bei kwa sarafu nyingine. Kinachotozwa kinatumia kiwango cha mtoa huduma wa malipo siku hiyo.",
@@ -2269,7 +2269,7 @@
       "bankTitle": "Maelezo ya uhamisho wa benki",
       "templates": "Maandishi ya arifa",
       "templatesHint": "Kile kila arifa inasema, kwa kila lugha. Ni ya kusoma tu kwa sasa: yanahaririwa kwenye faili za tafsiri.",
-      "audit": "Kumbukumbu za ukaguzi",
+      "audit": "Kumbukumbu za mabadiliko",
       "auditBody": "Kila hatua iliyorekodiwa, ya karibuni kwanza, kwa saa za Kigali.",
       "who": "Nani",
       "anyone": "Yeyote",
@@ -2327,7 +2327,7 @@
       "schedule": "Ratiba",
       "scheduleBody": "Wiki mbili zijazo, siku kwa siku.",
       "today": "Leo",
-      "free": "Huru",
+      "free": "Wazi",
       "earnings": "Mapato",
       "earningsBody": "Unachodai na kilicholipwa. Malipo ya kazi yanashikiliwa hadi mgeni afike.",
       "paidThisMonth": "Yaliyolipwa mwezi huu",
@@ -2346,7 +2346,7 @@
       "doc": {
         "licence": "Leseni ya udereva",
         "insurance": "Bima",
-        "permit": "Cheti cha uongozaji",
+        "permit": "Cheti cha mwongozaji",
         "id": "Kitambulisho",
         "vehicleInspection": "Ukaguzi wa gari"
       },
@@ -2365,9 +2365,9 @@
       "overview": "Muhtasari",
       "trips": "Safari na uhifadhi",
       "renting": "Nyumba unayopanga",
-      "viewings": "Kutazama nyumba",
+      "viewings": "Kuiona nyumba",
       "payments": "Malipo",
-      "saved": "Vilivyohifadhiwa",
+      "saved": "Vipendwa",
       "notifications": "Arifa",
       "settings": "Mipangilio"
     },
@@ -2380,13 +2380,13 @@
       "checkInSoon": "Maelezo ya kuingia yatapatikana {date}",
       "viewBooking": "Angalia uhifadhi",
       "message": "Tuma ujumbe kwa timu",
-      "nothing": "Bado hakuna uhifadhi. Nyumba, magari na matembezi yako umbali wa utafutaji mmoja.",
+      "nothing": "Bado hakuna uhifadhi. Nyumba, magari na matembezi unaweza kuyapata kwa kutafuta tu.",
       "find": "Tafuta malazi",
       "latest": "Za karibuni",
       "seeAll": "Ona zote",
       "shortcuts": "Akaunti yako",
       "rentDue": "Kodi ya {amount} inadaiwa {date}",
-      "viewingOn": "Kutazama tarehe {date} saa {time}"
+      "viewingOn": "Kuiona nyumba tarehe {date} saa {time}"
     },
     "payments": {
       "title": "Malipo",
@@ -2427,7 +2427,7 @@
         "low": "Wakati unaofaa"
       },
       "send": "Tuma ombi",
-      "sent": "Imetumwa. Timu itaipanga.",
+      "sent": "Imetumwa. Timu itapanga siku ya kurekebisha.",
       "ticketStatus": {
         "open": "Imepokelewa",
         "scheduled": "Imepangwa",
@@ -2440,16 +2440,16 @@
       "docReceipts": "Risiti"
     },
     "viewings": {
-      "title": "Kutazama nyumba",
-      "none": "Hakuna kutazama kulikopangwa. Unaweza kupanga kutoka kwa nyumba yoyote inayouzwa.",
+      "title": "Kuiona nyumba",
+      "none": "Hujapanga kuiona nyumba yoyote. Unaweza kupanga kutoka kwenye nyumba yoyote inayouzwa.",
       "status": {
         "requested": "Imeombwa",
         "confirmed": "Imethibitishwa",
         "rescheduled": "Imehamishwa",
         "done": "Imefanyika",
-        "cancelled": "Imefutwa"
+        "cancelled": "Imeghairiwa"
       },
-      "cancel": "Ghairi kutazama",
+      "cancel": "Ghairi kuiona",
       "move": "Chagua wakati mwingine",
       "video": "Kwa video",
       "inPerson": "Ana kwa ana"
@@ -2469,7 +2469,7 @@
       "name": "Jina",
       "email": "Barua pepe",
       "phone": "Simu",
-      "verifyHint": "Tutatuma msimbo kwa mpya kabla haijahesabiwa.",
+      "verifyHint": "Tutatuma msimbo kwa anwani au namba mpya kabla haijaanza kutumika.",
       "codeSent": "Msimbo uko njiani kwa {to}",
       "saved": "Imehifadhiwa",
       "photo": "Picha",
@@ -2509,7 +2509,7 @@
       "mobileMoney": "Mobile Money",
       "default": "Chaguo-msingi",
       "defaultSet": "Chaguo-msingi limebadilishwa",
-      "makeDefault": "Fanya chaguo-msingi",
+      "makeDefault": "Weka kuwa chaguo-msingi",
       "remove": "Ondoa",
       "noMethods": "Hakuna kilichohifadhiwa. Ongeza hapa au wakati wa kulipa.",
       "addCard": "Ongeza kadi",
@@ -2534,7 +2534,7 @@
       "downloadBody": "Wasifu wako, uhifadhi, malipo na ziara, kama faili unayoweza kuhifadhi.",
       "downloadButton": "Pakua nakala",
       "deleteTitle": "Futa akaunti yangu",
-      "deleteBody": "Hii inafunga akaunti yako na kukutoa. Haiwezi kurudishwa.",
+      "deleteBody": "Hii inafunga akaunti yako na kukutoa. Hatua hii haiwezi kutenduliwa.",
       "typeWord": "Andika {word} kuthibitisha",
       "deleteButton": "Futa akaunti yangu",
       "deleteBlocked": "Una uhifadhi unaokuja ({reference}). Ughairi au usubiri uishe, kisha ufute akaunti.",
@@ -2544,7 +2544,7 @@
       "deleteWord": "FUTA"
     },
     "id": {
-      "intro": "Picha ya kitambulisho na selfie, zinakaguliwa mara moja na mtu wa timu yetu, ili upangaji na baadhi ya magari yasikuulize tena.",
+      "intro": "Picha ya kitambulisho na selfie, zinakaguliwa mara moja na mtu wa timu yetu, ili usiulizwe tena unapopanga nyumba au kukodi baadhi ya magari.",
       "status": {
         "none": "Bado hakijakaguliwa",
         "pending": "Kiko kwa timu yetu",
@@ -2554,7 +2554,7 @@
       "statusBody": {
         "none": "Tuma picha ya hati moja hapa chini.",
         "pending": "Kwa kawaida tunajibu ndani ya siku moja ya kazi.",
-        "verified": "Hakuna kingine cha kufanya. Upangaji na magari hayataiuliza tena.",
+        "verified": "Hakuna kingine cha kufanya. Hutaulizwa tena unapopanga au kukodi gari.",
         "retry": "Picha ilikuwa na ukungu au imekatwa. Itume tena kwenye mwanga mzuri, pembe zote nne zikionekana."
       },
       "previewCycle": "Onyesho: hali inayofuata",
@@ -2569,7 +2569,7 @@
       "back": "Nyuma",
       "selfie": "Selfie",
       "selfieHint": "Uso wako, kwenye mwanga mzuri, bila miwani ya jua.",
-      "privacy": "Inaonwa tu na mtu wa timu anayeikagua, na inafutwa siku 30 baada ya ukaguzi.",
+      "privacy": "Inaonekana tu kwa mtu wa timu anayeikagua, na inafutwa siku 30 baada ya ukaguzi.",
       "send": "Tuma ikaguliwe"
     }
   },
@@ -2608,7 +2608,7 @@
         "body": "Dakika mbili kuhusu kilichofaa na kisichofaa zinamsaidia mgeni anayefuata."
       },
       "viewingConfirmed": {
-        "title": "Kutazama kumethibitishwa",
+        "title": "Kuiona nyumba kumethibitishwa",
         "body": "{name}, {date}. Leta kitambulisho."
       },
       "newBooking": {
@@ -2617,7 +2617,7 @@
       },
       "arrivalToday": {
         "title": "{count, plural, one {Mgeni # anawasili leo} other {Wageni # wanawasili leo}}",
-        "body": "Angalia ubao wa leo kwa nyakati na funguo."
+        "body": "Angalia ubao wa Leo kwa nyakati na funguo."
       },
       "newAsk": {
         "title": "Ombi jipya la mgeni",
@@ -2648,7 +2648,7 @@
         "body": "{doc} inaisha tarehe {date}."
       },
       "viewingChanged": {
-        "title": "Ziara {state, select, moved {imehamishwa} done {imekamilika, asante} cancelled {imeghairiwa} other {imesasishwa}}",
+        "title": "Kuiona nyumba {state, select, moved {kumehamishwa} done {kumefanyika, asante} cancelled {kumeghairiwa} other {kumesasishwa}}",
         "body": "{name}: {when}."
       },
       "jobAccepted": {
@@ -2661,7 +2661,7 @@
     "seeAll": "Ona zote",
     "all": "Zote",
     "unread": "Hazijasomwa",
-    "bell": "{count, plural, =0 {Arifa} other {Arifa, # hazijasomwa}}",
+    "bell": "{count, plural, =0 {Arifa} one {Arifa, # haijasomwa} other {Arifa, # hazijasomwa}}",
     "empty": "Bado hakuna kitu. Uhifadhi, malipo na ujumbe vitaonekana hapa.",
     "emptyUnread": "Umesoma zote.",
     "filterLabel": "Onyesha",
@@ -2719,7 +2719,7 @@
       "rentDue": "Kodi inadaiwa",
       "newMessage": "Ujumbe mpya",
       "reviewRequest": "Ombi la maoni",
-      "viewingConfirmed": "Kutazama kumethibitishwa",
+      "viewingConfirmed": "Kuiona nyumba kumethibitishwa",
       "newBooking": "Uhifadhi mpya",
       "arrivalToday": "Wanaowasili leo",
       "newAsk": "Ombi jipya",
@@ -2729,22 +2729,22 @@
       "jobChanged": "Kazi imebadilika",
       "payoutSent": "Malipo yametumwa",
       "documentExpiring": "Hati inakaribia kuisha",
-      "viewingChanged": "Ziara imehamishwa au imekamilika",
+      "viewingChanged": "Kuiona nyumba kumehamishwa au kumefanyika",
       "jobAccepted": "Kazi imekubaliwa na dereva au mwongozaji"
     }
   },
   "extras": {
     "airportPickup": {
-      "name": "Kuchukuliwa uwanja wa ndege",
-      "body": "Dereva anakupokea sehemu ya wanaowasili akiwa na jina lako, saa yoyote."
+      "name": "Kupokelewa uwanja wa ndege",
+      "body": "Dereva anakupokea sehemu ya wanaowasili akiwa na bango lenye jina lako, saa yoyote."
     },
     "earlyCheckIn": {
       "name": "Kuingia mapema",
-      "body": "Ingia kuanzia saa 10:00 badala ya 14:00, kwa ndege ya mapema."
+      "body": "Ingia kuanzia 10:00 (saa nne asubuhi) badala ya 14:00, kwa ndege ya mapema."
     },
     "lateCheckout": {
-      "name": "Kutoka kwa kuchelewa",
-      "body": "Toka saa 16:00 badala ya 11:00, kwa ndege ya jioni."
+      "name": "Kutoka baadaye",
+      "body": "Toka 16:00 (saa kumi jioni) badala ya 11:00, kwa ndege ya jioni."
     },
     "groceries": {
       "name": "Vyakula ukifika",
@@ -2764,7 +2764,7 @@
     },
     "fullInsurance": {
       "name": "Bima kamili",
-      "body": "Hakuna ziada ya kulipa gari likiharibika. Kwa siku."
+      "body": "Hutalipa chochote gari likiharibika. Kwa siku."
     }
   },
   "booking": {
@@ -2835,7 +2835,7 @@
       "remove": "Ondoa {name}",
       "increase": "Ongeza {name} moja",
       "decrease": "Punguza {name} moja",
-      "perBooking": "kwa kila malazi",
+      "perBooking": "kwa kila ukaaji",
       "perVisit": "kwa kila ziara",
       "perDay": "kwa siku",
       "free": "Bure",
@@ -2861,7 +2861,7 @@
       "cancelUntil": "Hadi {date}",
       "cancelFrom": "Kuanzia {date}",
       "cancelCarFree": "Kughairi bure",
-      "cancelCarOneDay": "Malipo ya siku moja ya kukodi hayarudishwi",
+      "cancelCarOneDay": "Malipo ya siku moja ya kukodi yanabakizwa",
       "cancelDayFree": "Unarudishiwa pesa zote",
       "cancelDayNone": "Hakuna pesa inayorudishwa",
       "cancelPermit": "Vibali vya hifadhi vinanunuliwa kwa jina lako na havirudishwi kamwe.",
@@ -2875,7 +2875,7 @@
         "notApplicable": "Msimbo huo hautumiki kwenye uhifadhi huu."
       },
       "rulesTitleCar": "Kanuni za kukodi gari",
-      "rulesTitleDay": "Kanuni za siku",
+      "rulesTitleDay": "Kanuni za matembezi",
       "rulesAcceptOther": "Nimesoma kanuni na ninazikubali",
       "cancelDayPermit": "Kurudishiwa, ukiondoa vibali vya hifadhi",
       "people": "Watu",
@@ -2891,7 +2891,7 @@
       "methodTitle": "Njia ya malipo",
       "card": "Kadi",
       "cardHint": "Visa, Mastercard",
-      "mobileMoney": "Pesa kwa simu",
+      "mobileMoney": "Mobile Money",
       "mobileMoneyHint": "MTN au Airtel",
       "bankTransfer": "Uhamisho wa benki",
       "bankTransferHint": "Kwa kupanga kwa muda mrefu",
@@ -2901,9 +2901,9 @@
       "payDeposit": "Lipa {amount} sasa",
       "processing": "Tunapokea malipo…",
       "secure": "Imesimbwa mwanzo hadi mwisho. HomeLink haioni kamwe namba kamili ya kadi yako.",
-      "testHint": "Mfano tu: hakuna kitakachotozwa. Kadi 4242 4242 4242 4242 inafanikiwa, 4000 0000 0000 0002 inakataliwa, 4000 0027 6000 3184 inaomba idhini ya benki yako. Namba ya pesa kwa simu inayoishia 0000 inapitwa na muda, 1111 inakataliwa.",
+      "testHint": "Mfano tu: hakuna kitakachotozwa. Kadi 4242 4242 4242 4242 inafanikiwa, 4000 0000 0000 0002 inakataliwa, 4000 0027 6000 3184 inaomba idhini ya benki yako. Namba ya Mobile Money inayoishia 0000 inapitwa na muda, 1111 inakataliwa.",
       "declinedTitle": "Benki yako imekataa malipo",
-      "declinedBody": "Hakuna kilichotozwa. Angalia taarifa za kadi, jaribu kadi nyingine, au lipa kwa pesa kwa simu.",
+      "declinedBody": "Hakuna kilichotozwa. Angalia taarifa za kadi, jaribu kadi nyingine, au lipa kwa Mobile Money.",
       "agree": "Kwa kulipa unakubali kanuni za nyumba na masharti ya kughairi yaliyo hapo juu."
     },
     "threeDs": {
@@ -2916,7 +2916,7 @@
     },
     "momo": {
       "waitTitle": "Idhinisha malipo kwenye simu yako",
-      "waitBody": "Tumetuma ombi la {provider} la {amount} kwa {number}. Weka PIN yako ya pesa kwa simu kwenye simu ili kuliidhinisha.",
+      "waitBody": "Tumetuma ombi la malipo la {amount} kwa {number} kupitia {provider} Mobile Money. Weka PIN yako kwenye simu ili kuliidhinisha.",
       "remaining": "{seconds, plural, one {Imebaki sekunde #} other {Zimebaki sekunde #}}",
       "approved": "Nimeidhinisha",
       "other": "Tumia namba nyingine",
@@ -2969,7 +2969,7 @@
       "nationalityError": "Chagua uraia.",
       "passport": "Namba ya pasipoti au kitambulisho",
       "passportError": "Weka namba ya pasipoti au kitambulisho.",
-      "permitNote": "Hifadhi inatoa kibali kwa jina la kila mtu, kwa hiyo tunahitaji maelezo ya pasipoti. Kibali hakiwezi kuhamishiwa mtu mwingine wala kurudishiwa pesa.",
+      "permitNote": "Mamlaka ya hifadhi hutoa kibali kwa jina la kila mtu, kwa hiyo tunahitaji maelezo ya pasipoti. Kibali hakiwezi kuhamishiwa mtu mwingine wala kurudishiwa pesa.",
       "pickup": "Mahali pa kukutana",
       "pickupHint": "Tutakutana hapa. Unahitaji kuchukuliwa Kigali? Sema katika hatua inayofuata.",
       "dietary": "Mzio wa chakula au lishe",
@@ -3001,7 +3001,7 @@
     },
     "agreement": {
       "title": "Mkataba wa kupanga",
-      "body": "Usome hadi mwisho. Huu ndio mkataba utakaobaki na nakala yake.",
+      "body": "Usome hadi mwisho. Huu ndio mkataba ambao utapewa nakala yake.",
       "heading": "Mkataba wa kupanga {home}",
       "parties": "Kati ya HomeLink Africa Ltd, inayosimamia nyumba kwa niaba ya mmiliki wake, na {tenant}, mpangaji.",
       "clauseHome": "Nyumba: {home}, {area}. Ina samani kama ilivyokaguliwa na kupigwa picha na HomeLink.",
@@ -3011,7 +3011,7 @@
       "clauseIncludes": "Vilivyojumuishwa kwenye kodi: {includes}. Umeme ni wa mita ya malipo ya awali kwa jina la mpangaji.",
       "clauseCare": "Mpangaji anaitunza nyumba ikiwa safi na kuripoti chochote kilichoharibika ndani ya saa 48 kupitia HomeLink; HomeLink inatengeneza kwa gharama zake kile ambacho si kosa la mpangaji.",
       "clauseRules": "Kanuni za nyumba zilizokubaliwa wakati wa kuhakiki ni sehemu ya mkataba huu.",
-      "clauseLaw": "Mkataba huu unaongozwa na sheria za Rwanda.",
+      "clauseLaw": "Mkataba huu unasimamiwa na sheria za Rwanda.",
       "scrollHint": "Shuka hadi mwisho ili kusaini.",
       "read": "Nimesoma mkataba wote",
       "sign": "Andika jina lako kamili ili kusaini",
@@ -3039,28 +3039,28 @@
       "facts": "{count, plural, one {Mwezi #} other {Miezi #}} kuanzia {month}"
     },
     "viewing": {
-      "title": "Panga kutazama",
+      "title": "Panga kuiona nyumba",
       "intro": "Mtu wa timu ya Kigali atakuonyesha nyumba na kujibu maswali kuhusu hati, eneo na bei. Hakuna malipo.",
       "how": "Ungependa kuiona vipi?",
       "inPerson": "Ana kwa ana",
       "inPersonBody": "Tukutane getini. Takriban dakika 45.",
       "video": "Kwa video",
-      "videoBody": "Kuzunguka moja kwa moja popote ulipo. Tunatuma kiungo siku moja kabla.",
+      "videoBody": "Tunakuzungusha ndani ya nyumba kwa video moja kwa moja, popote ulipo. Tunatuma kiungo siku moja kabla.",
       "day": "Siku",
       "time": "Saa (Kigali)",
       "timeError": "Chagua saa.",
       "contact": "Maelezo yako",
       "notes": "Kuna chochote ungependa tuandae?",
       "notesPlaceholder": "Maswali kuhusu hati, ziara ya pili na mpimaji…",
-      "submit": "Omba kutazama huku",
+      "submit": "Omba muda huu",
       "sending": "Inatuma…",
-      "doneTitle": "Kutazama kumeombwa",
+      "doneTitle": "Ombi la kuiona nyumba limetumwa",
       "doneBody": "{date} saa {time}. Timu ya Kigali itathibitisha kwa ujumbe ndani ya saa chache.",
       "bringPerson": "Leta kitambulisho; mlinzi wa getini atakiomba.",
       "bringVideo": "Tunatuma kiungo cha video kwa barua pepe na WhatsApp siku moja kabla.",
-      "seeViewings": "Ona ziara zako",
+      "seeViewings": "Ona miadi yako",
       "back": "Rudi kwenye nyumba",
-      "button": "Panga kutazama"
+      "button": "Panga kuiona nyumba"
     },
     "record": {
       "pendingTitle": "Nyumba yako imeshikiliwa hadi uhamisho ufike",
@@ -3104,7 +3104,7 @@
       "receiptTitle": "Risiti {ref}",
       "print": "Chapisha au hifadhi kama PDF",
       "issued": "Imetolewa {date}",
-      "billedTo": "Imetozwa kwa",
+      "billedTo": "Mlipaji",
       "item": "Kipengele",
       "amount": "Kiasi",
       "paid": "Imelipwa",
@@ -3138,8 +3138,8 @@
       "arrive": "Kuwasili",
       "leave": "Kuondoka",
       "checking": "Tunaangalia…",
-      "costMore": "Hii inaongeza {amount}. Itatozwa kwenye kadi uliyolipia.",
-      "costLess": "Hii inapungua {amount}. Zinarudishwa kwenye kadi uliyolipia.",
+      "costMore": "Gharama inaongezeka kwa {amount}. Kiasi hicho kitatozwa kwenye kadi uliyolipia.",
+      "costLess": "Gharama inapungua kwa {amount}. Kiasi hicho kinarudishwa kwenye kadi uliyolipia.",
       "costSame": "Bei inabaki ile ile.",
       "unavailable": "Tarehe hizo hazipo wazi. Jaribu nyingine.",
       "invalid": "Chagua tarehe ya kuondoka iliyo baadaye, kuanzia leo.",
@@ -3149,7 +3149,7 @@
       "save": "Hifadhi",
       "close": "Funga",
       "cancelTitle": "Ughairi uhifadhi huu?",
-      "cancelRefund": "Unarudishiwa {refund}. {kept} inabaki, kwa masharti uliyokubali.",
+      "cancelRefund": "Unarudishiwa {refund}. {kept} inabakizwa, kwa mujibu wa masharti uliyokubali.",
       "cancelRefundFull": "Unarudishiwa pesa zote, {refund}.",
       "cancelReason": "Nini kimebadilika?",
       "reasons": {
@@ -3168,9 +3168,9 @@
       "wifi": "Wifi",
       "manager": "Msimamizi wa nyumba yako",
       "emergency": "Simu ya dharura, saa yoyote",
-      "onlineTitle": "Ingia mtandaoni",
+      "onlineTitle": "Jisajili mtandaoni",
       "onlineBody": "Tuma kitambulisho cha kila mtu mzima sasa, na ukifika ni kukabidhiwa funguo tu.",
-      "onlineDone": "Kuingia mtandaoni kumekamilika kwa {names}.",
+      "onlineDone": "Usajili wa mtandaoni umekamilika kwa {names}.",
       "adult": "Mtu mzima {n}",
       "sendIds": "Tuma kwa ajili ya kuingia",
       "reportTitle": "Ripoti tatizo",
@@ -3209,19 +3209,19 @@
       "stars": "{count, plural, one {nyota #} other {nyota #}} kwa {aspect}",
       "reviewText": "Kwa maneno yako",
       "submitReview": "Tuma maoni",
-      "reviewed": "Asante. Maoni yako yako kwenye tangazo.",
+      "reviewed": "Asante. Maoni yako yamewekwa kwenye tangazo.",
       "bookAgain": "Hifadhi tena",
       "depositTitle": "Amana yako",
       "depositHeld": "{amount} zimeshikiliwa tangu ulipohamia.",
       "depositInspection": "Ukaguzi wa kuhama umekamilika; amana inarudi ndani ya siku 14, ukiondoa gharama zilizoorodheshwa.",
       "depositReturned": "{amount} zimerudishwa kwenye akaunti yako.",
-      "whenReleased": "tarehe {date} saa 14:00",
+      "whenReleased": "tarehe {date} saa nane mchana",
       "duringTitle": "Wakati wa kukaa kwako"
     }
   },
   "files": {
     "choose": "Chagua faili",
-    "drop": "au iweke hapa",
+    "drop": "au iburute hapa",
     "type": "Aina hiyo ya faili haiwezi kutumika hapa. Tumia picha au PDF.",
     "size": "Faili hiyo ni kubwa mno. Kikomo ni MB 10.",
     "remove": "Ondoa faili",
@@ -3230,7 +3230,7 @@
   "cart": {
     "planTitle": "Unapanga safari nzima?",
     "planBody": "Ongeza gari na matembezi kwenye malazi haya na ulipe mara moja. Kila sehemu bado inaweza kubadilishwa au kughairiwa peke yake.",
-    "planButton": "Panga safari kuzunguka malazi haya",
+    "planButton": "Panga safari nzima kulingana na malazi haya",
     "add": "Ongeza kwenye safari",
     "inTrip": "Kiko kwenye safari yako",
     "added": "Imeongezwa kwenye safari yako",
@@ -3252,7 +3252,7 @@
     "checkout": "Lipia safari nzima",
     "blocked": "Rekebisha vitu vilivyowekwa alama nyekundu ili ulipe.",
     "suggestCarBody": "Gari na dereva atakayekupokea uwanja wa ndege.",
-    "suggestDayBody": "Sokwe mtu, Nyungwe, Lake Kivu au matembezi ndani ya Kigali.",
+    "suggestDayBody": "Sokwe mtu, Nyungwe, Ziwa Kivu au matembezi ndani ya Kigali.",
     "turnOff": "Badala yake hifadhi kila kitu peke yake",
     "turnOffTitle": "Uzime safari?",
     "turnOffBody": "Hii inaondoa kila kitu kwenye safari yako. Kilichokwisha kuhifadhiwa kinabaki kama kilivyo.",
@@ -3329,7 +3329,7 @@
     "openLink": "Onyesho: fungua kiungo",
     "workHere": "Unafanya kazi HomeLink?",
     "staffTitle": "Jaribu eneo la kazi",
-    "staffBody": "Zana ya onyesho, si kuingia: chagua jukumu la kuona eneo la kazi kwalo. Akaunti halisi za wafanyakazi zinakuja na backend.",
+    "staffBody": "Zana ya onyesho, si kuingia: chagua jukumu, uone eneo la kazi kama mwenye jukumu hilo. Akaunti halisi za wafanyakazi zinakuja na mfumo wa nyuma.",
     "google": "Endelea na Google",
     "apple": "Endelea na Apple"
   },
@@ -3346,7 +3346,7 @@
       "booking": "Kuhifadhi na kulipa",
       "changing": "Kubadilisha na kughairi",
       "stay": "Kuingia na kukaa",
-      "renting": "Kupangisha nyumba",
+      "renting": "Kupanga nyumba",
       "cars": "Magari na madereva",
       "days": "Matembezi"
     },
@@ -3357,23 +3357,23 @@
       },
       "ways-to-pay": {
         "title": "Njia za kulipa",
-        "body": "Unaweza kulipa kwa kadi (Visa au Mastercard) au kwa Mobile Money (MTN au Airtel). Bei zimewekwa kwa faranga za Rwanda; sarafu nyingine zinaonyeshwa kwa kiwango cha leo.\n\nKwa baadhi ya makazi marefu unaweza kulipa sehemu sasa na iliyobaki karibu na kufika."
+        "body": "Unaweza kulipa kwa kadi (Visa au Mastercard) au kwa Mobile Money (MTN au Airtel). Bei zimewekwa kwa faranga za Rwanda; sarafu nyingine zinaonyeshwa kwa kiwango cha leo kama mwongozo tu.\n\nKwa baadhi ya malazi ya muda mrefu unaweza kulipa amana sasa na kiasi kilichobaki karibu na siku ya kufika. Ukurasa wa malipo unaonyesha chaguo hili linapopatikana."
       },
       "fees": {
         "title": "Bei inajumuisha nini",
-        "body": "Bei unayoona wakati wa kulipa ndiyo unayolipa. Inajumuisha usiku, ada ya usafi ya RWF {cleaning} kwa makazi, na ada ya huduma ya {feePercent}% ya usiku.\n\nHakuna kinachoongezwa mwishoni."
+        "body": "Bei unayoona wakati wa kulipa ndiyo unayolipa. Inajumuisha usiku, ada ya usafi ya RWF {cleaning} kwa malazi, na ada ya huduma ya {feePercent}% ya usiku.\n\nHakuna kinachoongezwa mwishoni, wala ada ya uhifadhi juu yake."
       },
       "escrow": {
         "title": "Kwa nini malipo mengine yanashikiliwa",
-        "body": "Kwa makazi ya RWF {escrowFrom} au zaidi, tunashikilia malipo yako hadi uingie. Nyumba hulipwa tu ukiwa ndani na iko kama ilivyoelezwa.\n\nKama sivyo, tuambie siku ya kwanza tutarekebisha au kukurudishia pesa."
+        "body": "Kwa malazi ya RWF {escrowFrom} au zaidi, tunashikilia malipo yako hadi uingie. Nyumba hulipwa tu ukiwa ndani na iko kama ilivyoelezwa.\n\nKama sivyo, tuambie ndani ya siku ya kwanza nasi tutarekebisha au tutakurudishia pesa."
       },
       "cancel-stay": {
-        "title": "Kughairi makazi",
+        "title": "Kughairi malazi",
         "body": "Ghairi hadi siku {stayDays} kabla ya kufika na unarejeshewa kila kitu.\n\nBaada ya hapo hadi siku iliyotangulia, unarejeshewa nusu ya bei ya usiku, pamoja na ada ya usafi na ziada. Siku ya kufika hakuna marejesho."
       },
       "cancel-car-day": {
         "title": "Kughairi gari au matembezi",
-        "body": "Gari linaweza kughairiwa kwa marejesho kamili hadi siku {carDays} kabla ya kulichukua. Baada ya hapo, siku moja ya kukodisha inabakizwa.\n\nMatembezi yanaweza kughairiwa kwa marejesho kamili hadi siku {dayDays} kabla. Vibali vya hifadhi vilivyonunuliwa kwa jina lako haviwezi kuuzwa tena, kwa hivyo sehemu yake inabakizwa."
+        "body": "Gari linaweza kughairiwa kwa marejesho kamili hadi siku {carDays} kabla ya kulichukua. Baada ya hapo, malipo ya siku moja ya kukodi yanabakizwa.\n\nMatembezi yanaweza kughairiwa kwa marejesho kamili hadi siku {dayDays} kabla. Vibali vya hifadhi vilivyonunuliwa kwa jina lako haviwezi kuuzwa tena, kwa hivyo sehemu yake inabakizwa."
       },
       "change-dates": {
         "title": "Kubadilisha tarehe",
@@ -3385,31 +3385,31 @@
       },
       "check-in": {
         "title": "Kuingia",
-        "body": "Kuingia ni kuanzia saa {checkIn}. Anwani, namba ya mlango na wi-fi vinafika saa 48 kabla, kwenye uhifadhi wako na kwa ujumbe, kamwe mapema zaidi.\n\nUnafika kwa kuchelewa? Andika saa yako kwenye uhifadhi na mtu atakuwepo, au namba ya kisanduku cha funguo itafanya kazi wakati wowote."
+        "body": "Kuingia ni kuanzia {checkIn}. Anwani, namba ya mlango na wi-fi vinafika saa 48 kabla, kwenye uhifadhi wako na kwa ujumbe, si mapema zaidi.\n\nUnafika kwa kuchelewa? Andika saa yako kwenye uhifadhi na mtu atakuwepo, au namba ya kisanduku cha funguo itafanya kazi wakati wowote."
       },
       "something-wrong": {
         "title": "Kuna tatizo ukiwa nyumbani",
         "body": "Liripoti kutoka kwenye uhifadhi wako: chagua ni nini na kina dharura kiasi gani. Dharura (hakuna umeme, hakuna maji, kufuli) inafika kwa timu mara moja, mchana na usiku.\n\nUnaweza pia kupiga namba ya dharura iliyo kwenye ukurasa wa mawasiliano."
       },
       "extras": {
-        "title": "Kuchukuliwa uwanja wa ndege na ziada nyingine",
+        "title": "Kupokelewa uwanja wa ndege, kuingia mapema na huduma nyingine za ziada",
         "body": "Ongeza ziada wakati wa kuhifadhi, au baadaye kutoka kwenye uhifadhi wako. Timu inapanga kila moja na kuithibitisha kwenye ujumbe.\n\nZiada zinarejeshwa kikamilifu ukighairi kabla ya kufika."
       },
       "verified": {
         "title": "\"Imethibitishwa\" inamaanisha nini",
-        "body": "Mtu wa timu yetu amesimama kwenye kila nyumba, ameendesha kila gari na amefanya kila matembezi tunayotoa, kwa orodha ya ukaguzi, na ameyapiga picha mwenyewe.\n\nUkurasa unaonyesha nani alikagua na lini."
+        "body": "Mtu wa timu yetu amefika kwenye kila nyumba, ameendesha kila gari na amefanya kila matembezi tunayotoa, kwa orodha ya ukaguzi, na ameyapiga picha mwenyewe.\n\nUkurasa unaonyesha nani alikagua na lini."
       },
       "renting-how": {
-        "title": "Jinsi kupangisha kunavyofanya kazi",
-        "body": "Kupangisha ni kwa miezi 12 au 24, kuanzia tarehe 1 ya mwezi. Unaomba kwa maelezo machache na kitambulisho; timu inajibu ndani ya siku mbili za kazi.\n\nUnalipa mwezi wa kwanza na amana kuhamia, kisha kodi kila mwezi."
+        "title": "Jinsi kupanga kunavyofanya kazi",
+        "body": "Kupanga ni kwa miezi 12 au 24, kuanzia tarehe 1 ya mwezi. Unaomba kwa maelezo machache na kitambulisho; timu inajibu ndani ya siku mbili za kazi.\n\nUnalipa mwezi wa kwanza na amana ili kuhamia, kisha kodi kila mwezi."
       },
       "renting-deposit": {
         "title": "Amana",
         "body": "Amana inashikiliwa muda wote wa upangaji na kurudishwa baada ya kuhama, nyumba ikishakaguliwa dhidi ya kumbukumbu ya kuhamia.\n\nKama kuna kinachobakizwa kwa matengenezo, unaambiwa nini na kwa nini, kwa maandishi, kabla ya kutumiwa kilichobaki."
       },
       "renting-repairs": {
-        "title": "Matengenezo ukipangisha",
-        "body": "Ripoti matengenezo kutoka ukurasa wako wa upangaji. Ya dharura (maji, umeme, usalama) yanaonwa siku hiyo hiyo; mengine yanapangwa nawe.\n\nHutozwi kamwe kwa uchakavu wa maisha ya kawaida."
+        "title": "Matengenezo ukiwa mpangaji",
+        "body": "Ripoti matengenezo kutoka ukurasa wako wa upangaji. Ya dharura (maji, umeme, usalama) yanashughulikiwa siku hiyo hiyo; mengine yanapangwa nawe.\n\nHutozwi kamwe kwa uchakavu wa maisha ya kawaida."
       },
       "renting-moving-out": {
         "title": "Kuhama",
@@ -3417,11 +3417,11 @@
       },
       "car-with-driver": {
         "title": "Gari pamoja na dereva",
-        "body": "Dereva anakukuta unaposema, anajua barabara na anasubiri ukiwa nje. Chakula chake na mafuta vimo kwenye bei.\n\nUnaona jina lake kwenye uhifadhi kabla ya siku."
+        "body": "Dereva anakupokea mahali unaposema, anajua barabara na anasubiri ukiwa nje. Chakula chake na mafuta vimo kwenye bei.\n\nUnaona jina lake kwenye uhifadhi kabla ya siku."
       },
       "car-self-drive": {
         "title": "Kujiendesha mwenyewe",
-        "body": "Unahitaji leseni ya udereva uliyonayo kwa angalau miaka miwili. Ipakie wakati wa kuhifadhi; timu inaikagua kabla ya kuchukua gari.\n\nMadereva waliotajwa kwenye uhifadhi tu ndio wanaoendesha."
+        "body": "Unahitaji leseni ya udereva uliyonayo kwa angalau miaka miwili. Ipakie wakati wa kuhifadhi; timu inaikagua kabla ya kuchukua gari.\n\nMadereva waliotajwa kwenye uhifadhi tu ndio wanaoruhusiwa kuendesha."
       },
       "car-pickup": {
         "title": "Kuchukua na kurudisha gari",
@@ -3458,7 +3458,7 @@
       "change": "Kubadilisha au kughairi",
       "payment": "Malipo",
       "stay": "Wakati wa kukaa",
-      "renting": "Kupangisha",
+      "renting": "Kupanga",
       "other": "Kitu kingine"
     },
     "reference": "Namba ya uhifadhi (si lazima)",
@@ -3487,7 +3487,7 @@
       "intro": "Masharti haya yanahusu kuhifadhi nyumba, magari na matembezi kupitia HomeLink Africa Ltd nchini Rwanda.",
       "who": {
         "title": "Sisi ni nani",
-        "body": "HomeLink Africa Ltd inakaribisha kila nyumba inayotoa na kupanga kila gari na matembezi na madereva na waongozaji iliowakagua. Unahifadhi nasi, si na mmiliki."
+        "body": "HomeLink Africa Ltd ndiyo mwenyeji wa kila nyumba inayoorodhesha, na hupanga kila gari na matembezi pamoja na madereva na waongozaji iliowakagua. Unahifadhi nasi, si na mmiliki."
       },
       "booking": {
         "title": "Kuhifadhi",
@@ -3495,7 +3495,7 @@
       },
       "paying": {
         "title": "Kulipa",
-        "body": "Bei ziko kwa faranga za Rwanda na zinajumuisha ada zote: usiku, ada ya usafi ya RWF {cleaning} kwa makazi na ada ya huduma ya {feePercent}%. Malipo ya RWF {escrowFrom} au zaidi kwa makazi yanashikiliwa hadi uingie."
+        "body": "Bei ziko kwa faranga za Rwanda na zinajumuisha ada zote: usiku, ada ya usafi ya RWF {cleaning} kwa malazi na ada ya huduma ya {feePercent}%. Malipo ya RWF {escrowFrom} au zaidi kwa malazi yanashikiliwa hadi uingie."
       },
       "verified": {
         "title": "Tunachoahidi",
@@ -3503,7 +3503,7 @@
       },
       "conduct": {
         "title": "Sehemu yako",
-        "body": "Fuata kanuni za nyumba, iache kama ulivyoikuta, na tuambie uharibifu. Waliotajwa kwenye uhifadhi tu ndio wanaokaa, kuendesha au kujiunga."
+        "body": "Fuata kanuni za nyumba, iache kama ulivyoikuta, na tuambie kuhusu uharibifu wowote. Waliotajwa kwenye uhifadhi tu ndio wanaoruhusiwa kukaa, kuendesha au kujiunga."
       },
       "liability": {
         "title": "Wajibu",
@@ -3515,7 +3515,7 @@
       "intro": "Tunachokusanya kukuhusu, kwa nini, na unachoweza kutuomba tufanye nacho.",
       "what": {
         "title": "Tunachokusanya",
-        "body": "Jina na mawasiliano yako, uhifadhi na malipo yako, ujumbe na timu, na kitambulisho upangaji au gari likikihitaji. Picha zinaondolewa mahali zilipopigwa kwenye kifaa chako kabla ya kutumwa."
+        "body": "Jina na mawasiliano yako, uhifadhi na malipo yako, ujumbe na timu, na kitambulisho upangaji au gari likikihitaji. Taarifa za mahali picha zilipopigwa huondolewa kwenye kifaa chako kabla ya kutumwa."
       },
       "why": {
         "title": "Kwa nini",
@@ -3542,20 +3542,20 @@
       "title": "Sera ya kughairi",
       "intro": "Unachorejeshewa ukighairi, kwa aina ya uhifadhi. Uhifadhi wako daima unaonyesha kiasi kamili kabla ya kuthibitisha.",
       "stays": {
-        "title": "Makazi",
+        "title": "Malazi",
         "body": "Hadi siku {stayDays} kabla ya kufika: unarejeshewa kila kitu.\n\nBaada ya hapo, hadi siku iliyotangulia: nusu ya usiku, pamoja na ada ya usafi na ziada zote. Siku ya kufika: hakuna marejesho."
       },
       "renting": {
-        "title": "Kupangisha",
+        "title": "Kupanga",
         "body": "Kabla ya kuhamia, mwezi wa kwanza na amana vinarejeshwa kikamilifu ukighairi angalau siku 30 kabla. Ukishahamia, mkataba wa upangaji unaeleza jinsi ya kuondoka mapema."
       },
       "cars": {
         "title": "Magari",
-        "body": "Hadi siku {carDays} kabla ya kuchukua: unarejeshewa kila kitu. Baada ya hapo, siku moja ya kukodisha inabakizwa na iliyobaki inarudishwa."
+        "body": "Hadi siku {carDays} kabla ya kuchukua: unarejeshewa kila kitu. Baada ya hapo, malipo ya siku moja ya kukodi yanabakizwa na yaliyobaki yanarudishwa."
       },
       "days": {
         "title": "Matembezi",
-        "body": "Hadi siku {dayDays} kabla: unarejeshewa kila kitu. Baada ya hapo, hakuna marejesho. Vibali vya hifadhi vilivyonunuliwa kwa jina lako haviregeshwi kamwe, kwa kuwa haviwezi kuuzwa tena."
+        "body": "Hadi siku {dayDays} kabla: unarejeshewa kila kitu. Baada ya hapo, hakuna marejesho. Vibali vya hifadhi vilivyonunuliwa kwa jina lako havirudishwi kamwe, kwa kuwa haviwezi kuuzwa tena."
       },
       "ours": {
         "title": "Tukighairi sisi",

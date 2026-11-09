@@ -1,6 +1,14 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { IntlMessageFormat } from "intl-messageformat";
+
+/** Argument values for formatting: the given ones, and any rich-text tag (<terms>…</terms>) as plain text. */
+const withTags = (args: Record<string, unknown>) =>
+  new Proxy(args, {
+    get: (t, name: string) => (name in t ? t[name] : (chunks: unknown[]) => chunks.join("")),
+    has: () => true,
+  });
 
 /**
  * Four message files, one shape.
@@ -97,6 +105,29 @@ describe("message files", () => {
     // stay, and a rental agreement. Code identifiers keep `lease`.
     expect(values("en").filter((v) => /\blease/i.test(v))).toEqual([]);
     expect(values("fr").filter((v) => /\bbail\b|\bbaux\b/i.test(v))).toEqual([]);
+  });
+
+  it("every message renders without raw ICU left in the text", () => {
+    // A straight apostrophe right before a brace, "cy'{count, plural, …}",
+    // quotes the whole plural in ICU, and the reader saw the source instead
+    // of "cy’amajoro 3". Formatting each message the way next-intl does, with
+    // a number for every argument, shows any syntax that does not render.
+    const raw: string[] = [];
+    for (const l of LOCALES) {
+      for (const [k, v] of flat(l)) {
+        const args = Object.fromEntries(placeholders(l, k).map((name) => [name, 2]));
+        let out: unknown;
+        try {
+          out = new IntlMessageFormat(v, l).format(withTags(args) as never);
+        } catch (e) {
+          raw.push(`${l}:${k} throws ${String(e).slice(0, 80)}`);
+          continue;
+        }
+        const text = Array.isArray(out) ? out.join("") : String(out);
+        if (/[{}]/.test(text)) raw.push(`${l}:${k} → ${text.slice(0, 80)}`);
+      }
+    }
+    expect(raw).toEqual([]);
   });
 
   it("no string is empty", () => {
