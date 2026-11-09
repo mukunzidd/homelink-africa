@@ -47,3 +47,6 @@ next-env.d.ts
 # playwright e2e and sweep output
 .e2e-results/
 .sweep/
+
+# Local Netlify folder
+.netlify

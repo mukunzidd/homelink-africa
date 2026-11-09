@@ -408,6 +408,19 @@ the title and every other cell labelled with its column name
   race in item 2, made permanent). Delete it inside the container
   (`docker compose exec web rm .next/dev/prerender-manifest.json`) and
   restart web. Seen 2026-11-09 when a new preview route was added.
+- **The team preview on Netlify** (https://homelink-preview.netlify.app,
+  site homelink-preview, IST-b2c team) logs React error #418 on every
+  page. The app is not at fault: Netlify inserts a "This site is hosted
+  on Netlify" comment, with line breaks around it, into every page's
+  `<head>`. React finds the extra whitespace there, discards the
+  server's HTML and renders the page itself, so it looks and works the
+  same. Proven 2026-11-09: the same build is clean under `next start`,
+  and the live page is clean once the comment and its line breaks are
+  removed in the browser. Netlify has no documented switch for it, and
+  `built_with_badge_enabled` cannot be changed on the free plan. Deploy
+  from a clean worktree of a commit (`npm ci`, then
+  `netlify deploy --build --prod`), never from this folder: building
+  here deletes the dev container's `.next/dev`.
 - **Do not edit files while a sweep runs.** Turbopack reloads modules under
   load and a page can fail with "the module factory is not available".
 - **Message edits need a restart** (`docker compose restart web`) before the
