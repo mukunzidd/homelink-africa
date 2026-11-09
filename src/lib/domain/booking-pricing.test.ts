@@ -238,3 +238,10 @@ describe("quoteStay on a range from a URL", () => {
     expect(q).not.toBeNull();
   });
 });
+
+describe("balanceDueOn", () => {
+  it("is the day the deposit plan says, so the booking page and the plan agree", async () => {
+    const { balanceDueOn } = await import("./payment-plan");
+    expect(balanceDueOn("2026-12-20")).toBe("2026-12-06");
+  });
+});

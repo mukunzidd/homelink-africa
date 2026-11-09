@@ -2615,6 +2615,10 @@
         "title": "New booking",
         "body": "{guest} booked {name} ({ref})."
       },
+      "bookingCancelled": {
+        "title": "Booking cancelled",
+        "body": "{guest} cancelled {name} ({ref})."
+      },
       "arrivalToday": {
         "title": "{count, plural, one {# arrival today} other {# arrivals today}}",
         "body": "Check the Today board for times and keys."
@@ -3161,6 +3165,7 @@
       "keep": "Keep my booking",
       "confirmCancel": "Cancel and refund {refund}",
       "cancelledToast": "Cancelled. {refund} is on its way back.",
+      "cancelFailed": "This booking can no longer be cancelled here. Message the team.",
       "checkInTitle": "Check-in details",
       "checkInLocked": "Directions, the door code and wifi unlock {when}.",
       "directions": "Getting there",

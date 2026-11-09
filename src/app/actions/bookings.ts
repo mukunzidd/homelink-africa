@@ -38,12 +38,16 @@ export async function cancelBooking(reference: string, reason: string): Promise<
   if (who !== "guest" && who !== "ops" && who !== "admin") return null;
   const b = await repos().bookings.cancel(reference, who, reason.slice(0, 200), kigaliDay()).catch(() => null);
   if (!b) return null;
-  await repos().notifications.create({
-    audience: "ops",
-    kind: "newBooking",
-    params: { guest: b.guest?.name ?? "", name: `${b.title} (cancelled)`, ref: b.reference },
-    href: `/manage/bookings/${b.reference}`,
-  });
+  // Its own kind, to the desk and to admin: a cancellation is money going
+  // back, not a new booking with a word added to its name.
+  for (const audience of ["ops", "admin"] as const) {
+    await repos().notifications.create({
+      audience,
+      kind: "bookingCancelled",
+      params: { guest: b.guest?.name ?? "", name: b.title, ref: b.reference },
+      href: `/manage/bookings/${b.reference}`,
+    });
+  }
   refresh();
   return b;
 }
@@ -93,7 +97,7 @@ export async function staffChangeDates(reference: string, start: string, end: st
 export async function staffAddGuests(reference: string, party: number) {
   const who = await staff();
   try {
-    await repos().bookings.addGuests(reference, party);
+    await repos().bookings.addGuests(reference, party, who);
     await repos().audit.record({ actor: who, action: "booking.addGuests", target: reference, detail: String(party) });
     refresh();
     return { ok: true as const };

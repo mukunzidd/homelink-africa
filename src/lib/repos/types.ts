@@ -239,7 +239,8 @@ export interface BookingRepo {
   addEvent(reference: string, event: Omit<BookingEvent, "at">): Promise<Booking>;
   payments(bookingId?: string): Promise<PaymentRecord[]>;
   /** More people on a stay; refused above what the home sleeps. Price is per night, not per head. */
-  addGuests(reference: string, party: number): Promise<Booking>;
+  /** `by` is who asked: the guest, or staff on their behalf. */
+  addGuests(reference: string, party: number, by?: Role): Promise<Booking>;
   submitOnlineCheckIn(reference: string, adults: { name: string; idFileName: string }[]): Promise<Booking>;
   /** Pays the next unpaid month of a long-term stay. */
   payRent(reference: string, rail: PaymentRail): Promise<PaymentRecord>;

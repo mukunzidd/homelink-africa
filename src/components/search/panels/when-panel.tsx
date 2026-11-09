@@ -14,6 +14,7 @@ import { Segmented } from "@/components/ui/segmented";
 import { BigStepper } from "@/components/ui/stepper";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/cn";
+import { kigaliDay } from "@/lib/domain/instants";
 
 /**
  * Exact dates, or a flexible span.
@@ -99,7 +100,7 @@ export function WhenPanel({
   }
 
   function nowish(): IsoDate {
-    return value.from ?? new Date().toISOString().slice(0, 10);
+    return value.from ?? kigaliDay();
   }
 
   const spans: { value: FlexibleSpan; label: string }[] = [

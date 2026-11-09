@@ -47,7 +47,13 @@ export function useBookingDraft(
     const stored = load(id);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (stored) setDraft(stored);
-    else save(newDraft(init, new Date()));
+    else {
+      // A new key with nothing stored is a new draft: put it in state too,
+      // or the page keeps editing the previous dates' draft.
+      const fresh = newDraft(init, new Date());
+      save(fresh);
+      setDraft(fresh);
+    }
     setRestored(true);
     // init is keyed by id; re-running for a new object with the same id is pointless.
     // eslint-disable-next-line react-hooks/exhaustive-deps

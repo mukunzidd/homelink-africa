@@ -135,3 +135,50 @@ describe("day outs are counted per departure", () => {
     expect(first.booking.party).toBe(2);
   });
 });
+
+describe("small contract gaps from the final review", () => {
+  beforeEach(() => resetStore());
+
+  function stay(): BookingDraft {
+    const home = store().listings.find((x) => x.unitsAvailable === 1 && x.modes.includes("nightly") && x.published !== false)!;
+    let d = newDraft({ flow: "stay", slug: home.slug, start: addDays(today, 80), end: addDays(today, 84), party: 2 }, new Date());
+    d = draftReducer(d, { type: "guest", value: { name: "Ange Uwase", email: "ange@example.rw", phone: "0788123456" } });
+    return draftReducer(d, { type: "acceptRules", value: true });
+  }
+  const totalFor = (d: BookingDraft) => {
+    const home = store().listings.find((x) => x.slug === d.slug)!;
+    return quoteBooking(home, { kind: "stay", start: d.start, end: d.end, party: d.party, extras: d.extras }, today)!.total;
+  };
+
+  it("refuses a payment rail that does not exist, and stores nothing", async () => {
+    const before = store().bookings.length;
+    const d = stay();
+    const r = await repos.bookings.place({ draft: d, clientTotal: totalFor(d), payment: { rail: "cash" as never, outcome: "approved" } });
+    expect(r).toMatchObject({ ok: false, reason: "invalid" });
+    expect(store().bookings.length).toBe(before);
+  });
+
+  it("refuses extras that are not a list, instead of failing inside the pricing", async () => {
+    const d = { ...stay(), extras: "groceries" as never };
+    const r = await repos.bookings.place({ draft: d, clientTotal: totalFor(stay()), payment });
+    expect(r).toMatchObject({ ok: false, reason: "invalid" });
+  });
+
+  it("refuses rent paid by a rail that does not exist", async () => {
+    const lease = store().bookings.find((b) => b.stayMode === "lease" && b.status === "active")!;
+    await expect(repos.bookings.payRent(lease.reference, "cash" as never)).rejects.toThrow();
+  });
+
+  it("records who added the guests", async () => {
+    const e = store().experiences.find((x) => (x.slots?.length ?? 0) > 1)!;
+    let d = newDraft({ flow: "experience", slug: e.slug, start: addDays(today, 48), end: addDays(today, 48), party: 2 }, new Date());
+    d = draftReducer(d, { type: "guest", value: { name: "Ange Uwase", email: "ange@example.rw", phone: "0788123456" } });
+    d = draftReducer(d, { type: "slot", value: e.slots![0] });
+    d = draftReducer(d, { type: "participants", value: [0, 1].map((i) => ({ name: `Person ${i}`, age: 30, nationality: "RW", passport: `PC${2000000 + i}` })) });
+    d = draftReducer(d, { type: "acceptRules", value: true });
+    const r = await repos.bookings.place({ draft: d, clientTotal: quoteBooking(e, { kind: "experience", start: d.start, end: d.start, party: 2 }, today)!.total, payment });
+    if (!r.ok) throw new Error("setup");
+    const b = await repos.bookings.addGuests(r.booking.reference, 3, "ops");
+    expect(b.timeline?.at(-1)).toMatchObject({ kind: "guestsAdded", actor: "ops" });
+  });
+});

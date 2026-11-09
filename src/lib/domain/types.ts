@@ -507,7 +507,7 @@ export type NotificationCategory = "booking" | "payment" | "message" | "stay" | 
 export type NotificationKind =
   | "bookingConfirmed" | "paymentReceived" | "paymentFailed" | "momoPending" | "checkInReady"
   | "rentDue" | "newMessage" | "reviewRequest" | "viewingConfirmed" | "viewingChanged"
-  | "newBooking" | "arrivalToday" | "newAsk" | "newIncident" | "inspectionDue"
+  | "newBooking" | "bookingCancelled" | "arrivalToday" | "newAsk" | "newIncident" | "inspectionDue"
   | "jobOffered" | "jobChanged" | "jobAccepted" | "payoutSent" | "documentExpiring";
 
 export type Channel = "inApp" | "email" | "sms" | "whatsapp" | "push";

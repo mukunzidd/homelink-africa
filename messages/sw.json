@@ -2615,6 +2615,10 @@
         "title": "Uhifadhi mpya",
         "body": "{guest} amehifadhi {name} ({ref})."
       },
+      "bookingCancelled": {
+        "title": "Uhifadhi umeghairiwa",
+        "body": "{guest} ameghairi {name} ({ref})."
+      },
       "arrivalToday": {
         "title": "{count, plural, one {Mgeni # anawasili leo} other {Wageni # wanawasili leo}}",
         "body": "Angalia ubao wa Leo kwa nyakati na funguo."
@@ -3161,6 +3165,7 @@
       "keep": "Baki na uhifadhi wangu",
       "confirmCancel": "Ghairi na urudishiwe {refund}",
       "cancelledToast": "Imeghairiwa. {refund} ziko njiani kurudi kwako.",
+      "cancelFailed": "Uhifadhi huu hauwezi tena kughairiwa hapa. Andikia timu.",
       "checkInTitle": "Maelezo ya kuingia",
       "checkInLocked": "Maelekezo, namba ya mlango na wifi vitapatikana {when}.",
       "directions": "Jinsi ya kufika",

@@ -232,8 +232,11 @@ function CancelFooter({
           disabled={busy}
           onClick={async () => {
             setBusy(true);
-            await cancelBooking(reference, reason);
-            toast.show({ title: t("cancelledToast", { refund: refund ? display(refund) : "" }), tone: "ok" });
+            const done = await cancelBooking(reference, reason);
+            // Refused (it has begun, or was already handled): say so, not "cancelled".
+            if (done) toast.show({ title: t("cancelledToast", { refund: refund ? display(refund) : "" }), tone: "ok" });
+            else toast.show({ title: t("cancelFailed"), tone: "crit" });
+            setBusy(false);
             onDone();
           }}
           className="min-h-11 cursor-pointer rounded-ctl bg-crit px-4 text-[15px] font-semibold text-white hover:opacity-90 disabled:opacity-60"

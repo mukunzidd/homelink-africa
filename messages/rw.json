@@ -2615,6 +2615,10 @@
         "title": "Icyafashwe gishya",
         "body": "{guest} yafashe {name} ({ref})."
       },
+      "bookingCancelled": {
+        "title": "Icyafashwe cyahagaritswe",
+        "body": "{guest} yahagaritse {name} ({ref})."
+      },
       "arrivalToday": {
         "title": "{count, plural, one {Umushyitsi # ugera uyu munsi} other {Abashyitsi # bagera uyu munsi}}",
         "body": "Reba ikibaho cy'uyu munsi ku masaha n'imfunguzo."
@@ -3161,6 +3165,7 @@
       "keep": "Gumana ibyo nafashe",
       "confirmCancel": "Hagarika usubizwe {refund}",
       "cancelledToast": "Byahagaritswe. {refund} ari mu nzira agusanga.",
+      "cancelFailed": "Ibi wafashe ntibigishobora guhagarikirwa hano. Andikira itsinda.",
       "checkInTitle": "Amakuru yo kwinjira",
       "checkInLocked": "Inzira, kode y'umuryango na wifi bizaboneka {when}.",
       "directions": "Uko wahagera",

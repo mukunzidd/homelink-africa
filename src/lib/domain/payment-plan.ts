@@ -19,6 +19,11 @@ const BALANCE_DAYS_BEFORE = 14;
  * would otherwise be in the past, and a plan whose second payment is due
  * yesterday is a full payment with extra steps.
  */
+/** When the rest of a deposit-plan booking is due: the one rule, for the plan and for every page that shows it. */
+export function balanceDueOn(start: IsoDate): IsoDate {
+  return addDays(start, -BALANCE_DAYS_BEFORE);
+}
+
 export function depositPlan(quote: Quote, start: IsoDate, on: IsoDate, fx: FxTable): DepositPlan {
   if (!quote.lines.some((l) => l.key === "accommodation")) return { offered: false };
   const big = convert(quote.total, "RWF", fx).minor >= MIN_TOTAL_RWF;
@@ -29,6 +34,6 @@ export function depositPlan(quote: Quote, start: IsoDate, on: IsoDate, fx: FxTab
     offered: true,
     now,
     balance: subtract(quote.total, now),
-    balanceDue: addDays(start, -BALANCE_DAYS_BEFORE),
+    balanceDue: balanceDueOn(start),
   };
 }

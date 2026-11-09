@@ -20,7 +20,13 @@ describe("toIcs", () => {
   });
   it("escapes commas and semicolons", () => {
     expect(ics).toContain("LOCATION:Kimihurura\\, Kigali");
-    expect(ics).toContain("HL-4KQ2-8M\; check-in");
+    // "\\;" is backslash-semicolon; "\;" in a JS string is only ";".
+    expect(ics).toContain("HL-4KQ2-8M\\; check-in");
+  });
+  it("turns every kind of line break into an escaped newline", () => {
+    const out = toIcs({ ...e, description: "one\rtwo\r\nthree\nfour" });
+    expect(out).toContain("DESCRIPTION:one\\ntwo\\nthree\\nfour");
+    expect(out.split("\r\n").some((l) => /\r(?!$)/.test(l) && !l.startsWith(" "))).toBe(false);
   });
   it("uses CRLF and folds every line at 75 octets", () => {
     expect(ics.includes("\n") && !/[^\r]\n/.test(ics)).toBe(true);

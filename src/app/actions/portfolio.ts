@@ -10,6 +10,7 @@ import { addDays, isIsoDate } from "@/lib/domain/dates";
 import { listingPatchErrors, type ListingPatch, type PatchError } from "@/lib/workspace/listing-patch";
 import { nightsWithGuests } from "@/lib/workspace/guest-nights";
 import { searchChanged } from "@/lib/search";
+import { kigaliDay } from "@/lib/domain/instants";
 
 /**
  * The listing editor's writes. Admin only, checked here. A patch is
@@ -60,12 +61,12 @@ function clean(raw: Record<string, unknown>): ListingPatch {
     p.leaseTerms = {
       depositMonths: Math.min(6, Math.max(0, int(t.depositMonths) ?? 1)),
       includes: (strings(t.includes, 10, 30) ?? []) as LeaseTerms["includes"],
-      availableFrom: isIsoDate(t.availableFrom) ? t.availableFrom : new Date().toISOString().slice(0, 10),
+      availableFrom: isIsoDate(t.availableFrom) ? t.availableFrom : kigaliDay(),
     };
   }
   if ("propertyManager" in raw && raw.propertyManager) {
     const m = raw.propertyManager as Partial<Listing["propertyManager"]>;
-    p.propertyManager = { name: str(m.name, 80)?.trim() ?? "", since: isIsoDate(m.since) ? m.since : new Date().toISOString().slice(0, 10) };
+    p.propertyManager = { name: str(m.name, 80)?.trim() ?? "", since: isIsoDate(m.since) ? m.since : kigaliDay() };
   }
   if ("checkIn" in raw && raw.checkIn) {
     const c = raw.checkIn as Partial<NonNullable<Listing["checkIn"]>>;

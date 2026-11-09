@@ -19,6 +19,7 @@ import { CalendarIcon, CheckIcon, ClockIcon, NoteIcon } from "@/components/ui/ic
 import { cn } from "@/lib/cn";
 import { TripActions } from "@/components/cart/trip-actions";
 import { cartItemId } from "@/lib/cart-checks";
+import { balanceDueOn } from "@/lib/domain/payment-plan";
 
 /** Placed in the last quarter of an hour: still "you're booked", not the record. */
 function placedRecently(at: string | undefined): boolean {
@@ -186,7 +187,7 @@ export async function BookingRecord({
                 <p className="text-[14px] text-ink-2">
                   {t("balanceDue", {
                     amount: formatMoney({ ...booking.total, minor: booking.total.minor - deposit.amount.minor }, numLocale),
-                    date: formatDate(new Date(Date.parse(`${booking.startDate}T00:00:00Z`) - 14 * 86_400_000).toISOString().slice(0, 10), intlLocale),
+                    date: formatDate(balanceDueOn(booking.startDate), intlLocale),
                   })}
                 </p>
               )}

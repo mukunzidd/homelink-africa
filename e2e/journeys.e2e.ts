@@ -288,3 +288,35 @@ for (const width of [1280, 390]) {
     expect(hit).toBe(true);
   });
 }
+
+test("a guest's cancellation reaches the desk and admin as a cancellation", async ({ browser }) => {
+  const guest = await browser.newContext();
+  await as(guest, "guest");
+  const g = await guest.newPage();
+  await g.goto("/en/trips");
+  await hydrated(g);
+  // Any upcoming booking but the one the dialog tests open.
+  const refs = [...new Set(await g.locator("a[href*='/bookings/HL-']").evaluateAll((as) => as.map((a) => a.getAttribute("href")!).filter((h) => !h.includes("receipt") && !h.includes("HL-PREL-01"))))];
+  let cancelled = "";
+  for (const href of refs) {
+    await g.goto(href);
+    await hydrated(g);
+    const button = g.getByRole("button", { name: "Cancel booking" }).first();
+    if (!(await button.count())) continue;
+    await button.click();
+    await g.getByRole("dialog", { name: "Cancel this booking?" }).getByRole("button", { name: /^Cancel and refund/ }).click();
+    await expect(g.getByText(/^Cancelled\./)).toBeVisible();
+    cancelled = href.split("/").pop()!;
+    break;
+  }
+  expect(cancelled).not.toBe("");
+  for (const role of ["ops", "admin"] as const) {
+    const ctx = await browser.newContext();
+    await as(ctx, role);
+    const res = await (await ctx.newPage()).request.get("/api/notifications?limit=10");
+    const items: { kind: string; params?: { ref?: string } }[] = (await res.json()).items;
+    expect(items.some((n) => n.kind === "bookingCancelled" && n.params?.ref === cancelled), role).toBe(true);
+    await ctx.close();
+  }
+  await guest.close();
+});

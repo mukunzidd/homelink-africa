@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { AppNotification } from "@/lib/domain/types";
 
 /** Fired after anything marks notifications read, so every bell refetches. */
@@ -18,16 +18,18 @@ export function notifyChanged() {
  */
 export function useUnread(enabled: boolean, onArrive?: (n: AppNotification) => void) {
   const [count, setCount] = useState(0);
+  // The last count seen, outside React state, so the toast is decided here
+  // and not inside a state updater, which React may run twice.
+  const last = useRef(0);
 
   const load = useCallback(
     async (announce: boolean) => {
       try {
         const res = await fetch(`/api/notifications/unread${announce ? "?latest=1" : ""}`, { cache: "no-store" });
         const data: { count: number; latest?: AppNotification | null } = await res.json();
-        setCount((prev) => {
-          if (announce && data.count > prev && data.latest && onArrive) onArrive(data.latest);
-          return data.count;
-        });
+        if (announce && data.count > last.current && data.latest && onArrive) onArrive(data.latest);
+        last.current = data.count;
+        setCount(data.count);
       } catch {
         // Offline or mid-deploy: keep the last count rather than flashing 0.
       }

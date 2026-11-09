@@ -2615,6 +2615,10 @@
         "title": "Nouvelle réservation",
         "body": "{guest} a réservé {name} ({ref})."
       },
+      "bookingCancelled": {
+        "title": "Réservation annulée",
+        "body": "{guest} a annulé {name} ({ref})."
+      },
       "arrivalToday": {
         "title": "{count, plural, one {# arrivée aujourd'hui} other {# arrivées aujourd'hui}}",
         "body": "Consultez l'écran Aujourd'hui pour les horaires et les clés."
@@ -3161,6 +3165,7 @@
       "keep": "Garder ma réservation",
       "confirmCancel": "Annuler et rembourser {refund}",
       "cancelledToast": "Réservation annulée. Le remboursement de {refund} est en cours.",
+      "cancelFailed": "Cette réservation ne peut plus être annulée ici. Écrivez à l’équipe.",
       "checkInTitle": "Infos d'arrivée",
       "checkInLocked": "L'itinéraire, le code de la porte et le wifi seront disponibles {when}.",
       "directions": "Comment venir",

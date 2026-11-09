@@ -5,7 +5,11 @@
  */
 export type IcsEvent = { uid: string; title: string; start: string; end: string; location: string; description: string };
 
-const esc = (s: string) => s.replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+// RFC 5545 TEXT: backslash, semicolon and comma are escaped, and every line
+// break (CRLF, LF or a lone CR) becomes the two characters \n. The
+// replacement for ";" is written with a doubled backslash: a single one in a
+// JS string escapes nothing, so it was silently just ";" before.
+const esc = (s: string) => s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r\n|\r|\n/g, "\\n");
 const day = (d: string) => d.replace(/-/g, "");
 
 /** Fold a content line so no physical line exceeds 75 octets. */

@@ -58,6 +58,8 @@ function supplyForDraft(d: BookingDraft): Supply | null {
 }
 
 const ACTIVE = new Set(["confirmed", "active"]);
+/** The ways to pay that exist; anything else from a client is refused. */
+const RAILS: ReadonlySet<string> = new Set<PaymentRail>(["card", "mobileMoney", "bankTransfer"]);
 
 /** The times a day out leaves; one with no list leaves at `departs`. */
 function departuresOf(e: Experience): string[] {
@@ -195,6 +197,8 @@ async function prepare(draft: BookingDraft): Promise<Prepared | { ok: false; rea
     return { ok: false, reason: "invalid" };
   }
   if (!Number.isInteger(draft.party) || draft.party < 1) return { ok: false, reason: "invalid" };
+  // Extras arrive from the client; a non-list would throw inside pricing.
+  if (draft.extras !== undefined && !Array.isArray(draft.extras)) return { ok: false, reason: "invalid" };
   // A home admin has taken down is not for sale, whatever link got here.
   if (supply.kind === "stay" && supply.item.published === false) return { ok: false, reason: "unavailable" };
   if (supply.kind === "stay" && draft.flow !== "rent" && nightsBetween(draft.start, draft.end) < (supply.item.minNights ?? 1)) {
@@ -379,6 +383,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
     },
 
     async place({ draft, clientTotal, payment }) {
+      if (!RAILS.has(payment.rail)) return { ok: false, reason: "invalid" };
       const ready = await prepare(draft);
       if (!ready.ok) return ready;
       if (clientTotal.currency !== ready.quote.total.currency || Math.abs(clientTotal.minor - ready.quote.total.minor) > 1) {
@@ -509,7 +514,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       return b;
     },
 
-    async addGuests(reference, party) {
+    async addGuests(reference, party, by = "guest") {
       const b = find(reference);
       const supply = supplyById(b.supplyItemId);
       const max = supply?.kind === "stay" ? supply.item.sleeps : supply?.kind === "car" ? supply.item.seats : supply?.kind === "experience" ? supply.item.groupMax : 0;
@@ -543,7 +548,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
         b.total = q.total;
         b.lines = q.lines;
       }
-      b.timeline = [...(b.timeline ?? []), event("guestsAdded", "guest", `${b.party} → ${party}`)];
+      b.timeline = [...(b.timeline ?? []), event("guestsAdded", by, `${b.party} → ${party}`)];
       b.party = party;
       return b;
     },
@@ -560,6 +565,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
     },
 
     async payRent(reference, rail) {
+      if (!RAILS.has(rail)) throw new Error("Unknown payment rail");
       const b = find(reference);
       const rent = b.lines?.find((l) => l.key === "rent")?.amount;
       if (b.stayMode !== "lease" || b.status !== "active" || !rent) throw new Error("Not a renting booking under way");
@@ -682,6 +688,7 @@ export function makeTrips(notifications: NotificationsRepo, read: Pick<TripRepo,
     ...read,
     async place({ drafts, clientTotal, payment, bookedReferences }) {
       if (!drafts.length) return { ok: false, failed: [] };
+      if (!RAILS.has(payment.rail)) return { ok: false, failed: [{ index: -1, reason: "invalid" }] };
       // Indexed by draft, so a failed part never shifts the others.
       const prepared: (Prepared | undefined)[] = [];
       const failed: { index: number; reason: "unavailable" | "invalid" | "priceChanged" }[] = [];
