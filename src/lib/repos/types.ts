@@ -202,7 +202,8 @@ export interface AvailabilityRepo {
    * hire, enough seats left on a day out. `exceptBookingId` leaves out a
    * booking being moved, so it does not collide with itself.
    */
-  isFree(supplyId: string, from: string, to: string, opts?: { party?: number; exceptBookingId?: string }): Promise<boolean>;
+  /** `slot` is a day out's departure (defaults to its `departs`); a day out is counted per departure. */
+  isFree(supplyId: string, from: string, to: string, opts?: { party?: number; exceptBookingId?: string; slot?: string }): Promise<boolean>;
   /** Returns the dates it added; dates already blocked (for any reason) are left as they were and not returned. */
   block(supplyId: string, dates: string[], reason: Block["reason"]): Promise<string[]>;
   unblock(supplyId: string, dates: string[]): Promise<void>;

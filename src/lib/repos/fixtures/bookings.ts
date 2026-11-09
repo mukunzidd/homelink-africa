@@ -58,6 +58,19 @@ function supplyForDraft(d: BookingDraft): Supply | null {
 }
 
 const ACTIVE = new Set(["confirmed", "active"]);
+
+/** The times a day out leaves; one with no list leaves at `departs`. */
+function departuresOf(e: Experience): string[] {
+  return e.slots?.length ? e.slots : [e.departs];
+}
+/** Which departure a booking is on, for one booked before slots existed too. */
+function departureOf(b: Booking, e: Experience): string {
+  return b.slot ?? e.departs;
+}
+/** Whether any of a booking's deposit has already gone back. */
+function depositReturned(bookingId: string): boolean {
+  return store().payments.some((p) => p.bookingId === bookingId && p.kind === "refund" && p.status !== "failed");
+}
 const OTHER_GUESTS = (b: Booking) => b.id.startsWith("bkg_hist_") || b.id === "bkg_phase_leaveToday" || b.id === "bkg_phase_arriveToday";
 
 /** Days a booking occupies: a stay's nights [start, end), a hire's days [start, end]. */
@@ -95,7 +108,12 @@ export const availability: AvailabilityRepo = {
       (b) => b.supplyItemId === supplyId && ACTIVE.has(b.status) && b.id !== opts.exceptBookingId,
     );
     if (supply.kind === "experience") {
-      const taken = live.filter((b) => b.startDate === from).reduce((n, b) => n + b.party, 0);
+      // Counted per departure: a walk that leaves at 09:00 and 14:00 is two
+      // groups, and a full morning says nothing about the afternoon.
+      const slot = opts.slot ?? supply.item.departs;
+      const taken = live
+        .filter((b) => b.startDate === from && departureOf(b, supply.item) === slot)
+        .reduce((n, b) => n + b.party, 0);
       return taken + (opts.party ?? 1) <= supply.item.groupMax;
     }
     const days = eachDay(from, to, supply.kind === "car");
@@ -217,8 +235,14 @@ async function prepare(draft: BookingDraft): Promise<Prepared | { ok: false; rea
   const quote = quoteFor(supply, draft, today);
   if (!quote) return { ok: false, reason: "invalid" };
 
+  // A departure the day out does not have would be stored as given.
+  if (supply.kind === "experience" && draft.slot && !departuresOf(supply.item).includes(draft.slot)) {
+    return { ok: false, reason: "invalid" };
+  }
+
   const end = supply.kind === "experience" ? draft.start : draft.end;
-  if (!(await availability.isFree(supply.item.id, draft.start, end, { party: draft.party }))) {
+  const slot = supply.kind === "experience" ? (draft.slot ?? supply.item.departs) : undefined;
+  if (!(await availability.isFree(supply.item.id, draft.start, end, { party: draft.party, slot }))) {
     return { ok: false, reason: "unavailable" };
   }
   return { ok: true, supply, quote, end, today };
@@ -366,6 +390,13 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
     async cancel(reference, by, reason, today, opts = {}) {
       const b = find(reference);
       if (b.status === "cancelled") return b;
+      // Only what has not begun can be cancelled under the policy. Once it is
+      // under way, only staff can end it, as goodwill; once it is over, there
+      // is nothing to cancel, and a policy refund then would pay back days
+      // already used and free nights already slept.
+      if (b.status !== "confirmed" && !(opts.goodwill && b.status === "active")) {
+        throw new Error(`Cannot cancel a booking that is ${b.status}`);
+      }
       const supply = supplyById(b.supplyItemId);
       const preview = refundPreview(b.service as ServiceKind, storedQuote(b), b.startDate, today, {
         hireDays: nightsBetween(b.startDate, b.endDate) + 1,
@@ -428,8 +459,16 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       if (!supply || !isIsoDate(start) || !isIsoDate(end) || start < today || end < start) {
         return { ok: false, reason: "invalid" };
       }
-      if (supply.kind === "stay" && nightsBetween(start, end) < 1) return { ok: false, reason: "invalid" };
-      const free = await availability.isFree(supply.item.id, start, end, { party: b.party, exceptBookingId: b.id });
+      // A renting is priced by the month with a deposit; repricing it by the
+      // night would drop both and refund the difference. Its dates change by
+      // a new agreement, not here.
+      if (b.stayMode === "lease") return { ok: false, reason: "invalid" };
+      if (supply.kind === "stay" && nightsBetween(start, end) < (supply.item.minNights ?? 1)) return { ok: false, reason: "invalid" };
+      const free = await availability.isFree(supply.item.id, start, end, {
+        party: b.party,
+        exceptBookingId: b.id,
+        slot: supply.kind === "experience" ? departureOf(b, supply.item) : undefined,
+      });
       if (!free) return { ok: false, reason: "unavailable" };
 
       const after = quoteBooking(
@@ -478,6 +517,12 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       // Only before it starts: a party is what was planned, not a tally.
       if (b.status !== "confirmed" || b.startDate <= kigaliDay()) throw new Error("Too late to change the party");
       if (party === b.party) return b;
+      // More people must still fit the day out's departure, alongside
+      // everyone else booked on it.
+      if (supply?.kind === "experience" && party > b.party) {
+        const fits = await availability.isFree(supply.item.id, b.startDate, b.startDate, { party, exceptBookingId: b.id, slot: departureOf(b, supply.item) });
+        if (!fits) throw new Error("No room left on that departure");
+      }
       // A day out is priced per person, so more people cost more; a stay or
       // a hire is not, and its price stays as it is.
       if (supply?.kind === "experience") {
@@ -584,6 +629,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       const b = store().bookings.find((x) => x.reference === reference);
       if (!b || b.stayMode !== "lease" || b.status !== "active") throw new Error("Not a renting under way");
       if (b.moveOut) throw new Error("Move-out already booked");
+      if (depositReturned(b.id)) throw new Error("Deposit already returned");
       if (!isIsoDate(date) || date < kigaliDay()) throw new Error("Bad date");
       const l = store().listings.find((x) => x.id === b.supplyItemId);
       const deposit = b.lines?.find((x) => x.key === "deposit")?.amount ?? money(0, b.total.currency);
@@ -607,6 +653,7 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
     async returnDeposit(reference, by) {
       const b = store().bookings.find((x) => x.reference === reference);
       if (!b?.moveOut || b.moveOut.status !== "scheduled") throw new Error("No move-out to settle");
+      if (depositReturned(b.id)) throw new Error("Deposit already returned");
       const at = new Date().toISOString();
       store().payments.push({ id: nextId("pmt"), bookingId: b.id, rail: "bankTransfer", kind: "refund", amount: { ...b.moveOut.deposit }, status: "succeeded", at });
       b.moveOut = { ...b.moveOut, status: "returned", returnedAt: at };
@@ -635,11 +682,12 @@ export function makeTrips(notifications: NotificationsRepo, read: Pick<TripRepo,
     ...read,
     async place({ drafts, clientTotal, payment, bookedReferences }) {
       if (!drafts.length) return { ok: false, failed: [] };
-      const prepared: Prepared[] = [];
+      // Indexed by draft, so a failed part never shifts the others.
+      const prepared: (Prepared | undefined)[] = [];
       const failed: { index: number; reason: "unavailable" | "invalid" | "priceChanged" }[] = [];
       for (const [index, d] of drafts.entries()) {
         const r = await prepare(d);
-        if (r.ok) prepared.push(r);
+        if (r.ok) prepared[index] = r;
         else failed.push({ index, reason: r.reason });
       }
       // Each part was checked against existing bookings; it must also fit
@@ -651,8 +699,9 @@ export function makeTrips(notifications: NotificationsRepo, read: Pick<TripRepo,
         const item = p.supply.item;
         const live = store().bookings.filter((x) => x.supplyItemId === item.id && ACTIVE.has(x.status));
         if (p.supply.kind === "experience") {
-          const key = `${item.id}|${d.start}`;
-          const existing = live.filter((x) => x.startDate === d.start).reduce((n, x) => n + x.party, 0);
+          const slot = d.slot ?? (item as Experience).departs;
+          const key = `${item.id}|${d.start}|${slot}`;
+          const existing = live.filter((x) => x.startDate === d.start && departureOf(x, item as Experience) === slot).reduce((n, x) => n + x.party, 0);
           const prior = taken.get(key) ?? 0;
           if (existing + prior + d.party > (item as Experience).groupMax) failed.push({ index: j, reason: "unavailable" });
           taken.set(key, prior + d.party);
@@ -674,15 +723,18 @@ export function makeTrips(notifications: NotificationsRepo, read: Pick<TripRepo,
       );
       if (failed.length) return { ok: false, failed };
 
-      const sum = prepared.reduce((n, p) => n + convert(p.quote.total, "RWF", FX_RATES).minor, 0);
+      const sum = prepared.reduce((n, p) => n + (p ? convert(p.quote.total, "RWF", FX_RATES).minor : 0), 0);
       if (clientTotal.currency !== "RWF" || Math.abs(clientTotal.minor - sum) > drafts.length) {
         return { ok: false, failed: [{ index: -1, reason: "priceChanged" }] };
       }
 
       const tripId = nextId("trp");
       const bookings = [];
-      for (const [i, d] of drafts.entries()) bookings.push(await commit(d, prepared[i], payment, notify, tripId));
-      const already = store().bookings.filter((b) => bookedReferences.includes(b.reference));
+      for (const [i, d] of drafts.entries()) bookings.push(await commit(d, prepared[i]!, payment, notify, tripId));
+      // Only the guest's own bookings join the trip; a reference is not proof
+      // of ownership. Phase 2 checks the signed-in user here instead.
+      // The same rule bookings.listForCurrentUser applies.
+      const already = store().bookings.filter((b) => bookedReferences.includes(b.reference) && !OTHER_GUESTS(b));
       for (const b of already) b.tripId = tripId;
       const month = new Intl.DateTimeFormat("en-GB", { month: "long", timeZone: "UTC" }).format(new Date(`${drafts[0].start}T00:00:00Z`));
       const trip = {

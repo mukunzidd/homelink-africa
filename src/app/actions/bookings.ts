@@ -36,7 +36,8 @@ export async function placeBooking(input: PlaceBookingInput): Promise<PlaceResul
 export async function cancelBooking(reference: string, reason: string): Promise<Booking | null> {
   const who = await role();
   if (who !== "guest" && who !== "ops" && who !== "admin") return null;
-  const b = await repos().bookings.cancel(reference, who, reason.slice(0, 200), kigaliDay());
+  const b = await repos().bookings.cancel(reference, who, reason.slice(0, 200), kigaliDay()).catch(() => null);
+  if (!b) return null;
   await repos().notifications.create({
     audience: "ops",
     kind: "newBooking",
@@ -103,7 +104,8 @@ export async function staffAddGuests(reference: string, party: number) {
 
 export async function staffCancel(reference: string, reason: string, goodwill: boolean) {
   const who = await staff(goodwill);
-  const b = await repos().bookings.cancel(reference, who, reason.trim().slice(0, 200), kigaliDay(), { goodwill });
+  const b = await repos().bookings.cancel(reference, who, reason.trim().slice(0, 200), kigaliDay(), { goodwill }).catch(() => null);
+  if (!b) return { ok: false as const };
   refresh();
   return { ok: true as const, refund: b.refund ?? null };
 }
