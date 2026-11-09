@@ -7,7 +7,7 @@ import { repos } from "@/lib/repos";
 import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
 import { kigaliDay } from "@/lib/domain/instants";
 import { quoteBooking } from "@/lib/domain/pricing";
-import { dateChange } from "@/lib/booking/date-change";
+import { dateChange, extensionPrice } from "@/lib/booking/date-change";
 
 /**
  * What a guest does with a booking after it is made. Each checks the role
@@ -29,6 +29,12 @@ export async function previewChange(reference: string, start: string, end: strin
   if (!free) return { ok: false as const, reason: "unavailable" as const };
   const supply = (await repos().stays.byId(b.supplyItemId)) ?? (await repos().mobility.byId(b.supplyItemId));
   if (!supply) return { ok: false as const, reason: "invalid" as const };
+  // Staying longer prices only the added nights, as the change itself does.
+  if (window.from !== start) {
+    const home = await repos().stays.byId(b.supplyItemId);
+    const x = home ? extensionPrice(home, b, window.from, window.to) : null;
+    return x ? { ok: true as const, difference: x.extra, total: x.total } : { ok: false as const, reason: "invalid" as const };
+  }
   const q = quoteBooking(supply, { kind: b.service, start, end, party: b.party, driveMode: b.driveMode, extras: b.extras, promoCode: b.promoCode }, kigaliDay(), (await repos().admin.settings()).catalog);
   if (!q) return { ok: false as const, reason: "invalid" as const };
   return { ok: true as const, difference: { ...q.total, minor: q.total.minor - b.total.minor }, total: q.total };

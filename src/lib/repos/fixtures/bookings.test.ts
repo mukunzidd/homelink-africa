@@ -1,3 +1,4 @@
+import { quoteStay } from "@/lib/domain/pricing";
 import { beforeEach, describe, expect, it } from "vitest";
 import { fixtureRepositories as repos } from "@/lib/repos/fixtures";
 import { resetStore, store } from "./store";
@@ -325,6 +326,27 @@ describe("money back never exceeds money in (security review, Task 34)", () => {
     const charged = store().payments.filter((p) => p.bookingId === during.id && p.kind === "change");
     expect(charged.at(-1)?.amount.minor).toBe(during.total.minor - total);
     expect(during.total.minor).toBeGreaterThan(total);
+  });
+
+  it("charges only the added nights, at today's rate, even when the home got cheaper since", async () => {
+    const during = store().bookings.find((b) => b.id === "bkg_phase_during")!;
+    const home = store().listings.find((l) => l.id === during.supplyItemId)!;
+    const before = during.total.minor;
+    const cleaning = during.lines!.find((l) => l.key === "cleaning")!.amount.minor;
+    home.nightlyRate = { ...home.nightlyRate, minor: Math.round(home.nightlyRate.minor / 4) };
+    const end = addDays(during.endDate, 2);
+    const added = quoteStay(home, during.endDate, end)!;
+    const extra = added.total.minor - added.lines.find((l) => l.key === "cleaning")!.amount.minor;
+    const r = await repos.bookings.changeDates(during.reference, during.startDate, end, today);
+    expect(r.ok).toBe(true);
+    expect(during.total.minor).toBe(before + extra);
+    expect(during.lines!.find((l) => l.key === "cleaning")!.amount.minor).toBe(cleaning);
+    expect(store().payments.filter((p) => p.bookingId === during.id && p.kind === "refund")).toHaveLength(0);
+  });
+
+  it("will not let a car or day out under way run on through this door", async () => {
+    const car = store().bookings.find((b) => b.service === "car" && b.status === "active");
+    if (car) expect(await repos.bookings.changeDates(car.reference, car.startDate, addDays(car.endDate, 1), today)).toEqual({ ok: false, reason: "invalid" });
   });
 
   it("will not shorten a stay under way, or move where it started", async () => {

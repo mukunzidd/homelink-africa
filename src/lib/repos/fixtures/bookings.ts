@@ -1,4 +1,4 @@
-import { dateChange } from "@/lib/booking/date-change";
+import { dateChange, extensionPrice } from "@/lib/booking/date-change";
 import type {
   Booking,
   BookingEvent,
@@ -475,12 +475,18 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       });
       if (!free) return { ok: false, reason: "unavailable" };
 
-      const after = quoteBooking(
-        supply.item,
-        { kind: supply.kind, start, end, party: b.party, driveMode: b.driveMode, extras: b.extras, promoCode: b.promoCode },
-        today,
-        store().settings.catalog,
-      );
+      // Under way, only a stay runs longer, and it pays for the nights it
+      // adds; the ones already lived in keep their price (extensionPrice).
+      const extending = window.from !== start;
+      if (extending && supply.kind !== "stay") return { ok: false, reason: "invalid" };
+      const after = extending
+        ? extensionPrice(supply.item as Listing, b, window.from, window.to)
+        : quoteBooking(
+            supply.item,
+            { kind: supply.kind, start, end, party: b.party, driveMode: b.driveMode, extras: b.extras, promoCode: b.promoCode },
+            today,
+            store().settings.catalog,
+          );
       if (!after) return { ok: false, reason: "invalid" };
       const difference = money(after.total.minor - b.total.minor, b.total.currency);
 
@@ -488,7 +494,8 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
       b.endDate = end;
       b.total = after.total;
       b.lines = after.lines;
-      b.escrowHeld = after.escrowHeld;
+      // Escrow is released at check-in; a stay under way holds none again.
+      if (!extending && "escrowHeld" in after) b.escrowHeld = after.escrowHeld;
       b.timeline = [...(b.timeline ?? []), event("datesChanged", by, `${start} → ${end}`)];
       // A cheaper stay gives the difference back, capped at what is left.
       const owed = difference.minor > 0 ? difference.minor : Math.min(-difference.minor, refundable(b).minor);
