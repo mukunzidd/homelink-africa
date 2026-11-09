@@ -1,7 +1,9 @@
 # Booking, workspace and notifications: the whole product, on fixtures
 
-**Status:** approved in outline 2026-11-08, plan at
-`docs/superpowers/plans/2026-11-08-booking-workspace.md`. Written 2026-11-08.
+**Status:** built through Task 47 of
+`docs/superpowers/plans/2026-11-08-booking-workspace.md`, swept and fixed on
+2026-11-09 (see "Review and fixes"). The whole-branch review has not run yet.
+Approved in outline 2026-11-08.
 
 ## Why this exists
 
@@ -216,6 +218,80 @@ Off by default. Stored on the device until accounts exist.
 - No real auth, payments, uploads, email, SMS, WhatsApp or push delivery.
 - No owner portal for people whose homes HomeLink runs; the owner did not ask.
 - No new runtime dependencies, no map or chart library.
+
+## Review and fixes
+
+Swept on 2026-11-09 with `make e2e` (15 journeys) and `make sweep` (424
+screens: guest pages at 390, 1024 and 1440 in light and two of those in dark,
+visitor pages, every page in each workspace role's own sidebar, and the
+busiest guest and workspace pages in fr, rw and sw). Every capture was looked
+at, not only the ones a check flagged. The final run is 15 of 15 journeys and
+424 screens with nothing to report.
+
+What it found, and what was done:
+
+- **A guest saw everyone's payments.** `/account/payments` matched all stored
+  payments to the guest's bookings for titles, so other guests' payments
+  showed under raw IDs and "Paid this year" summed the whole store. Now
+  filtered to the guest's bookings, as the privacy export already was. No
+  check caught this; it was found by looking at a capture.
+- **Kinyarwanda dates broke hydration.** Node formats `rw-RW` from full ICU,
+  Chrome has no Kinyarwanda and falls back to English, so every client
+  component showing a date re-rendered from scratch. Every date now goes
+  through `dateTimeFormat()` in `lib/domain/date-format.ts`, which formats rw
+  from en-GB parts and a fixed table of CLDR names. This also changes the
+  order: Node gave "2026 Ukwakira 12", which an older comment called the
+  wanted form; it now reads "12 Ukwakira 2026". A native reader should
+  confirm which Rwandans expect.
+- **Long rw and sw labels widened whole pages** (441px and 413px at 390). The
+  page grids had no column template below their breakpoint, so the implicit
+  column grew to its content. `grid-cols-1` (minmax(0,1fr) in Tailwind 4) on
+  ten pages.
+- **Money did not fit stat tiles.** "RWF 3,349,013" needs 204px at 28px; a
+  phone tile has 139px. The overview's money tile takes the full row on
+  phones; the earnings tiles stack below 640px and go four across only from
+  1280px.
+- **Francs grouped with a period in rw.** Earnings, jobs and other workspace
+  pages printed "RWF 157.096". Fixed inside `formatMoney` and the four direct
+  `Intl.NumberFormat` calls; the compact franc figure on sale pages was also
+  a hydration mismatch in rw for the same missing-ICU reason as dates.
+- **Smaller things.** A review aspect label cut at 1024px; partner document
+  rows 36px over the edge; a missing `workspace.homes.doc.vehicleInspection`
+  key; one fixture description that said "lease".
+
+Traps a later session would otherwise rediscover:
+
+- **The browser has less ICU than the server.** Anything formatted with `Intl`
+  in a client component must give the same string in Chrome as in Node.
+  `fr` and `sw` do; `rw` does not. Use `dateTimeFormat()` for dates and
+  `numberLocale()` (in `lib/domain/money.ts`) for any `Intl.NumberFormat`.
+- **The date locale is the wrong tag for money.** Kinyarwanda's CLDR groups
+  thousands with a period ("RWF 157.096"), which reads as a decimal point in
+  Rwanda; `NUMBER_LOCALES` exists for this. Several workspace pages passed the
+  date locale anyway. `formatMoney` now maps rw to en-RW itself, and the sweep
+  flags any franc amount grouped with a period.
+- **A page that does not scroll sideways can still clip.** The tile overflow
+  never widened the page, so the first sweep missed it. The sweep now also
+  flags visible text wider than its own box that is not an ellipsis or a
+  scroll area. Its first version flagged screen-reader text and closed menus
+  on every page; it now ignores anything that is not visible or narrower than
+  8px.
+- **Measure the original before fixing.** One offscreen measurement of the
+  tile text came back at 109px against the 139px available and nearly
+  closed the finding; measuring `scrollWidth` on the real element gave 204.
+- **`make e2e` empties `.e2e-results/`**, so the sweep writes to `.sweep/`.
+
+Gaps seen during the sweep and left alone (none blocks the preview):
+
+- The finance lane table shows RWF 0 for cars and days out in most months:
+  the seeded history is stays only before October.
+- The audit log opens empty after a reset; the seed records no history.
+- Finance tables on a phone scroll inside their card with the amount column
+  off screen; a stacked layout would read better.
+- Lint passes with three old warnings: `aria-selected` on calendar day
+  buttons in `ui/calendar.tsx` and `ui/date-range-picker.tsx` (should be
+  `aria-pressed`, or a grid with `gridcell`), and an unused `at` in
+  `fixtures/booking-seeds.ts`.
 
 ## Left for later
 

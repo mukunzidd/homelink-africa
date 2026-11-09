@@ -1,7 +1,8 @@
 # Real data milestone: the same screens, on Postgres
 
-**Status:** paused behind `2026-11-03-search-and-polish-design.md`. Steps 1
-and 3 are done, step 2 is half done. Written 2026-08-09.
+**Status:** paused behind `2026-11-08-booking-workspace-design.md`, which
+is built through its full sweep and waits only on a whole-branch review.
+Steps 1 and 3 are done, step 2 is half done. Written 2026-08-09.
 
 ## Why this milestone exists
 
