@@ -4,9 +4,10 @@ import report from "./report";
 import hills from "./hills";
 import magazine from "./magazine";
 import concierge from "./concierge";
+import doors from "./doors";
 
 /**
- * Five whole-page candidates for the home page, each built on its own idea
+ * Six whole-page candidates for the home page, each built on its own idea
  * rather than a different hero photo. Compared at /preview/landing.
  */
 export const DESIGNS: Record<string, (p: { locale: string; data: LandingData }) => Promise<React.ReactNode>> = {
@@ -15,5 +16,6 @@ export const DESIGNS: Record<string, (p: { locale: string; data: LandingData }) 
   hills,
   magazine,
   concierge,
+  doors,
 };
 export const DESIGN_KEYS = Object.keys(DESIGNS);

@@ -3648,6 +3648,10 @@
       "concierge": {
         "name": "Baza itsinda",
         "body": "Urupapuro ni ikiganiro n’itsinda rya Kigali, kandi gushakisha ni ubutumwa ubandikira"
+      },
+      "doors": {
+        "name": "Hano cyangwa mu mahanga",
+        "body": "Urupapuro ruhinduka bitewe n’uwo uri we: uje mu ndege abanza kubona amacumbi, kwakirwa no kubikirwa amafaranga; uri mu Rwanda abanza kubona gukodesha ku kwezi, kugura n’imodoka mu mafaranga y’u Rwanda"
       }
     },
     "groupDesigns": "Impapuro zavuguruwe zose",

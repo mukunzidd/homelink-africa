@@ -3648,6 +3648,10 @@
       "concierge": {
         "name": "Uliza timu",
         "body": "Ukurasa ni mazungumzo na timu ya Kigali, na kutafuta ni ujumbe kwao"
+      },
+      "doors": {
+        "name": "Hapa au ng’ambo",
+        "body": "Ukurasa unabadilika kulingana na wewe: anayewasili kwa ndege anaona kwanza malazi, kupokelewa na amana; aliye Rwanda anaona kwanza kukodi kwa mwezi, kununua na magari kwa faranga"
       }
     },
     "groupDesigns": "Kurasa zilizosanifiwa upya kabisa",

@@ -3648,6 +3648,10 @@
       "concierge": {
         "name": "Ask the team",
         "body": "The page is a conversation with the Kigali team, and the search is a message to them"
+      },
+      "doors": {
+        "name": "Here or abroad",
+        "body": "The page changes with who you are: someone flying in sees stays, pickup and escrow first; someone in Rwanda sees renting, buying and cars in francs"
       }
     },
     "groupDesigns": "Whole-page redesigns",
