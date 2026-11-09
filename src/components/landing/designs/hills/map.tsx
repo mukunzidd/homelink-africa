@@ -3,6 +3,7 @@ import type { Money } from "@/lib/domain/money";
 import { Link } from "@/i18n/navigation";
 import { areaCentre } from "@/lib/places/area";
 import { PLACES } from "@/lib/places/gazetteer";
+import { LANDMARK_POINTS } from "@/lib/domain/landmarks";
 import { MoneyText } from "@/components/ui/money-text";
 import { cn } from "@/lib/cn";
 import { contours, KM, MAP_H, MAP_W, project } from "./contours";
@@ -23,7 +24,7 @@ const SIDE: Record<string, Side> = {
   Remera: "r",
   Gacuriro: "r",
   Kicukiro: "r",
-  Gikondo: "l",
+  Gikondo: "r",
   Nyamirambo: "t",
   Rebero: "r",
   Kagugu: "l",
@@ -39,6 +40,17 @@ const PHONE_SIDE: Record<string, Side> = {
   Nyarutarama: "l",
   Gikondo: "b",
 };
+
+/*
+  The two places someone arriving navigates by, marked with a diamond as on
+  the neighbourhood pages: the city centre (just above Kiyovu, so its name
+  sits left) and the airport, which is in Kanombe and
+  takes that neighbourhood's place on the map.
+*/
+const LANDMARKS: { key: "cityCentre" | "airport"; side: Side; phone: Side }[] = [
+  { key: "cityCentre", side: "l", phone: "l" },
+  { key: "airport", side: "b", phone: "l" },
+];
 
 const OFFSET: Record<Side, string> = {
   r: "translate-x-[10px] -translate-y-1/2 text-left",
@@ -60,22 +72,25 @@ export async function HillMap({
   label,
   north,
   km,
-  note,
+  legendCount,
+  legend,
+  terrain,
 }: {
   places: { name: string; count: number }[];
   from: Map<string, Money>;
   label: string;
   north: string;
   km: string;
-  note: string;
+  legendCount: string;
+  legend: string;
+  terrain: string;
 }) {
-  const t = await getTranslations("landing");
-  const tSmart = await getTranslations("smart");
+  const tLandmark = await getTranslations("landmarkNames");
   const lines = contours();
   const known = new Set(places.map((p) => p.name));
   // The rest of the gazetteer's neighbourhoods, named quietly so the city is
   // whole. Nyarugenge is the old centre and sits on Kiyovu's dot.
-  const quiet = PLACES.filter((p) => p.kind === "neighbourhood" && !known.has(p.name) && p.name !== "Nyarugenge");
+  const quiet = PLACES.filter((p) => p.kind === "neighbourhood" && !known.has(p.name) && p.name !== "Nyarugenge" && p.name !== "Kanombe");
   const mount = project(-1.9796, 30.0306);
 
   return (
@@ -163,20 +178,28 @@ export async function HillMap({
                 >
                   <span className="text-[12px] font-medium leading-4 text-ink transition-colors duration-150 group-hover:text-brand sm:text-[14px] sm:leading-5">
                     {p.name}
-                    <span className="tnum ml-1 font-normal text-ink-3 xl:hidden">{p.count}</span>
+                    <span className="tnum ml-1 font-normal text-ink-3">{p.count}</span>
                   </span>
-                  {v.detail && (
-                    <span className="tnum hidden text-[12px] leading-4 text-ink-3 xl:block">
-                      {tSmart("placeCount", { count: p.count })}
-                      {price && (
-                        <>
-                          {" · "}
-                          {t("fromPrice").toLowerCase()} <MoneyText amount={price} rounded className="text-ink-2" />
-                        </>
-                      )}
-                    </span>
-                  )}
+                  {v.detail && price && <MoneyText amount={price} rounded className="hidden text-[12px] leading-4 text-ink-2 xl:block" />}
                 </Link>
+              ))}
+            </span>
+          );
+        })}
+
+        {LANDMARKS.map((l) => {
+          const at = project(LANDMARK_POINTS[l.key].lat, LANDMARK_POINTS[l.key].lng);
+          const style = { left: pct(at.x, MAP_W), top: pct(at.y, MAP_H) };
+          return (
+            <span key={l.key} aria-hidden>
+              <span className="absolute size-[7px] -translate-x-1/2 -translate-y-1/2 rotate-45 border border-ink-2 bg-canvas" style={style} />
+              {[
+                { show: "flex sm:hidden", s: l.phone },
+                { show: "hidden sm:flex", s: l.side },
+              ].map((v) => (
+                <span key={v.show} className={cn("absolute whitespace-nowrap text-[11px] leading-4 text-ink-2 sm:text-[12px]", v.show, OFFSET[v.s])} style={style}>
+                  {tLandmark(l.key)}
+                </span>
               ))}
             </span>
           );
@@ -196,7 +219,10 @@ export async function HillMap({
           <span className="h-4 w-px bg-current" />
         </div>
       </div>
-      <figcaption className="text-[13px] text-ink-3 lg:text-center">{note}</figcaption>
+      <figcaption className="mx-auto max-w-[60ch] px-6 text-[13px] leading-5 text-ink-3 sm:px-0 lg:text-center">
+        <span className="xl:hidden">{legendCount}</span>
+        <span className="hidden xl:inline">{legend}</span> {terrain}
+      </figcaption>
     </figure>
   );
 }

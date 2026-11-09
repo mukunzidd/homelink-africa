@@ -10,6 +10,9 @@ export const copy: DesignCopy<{
   note: string;
   signed: string;
   rooms: (bedrooms: number, sleeps: number) => string;
+  coverLines: string;
+  talkTitle: string;
+  talkBody: string;
 }> = {
   en: {
     issue: "The Kigali issue",
@@ -20,6 +23,9 @@ export const copy: DesignCopy<{
     note: "Editor's note",
     signed: "The HomeLink team, Kigali",
     rooms: (b, s) => `${b} ${b === 1 ? "bedroom" : "bedrooms"}, sleeps ${s}`,
+    coverLines: "On the cover",
+    talkTitle: "Talk to a person",
+    talkBody: "Write to the Kigali team before you book, or while you are here. A person reads every message.",
   },
   fr: {
     issue: "Le numéro Kigali",
@@ -30,6 +36,9 @@ export const copy: DesignCopy<{
     note: "Le mot de la rédaction",
     signed: "L'équipe HomeLink, Kigali",
     rooms: (b, s) => `${b} ${b === 1 ? "chambre" : "chambres"}, ${s} personnes`,
+    coverLines: "En couverture",
+    talkTitle: "Parler à quelqu'un",
+    talkBody: "Écrivez à l'équipe de Kigali avant de réserver, ou pendant votre séjour. Chaque message est lu par une personne.",
   },
   rw: {
     issue: "Nimero ya Kigali",
@@ -40,6 +49,9 @@ export const copy: DesignCopy<{
     note: "Ijambo ry'ubwanditsi",
     signed: "Itsinda rya HomeLink, Kigali",
     rooms: (b, s) => `${b === 1 ? "Icyumba 1 cyo kuraramo" : `Ibyumba ${b} byo kuraramo`}, abantu ${s}`,
+    coverLines: "Ku gifubiko",
+    talkTitle: "Vugana n'umuntu",
+    talkBody: "Andikira itsinda rya Kigali mbere yo gutumiza, cyangwa igihe uri hano. Buri butumwa busomwa n'umuntu.",
   },
   sw: {
     issue: "Toleo la Kigali",
@@ -50,5 +62,8 @@ export const copy: DesignCopy<{
     note: "Neno la mhariri",
     signed: "Timu ya HomeLink, Kigali",
     rooms: (b, s) => `${b === 1 ? "Chumba 1 cha kulala" : `Vyumba ${b} vya kulala`}, watu ${s}`,
+    coverLines: "Kwenye jalada",
+    talkTitle: "Ongea na mtu",
+    talkBody: "Andikia timu ya Kigali kabla ya kuweka nafasi, au ukiwa hapa. Kila ujumbe unasomwa na mtu.",
   },
 };

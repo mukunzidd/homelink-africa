@@ -7,7 +7,7 @@ import { MoneyText } from "@/components/ui/money-text";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { AskButton } from "@/components/search/hero-search";
 import { IntentChips } from "@/components/search/intent-chips";
-import { ArrowRightIcon, CheckIcon, ClockIcon, UsersIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, CheckIcon, ClockIcon, ShieldIcon, UsersIcon } from "@/components/ui/icons";
 import { pick } from "./copy";
 import { copy } from "./concierge.copy";
 import { Stamp, Thread, shortDate } from "./concierge/thread";
@@ -17,15 +17,18 @@ import { Stamp, Thread, shortDate } from "./concierge/thread";
  *
  * What separates HomeLink from a listings site is the people in Kigali who
  * inspected the homes and answer you, so the first screen is a thread with
- * them, and the search is the reply box. Below it, the same people by name
- * (worked out from the inspection records, not written in), what they check,
- * then what you can book, the promises, the neighbourhoods and the days out.
+ * them, and the search is the reply box. Beside it, the five lanes, so a
+ * resident after a monthly rental or a title-checked sale is one tap from the
+ * top. Below it, the same people by name (worked out from the inspection
+ * records, not written in) and what they check, then the sentences the search
+ * reads, the neighbourhoods and the days out. The "how it works" promises the
+ * other designs carry are left out here: the checks panel already says each
+ * of them, with the escrow terms, under the names of the people who keep them.
  * Timestamps and the read receipt belong to the thread and appear nowhere else.
  */
 export default async function Design({ locale, data }: { locale: string; data: LandingData }) {
   const c = pick(copy, locale);
   const t = await getTranslations("landing");
-  const tTrust = await getTranslations("trust");
   const tVerify = await getTranslations("verification");
   const tNav = await getTranslations("nav");
   const tSmart = await getTranslations("smart");
@@ -51,26 +54,51 @@ export default async function Design({ locale, data }: { locale: string; data: L
 
   return (
     <div className="flex flex-col">
-      {/* First screen. z-10 so the search's answer paints over what follows. */}
+      {/* First screen. z-10 so the search's answer paints over what follows.
+          Three blocks: the words, the thread, and the five lanes. On a wide
+          screen the thread takes the right column and the lanes sit under the
+          words; on a phone the lanes follow the thread, whose reply box stays
+          pinned to the bottom of the screen while it is in view. */}
       <section className="relative z-10">
-        <div className="mx-auto grid max-w-[1180px] gap-8 px-4 pb-12 pt-8 sm:px-6 lg:min-h-[calc(100svh-64px)] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-16 lg:py-12">
-          <div className="flex flex-col items-start gap-6">
-            <h1 className="max-w-[15ch] text-balance font-display text-[40px] font-medium leading-[1.05] tracking-tight text-ink sm:text-[56px]">{c.title}</h1>
-            <p className="max-w-[40ch] text-[17px] leading-relaxed text-ink-2">{c.body(data.total)}</p>
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-3">
-              <span>{tTrust("escrowProtected")}</span>
-              <span aria-hidden>·</span>
-              <span>{tVerify("escrowShort")}</span>
+        <div className="mx-auto grid max-w-[1180px] grid-cols-[minmax(0,1fr)] gap-8 px-4 pb-12 pt-6 sm:px-6 sm:pt-8 lg:min-h-[calc(100svh-64px)] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:grid-rows-[auto_auto] lg:content-center lg:gap-x-16 lg:gap-y-10 lg:py-12">
+          <div className="flex flex-col items-start gap-5 lg:gap-6 lg:self-end">
+            <h1 className="max-w-[15ch] text-balance font-display text-[36px] font-medium leading-[1.05] tracking-tight text-ink sm:text-[56px]">{c.title}</h1>
+            <p className="max-w-[40ch] text-[16px] leading-relaxed text-ink-2 sm:text-[17px]">{c.body(data.total)}</p>
+            <p className="flex max-w-[44ch] items-start gap-2 text-[14px] leading-snug text-ink-2">
+              <ShieldIcon size={16} className="mt-0.5 flex-none text-trust" />
+              {c.escrow}
             </p>
           </div>
-          <Thread locale={locale} cards={cards} inspectedOn={data.inspectedOn} />
+
+          <Thread locale={locale} cards={cards} inspectedOn={data.inspectedOn} className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center" />
+
+          {/* The five lanes, so renting and buying are one tap from the top. */}
+          <nav aria-labelledby="lanes-heading" className="flex flex-col gap-2 lg:self-start">
+            <h2 id="lanes-heading" className="text-[13px] text-ink-3">{t("lanesTitle")}</h2>
+            <ul className="flex flex-col border-t border-line">
+              {data.lanes.map((lane) => (
+                <li key={lane.key} className="border-b border-line">
+                  <Link href={lane.href} className="group flex items-center gap-3 rounded-ctl py-2">
+                    <span className="relative size-10 flex-none overflow-hidden rounded-[8px]">
+                      <Image src={lane.image} alt="" fill sizes="40px" className="object-cover" />
+                    </span>
+                    <span className="flex min-w-0 flex-1 flex-col">
+                      <span className="text-[15px] font-medium leading-5 text-ink transition-colors duration-150 group-hover:text-brand">{tNav(lane.label)}</span>
+                      <span className="tnum text-[13px] leading-5 text-ink-3">{t(`lane.${lane.key}`, { count: lane.count })}</span>
+                    </span>
+                    <ArrowRightIcon size={16} className="flex-none text-ink-3 transition-[color,transform] duration-150 group-hover:translate-x-0.5 group-hover:text-brand" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </section>
 
-      <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-24 px-4 pb-24 pt-12 sm:px-6 lg:pt-16">
+      <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-24 px-4 pt-12 sm:px-6 lg:pt-16">
         {/* The people, from the records. */}
         <section aria-labelledby="people-heading" className="flex flex-col gap-8">
-          <Head id="people-heading" title={c.peopleTitle} body={c.peopleBody} />
+          <Head id="people-heading" title={c.peopleTitle} body={c.peopleBody} href="/contact" link={c.writeTeam} />
           <ul className="grid border-t border-line sm:grid-cols-3 sm:gap-x-8">
             {people.map((p) => (
               <li key={p.name} className="flex items-start gap-4 border-b border-line py-6">
@@ -99,45 +127,6 @@ export default async function Design({ locale, data }: { locale: string; data: L
               ))}
             </ul>
           </div>
-        </section>
-
-        {/* The five lanes, with how many of each the team has inspected. */}
-        <section aria-labelledby="lanes-heading" className="flex flex-col gap-8">
-          <Head id="lanes-heading" title={t("lanesTitle")} />
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
-            {data.lanes.map((lane) => (
-              <li key={lane.key}>
-                <Link href={lane.href} className="group flex h-full items-center gap-4 rounded-card border border-line bg-surface p-2 pr-4 transition-colors duration-150 hover:border-brand/40 lg:flex-col lg:items-stretch lg:gap-3 lg:pr-2">
-                  <span className="relative size-16 flex-none overflow-hidden rounded-[8px] lg:h-32 lg:w-full">
-                    <Image src={lane.image} alt="" fill sizes="(max-width: 1024px) 64px, 220px" className="object-cover" />
-                  </span>
-                  <span className="flex min-w-0 flex-1 flex-col gap-1 lg:px-2 lg:pb-2">
-                    <span className="flex items-center justify-between gap-2 text-[17px] font-medium text-ink group-hover:text-brand">
-                      {tNav(lane.label)}
-                      <ArrowRightIcon size={16} className="flex-none text-ink-3 transition-transform duration-150 group-hover:translate-x-0.5" />
-                    </span>
-                    <span className="tnum text-[13px] leading-5 text-ink-2">{t(`lane.${lane.key}`, { count: lane.count })}</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* The three promises. */}
-        <section aria-labelledby="how-heading" className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-16">
-          <div className="lg:self-start"><Head id="how-heading" title={t("howTitle")} body={t("howBody")} /></div>
-          <ol className="flex flex-col border-t border-line">
-            {(["inspect", "escrow", "people"] as const).map((step, i) => (
-              <li key={step} className="grid grid-cols-[32px_minmax(0,1fr)] gap-4 border-b border-line py-6">
-                <span className="tnum font-display text-[22px] leading-none text-ink-3">{i + 1}</span>
-                <div className="flex flex-col gap-2">
-                  <h3 className="font-display text-[20px] font-medium leading-snug text-ink">{t(`how.${step}Title`)}</h3>
-                  <p className="max-w-[60ch] text-[15px] leading-relaxed text-ink-2">{t(`how.${step}Body`)}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
         </section>
 
         {/* Things people ask, each with what the search reads in it. */}

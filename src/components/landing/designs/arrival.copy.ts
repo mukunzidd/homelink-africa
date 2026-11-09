@@ -7,6 +7,8 @@ export const copy: DesignCopy<{
   stages: { land: string; settle: string; look: string; further: string };
   bodies: { land: string; settle: string };
   departs: string;
+  /** Heads the hero's short way in for people who already live in Kigali. */
+  resident: string;
 }> = {
   en: {
     dayOne: "Day one in Kigali, from what is listed today",
@@ -17,6 +19,7 @@ export const copy: DesignCopy<{
       settle: "Homes someone from our team has stood in, by the night or by the month, and homes for sale with the title checked.",
     },
     departs: "Leaves at {time}",
+    resident: "Living in Kigali",
   },
   fr: {
     dayOne: "Premier jour à Kigali, avec ce qui est en ligne aujourd'hui",
@@ -27,6 +30,7 @@ export const copy: DesignCopy<{
       settle: "Des logements visités par un membre de notre équipe, à la nuit ou au mois, et des maisons à vendre dont le titre a été vérifié.",
     },
     departs: "Départ à {time}",
+    resident: "Vous vivez à Kigali",
   },
   rw: {
     dayOne: "Umunsi wa mbere i Kigali, uhereye ku biri ku rubuga uyu munsi",
@@ -37,6 +41,7 @@ export const copy: DesignCopy<{
       settle: "Inzu umwe mu ikipe yacu yasuye, zo kuraramo iminsi mike cyangwa ukwezi, n'inzu zigurishwa zagenzuriwe ibyangombwa.",
     },
     departs: "Guhaguruka: {time}",
+    resident: "Usanzwe utuye i Kigali",
   },
   sw: {
     dayOne: "Siku ya kwanza Kigali, kutoka kwa kilichoorodheshwa leo",
@@ -47,5 +52,6 @@ export const copy: DesignCopy<{
       settle: "Nyumba ambazo mtu wa timu yetu ametembelea, kwa usiku au kwa mwezi, na nyumba zinazouzwa zenye hati iliyokaguliwa.",
     },
     departs: "Kuondoka: {time}",
+    resident: "Unaishi Kigali",
   },
 };

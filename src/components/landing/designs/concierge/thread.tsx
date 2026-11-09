@@ -8,6 +8,7 @@ import { HeroSearch } from "@/components/search/hero-search";
 import { MoneyText } from "@/components/ui/money-text";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { cn } from "@/lib/cn";
+import { Composer } from "./composer";
 import { pick } from "../copy";
 import { copy } from "../concierge.copy";
 
@@ -22,6 +23,10 @@ import { copy } from "../concierge.copy";
  *
  * The times are part of the picture, not a claim about response times, and
  * the read receipt sits only under the guest's last message, as in the app.
+ *
+ * The reply box is sticky to the bottom of the screen while the thread is in
+ * view (see Composer), which is what puts the search in a phone's first
+ * screen: the conversation scrolls under it, as it would in a chat app.
  */
 export async function Thread({ locale, cards, inspectedOn, className }: { locale: string; cards: Listing[]; inspectedOn: string; className?: string }) {
   const c = pick(copy, locale);
@@ -76,10 +81,10 @@ export async function Thread({ locale, cards, inspectedOn, className }: { locale
         </li>
       </ol>
 
-      <div className="flex flex-col gap-2 rounded-b-[16px] border-t border-line bg-surface px-4 py-4 sm:px-5">
+      <Composer className="sticky bottom-0 z-20 flex flex-col gap-2 rounded-b-[16px] border-t border-line bg-surface px-4 pb-4 pt-3 sm:px-5 sm:pt-4">
         <p className="px-1 text-[13px] text-ink-3">{c.composer}</p>
         <HeroSearch />
-      </div>
+      </Composer>
     </div>
   );
 }
@@ -134,7 +139,7 @@ function Card({ listing, locale, perNight, label }: { listing: Listing; locale: 
         <span className="text-[12px] text-ink-3">{listing.neighbourhood}</span>
         <span className="mt-auto flex flex-wrap items-center justify-between gap-x-2 gap-y-1 pt-1">
           <span className="flex items-baseline gap-0.5 text-[13px]">
-            <MoneyText amount={listing.nightlyRate} className="font-medium text-ink" />
+            <MoneyText amount={listing.nightlyRate} rounded className="font-medium text-ink" />
             <span className="text-ink-3">{perNight}</span>
           </span>
           <span className="flex items-center gap-1 text-[12px] text-ink-3" title={label}>

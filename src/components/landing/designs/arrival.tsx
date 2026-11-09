@@ -9,7 +9,7 @@ import { HeroSearch } from "@/components/search/hero-search";
 import { ListingRow } from "@/components/listing/listing-row";
 import { MoneyText } from "@/components/ui/money-text";
 import { SupplyImage } from "@/components/ui/supply-image";
-import { ArrowRightIcon, CheckIcon, ClockIcon, PinIcon, UsersIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, CheckIcon, ClockIcon, UsersIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 
 /*
@@ -33,6 +33,9 @@ export default async function Design({ locale, data }: { locale: string; data: L
   const tCars = await getTranslations("cars");
   const tExp = await getTranslations("experiences");
   const tSmart = await getTranslations("smart");
+  const tFooter = await getTranslations("footer");
+  const tNav = await getTranslations("nav");
+  const tPlaces = await getTranslations("places");
 
   const { cars, days, places, from, featured, lanes } = data;
   const lane = (key: Lane["key"]) => lanes.find((l) => l.key === key)!;
@@ -42,7 +45,7 @@ export default async function Design({ locale, data }: { locale: string; data: L
       {/* z-10 so the search's answer, which drops below the field, paints over day one. */}
       <section className="relative isolate z-10">
         <div className="mx-auto flex max-w-[1180px] flex-col gap-10 px-6 pb-12 pt-10 lg:gap-14 lg:pb-12 lg:pt-16">
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
             <h1 className="max-w-[14ch] text-balance font-display text-[40px] font-medium leading-[1.05] tracking-tight text-ink sm:text-[60px]">
               {t("heroTitle")}
             </h1>
@@ -51,11 +54,32 @@ export default async function Design({ locale, data }: { locale: string; data: L
               <div className="w-full">
                 <HeroSearch />
               </div>
-              <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-3">
-                <span className="tnum">{tTrust("listingsVerified", { count: data.total })}</span>
-                <span aria-hidden>·</span>
-                <span>{tTrust("escrowProtected")}</span>
+              {/* Checks, not a dot between them: in rw and sw the pair wraps
+                  on a phone and a dot was left hanging at the line's end. */}
+              <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-ink-2">
+                <span className="flex items-center gap-1 tnum"><CheckIcon size={14} className="flex-none text-trust" />{tTrust("listingsVerified", { count: data.total })}</span>
+                <span className="flex items-center gap-1"><CheckIcon size={14} className="flex-none text-trust" />{tTrust("escrowProtected")}</span>
               </p>
+              {/* The page tells a visitor's first day; someone who already
+                  lives here came to rent or buy, so their way in sits in the
+                  first screen instead of halfway down stage two. */}
+              <nav aria-labelledby="resident" className="flex w-full flex-col gap-2 border-t border-line pt-4 sm:flex-row sm:items-baseline sm:gap-5">
+                <p id="resident" className="flex-none text-[13px] text-ink-3">{c.resident}</p>
+                <ul className="flex flex-wrap gap-x-5 gap-y-2">
+                  {[
+                    { l: lane("homes"), label: tFooter("rentLink") },
+                    { l: lane("buy"), label: tFooter("buyLink") },
+                    { l: lane("cars"), label: tNav("cars") },
+                  ].map(({ l, label }) => (
+                    <li key={l.key}>
+                      <Link href={l.href} className="group inline-flex items-baseline gap-1.5 rounded-ctl text-[15px] font-medium text-ink transition-colors duration-150 hover:text-brand">
+                        {label}{" "}
+                        <span className="tnum text-[13px] font-normal text-ink-3">{l.count}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
           <DayOne data={data} locale={locale} />
@@ -73,7 +97,7 @@ export default async function Design({ locale, data }: { locale: string; data: L
                   <CheckIcon className="flex-none text-trust" />
                   {tCars("airportPickup")}
                 </p>
-                <Pledge title={t("how.peopleTitle")} body={t("how.peopleBody")} />
+                <Pledge title={t("how.peopleTitle")} body={t("how.peopleBody")} link={{ href: "/contact", label: tFooter("contact") }} />
                 <LaneLinks lanes={[lane("cars")]} />
               </>
             }
@@ -92,9 +116,9 @@ export default async function Design({ locale, data }: { locale: string; data: L
                         {tCars(`class.${v.vehicleClass}`)} · {tCars("seats", { count: v.seats })} · {tCars(`transmission.${v.transmission}`)}
                       </span>
                       <span className="text-[13px] text-ink-2">{v.driveModes.map((m) => tCars(m)).join(" · ")}</span>
-                      <span className="flex items-baseline gap-1 sm:hidden">
-                        <MoneyText amount={v.dailyRate} rounded className="font-semibold text-ink" />
-                        <span className="text-[13px] text-ink-3">{tCars("perDay")}</span>
+                      <span className="flex flex-wrap items-baseline gap-x-1 sm:hidden">
+                        <MoneyText amount={v.dailyRate} rounded className="whitespace-nowrap font-semibold text-ink" />
+                        <span className="whitespace-nowrap text-[13px] text-ink-3">{tCars("perDay")}</span>
                       </span>
                     </span>
                     <span className="hidden flex-none flex-col items-end sm:flex">
@@ -118,7 +142,9 @@ export default async function Design({ locale, data }: { locale: string; data: L
               </>
             }
           >
-            <div className="grid gap-5 sm:grid-cols-2">
+            {/* Four on a phone: six stacked tiles made this one stage longer
+                than the rest of the page, and Stay and Rent above lead to all of them. */}
+            <div className="grid gap-5 sm:grid-cols-2 max-sm:[&>*:nth-child(n+5)]:hidden">
               {featured.map((listing) => (
                 <ListingRow key={listing.id} listing={listing} layout="tile" />
               ))}
@@ -128,17 +154,22 @@ export default async function Design({ locale, data }: { locale: string; data: L
           <Stage n={3} title={c.stages.look} last={false}
             aside={<p className="text-[15px] leading-relaxed text-ink-2">{t("placesBody")}</p>}
           >
-            <ul className="grid border-t border-line sm:grid-cols-2 sm:gap-x-8">
+            {/* Six on a phone, where eleven rows ran to a screen and a half;
+                the link under them leads to the rest. */}
+            <ul className="grid border-t border-line sm:grid-cols-2 sm:gap-x-8 max-sm:[&>*:nth-child(n+7)]:hidden">
               {places.map((p) => {
                 const price = from.get(p.name);
                 return (
                   <li key={p.name} className="border-b border-line">
-                    <Link href={`/neighbourhoods/${p.name.toLowerCase()}`} className="group flex h-16 items-center justify-between gap-4 rounded-ctl">
-                      <span className="flex min-w-0 flex-col">
-                        <span className="truncate text-[16px] font-medium text-ink transition-colors duration-150 group-hover:text-brand">{p.name}</span>
-                        <span className="text-[13px] text-ink-3">{DISTRICTS[p.name] ?? "Kigali"}</span>
+                    <Link href={`/neighbourhoods/${p.name.toLowerCase()}`} className="group flex h-full items-start justify-between gap-4 rounded-ctl py-4">
+                      <span className="flex min-w-0 flex-col gap-1">
+                        <span className="flex items-baseline gap-2">
+                          <span className="truncate text-[16px] font-medium text-ink transition-colors duration-150 group-hover:text-brand">{p.name}</span>
+                          <span className="text-[13px] text-ink-3">{DISTRICTS[p.name] ?? "Kigali"}</span>
+                        </span>
+                        {tPlaces.has(p.name) && <span className="text-[14px] leading-snug text-ink-2">{tPlaces(p.name)}</span>}
                       </span>
-                      <span className="flex flex-none flex-col items-end text-[13px]">
+                      <span className="flex flex-none flex-col items-end pt-0.5 text-[13px]">
                         <span className="tnum text-ink-2">{tSmart("placeCount", { count: p.count })}</span>
                         {price && (
                           <span className="text-ink-3">
@@ -151,6 +182,7 @@ export default async function Design({ locale, data }: { locale: string; data: L
                 );
               })}
             </ul>
+            <TextLink href="/neighbourhoods" label={tFooter("allNeighbourhoods")} className="mt-5" />
           </Stage>
 
           <Stage n={4} title={c.stages.further} last
@@ -210,6 +242,7 @@ async function DayOne({ data, locale }: { data: LandingData; locale: string }) {
   const tExp = await getTranslations("experiences");
   const tVerify = await getTranslations("verification");
   const tSmart = await getTranslations("smart");
+  const tPlaces = await getTranslations("places");
   const { latest, record, cars, days, places, from } = data;
 
   // The newest-inspected car that comes with its driver, so stage one is a
@@ -238,6 +271,10 @@ async function DayOne({ data, locale }: { data: LandingData; locale: string }) {
                 <span className="text-[15px] font-medium text-ink transition-colors duration-150 group-hover:text-brand">{car.name}</span>
                 <span className="text-[13px] text-ink-2">{car.driveModes.includes("selfDrive") ? tCars("withDriver") : tCars("driverIncluded")}</span>
                 <span className="text-[13px] text-ink-3">{tCars("seats", { count: car.seats })}</span>
+                <span className="mt-1 flex items-start gap-1 text-[13px] text-ink-2">
+                  <CheckIcon size={14} className="mt-[3px] flex-none text-trust" />
+                  {tCars("airportPickup")}
+                </span>
               </span>
             </Link>
           </li>
@@ -260,8 +297,8 @@ async function DayOne({ data, locale }: { data: LandingData; locale: string }) {
                 <span className="text-[13px] text-ink-2">{tVerify("inspectedBy", { name: record.inspectorName, date: data.inspectedOn })}</span>
                 <span className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[13px] text-ink-2">
                   {data.checks.map((k) => (
-                    <span key={k.key} className="flex items-center gap-1">
-                      <CheckIcon size={14} className="flex-none text-trust" />
+                    <span key={k.key} className="flex items-start gap-1">
+                      <CheckIcon size={14} className="mt-[3px] flex-none text-trust" />
                       {tVerify(`steps.${k.key}`)}
                     </span>
                   ))}
@@ -276,14 +313,18 @@ async function DayOne({ data, locale }: { data: LandingData; locale: string }) {
             <Connector />
             <StopHead n={3} label={c.stages.look} />
             <Link href={`/neighbourhoods/${place.name.toLowerCase()}`} className={cn(body, "group")}>
-              <span className={cn(thumb, "grid place-items-center bg-surface-2 lg:flex lg:flex-col lg:items-start lg:justify-end lg:p-3")}>
-                <PinIcon size={18} className="text-ink-3 lg:hidden" />
-                <span className="hidden truncate font-display text-[22px] font-medium leading-tight text-ink lg:block">{place.name}</span>
-                <span className="hidden text-[12px] text-ink-3 lg:block">{DISTRICTS[place.name] ?? "Kigali"}</span>
+              {/* The name set in the display face stands in for a photograph on a
+                  desktop. A phone has no room for it at 80px, and a pin in a
+                  grey square read as an image that failed to load, so there
+                  the words start at the label instead. */}
+              <span className={cn(thumb, "hidden bg-surface-2 lg:flex lg:flex-col lg:items-start lg:justify-end lg:p-3")}>
+                <span className="max-w-full truncate font-display text-[22px] font-medium leading-tight text-ink transition-colors duration-150 group-hover:text-brand">{place.name}</span>
+                <span className="text-[12px] text-ink-3">{DISTRICTS[place.name] ?? "Kigali"}</span>
               </span>
               <span className="flex min-w-0 flex-col gap-1 text-[13px]">
-                <span className="text-[15px] font-medium text-ink lg:hidden">{place.name}</span>
-                <span className="tnum text-ink-2 lg:text-[15px] lg:font-medium lg:text-ink lg:transition-colors lg:duration-150 lg:group-hover:text-brand">{tSmart("placeCount", { count: place.count })}</span>
+                <span className="text-[15px] font-medium text-ink transition-colors duration-150 group-hover:text-brand lg:hidden">{place.name}</span>
+                {tPlaces.has(place.name) && <span className="leading-snug text-ink-2">{tPlaces(place.name)}</span>}
+                <span className="tnum text-ink-3">{tSmart("placeCount", { count: place.count })}</span>
                 {price && (
                   <span className="text-ink-3">
                     {t("fromPrice")} <MoneyText amount={price} rounded className="font-medium text-ink-2" />
@@ -338,23 +379,42 @@ function Connector() {
 function Stage({ n, title, aside, children, last }: { n: number; title: string; aside: React.ReactNode; children: React.ReactNode; last: boolean }) {
   return (
     <li className={cn("relative grid grid-cols-[32px_minmax(0,1fr)] gap-x-4 lg:grid-cols-[32px_280px_minmax(0,1fr)] lg:gap-x-10", !last && "pb-16 lg:pb-24")}>
-      {!last && <span aria-hidden className="absolute bottom-0 left-4 top-7 w-px bg-line" />}
-      <Marker n={n} className="mt-1.5 bg-canvas" />
+      {/* On a phone the line runs beside the stage's words and stops where
+          its things begin, which take the full width: squeezed beside the
+          line they were 290px wide and every card wrapped. */}
+      {!last && <span aria-hidden className="absolute bottom-0 left-4 top-7 hidden w-px bg-line lg:block" />}
+      {/* The marker's cell is as tall as the stage's words: it carries the
+          phone's short line and lets the marker stick with its title on a
+          desktop, so the number stays beside the stage it names. */}
+      <div className="relative">
+        <span aria-hidden className="absolute bottom-0 left-4 top-7 w-px bg-line lg:hidden" />
+        <Marker n={n} className="mt-1.5 bg-canvas lg:sticky lg:top-[102px]" />
+      </div>
       <div className="flex flex-col gap-5 lg:sticky lg:top-24 lg:self-start">
         <h3 className="font-display text-[32px] font-medium leading-tight text-ink">{title}</h3>
         {aside}
       </div>
-      <div className="col-start-2 mt-8 lg:col-start-3 lg:mt-0">{children}</div>
+      <div className="col-span-2 mt-8 lg:col-span-1 lg:col-start-3 lg:mt-0">{children}</div>
     </li>
   );
 }
 
-function Pledge({ title, body }: { title: string; body: string }) {
+function Pledge({ title, body, link }: { title: string; body: string; link?: { href: string; label: string } }) {
   return (
     <div className="flex flex-col gap-1 border-t border-line pt-4">
       <h4 className="text-[15px] font-medium text-ink">{title}</h4>
       <p className="text-[14px] leading-relaxed text-ink-2">{body}</p>
+      {link && <TextLink href={link.href} label={link.label} className="mt-1" />}
     </div>
+  );
+}
+
+function TextLink({ href, label, className }: { href: string; label: string; className?: string }) {
+  return (
+    <Link href={href} className={cn("group inline-flex items-center gap-1 self-start rounded-ctl text-[14px] font-medium text-brand transition-colors duration-150 hover:text-ink", className)}>
+      {label}
+      <ArrowRightIcon size={14} className="transition-transform duration-150 group-hover:translate-x-0.5" />
+    </Link>
   );
 }
 

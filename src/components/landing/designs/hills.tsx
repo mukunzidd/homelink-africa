@@ -5,6 +5,7 @@ import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { areaCentre } from "@/lib/places/area";
 import { DISTRICTS } from "@/lib/domain/neighbourhoods";
+import { LANDMARK_POINTS, distanceKm } from "@/lib/domain/landmarks";
 import { initials } from "@/components/results/inspected-by";
 import { HeroSearch } from "@/components/search/hero-search";
 import { MoneyText } from "@/components/ui/money-text";
@@ -32,16 +33,22 @@ export default async function Design({ locale, data }: { locale: string; data: L
   const tTrust = await getTranslations("trust");
   const tNav = await getTranslations("nav");
   const tSmart = await getTranslations("smart");
+  const tPlaces = await getTranslations("places");
 
   // North to south, the way the map reads.
   const byLatitude = [...data.places].sort((a, b) => areaCentre(b.name).lat - areaCentre(a.name).lat);
 
   return (
     <div className="flex flex-col">
-      {/* The first screen: words and the search on the left, the city on the right */}
+      {/*
+        The first screen: words and the search on the left, the city on the
+        right, and the five lanes along the bottom so renting and buying are
+        one look away. On a phone the lanes come straight after the search,
+        before the map, for the same reason.
+      */}
       <section className="relative isolate z-10">
-        <div className="mx-auto grid max-w-[1360px] gap-8 px-6 pb-8 pt-10 lg:min-h-[calc(100svh-64px)] lg:grid-cols-[minmax(0,9fr)_minmax(0,14fr)] lg:items-center lg:gap-8 lg:py-8">
-          <div className="flex flex-col items-start gap-6">
+        <div className="mx-auto grid max-w-[1280px] gap-8 px-6 pb-8 pt-10 lg:min-h-[calc(100svh-64px)] lg:grid-cols-[minmax(0,9fr)_minmax(0,14fr)] lg:grid-rows-[minmax(0,1fr)_auto] lg:gap-x-8 lg:gap-y-4 lg:pb-6 lg:pt-8">
+          <div className="flex flex-col items-start gap-6 lg:self-center">
             <p className="text-[15px] text-ink-3">{c.eyebrow}</p>
             <h1 className="max-w-[14ch] text-balance font-display text-[40px] font-medium leading-[1.05] tracking-tight text-ink sm:text-[56px]">
               {t("heroTitle")}
@@ -50,66 +57,83 @@ export default async function Design({ locale, data }: { locale: string; data: L
             <div className="mt-2 w-full max-w-[520px]">
               <HeroSearch />
             </div>
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-3">
-              <span className="tnum">{tTrust("listingsVerified", { count: data.total })}</span>
-              <span aria-hidden>·</span>
-              <span>{tTrust("escrowProtected")}</span>
-            </p>
+            <div className="flex flex-col gap-1 text-[13px] leading-5 text-ink-3">
+              <p className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
+                <span className="tnum">{tTrust("listingsVerified", { count: data.total })}</span>
+                <span aria-hidden className="hidden sm:inline">·</span>
+                <span>{tTrust("escrowProtected")}</span>
+              </p>
+              {data.latest && data.record && (
+                <Link href={`/stays/${data.latest.slug}`} className="rounded-ctl text-ink-2 underline decoration-line underline-offset-4 transition-colors duration-150 hover:text-brand hover:decoration-brand">
+                  {c.newest(data.latest.neighbourhood, data.record.inspectorName, data.inspectedOn)}
+                </Link>
+              )}
+            </div>
           </div>
-          <div className="-mx-6 sm:mx-0">
-            <HillMap places={data.places} from={data.from} label={c.mapLabel} north={c.north} km={c.km} note={c.mapNote} />
+
+          <nav aria-labelledby="hills-lanes" className="lg:col-span-2 lg:row-start-2">
+            <h2 id="hills-lanes" className="sr-only">{t("lanesTitle")}</h2>
+            <ul className="grid grid-cols-2 gap-x-6 border-t border-line lg:grid-cols-5 lg:gap-x-0">
+              {data.lanes.map((lane, i) => (
+                <li key={lane.key} className="border-b border-line last:col-span-2 lg:border-b-0 lg:border-l lg:last:col-span-1 lg:first:border-l-0">
+                  <Link href={lane.href} className={`group flex h-full flex-col gap-1 rounded-ctl py-3 lg:py-4 ${i === 0 ? "lg:pr-6" : "lg:px-6"}`}>
+                    <span className="flex items-center gap-2 font-display text-[18px] font-medium leading-6 text-ink transition-colors duration-150 group-hover:text-brand lg:text-[20px]">
+                      {tNav(lane.label)}
+                      <ArrowRightIcon size={16} className="text-ink-3 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-brand" />
+                    </span>
+                    <span className="text-[13px] leading-5 text-ink-2">{t(`lane.${lane.key}`, { count: lane.count })}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="-mx-6 sm:mx-0 lg:col-start-2 lg:row-start-1 lg:self-center">
+            <HillMap
+              places={data.places}
+              from={data.from}
+              label={c.mapLabel}
+              north={c.north}
+              km={c.km}
+              legendCount={c.legendCount}
+              legend={c.legend}
+              terrain={c.terrain}
+            />
           </div>
         </div>
       </section>
 
       <Contour seed={1} />
 
-      {/* The five lanes, in one row */}
-      <section aria-labelledby="hills-lanes" className="mx-auto w-full max-w-[1280px] px-6 py-12">
-        <h2 id="hills-lanes" className="sr-only">{t("lanesTitle")}</h2>
-        <ul className="grid border-t border-line sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-5 lg:gap-x-0 lg:border-t-0">
-          {data.lanes.map((lane, i) => (
-            <li key={lane.key} className="border-b border-line lg:border-b-0 lg:border-l lg:first:border-l-0">
-              <Link href={lane.href} className={`group flex items-center justify-between gap-4 rounded-ctl py-4 lg:flex-col lg:items-start lg:justify-start lg:gap-1 lg:py-2 ${i === 0 ? "lg:pr-6" : "lg:px-6"}`}>
-                <span className="flex items-center gap-2 font-display text-[20px] font-medium text-ink transition-colors duration-150 group-hover:text-brand">
-                  {tNav(lane.label)}
-                  <ArrowRightIcon size={16} className="hidden text-ink-3 transition-transform duration-150 group-hover:translate-x-0.5 lg:block" />
-                </span>
-                <span className="text-right text-[13px] leading-5 text-ink-2 lg:text-left">{t(`lane.${lane.key}`, { count: lane.count })}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <Contour seed={2} />
-
       {/* Every neighbourhood with the homes in it, north to south */}
       <section aria-labelledby="hills-places" className="mx-auto flex w-full max-w-[1280px] flex-col gap-8 px-6 py-16">
         <div className="flex flex-col gap-2">
           <h2 id="hills-places" className="font-display text-[28px] font-medium leading-tight text-ink sm:text-[32px]">{t("placesTitle")}</h2>
           <p className="max-w-[60ch] text-[15px] text-ink-2">{t("placesBody")}</p>
+          <p className="max-w-[60ch] text-[13px] text-ink-3">{c.distanceNote}</p>
         </div>
         <div className="grid gap-x-12 lg:grid-cols-2">
           {byLatitude.map((p) => {
             const homes = data.stays.filter((s) => s.neighbourhood === p.name);
-            const price = data.from.get(p.name);
+            const rent = data.leases.filter((l) => l.neighbourhood === p.name).length;
+            const sale = data.sales.filter((h) => h.neighbourhood === p.name).length;
+            const centre = areaCentre(p.name);
+            const stock = [tSmart("placeCount", { count: p.count }), rent > 0 && c.toRent(rent), sale > 0 && c.forSale(sale)].filter(Boolean);
             return (
               <article key={p.name} className="flex flex-col gap-4 border-t border-line py-6">
-                <header className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                  <Link href={`/neighbourhoods/${p.name.toLowerCase()}`} className="group flex items-baseline gap-2 rounded-ctl">
-                    <h3 className="font-display text-[24px] font-medium leading-tight text-ink transition-colors duration-150 group-hover:text-brand">{p.name}</h3>
-                    <ArrowRightIcon size={16} className="self-center text-ink-3 transition-transform duration-150 group-hover:translate-x-0.5" />
-                  </Link>
-                  <p className="tnum text-[13px] text-ink-3">
-                    {DISTRICTS[p.name] ?? "Kigali"} · {tSmart("placeCount", { count: p.count })}
-                    {price && (
-                      <>
-                        {" · "}
-                        {t("fromPrice").toLowerCase()} <MoneyText amount={price} rounded className="text-ink-2" />
-                      </>
-                    )}
+                <header className="flex flex-col gap-2">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <Link href={`/neighbourhoods/${p.name.toLowerCase()}`} className="group flex items-baseline gap-2 rounded-ctl">
+                      <h3 className="font-display text-[24px] font-medium leading-tight text-ink transition-colors duration-150 group-hover:text-brand">{p.name}</h3>
+                      <ArrowRightIcon size={16} className="self-center text-ink-3 transition-transform duration-150 group-hover:translate-x-0.5" />
+                    </Link>
+                    <p className="text-[13px] text-ink-3">{DISTRICTS[p.name] ?? "Kigali"}</p>
+                  </div>
+                  {tPlaces.has(p.name) && <p className="max-w-[56ch] text-[15px] leading-relaxed text-ink-2">{tPlaces(p.name)}</p>}
+                  <p className="tnum text-[13px] leading-5 text-ink-3">
+                    {c.toAirport(km(centre, LANDMARK_POINTS.airport))} · {c.toCentre(km(centre, LANDMARK_POINTS.cityCentre))}
                   </p>
+                  <p className="tnum text-[13px] leading-5 text-ink-3 first-letter:uppercase">{stock.join(" · ")}</p>
                 </header>
                 <ul className="flex flex-col gap-3">
                   {homes.map((h) => (
@@ -124,7 +148,7 @@ export default async function Design({ locale, data }: { locale: string; data: L
         </div>
       </section>
 
-      <Contour seed={3} />
+      <Contour seed={2} />
 
       {/* The three promises, with the newest inspection as the evidence */}
       <section aria-labelledby="hills-how" className="mx-auto grid w-full max-w-[1280px] gap-10 px-6 py-16 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16">
@@ -140,6 +164,18 @@ export default async function Design({ locale, data }: { locale: string; data: L
                 <div className="flex flex-col gap-2">
                   <h3 className="font-display text-[20px] font-medium leading-snug text-ink">{t(`how.${step}Title`)}</h3>
                   <p className="max-w-[60ch] text-[15px] leading-relaxed text-ink-2">{t(`how.${step}Body`)}</p>
+                  {step === "people" && (
+                    <p className="flex flex-wrap gap-x-6 gap-y-2 pt-1 text-[15px]">
+                      <Link href="/contact" className="rounded-ctl font-medium text-brand transition-colors duration-150 hover:text-brand-deep">
+                        {c.contact}
+                        <ArrowRightIcon size={14} className="ml-1 inline-block align-[-2px]" />
+                      </Link>
+                      <Link href="/help/extras" className="rounded-ctl font-medium text-brand transition-colors duration-150 hover:text-brand-deep">
+                        {c.pickup}
+                        <ArrowRightIcon size={14} className="ml-1 inline-block align-[-2px]" />
+                      </Link>
+                    </p>
+                  )}
                 </div>
               </li>
             ))}
@@ -148,10 +184,10 @@ export default async function Design({ locale, data }: { locale: string; data: L
         <Record data={data} title={c.latestTitle} />
       </section>
 
-      <Contour seed={4} />
+      <Contour seed={3} />
 
       {/* Days out, placed from the city: which way and how far by road */}
-      <section aria-labelledby="hills-days" className="mx-auto flex w-full max-w-[1280px] flex-col gap-8 px-6 pb-24 pt-16">
+      <section aria-labelledby="hills-days" className="mx-auto flex w-full max-w-[1280px] flex-col gap-8 px-6 pb-4 pt-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="flex flex-col gap-2">
             <h2 id="hills-days" className="font-display text-[28px] font-medium leading-tight text-ink sm:text-[32px]">{c.beyondTitle}</h2>
@@ -171,6 +207,9 @@ export default async function Design({ locale, data }: { locale: string; data: L
     </div>
   );
 }
+
+/** Whole kilometres in a straight line, never less than one. */
+const km = (a: { lat: number; lng: number }, b: { lat: number; lng: number }) => Math.max(1, Math.round(distanceKm(a, b)));
 
 /** Thin contour lines across the page, the one divider this design uses. */
 function Contour({ seed }: { seed: number }) {

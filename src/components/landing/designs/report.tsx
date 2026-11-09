@@ -35,6 +35,9 @@ export default async function Design({ locale, data }: { locale: string; data: L
   const tNav = await getTranslations("nav");
   const tExp = await getTranslations("experiences");
   const tSmart = await getTranslations("smart");
+  const tPlaces = await getTranslations("places");
+  const tList = await getTranslations("list");
+  const tFooter = await getTranslations("footer");
   const c = pick(copy, locale);
   const intl = INTL_LOCALES[locale as Locale] ?? "en-GB";
 
@@ -45,15 +48,22 @@ export default async function Design({ locale, data }: { locale: string; data: L
   const year = today().slice(0, 4);
   const shortDate = (iso: string) =>
     formatDate(iso, intl, iso.slice(0, 4) === year ? { day: "numeric", month: "short" } : { day: "numeric", month: "short", year: "numeric" });
-  const stampDate = record ? formatDate(record.inspectedAt, intl, { day: "2-digit", month: "2-digit", year: "2-digit" }) : undefined;
+  // Day and month in words: "10/19/26" reads as a different day in every
+  // country this page is written for.
+  const stampDate = record ? shortDate(record.inspectedAt) : undefined;
+  // The newest inspection is already the sheet in the first screen, so the
+  // register starts with the next one instead of repeating it.
+  const register = featured.filter((l) => l.id !== latest?.id).slice(0, 5);
 
   return (
-    <div className="bg-[color-mix(in_oklab,var(--surface-2)_40%,var(--canvas))] text-ink">
+    // -mb-24 takes up the footer's top margin, which would otherwise show as
+    // a band of plain canvas between the paper and the footer.
+    <div className="-mb-24 bg-[color-mix(in_oklab,var(--surface-2)_40%,var(--canvas))] text-ink">
       <div className="mx-auto flex max-w-[1180px] flex-col px-4 sm:px-6">
         {/* Masthead: what this document is, and how much is in it. */}
-        <div className="flex items-center justify-between gap-4 border-b border-ink py-3 font-mono text-[12px] text-ink-2">
-          <span>{c.masthead}</span>
-          <span className="tnum">{tTrust("listingsVerified", { count: total })}</span>
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-ink py-3 font-mono text-[12px] text-ink-2">
+          <span className="whitespace-nowrap">{c.masthead}</span>
+          <span className="tnum whitespace-nowrap">{tTrust("listingsVerified", { count: total })}</span>
         </div>
 
         {/* First screen. z-10 so the search's answer paints over what follows. */}
@@ -64,21 +74,34 @@ export default async function Design({ locale, data }: { locale: string; data: L
             <div className="mt-2 w-full max-w-[540px]">
               <HeroSearch />
             </div>
-            <p className="flex flex-wrap gap-x-3 gap-y-1 text-[13px] text-ink-3">
+            {/* The contents, in one line: renting and buying are a tap from the first screen. */}
+            <nav aria-label={c.browse} className="flex w-full max-w-[540px] flex-col gap-2">
+              <span className="font-mono text-[12px] text-ink-3">{c.browse}</span>
+              <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                {lanes.map((lane) => (
+                  <li key={lane.key}>
+                    <Link href={lane.href} className="group inline-flex items-baseline gap-2 rounded-ctl text-[16px] font-medium text-ink">
+                      <span className="underline decoration-line underline-offset-4 transition-colors duration-150 group-hover:text-brand group-hover:decoration-brand">{tNav(lane.label)}</span>
+                      <span className="tnum font-mono text-[12px] text-ink-3">{lane.count}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <p className="flex w-full max-w-[540px] flex-col items-start gap-x-3 gap-y-1 border-t border-line pt-4 text-[13px] text-ink-3 sm:flex-row sm:flex-wrap sm:items-center">
               <span>{tTrust("escrowProtected")}</span>
               <span aria-hidden className="hidden sm:inline">·</span>
               <span>{tTrust("noSurprises")}</span>
+              <span aria-hidden className="hidden sm:inline">·</span>
+              <Link href="/contact" className="rounded-ctl text-ink-2 underline decoration-line underline-offset-4 hover:text-brand hover:decoration-brand">
+                {c.talk}
+              </Link>
             </p>
           </div>
 
           {latest && record && (
             <article aria-label={c.latest} className="flex flex-col rounded-ctl border border-line bg-surface p-5 shadow-[var(--shadow-card)] sm:p-6">
-              <div className="flex items-baseline justify-between gap-4 font-mono text-[12px] text-ink-3">
-                <span>{c.latest}</span>
-                <span className="tnum">
-                  {c.record} {record.id.replace(/^ver_/, "")}
-                </span>
-              </div>
+              <p className="font-mono text-[12px] text-ink-3">{c.latest}</p>
               <div aria-hidden className="mt-3 h-[2px] bg-ink" />
 
               <Photo src={latest.images?.[0]} seed={latest.imageSeed} alt={latest.name} priority sizes="(max-width: 1024px) 100vw, 480px" className="mt-5 aspect-[16/9] rounded-inner" />
@@ -124,7 +147,10 @@ export default async function Design({ locale, data }: { locale: string; data: L
                 <li key={lane.key} className="border-b border-line">
                   <Link href={lane.href} className="group grid grid-cols-[minmax(0,1fr)_16px] items-center gap-x-4 gap-y-1 rounded-ctl py-4 sm:flex sm:items-baseline sm:gap-6">
                     <span className="font-display text-[22px] font-medium leading-tight text-ink transition-colors duration-150 group-hover:text-brand sm:w-44 sm:flex-none sm:text-[24px]">{tNav(lane.label)}</span>
-                    <span className="col-start-1 text-[15px] text-ink-2">{t(`lane.${lane.key}`, { count: lane.count })}</span>
+                    <span className="col-start-1 text-[15px] text-ink-2">
+                      {t(`lane.${lane.key}`, { count: lane.count })}
+                      {lane.key === "cars" && <span className="text-ink-3"> · {tList("carIncludes.handover")}</span>}
+                    </span>
                     <Leader className="hidden sm:block" />
                     <ArrowRightIcon size={16} className="col-start-2 row-span-2 row-start-1 text-ink-3 transition-[color,transform] duration-150 group-hover:translate-x-0.5 group-hover:text-brand sm:self-center" />
                   </Link>
@@ -146,7 +172,7 @@ export default async function Design({ locale, data }: { locale: string; data: L
                 <span className="text-right">{c.colNight}</span>
               </div>
               <ol className="flex flex-col border-t border-ink lg:border-t-0">
-                {featured.map((l, i) => (
+                {register.map((l, i) => (
                   <li key={l.id} className="border-b border-line">
                     <Link
                       href={`/stays/${l.slug}`}
@@ -167,7 +193,7 @@ export default async function Design({ locale, data }: { locale: string; data: L
                       </span>
                       <span className="tnum hidden font-mono text-[13px] text-ink-2 lg:block">{shortDate(l.verification.inspectedAt)}</span>
                       <span className="flex items-baseline gap-1 lg:justify-end">
-                        <MoneyText amount={l.nightlyRate} className="text-[15px] font-semibold text-ink" />
+                        <MoneyText amount={l.nightlyRate} rounded className="text-[15px] font-semibold text-ink" />
                         <span className="text-[13px] text-ink-3">{tSmart("perNightShort")}</span>
                       </span>
                     </Link>
@@ -186,6 +212,12 @@ export default async function Design({ locale, data }: { locale: string; data: L
                   <span className="tnum font-mono text-[13px] text-ink-3">3.{i + 1}</span>
                   <h3 className="font-display text-[22px] font-medium leading-snug text-ink">{t(`how.${step}Title`)}</h3>
                   <p className="text-[15px] leading-relaxed text-ink-2">{t(`how.${step}Body`)}</p>
+                  {step === "people" && (
+                    <Link href="/contact" className="group inline-flex items-center gap-1 self-start rounded-ctl text-[14px] font-medium text-brand hover:text-brand-deep">
+                      {tFooter("contact")}
+                      <ArrowRightIcon size={14} className="transition-transform duration-150 group-hover:translate-x-0.5" />
+                    </Link>
+                  )}
                 </li>
               ))}
             </ol>
@@ -199,19 +231,19 @@ export default async function Design({ locale, data }: { locale: string; data: L
                 const price = from.get(p.name);
                 return (
                   <li key={p.name} className="border-b border-line">
-                    <Link href={`/neighbourhoods/${p.name.toLowerCase()}`} className="group flex items-end gap-3 rounded-ctl py-3">
-                      <span className="flex min-w-0 flex-col">
+                    <Link href={`/neighbourhoods/${p.name.toLowerCase()}`} className="group flex flex-col gap-1 rounded-ctl py-4">
+                      <span className="flex items-baseline gap-3">
                         <span className="truncate text-[16px] font-medium text-ink transition-colors duration-150 group-hover:text-brand">{p.name}</span>
-                        <span className="text-[13px] text-ink-3">{DISTRICTS[p.name] ?? "Kigali"}</span>
-                      </span>
-                      <Leader />
-                      <span className="flex flex-none flex-col items-end text-[13px]">
-                        <span className="tnum font-mono text-[12px] text-ink-2">{tSmart("placeCount", { count: p.count })}</span>
+                        <Leader />
                         {price && (
-                          <span className="text-ink-3">
+                          <span className="flex-none text-[13px] text-ink-3">
                             {t("fromPrice")} <MoneyText amount={price} rounded className="font-medium text-ink" />
                           </span>
                         )}
+                      </span>
+                      {tPlaces.has(p.name) && <span className="text-pretty text-[14px] leading-snug text-ink-2">{tPlaces(p.name)}</span>}
+                      <span className="tnum font-mono text-[12px] text-ink-3">
+                        {DISTRICTS[p.name] ?? "Kigali"} · {tSmart("placeCount", { count: p.count })}
                       </span>
                     </Link>
                   </li>

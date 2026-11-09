@@ -402,6 +402,12 @@ the title and every other cell labelled with its column name
   web`). After hours of sweeps the dev server restarts itself at its memory
   threshold mid-run, and requests in flight fail with empty responses,
   broken chunks or 500s that are not real findings.
+- **A route that keeps returning 500 with `SyntaxError: Unexpected
+  non-whitespace character after JSON`** means the dev server's
+  `.next/dev/prerender-manifest.json` was written twice over itself (the
+  race in item 2, made permanent). Delete it inside the container
+  (`docker compose exec web rm .next/dev/prerender-manifest.json`) and
+  restart web. Seen 2026-11-09 when a new preview route was added.
 - **Do not edit files while a sweep runs.** Turbopack reloads modules under
   load and a page can fail with "the module factory is not available".
 - **Message edits need a restart** (`docker compose restart web`) before the
