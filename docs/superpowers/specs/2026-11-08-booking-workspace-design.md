@@ -281,6 +281,24 @@ Traps a later session would otherwise rediscover:
   closed the finding; measuring `scrollWidth` on the real element gave 204.
 - **`make e2e` empties `.e2e-results/`**, so the sweep writes to `.sweep/`.
 
+Later the same day, after the copy review and the console pass:
+
+- `e2e/console.e2e.ts` opens every page for each role, opens each menu,
+  listbox, calendar, disclosure and tab on it, and does the everyday actions
+  (search, save, message, theme, change dates, switch language), failing on
+  any console error, uncaught exception or 5xx. It was checked against a
+  planted `console.error` and finds 4 to 8 triggers per page. Clean.
+- `ALL_LOCALES=1 make sweep` opens every page in fr, rw and sw on a phone
+  (682 visits). It found Kinyarwanda relative times and Swahili calendar
+  headers coming from runtime ICU data the browser lacks, and one more
+  untemplated grid; fixed. See also `docs/translations/`.
+- **Unexplained, dev only:** twice today `/api/notifications/unread`
+  returned 500 for a burst of four concurrent polls ("Unexpected end of
+  JSON input", every stack frame inside Next.js), out of about 2,600 polls
+  in a sweep; the next poll succeeded. It did not reproduce in 1,000
+  concurrent requests, with or without files being written into the
+  project. If it shows up against a production build, start there.
+
 Gaps seen during the sweep and left alone (none blocks the preview):
 
 - The finance lane table shows RWF 0 for cars and days out in most months:

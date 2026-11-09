@@ -8,6 +8,7 @@
  *   make sweep                        # against http://localhost:3100
  *   BASE=http://localhost:3000 node scripts/sweep.mjs
  *   ONLY=manage node scripts/sweep.mjs   # paths containing "manage"
+ *   ALL_LOCALES=1 node scripts/sweep.mjs # every page in fr, rw and sw too
  *
  * Writes a first-screen capture of every visit and report.json to .sweep/
  * (kept apart from .e2e-results, which Playwright empties on every run).
@@ -59,7 +60,11 @@ function plan(dynamic, workspace) {
   for (const p of [...SITE, ...dynamic, ...BOOKING(day)]) add("guest", "en", p, ["phone", "tablet", "desktop"], ["light"]);
   for (const p of [...SITE, ...dynamic]) add("guest", "en", p, ["phone", "desktop"], ["dark"]);
   for (const p of VISITOR) add("visitor", "en", p, ["phone", "desktop"], ["light", "dark"]);
-  for (const l of LOCALES.slice(1)) for (const p of BUSIEST) add("guest", l, p, ["phone"], ["light"]);
+  // ALL_LOCALES=1 sweeps every guest and workspace page in fr, rw and sw at
+  // phone width, for a translation pass: a longer word clips or wraps there first.
+  const everyLocale = process.env.ALL_LOCALES === "1";
+  for (const l of LOCALES.slice(1)) for (const p of everyLocale ? [...SITE, ...dynamic] : BUSIEST) add("guest", l, p, ["phone"], ["light"]);
+  if (everyLocale) for (const l of LOCALES.slice(1)) for (const [role, paths] of Object.entries(workspace)) for (const p of paths) add(role, l, p, ["phone"], ["light"]);
   for (const [role, paths] of Object.entries(workspace)) {
     for (const p of paths) {
       add(role, "en", p, ["phone", "desktop"], ["light"]);
