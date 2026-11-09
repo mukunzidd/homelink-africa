@@ -1,3 +1,4 @@
+import { Reviews } from "@/components/listing/reviews";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -158,6 +159,8 @@ export default async function VehicleDetailPage({
               kind="car"
             />
           </div>
+
+          <Reviews supplyId={vehicle.id} intl={intlLocale} />
 
           {/* The unglamorous facts, gathered before someone pays rather than
               discovered at the counter. A hire desk is where surprise fees

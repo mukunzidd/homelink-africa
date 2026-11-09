@@ -1000,7 +1000,14 @@
     "buyLink": "Nunua nyumba",
     "allNeighbourhoods": "Mitaa yote",
     "yoursSupply": "Matangazo yako",
-    "yoursOps": "Kazi yako"
+    "yoursOps": "Kazi yako",
+    "helpTitle": "Msaada",
+    "help": "Kituo cha msaada",
+    "contact": "Wasiliana nasi",
+    "cancellation": "Sera ya kughairi",
+    "terms": "Masharti",
+    "privacy": "Faragha",
+    "languages": "Lugha"
   },
   "homes": {
     "modeLabel": "Kwa muda gani",
@@ -3322,5 +3329,253 @@
     "staffBody": "Zana ya onyesho, si kuingia: chagua jukumu la kuona eneo la kazi kwalo. Akaunti halisi za wafanyakazi zinakuja na backend.",
     "google": "Endelea na Google",
     "apple": "Endelea na Apple"
+  },
+  "help": {
+    "title": "Msaada",
+    "intro": "Majibu mafupi kwa tunachoulizwa zaidi. Kama lako halipo, timu inajibu ndani ya siku moja ya kazi.",
+    "search": "Tafuta msaada",
+    "searchPlaceholder": "Tafuta, kwa mfano \"ghairi\" au \"amana\"",
+    "noHits": "Hakuna kinacholingana.",
+    "askUs": "Uliza timu",
+    "stillStuck": "Bado umekwama?",
+    "related": "Katika sehemu hii pia",
+    "categories": {
+      "booking": "Kuhifadhi na kulipa",
+      "changing": "Kubadilisha na kughairi",
+      "stay": "Kuingia na kukaa",
+      "renting": "Kupangisha nyumba",
+      "cars": "Magari na madereva",
+      "days": "Matembezi"
+    },
+    "articles": {
+      "how-to-book": {
+        "title": "Jinsi kuhifadhi kunavyofanya kazi",
+        "body": "Chagua tarehe, angalia bei, kisha pitia hatua nne fupi: maelezo yako, ziada, kanuni, kisha malipo.\n\nTunashikilia tarehe kwa dakika {holdMinutes} unapolipa. Malipo yakipita, unapata namba inayoanza na HL- na uthibitisho kwa barua pepe na kwenye akaunti yako."
+      },
+      "ways-to-pay": {
+        "title": "Njia za kulipa",
+        "body": "Unaweza kulipa kwa kadi (Visa au Mastercard) au kwa Mobile Money (MTN au Airtel). Bei zimewekwa kwa faranga za Rwanda; sarafu nyingine zinaonyeshwa kwa kiwango cha leo.\n\nKwa baadhi ya makazi marefu unaweza kulipa sehemu sasa na iliyobaki karibu na kufika."
+      },
+      "fees": {
+        "title": "Bei inajumuisha nini",
+        "body": "Bei unayoona wakati wa kulipa ndiyo unayolipa. Inajumuisha usiku, ada ya usafi ya RWF {cleaning} kwa makazi, na ada ya huduma ya {feePercent}% ya usiku.\n\nHakuna kinachoongezwa mwishoni."
+      },
+      "escrow": {
+        "title": "Kwa nini malipo mengine yanashikiliwa",
+        "body": "Kwa makazi ya RWF {escrowFrom} au zaidi, tunashikilia malipo yako hadi uingie. Nyumba hulipwa tu ukiwa ndani na iko kama ilivyoelezwa.\n\nKama sivyo, tuambie siku ya kwanza tutarekebisha au kukurudishia pesa."
+      },
+      "cancel-stay": {
+        "title": "Kughairi makazi",
+        "body": "Ghairi hadi siku {stayDays} kabla ya kufika na unarejeshewa kila kitu.\n\nBaada ya hapo hadi siku iliyotangulia, unarejeshewa nusu ya bei ya usiku, pamoja na ada ya usafi na ziada. Siku ya kufika hakuna marejesho."
+      },
+      "cancel-car-day": {
+        "title": "Kughairi gari au matembezi",
+        "body": "Gari linaweza kughairiwa kwa marejesho kamili hadi siku {carDays} kabla ya kulichukua. Baada ya hapo, siku moja ya kukodisha inabakizwa.\n\nMatembezi yanaweza kughairiwa kwa marejesho kamili hadi siku {dayDays} kabla. Vibali vya hifadhi vilivyonunuliwa kwa jina lako haviwezi kuuzwa tena, kwa hivyo sehemu yake inabakizwa."
+      },
+      "change-dates": {
+        "title": "Kubadilisha tarehe",
+        "body": "Fungua uhifadhi kwenye akaunti yako uchague tarehe mpya. Unaona bei mpya na tofauti kabla ya kuthibitisha.\n\nTarehe mpya zikigharimu kidogo, tofauti inarudi kwako; zikigharimu zaidi, unalipa tofauti. Tarehe zinaweza kusogezwa kabla uhifadhi haujaanza tu."
+      },
+      "refund-timing": {
+        "title": "Marejesho yanafika lini",
+        "body": "Tunatuma marejesho siku hiyo hiyo. Mobile Money kwa kawaida inaonekana ndani ya dakika chache; kadi huchukua siku 5 hadi 10 za kazi, kutegemea benki yako."
+      },
+      "check-in": {
+        "title": "Kuingia",
+        "body": "Kuingia ni kuanzia saa {checkIn}. Anwani, namba ya mlango na wi-fi vinafika saa 48 kabla, kwenye uhifadhi wako na kwa ujumbe, kamwe mapema zaidi.\n\nUnafika kwa kuchelewa? Andika saa yako kwenye uhifadhi na mtu atakuwepo, au namba ya kisanduku cha funguo itafanya kazi wakati wowote."
+      },
+      "something-wrong": {
+        "title": "Kuna tatizo ukiwa nyumbani",
+        "body": "Liripoti kutoka kwenye uhifadhi wako: chagua ni nini na kina dharura kiasi gani. Dharura (hakuna umeme, hakuna maji, kufuli) inafika kwa timu mara moja, mchana na usiku.\n\nUnaweza pia kupiga namba ya dharura iliyo kwenye ukurasa wa mawasiliano."
+      },
+      "extras": {
+        "title": "Kuchukuliwa uwanja wa ndege na ziada nyingine",
+        "body": "Ongeza ziada wakati wa kuhifadhi, au baadaye kutoka kwenye uhifadhi wako. Timu inapanga kila moja na kuithibitisha kwenye ujumbe.\n\nZiada zinarejeshwa kikamilifu ukighairi kabla ya kufika."
+      },
+      "verified": {
+        "title": "\"Imethibitishwa\" inamaanisha nini",
+        "body": "Mtu wa timu yetu amesimama kwenye kila nyumba, ameendesha kila gari na amefanya kila matembezi tunayotoa, kwa orodha ya ukaguzi, na ameyapiga picha mwenyewe.\n\nUkurasa unaonyesha nani alikagua na lini."
+      },
+      "renting-how": {
+        "title": "Jinsi kupangisha kunavyofanya kazi",
+        "body": "Kupangisha ni kwa miezi 12 au 24, kuanzia tarehe 1 ya mwezi. Unaomba kwa maelezo machache na kitambulisho; timu inajibu ndani ya siku mbili za kazi.\n\nUnalipa mwezi wa kwanza na amana kuhamia, kisha kodi kila mwezi."
+      },
+      "renting-deposit": {
+        "title": "Amana",
+        "body": "Amana inashikiliwa muda wote wa upangaji na kurudishwa baada ya kuhama, nyumba ikishakaguliwa dhidi ya kumbukumbu ya kuhamia.\n\nKama kuna kinachobakizwa kwa matengenezo, unaambiwa nini na kwa nini, kwa maandishi, kabla ya kutumiwa kilichobaki."
+      },
+      "renting-repairs": {
+        "title": "Matengenezo ukipangisha",
+        "body": "Ripoti matengenezo kutoka ukurasa wako wa upangaji. Ya dharura (maji, umeme, usalama) yanaonwa siku hiyo hiyo; mengine yanapangwa nawe.\n\nHutozwi kamwe kwa uchakavu wa maisha ya kawaida."
+      },
+      "renting-moving-out": {
+        "title": "Kuhama",
+        "body": "Tuambie tarehe yako ya kuhama angalau mwezi mmoja kabla. Tunapanga ukaguzi siku hiyo, tunalinganisha nyumba na ulivyoipokea, na kurudisha amana."
+      },
+      "car-with-driver": {
+        "title": "Gari pamoja na dereva",
+        "body": "Dereva anakukuta unaposema, anajua barabara na anasubiri ukiwa nje. Chakula chake na mafuta vimo kwenye bei.\n\nUnaona jina lake kwenye uhifadhi kabla ya siku."
+      },
+      "car-self-drive": {
+        "title": "Kujiendesha mwenyewe",
+        "body": "Unahitaji leseni ya udereva uliyonayo kwa angalau miaka miwili. Ipakie wakati wa kuhifadhi; timu inaikagua kabla ya kuchukua gari.\n\nMadereva waliotajwa kwenye uhifadhi tu ndio wanaoendesha."
+      },
+      "car-pickup": {
+        "title": "Kuchukua na kurudisha gari",
+        "body": "Kuchukua ni pale uhifadhi wako unaposema, mara nyingi uwanja wa ndege. Gari linaonyeshwa na picha za alama zilizokuwepo, na linarudishwa na mafuta yale yale lililotoka nayo."
+      },
+      "car-insurance": {
+        "title": "Bima",
+        "body": "Kila gari lina bima ya mtu wa tatu. Bima kamili ni ziada unayoweza kuongeza wakati wa kuhifadhi, na inapunguza unacholipa gari likiharibika."
+      },
+      "day-what-to-bring": {
+        "title": "Unachopaswa kubeba",
+        "body": "Kila matembezi yanaonyesha unachopaswa kubeba kwenye ukurasa wake: kwa kawaida maji, viatu vya kutembea, na nguo ya ziada kwa milima.\n\nMwongozaji anakuambia mahali pa kukutana kwenye uhifadhi wako."
+      },
+      "day-permits": {
+        "title": "Vibali vya hifadhi",
+        "body": "Baadhi ya matembezi yanahitaji kibali cha hifadhi kwa jina la kila mtu, ndiyo maana majina na namba za pasipoti zinaulizwa wakati wa kuhifadhi.\n\nVibali haviwezi kuuzwa tena, kwa hivyo sehemu yake hairejeshwi ukighairi."
+      },
+      "day-group": {
+        "title": "Ukubwa wa kikundi na umri",
+        "body": "Kila matembezi yanaonyesha kikundi kikubwa zaidi na umri mdogo zaidi unaoruhusiwa. Uhifadhi haukuruhusu kuongeza watu zaidi ya nafasi."
+      },
+      "day-weather": {
+        "title": "Hali ya hewa ikibadilika",
+        "body": "Matembezi yanaendelea kwenye mvua isipokuwa ni hatari. Mwongozaji au hifadhi wakighairi, unachagua siku nyingine au unarejeshewa kila kitu."
+      }
+    }
+  },
+  "contact": {
+    "title": "Wasiliana nasi",
+    "intro": "Iandikie timu, au utufikie kwa WhatsApp au simu. Tunajibu ndani ya siku moja ya kazi, na mara moja kwa dharura ukiwa nyumbani.",
+    "topic": "Ni kuhusu nini?",
+    "topics": {
+      "booking": "Uhifadhi",
+      "change": "Kubadilisha au kughairi",
+      "payment": "Malipo",
+      "stay": "Wakati wa kukaa",
+      "renting": "Kupangisha",
+      "other": "Kitu kingine"
+    },
+    "reference": "Namba ya uhifadhi (si lazima)",
+    "badReference": "Hii si mojawapo ya uhifadhi wako. Angalia namba, au iache tupu.",
+    "message": "Ujumbe wako",
+    "empty": "Andika ujumbe kwanza.",
+    "send": "Tuma",
+    "sent": "Imetumwa",
+    "sentBody": "Timu itakujibu ndani ya siku moja ya kazi.",
+    "openThread": "Fungua mazungumzo",
+    "signInFirst": "Ingia ili tukujibu na tuone uhifadhi wako.",
+    "signIn": "Ingia",
+    "whatsapp": "WhatsApp",
+    "whatsappHint": "Kwa kawaida tunajibu ndani ya saa moja",
+    "call": "Tupigie simu",
+    "hours": "Kila siku, saa 1 asubuhi hadi saa 4 usiku",
+    "emergencyTitle": "Unakaa {home}? Namba ya dharura",
+    "emergencyBody": "Wakati wowote, mchana au usiku, kwa dharura yoyote nyumbani."
+  },
+  "legal": {
+    "updated": "Ilisasishwa mwisho 8 Novemba 2026",
+    "draft": "Rasimu ya maandishi kwa ukaguzi. Maandishi ya mwisho yatatolewa na wanasheria wetu kabla ya kuzindua.",
+    "help": "Kituo cha msaada",
+    "terms": {
+      "title": "Masharti ya matumizi",
+      "intro": "Masharti haya yanahusu kuhifadhi nyumba, magari na matembezi kupitia HomeLink Africa Ltd nchini Rwanda.",
+      "who": {
+        "title": "Sisi ni nani",
+        "body": "HomeLink Africa Ltd inakaribisha kila nyumba inayotoa na kupanga kila gari na matembezi na madereva na waongozaji iliowakagua. Unahifadhi nasi, si na mmiliki."
+      },
+      "booking": {
+        "title": "Kuhifadhi",
+        "body": "Uhifadhi unafanyika malipo yakipita na ukapata namba. Kanuni za nyumba, gari au matembezi ni sehemu yake na zinaonyeshwa kabla ya kulipa."
+      },
+      "paying": {
+        "title": "Kulipa",
+        "body": "Bei ziko kwa faranga za Rwanda na zinajumuisha ada zote: usiku, ada ya usafi ya RWF {cleaning} kwa makazi na ada ya huduma ya {feePercent}%. Malipo ya RWF {escrowFrom} au zaidi kwa makazi yanashikiliwa hadi uingie."
+      },
+      "verified": {
+        "title": "Tunachoahidi",
+        "body": "Kila tunachotoa kimekaguliwa ana kwa ana. Nyumba, gari au matembezi yasipokuwa kama ukurasa unavyosema, tuambie ndani ya siku tutarekebisha au kukurudishia pesa."
+      },
+      "conduct": {
+        "title": "Sehemu yako",
+        "body": "Fuata kanuni za nyumba, iache kama ulivyoikuta, na tuambie uharibifu. Waliotajwa kwenye uhifadhi tu ndio wanaokaa, kuendesha au kujiunga."
+      },
+      "liability": {
+        "title": "Wajibu",
+        "body": "Tunawajibika kwa tunachoahidi hapo juu. Hatuwajibiki kwa hasara zaidi ya bei ya uhifadhi, isipokuwa sheria ikisema vinginevyo."
+      }
+    },
+    "privacy": {
+      "title": "Taarifa ya faragha",
+      "intro": "Tunachokusanya kukuhusu, kwa nini, na unachoweza kutuomba tufanye nacho.",
+      "what": {
+        "title": "Tunachokusanya",
+        "body": "Jina na mawasiliano yako, uhifadhi na malipo yako, ujumbe na timu, na kitambulisho upangaji au gari likikihitaji. Picha zinaondolewa mahali zilipopigwa kwenye kifaa chako kabla ya kutumwa."
+      },
+      "why": {
+        "title": "Kwa nini",
+        "body": "Kufanya na kuendesha uhifadhi wako, kulinda nyumba na watu, na kufuata sheria ya malipo na upangaji. Hatuuzi data yako."
+      },
+      "who": {
+        "title": "Nani anaiona",
+        "body": "Timu inayoendesha uhifadhi wako, dereva au mwongozaji aliyemo (anachohitaji tu), na watoa huduma wa malipo. Hatuhifadhi namba za kadi kamwe."
+      },
+      "keep": {
+        "title": "Tunaihifadhi muda gani",
+        "body": "Risiti kwa muda ambao sheria ya kodi inataka. Picha za vitambulisho zinafutwa siku 30 baada ya ukaguzi. Kila kitu kingine kinafutwa ukifunga akaunti."
+      },
+      "rights": {
+        "title": "Haki zako",
+        "body": "Unaweza kupakua nakala ya data yako au kufunga akaunti kutoka kwenye mipangilio, na kutuomba turekebishe kisicho sahihi."
+      },
+      "contact": {
+        "title": "Maswali",
+        "body": "Tuandikie kutoka ukurasa wa mawasiliano, na mhusika wa data atakujibu."
+      }
+    },
+    "cancellation": {
+      "title": "Sera ya kughairi",
+      "intro": "Unachorejeshewa ukighairi, kwa aina ya uhifadhi. Uhifadhi wako daima unaonyesha kiasi kamili kabla ya kuthibitisha.",
+      "stays": {
+        "title": "Makazi",
+        "body": "Hadi siku {stayDays} kabla ya kufika: unarejeshewa kila kitu.\n\nBaada ya hapo, hadi siku iliyotangulia: nusu ya usiku, pamoja na ada ya usafi na ziada zote. Siku ya kufika: hakuna marejesho."
+      },
+      "renting": {
+        "title": "Kupangisha",
+        "body": "Kabla ya kuhamia, mwezi wa kwanza na amana vinarejeshwa kikamilifu ukighairi angalau siku 30 kabla. Ukishahamia, mkataba wa upangaji unaeleza jinsi ya kuondoka mapema."
+      },
+      "cars": {
+        "title": "Magari",
+        "body": "Hadi siku {carDays} kabla ya kuchukua: unarejeshewa kila kitu. Baada ya hapo, siku moja ya kukodisha inabakizwa na iliyobaki inarudishwa."
+      },
+      "days": {
+        "title": "Matembezi",
+        "body": "Hadi siku {dayDays} kabla: unarejeshewa kila kitu. Baada ya hapo, hakuna marejesho. Vibali vya hifadhi vilivyonunuliwa kwa jina lako haviregeshwi kamwe, kwa kuwa haviwezi kuuzwa tena."
+      },
+      "ours": {
+        "title": "Tukighairi sisi",
+        "body": "Tukilazimika kughairi, unarejeshewa kila kitu mara moja, na timu inakupa kitu kizuri kama hicho au bora zaidi kama kipo."
+      },
+      "how": {
+        "title": "Jinsi ya kughairi",
+        "body": "Fungua uhifadhi kwenye akaunti yako uchague Ghairi. Unaona kinachorudishwa kabla ya kuthibitisha, na marejesho yanatumwa siku hiyo hiyo."
+      }
+    }
+  },
+  "reviews": {
+    "title": "{score} kutoka {count, plural, one {maoni #} other {maoni #}}",
+    "titleNew": "Maoni",
+    "new": "Mpya kwenye HomeLink: {count, plural, =0 {bado hakuna maoni} one {maoni moja hadi sasa} other {maoni # hadi sasa}}. Tunaonyesha alama baada ya wageni watatu kukaa, ili maoni ya mtu mmoja yasiwakilishe mahali.",
+    "more": "Onyesha maoni zaidi",
+    "aspects": {
+      "cleanliness": "Usafi",
+      "accuracy": "Kama ilivyoelezwa",
+      "checkIn": "Kuingia",
+      "communication": "Mawasiliano",
+      "location": "Mahali",
+      "value": "Thamani"
+    }
   }
 }

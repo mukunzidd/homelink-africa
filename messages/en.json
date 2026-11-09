@@ -1000,7 +1000,14 @@
     "buyLink": "Buy a home",
     "allNeighbourhoods": "All neighbourhoods",
     "yoursSupply": "Your listings",
-    "yoursOps": "Your work"
+    "yoursOps": "Your work",
+    "helpTitle": "Help",
+    "help": "Help centre",
+    "contact": "Contact us",
+    "cancellation": "Cancellation policy",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "languages": "Languages"
   },
   "homes": {
     "modeLabel": "How long for",
@@ -3322,5 +3329,253 @@
     "staffBody": "A preview tool, not a sign-in: pick the role to see the workspace as. Real staff accounts come with the backend.",
     "google": "Continue with Google",
     "apple": "Continue with Apple"
+  },
+  "help": {
+    "title": "Help",
+    "intro": "Short answers to what people ask us most. If yours is not here, the team answers within a working day.",
+    "search": "Search help",
+    "searchPlaceholder": "Search, for example \"cancel\" or \"deposit\"",
+    "noHits": "Nothing matches that.",
+    "askUs": "Ask the team",
+    "stillStuck": "Still stuck?",
+    "related": "Also in this section",
+    "categories": {
+      "booking": "Booking and paying",
+      "changing": "Changing and cancelling",
+      "stay": "Check-in and your stay",
+      "renting": "Renting a home",
+      "cars": "Cars and drivers",
+      "days": "Days out"
+    },
+    "articles": {
+      "how-to-book": {
+        "title": "How booking works",
+        "body": "Pick your dates, check the price, and go through four short steps: your details, any extras, the rules, then payment.\n\nWe hold the dates for {holdMinutes} minutes while you pay. Once payment goes through you get a reference starting HL- and a confirmation by email and in your account."
+      },
+      "ways-to-pay": {
+        "title": "Ways to pay",
+        "body": "You can pay by card (Visa or Mastercard) or by Mobile Money (MTN or Airtel). Prices are set in Rwandan francs; other currencies are shown at today's rate for guidance.\n\nFor some longer stays you can pay a deposit now and the rest closer to arrival. The checkout shows when that is offered."
+      },
+      "fees": {
+        "title": "What the price includes",
+        "body": "The price you see at checkout is the price you pay. It includes the nights, a cleaning fee of RWF {cleaning} for a stay, and a service fee of {feePercent}% of the nights.\n\nNothing is added at the end, and there is no booking fee on top."
+      },
+      "escrow": {
+        "title": "Why some payments are held",
+        "body": "For stays of RWF {escrowFrom} or more, we hold your payment until you have checked in. The home is only paid once you are inside and it is as described.\n\nIf it is not, tell us within the first day and we put it right or give the money back."
+      },
+      "cancel-stay": {
+        "title": "Cancelling a stay",
+        "body": "Cancel up to {stayDays} days before arrival and you get everything back.\n\nAfter that and up to the day before, you get half of what the nights cost, plus the cleaning fee and any extras, which were never used. On the day of arrival there is no refund."
+      },
+      "cancel-car-day": {
+        "title": "Cancelling a car or a day out",
+        "body": "A car can be cancelled for a full refund up to {carDays} days before pickup. After that, one day's hire is kept.\n\nA day out can be cancelled for a full refund up to {dayDays} days before. Park permits bought in your name cannot be resold, so their share is kept."
+      },
+      "change-dates": {
+        "title": "Changing your dates",
+        "body": "Open the booking in your account and choose new dates. You see the new price and the difference before you confirm.\n\nIf the new dates cost less, the difference comes back to you; if more, you pay the difference. Dates can only be moved before the booking begins."
+      },
+      "refund-timing": {
+        "title": "When a refund arrives",
+        "body": "We send refunds the same day. Mobile Money usually shows within minutes; cards take 5 to 10 working days, depending on your bank.\n\nYour booking shows each refund and when it was sent."
+      },
+      "check-in": {
+        "title": "Getting in",
+        "body": "Check-in is from {checkIn}. The address, the door code and the wi-fi arrive 48 hours before, in your booking and by message, never earlier.\n\nArriving late? Tell us your time in the booking and someone will be there, or the key box code will work whenever you arrive."
+      },
+      "something-wrong": {
+        "title": "Something is wrong during a stay",
+        "body": "Report it from your booking: choose what it is and how urgent. Something urgent (no power, no water, a lock) reaches the team at once, day or night.\n\nYou can also call the emergency line shown on the contact page while you are staying."
+      },
+      "extras": {
+        "title": "Airport pickup, early check-in and other extras",
+        "body": "Add extras while booking, or later from your booking. The team arranges each one and confirms it in your messages.\n\nExtras are refunded in full if you cancel before arrival."
+      },
+      "verified": {
+        "title": "What \"verified\" means",
+        "body": "Someone from our team has stood in every home, driven every car and been on every day out we list, against a checklist, and photographed it themselves.\n\nThe page shows who checked it and when."
+      },
+      "renting-how": {
+        "title": "How renting works",
+        "body": "Renting is for 12 or 24 months, starting on the 1st of a month. You apply with a few details and an ID; the team answers within two working days.\n\nYou pay the first month and the deposit to move in, then the rent each month."
+      },
+      "renting-deposit": {
+        "title": "The deposit",
+        "body": "The deposit is held for the whole tenancy and returned after you move out, once the home has been checked against the move-in record.\n\nIf anything is kept for repairs, you are told what and why, in writing, before the rest is sent."
+      },
+      "renting-repairs": {
+        "title": "Repairs while you rent",
+        "body": "Report repairs from your renting page. Urgent ones (water, power, security) are seen the same day; others are booked with you.\n\nYou are never charged for wear that comes with ordinary living."
+      },
+      "renting-moving-out": {
+        "title": "Moving out",
+        "body": "Tell us your moving-out date at least a month ahead. We book an inspection for that day, compare the home with how you received it, and return the deposit."
+      },
+      "car-with-driver": {
+        "title": "A car with a driver",
+        "body": "The driver meets you where you say, knows the roads and waits while you are out. Their meals and fuel are included in the price.\n\nYou see their name in your booking before the day."
+      },
+      "car-self-drive": {
+        "title": "Driving yourself",
+        "body": "You need a driving licence held for at least two years. Upload it while booking; the team checks it before pickup.\n\nOnly the drivers named on the booking may drive."
+      },
+      "car-pickup": {
+        "title": "Picking up and returning a car",
+        "body": "Pickup is where your booking says, often the airport. The car is shown with photos of any marks already there, and returned with the same fuel it left with."
+      },
+      "car-insurance": {
+        "title": "Insurance",
+        "body": "Every car carries third-party insurance. Full cover is an extra you can add while booking, and lowers what you pay if the car is damaged."
+      },
+      "day-what-to-bring": {
+        "title": "What to bring",
+        "body": "Each day out lists what to bring on its page: usually water, shoes you can walk in, and a layer for the hills.\n\nThe guide tells you the meeting point in your booking."
+      },
+      "day-permits": {
+        "title": "Park permits",
+        "body": "Some days need a park permit bought in each person's name, so the names and passport numbers are asked for while booking.\n\nPermits cannot be resold, so their share is not refunded if you cancel."
+      },
+      "day-group": {
+        "title": "Group sizes and ages",
+        "body": "Each day out shows the largest group and the youngest age allowed. The booking will not let you add more people than there is room for."
+      },
+      "day-weather": {
+        "title": "If the weather turns",
+        "body": "Days out go ahead in rain unless it is unsafe. If the guide or the park calls it off, you choose another day or get everything back."
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact us",
+    "intro": "Write to the team, or reach us on WhatsApp or by phone. We answer within a working day, and at once for anything urgent during a stay.",
+    "topic": "What is it about?",
+    "topics": {
+      "booking": "A booking",
+      "change": "Changing or cancelling",
+      "payment": "A payment",
+      "stay": "During my stay",
+      "renting": "Renting",
+      "other": "Something else"
+    },
+    "reference": "Booking reference (optional)",
+    "badReference": "That is not one of your bookings. Check the reference, or leave it empty.",
+    "message": "Your message",
+    "empty": "Write a message first.",
+    "send": "Send",
+    "sent": "Sent",
+    "sentBody": "The team will answer within a working day.",
+    "openThread": "Open the conversation",
+    "signInFirst": "Sign in so we can answer you and see your bookings.",
+    "signIn": "Sign in",
+    "whatsapp": "WhatsApp",
+    "whatsappHint": "Usually answered within the hour",
+    "call": "Call us",
+    "hours": "Every day, 07:00 to 22:00",
+    "emergencyTitle": "Staying at {home}? Emergency line",
+    "emergencyBody": "Any time, day or night, for anything urgent in the home."
+  },
+  "legal": {
+    "updated": "Last updated 8 November 2026",
+    "draft": "Draft wording for review. The final text will be supplied by our lawyers before launch.",
+    "help": "Help centre",
+    "terms": {
+      "title": "Terms of use",
+      "intro": "These terms cover booking homes, cars and days out with HomeLink Africa Ltd in Rwanda.",
+      "who": {
+        "title": "Who we are",
+        "body": "HomeLink Africa Ltd hosts every home it lists and arranges every car and day out with drivers and guides it has checked. You book with us, not with an owner."
+      },
+      "booking": {
+        "title": "Booking",
+        "body": "A booking is made when payment goes through and you receive a reference. The rules of the home, car or day out form part of it and are shown before you pay."
+      },
+      "paying": {
+        "title": "Paying",
+        "body": "Prices are set in Rwandan francs and include every fee: the nights, a RWF {cleaning} cleaning fee for a stay and a {feePercent}% service fee. Payments of RWF {escrowFrom} or more for a stay are held until you check in."
+      },
+      "verified": {
+        "title": "What we promise",
+        "body": "Everything we list has been inspected in person. If a home, car or day out is not what its page says, tell us within a day and we put it right or refund you."
+      },
+      "conduct": {
+        "title": "Your part",
+        "body": "Follow the house rules, leave the home as you found it, and tell us about damage. Only the people named on a booking may stay, drive or join."
+      },
+      "liability": {
+        "title": "Responsibility",
+        "body": "We are responsible for what we promise above. We are not responsible for losses beyond the price of the booking, except where the law says otherwise."
+      }
+    },
+    "privacy": {
+      "title": "Privacy notice",
+      "intro": "What we collect about you, why, and what you can ask us to do with it.",
+      "what": {
+        "title": "What we collect",
+        "body": "Your name and contact details, your bookings and payments, messages with the team, and an ID when renting or hiring a car needs one. Photos lose their location data on your device before they are sent."
+      },
+      "why": {
+        "title": "Why",
+        "body": "To make and run your bookings, to keep homes and people safe, and to meet the law on payments and tenancy. We do not sell your data."
+      },
+      "who": {
+        "title": "Who sees it",
+        "body": "The team running your booking, the driver or guide on it (only what they need), and the payment providers. Card numbers are never stored by us."
+      },
+      "keep": {
+        "title": "How long we keep it",
+        "body": "Receipts for as long as tax law asks. ID photos are deleted 30 days after they are checked. Everything else is deleted when you close your account."
+      },
+      "rights": {
+        "title": "Your rights",
+        "body": "You can download a copy of your data or close your account from your settings, and ask us to correct anything that is wrong."
+      },
+      "contact": {
+        "title": "Questions",
+        "body": "Write to us from the contact page, and the person responsible for data will answer."
+      }
+    },
+    "cancellation": {
+      "title": "Cancellation policy",
+      "intro": "What you get back if you cancel, by kind of booking. Your booking always shows the exact amount before you confirm.",
+      "stays": {
+        "title": "Stays",
+        "body": "Up to {stayDays} days before arrival: everything back.\n\nAfter that, up to the day before: half of the nights, plus the cleaning fee and extras in full. On the day of arrival: no refund."
+      },
+      "renting": {
+        "title": "Renting",
+        "body": "Before you move in, the first month and the deposit come back in full if you cancel at least 30 days ahead. Once you have moved in, the tenancy agreement sets out how to leave early."
+      },
+      "cars": {
+        "title": "Cars",
+        "body": "Up to {carDays} days before pickup: everything back. After that, one day's hire is kept and the rest comes back."
+      },
+      "days": {
+        "title": "Days out",
+        "body": "Up to {dayDays} days before: everything back. After that, no refund. Park permits bought in your name are never refunded, as they cannot be resold."
+      },
+      "ours": {
+        "title": "If we cancel",
+        "body": "If we have to cancel, you get everything back at once, and the team offers you something as good or better if there is one."
+      },
+      "how": {
+        "title": "How to cancel",
+        "body": "Open the booking in your account and choose Cancel. You see what comes back before you confirm, and the refund is sent the same day."
+      }
+    }
+  },
+  "reviews": {
+    "title": "{score} from {count, plural, one {# review} other {# reviews}}",
+    "titleNew": "Reviews",
+    "new": "New to HomeLink: {count, plural, =0 {no reviews yet} one {one review so far} other {# reviews so far}}. We show scores once three guests have stayed, so one opinion never stands for a place.",
+    "more": "Show more reviews",
+    "aspects": {
+      "cleanliness": "Cleanliness",
+      "accuracy": "As described",
+      "checkIn": "Check-in",
+      "communication": "Communication",
+      "location": "Location",
+      "value": "Value"
+    }
   }
 }

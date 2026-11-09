@@ -1000,7 +1000,14 @@
     "buyLink": "Acheter",
     "allNeighbourhoods": "Tous les quartiers",
     "yoursSupply": "Vos annonces",
-    "yoursOps": "Votre travail"
+    "yoursOps": "Votre travail",
+    "helpTitle": "Aide",
+    "help": "Centre d'aide",
+    "contact": "Nous contacter",
+    "cancellation": "Politique d'annulation",
+    "terms": "Conditions",
+    "privacy": "Confidentialité",
+    "languages": "Langues"
   },
   "homes": {
     "modeLabel": "Pour combien de temps",
@@ -3322,5 +3329,253 @@
     "staffBody": "Un outil d'aperçu, pas une connexion : choisissez le rôle avec lequel voir l'espace de travail. Les vrais comptes du personnel arrivent avec le backend.",
     "google": "Continuer avec Google",
     "apple": "Continuer avec Apple"
+  },
+  "help": {
+    "title": "Aide",
+    "intro": "Des réponses courtes aux questions qu'on nous pose le plus. Si la vôtre n'y est pas, l'équipe répond sous un jour ouvré.",
+    "search": "Rechercher dans l'aide",
+    "searchPlaceholder": "Cherchez, par exemple « annuler » ou « caution »",
+    "noHits": "Rien ne correspond.",
+    "askUs": "Demander à l'équipe",
+    "stillStuck": "Toujours bloqué ?",
+    "related": "Dans la même rubrique",
+    "categories": {
+      "booking": "Réserver et payer",
+      "changing": "Modifier et annuler",
+      "stay": "Arrivée et séjour",
+      "renting": "Louer un logement",
+      "cars": "Voitures et chauffeurs",
+      "days": "Excursions"
+    },
+    "articles": {
+      "how-to-book": {
+        "title": "Comment réserver",
+        "body": "Choisissez vos dates, vérifiez le prix, puis quatre courtes étapes : vos coordonnées, les options, le règlement, puis le paiement.\n\nNous gardons les dates pendant {holdMinutes} minutes le temps de payer. Une fois le paiement passé, vous recevez une référence commençant par HL- et une confirmation par e-mail et dans votre compte."
+      },
+      "ways-to-pay": {
+        "title": "Moyens de paiement",
+        "body": "Vous pouvez payer par carte (Visa ou Mastercard) ou par Mobile Money (MTN ou Airtel). Les prix sont fixés en francs rwandais ; les autres devises sont affichées au cours du jour à titre indicatif.\n\nPour certains longs séjours, vous pouvez payer un acompte maintenant et le reste plus près de l'arrivée. Le paiement indique quand c'est proposé."
+      },
+      "fees": {
+        "title": "Ce que comprend le prix",
+        "body": "Le prix affiché au paiement est celui que vous payez. Il comprend les nuits, des frais de ménage de RWF {cleaning} pour un séjour, et des frais de service de {feePercent} % des nuits.\n\nRien n'est ajouté à la fin, et il n'y a pas de frais de réservation en plus."
+      },
+      "escrow": {
+        "title": "Pourquoi certains paiements sont retenus",
+        "body": "Pour les séjours de RWF {escrowFrom} ou plus, nous retenons votre paiement jusqu'à votre arrivée. Le logement n'est payé qu'une fois que vous êtes à l'intérieur et qu'il est conforme.\n\nS'il ne l'est pas, prévenez-nous le premier jour et nous corrigeons ou vous remboursons."
+      },
+      "cancel-stay": {
+        "title": "Annuler un séjour",
+        "body": "Annulez jusqu'à {stayDays} jours avant l'arrivée et tout vous est rendu.\n\nEnsuite et jusqu'à la veille, vous récupérez la moitié du prix des nuits, plus les frais de ménage et les options, jamais utilisés. Le jour de l'arrivée, il n'y a pas de remboursement."
+      },
+      "cancel-car-day": {
+        "title": "Annuler une voiture ou une excursion",
+        "body": "Une voiture peut être annulée avec remboursement complet jusqu'à {carDays} jours avant la prise en charge. Ensuite, une journée de location est retenue.\n\nUne excursion peut être annulée avec remboursement complet jusqu'à {dayDays} jours avant. Les permis de parc achetés à votre nom ne peuvent pas être revendus, leur part est donc retenue."
+      },
+      "change-dates": {
+        "title": "Changer vos dates",
+        "body": "Ouvrez la réservation dans votre compte et choisissez de nouvelles dates. Vous voyez le nouveau prix et la différence avant de confirmer.\n\nSi les nouvelles dates coûtent moins, la différence vous revient ; si elles coûtent plus, vous payez la différence. Les dates ne peuvent être déplacées qu'avant le début de la réservation."
+      },
+      "refund-timing": {
+        "title": "Quand arrive un remboursement",
+        "body": "Nous envoyons les remboursements le jour même. Le Mobile Money apparaît en général en quelques minutes ; les cartes prennent 5 à 10 jours ouvrés selon votre banque.\n\nVotre réservation indique chaque remboursement et sa date d'envoi."
+      },
+      "check-in": {
+        "title": "Entrer dans le logement",
+        "body": "L'arrivée se fait à partir de {checkIn}. L'adresse, le code de la porte et le wi-fi arrivent 48 heures avant, dans votre réservation et par message, jamais plus tôt.\n\nVous arrivez tard ? Indiquez votre heure dans la réservation et quelqu'un sera là, ou le code de la boîte à clés fonctionnera à toute heure."
+      },
+      "something-wrong": {
+        "title": "Un problème pendant le séjour",
+        "body": "Signalez-le depuis votre réservation : choisissez de quoi il s'agit et l'urgence. Ce qui est urgent (pas de courant, pas d'eau, une serrure) arrive tout de suite à l'équipe, de jour comme de nuit.\n\nVous pouvez aussi appeler la ligne d'urgence indiquée sur la page contact pendant votre séjour."
+      },
+      "extras": {
+        "title": "Navette aéroport, arrivée anticipée et autres options",
+        "body": "Ajoutez des options en réservant, ou plus tard depuis votre réservation. L'équipe organise chacune et la confirme dans vos messages.\n\nLes options sont remboursées intégralement si vous annulez avant l'arrivée."
+      },
+      "verified": {
+        "title": "Ce que signifie « vérifié »",
+        "body": "Quelqu'un de notre équipe s'est tenu dans chaque logement, a conduit chaque voiture et a fait chaque excursion que nous proposons, selon une liste de contrôle, et l'a photographié lui-même.\n\nLa page indique qui a vérifié et quand."
+      },
+      "renting-how": {
+        "title": "Comment fonctionne la location",
+        "body": "La location dure 12 ou 24 mois et commence le 1er du mois. Vous postulez avec quelques informations et une pièce d'identité ; l'équipe répond sous deux jours ouvrés.\n\nVous payez le premier mois et la caution pour emménager, puis le loyer chaque mois."
+      },
+      "renting-deposit": {
+        "title": "La caution",
+        "body": "La caution est conservée pendant toute la location et rendue après votre départ, une fois le logement comparé à l'état des lieux d'entrée.\n\nSi une somme est retenue pour des réparations, on vous dit quoi et pourquoi, par écrit, avant d'envoyer le reste."
+      },
+      "renting-repairs": {
+        "title": "Réparations pendant la location",
+        "body": "Signalez les réparations depuis votre page de location. Les urgentes (eau, électricité, sécurité) sont vues le jour même ; les autres sont planifiées avec vous.\n\nL'usure normale de la vie quotidienne ne vous est jamais facturée."
+      },
+      "renting-moving-out": {
+        "title": "Déménager",
+        "body": "Indiquez votre date de départ au moins un mois à l'avance. Nous prévoyons une inspection ce jour-là, comparons le logement avec son état à votre arrivée, et rendons la caution."
+      },
+      "car-with-driver": {
+        "title": "Une voiture avec chauffeur",
+        "body": "Le chauffeur vous retrouve où vous le dites, connaît les routes et attend pendant vos sorties. Ses repas et le carburant sont compris dans le prix.\n\nVous voyez son nom dans votre réservation avant le jour."
+      },
+      "car-self-drive": {
+        "title": "Conduire vous-même",
+        "body": "Il faut un permis de conduire obtenu depuis au moins deux ans. Téléversez-le en réservant ; l'équipe le vérifie avant la prise en charge.\n\nSeuls les conducteurs nommés sur la réservation peuvent conduire."
+      },
+      "car-pickup": {
+        "title": "Prendre et rendre une voiture",
+        "body": "La prise en charge se fait là où l'indique votre réservation, souvent l'aéroport. La voiture vous est présentée avec des photos des marques déjà présentes, et se rend avec le même niveau de carburant qu'au départ."
+      },
+      "car-insurance": {
+        "title": "Assurance",
+        "body": "Chaque voiture a une assurance au tiers. La couverture complète est une option à ajouter en réservant, et réduit ce que vous payez si la voiture est abîmée."
+      },
+      "day-what-to-bring": {
+        "title": "Quoi apporter",
+        "body": "Chaque excursion indique quoi apporter sur sa page : en général de l'eau, des chaussures de marche et une couche pour les collines.\n\nLe guide vous donne le point de rendez-vous dans votre réservation."
+      },
+      "day-permits": {
+        "title": "Permis de parc",
+        "body": "Certaines excursions demandent un permis de parc au nom de chaque personne ; les noms et numéros de passeport sont donc demandés en réservant.\n\nLes permis ne peuvent pas être revendus, leur part n'est donc pas remboursée si vous annulez."
+      },
+      "day-group": {
+        "title": "Taille des groupes et âges",
+        "body": "Chaque excursion indique le groupe maximum et l'âge minimum. La réservation ne vous laisse pas ajouter plus de personnes qu'il n'y a de place."
+      },
+      "day-weather": {
+        "title": "Si le temps se gâte",
+        "body": "Les excursions ont lieu sous la pluie, sauf si c'est dangereux. Si le guide ou le parc annule, vous choisissez un autre jour ou êtes intégralement remboursé."
+      }
+    }
+  },
+  "contact": {
+    "title": "Nous contacter",
+    "intro": "Écrivez à l'équipe, ou joignez-nous sur WhatsApp ou par téléphone. Nous répondons sous un jour ouvré, et tout de suite pour une urgence pendant un séjour.",
+    "topic": "À quel sujet ?",
+    "topics": {
+      "booking": "Une réservation",
+      "change": "Modifier ou annuler",
+      "payment": "Un paiement",
+      "stay": "Pendant mon séjour",
+      "renting": "Location",
+      "other": "Autre chose"
+    },
+    "reference": "Référence de réservation (facultatif)",
+    "badReference": "Ce n'est pas une de vos réservations. Vérifiez la référence, ou laissez vide.",
+    "message": "Votre message",
+    "empty": "Écrivez d'abord un message.",
+    "send": "Envoyer",
+    "sent": "Envoyé",
+    "sentBody": "L'équipe vous répondra sous un jour ouvré.",
+    "openThread": "Ouvrir la conversation",
+    "signInFirst": "Connectez-vous pour que nous puissions vous répondre et voir vos réservations.",
+    "signIn": "Se connecter",
+    "whatsapp": "WhatsApp",
+    "whatsappHint": "Réponse en général dans l'heure",
+    "call": "Nous appeler",
+    "hours": "Tous les jours, de 7 h à 22 h",
+    "emergencyTitle": "Vous séjournez à {home} ? Ligne d'urgence",
+    "emergencyBody": "À toute heure, de jour comme de nuit, pour toute urgence dans le logement."
+  },
+  "legal": {
+    "updated": "Dernière mise à jour : 8 novembre 2026",
+    "draft": "Projet de texte pour relecture. Le texte définitif sera fourni par nos avocats avant le lancement.",
+    "help": "Centre d'aide",
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "intro": "Ces conditions couvrent la réservation de logements, de voitures et d'excursions auprès de HomeLink Africa Ltd au Rwanda.",
+      "who": {
+        "title": "Qui nous sommes",
+        "body": "HomeLink Africa Ltd héberge chaque logement proposé et organise chaque voiture et excursion avec des chauffeurs et guides vérifiés. Vous réservez avec nous, pas avec un propriétaire."
+      },
+      "booking": {
+        "title": "Réservation",
+        "body": "Une réservation est faite quand le paiement passe et que vous recevez une référence. Le règlement du logement, de la voiture ou de l'excursion en fait partie et est affiché avant de payer."
+      },
+      "paying": {
+        "title": "Paiement",
+        "body": "Les prix sont fixés en francs rwandais et incluent tous les frais : les nuits, des frais de ménage de RWF {cleaning} pour un séjour et des frais de service de {feePercent} %. Les paiements de RWF {escrowFrom} ou plus pour un séjour sont retenus jusqu'à votre arrivée."
+      },
+      "verified": {
+        "title": "Ce que nous promettons",
+        "body": "Tout ce que nous proposons a été inspecté sur place. Si un logement, une voiture ou une excursion n'est pas conforme à sa page, prévenez-nous dans la journée et nous corrigeons ou vous remboursons."
+      },
+      "conduct": {
+        "title": "Votre part",
+        "body": "Respectez le règlement, laissez le logement comme vous l'avez trouvé, et signalez les dégâts. Seules les personnes nommées sur une réservation peuvent séjourner, conduire ou participer."
+      },
+      "liability": {
+        "title": "Responsabilité",
+        "body": "Nous répondons de ce que nous promettons ci-dessus. Nous ne répondons pas des pertes au-delà du prix de la réservation, sauf si la loi en dispose autrement."
+      }
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "intro": "Ce que nous recueillons sur vous, pourquoi, et ce que vous pouvez nous demander d'en faire.",
+      "what": {
+        "title": "Ce que nous recueillons",
+        "body": "Votre nom et vos coordonnées, vos réservations et paiements, vos messages avec l'équipe, et une pièce d'identité quand une location ou une voiture l'exige. Les photos perdent leur localisation sur votre appareil avant l'envoi."
+      },
+      "why": {
+        "title": "Pourquoi",
+        "body": "Pour faire et gérer vos réservations, assurer la sécurité des logements et des personnes, et respecter la loi sur les paiements et la location. Nous ne vendons pas vos données."
+      },
+      "who": {
+        "title": "Qui les voit",
+        "body": "L'équipe qui gère votre réservation, le chauffeur ou le guide concerné (seulement le nécessaire), et les prestataires de paiement. Nous ne stockons jamais les numéros de carte."
+      },
+      "keep": {
+        "title": "Combien de temps",
+        "body": "Les reçus aussi longtemps que la loi fiscale l'exige. Les photos d'identité sont supprimées 30 jours après la vérification. Tout le reste est supprimé à la fermeture de votre compte."
+      },
+      "rights": {
+        "title": "Vos droits",
+        "body": "Vous pouvez télécharger une copie de vos données ou fermer votre compte depuis vos réglages, et nous demander de corriger ce qui est faux."
+      },
+      "contact": {
+        "title": "Questions",
+        "body": "Écrivez-nous depuis la page contact ; la personne responsable des données vous répondra."
+      }
+    },
+    "cancellation": {
+      "title": "Politique d'annulation",
+      "intro": "Ce qui vous est rendu si vous annulez, selon le type de réservation. Votre réservation affiche toujours le montant exact avant de confirmer.",
+      "stays": {
+        "title": "Séjours",
+        "body": "Jusqu'à {stayDays} jours avant l'arrivée : tout est rendu.\n\nEnsuite, jusqu'à la veille : la moitié des nuits, plus les frais de ménage et les options en entier. Le jour de l'arrivée : pas de remboursement."
+      },
+      "renting": {
+        "title": "Location",
+        "body": "Avant d'emménager, le premier mois et la caution sont rendus intégralement si vous annulez au moins 30 jours avant. Une fois installé, le contrat de location prévoit comment partir plus tôt."
+      },
+      "cars": {
+        "title": "Voitures",
+        "body": "Jusqu'à {carDays} jours avant la prise en charge : tout est rendu. Ensuite, une journée de location est retenue et le reste est rendu."
+      },
+      "days": {
+        "title": "Excursions",
+        "body": "Jusqu'à {dayDays} jours avant : tout est rendu. Ensuite, pas de remboursement. Les permis de parc achetés à votre nom ne sont jamais remboursés, car ils ne peuvent être revendus."
+      },
+      "ours": {
+        "title": "Si nous annulons",
+        "body": "Si nous devons annuler, tout vous est rendu immédiatement, et l'équipe vous propose quelque chose d'aussi bien ou mieux s'il y en a."
+      },
+      "how": {
+        "title": "Comment annuler",
+        "body": "Ouvrez la réservation dans votre compte et choisissez Annuler. Vous voyez ce qui est rendu avant de confirmer, et le remboursement part le jour même."
+      }
+    }
+  },
+  "reviews": {
+    "title": "{score} sur {count, plural, one {# avis} other {# avis}}",
+    "titleNew": "Avis",
+    "new": "Nouveau sur HomeLink : {count, plural, =0 {pas encore d'avis} one {un avis pour l'instant} other {# avis pour l'instant}}. Nous affichons les notes à partir de trois séjours, pour qu'une seule opinion ne résume jamais un lieu.",
+    "more": "Voir plus d'avis",
+    "aspects": {
+      "cleanliness": "Propreté",
+      "accuracy": "Conforme à la description",
+      "checkIn": "Arrivée",
+      "communication": "Communication",
+      "location": "Emplacement",
+      "value": "Rapport qualité-prix"
+    }
   }
 }

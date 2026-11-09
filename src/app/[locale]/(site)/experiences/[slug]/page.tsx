@@ -1,3 +1,5 @@
+import { Reviews } from "@/components/listing/reviews";
+import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -157,6 +159,8 @@ export default async function ExperienceDetailPage({
               kind="experience"
             />
           </div>
+
+          <Reviews supplyId={experience.id} intl={INTL_LOCALES[locale as Locale]} />
 
           <section className="flex flex-col gap-4 border-t border-line py-6">
             <h2 className="font-display text-2xl font-semibold text-ink">

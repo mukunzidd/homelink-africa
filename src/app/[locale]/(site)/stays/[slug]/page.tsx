@@ -1,3 +1,4 @@
+import { Reviews } from "@/components/listing/reviews";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -278,6 +279,8 @@ export default async function ListingDetailPage({
               escrowApplies={escrowApplies}
             />
           </div>
+
+          <Reviews supplyId={listing.id} intl={intlLocale} />
 
           {isLease && listing.leaseTerms && (
             <section className="flex flex-col gap-4 border-t border-line py-6">

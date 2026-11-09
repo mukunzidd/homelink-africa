@@ -14,17 +14,17 @@ import type { PricingCatalog } from "./catalog";
  */
 
 /** Flat cleaning fee per stay, in RWF. Fixture-level until suppliers set it. */
-const CLEANING_FEE_RWF = 32_000;
+export const CLEANING_FEE_RWF = 32_000;
 
 /** HomeLink's commission, as a fraction of the accommodation subtotal. */
-const SERVICE_FEE_RATE = 0.1076;
+export const SERVICE_FEE_RATE = 0.1076;
 
 /**
  * Stays at or above this hold funds until check-in is confirmed.
  * Product & UX §7 scopes escrow to high-value stays; this is where that line
  * currently sits.
  */
-const ESCROW_THRESHOLD_RWF = 300_000;
+export const ESCROW_THRESHOLD_RWF = 300_000;
 
 export type QuoteLineKey =
   | "accommodation"

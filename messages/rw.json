@@ -1000,7 +1000,14 @@
     "buyLink": "Kugura inzu",
     "allNeighbourhoods": "Uduce twose",
     "yoursSupply": "Amatangazo yawe",
-    "yoursOps": "Akazi kawe"
+    "yoursOps": "Akazi kawe",
+    "helpTitle": "Ubufasha",
+    "help": "Ubufasha",
+    "contact": "Twandikire",
+    "cancellation": "Amategeko yo guhagarika",
+    "terms": "Amategeko",
+    "privacy": "Ubuzima bwite",
+    "languages": "Indimi"
   },
   "homes": {
     "modeLabel": "Igihe kingana iki",
@@ -3322,5 +3329,253 @@
     "staffBody": "Igikoresho cy'igerageza, si ukwinjira: hitamo inshingano ushaka kureberamo umwanya w'akazi. Konti nyakuri z'abakozi zizaza hamwe na backend.",
     "google": "Komeza na Google",
     "apple": "Komeza na Apple"
+  },
+  "help": {
+    "title": "Ubufasha",
+    "intro": "Ibisubizo bigufi ku byo abantu batubaza cyane. Niba icyawe kitarimo, ikipe isubiza mu munsi umwe w'akazi.",
+    "search": "Shakisha mu bufasha",
+    "searchPlaceholder": "Shakisha, urugero \"guhagarika\" cyangwa \"ingwate\"",
+    "noHits": "Nta gihuye na byo.",
+    "askUs": "Baza ikipe",
+    "stillStuck": "Ntibirakemuka?",
+    "related": "Mu gice kimwe",
+    "categories": {
+      "booking": "Gufata no kwishyura",
+      "changing": "Guhindura no guhagarika",
+      "stay": "Kwinjira no kuhaba",
+      "renting": "Gukodesha inzu",
+      "cars": "Imodoka n'abashoferi",
+      "days": "Ingendo"
+    },
+    "articles": {
+      "how-to-book": {
+        "title": "Uko gufata bikorwa",
+        "body": "Hitamo amatariki, urebe igiciro, unyure mu ntambwe enye ngufi: amakuru yawe, ibyongerwaho, amategeko, hanyuma kwishyura.\n\nTubika amatariki mu minota {holdMinutes} mu gihe wishyura. Ubwishyu bumaze kugenda, uhabwa nimero itangirwa na HL- n'icyemezo kuri imeyili no kuri konti yawe."
+      },
+      "ways-to-pay": {
+        "title": "Uburyo bwo kwishyura",
+        "body": "Ushobora kwishyura ukoresheje ikarita (Visa cyangwa Mastercard) cyangwa Mobile Money (MTN cyangwa Airtel). Ibiciro bishyirwa mu mafaranga y'u Rwanda; andi mafaranga yerekanwa ku gaciro k'uyu munsi.\n\nKu kuhaba igihe kirekire, ushobora kwishyura igice ubu n'ikindi hafi y'igihe cyo kuhagera."
+      },
+      "fees": {
+        "title": "Ibiri mu giciro",
+        "body": "Igiciro ubona mu kwishyura ni cyo wishyura. Kirimo amajoro, amafaranga y'isuku RWF {cleaning} ku kuhaba, n'amafaranga ya serivisi angana na {feePercent}% y'amajoro.\n\nNta kindi cyongerwaho ku musozo."
+      },
+      "escrow": {
+        "title": "Impamvu ubwishyu bumwe bufatwa",
+        "body": "Ku kuhaba gufite agaciro ka RWF {escrowFrom} cyangwa arenga, dufata ubwishyu bwawe kugeza winjiye. Inzu yishyurwa ari uko uri imbere kandi imeze uko yavuzwe.\n\nNiba itameze uko, tubwire mu munsi wa mbere tukabikosora cyangwa tukagusubiza amafaranga."
+      },
+      "cancel-stay": {
+        "title": "Guhagarika kuhaba",
+        "body": "Uhagaritse iminsi {stayDays} mbere yo kuhagera, usubizwa byose.\n\nNyuma yaho kugeza ku munsi ubanziriza, usubizwa kimwe cya kabiri cy'amajoro, n'amafaranga y'isuku n'ibyongerwaho. Ku munsi wo kuhagera nta gusubizwa."
+      },
+      "cancel-car-day": {
+        "title": "Guhagarika imodoka cyangwa urugendo",
+        "body": "Imodoka ishobora guhagarikwa ugasubizwa byose kugeza iminsi {carDays} mbere yo kuyifata. Nyuma yaho, hafatwa umunsi umwe w'ubukode.\n\nUrugendo rushobora guhagarikwa ugasubizwa byose kugeza iminsi {dayDays} mbere. Impushya za pariki zaguzwe mu izina ryawe ntizigurishwa, igice cyazo kirafatwa."
+      },
+      "change-dates": {
+        "title": "Guhindura amatariki",
+        "body": "Fungura ifatwa kuri konti yawe uhitemo amatariki mashya. Ubona igiciro gishya n'itandukaniro mbere yo kwemeza.\n\nNiba amatariki mashya ahenduka, itandukaniro rirakugarukira; niba ahenze, wishyura itandukaniro. Amatariki ahindurwa mbere y'uko ifatwa ritangira gusa."
+      },
+      "refund-timing": {
+        "title": "Igihe amafaranga asubizwa agera",
+        "body": "Twohereza ibisubizwa uwo munsi. Mobile Money igaragara mu minota mike; amakarita afata iminsi 5 kugeza 10 y'akazi, bitewe na banki yawe."
+      },
+      "check-in": {
+        "title": "Kwinjira",
+        "body": "Kwinjira ni guhera saa {checkIn}. Aderesi, kode y'urugi na wi-fi bikugeraho amasaha 48 mbere, mu ifatwa ryawe no mu butumwa, ntabwo mbere yaho.\n\nUzagera atinze? Andika isaha yawe mu ifatwa, hazaba umuntu, cyangwa kode y'agasanduku k'imfunguzo izakora igihe icyo ari cyo cyose."
+      },
+      "something-wrong": {
+        "title": "Hari ikibazo uri mu nzu",
+        "body": "Kimenyekanishe uhereye ku ifatwa: hitamo icyo ari cyo n'uko cyihutirwa. Icyihutirwa (nta muriro, nta mazi, urugi) kigera ku ikipe ako kanya, ku manywa no nijoro.\n\nUshobora no guhamagara umurongo w'ibyago uri ku rupapuro rwo kutwandikira."
+      },
+      "extras": {
+        "title": "Kujyanwa ku kibuga cy'indege n'ibindi byongerwaho",
+        "body": "Ongeraho ibyongerwaho mu gufata, cyangwa nyuma uhereye ku ifatwa. Ikipe itegura buri kimwe ikakwemeza mu butumwa.\n\nBisubizwa byose niba uhagaritse mbere yo kuhagera."
+      },
+      "verified": {
+        "title": "Icyo \"byagenzuwe\" bivuze",
+        "body": "Umuntu wo mu ikipe yacu yageze muri buri nzu, yatwaye buri modoka kandi yakoze buri rugendo dutanga, akurikije urutonde rw'igenzura, akanabifotora ubwe.\n\nUrupapuro rwerekana uwabigenzuye n'igihe."
+      },
+      "renting-how": {
+        "title": "Uko gukodesha bikorwa",
+        "body": "Gukodesha ni amezi 12 cyangwa 24, bitangira ku itariki ya 1 y'ukwezi. Usaba utanga amakuru make n'indangamuntu; ikipe isubiza mu minsi ibiri y'akazi.\n\nWishyura ukwezi kwa mbere n'ingwate kugira ngo winjire, hanyuma ubukode buri kwezi."
+      },
+      "renting-deposit": {
+        "title": "Ingwate",
+        "body": "Ingwate ibikwa igihe cyose cy'ubukode igasubizwa nyuma yo kuvamo, inzu imaze kugenzurwa ugereranyije n'uko wayakiriye.\n\nNiba hari igifashwe kubera gusana, ubwirwa icyo ari cyo n'impamvu, mu nyandiko, mbere y'uko ibisigaye byoherezwa."
+      },
+      "renting-repairs": {
+        "title": "Gusana uri gukodesha",
+        "body": "Menyekanisha ibikeneye gusanwa uhereye ku rupapuro rw'ubukode. Ibyihutirwa (amazi, umuriro, umutekano) birebwa uwo munsi; ibindi bitegurwa nawe.\n\nNturihishwa gusaza kuzanwa no kubaho bisanzwe."
+      },
+      "renting-moving-out": {
+        "title": "Kuvamo",
+        "body": "Tubwire itariki yo kuvamo nibura ukwezi mbere. Dushyiraho igenzura uwo munsi, tugereranya inzu n'uko wayakiriye, tugasubiza ingwate."
+      },
+      "car-with-driver": {
+        "title": "Imodoka n'umushoferi",
+        "body": "Umushoferi ahurira nawe aho uvuze, azi imihanda kandi agutegereza. Ibiryo bye na lisansi biri mu giciro.\n\nUbona izina rye mu ifatwa mbere y'umunsi."
+      },
+      "car-self-drive": {
+        "title": "Kwitwarira",
+        "body": "Ukeneye uruhushya rwo gutwara rumaze nibura imyaka ibiri. Rushyireho mu gufata; ikipe irarugenzura mbere yo gufata imodoka.\n\nAbashoferi banditswe ku ifatwa gusa ni bo batwara."
+      },
+      "car-pickup": {
+        "title": "Gufata no gusubiza imodoka",
+        "body": "Gufata imodoka ni aho ifatwa ryawe rivuga, akenshi ku kibuga cy'indege. Imodoka yerekanwa n'amafoto y'ibimenyetso bisanzweho, igasubizwa ifite lisansi ingana n'iyo yagiye ifite."
+      },
+      "car-insurance": {
+        "title": "Ubwishingizi",
+        "body": "Buri modoka ifite ubwishingizi bw'undi muntu. Ubwishingizi bwuzuye ni icyongerwaho ushobora gushyiraho mu gufata, kigabanya ibyo wishyura imodoka yangiritse."
+      },
+      "day-what-to-bring": {
+        "title": "Ibyo kuzana",
+        "body": "Buri rugendo rwerekana ibyo kuzana ku rupapuro rwarwo: akenshi amazi, inkweto zigenda, n'umwenda w'imisozi.\n\nUmuyobozi akubwira aho muhurira mu ifatwa."
+      },
+      "day-permits": {
+        "title": "Impushya za pariki",
+        "body": "Ingendo zimwe zikenera uruhushya rwa pariki mu izina rya buri muntu, ni yo mpamvu amazina na nimero za pasiporo bisabwa mu gufata.\n\nImpushya ntizigurishwa, igice cyazo ntigisubizwa uhagaritse."
+      },
+      "day-group": {
+        "title": "Ingano y'itsinda n'imyaka",
+        "body": "Buri rugendo rwerekana itsinda rinini n'imyaka mike yemewe. Gufata ntibikwemerera kongeramo abantu barenze imyanya."
+      },
+      "day-weather": {
+        "title": "Ikirere kibaye kibi",
+        "body": "Ingendo zikomeza mu mvura keretse habaye akaga. Umuyobozi cyangwa pariki biruhagaritse, uhitamo undi munsi cyangwa ugasubizwa byose."
+      }
+    }
+  },
+  "contact": {
+    "title": "Twandikire",
+    "intro": "Andikira ikipe, cyangwa utugereho kuri WhatsApp cyangwa kuri telefoni. Dusubiza mu munsi umwe w'akazi, ako kanya ku byihutirwa uri mu nzu.",
+    "topic": "Ni ibyerekeye iki?",
+    "topics": {
+      "booking": "Ifatwa",
+      "change": "Guhindura cyangwa guhagarika",
+      "payment": "Ubwishyu",
+      "stay": "Mu gihe ndi mu nzu",
+      "renting": "Gukodesha",
+      "other": "Ikindi"
+    },
+    "reference": "Nimero y'ifatwa (si ngombwa)",
+    "badReference": "Iyi si imwe mu mafatwa yawe. Reba nimero, cyangwa usige ubusa.",
+    "message": "Ubutumwa bwawe",
+    "empty": "Banza wandike ubutumwa.",
+    "send": "Ohereza",
+    "sent": "Byoherejwe",
+    "sentBody": "Ikipe izagusubiza mu munsi umwe w'akazi.",
+    "openThread": "Fungura ikiganiro",
+    "signInFirst": "Injira kugira ngo tugusubize kandi tubone amafatwa yawe.",
+    "signIn": "Injira",
+    "whatsapp": "WhatsApp",
+    "whatsappHint": "Akenshi dusubiza mu isaha",
+    "call": "Duhamagare",
+    "hours": "Buri munsi, saa moya za mu gitondo kugeza saa yine z'ijoro",
+    "emergencyTitle": "Uri muri {home}? Umurongo w'ibyago",
+    "emergencyBody": "Igihe icyo ari cyo cyose, ku manywa no nijoro, ku kintu cyihutirwa mu nzu."
+  },
+  "legal": {
+    "updated": "Byavuguruwe ku wa 8 Ugushyingo 2026",
+    "draft": "Inyandiko y'agateganyo yo gusuzumwa. Inyandiko ya nyuma izatangwa n'abanyamategeko bacu mbere yo gutangiza.",
+    "help": "Ubufasha",
+    "terms": {
+      "title": "Amategeko yo gukoresha",
+      "intro": "Aya mategeko areba gufata amazu, imodoka n'ingendo kuri HomeLink Africa Ltd mu Rwanda.",
+      "who": {
+        "title": "Abo turi bo",
+        "body": "HomeLink Africa Ltd yakira buri nzu itanga kandi itegura buri modoka n'urugendo hamwe n'abashoferi n'abayobozi yagenzuye. Ufata natwe, ntabwo ufata na nyir'inzu."
+      },
+      "booking": {
+        "title": "Gufata",
+        "body": "Ifatwa rikorwa iyo ubwishyu bugenze ugahabwa nimero. Amategeko y'inzu, imodoka cyangwa urugendo ni igice cyaryo, kandi yerekanwa mbere yo kwishyura."
+      },
+      "paying": {
+        "title": "Kwishyura",
+        "body": "Ibiciro biri mu mafaranga y'u Rwanda kandi birimo amafaranga yose: amajoro, isuku ya RWF {cleaning} ku kuhaba na serivisi ya {feePercent}%. Ubwishyu bwa RWF {escrowFrom} cyangwa burenga ku kuhaba bufatwa kugeza winjiye."
+      },
+      "verified": {
+        "title": "Icyo dusezeranya",
+        "body": "Ibyo dutanga byose byagenzuwe imbonankubone. Niba inzu, imodoka cyangwa urugendo bitameze uko byavuzwe, tubwire mu munsi tukabikosora cyangwa tukagusubiza amafaranga."
+      },
+      "conduct": {
+        "title": "Uruhare rwawe",
+        "body": "Kurikiza amategeko y'inzu, uyisige uko wayisanze, kandi utubwire ibyangiritse. Abanditswe ku ifatwa gusa ni bo bahaba, batwara cyangwa bajyamo."
+      },
+      "liability": {
+        "title": "Inshingano",
+        "body": "Dufite inshingano ku byo dusezeranya haruguru. Ntitubazwa igihombo kirenze igiciro cy'ifatwa, keretse itegeko rivuze ukundi."
+      }
+    },
+    "privacy": {
+      "title": "Itangazo ry'ubuzima bwite",
+      "intro": "Ibyo tubika kuri wowe, impamvu, n'ibyo ushobora kudusaba kubikoraho.",
+      "what": {
+        "title": "Ibyo tubika",
+        "body": "Izina n'aho tukubona, amafatwa n'ubwishyu bwawe, ubutumwa n'ikipe, n'indangamuntu iyo gukodesha cyangwa imodoka biyikeneye. Amafoto akurwaho aho yafatiwe kuri telefoni yawe mbere yo koherezwa."
+      },
+      "why": {
+        "title": "Impamvu",
+        "body": "Gukora no gukurikirana amafatwa yawe, kurinda amazu n'abantu, no kubahiriza amategeko y'ubwishyu n'ubukode. Ntitugurisha amakuru yawe."
+      },
+      "who": {
+        "title": "Abayabona",
+        "body": "Ikipe ikurikirana ifatwa ryawe, umushoferi cyangwa umuyobozi uririmo (ibyo akeneye gusa), n'abatanga serivisi zo kwishyura. Ntitujya tubika nimero z'amakarita."
+      },
+      "keep": {
+        "title": "Igihe tuyabika",
+        "body": "Inyemezabwishyu igihe itegeko ry'imisoro risaba. Amafoto y'indangamuntu asibwa nyuma y'iminsi 30 agenzuwe. Ibindi byose bisibwa ufunze konti."
+      },
+      "rights": {
+        "title": "Uburenganzira bwawe",
+        "body": "Ushobora gukuramo kopi y'amakuru yawe cyangwa gufunga konti uhereye ku igenamiterere, no kudusaba gukosora ibitari byo."
+      },
+      "contact": {
+        "title": "Ibibazo",
+        "body": "Twandikire uhereye ku rupapuro rwo kutwandikira, ushinzwe amakuru azagusubiza."
+      }
+    },
+    "cancellation": {
+      "title": "Amategeko yo guhagarika",
+      "intro": "Ibyo usubizwa uhagaritse, bitewe n'ubwoko bw'ifatwa. Ifatwa ryawe rihora ryerekana amafaranga nyayo mbere yo kwemeza.",
+      "stays": {
+        "title": "Kuhaba",
+        "body": "Kugeza iminsi {stayDays} mbere yo kuhagera: usubizwa byose.\n\nNyuma yaho kugeza ku munsi ubanziriza: kimwe cya kabiri cy'amajoro, n'isuku n'ibyongerwaho byose. Ku munsi wo kuhagera: nta gusubizwa."
+      },
+      "renting": {
+        "title": "Gukodesha",
+        "body": "Mbere yo kwinjira, ukwezi kwa mbere n'ingwate bisubizwa byose uhagaritse nibura iminsi 30 mbere. Umaze kwinjira, amasezerano y'ubukode agaragaza uko wava mbere."
+      },
+      "cars": {
+        "title": "Imodoka",
+        "body": "Kugeza iminsi {carDays} mbere yo gufata: usubizwa byose. Nyuma yaho, umunsi umwe w'ubukode urafatwa, ibisigaye bigasubizwa."
+      },
+      "days": {
+        "title": "Ingendo",
+        "body": "Kugeza iminsi {dayDays} mbere: usubizwa byose. Nyuma yaho, nta gusubizwa. Impushya za pariki zaguzwe mu izina ryawe ntizijya zisubizwa, kuko zitagurishwa."
+      },
+      "ours": {
+        "title": "Turamutse duhagaritse",
+        "body": "Turamutse duhagaritse, usubizwa byose ako kanya, kandi ikipe ikaguha ikindi kingana cyangwa kiruta niba gihari."
+      },
+      "how": {
+        "title": "Uko uhagarika",
+        "body": "Fungura ifatwa kuri konti yawe uhitemo Hagarika. Ubona ibisubizwa mbere yo kwemeza, kandi amafaranga yoherezwa uwo munsi."
+      }
+    }
+  },
+  "reviews": {
+    "title": "{score} ku bitekerezo {count}",
+    "titleNew": "Ibitekerezo",
+    "new": "Ni bishya kuri HomeLink: ibitekerezo {count} kugeza ubu. Twerekana amanota abashyitsi batatu bamaze kuhaba, kugira ngo igitekerezo kimwe kitavuga ahantu hose.",
+    "more": "Erekana ibindi bitekerezo",
+    "aspects": {
+      "cleanliness": "Isuku",
+      "accuracy": "Ni uko byavuzwe",
+      "checkIn": "Kwinjira",
+      "communication": "Itumanaho",
+      "location": "Aho biherereye",
+      "value": "Agaciro"
+    }
   }
 }

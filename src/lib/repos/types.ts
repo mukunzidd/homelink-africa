@@ -301,6 +301,12 @@ export interface MessagingRepo {
   file(id: string, role: Role): Promise<{ mime: string; bytes: Uint8Array } | null>;
   /** Marks what others wrote in the thread as read by `role`; returns how many. */
   markRead(conversationId: string, role: Role): Promise<number>;
+  /**
+   * The contact form, from the signed-in guest. With a reference (one of
+   * their own bookings), it goes into that booking's thread with the desk;
+   * without, it is a note to the desk.
+   */
+  contact(input: { topic: string; reference?: string; body: string }): Promise<{ ok: true; conversationId?: string } | { ok: false; reason: "empty" | "reference" }>;
 }
 
 export const MESSAGE_LIMITS = {

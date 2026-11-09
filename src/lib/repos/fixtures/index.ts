@@ -428,6 +428,26 @@ const messaging: MessagingRepo = {
     return { mime: u.mime, bytes: u.bytes };
   },
 
+  async contact(input) {
+    const body = input.body.trim().slice(0, 2000);
+    if (!body) return { ok: false as const, reason: "empty" as const };
+    const topic = input.topic.trim().slice(0, 40) || "other";
+    if (input.reference?.trim()) {
+      const ref = input.reference.trim().toUpperCase();
+      const mine = (await bookings.listForCurrentUser()).find((b) => b.reference === ref);
+      if (!mine) return { ok: false as const, reason: "reference" as const };
+      const name = store().account.profile.name;
+      const c = postToGuest(mine.id, name, "guest", body);
+      for (const audience of ["ops", "admin"] as const) {
+        await notifications.create({ audience, kind: "newMessage", params: { from: name, subject: c.subject }, href: `/manage/inbox?thread=${c.id}` });
+      }
+      return { ok: true as const, conversationId: c.id };
+    }
+    await notifications.create({ audience: "ops", kind: "newMessage", params: { from: store().account.profile.name, subject: `${topic}: ${body.slice(0, 60)}` }, href: "/manage/inbox" });
+    recordAudit({ actor: "guest", action: "contact.message", target: topic, detail: body.slice(0, 300) });
+    return { ok: true as const };
+  },
+
   async markRead(conversationId, role) {
     const c = store().conversations.find((x) => x.id === conversationId && visibleTo(role)(x));
     if (!c) return 0;

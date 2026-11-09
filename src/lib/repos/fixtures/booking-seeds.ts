@@ -170,6 +170,20 @@ export function seedReviews(): Review[] {
     r("rv4", "lst_kacyiru_garden", "Jonas", [5, 5, 5, 4, 4, 4], "The garden is the reason to book. Breakfast outside every morning.", "2026-10-11T08:00:00Z"),
     r("rv5", "lst_kacyiru_garden", "Amani", [5, 5, 4, 5, 4, 5], "Easy to reach the embassies; the team arranged a driver the same afternoon.", "2026-09-30T08:00:00Z"),
     r("rv6", "lst_kacyiru_garden", "Sophie", [4, 4, 5, 5, 4, 4], "Water pressure was low one morning and fixed by lunchtime.", "2026-09-03T08:00:00Z"),
+    r("rv7", "lst_kimihurura_studio", "Daniel", [5, 5, 4, 5, 5, 4], "Small, but every inch is used well. The blackout curtains are real ones.", "2026-07-19T08:00:00Z"),
+    r("rv8", "lst_kimihurura_studio", "Priya", [5, 5, 5, 5, 4, 5], "I walked to the conference every day and back in the dark without a second thought.", "2026-07-02T08:00:00Z"),
+    r("rv9", "lst_kimihurura_studio", "Lucas", [4, 4, 5, 4, 5, 4], "The kitchen has two pans and a kettle; enough for breakfast, not for a dinner party.", "2026-06-14T08:00:00Z"),
+    r("rv10", "lst_kimihurura_studio", "Fatou", [5, 5, 5, 5, 5, 5], "Aline left a list of where to eat within ten minutes. We tried six of them.", "2026-05-30T08:00:00Z"),
+    r("rv11", "lst_kimihurura_studio", "Jonas", [5, 4, 5, 5, 5, 4], "Fibre was as fast as promised; I ran video calls all week.", "2026-05-11T08:00:00Z"),
+    r("rv12", "veh_rav4", "Claire", [5, 5, 5, 5, 4, 5], "Waiting in bay 12 as promised, full tank, and the spare had air in it.", "2026-10-20T08:00:00Z"),
+    r("rv13", "veh_rav4", "Amani", [5, 5, 4, 5, 5, 4], "Handled the road to Musanze without a complaint.", "2026-09-28T08:00:00Z"),
+    r("rv14", "veh_rav4", "Sophie", [4, 5, 5, 4, 5, 4], "Hand-over took ten minutes, with photos of every scratch already there.", "2026-09-10T08:00:00Z"),
+    r("rv15", "veh_rav4", "Eric", [5, 5, 5, 5, 5, 5], "Clean, honest, and returned without a single question about fuel.", "2026-08-15T08:00:00Z"),
+    r("rv16", "exp_kigali_walk", "Grace", [5, 5, 5, 5, 5, 5], "Solange knows everyone in Nyamirambo. We ate at three places we would never have found.", "2026-10-25T08:00:00Z"),
+    r("rv17", "exp_kigali_walk", "Daniel", [5, 4, 5, 5, 5, 5], "Three hours went in what felt like one. Wear good shoes: the hills are real.", "2026-10-04T08:00:00Z"),
+    r("rv18", "exp_kigali_walk", "Lucas", [4, 5, 5, 5, 5, 4], "Honest about the history, without making it a performance.", "2026-09-19T08:00:00Z"),
+    r("rv19", "exp_kigali_walk", "Priya", [5, 5, 5, 4, 5, 5], "Small group, so we could ask everything.", "2026-08-30T08:00:00Z"),
+    r("rv20", "lst_kiyovu_apartment", "Jonas", [5, 5, 4, 5, 5, 4], "Quiet street, five minutes from the centre.", "2026-10-15T08:00:00Z"),
   ];
 }
 
