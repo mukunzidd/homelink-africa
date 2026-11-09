@@ -9,6 +9,7 @@ import type { Role } from "@/lib/domain/types";
 import { usePreferences } from "@/lib/preferences/context";
 import { homeFor } from "@/lib/workspace/nav";
 import { Dialog } from "@/components/ui/dialog";
+import { Select } from "@/components/ui/select";
 import { AuthCard, authField, authLabel, authPrimary } from "./auth-card";
 import { OtpInput } from "./otp-input";
 import { ProviderButtons } from "./provider-buttons";
@@ -155,12 +156,10 @@ export function SignUpScreen() {
           <input autoComplete="username" value={contact} onChange={(e) => setContact(e.target.value)} aria-invalid={tried && !contactOk} placeholder="+250 788 123 456" className={authField} />
           {tried && !contactOk && <span className="text-[13px] font-normal text-crit">{t("contactInvalid")}</span>}
         </label>
-        <label className={authLabel}>
-          {t("language")}
-          <select value={lang} onChange={(e) => setLang(e.target.value as Locale)} className={authField}>
-            {routing.locales.map((l) => <option key={l} value={l}>{LOCALE_LABELS[l]}</option>)}
-          </select>
-        </label>
+        <div className={authLabel}>
+          <span aria-hidden="true">{t("language")}</span>
+          <Select label={t("language")} hideLabel value={lang} onChange={(v) => setLang(v as Locale)} className="[&_[role=combobox]]:min-h-12" options={routing.locales.map((l) => ({ value: l, label: LOCALE_LABELS[l] }))} />
+        </div>
         <label className={cn("flex cursor-pointer items-start gap-3 text-[14px] text-ink-2", tried && !terms && "text-crit")}>
           <input type="checkbox" checked={terms} onChange={(e) => setTerms(e.target.checked)} aria-invalid={tried && !terms} className="mt-0.5 size-5 accent-[var(--brand)]" />
           <span>

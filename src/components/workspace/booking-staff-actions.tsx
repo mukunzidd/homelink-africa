@@ -8,6 +8,7 @@ import { exponentOf, formatMoney, type Money } from "@/lib/domain/money";
 import { resendConfirmation, staffAddGuests, staffCancel, staffChangeDates, staffRefund } from "@/app/actions/bookings";
 import { addBookingNote } from "@/app/actions/desk";
 import { useToast } from "@/components/notifications/toaster";
+import { SingleDatePicker } from "@/components/ui/single-date-picker";
 import { cn } from "@/lib/cn";
 
 type Panel = "dates" | "party" | "cancel" | "refund" | null;
@@ -124,8 +125,9 @@ export function BookingStaffActions(p: StaffActionsProps) {
           }}
         >
           <div className="grid grid-cols-2 gap-2">
-            <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">{t("start")}<input type="date" min={p.today} value={start} onChange={(e) => setStart(e.target.value)} className={control} /></label>
-            <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">{t("end")}<input type="date" min={start} value={end} onChange={(e) => setEnd(e.target.value)} className={control} /></label>
+            {/* A cleared day keeps the old one, and an end before a new start moves up to it: the native inputs' min refused both at submit. */}
+            <SingleDatePicker label={t("start")} minDate={p.today} value={start} onChange={(d) => { if (!d) return; setStart(d); if (end < d) setEnd(d); }} />
+            <SingleDatePicker label={t("end")} minDate={start} value={end} onChange={(d) => d && setEnd(d)} />
           </div>
           <button type="submit" disabled={busy || (start === p.start && end === p.end)} className={primary}>{t("saveDates")}</button>
         </form>

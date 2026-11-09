@@ -228,3 +228,63 @@ test("a missing page logs nothing but its 404, and a stored dark theme paints be
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   expect(errors.filter((e) => !e.includes("status of 404"))).toEqual([]);
 });
+
+test("admin assigns a driver from a branded list, and it sticks", async ({ page, context }) => {
+  await as(context, "admin");
+  await page.goto("/en/manage/partners");
+  await hydrated(page);
+  await expect(page.locator("main select")).toHaveCount(0);
+  // Counted rather than fixed: other journeys hand out jobs from the same store.
+  const unassigned = () => page.locator("section", { hasText: /with nobody on them/ }).getByRole("combobox");
+  const before = await unassigned().count();
+  expect(before).toBeGreaterThan(0);
+  await unassigned().first().click();
+  await page.getByRole("option", { name: "Eric Hakizimana" }).click();
+  await expect(page.getByText("Job given").first()).toBeVisible();
+  await page.reload();
+  await hydrated(page);
+  await expect(unassigned()).toHaveCount(before - 1);
+});
+
+test("the workspace sidebar starts folded, unfolds from the top, and remembers", async ({ page, context }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await as(context, "admin");
+  await page.goto("/en/manage/overview");
+  await hydrated(page);
+  const sidebar = page.locator("aside[data-sidebar]");
+  await expect(sidebar).toHaveAttribute("data-collapsed", "true");
+  expect((await sidebar.boundingBox())!.width).toBeLessThan(80);
+  await sidebar.getByRole("button", { name: "Expand sidebar" }).click();
+  await expect(sidebar).not.toHaveAttribute("data-collapsed", "true");
+  await page.reload();
+  await hydrated(page);
+  await expect(sidebar).not.toHaveAttribute("data-collapsed", "true");
+  expect((await sidebar.boundingBox())!.width).toBeGreaterThan(200);
+  await sidebar.getByRole("button", { name: "Collapse sidebar" }).click();
+  await expect(sidebar).toHaveAttribute("data-collapsed", "true");
+});
+
+for (const width of [1280, 390]) {
+  test(`a calendar inside a dialog is shown whole at ${width}px`, async ({ page, context }) => {
+    await page.setViewportSize({ width, height: 860 });
+    await as(context, "guest");
+    await page.goto("/en/bookings/HL-PREL-01");
+    await hydrated(page);
+    await page.getByRole("button", { name: "Change dates" }).first().click();
+    const dialog = page.getByRole("dialog", { name: "Change dates" });
+    await dialog.locator("button[aria-haspopup=dialog]").first().click();
+    const calendar = page.locator("[role=dialog][aria-modal=false]");
+    await expect(calendar).toBeVisible();
+    // Done is the popover's bottom edge: whole in the viewport, and the
+    // topmost thing at its centre, so nothing is clipping or covering it.
+    // (The last date button can be the second month, hidden on a phone.)
+    const last = calendar.getByRole("button", { name: "Done" });
+    await expect(last).toBeInViewport({ ratio: 1 });
+    const hit = await last.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      return !!top && (top === el || el.contains(top));
+    });
+    expect(hit).toBe(true);
+  });
+}

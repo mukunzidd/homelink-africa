@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { replaceDocument, respondToOffer } from "@/app/actions/partner";
 import { control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
 import { FileDrop } from "@/components/ui/file-drop";
+import { SingleDatePicker } from "@/components/ui/single-date-picker";
 import { cn } from "@/lib/cn";
 
 /** Time left on an offer, ticking each minute, and the moment it runs out. */
@@ -64,7 +65,7 @@ export function ReplaceDocument({ id, today }: { id: string; today: string }) {
   return (
     <form className="flex w-full flex-col gap-3 rounded-ctl border border-line bg-surface-2/50 p-3" onSubmit={(e) => { e.preventDefault(); w.run(async () => { if (!(await replaceDocument(id, file ?? "", expires)).ok) throw new Error(); setOpen(false); }, t("replaced")); }}>
       <FileDrop label={t("newCopy")} accept="image/*,application/pdf" value={file} onFile={(f) => setFile(f?.name)} errors={{ type: tf("type"), size: tf("size"), choose: tf("choose"), drop: tf("drop"), remove: tf("remove") }} capture="environment" />
-      <label className={cn(label, "w-48")}>{t("validUntil")}<input type="date" required min={today} value={expires} onChange={(e) => setExpires(e.target.value)} className={control} /></label>
+      <SingleDatePicker label={t("validUntil")} minDate={today} value={expires || null} onChange={(d) => setExpires(d ?? "")} className="w-48" />
       <div className="flex gap-2">
         <button type="submit" disabled={w.busy || !file || !expires} className={primary}>{t("send")}</button>
         <button type="button" onClick={() => setOpen(false)} className={quiet}>{t("back")}</button>

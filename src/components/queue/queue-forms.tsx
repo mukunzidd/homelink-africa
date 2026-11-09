@@ -16,12 +16,29 @@ import {
   updateIncident,
 } from "@/app/actions/queue";
 import { useToast } from "@/components/notifications/toaster";
+import { Select } from "@/components/ui/select";
+import { SingleDatePicker } from "@/components/ui/single-date-picker";
 import { cn } from "@/lib/cn";
 
 export const control = "min-h-10 w-full rounded-ctl border border-line bg-surface px-3 text-[14px] text-ink";
 export const primary = "min-h-10 cursor-pointer rounded-ctl bg-brand px-4 text-[14px] font-semibold text-on-brand hover:bg-brand-deep disabled:opacity-60";
 export const quiet = "min-h-10 cursor-pointer rounded-ctl border border-line bg-surface px-4 text-[14px] font-semibold text-ink hover:border-brand disabled:opacity-60";
 export const label = "flex flex-col gap-1 text-[12.5px] text-ink-3";
+
+/**
+ * The small caption the workspace puts over a field, for a brand control that
+ * names itself. `Select` carries its own accessible name (`hideLabel`), so the
+ * caption is visual only; a wrapping `<label>` would nest inside the one
+ * `Select` renders and point at a button rather than an input.
+ */
+export function Caption({ text, className, children }: { text: string; className?: string; children: React.ReactNode }) {
+  return (
+    <div className={cn(label, className)}>
+      <span aria-hidden="true">{text}</span>
+      {children}
+    </div>
+  );
+}
 
 /** Runs a write, then refreshes the server page; a refusal shows inline. */
 export function useWrite() {
@@ -46,15 +63,17 @@ export function useWrite() {
   return { busy, error, setError, run };
 }
 
-export function TeamSelect({ team, value, onChange, name }: { team: string[]; value: string; onChange: (v: string) => void; name: string }) {
+export function TeamSelect({ team, value, onChange, name, disabled }: { team: string[]; value: string; onChange: (v: string) => void; name: string; disabled?: boolean }) {
   const t = useTranslations("workspace.queue");
   return (
-    <select aria-label={name} value={value} onChange={(e) => onChange(e.target.value)} className={control}>
-      <option value="">{t("nobody")}</option>
-      {team.map((p) => (
-        <option key={p} value={p}>{p}</option>
-      ))}
-    </select>
+    <Select
+      label={name}
+      hideLabel
+      value={value}
+      disabled={disabled}
+      onChange={onChange}
+      options={[{ value: "", label: t("nobody") }, ...team.map((p) => ({ value: p, label: p }))]}
+    />
   );
 }
 
@@ -66,10 +85,9 @@ export function AskActions({ id, owner, status, team }: { id: string; owner?: st
   const amount = Number(francs.replace(/[\s,.]/g, ""));
   return (
     <div className="flex flex-col gap-4">
-      <label className={cn(label, "max-w-xs")}>
-        {t("owner")}
+      <Caption text={t("owner")} className="max-w-xs">
         <TeamSelect team={team} name={t("owner")} value={owner ?? ""} onChange={(v) => w.run(() => assignAsk(id, v), t("assigned", { name: v || t("nobody") }))} />
-      </label>
+      </Caption>
       {(status === "open" || status === "quoted") && (
         <form
           className="flex flex-col gap-2 rounded-ctl border border-line bg-surface p-3"
@@ -144,8 +162,8 @@ export function InspectionActions({
           }, t("visitBooked"));
         }}
       >
-        <label className={label}>{t("date")}<input type="date" min={today} value={date} onChange={(e) => setDate(e.target.value)} className={control} /></label>
-        <label className={cn(label, "min-w-[180px]")}>{t("inspector")}<TeamSelect team={team} name={t("inspector")} value={who} onChange={setWho} /></label>
+        <SingleDatePicker label={t("date")} minDate={today} value={date || null} onChange={(d) => setDate(d ?? "")} className="w-48" />
+        <Caption text={t("inspector")} className="min-w-[180px]"><TeamSelect team={team} name={t("inspector")} value={who} onChange={setWho} /></Caption>
         <button type="submit" disabled={w.busy || !date || !who} className={quiet}>{scheduledFor ? t("reschedule") : t("schedule")}</button>
       </form>
 
@@ -203,13 +221,16 @@ export function IncidentActions({ id, status, assignee, team, stay, ticketId }: 
   return (
     <div className="flex flex-col gap-3">
       <div className="grid max-w-md gap-2 sm:grid-cols-2">
-        <label className={label}>{t("who")}<TeamSelect team={team} name={t("who")} value={assignee ?? ""} onChange={(v) => w.run(() => updateIncident(id, { assignee: v }), t("assigned", { name: v || t("nobody") }))} /></label>
-        <label className={label}>
-          {t("status")}
-          <select value={status} onChange={(e) => w.run(() => updateIncident(id, { status: e.target.value as Incident["status"] }))} className={control}>
-            {(["open", "inProgress", "resolved"] as const).map((s) => <option key={s} value={s}>{t(`incidentStatus.${s}`)}</option>)}
-          </select>
-        </label>
+        <Caption text={t("who")}><TeamSelect team={team} name={t("who")} value={assignee ?? ""} onChange={(v) => w.run(() => updateIncident(id, { assignee: v }), t("assigned", { name: v || t("nobody") }))} /></Caption>
+        <Caption text={t("status")}>
+          <Select
+            label={t("status")}
+            hideLabel
+            value={status}
+            onChange={(v) => w.run(() => updateIncident(id, { status: v as Incident["status"] }))}
+            options={(["open", "inProgress", "resolved"] as const).map((s) => ({ value: s, label: t(`incidentStatus.${s}`) }))}
+          />
+        </Caption>
       </div>
       {stay && !ticketId && (
         <button type="button" disabled={w.busy} onClick={() => w.run(async () => { const r = await incidentToTicket(id); if (!r.ok) throw new Error(); }, t("ticketOpened"))} className={cn(quiet, "self-start")}>

@@ -8,6 +8,7 @@ import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { SectionHeader } from "@/components/workspace/section-header";
 import { ExportCsv } from "@/components/workspace/admin-forms";
+import { FormDate, FormSelect } from "@/components/ui/form-controls";
 
 const ACTORS: Role[] = ["admin", "ops", "driver", "guide", "guest"];
 
@@ -46,10 +47,10 @@ export default async function Audit({ params, searchParams }: { params: Promise<
       <SectionHeader title={t("audit")} description={t("auditBody")} />
       <div className="flex flex-wrap items-end justify-between gap-3">
         <form className="flex flex-wrap items-end gap-2">
-          <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">{t("who")}<select name="actor" defaultValue={actor ?? ""} className={field}><option value="">{t("anyone")}</option>{ACTORS.map((a) => <option key={a} value={a}>{t(`actors.${a}`)}</option>)}</select></label>
+          <div className="flex w-40 flex-col gap-1 text-[12.5px] text-ink-3"><span aria-hidden="true">{t("who")}</span><FormSelect name="actor" label={t("who")} hideLabel size="md" defaultValue={actor ?? ""} options={[{ value: "", label: t("anyone") }, ...ACTORS.map((a) => ({ value: a, label: t(`actors.${a}`) }))]} /></div>
           <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">{t("what")}<input name="action" defaultValue={sp.action ?? ""} placeholder="booking.cancel" className={`${field} w-44 font-mono`} /></label>
-          <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">{t("from")}<input type="date" name="from" defaultValue={sp.from ?? ""} className={field} /></label>
-          <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">{t("until")}<input type="date" name="to" defaultValue={sp.to ?? ""} className={field} /></label>
+          <FormDate name="from" label={t("from")} defaultValue={isIsoDate(sp.from) ? sp.from : null} className="w-44" />
+          <FormDate name="to" label={t("until")} defaultValue={isIsoDate(sp.to) ? sp.to : null} className="w-44" />
           <button type="submit" className="min-h-10 cursor-pointer rounded-ctl border border-line bg-surface px-4 text-[14px] font-semibold text-ink hover:border-brand">{t("filter")}</button>
         </form>
         <ExportCsv name="homelink-audit.csv" rows={[["when", "who", "what", "target", "detail"], ...rows.map((e) => [e.at, e.actor, e.action, e.target, e.detail ?? ""])]} />

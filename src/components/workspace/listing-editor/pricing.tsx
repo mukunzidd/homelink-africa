@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import type { LeaseIncluded, LeaseTerms, Listing, StayMode } from "@/lib/domain/types";
 import { exponentOf, type Money } from "@/lib/domain/money";
 import { EditorForm, FieldError, field, fieldLabel } from "./editor-form";
+import { SingleDatePicker } from "@/components/ui/single-date-picker";
 import { cn } from "@/lib/cn";
 
 type D = { modes: StayMode[]; nightly: string; monthly: string; minNights: number; terms: LeaseTerms };
@@ -77,10 +78,7 @@ export function PricingTab({ listing }: { listing: Listing }) {
                   {t("depositMonths")}
                   <input type="number" min={0} max={6} value={d.terms.depositMonths} onChange={(e) => set({ ...d, terms: { ...d.terms, depositMonths: Number(e.target.value) } })} className={field} />
                 </label>
-                <label className={fieldLabel}>
-                  {t("availableFrom")}
-                  <input type="date" value={d.terms.availableFrom} onChange={(e) => set({ ...d, terms: { ...d.terms, availableFrom: e.target.value } })} className={field} />
-                </label>
+                <SingleDatePicker label={t("availableFrom")} minDate="2000-01-01" value={d.terms.availableFrom || null} onChange={(x) => set({ ...d, terms: { ...d.terms, availableFrom: x ?? "" } })} />
               </div>
               <div className="flex flex-wrap gap-2">
                 {INCLUDES.map((x) => {

@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { sendContact } from "@/app/actions/contact";
-import { control, label, primary } from "@/components/queue/queue-forms";
+import { Caption, control, label, primary } from "@/components/queue/queue-forms";
+import { Select } from "@/components/ui/select";
 import { cn } from "@/lib/cn";
 
 const TOPICS = ["booking", "change", "payment", "stay", "renting", "other"] as const;
@@ -45,7 +46,7 @@ export function ContactForm({ signedIn, references }: { signedIn: boolean; refer
       }}
     >
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className={label}>{t("topic")}<select value={topic} onChange={(e) => setTopic(e.target.value as (typeof TOPICS)[number])} className={control}>{TOPICS.map((x) => <option key={x} value={x}>{t(`topics.${x}`)}</option>)}</select></label>
+        <Caption text={t("topic")}><Select label={t("topic")} hideLabel value={topic} onChange={(v) => setTopic(v as (typeof TOPICS)[number])} options={TOPICS.map((x) => ({ value: x, label: t(`topics.${x}`) }))} /></Caption>
         <label className={label}>
           {t("reference")}
           <input list="my-refs" value={reference} onChange={(e) => setReference(e.target.value.toUpperCase())} placeholder="HL-4KQ2-8M" aria-invalid={result?.ok === false && result.reason === "reference"} className={cn(control, "font-mono", result?.ok === false && result.reason === "reference" && "border-crit")} />

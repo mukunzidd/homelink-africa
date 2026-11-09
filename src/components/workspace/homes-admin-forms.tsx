@@ -4,8 +4,21 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import type { HomeForSale, Viewing } from "@/lib/domain/types";
 import { assignJob, recordRent, returnDeposit, sendRentReminder, setViewing, startMoveOut, updateSale } from "@/app/actions/homes-admin";
-import { control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
+import { Caption, control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
+import { Select } from "@/components/ui/select";
+import { SingleDatePicker } from "@/components/ui/single-date-picker";
 import { cn } from "@/lib/cn";
+
+/**
+ * Half-hours from 06:00 to 22:00, as "HH:MM", in place of the native time input with a 30-minute step.
+ * A time already on the viewing that falls between them is kept as a choice,
+ * so opening the form never silently moves it.
+ */
+function halfHours(current: string): string[] {
+  const all: string[] = [];
+  for (let m = 6 * 60; m <= 22 * 60; m += 30) all.push(`${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`);
+  return current && !all.includes(current) ? [...all, current].sort() : all;
+}
 
 /** Remind, record a transfer, and the move-out: the three things a rent roll does. */
 export function TenantActions({ reference, rentMajor, currency, moveOut, today }: { reference: string; rentMajor: number; currency: string; moveOut?: { status: "scheduled" | "returned"; date: string }; today: string }) {
@@ -29,10 +42,7 @@ export function TenantActions({ reference, rentMajor, currency, moveOut, today }
       </form>
       {!moveOut ? (
         <form className="flex flex-wrap items-end gap-2" onSubmit={(e) => { e.preventDefault(); w.run(async () => { if (!(await startMoveOut(reference, date)).ok) fail(); }, t("moveOutBooked")); }}>
-          <label className={cn(label, "w-48")}>
-            {t("moveOutDate")}
-            <input type="date" min={today} required value={date} onChange={(e) => setDate(e.target.value)} className={control} />
-          </label>
+          <SingleDatePicker label={t("moveOutDate")} minDate={today} value={date || null} onChange={(d) => setDate(d ?? "")} className="w-48" />
           <button type="submit" disabled={w.busy || !date} className={quiet}>{t("startMoveOut")}</button>
         </form>
       ) : moveOut.status === "scheduled" ? (
@@ -61,12 +71,9 @@ export function SaleEditor({ id, priceMajor, currency, status }: { id: string; p
         {t("askingPrice", { currency })}
         <input inputMode="decimal" value={price} onChange={(e) => setPrice(e.target.value)} className={cn(control, "tnum")} />
       </label>
-      <label className={cn(label, "w-48")}>
-        {t("status")}
-        <select value={state} onChange={(e) => setState(e.target.value as typeof state)} className={control}>
-          {STATUSES.map((s) => <option key={s} value={s}>{t(`sale.${s}`)}</option>)}
-        </select>
-      </label>
+      <Caption text={t("status")} className="w-48">
+        <Select label={t("status")} hideLabel value={state} onChange={(v) => setState(v as typeof state)} options={STATUSES.map((s) => ({ value: s, label: t(`sale.${s}`) }))} />
+      </Caption>
       <button type="submit" disabled={w.busy} className={primary}>{t("save")}</button>
       {w.error && <p role="alert" className="w-full text-[13px] text-crit">{w.error}</p>}
     </form>
@@ -92,8 +99,8 @@ export function ViewingActions({ id, status, date, time, today }: { id: string; 
       </div>
       {moving && (
         <form className="flex flex-wrap items-end gap-2" onSubmit={(e) => { e.preventDefault(); go("rescheduled", { date: d, time: tm }, t("viewingMoved")); }}>
-          <label className={cn(label, "w-44")}>{t("day")}<input type="date" min={today} value={d} onChange={(e) => setD(e.target.value)} className={control} /></label>
-          <label className={cn(label, "w-32")}>{t("time")}<input type="time" step={1800} value={tm} onChange={(e) => setTm(e.target.value)} className={control} /></label>
+          <SingleDatePicker label={t("day")} minDate={today} value={d || null} onChange={(x) => setD(x ?? "")} className="w-44" />
+          <Caption text={t("time")} className="w-32"><Select label={t("time")} hideLabel value={tm} onChange={setTm} options={halfHours(time).map((h) => ({ value: h, label: h }))} /></Caption>
           <button type="submit" disabled={w.busy} className={primary}>{t("move")}</button>
         </form>
       )}
@@ -106,18 +113,18 @@ export function AssignJob({ bookingId, current, options }: { bookingId: string; 
   const t = useTranslations("workspace.homes");
   const w = useWrite();
   return (
-    <label className="flex items-center gap-2 text-[13px] text-ink-3">
-      <span className="sr-only">{t("assignTo")}</span>
-      <select
+    <div className="flex items-center gap-2 text-[13px] text-ink-3">
+      <Select
+        label={t("assignTo")}
+        hideLabel
+        size="sm"
+        className="min-w-44"
         value={current ?? ""}
         disabled={w.busy}
-        onChange={(e) => w.run(async () => { if (!(await assignJob(bookingId, e.target.value || null)).ok) throw new Error(); }, t("assigned"))}
-        className="min-h-9 rounded-ctl border border-line bg-surface px-2 text-[13px] text-ink"
-      >
-        <option value="">{t("nobody")}</option>
-        {options.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
-      </select>
+        onChange={(v) => w.run(async () => { if (!(await assignJob(bookingId, v || null)).ok) throw new Error(); }, t("assigned"))}
+        options={[{ value: "", label: t("nobody") }, ...options.map((o) => ({ value: o.id, label: o.name }))]}
+      />
       {w.error && <span role="alert" className="text-crit">{w.error}</span>}
-    </label>
+    </div>
   );
 }

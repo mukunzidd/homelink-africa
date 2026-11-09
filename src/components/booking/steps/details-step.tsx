@@ -7,7 +7,8 @@ import { VALID } from "@/lib/booking/validation";
 import { usePreferences } from "@/lib/preferences/context";
 import { Link } from "@/i18n/navigation";
 import { UsersIcon } from "@/components/ui/icons";
-import { Field, StepSection, TextArea, TextInput, ChoiceCards, controlClass } from "../fields";
+import { Field, StepSection, TextArea, TextInput, ChoiceCards } from "../fields";
+import { Select } from "@/components/ui/select";
 
 const ARRIVALS = Array.from({ length: 18 }, (_, i) => `${String(i + 6).padStart(2, "0")}:00`);
 
@@ -104,18 +105,16 @@ export function DetailsStep({
 
       {stayish && (
         <StepSection title={t("arrivalTitle")}>
-          <Field label={t("arrival")} hint={t("arrivalHint")} id="arrival-time">
-            {(a) => (
-              <select {...a} value={g.arrivalTime ?? ""} onChange={(e) => set({ arrivalTime: e.target.value || undefined })} className={`${controlClass()} tnum cursor-pointer sm:max-w-60`}>
-                <option value="">{t("arrivalNotSure")}</option>
-                {ARRIVALS.map((x) => (
-                  <option key={x} value={x}>
-                    {x}
-                  </option>
-                ))}
-              </select>
-            )}
-          </Field>
+          <div className="flex flex-col gap-1.5">
+            <Select
+              label={t("arrival")}
+              value={g.arrivalTime ?? ""}
+              onChange={(v) => set({ arrivalTime: v || undefined })}
+              className="tnum sm:max-w-60"
+              options={[{ value: "", label: t("arrivalNotSure") }, ...ARRIVALS.map((x) => ({ value: x, label: x }))]}
+            />
+            <span className="text-xs leading-relaxed text-ink-3">{t("arrivalHint")}</span>
+          </div>
           <div className="flex flex-col gap-1.5">
             <p className="text-[13px] font-semibold text-ink-2">{t("purpose")}</p>
             <ChoiceCards

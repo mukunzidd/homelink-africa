@@ -4,7 +4,9 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Announcement, ServiceKind, StaffMember } from "@/lib/domain/types";
 import { deactivateStaff, inviteStaff, saveContent, saveSettings, setStaffRole } from "@/app/actions/admin";
-import { control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
+import { Caption, control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
+import { Select } from "@/components/ui/select";
+import { SingleDatePicker } from "@/components/ui/single-date-picker";
 import { ChevronDownIcon, CloseIcon, PlusIcon } from "@/components/ui/icons";
 import { toCsv } from "@/lib/export/csv";
 import { cn } from "@/lib/cn";
@@ -30,7 +32,7 @@ export function InviteForm() {
   return (
     <form className="flex flex-wrap items-end gap-2 rounded-card border border-line bg-surface p-4" onSubmit={(e) => { e.preventDefault(); w.run(async () => { await must(inviteStaff(email, role)); setEmail(""); }, t("invited", { email })); }}>
       <label className={cn(label, "min-w-60 flex-1")}>{t("email")}<input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className={control} /></label>
-      <label className={cn(label, "w-40")}>{t("role")}<select value={role} onChange={(e) => setRole(e.target.value as StaffMember["role"])} className={control}>{ROLES.map((r) => <option key={r} value={r}>{t(`roles.${r}`)}</option>)}</select></label>
+      <Caption text={t("role")} className="w-40"><Select label={t("role")} hideLabel value={role} onChange={(v) => setRole(v as StaffMember["role"])} options={ROLES.map((r) => ({ value: r, label: t(`roles.${r}`) }))} /></Caption>
       <button type="submit" disabled={w.busy} className={primary}>{t("invite")}</button>
       {w.error && <p role="alert" className="w-full text-[13px] text-crit">{t("inviteRefused")}</p>}
     </form>
@@ -42,9 +44,7 @@ export function StaffControls({ id, role, status }: { id: string; role: StaffMem
   const w = useWrite();
   return (
     <div className="flex flex-wrap items-center justify-end gap-2">
-      <select aria-label={t("role")} value={role} disabled={w.busy || status === "deactivated"} onChange={(e) => w.run(() => must(setStaffRole(id, e.target.value)), t("roleChanged"))} className="min-h-9 rounded-ctl border border-line bg-surface px-2 text-[13px] text-ink">
-        {ROLES.map((r) => <option key={r} value={r}>{t(`roles.${r}`)}</option>)}
-      </select>
+      <Select label={t("role")} hideLabel size="sm" className="w-32" value={role} disabled={w.busy || status === "deactivated"} onChange={(v) => w.run(() => must(setStaffRole(id, v)), t("roleChanged"))} options={ROLES.map((r) => ({ value: r, label: t(`roles.${r}`) }))} />
       {status !== "deactivated" && <button type="button" disabled={w.busy} onClick={() => w.run(() => must(deactivateStaff(id)), t("deactivated"))} className="min-h-9 cursor-pointer rounded-ctl px-2 text-[13px] font-medium text-ink-2 hover:text-crit">{t("deactivate")}</button>}
       {w.error && <span role="alert" className="w-full text-right text-[12.5px] text-crit">{t("lastAdmin")}</span>}
     </div>
@@ -61,8 +61,9 @@ export function AnnouncementsEditor({ initial, today }: { initial: Announcement[
       {list.map((a, i) => (
         <div key={a.id} className="grid gap-2 rounded-ctl border border-line bg-surface p-3 sm:grid-cols-[minmax(0,1fr)_150px_150px_auto] sm:items-end">
           <label className={label}>{t("annText")}<input required maxLength={200} value={a.text} onChange={(e) => set(i, { text: e.target.value })} className={control} /></label>
-          <label className={label}>{t("from")}<input type="date" required value={a.start} onChange={(e) => set(i, { start: e.target.value })} className={control} /></label>
-          <label className={label}>{t("until")}<input type="date" required min={a.start} value={a.end} onChange={(e) => set(i, { end: e.target.value })} className={control} /></label>
+          {/* Both required: a cleared calendar keeps the old day rather than leaving the field empty, and an end before the new start moves up to it, which the native min used to refuse at submit. */}
+          <SingleDatePicker label={t("from")} minDate="2000-01-01" value={a.start} onChange={(d) => d && set(i, { start: d, ...(a.end < d ? { end: d } : {}) })} />
+          <SingleDatePicker label={t("until")} minDate={a.start} value={a.end} onChange={(d) => d && set(i, { end: d })} />
           <button type="button" aria-label={t("remove")} onClick={() => setList(list.filter((_, j) => j !== i))} className="grid size-10 cursor-pointer place-items-center rounded-ctl text-ink-2 hover:bg-crit-tint hover:text-crit"><CloseIcon size={14} /></button>
         </div>
       ))}
@@ -91,13 +92,9 @@ export function FeaturedEditor({ homes, initial }: { homes: { id: string; name: 
           </li>
         ))}
       </ol>
-      <label className={cn(label, "max-w-sm")}>
-        {t("addHome")}
-        <select value="" onChange={(e) => e.target.value && setIds([...ids, e.target.value])} className={control}>
-          <option value="">{t("choose")}</option>
-          {homes.filter((h) => !ids.includes(h.id)).map((h) => <option key={h.id} value={h.id}>{h.name}</option>)}
-        </select>
-      </label>
+      <Caption text={t("addHome")} className="max-w-sm">
+        <Select label={t("addHome")} hideLabel value="" onChange={(v) => v && setIds([...ids, v])} options={[{ value: "", label: t("choose") }, ...homes.filter((h) => !ids.includes(h.id)).map((h) => ({ value: h.id, label: h.name }))]} />
+      </Caption>
       <p className="text-[12.5px] text-ink-3">{t("featuredHint")}</p>
       <SaveBar busy={w.busy} error={w.error} />
     </form>
@@ -157,8 +154,8 @@ export function PromosForm({ rows, today }: { rows: PromoRow[]; today: string })
           <label className={label}>{t("code")}<input required value={p.code} maxLength={20} onChange={(e) => set(i, { code: e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "") })} className={cn(control, "font-mono")} /></label>
           <label className={label}>{t("percent")}<input type="number" min={1} max={90} value={p.percent} onChange={(e) => set(i, { percent: Number(e.target.value) })} className={control} /></label>
           <label className={label}>{t("cap")}<input inputMode="numeric" value={p.capRwf} onChange={(e) => set(i, { capRwf: Number(e.target.value.replace(/[^\d]/g, "")) })} className={cn(control, "tnum")} /></label>
-          <label className={label}>{t("expires")}<input type="date" min={today} value={p.validUntil} onChange={(e) => set(i, { validUntil: e.target.value })} className={control} /></label>
-          <label className={label}>{t("lane")}<select value={p.lane ?? ""} onChange={(e) => set(i, { lane: e.target.value || undefined })} className={control}><option value="">{t("anyLane")}</option>{(["stay", "car", "experience"] as const).map((l) => <option key={l} value={l}>{t(`lanes.${l}`)}</option>)}</select></label>
+          <SingleDatePicker label={t("expires")} minDate={today} value={p.validUntil || null} onChange={(d) => set(i, { validUntil: d ?? "" })} />
+          <Caption text={t("lane")}><Select label={t("lane")} hideLabel value={p.lane ?? ""} onChange={(v) => set(i, { lane: v || undefined })} options={[{ value: "", label: t("anyLane") }, ...(["stay", "car", "experience"] as const).map((l) => ({ value: l, label: t(`lanes.${l}`) }))]} /></Caption>
           <button type="button" aria-label={t("remove")} onClick={() => setList(list.filter((_, j) => j !== i))} className="grid size-10 cursor-pointer place-items-center rounded-ctl text-ink-2 hover:text-crit"><CloseIcon size={14} /></button>
         </div>
       ))}

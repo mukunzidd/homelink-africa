@@ -2,7 +2,9 @@
 
 import { useTranslations } from "next-intl";
 import type { Listing } from "@/lib/domain/types";
-import { EditorForm, field, fieldLabel } from "./editor-form";
+import { EditorForm } from "./editor-form";
+import { Select } from "@/components/ui/select";
+import { SingleDatePicker } from "@/components/ui/single-date-picker";
 
 /** The person on the team who looks after this home, named on its page. */
 export function ManagerTab({ listing, team }: { listing: Listing; team: string[] }) {
@@ -12,17 +14,8 @@ export function ManagerTab({ listing, team }: { listing: Listing; team: string[]
     <EditorForm<Listing["propertyManager"]> listingId={listing.id} initial={listing.propertyManager} toPatch={(propertyManager) => ({ propertyManager })}>
       {(d, set) => (
         <div className="grid max-w-xl gap-3 sm:grid-cols-2">
-          <label className={fieldLabel}>
-            {t("manager")}
-            <select value={d.name} onChange={(e) => set({ ...d, name: e.target.value })} className={field}>
-              <option value="">{t("nobody")}</option>
-              {people.map((p) => <option key={p} value={p}>{p}</option>)}
-            </select>
-          </label>
-          <label className={fieldLabel}>
-            {t("managerSince")}
-            <input type="date" value={d.since} onChange={(e) => set({ ...d, since: e.target.value })} className={field} />
-          </label>
+          <Select label={t("manager")} value={d.name} onChange={(v) => set({ ...d, name: v })} options={[{ value: "", label: t("nobody") }, ...people.map((p) => ({ value: p, label: p }))]} />
+          <SingleDatePicker label={t("managerSince")} minDate="2000-01-01" value={d.since || null} onChange={(x) => set({ ...d, since: x ?? "" })} className="self-end" />
           <p className="text-[13px] text-ink-3 sm:col-span-2">{t("managerHint")}</p>
         </div>
       )}

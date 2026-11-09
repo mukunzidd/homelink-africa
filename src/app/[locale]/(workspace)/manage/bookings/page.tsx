@@ -9,6 +9,7 @@ import { Link } from "@/i18n/navigation";
 import { SectionHeader } from "@/components/workspace/section-header";
 import { DataTable, type Column } from "@/components/workspace/data-table";
 import { StatusPill } from "@/components/ui/status-pill";
+import { FormDate, FormSelect } from "@/components/ui/form-controls";
 import { cn } from "@/lib/cn";
 import { STATUS_TONE, paidState } from "@/lib/workspace/paid-state";
 
@@ -93,28 +94,16 @@ export default async function Bookings({
           {t("search")}
           <input name="q" defaultValue={q} placeholder={t("searchPlaceholder")} className={control} />
         </label>
-        <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">
-          {t("colStatus")}
-          <select name="status" defaultValue={status ?? ""} className={control}>
-            <option value="">{t("all")}</option>
-            {STATUSES.map((s) => <option key={s} value={s}>{tStatus(s)}</option>)}
-          </select>
-        </label>
-        <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">
-          {t("lane")}
-          <select name="lane" defaultValue={lane ?? ""} className={control}>
-            <option value="">{t("all")}</option>
-            {LANES.map((l) => <option key={l} value={l}>{t(`lanes.${l}`)}</option>)}
-          </select>
-        </label>
-        <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">
-          {t("from")}
-          <input type="date" name="from" defaultValue={from} className={control} />
-        </label>
-        <label className="flex flex-col gap-1 text-[12.5px] text-ink-3">
-          {t("to")}
-          <input type="date" name="to" defaultValue={to} className={control} />
-        </label>
+        <div className="flex w-40 flex-col gap-1 text-[12.5px] text-ink-3">
+          <span aria-hidden="true">{t("colStatus")}</span>
+          <FormSelect name="status" label={t("colStatus")} hideLabel size="md" defaultValue={status ?? ""} options={[{ value: "", label: t("all") }, ...STATUSES.map((s) => ({ value: s, label: tStatus(s) }))]} />
+        </div>
+        <div className="flex w-40 flex-col gap-1 text-[12.5px] text-ink-3">
+          <span aria-hidden="true">{t("lane")}</span>
+          <FormSelect name="lane" label={t("lane")} hideLabel size="md" defaultValue={lane ?? ""} options={[{ value: "", label: t("all") }, ...LANES.map((l) => ({ value: l, label: t(`lanes.${l}`) }))]} />
+        </div>
+        <FormDate name="from" label={t("from")} defaultValue={from ?? null} className="w-44" />
+        <FormDate name="to" label={t("to")} defaultValue={to ?? null} className="w-44" />
         <button type="submit" className="min-h-10 cursor-pointer rounded-ctl bg-brand px-4 text-[14px] font-semibold text-on-brand hover:bg-brand-deep">{t("apply")}</button>
         {filtered && <Link href="/manage/bookings" className="min-h-10 content-center rounded-ctl px-3 text-[14px] font-semibold text-ink-2 hover:bg-surface-2">{t("clear")}</Link>}
       </form>

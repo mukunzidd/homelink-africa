@@ -10,6 +10,8 @@ import { cancelBooking, changeBookingDates } from "@/app/actions/bookings";
 import { addGuests, previewChange, reportIssue, submitCheckIn, submitReview } from "@/app/actions/stay";
 import { Dialog } from "@/components/ui/dialog";
 import { FileDrop } from "@/components/ui/file-drop";
+import { Select } from "@/components/ui/select";
+import { SingleDatePicker } from "@/components/ui/single-date-picker";
 import { useToast } from "@/components/notifications/toaster";
 import {
   CalendarIcon,
@@ -21,7 +23,7 @@ import {
   UsersIcon,
   WifiIcon,
 } from "@/components/ui/icons";
-import { ChoiceCards, Field, TextArea, TextInput, controlClass } from "@/components/booking/fields";
+import { ChoiceCards, Field, TextArea, TextInput } from "@/components/booking/fields";
 import { cn } from "@/lib/cn";
 
 export type ManageProps = {
@@ -220,16 +222,7 @@ function CancelFooter({
   const [busy, setBusy] = useState(false);
   return (
     <div className="flex w-full flex-col gap-4">
-      <label className="flex flex-col gap-1.5 text-[13px] font-semibold text-ink-2">
-        {t("cancelReason")}
-        <select value={reason} onChange={(e) => setReason(e.target.value as typeof reason)} className={`${controlClass()} cursor-pointer`}>
-          {REASONS.map((r) => (
-            <option key={r} value={r}>
-              {t(`reasons.${r}`)}
-            </option>
-          ))}
-        </select>
-      </label>
+      <Select label={t("cancelReason")} value={reason} onChange={(v) => setReason(v as typeof reason)} options={REASONS.map((r) => ({ value: r, label: t(`reasons.${r}`) }))} />
       <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
         <button type="button" onClick={onDone} className="min-h-11 cursor-pointer rounded-ctl border border-line px-4 text-[15px] font-semibold text-ink hover:bg-surface-2">
           {t("keep")}
@@ -294,16 +287,11 @@ function DatesDialog({ open, onClose, extend, reference, start, end, today }: Ma
     >
       <div className="flex flex-col gap-4">
         <div className="grid gap-3 sm:grid-cols-2">
-          <Field label={t("arrive")} id="mb-from">
-            {(a) => (
-              <TextInput {...a} type="date" min={today} disabled={extend} value={from} onChange={(e) => { setFrom(e.target.value); void check(e.target.value, to); }} />
-            )}
-          </Field>
-          <Field label={t("leave")} id="mb-to">
-            {(a) => (
-              <TextInput {...a} type="date" min={extend ? end : from} value={to} onChange={(e) => { setTo(e.target.value); void check(from, e.target.value); }} />
-            )}
-          </Field>
+          {/* The calendar has no disabled state; a disabled fieldset disables the button inside it, which is what `disabled` did on the native input when extending. */}
+          <fieldset disabled={extend} className="m-0 min-w-0 border-0 p-0 disabled:opacity-60">
+            <SingleDatePicker label={t("arrive")} minDate={today} value={from || null} onChange={(d) => { const v = d ?? ""; setFrom(v); void check(v, to); }} />
+          </fieldset>
+          <SingleDatePicker label={t("leave")} minDate={(extend ? end : from) || today} value={to || null} onChange={(d) => { const v = d ?? ""; setTo(v); void check(from, v); }} />
         </div>
         <p aria-live="polite" className="min-h-6 text-[14px]">
           {result === null ? (
@@ -405,17 +393,7 @@ function ReportDialog({ open, onClose, reference }: { open: boolean; onClose: ()
       }
     >
       <div className="flex flex-col gap-4">
-        <Field label={t("category")} id="r-cat">
-          {(a) => (
-            <select {...a} value={category} onChange={(e) => setCategory(e.target.value as IncidentCategory)} className={`${controlClass()} cursor-pointer`}>
-              {CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {t(`categories.${c}`)}
-                </option>
-              ))}
-            </select>
-          )}
-        </Field>
+        <Select label={t("category")} value={category} onChange={(v) => setCategory(v as IncidentCategory)} options={CATEGORIES.map((c) => ({ value: c, label: t(`categories.${c}`) }))} />
         <div className="flex flex-col gap-1.5">
           <p className="text-[13px] font-semibold text-ink-2">{t("urgency")}</p>
           <ChoiceCards

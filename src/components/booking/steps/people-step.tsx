@@ -5,7 +5,9 @@ import { useLocale, useTranslations } from "next-intl";
 import type { Experience, Participant } from "@/lib/domain/types";
 import type { BookingDraft, DraftAction } from "@/lib/booking/draft";
 import { ClockIcon } from "@/components/ui/icons";
-import { ChoiceCards, Field, StepSection, TextArea, TextInput, controlClass } from "../fields";
+import { ChoiceCards, Field, StepSection, TextArea, TextInput } from "../fields";
+import { Select } from "@/components/ui/select";
+import { cn } from "@/lib/cn";
 
 /** Where most guests on a Rwandan day out come from, then everyone else. */
 const NATIONALITIES = ["RW", "KE", "UG", "TZ", "BI", "CD", "US", "GB", "FR", "BE", "DE", "NL", "CA", "CN", "IN", "ZA", "NG"];
@@ -126,19 +128,17 @@ export function PeopleStep({
                 </div>
                 {permit && (
                   <div className="grid gap-3 sm:grid-cols-2">
-                    <Field label={t("nationality")} error={natBad && t("nationalityError")} id={`p${i}-nat`}>
-                      {(a) => (
-                        <select {...a} value={p.nationality ?? ""} onChange={(e) => update(i, { nationality: e.target.value || undefined })} className={`${controlClass(a["aria-invalid"])} cursor-pointer`}>
-                          <option value="">{t("choose")}</option>
-                          {NATIONALITIES.map((c) => (
-                            <option key={c} value={c} suppressHydrationWarning>
-                              {names[c]}
-                            </option>
-                          ))}
-                          <option value="XX">{t("other")}</option>
-                        </select>
-                      )}
-                    </Field>
+                    {/* The listbox labels itself; the error is the focus target the flow jumps to, as on the driver step. */}
+                    <div className={cn("flex flex-col gap-1.5", natBad && "[&_[role=combobox]]:border-crit")}>
+                      <Select
+                        label={t("nationality")}
+                        value={p.nationality ?? ""}
+                        onChange={(v) => update(i, { nationality: v || undefined })}
+                       
+                        options={[{ value: "", label: t("choose") }, ...NATIONALITIES.map((c) => ({ value: c, label: names[c] })), { value: "XX", label: t("other") }]}
+                      />
+                      {natBad && <p className="text-xs text-crit" aria-invalid="true" tabIndex={-1}>{t("nationalityError")}</p>}
+                    </div>
                     <Field label={t("passport")} error={passBad && t("passportError")} id={`p${i}-passport`}>
                       {(a) => <TextInput {...a} invalid={a["aria-invalid"]} autoCapitalize="characters" spellCheck={false} value={p.passport ?? ""} onChange={(e) => update(i, { passport: e.target.value.toUpperCase() })} className="font-mono uppercase" />}
                     </Field>

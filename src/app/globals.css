@@ -233,11 +233,54 @@
   }
 
   /*
-   * Dropdowns are a real listbox (components/ui/select.tsx), not a native
-   * `<select>`, because the native open list is drawn by the OS and cannot be
-   * themed. `color-scheme` above still matters for the remaining native
-   * surfaces — scrollbars, and the datalist on the place field.
+   * Dropdowns and dates are a real listbox and calendar (components/ui/
+   * select.tsx, single-date-picker.tsx, and form-controls.tsx for plain
+   * forms), never a native `<select>` or date input: the native open list
+   * and calendar are drawn by the OS and cannot be themed. The sweep flags
+   * any that come back. `color-scheme` above still matters for the native
+   * surfaces that remain: scrollbars, and the datalist on the place field.
+   *
+   * What stays native is brought into the brand here, so a control added
+   * without classes still matches.
    */
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--brand);
+    cursor: pointer;
+  }
+  input[type="checkbox"]:disabled,
+  input[type="radio"]:disabled {
+    cursor: not-allowed;
+  }
+
+  /* The file picker's button, styled as a secondary button. */
+  input[type="file"]::file-selector-button {
+    margin-right: 0.75rem;
+    min-height: 2.25rem;
+    padding: 0 0.875rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-ctl);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  input[type="file"]::file-selector-button:hover {
+    background: var(--surface-2);
+  }
+
+  /* Spinner arrows are tiny, unthemed, and change values by accident on scroll. */
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

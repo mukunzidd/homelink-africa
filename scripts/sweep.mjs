@@ -177,7 +177,13 @@ async function visit(browser, [role, locale, path, width, scheme]) {
         return e.clientWidth >= 8 && e.scrollWidth > e.clientWidth + 1;
       })
       .map((e) => `${e.textContent.trim().slice(0, 40)} (${e.scrollWidth}>${e.clientWidth})`);
+    // A native select or date field opens the operating system's own list
+    // or calendar, which ignores the brand and the theme. ui/form-controls.
+    const native = [...document.querySelectorAll("select, input[type=date], input[type=time], input[type=datetime-local]")]
+      .filter((e) => e.checkVisibility())
+      .map((e) => `${e.tagName.toLowerCase()}${e.type && e.tagName === "INPUT" ? `[${e.type}]` : ""}${e.name ? ` name=${e.name}` : ""}`);
     return {
+      native,
       clipped,
       scrollWidth: document.documentElement.scrollWidth,
       innerWidth,
@@ -188,6 +194,7 @@ async function visit(browser, [role, locale, path, width, scheme]) {
   if (seen) {
     if (seen.scrollWidth > seen.innerWidth) problems.push(`scrolls sideways: ${seen.scrollWidth}px in ${seen.innerWidth}px`);
     for (const c of seen.clipped.slice(0, 5)) problems.push(`clipped: ${c}`);
+    for (const n of [...new Set(seen.native)].slice(0, 5)) problems.push(`native control: ${n}`);
     for (const src of seen.broken) problems.push(`broken image: ${src.slice(0, 120)}`);
     // Rwanda groups money with commas; a period reads as a decimal point.
     const grouped = /\b(RWF|RF|Frw)\s?\d{1,3}\.\d{3}\b/.exec(seen.text);

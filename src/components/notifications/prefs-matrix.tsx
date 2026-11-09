@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import type { Channel, NotificationCategory, NotificationKind, NotificationPrefs } from "@/lib/domain/types";
 import { saveNotificationPrefs } from "@/app/actions/notifications";
 import { CheckIcon, ShieldIcon } from "@/components/ui/icons";
+import { Select } from "@/components/ui/select";
 import { useToast } from "./toaster";
 import { cn } from "@/lib/cn";
 
@@ -185,22 +186,14 @@ export function PrefsMatrix({
         {prefs.quietHours && (
           <div className="flex flex-wrap items-end gap-3">
             {(["from", "to"] as const).map((end) => (
-              <label key={end} className="flex flex-col gap-1 text-[13px] font-semibold text-ink-2">
-                {t(`prefs.${end}`)}
-                <select
-                  value={prefs.quietHours![end]}
-                  onChange={(e) =>
-                    setPrefs((p) => ({ ...p, quietHours: { ...p.quietHours!, [end]: e.target.value } }))
-                  }
-                  className="tnum h-11 w-32 cursor-pointer rounded-ctl border border-line bg-surface px-3 text-[15px] font-normal text-ink"
-                >
-                  {TIMES.map((x) => (
-                    <option key={x} value={x}>
-                      {x}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <Select
+                key={end}
+                label={t(`prefs.${end}`)}
+                className="tnum w-32"
+                value={prefs.quietHours![end]}
+                onChange={(v) => setPrefs((p) => ({ ...p, quietHours: { ...p.quietHours!, [end]: v } }))}
+                options={TIMES.map((x) => ({ value: x, label: x }))}
+              />
             ))}
             <span className="pb-3 text-[13px] text-ink-3">{t("prefs.kigaliTime")}</span>
           </div>

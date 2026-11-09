@@ -10,6 +10,7 @@ import { groupByDay } from "@/lib/notifications/group";
 import { markAllNotificationsRead, markNotificationsRead } from "@/app/actions/notifications";
 import { BellIcon, CloseIcon } from "@/components/ui/icons";
 import { HoverLabel } from "@/components/ui/hover-label";
+import { Select } from "@/components/ui/select";
 import { NotificationItem } from "./notification-item";
 import { notifyChanged, useUnread } from "./use-unread";
 import { useToast } from "./toaster";
@@ -180,21 +181,15 @@ export function NotificationBell({ allHref, role: known }: { allHref: string; ro
             </button>
           ))}
         </div>
-        <label className="ml-auto flex items-center gap-1.5 text-[13px] text-ink-3">
-          <span className="sr-only">{t("filterLabel")}</span>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value as NotificationCategory | "")}
-            className="h-8 cursor-pointer rounded-ctl border border-line bg-surface px-2 text-[13px] text-ink-2"
-          >
-            <option value="">{t("allCategories")}</option>
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>
-                {t(`categories.${c}`)}
-              </option>
-            ))}
-          </select>
-        </label>
+        <Select
+          label={t("filterLabel")}
+          hideLabel
+          size="sm"
+          className="ml-auto w-40"
+          value={category}
+          onChange={(v) => setCategory(v as NotificationCategory | "")}
+          options={[{ value: "", label: t("allCategories") }, ...CATEGORIES.map((c) => ({ value: c, label: t(`categories.${c}`) }))]}
+        />
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto px-1.5 py-1.5">

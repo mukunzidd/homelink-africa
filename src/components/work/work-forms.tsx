@@ -5,7 +5,9 @@ import { useLocale, useTranslations } from "next-intl";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import type { HousekeepingTask, MaintenanceTicket } from "@/lib/domain/types";
 import { addTicketNote, blockForTicket, createTicket, unblockForTicket, updateHousekeeping, updateTicket } from "@/app/actions/work";
-import { TeamSelect, control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
+import { Caption, TeamSelect, control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
+import { Select } from "@/components/ui/select";
+import { SingleDatePicker } from "@/components/ui/single-date-picker";
 import { FileDrop } from "@/components/ui/file-drop";
 import { cn } from "@/lib/cn";
 import { dateTimeFormat } from "@/lib/domain/date-format";
@@ -20,10 +22,9 @@ export function HousekeepingActions({ task, team }: { task: HousekeepingTask; te
   return (
     <div className="flex flex-col gap-3">
       <div className="grid gap-3 sm:grid-cols-[220px_minmax(0,1fr)]">
-        <label className={label}>
-          {t("cleaner")}
+        <Caption text={t("cleaner")}>
           <TeamSelect team={team} name={t("cleaner")} value={task.assignee ?? ""} onChange={(v) => w.run(() => updateHousekeeping(task.id, { assignee: v }), t("assignedTo", { name: v || t("nobody") }))} />
-        </label>
+        </Caption>
         <div className={label}>
           {t("progress")}
           <div role="group" aria-label={t("progress")} className="grid grid-cols-2 gap-1 rounded-ctl bg-surface-2 p-1 sm:grid-cols-4">
@@ -79,22 +80,15 @@ export function TicketActions({ ticket, team, today }: { ticket: MaintenanceTick
   return (
     <div className="flex flex-col gap-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <label className={label}>
-          {t("status")}
-          <select value={ticket.status} disabled={w.busy} onChange={(e) => w.run(() => updateTicket(ticket.id, { status: e.target.value as MaintenanceTicket["status"] }), t("moved"))} className={control}>
-            {STATUSES.map((s) => <option key={s} value={s}>{t(`ticket.${s}`)}</option>)}
-          </select>
-        </label>
-        <label className={label}>
-          {t("priority")}
-          <select value={ticket.priority} disabled={w.busy} onChange={(e) => w.run(() => updateTicket(ticket.id, { priority: e.target.value as MaintenanceTicket["priority"] }), t("moved"))} className={control}>
-            {PRIORITIES.map((p) => <option key={p} value={p}>{t(`priorityName.${p}`)}</option>)}
-          </select>
-        </label>
-        <label className={label}>
-          {t("fixer")}
+        <Caption text={t("status")}>
+          <Select label={t("status")} hideLabel value={ticket.status} disabled={w.busy} onChange={(v) => w.run(() => updateTicket(ticket.id, { status: v as MaintenanceTicket["status"] }), t("moved"))} options={STATUSES.map((s) => ({ value: s, label: t(`ticket.${s}`) }))} />
+        </Caption>
+        <Caption text={t("priority")}>
+          <Select label={t("priority")} hideLabel value={ticket.priority} disabled={w.busy} onChange={(v) => w.run(() => updateTicket(ticket.id, { priority: v as MaintenanceTicket["priority"] }), t("moved"))} options={PRIORITIES.map((p) => ({ value: p, label: t(`priorityName.${p}`) }))} />
+        </Caption>
+        <Caption text={t("fixer")}>
           <TeamSelect team={people} name={t("fixer")} value={ticket.assignee ?? ""} onChange={(v) => w.run(() => updateTicket(ticket.id, { assignee: v }), t("assignedTo", { name: v || t("nobody") }))} />
-        </label>
+        </Caption>
       </div>
 
       <form
@@ -104,10 +98,7 @@ export function TicketActions({ ticket, team, today }: { ticket: MaintenanceTick
           w.run(() => updateTicket(ticket.id, { scheduledFor: when }), when ? t("scheduledFor", { date: day(when) }) : t("unscheduled"));
         }}
       >
-        <label className={cn(label, "w-48")}>
-          {t("visit")}
-          <input type="date" value={when} min={today} onChange={(e) => setWhen(e.target.value)} className={control} />
-        </label>
+        <SingleDatePicker label={t("visit")} value={when || null} minDate={today} onChange={(d) => setWhen(d ?? "")} className="w-48" />
         <button type="submit" disabled={w.busy || when === (ticket.scheduledFor ?? "")} className={quiet}>{t("setVisit")}</button>
       </form>
 
@@ -133,10 +124,7 @@ export function TicketActions({ ticket, team, today }: { ticket: MaintenanceTick
               }, undefined);
             }}
           >
-            <label className={cn(label, "w-44")}>
-              {t("from")}
-              <input type="date" value={from} min={today} onChange={(e) => setFrom(e.target.value)} className={control} />
-            </label>
+            <SingleDatePicker label={t("from")} value={from || null} minDate={today} onChange={(d) => setFrom(d ?? "")} className="w-44" />
             <label className={cn(label, "w-28")}>
               {t("nights")}
               <input type="number" min={1} max={30} value={nights} onChange={(e) => setNights(e.target.value)} className={control} />
@@ -209,18 +197,12 @@ export function NewTicket({ homes, startOpen }: { homes: { id: string; name: str
     >
       <h2 className="text-[16px] font-semibold text-ink">{t("newTicket")}</h2>
       <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_180px]">
-        <label className={label}>
-          {t("home")}
-          <select value={listingId} onChange={(e) => setListingId(e.target.value)} className={control}>
-            {homes.map((h) => <option key={h.id} value={h.id}>{h.name}</option>)}
-          </select>
-        </label>
-        <label className={label}>
-          {t("priority")}
-          <select value={priority} onChange={(e) => setPriority(e.target.value as MaintenanceTicket["priority"])} className={control}>
-            {PRIORITIES.map((p) => <option key={p} value={p}>{t(`priorityName.${p}`)}</option>)}
-          </select>
-        </label>
+        <Caption text={t("home")}>
+          <Select label={t("home")} hideLabel value={listingId} onChange={setListingId} options={homes.map((h) => ({ value: h.id, label: h.name }))} />
+        </Caption>
+        <Caption text={t("priority")}>
+          <Select label={t("priority")} hideLabel value={priority} onChange={(v) => setPriority(v as MaintenanceTicket["priority"])} options={PRIORITIES.map((p) => ({ value: p, label: t(`priorityName.${p}`) }))} />
+        </Caption>
       </div>
       <label className={label}>
         {t("what")}
