@@ -378,20 +378,23 @@ changed from Node's year-first form), rw relative times ("hashize iminota
 `src/lib/domain/date-format.ts`. The legal pages need a lawyer in each
 language.
 
-### 5. Fixture data gaps visible on staff screens
+### 5. ~~Fixture data gaps visible on staff screens~~ Fixed 2026-11-09
 
-- The finance lane table shows RWF 0 for cars and days out in most months:
-  the seeded history is stays only before October (`seedHistory`).
-- The audit log opens empty after a reset; the seed records no history.
+The seed now has six months of stays, car hire and day outs
+(`seedHistory`, `seedLaneHistory`), so every lane of the finance revenue
+table has money in every month. Past cars and day outs all end before
+today, so they never take a date someone could book. The audit log opens
+on five weeks of entries (`seedAudit`): check-ins and check-outs taken
+from the bookings' own timelines, plus the routine staff actions of a
+month. Seeded payments are dated when the booking was paid, never in the
+future. Tests: `src/lib/repos/fixtures/seed-history.test.ts`.
 
-### 6. Layout and accessibility, small
+### 6. ~~Layout and accessibility, small~~ Fixed 2026-11-09
 
-- Finance tables on a phone scroll inside their card with the amount column
-  off screen; a stacked layout would read better.
-- Lint passes with three old warnings: `aria-selected` on calendar day
-  buttons in `ui/calendar.tsx` and `ui/date-range-picker.tsx` (should be
-  `aria-pressed`, or a grid with `gridcell`), and an unused `at` in
-  `fixtures/booking-seeds.ts`.
+Finance tables stack into one card per row on a phone, the first cell as
+the title and every other cell labelled with its column name
+(`components/workspace/finance/shared.tsx`). Calendar day buttons use
+`aria-pressed`; lint passes with no warnings.
 
 ### 7. Working on this branch: traps
 

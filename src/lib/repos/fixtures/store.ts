@@ -49,7 +49,7 @@ import {
   VERIFICATION_QUEUE,
 } from "./data";
 import { seedNotifications } from "./notifications";
-import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents, seedHistory, seedPartners, seedViewings, seedStatement, seedPendingRefunds, seedStaff, seedPartnerWork } from "./booking-seeds";
+import { seedBlocks, seedPayments, seedPhaseBookings, seedReviews, seedTickets, seedIncidents, seedHistory, seedLaneHistory, seedAudit, seedPartners, seedViewings, seedStatement, seedPendingRefunds, seedStaff, seedPartnerWork } from "./booking-seeds";
 import { DEFAULT_CATALOG } from "@/lib/domain/catalog";
 import type { SiteSettings } from "@/lib/repos/types";
 
@@ -125,7 +125,7 @@ function seed(): FixtureStore {
     messages: MESSAGES,
     addOnRequests: ADDON_REQUESTS,
     verificationQueue: VERIFICATION_QUEUE,
-    audit: [],
+    audit: [] as AuditEntry[],
     ids: {},
   });
   const now = new Date();
@@ -133,15 +133,16 @@ function seed(): FixtureStore {
   const phased = [...seedPhaseBookings(fixed.listings, now), ...fixed.bookings];
   const work = seedPartnerWork({ vehicles: fixed.vehicles, experiences: fixed.experiences }, phased, now);
   fixed.payouts = [...fixed.payouts, ...work.payouts];
-  fixed.bookings = [...phased, ...work.bookings, ...seedHistory(fixed.listings, [...phased, ...work.bookings], now)].sort((a, b) =>
-    b.startDate.localeCompare(a.startDate),
-  );
+  const stays = seedHistory(fixed.listings, [...phased, ...work.bookings], now);
+  const lanes = seedLaneHistory({ vehicles: fixed.vehicles, experiences: fixed.experiences }, [...phased, ...work.bookings, ...stays], now);
+  fixed.bookings = [...phased, ...work.bookings, ...stays, ...lanes].sort((a, b) => b.startDate.localeCompare(a.startDate));
+  fixed.audit = seedAudit({ bookings: fixed.bookings, payouts: fixed.payouts, listings: fixed.listings }, now);
   settleThreads(fixed.conversations, fixed.messages, now);
   return {
     ...fixed,
     notifications: seedNotifications(now),
     ...(() => {
-      const payments = seedPayments(fixed.bookings);
+      const payments = seedPayments(fixed.bookings, now);
       const all = [...payments, ...seedPendingRefunds(fixed.bookings, payments)];
       return { payments: all, statement: seedStatement(all, now) };
     })(),
@@ -202,7 +203,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 19;
+const SHAPE = 20;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {

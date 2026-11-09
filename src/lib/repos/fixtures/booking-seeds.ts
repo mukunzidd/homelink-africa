@@ -1,11 +1,19 @@
-import type { Block, Booking, Incident, Listing, MaintenanceTicket, Partner, PartnerDocument, PaymentRecord, Review, StaffMember, StatementLine, Viewing, Vehicle, Experience, JobOffer, Payout } from "@/lib/domain/types";
-import { quoteRent, quoteStay } from "@/lib/domain/pricing";
+import type { AuditEntry, Block, Booking, Incident, Listing, MaintenanceTicket, Partner, PartnerDocument, PaymentRecord, Review, StaffMember, StatementLine, Viewing, Vehicle, Experience, JobOffer, Payout } from "@/lib/domain/types";
+import { quoteExperience, quoteRent, quoteStay, quoteVehicle } from "@/lib/domain/pricing";
 import { addDays } from "@/lib/domain/dates";
 import { money } from "@/lib/domain/money";
 import { kigaliDay } from "@/lib/domain/instants";
 
 /** One payment per fixture booking, so the payments screens have rows. */
-export function seedPayments(bookings: Booking[]): PaymentRecord[] {
+export function seedPayments(bookings: Booking[], now = new Date()): PaymentRecord[] {
+  // Paid when the timeline says it was paid; a fixture with no timeline
+  // three weeks before it starts. Never later than now: a payment list
+  // with next week's payments on it reads as a bug.
+  const latest = new Date(now.getTime() - 60 * 60_000).toISOString();
+  const paidAt = (b: Booking) => {
+    const at = b.timeline?.find((e) => e.kind === "paid")?.at ?? `${addDays(b.startDate, -21)}T09:30:00.000Z`;
+    return at < latest ? at : latest;
+  };
   const base: PaymentRecord[] = bookings.map((b, i) => ({
     id: `pmt_${String(i + 1).padStart(3, "0")}`,
     bookingId: b.id,
@@ -13,7 +21,7 @@ export function seedPayments(bookings: Booking[]): PaymentRecord[] {
     kind: "full",
     amount: b.total,
     status: b.status === "cancelled" ? "refunded" : "succeeded",
-    at: `${addDays(b.startDate, -21)}T09:30:00.000Z`,
+    at: paidAt(b),
   }));
   // The renting tenant has paid the three months after the first, which
   // leaves this month's rent showing as overdue.
@@ -58,7 +66,6 @@ export function seedBlocks(now: Date): Block[] {
  */
 export function seedPhaseBookings(listings: Listing[], now: Date): Booking[] {
   const today = kigaliDay(now);
-  const at = new Date(now.getTime() - 21 * 86_400_000).toISOString();
   const guest = { name: "Ange Uwase", email: "ange@example.rw", phone: "+250 788 123 456" };
   const make = (id: string, listingId: string, from: number, to: number, status: Booking["status"], lease = false, who = guest): Booking => {
     const l = listings.find((x) => x.id === listingId)!;
@@ -226,6 +233,12 @@ const HISTORY_GUESTS = [
 
 /** Bookings placed per week over the last twelve, oldest first: a slow August, a busier autumn. */
 const PER_WEEK = [2, 3, 2, 4, 3, 5, 4, 6, 5, 4, 6, 5];
+/**
+ * The fourteen weeks before those, so the finance page's six months all
+ * have stays in them. Numbered from 300 so the twelve weeks above keep the
+ * ids and references they always had.
+ */
+const EARLIER_WEEKS = [1, 2, 1, 2, 2, 1, 2, 2, 3, 2, 2, 3, 2, 3];
 
 /**
  * Twelve weeks of ordinary nightly bookings, so the overview's numbers and
@@ -246,10 +259,11 @@ export function seedHistory(listings: Listing[], existing: Booking[], now: Date)
     }
     return true;
   };
-  let n = 0;
-  PER_WEEK.forEach((count, w) => {
+  const weeks = (perWeek: number[], weeksBack: number, from: number) => {
+  let n = from;
+  perWeek.forEach((count, w) => {
     for (let k = 0; k < count; k++, n++) {
-      const placed = addDays(today, -7 * (11 - w) - ((k * 3) % 7));
+      const placed = addDays(today, -7 * (weeksBack + perWeek.length - 1 - w) - ((k * 3) % 7));
       if (placed > today) continue;
       const lead = 4 + ((n * 7) % 26);
       const nights = 2 + ((n * 5) % 5);
@@ -294,7 +308,124 @@ export function seedHistory(listings: Listing[], existing: Booking[], now: Date)
       }
     }
   });
+  };
+  weeks(PER_WEEK, 0, 0);
+  weeks(EARLIER_WEEKS, PER_WEEK.length, 300);
   return out;
+}
+
+/**
+ * Six months of car hire and day outs, two or three a fortnight each, so
+ * the finance page's lanes are not zero before the partner work above.
+ * Every one has ended before today: a seeded past must never take a car or
+ * a departure that someone could book now. Placed only where a car has a
+ * unit free on every day and a departure has room for the whole party.
+ */
+export function seedLaneHistory(supply: { vehicles: Vehicle[]; experiences: Experience[] }, existing: Booking[], now: Date): Booking[] {
+  const today = kigaliDay(now);
+  const out: Booking[] = [];
+  const live = (id: string) => [...existing, ...out].filter((b) => b.supplyItemId === id && b.status !== "cancelled");
+  const carFits = (v: Vehicle, start: string, end: string) => {
+    for (let d = start; d <= end; d = addDays(d, 1)) if (live(v.id).filter((b) => b.startDate <= d && d <= b.endDate).length >= v.unitsAvailable) return false;
+    return true;
+  };
+  const seatsLeft = (e: Experience, date: string, slot: string | undefined) =>
+    e.groupMax - live(e.id).filter((b) => b.startDate === date && (b.slot ?? slot) === slot).reduce((n, b) => n + b.party, 0);
+  const cars = supply.vehicles;
+  const tours = supply.experiences;
+  const guest = (n: number) => {
+    const [name, email, phone] = HISTORY_GUESTS[(n + 3) % HISTORY_GUESTS.length];
+    return { name, email, phone };
+  };
+  const ref = (n: number, tag: string) => {
+    const code = (1_700_000 + n * 6007).toString(36).toUpperCase();
+    return `HL-${code.slice(0, 4)}-${code.slice(-1)}${tag}`;
+  };
+  const stamp = (d: string, n: number) => `${d}T${String(7 + (n % 9)).padStart(2, "0")}:40:00.000Z`;
+  for (let n = 0; n < 26 * 2; n++) {
+    const placed = addDays(today, -182 + n * 3 + (n % 2));
+    const lead = 3 + ((n * 5) % 12);
+    if (n % 2 === 0 && cars.length) {
+      const days = 1 + (n % 4);
+      const start = addDays(placed, lead);
+      const end = addDays(start, days - 1);
+      if (end >= today) continue;
+      for (let tryNo = 0; tryNo < cars.length; tryNo++) {
+        const v = cars[(n / 2 + tryNo) % cars.length];
+        const driveMode = v.withDriverSupplement && n % 3 !== 1 ? ("withDriver" as const) : ("selfDrive" as const);
+        if (!carFits(v, start, end)) continue;
+        const q = quoteVehicle(v, start, end, driveMode);
+        if (!q) continue;
+        out.push({
+          id: `bkg_hist_car_${String(n).padStart(3, "0")}`, reference: ref(n, "C"), service: "car", supplyItemId: v.id, title: v.name,
+          startDate: start, endDate: end, party: 1 + (n % Math.max(1, Math.min(4, v.seats))), total: q.total, lines: q.lines, status: "completed",
+          escrowHeld: false, guest: guest(n), paymentPlan: "full", driveMode,
+          timeline: [{ at: stamp(placed, n), kind: "placed", actor: "guest" }, { at: stamp(placed, n), kind: "paid", actor: "guest" }],
+        });
+        break;
+      }
+    } else if (tours.length) {
+      const date = addDays(placed, lead);
+      if (date >= today) continue;
+      for (let tryNo = 0; tryNo < tours.length; tryNo++) {
+        const e = tours[((n - 1) / 2 + tryNo) % tours.length];
+        const slot = e.slots?.length ? e.slots[n % e.slots.length] : undefined;
+        const party = Math.min(1 + (n % 4), e.groupMax);
+        if (seatsLeft(e, date, slot) < party) continue;
+        const q = quoteExperience(e, party);
+        if (!q) continue;
+        const g = guest(n);
+        out.push({
+          id: `bkg_hist_exp_${String(n).padStart(3, "0")}`, reference: ref(n, "D"), service: "experience", supplyItemId: e.id, title: e.name,
+          startDate: date, endDate: date, party, total: q.total, lines: q.lines, status: "completed",
+          escrowHeld: false, guest: g, paymentPlan: "full", ...(slot ? { slot } : {}),
+          participants: Array.from({ length: party }, (_, i) => ({ name: i ? `${g.name.split(" ")[0]} +${i}` : g.name, age: 24 + ((n + i * 7) % 30) })),
+          timeline: [{ at: stamp(placed, n), kind: "placed", actor: "guest" }, { at: stamp(placed, n), kind: "paid", actor: "guest" }],
+        });
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * Five weeks of the audit log, so the admin page opens on a record of the
+ * desk's work instead of an empty table. Check-ins and check-outs come
+ * from the bookings' own timelines; the rest are the routine staff actions
+ * of a working month, on things the seed has. Ids are "aud_seed_…", apart
+ * from the "aud_1001…" ones `recordAudit` hands out.
+ */
+export function seedAudit(seeded: { bookings: Booking[]; payouts: Payout[]; listings: Listing[] }, now: Date): AuditEntry[] {
+  const nowMs = now.getTime();
+  const since = nowMs - 35 * 86_400_000;
+  const out: Omit<AuditEntry, "id">[] = [];
+  for (const b of seeded.bookings) {
+    for (const ev of b.timeline ?? []) {
+      const t = Date.parse(ev.at);
+      if (t < since || t > nowMs) continue;
+      if (ev.kind === "checkedIn") out.push({ at: ev.at, actor: ev.actor, action: "booking.checkIn", target: b.reference });
+      if (ev.kind === "checkedOut") out.push({ at: ev.at, actor: ev.actor, action: "booking.checkOut", target: b.reference });
+      if (ev.kind === "placed" && b.service !== "stay") out.push({ at: ev.at, actor: "guest", action: "booking.place", target: b.reference });
+    }
+  }
+  const ago = (days: number, hour: number) => new Date(nowMs - days * 86_400_000 - ((nowMs / 3_600_000) % 24) * 3_600_000 + hour * 3_600_000).toISOString();
+  const homes = seeded.listings.filter((l) => l.nightlyRate).slice(0, 4);
+  for (const [i, p] of seeded.payouts.filter((x) => x.status === "paid").entries()) {
+    out.push({ at: ago(Math.max(1, 3 + i * 4), 10), actor: "admin", action: "payout.paid", target: p.id, detail: `${p.amount.minor} ${p.amount.currency} to ${p.payee}` });
+  }
+  homes.forEach((h, i) => {
+    out.push({ at: ago(30 - i * 6, 9), actor: "admin", action: "rates.set", target: h.id, detail: `${addDays(kigaliDay(now), 20 + i * 7)}..${addDays(kigaliDay(now), 27 + i * 7)} base` });
+    out.push({ at: ago(26 - i * 6, 15), actor: "ops", action: "listing.update", target: h.id, detail: i % 2 ? "photos" : "houseRules,checkInTime" });
+  });
+  out.push({ at: ago(33, 11), actor: "admin", action: "staff.invite", target: "stf_seed_ops", detail: "kevin@homelink.rw as ops" });
+  out.push({ at: ago(19, 16), actor: "admin", action: "content.update", target: "announcements", detail: "" });
+  out.push({ at: ago(12, 8), actor: "admin", action: "settings.update", target: "catalog", detail: "windows" });
+  out.push({ at: ago(5, 14), actor: "ops", action: "inspection.record", target: "insp_seed_kicukiro" });
+  return out
+    .filter((e) => Date.parse(e.at) <= nowMs)
+    .sort((a, b) => a.at.localeCompare(b.at))
+    .map((e, i) => ({ id: `aud_seed_${String(i + 1).padStart(3, "0")}`, ...e }));
 }
 
 /**

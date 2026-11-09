@@ -462,7 +462,7 @@ function MonthGrid({
               tabIndex={cell.date === focused ? 0 : -1}
               data-focused={cell.date === focused}
               disabled={disabled}
-              aria-selected={isEdge}
+              aria-pressed={isEdge}
               aria-current={cell.date === now ? "date" : undefined}
               onClick={() => onSelect(cell.date)}
               onMouseEnter={() => !disabled && onHover(cell.date)}
