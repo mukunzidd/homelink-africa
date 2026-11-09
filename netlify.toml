@@ -1,0 +1,21 @@
+# The team preview at https://homelink-preview.netlify.app (Netlify site
+# homelink-preview, IST-b2c team). Netlify's Next.js adapter is detected
+# from the framework; nothing here needs a database or the search service,
+# which falls back to its built-in engine when MEILI_URL is unset. The
+# store is the in-memory fixture store, so what testers book is not kept.
+# HOMELINK_E2E is deliberately unset: the test-only reset route stays off.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# A prototype with sample data, shared by link for feedback: open to anyone
+# with the URL (the team's Netlify login is switched off for this site), so
+# no page may be indexed.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
