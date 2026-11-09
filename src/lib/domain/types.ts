@@ -642,6 +642,35 @@ export type HousekeepingTask = {
   note?: string;
 };
 
+/** The preview guest's own account details. */
+export type Profile = {
+  name: string;
+  email: string;
+  phone: string;
+  photoName?: string;
+  emergency?: { name: string; phone: string };
+  twoStep: boolean;
+};
+
+/** A saved way to pay. A card keeps its brand, last four and expiry only, never the number. */
+export type SavedMethod = {
+  id: string;
+  kind: "card" | "mobileMoney";
+  brand?: "visa" | "mastercard" | "card";
+  provider?: "mtn" | "airtel";
+  last4: string;
+  expiry?: string;
+  isDefault: boolean;
+};
+
+export type AccountSession = { id: string; device: string; city: string; lastActiveAt: string; current: boolean };
+
+export type IdCheck = {
+  status: "none" | "pending" | "verified" | "retry";
+  docType?: "nationalId" | "passport" | "drivingLicence";
+  submittedAt?: string;
+};
+
 /** Someone who signs in to the workspace. Guests are not here: they are customers, not staff. */
 export type StaffMember = {
   id: string;

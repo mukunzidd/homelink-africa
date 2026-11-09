@@ -1,4 +1,8 @@
 import type {
+  AccountSession,
+  IdCheck,
+  Profile,
+  SavedMethod,
   JobOffer,
   StaffMember,
   SiteContent,
@@ -91,6 +95,7 @@ export type FixtureStore = {
   drafts: ListingDraft[];
   /** Photos uploaded to a thread, held until (and after) a message uses them. */
   partners: Partner[];
+  account: { profile: Profile; methods: SavedMethod[]; sessions: AccountSession[]; idCheck: IdCheck; deleted: boolean };
   jobOffers: JobOffer[];
   staff: StaffMember[];
   settings: SiteSettings;
@@ -148,6 +153,20 @@ function seed(): FixtureStore {
     drafts: [],
     uploads: [],
     housekeeping: {},
+    account: {
+      profile: { name: "Ange Uwase", email: "ange@example.rw", phone: "+250 788 123 456", twoStep: false },
+      methods: [
+        { id: "pm_visa", kind: "card", brand: "visa", last4: "4242", expiry: "08/28", isDefault: true },
+        { id: "pm_momo", kind: "mobileMoney", provider: "mtn", last4: "3456", isDefault: false },
+      ],
+      sessions: [
+        { id: "ses_here", device: "Chrome on this computer", city: "Kigali", lastActiveAt: now.toISOString(), current: true },
+        { id: "ses_phone", device: "Safari on iPhone", city: "Kigali", lastActiveAt: new Date(now.getTime() - 5 * 3_600_000).toISOString(), current: false },
+        { id: "ses_tablet", device: "Chrome on Android tablet", city: "Musanze", lastActiveAt: new Date(now.getTime() - 9 * 86_400_000).toISOString(), current: false },
+      ],
+      idCheck: { status: "none" },
+      deleted: false,
+    },
     jobOffers: work.offers,
     staff: seedStaff(now),
     settings: { catalog: structuredClone(DEFAULT_CATALOG), fxDisplay: { ...FX_RATES }, bank: { bankName: "Bank of Kigali", accountName: "HomeLink Africa Ltd", accountNumber: "00040-0695781-29", swift: "BKIGRWRW" } },
@@ -183,7 +202,7 @@ const KEY = "__homelinkStore";
  * purpose, so without this a running dev server would keep serving a store
  * from before a new collection existed, and the first read of it would crash.
  */
-const SHAPE = 17;
+const SHAPE = 18;
 type Holder = { [KEY]?: { shape: number; data: FixtureStore } };
 
 export function store(): FixtureStore {

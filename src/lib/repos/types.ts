@@ -1,6 +1,10 @@
 import type { ListingPatch } from "@/lib/workspace/listing-patch";
 import type { PricingCatalog } from "@/lib/domain/catalog";
 import type {
+  AccountSession,
+  IdCheck,
+  Profile,
+  SavedMethod,
   JobOffer,
   StaffMember,
   SiteContent,
@@ -399,6 +403,26 @@ export type SiteSettings = {
   bank: { bankName: string; accountName: string; accountNumber: string; swift: string };
 };
 
+/** The signed-in guest's own settings. One preview account until Phase 2. */
+export interface AccountRepo {
+  profile(): Promise<Profile>;
+  updateProfile(patch: Partial<Profile>): Promise<Profile>;
+  methods(): Promise<SavedMethod[]>;
+  /** Card: number (Luhn-checked, never stored), MM/YY expiry not past. Mobile Money: a number a provider recognises. */
+  addMethod(m: { kind: "card"; number: string; expiry: string; name: string } | { kind: "mobileMoney"; number: string }): Promise<SavedMethod>;
+  removeMethod(id: string): Promise<void>;
+  setDefault(id: string): Promise<void>;
+  sessions(): Promise<AccountSession[]>;
+  signOutSession(id: string): Promise<void>;
+  signOutOthers(): Promise<void>;
+  idCheck(): Promise<IdCheck>;
+  submitIdCheck(input: { docType: NonNullable<IdCheck["docType"]>; front: string; back?: string; selfie: string }): Promise<IdCheck>;
+  /** Preview only: moves the check to its next state, so every state can be seen. */
+  cycleIdCheck(): Promise<IdCheck>;
+  /** Refused while a booking is still to come or under way, naming it. */
+  deleteAccount(): Promise<{ ok: true } | { ok: false; reason: "upcoming"; reference: string }>;
+}
+
 export interface AdminRepo {
   staff(): Promise<StaffMember[]>;
   invite(email: string, role: StaffMember["role"], by: Role): Promise<StaffMember>;
@@ -479,6 +503,7 @@ export type Repositories = {
   partners: PartnersRepo;
   finance: FinanceRepo;
   admin: AdminRepo;
+  account: AccountRepo;
   trips: TripRepo;
   messaging: MessagingRepo;
   ops: OpsRepo;

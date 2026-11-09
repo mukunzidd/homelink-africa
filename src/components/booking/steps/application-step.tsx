@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import type { Listing, RentApplication } from "@/lib/domain/types";
 import type { BookingDraft, DraftAction } from "@/lib/booking/draft";
 import { monthsBetween } from "@/lib/domain/dates";
@@ -97,6 +98,10 @@ export function ApplicationStep({
         onFile={(f) => set({ idFileName: f?.name })}
         errors={{ type: tf("type"), size: tf("size"), choose: tf("choose"), drop: tf("drop"), remove: tf("remove") }}
       />
+      {/* A checked ID on the account saves this upload, now and next time. */}
+      <Link href="/account/verify-id" className="self-start text-[14px] font-semibold text-brand hover:underline">
+        {t("verifyIdLink")}
+      </Link>
     </StepSection>
   );
 }

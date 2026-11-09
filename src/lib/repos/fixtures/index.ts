@@ -11,7 +11,8 @@ import type {
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
-import type { Conversation, HousekeepingTask, Listing, PartnerJob, Role, SharedLocation, StaffMember } from "@/lib/domain/types";
+import type { Conversation, HousekeepingTask, IdCheck, Listing, PartnerJob, Role, SavedMethod, SharedLocation, StaffMember } from "@/lib/domain/types";
+import { momoProvider } from "@/lib/booking/payment-sim";
 import { turnoverTasks } from "@/lib/workspace/day-board";
 import { readsAs } from "@/lib/preferences/role";
 import { convert, formatMoney, money, type Money } from "@/lib/domain/money";
@@ -22,7 +23,7 @@ import { FX_RATES } from "./data";
 import { kigaliDay } from "@/lib/domain/instants";
 import { nextId, recordAudit, store } from "./store";
 import { availability, makeBookings, makeTrips } from "./bookings";
-import { MESSAGE_LIMITS, type IncidentsRepo, type AdminRepo, type FinanceRepo, type PartnersRepo, type SiteSettings, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
+import { MESSAGE_LIMITS, type IncidentsRepo, type AccountRepo, type AdminRepo, type FinanceRepo, type PartnersRepo, type SiteSettings, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
 import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
 
@@ -932,6 +933,105 @@ const admin: AdminRepo = {
   },
 };
 
+const PHONE = (p: string) => /^\+?[\d\s]{9,20}$/.test(p.trim()) && p.replace(/\D/g, "").length >= 9;
+const luhn = (digits: string) => {
+  let sum = 0;
+  for (let i = 0; i < digits.length; i++) {
+    let d = Number(digits[digits.length - 1 - i]);
+    if (i % 2) d = d * 2 > 9 ? d * 2 - 9 : d * 2;
+    sum += d;
+  }
+  return digits.length >= 12 && digits.length <= 19 && sum % 10 === 0;
+};
+
+const account: AccountRepo = {
+  async profile() {
+    return structuredClone(store().account.profile);
+  },
+  async updateProfile(patch) {
+    const cur = store().account.profile;
+    const next = { ...cur, ...structuredClone(patch) };
+    if (!next.name?.trim() || next.name.trim().length > 80) throw new Error("Bad name");
+    if (!EMAIL.test(next.email)) throw new Error("Bad email");
+    if (!PHONE(next.phone)) throw new Error("Bad phone");
+    if (next.emergency && (next.emergency.name.trim().length > 80 || (next.emergency.phone && !PHONE(next.emergency.phone)))) throw new Error("Bad emergency contact");
+    next.name = next.name.trim();
+    store().account.profile = next;
+    return structuredClone(next);
+  },
+  async methods() {
+    return structuredClone(store().account.methods);
+  },
+  async addMethod(m) {
+    const methods = store().account.methods;
+    if (methods.length >= 6) throw new Error("Too many");
+    let made: SavedMethod;
+    if (m.kind === "card") {
+      const digits = m.number.replace(/\D/g, "");
+      if (!luhn(digits)) throw new Error("Bad card");
+      const [mm, yy] = m.expiry.split("/").map((x) => Number(x));
+      const now = new Date();
+      if (!(mm >= 1 && mm <= 12) || !(yy >= 0) || 2000 + yy < now.getUTCFullYear() || (2000 + yy === now.getUTCFullYear() && mm < now.getUTCMonth() + 1)) throw new Error("Expired");
+      const brand = digits.startsWith("4") ? "visa" : /^5[1-5]|^2[2-7]/.test(digits) ? "mastercard" : "card";
+      made = { id: nextId("pm"), kind: "card", brand, last4: digits.slice(-4), expiry: `${String(mm).padStart(2, "0")}/${String(yy).padStart(2, "0")}`, isDefault: !methods.length };
+    } else {
+      const provider = momoProvider(m.number);
+      if (!provider) throw new Error("Not a Mobile Money number");
+      made = { id: nextId("pm"), kind: "mobileMoney", provider, last4: m.number.replace(/\D/g, "").slice(-4), isDefault: !methods.length };
+    }
+    methods.push(made);
+    return { ...made };
+  },
+  async removeMethod(id) {
+    const a = store().account;
+    const gone = a.methods.find((x) => x.id === id);
+    if (!gone) throw new Error("No such method");
+    a.methods = a.methods.filter((x) => x.id !== id);
+    if (gone.isDefault && a.methods.length) a.methods[0].isDefault = true;
+  },
+  async setDefault(id) {
+    const a = store().account;
+    if (!a.methods.some((x) => x.id === id)) throw new Error("No such method");
+    for (const x of a.methods) x.isDefault = x.id === id;
+  },
+  async sessions() {
+    return structuredClone(store().account.sessions);
+  },
+  async signOutSession(id) {
+    const a = store().account;
+    const s = a.sessions.find((x) => x.id === id);
+    if (!s || s.current) throw new Error("Not another session");
+    a.sessions = a.sessions.filter((x) => x.id !== id);
+  },
+  async signOutOthers() {
+    store().account.sessions = store().account.sessions.filter((x) => x.current);
+  },
+  async idCheck() {
+    return { ...store().account.idCheck };
+  },
+  async submitIdCheck(input) {
+    if (!["nationalId", "passport", "drivingLicence"].includes(input.docType)) throw new Error("Bad document");
+    if (!input.front?.trim() || !input.selfie?.trim()) throw new Error("Front and selfie needed");
+    if (input.docType !== "passport" && !input.back?.trim()) throw new Error("Back needed");
+    store().account.idCheck = { status: "pending", docType: input.docType, submittedAt: new Date().toISOString() };
+    return { ...store().account.idCheck };
+  },
+  async cycleIdCheck() {
+    const order: IdCheck["status"][] = ["none", "pending", "verified", "retry"];
+    const c = store().account.idCheck;
+    c.status = order[(order.indexOf(c.status) + 1) % order.length];
+    return { ...c };
+  },
+  async deleteAccount() {
+    const today = kigaliDay();
+    const mine = await bookings.listForCurrentUser();
+    const blocking = mine.find((b) => (b.status === "confirmed" && b.endDate >= today) || b.status === "active");
+    if (blocking) return { ok: false as const, reason: "upcoming" as const, reference: blocking.reference };
+    store().account.deleted = true;
+    return { ok: true as const };
+  },
+};
+
 const finance: FinanceRepo = {
   async payments(filter = {}) {
     return store()
@@ -1155,6 +1255,7 @@ export const fixtureRepositories: Repositories = {
   partners,
   finance,
   admin,
+  account,
   trips,
   messaging,
   ops,

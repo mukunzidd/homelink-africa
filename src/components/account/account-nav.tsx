@@ -30,6 +30,8 @@ const HREF: Record<AccountSection, string> = {
 function activeSection(pathname: string): AccountSection | null {
   if (pathname === "/account") return "overview";
   if (pathname.startsWith("/trips") || pathname.startsWith("/bookings")) return "trips";
+  // The ID check is a settings tab with its own address.
+  if (pathname === "/account/verify-id") return "settings";
   for (const s of ACCOUNT_SECTIONS) {
     if (s !== "overview" && pathname.startsWith(HREF[s])) return s;
   }
