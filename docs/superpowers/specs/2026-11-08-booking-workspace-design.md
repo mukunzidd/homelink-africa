@@ -298,61 +298,81 @@ Gaps seen during the sweep and left alone are listed under "Open issues".
 
 ## Open issues
 
-Everything known to be wrong or unfinished on this branch as of 2026-11-09,
+Everything known to be wrong or unfinished on this branch as of 2026-11-09
+(updated after the final review the same day),
 most noticeable first. Each says what happens, the evidence, and where to
 start. Strike an item through, with the commit, when it is fixed.
 
-### 1. The whole-branch review has not run
+### 1. ~~The whole-branch review has not run~~ Done 2026-11-09
 
-All 47 tasks of `docs/superpowers/plans/2026-11-08-booking-workspace.md`
-are built (the ledger is `.superpowers/sdd/2026-11-08-booking-workspace/progress.md`).
-What the execution workflow still owes is a fresh code review of the whole
-branch, `git merge-base main HEAD` to `HEAD`. The owner asked for it to
-wait. Do not run it unasked; do not merge the branch before it.
+A fresh reviewer read the whole branch (52451fb..92debfa) and judged it
+"ready to merge: with fixes". The Critical finding (door codes, wifi and
+directions sent to every visitor on public listing pages) is fixed in
+57cb6d3; the six Important ones (cancel after start, changeDates on a
+renting and below the minimum stay, a deposit returned twice, trips
+claiming other guests' bookings, day-out capacity per departure) in
+7e0ba9a, each with a test that failed first. Rulings and deferred minors
+are in the ledger, `.superpowers/sdd/2026-11-08-booking-workspace/progress.md`,
+lines starting `Final:`, and below.
 
-### 2. `/api/notifications/unread` sometimes returns 500 (cause unknown)
+### 2. ~~`/api/notifications/unread` sometimes returns 500~~ Cause found: a Next.js dev-server race
 
-- **What:** a burst of concurrent polls to the bell's endpoint fails with
-  500, logged as `SyntaxError: Unexpected end of JSON input ... page:
-  '/api/notifications/unread'`. The browser logs "Failed to load resource:
-  500". The next poll, 30 seconds later, succeeds.
-- **Evidence:** seen twice on 2026-11-09, both during `make sweep` against
-  the Docker dev server: four failures out of about 2,600 polls, all four
-  within the same millisecond, roughly 390ms each, almost all of it "next.js"
-  time in the request log. No frame in the stack is ours; the route reads a
-  cookie and the fixture store and parses no JSON.
-- **Ruled out:** load alone (1,000 concurrent requests on a quiet server, 0
-  failures) and file writes into the project (600 requests while writing
-  into `.sweep/` every 50ms, 0 failures). Not tied to the dev server's
-  memory-threshold restart either: the second time, the server had been up
-  for several minutes. Concurrency comes from the sweep's three workers and
-  Strict Mode's doubled mount (see 3).
-- **Next step:** run the sweep against a production build (`next build`
-  then `next start` in the container). The sweep starts by resetting the
-  store, and `src/app/api/dev/reset/route.ts` answers 404 in any production
-  build whatever `HOMELINK_E2E` says, so skip the reset for this run (a
-  fresh `next start` is already a fresh store) rather than loosening the
-  guard. If the 500 never appears, record it as a dev-server fault and
-  close this. If it does, start from the request timing in the log.
+- **What was seen:** bursts of 500s, logged as `SyntaxError: Unexpected end
+  of JSON input ... page: '/api/notifications/unread'`, during long sweeps
+  against the dev server.
+- **Cause (found by the final review, reproduced):** in development Next
+  rereads its manifests on every route request without caching
+  (`node_modules/next/dist/server/route-modules/route-module.js`, around
+  line 146, `shouldCache: !this.isDev`). Rendering a page runs
+  `generateStaticParams` in the background (the "generate-params" time in
+  the request log; `[locale]/layout.tsx` has one), and when the result
+  changes the dev server rewrites `.next/dev/prerender-manifest.json` with
+  a plain, non-atomic `writeFile` (`next-dev-server.js`, around line 690).
+  A request landing between truncate and write parses an empty file.
+- **Why it looked random:** the rewrite only happens the first time each
+  page pattern and locale is seen after a start, so only long all-language
+  sweeps on a fresh server hit it; the poll is simply the most frequent
+  route. Reproduced: 104 of 16,398 requests on a just-restarted server, 0
+  of 12,099 on the same server warm.
+- **Not ours, not in production:** a production build caches the
+  manifests and never takes this write path. Nothing to fix in the app. If
+  a sweep must be spotless, warm every page in every locale first.
 
-### 3. The bell's poll can restart itself (unmeasured)
+### 3. ~~The bell's poll can restart itself~~ Not a bug
 
-- **Not a bug, for the record:** a workspace page sends two unread
-  requests at the same instant on load in development (measured on
-  `/en/manage/today`: 0.66s, 0.66s, then one at 30.66s). The page has one
-  bell. The second request is React Strict Mode, on by default in the App
-  Router, running effects twice on mount in development only. Production
-  sends one. Bursts of two per open page are why issue 2 shows four at
-  once during a sweep.
-- **Possible bug, not measured:** in `useUnread`
-  (`src/components/notifications/use-unread.ts`) the effect fires a request
-  immediately whenever its `load` callback changes, and `load` follows
-  `onArrive`, which depends on the toast context in `bell.tsx`. If that
-  context value changes when a toast shows, every toast restarts the timer
-  and sends an extra request.
-- **Next step:** count requests across a toast (trigger a notification
-  while the page is open). If extra ones appear, keep `onArrive` in a ref
-  so it never restarts the effect.
+The two requests a workspace page sends on load in development are React
+Strict Mode running effects twice (production sends one). The suspected
+restart cannot happen: the toaster's `api` is memoised on stable
+callbacks (`toaster.tsx`), and `useTranslations` is stable for a locale,
+so `onArrive` and `load` never change when a toast shows.
+
+### 3a. Repo methods know the role, not the person
+
+Every booking action takes `(reference, by: Role)`. In the preview any
+guest cookie can cancel, change, add guests to, pay rent on, check in or
+review any booking by reference. Phase 2 cannot add ownership "behind the
+same interface": every such signature gains an actor id together. Ruled
+not to change now (there are no accounts); the cost, per the final
+review, is larger than the Task 26 ruling said. Also for Phase 2: two
+people booking one flat is safe today only because the fixture store has
+no I/O between `isFree` and the write; a database needs a constraint or a
+lock.
+
+### 3b. Small bugs the final review found, deferred
+
+- `ics.ts` `esc` does not escape semicolons (`"\;"` in a JS string is
+  `";"`) or a lone `\r`.
+- `payment.rail` is never checked against `PaymentRail`; a non-array
+  `draft.extras` throws a 500 inside `priceExtras`.
+- `useUnread` shows its toast inside a `setCount` updater; React may run
+  updaters twice. Move it out.
+- A guest's cancel notifies ops as kind `newBooking` with "(cancelled)" in
+  the name, and admin is not told; `addGuests` audits actor `"guest"`
+  when staff did it.
+- `useBookingDraft` keeps the old in-memory draft when its key changes and
+  nothing is stored (harmless while every date change navigates).
+- `booking-record.tsx` hardcodes 14 days for the balance date;
+  `portfolio.ts` and `when-panel.tsx` take "today" from UTC, not Kigali.
 
 ### 4. Translations still need native readers
 

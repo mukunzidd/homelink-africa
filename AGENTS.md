@@ -20,7 +20,8 @@ cart, every workspace page per role, sign-in, settings, help) and its plan,
 Task 47. Its "Review and fixes" section holds what the sweeps found and the
 traps behind them, and its **"Open issues"** section lists everything known
 to be wrong or unfinished, with evidence and a next step for each: start
-there. The whole-branch review has not run; the owner asked for it to wait.
+there. The whole-branch review ran on 2026-11-09; its Critical and
+Important findings are fixed, its minors and rulings are listed there.
 
 **Then `docs/superpowers/specs/2026-08-10-real-data-milestone.md`**, which is
 paused behind it. It holds the next milestone, what "done" means for each step,
