@@ -50,7 +50,7 @@ export async function SiteFooter() {
   ];
 
   return (
-    <footer className="mt-24 border-t border-line bg-surface">
+    <footer data-site-footer className="mt-24 border-t border-line bg-surface">
       <div className="mx-auto grid max-w-[1180px] gap-10 px-6 py-12 sm:grid-cols-2 md:grid-cols-[1.4fr_repeat(4,1fr)]">
         <div className="flex flex-col gap-3">
           <Logo />

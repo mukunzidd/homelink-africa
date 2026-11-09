@@ -98,8 +98,11 @@ export default async function MessagesPage({
     role === "guest" ? "guest" : supplyLaneFor(role) ? "supply" : "ops";
 
   return (
-    <div className="mx-auto flex max-w-[1180px] flex-col gap-6 px-6 py-6">
-      <header className="flex flex-col gap-2">
+    // data-chat: the page is laid out like a chat, filling the screen under
+    // the header with no footer, so the reply box never moves and only the
+    // thread list and the transcript scroll (globals.css).
+    <div data-chat className="mx-auto flex min-h-0 w-full max-w-[1180px] flex-1 flex-col gap-6 px-6 pb-4 pt-6">
+      <header className={cn("shrink-0 flex-col gap-2 lg:flex", showListOnMobile ? "flex" : "hidden")}>
         <h1 className="font-display text-4xl font-semibold leading-[1.06] tracking-tight text-ink">
           {t("title")}
         </h1>
@@ -108,10 +111,10 @@ export default async function MessagesPage({
         </p>
       </header>
 
-      <div className="grid grid-cols-1 items-start gap-x-10 lg:grid-cols-[320px_minmax(0,1fr)]">
+      <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[minmax(0,1fr)] gap-x-10 lg:grid-cols-[320px_minmax(0,1fr)]">
         <div
           className={cn(
-            "flex-col lg:flex",
+            "min-h-0 flex-col overflow-y-auto overscroll-contain lg:flex",
             showListOnMobile ? "flex" : "hidden",
           )}
         >
@@ -127,7 +130,7 @@ export default async function MessagesPage({
 
         <div
           className={cn(
-            "flex-col lg:flex",
+            "min-h-0 min-w-0 flex-col lg:flex",
             showListOnMobile ? "hidden" : "flex",
           )}
         >
@@ -135,7 +138,7 @@ export default async function MessagesPage({
             <>
               <Link
                 href="/messages"
-                className="mb-4 self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep lg:hidden"
+                className="mb-4 shrink-0 self-start rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep lg:hidden"
               >
                 ← {t("allThreads")}
               </Link>

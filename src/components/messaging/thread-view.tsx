@@ -1,3 +1,4 @@
+import { ScrollToEnd } from "./scroll-to-end";
 import { getTranslations } from "next-intl/server";
 import type { Conversation, Message, Role } from "@/lib/domain/types";
 import { Link } from "@/i18n/navigation";
@@ -51,9 +52,12 @@ export async function ThreadView({
   const isMe = side === role;
   const lastMine = [...messages].reverse().find((m) => m.authorRole === side);
 
+  // Fills its column when the column has a height (the guest's messages
+  // page, laid out like a chat): the header and the composer stay put and
+  // only the transcript scrolls. Elsewhere it simply grows with the page.
   return (
-    <div className="flex flex-col">
-      <header className="flex flex-col gap-2 border-b border-line pb-5">
+    <div className="flex min-h-0 flex-1 flex-col">
+      <header className="flex shrink-0 flex-col gap-2 border-b border-line pb-5">
         <h2 className="font-display text-2xl font-semibold leading-tight text-ink">
           {conversation.subject}
         </h2>
@@ -70,6 +74,7 @@ export async function ThreadView({
         )}
       </header>
 
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
       <ol className="flex flex-col gap-5 py-6">
         {messages.map((message, index) => {
           const mine = message.authorRole === side;
@@ -166,7 +171,11 @@ export async function ThreadView({
       </ol>
 
       <div id="thread-end" aria-hidden="true" />
-      <Composer key={conversation.id} conversationId={conversation.id} />
+      </div>
+      <ScrollToEnd thread={conversation.id} />
+      <div className="shrink-0">
+        <Composer key={conversation.id} conversationId={conversation.id} />
+      </div>
     </div>
   );
 }

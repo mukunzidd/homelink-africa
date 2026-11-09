@@ -360,3 +360,24 @@
     background: white;
   }
 }
+
+/*
+ * A chat page fills the screen like a chat app: the page stops scrolling,
+ * the footer goes, and the page's own columns (thread list, transcript)
+ * scroll instead, so the reply box stays where the thumb left it. A
+ * selector rather than a layout prop because the site layout is shared and
+ * does not know which page it holds. The trip tray and preview bar are
+ * fixed, so they are unaffected.
+ */
+body:has([data-chat]) {
+  height: 100dvh;
+  overflow: hidden;
+}
+body:has([data-chat]) > main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+body:has([data-chat]) [data-site-footer] {
+  display: none;
+}

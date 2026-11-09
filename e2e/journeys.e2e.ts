@@ -343,3 +343,23 @@ test("a guest in the middle of a stay can stay two nights longer", async ({ page
   await expect(page.getByText("Dates changed").first()).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+for (const width of [1280, 390]) {
+  test(`a conversation stays put like a chat at ${width}px: no footer, reply box on screen`, async ({ page, context }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await as(context, "guest");
+    const errors = watchErrors(page);
+    await page.goto("/en/messages?thread=cnv_001");
+    await hydrated(page);
+    await expect(page.locator("[data-site-footer]")).toBeHidden();
+    const reply = page.getByPlaceholder("Write a reply…");
+    await expect(reply).toBeInViewport({ ratio: 1 });
+    expect(await page.evaluate(() => document.documentElement.scrollHeight - innerHeight)).toBeLessThanOrEqual(0);
+    const text = `Chat layout check ${width}`;
+    await reply.fill(text);
+    await reply.press("Enter");
+    await expect(page.getByText(text)).toBeInViewport();
+    await expect(reply).toBeInViewport({ ratio: 1 });
+    expect(errors).toEqual([]);
+  });
+}
