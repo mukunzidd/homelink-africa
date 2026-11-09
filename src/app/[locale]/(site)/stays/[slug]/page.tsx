@@ -28,6 +28,7 @@ import { AreaMap } from "@/components/results/stays-map";
 import { TravelTimes } from "@/components/results/travel-times";
 import { MobileActionBar } from "@/components/ui/mobile-action-bar";
 import { DISTRICTS } from "@/lib/domain/neighbourhoods";
+import { AREA_RADIUS_M } from "@/lib/places/area";
 
 export async function generateMetadata({
   params,
@@ -252,8 +253,9 @@ export default async function ListingDetailPage({
 
           {/* An area, not a pin. The address goes to the guest with the
               booking, or to a tenant with the viewing; before that, the
-              street is enough to judge the commute and too little to turn up
-              at the gate. */}
+              neighbourhood is enough to judge the commute and too little to
+              find the gate and skip the booking. The point here is already
+              the neighbourhood's centre (lib/places/area.ts). */}
           <section className="flex flex-col gap-4 border-t border-line py-6">
             <div className="flex flex-col gap-1">
               <h2 className="font-display text-2xl font-semibold text-ink">{tMap("whereTitle")}</h2>
@@ -263,7 +265,7 @@ export default async function ListingDetailPage({
             </div>
             <AreaMap
               label={tMap("areaLabel", { place: listing.neighbourhood })}
-              area={{ lat: listing.location.lat, lng: listing.location.lng, radiusM: 350 }}
+              area={{ lat: listing.location.lat, lng: listing.location.lng, radiusM: AREA_RADIUS_M }}
               className="h-72 rounded-card border border-line"
             />
             <p className="max-w-[62ch] text-[14px] leading-relaxed text-ink-2">

@@ -960,14 +960,16 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "resultsLabel": "Map of {count, plural, one {# result} other {# results}}",
+    "areaPinLabel": "{count} from {price}",
+    "areaPinTitle": "{area}: {count, plural, one {# home} other {# homes}} from {price}",
     "list": "List",
     "map": "Map",
     "showMap": "Show on map",
     "whereTitle": "Where you will be",
     "areaLabel": "Approximate area in {place}",
-    "areaNote": "The circle is the street, not the door: the exact address comes with your booking.",
+    "areaNote": "The circle is the neighbourhood, not the street: the exact address comes with your booking.",
     "contributors": "contributors",
-    "areaNoteLease": "The circle is the street, not the door. The exact address comes with your viewing time."
+    "areaNoteLease": "The circle is the neighbourhood, not the street. The exact address comes with your viewing time."
   },
   "share": {
     "share": "Share",
@@ -1069,7 +1071,7 @@
     "plotLabel": "Plot",
     "listedLabel": "Listed",
     "about": "About this home",
-    "areaNote": "The circle is the street, not the gate: the exact plot comes with the title documents at the viewing.",
+    "areaNote": "The circle is the neighbourhood, not the street: the exact plot comes with the title documents at the viewing.",
     "howTitle": "How buying through HomeLink works",
     "how": {
       "viewingTitle": "A viewing with our team",

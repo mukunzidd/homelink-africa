@@ -960,14 +960,16 @@
     "zoomIn": "Egereza",
     "zoomOut": "Igiza kure",
     "resultsLabel": "Ikarita y’ibisubizo {count}",
+    "areaPinLabel": "{count} guhera {price}",
+    "areaPinTitle": "{area}: amazu {count} guhera kuri {price}",
     "list": "Urutonde",
     "map": "Ikarita",
     "showMap": "Reba ku ikarita",
     "whereTitle": "Aho uzaba uri",
     "areaLabel": "Agace kegereye i {place}",
-    "areaNote": "Uruziga ni umuhanda, si umuryango: aderesi nyayo uyihabwa umaze kubika.",
+    "areaNote": "Uruziga ni agace, si umuhanda: aderesi nyayo uyihabwa umaze kubika.",
     "contributors": "abaterankunga",
-    "areaNoteLease": "Uruziga ni umuhanda, si umuryango. Aderesi nyayo uyihabwa hamwe n’igihe cyo gusura."
+    "areaNoteLease": "Uruziga ni agace, si umuhanda. Aderesi nyayo uyihabwa hamwe n’igihe cyo gusura."
   },
   "share": {
     "share": "Sangiza",
@@ -1069,7 +1071,7 @@
     "plotLabel": "Ikibanza",
     "listedLabel": "Yashyizwe ku isoko",
     "about": "Ibyerekeye iyi nzu",
-    "areaNote": "Uruziga ni umuhanda, si irembo: ikibanza nyacyo ukibwirwa uri gusura, hamwe n’ibyangombwa.",
+    "areaNote": "Uruziga ni agace, si umuhanda: ikibanza nyacyo ukibwirwa uri gusura, hamwe n’ibyangombwa.",
     "howTitle": "Uko kugura binyuze kuri HomeLink bikorwa",
     "how": {
       "viewingTitle": "Gusura hamwe n’itsinda ryacu",

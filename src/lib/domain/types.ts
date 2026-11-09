@@ -80,9 +80,11 @@ export type Listing = {
   neighbourhood: string;
   city: string;
   /**
-   * The middle of the street, not the door. A guest sees the area before they
-   * book and the address after; anything finer than ~150m would give the
-   * second away with the first.
+   * Stored as the middle of the street, not the door, for staff. Every read
+   * the public site makes replaces it with the neighbourhood's centre
+   * (lib/places/area.ts): a guest sees the neighbourhood before booking and
+   * the address after, and anything finer lets them find the gate and skip
+   * the booking.
    */
   location: GeoPoint;
   bedrooms: number;

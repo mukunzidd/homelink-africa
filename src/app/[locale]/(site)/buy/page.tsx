@@ -76,6 +76,11 @@ export default async function BuyPage({
     price: h.price,
     href: `/buy/${h.slug}`,
     name: h.name,
+    area: h.neighbourhood,
+    areaHref: (() => {
+      const q = saleSearchToQuery({ ...search, neighbourhood: h.neighbourhood });
+      return q ? `/buy?${q}` : "/buy";
+    })(),
   }));
   const query = saleSearchToQuery(search);
 

@@ -26,6 +26,7 @@ import { availability, makeBookings, makeTrips } from "./bookings";
 import { MESSAGE_LIMITS, type IncidentsRepo, type AccountRepo, type AdminRepo, type FinanceRepo, type PartnersRepo, type SiteSettings, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
 import type { Review } from "@/lib/domain/types";
 import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
+import { inArea } from "@/lib/places/area";
 
 /**
  * In-memory implementations for Phase 1.
@@ -152,15 +153,17 @@ const stays: StaysRepo = {
         out.sort(byNewest);
     }
 
-    return query.limit ? out.slice(0, query.limit) : out;
+    return (query.limit ? out.slice(0, query.limit) : out).map(inArea);
   },
 
   async bySlug(slug) {
-    return live().find((l) => l.slug === slug) ?? null;
+    const l = live().find((x) => x.slug === slug);
+    return l ? inArea(l) : null;
   },
 
   async byId(id) {
-    return store().listings.find((l) => l.id === id) ?? null;
+    const l = store().listings.find((x) => x.id === id);
+    return l ? inArea(l) : null;
   },
 
   async featured(limit = 3) {
@@ -169,7 +172,7 @@ const stays: StaysRepo = {
     const rest = live()
       .filter((l) => !picks.includes(l))
       .sort((a, b) => b.verification.inspectedAt.localeCompare(a.verification.inspectedAt));
-    return [...picks, ...rest].slice(0, limit);
+    return [...picks, ...rest].slice(0, limit).map(inArea);
   },
 
   async neighbourhoods() {
@@ -230,13 +233,15 @@ const sales: SalesRepo = {
         // Recommended is newest on the market, named for what it is.
         out.sort((a, b) => b.listedAt.localeCompare(a.listedAt));
     }
-    return query.limit ? out.slice(0, query.limit) : out;
+    return (query.limit ? out.slice(0, query.limit) : out).map(inArea);
   },
   async bySlug(slug) {
-    return store().sales.find((h) => h.slug === slug) ?? null;
+    const h = store().sales.find((x) => x.slug === slug);
+    return h ? inArea(h) : null;
   },
   async byId(id) {
-    return store().sales.find((h) => h.id === id) ?? null;
+    const h = store().sales.find((x) => x.id === id);
+    return h ? inArea(h) : null;
   },
   async neighbourhoods() {
     return [...new Set(store().sales.map((h) => h.neighbourhood))].sort((a, b) => a.localeCompare(b));

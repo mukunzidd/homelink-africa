@@ -153,6 +153,11 @@ export default async function StaysPage({
     price: isLease && l.monthlyRate ? l.monthlyRate : l.nightlyRate,
     href: `/stays/${l.slug}${rowQuery.size ? `?${rowQuery}` : ""}`,
     name: l.name,
+    area: l.neighbourhood,
+    areaHref: (() => {
+      const q = staySearchToQuery({ ...search, neighbourhood: l.neighbourhood });
+      return q ? `/stays?${q}` : "/stays";
+    })(),
   }));
 
   const relaxedNote = result.relaxed.length > 0 && listings.length > 0 && (

@@ -960,14 +960,16 @@
     "zoomIn": "Zoomer",
     "zoomOut": "Dézoomer",
     "resultsLabel": "Carte de {count, plural, one {# résultat} other {# résultats}}",
+    "areaPinLabel": "{count} dès {price}",
+    "areaPinTitle": "{area} : {count, plural, one {# logement} other {# logements}} dès {price}",
     "list": "Liste",
     "map": "Carte",
     "showMap": "Voir sur la carte",
     "whereTitle": "Où vous serez",
     "areaLabel": "Zone approximative à {place}",
-    "areaNote": "Le cercle indique la rue, pas la porte : l’adresse exacte arrive avec votre réservation.",
+    "areaNote": "Le cercle indique le quartier, pas la rue : l’adresse exacte arrive avec votre réservation.",
     "contributors": "contributeurs",
-    "areaNoteLease": "Le cercle indique la rue, pas la porte. L’adresse exacte arrive avec l’horaire de visite."
+    "areaNoteLease": "Le cercle indique le quartier, pas la rue. L’adresse exacte arrive avec l’horaire de visite."
   },
   "share": {
     "share": "Partager",
@@ -1069,7 +1071,7 @@
     "plotLabel": "Terrain",
     "listedLabel": "Mis en vente",
     "about": "À propos de ce bien",
-    "areaNote": "Le cercle indique la rue, pas le portail : la parcelle exacte vous est montrée avec le titre lors de la visite.",
+    "areaNote": "Le cercle indique le quartier, pas la rue : la parcelle exacte vous est montrée avec le titre lors de la visite.",
     "howTitle": "Acheter avec HomeLink",
     "how": {
       "viewingTitle": "Une visite avec notre équipe",

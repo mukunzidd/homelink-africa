@@ -13,6 +13,7 @@ import { AreaMap } from "@/components/results/stays-map";
 import { TravelTimes } from "@/components/results/travel-times";
 import { ListingRow } from "@/components/listing/listing-row";
 import { SaleRow } from "@/components/sale/sale-row";
+import { AREA_RADIUS_M } from "@/lib/places/area";
 
 async function profileFor(name: string) {
   const r = repos();
@@ -71,7 +72,7 @@ export default async function NeighbourhoodPage({ params }: { params: Promise<{ 
         </div>
         {/* The area itself, not a room in it: the hero used to be a
             listing's bedroom, which described the listing. */}
-        <AreaMap label={tMap("areaLabel", { place: p.name })} area={{ lat: p.centre.lat, lng: p.centre.lng, radiusM: 900 }} className="h-64 rounded-card border border-line" />
+        <AreaMap label={tMap("areaLabel", { place: p.name })} area={{ lat: p.centre.lat, lng: p.centre.lng, radiusM: AREA_RADIUS_M }} className="h-64 rounded-card border border-line" />
       </header>
 
       <ul className="grid gap-3 sm:grid-cols-3">

@@ -23,6 +23,7 @@ import { RwfFigure } from "@/components/sale/rwf-figure";
 import { EnquiryPanel } from "@/components/sale/enquiry-panel";
 import { ShieldIcon } from "@/components/ui/icons";
 import { MoneyText } from "@/components/ui/money-text";
+import { AREA_RADIUS_M } from "@/lib/places/area";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -149,7 +150,7 @@ export default async function SaleDetailPage({ params }: { params: Promise<{ loc
             </div>
             <AreaMap
               label={tMap("areaLabel", { place: home.neighbourhood })}
-              area={{ lat: home.location.lat, lng: home.location.lng, radiusM: 350 }}
+              area={{ lat: home.location.lat, lng: home.location.lng, radiusM: AREA_RADIUS_M }}
               className="h-72 rounded-card border border-line"
             />
             <p className="max-w-[62ch] text-[14px] leading-relaxed text-ink-2">

@@ -960,14 +960,16 @@
     "zoomIn": "Kuza",
     "zoomOut": "Punguza",
     "resultsLabel": "Ramani ya {count, plural, one {tokeo #} other {matokeo #}}",
+    "areaPinLabel": "{count} kuanzia {price}",
+    "areaPinTitle": "{area}: {count, plural, one {nyumba #} other {nyumba #}} kuanzia {price}",
     "list": "Orodha",
     "map": "Ramani",
     "showMap": "Onyesha kwenye ramani",
     "whereTitle": "Utakapokuwa",
     "areaLabel": "Eneo la takriban huko {place}",
-    "areaNote": "Duara linaonyesha mtaa, si mlango: anwani kamili inakuja pamoja na uhifadhi wako.",
+    "areaNote": "Duara linaonyesha eneo, si mtaa: anwani kamili inakuja pamoja na uhifadhi wako.",
     "contributors": "wachangiaji",
-    "areaNoteLease": "Duara linaonyesha mtaa, si mlango. Anwani kamili inakuja pamoja na muda wako wa kuja kuiona."
+    "areaNoteLease": "Duara linaonyesha eneo, si mtaa. Anwani kamili inakuja pamoja na muda wako wa kuja kuiona."
   },
   "share": {
     "share": "Shiriki",
@@ -1069,7 +1071,7 @@
     "plotLabel": "Kiwanja",
     "listedLabel": "Imeorodheshwa",
     "about": "Kuhusu nyumba hii",
-    "areaNote": "Duara linaonyesha mtaa, si lango: kiwanja kamili kinakuja pamoja na hati za umiliki wakati wa kuiona.",
+    "areaNote": "Duara linaonyesha eneo, si mtaa: kiwanja kamili kinakuja pamoja na hati za umiliki wakati wa kuiona.",
     "howTitle": "Jinsi kununua kupitia HomeLink kunavyofanya kazi",
     "how": {
       "viewingTitle": "Kuiona pamoja na timu yetu",
