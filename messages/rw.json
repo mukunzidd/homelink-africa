@@ -3628,7 +3628,29 @@
       "original": {
         "name": "Ubwa mbere",
         "body": "Uburyo bwa mbere: hagati ku musozi, n’akarango hejuru"
+      },
+      "arrival": {
+        "name": "Umunsi wo kuhagera",
+        "body": "Urupapuro rukurikira umunsi wawe wa mbere: uragera, umushoferi akakwakira, ugahabwa imfunguzo, ugasohoka"
+      },
+      "report": {
+        "name": "Raporo y’igenzura",
+        "body": "Urupapuro rusomwa nka raporo y’ugenzura: buri nzu n’ibyagenzuwe, uwabigenzuye n’igihe"
+      },
+      "hills": {
+        "name": "Kigali ku misozi",
+        "body": "Ikarita ishushanyije y’imisozi ya Kigali ni yo itangira, kandi byose biboneka hakurikijwe agace"
+      },
+      "magazine": {
+        "name": "Ikinyamakuru cy’urugendo",
+        "body": "Amafoto manini n’inyandiko nini, bitondetse nk’inomero y’ikinyamakuru ivuga kuri Kigali"
+      },
+      "concierge": {
+        "name": "Baza itsinda",
+        "body": "Urupapuro ni ikiganiro n’itsinda rya Kigali, kandi gushakisha ni ubutumwa ubandikira"
       }
-    }
+    },
+    "groupDesigns": "Impapuro zavuguruwe zose",
+    "groupHeroes": "Amahitamo y’igice cyo hejuru ku rupapuro rw’ubu"
   }
 }

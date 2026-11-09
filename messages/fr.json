@@ -3628,7 +3628,29 @@
       "original": {
         "name": "Version d’origine",
         "body": "La première version : centrée sur la colline, avec un badge au-dessus"
+      },
+      "arrival": {
+        "name": "Jour d’arrivée",
+        "body": "La page suit votre premier jour : vous atterrissez, un chauffeur vous accueille, vous recevez les clés, vous sortez"
+      },
+      "report": {
+        "name": "Rapport d’inspection",
+        "body": "La page se lit comme le rapport de l’inspecteur : chaque logement avec ce qui a été vérifié, par qui et quand"
+      },
+      "hills": {
+        "name": "Kigali par colline",
+        "body": "Une carte dessinée des collines de Kigali ouvre la page, et tout se trouve par quartier"
+      },
+      "magazine": {
+        "name": "Magazine de voyage",
+        "body": "De grandes photos et une typographie ample, comme le numéro Kigali d’un magazine"
+      },
+      "concierge": {
+        "name": "Demandez à l’équipe",
+        "body": "La page est une conversation avec l’équipe de Kigali, et la recherche est un message pour elle"
       }
-    }
+    },
+    "groupDesigns": "Pages entièrement repensées",
+    "groupHeroes": "Variantes d’en-tête sur la page actuelle"
   }
 }

@@ -3628,7 +3628,29 @@
       "original": {
         "name": "Toleo la kwanza",
         "body": "Toleo la kwanza: katikati juu ya kilima, na beji juu"
+      },
+      "arrival": {
+        "name": "Siku ya kuwasili",
+        "body": "Ukurasa unafuata siku yako ya kwanza: unatua, dereva anakupokea, unapewa funguo, unatoka"
+      },
+      "report": {
+        "name": "Ripoti ya ukaguzi",
+        "body": "Ukurasa unasomeka kama ripoti ya mkaguzi: kila nyumba na kilichokaguliwa, na nani na lini"
+      },
+      "hills": {
+        "name": "Kigali kwa vilima",
+        "body": "Ramani iliyochorwa ya vilima vya Kigali inaongoza, na kila kitu kinapatikana kwa mtaa"
+      },
+      "magazine": {
+        "name": "Jarida la safari",
+        "body": "Picha kubwa na maandishi makubwa, yamepangwa kama toleo la jarida kuhusu Kigali"
+      },
+      "concierge": {
+        "name": "Uliza timu",
+        "body": "Ukurasa ni mazungumzo na timu ya Kigali, na kutafuta ni ujumbe kwao"
       }
-    }
+    },
+    "groupDesigns": "Kurasa zilizosanifiwa upya kabisa",
+    "groupHeroes": "Machaguo ya sehemu ya juu kwenye ukurasa wa sasa"
   }
 }

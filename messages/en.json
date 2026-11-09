@@ -3628,7 +3628,29 @@
       "original": {
         "name": "Original",
         "body": "The first version: centred over the hillside, with a badge above"
+      },
+      "arrival": {
+        "name": "Arrival day",
+        "body": "The page follows your first day: you land, a driver meets you, you get your keys, you go out"
+      },
+      "report": {
+        "name": "Inspection report",
+        "body": "The page reads as the inspector’s report: each home with what was checked, by whom and when"
+      },
+      "hills": {
+        "name": "Kigali by hill",
+        "body": "A drawn map of Kigali’s hills leads, and everything is found by neighbourhood"
+      },
+      "magazine": {
+        "name": "Travel magazine",
+        "body": "Large photographs and type, laid out like a magazine’s Kigali issue"
+      },
+      "concierge": {
+        "name": "Ask the team",
+        "body": "The page is a conversation with the Kigali team, and the search is a message to them"
       }
-    }
+    },
+    "groupDesigns": "Whole-page redesigns",
+    "groupHeroes": "Hero options on today’s page"
   }
 }

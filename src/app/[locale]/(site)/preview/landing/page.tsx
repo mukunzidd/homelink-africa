@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HERO_VARIANTS } from "@/components/landing/heroes";
 import { HeroCompare } from "@/components/landing/hero-compare";
+import { DESIGN_KEYS } from "@/components/landing/designs";
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
@@ -23,7 +24,10 @@ export default async function LandingOptions({ params }: { params: Promise<{ loc
       <HeroCompare
         locale={locale}
         current="split"
-        options={HERO_VARIANTS.map((v) => ({ key: v, name: t(`variants.${v}.name`), body: t(`variants.${v}.body`) }))}
+        groups={[
+          { title: t("groupDesigns"), options: DESIGN_KEYS.map((v) => ({ key: v, name: t(`variants.${v}.name`), body: t(`variants.${v}.body`) })) },
+          { title: t("groupHeroes"), options: HERO_VARIANTS.map((v) => ({ key: v, name: t(`variants.${v}.name`), body: t(`variants.${v}.body`) })) },
+        ]}
         labels={{ desktop: t("desktop"), phone: t("phone"), open: t("open"), current: t("current") }}
       />
     </div>
