@@ -11,11 +11,8 @@
 [build.environment]
   NODE_VERSION = "22"
   NEXT_TELEMETRY_DISABLED = "1"
+  # A prototype with sample data, shared by link for feedback: open to
+  # anyone with the URL (the team's Netlify login is off for this site),
+  # so every page sends X-Robots-Tag: noindex (see next.config.ts).
+  HOMELINK_NOINDEX = "1"
 
-# A prototype with sample data, shared by link for feedback: open to anyone
-# with the URL (the team's Netlify login is switched off for this site), so
-# no page may be indexed.
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
