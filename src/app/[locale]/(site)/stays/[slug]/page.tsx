@@ -196,7 +196,7 @@ export default async function ListingDetailPage({
         verifiedLabel={tVerify("badge")}
       />
 
-      <div className="grid items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_380px]">
+      <div className="grid grid-cols-1 items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_380px]">
         {/* Hairline rules between sections rather than cards: this column is
             one continuous read, and boxing each part would turn it into a
             list of unrelated panels. */}

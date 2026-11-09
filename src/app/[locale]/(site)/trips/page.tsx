@@ -142,7 +142,7 @@ export default async function TripsPage({
       {/* Beside the account menu the list gets about 870px; the "anything
           else" card only fits beside it from 1280px up, so below that it
           follows the list instead of squeezing every row. */}
-      <div className="grid items-start gap-x-12 gap-y-10 xl:grid-cols-[minmax(0,1fr)_300px]">
+      <div className="grid grid-cols-1 items-start gap-x-12 gap-y-10 xl:grid-cols-[minmax(0,1fr)_300px]">
         <div className="flex flex-col">
           {/* Three tabs in the URL, so "my past stays" is a link, and a
               long history does not push what is coming up below the fold. */}

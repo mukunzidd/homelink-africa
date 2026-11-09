@@ -108,7 +108,7 @@ export default async function MessagesPage({
         </p>
       </header>
 
-      <div className="grid items-start gap-x-10 lg:grid-cols-[320px_1fr]">
+      <div className="grid grid-cols-1 items-start gap-x-10 lg:grid-cols-[320px_minmax(0,1fr)]">
         <div
           className={cn(
             "flex-col lg:flex",

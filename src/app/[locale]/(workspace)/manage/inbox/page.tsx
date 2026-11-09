@@ -45,7 +45,7 @@ export default async function Inbox({ params, searchParams }: { params: Promise<
   return (
     <div className="flex flex-col gap-5">
       <SectionHeader title={tw("inbox.title")} description={t(`subtitleFor.${staff ? "ops" : "supply"}`)} />
-      <div className="grid items-start gap-x-8 lg:grid-cols-[320px_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 items-start gap-x-8 lg:grid-cols-[320px_minmax(0,1fr)]">
         <div className={cn("min-w-0 flex-col lg:flex", thread ? "hidden" : "flex")}>
           <ThreadList conversations={conversations} activeId={active?.id} selected={selected} role={role} scopeTags={scopeTags} locale={intl} basePath="/manage/inbox" />
         </div>

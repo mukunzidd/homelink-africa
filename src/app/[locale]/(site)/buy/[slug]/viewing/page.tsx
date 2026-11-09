@@ -32,7 +32,7 @@ export default async function BookViewing({ params }: { params: Promise<{ locale
   return (
     <div className="mx-auto flex max-w-[1180px] flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
       <Breadcrumbs trail={[{ label: tB("buy"), href: "/buy" }, { label: home.name, href: `/buy/${slug}` }, { label: t("title") }]} />
-      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="flex min-w-0 flex-col gap-5">
           <div className="flex flex-col gap-2">
             <h1 className="font-display text-3xl font-semibold text-ink sm:text-4xl">{t("title")}</h1>

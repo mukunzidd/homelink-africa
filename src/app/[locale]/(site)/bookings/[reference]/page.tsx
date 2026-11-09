@@ -208,7 +208,7 @@ async function JustBooked({
         </p>
       </header>
 
-      <div className="grid items-start gap-8 lg:grid-cols-[1fr_360px]">
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_360px]">
         <div className="flex flex-col gap-6">
           <section className="flex flex-col gap-1.5 rounded-card border border-line bg-surface p-5">
             <h2 className="text-xs font-medium text-ink-3">

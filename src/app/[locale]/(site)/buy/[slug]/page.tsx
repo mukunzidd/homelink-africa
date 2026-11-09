@@ -103,7 +103,7 @@ export default async function SaleDetailPage({ params }: { params: Promise<{ loc
 
       <Gallery seed={home.imageSeed} images={home.images} alt={home.name} verifiedLabel={tVerify("badge")} />
 
-      <div className="grid items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_380px]">
+      <div className="grid grid-cols-1 items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_380px]">
         <div className="flex flex-col">
           <section className="flex flex-col gap-4 pb-6">
             <h2 className="font-display text-2xl font-semibold text-ink">{t(`kind.${home.kind}`)} · {home.neighbourhood}</h2>
