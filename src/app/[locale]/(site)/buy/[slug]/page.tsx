@@ -102,7 +102,7 @@ export default async function SaleDetailPage({ params }: { params: Promise<{ loc
         </div>
       </header>
 
-      <Gallery seed={home.imageSeed} images={home.images} alt={home.name} verifiedLabel={tVerify("badge")} />
+      <Gallery seed={home.imageSeed} images={home.images} alt={home.name} />
 
       <div className="grid grid-cols-1 items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_380px]">
         <div className="flex flex-col">

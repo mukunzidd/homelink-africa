@@ -105,7 +105,6 @@ export default async function ExperienceDetailPage({
         seed={experience.imageSeed}
         images={experience.images}
         alt={experience.name}
-        verifiedLabel={tVerify("badge")}
       />
 
       <div className="grid grid-cols-1 items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_380px]">

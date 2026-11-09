@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { SupplyImage } from "@/components/ui/supply-image";
-import { VerifiedBadge } from "@/components/ui/verified-badge";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -55,7 +54,6 @@ export function Gallery({
   images,
   alt = "",
   count = 5,
-  verifiedLabel,
   className,
 }: {
   seed: string;
@@ -63,7 +61,6 @@ export function Gallery({
   images?: string[];
   alt?: string;
   count?: number;
-  verifiedLabel?: string;
   className?: string;
 }) {
   const t = useTranslations("gallery");
@@ -153,11 +150,6 @@ export function Gallery({
             sizes={n === 1 ? "100vw" : "(max-width: 640px) 100vw, 50vw"}
             className="h-full w-full"
           >
-            {verifiedLabel && (
-              <span className="absolute left-4 top-4">
-                <VerifiedBadge label={verifiedLabel} />
-              </span>
-            )}
           </SupplyImage>
         </button>
 

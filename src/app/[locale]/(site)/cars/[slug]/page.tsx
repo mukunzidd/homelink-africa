@@ -121,7 +121,6 @@ export default async function VehicleDetailPage({
         seed={vehicle.imageSeed}
         images={vehicle.images}
         alt={vehicle.name}
-        verifiedLabel={tVerify("badge")}
       />
 
       <div className="grid grid-cols-1 items-start gap-x-16 gap-y-10 lg:grid-cols-[1fr_380px]">
