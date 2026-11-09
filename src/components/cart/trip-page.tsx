@@ -13,6 +13,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { CarIcon, CloseIcon, CompassIcon, HouseIcon, PlusIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
+import { dateTimeFormat } from "@/lib/domain/date-format";
 
 const KIND_ICON = { stay: HouseIcon, car: CarIcon, experience: CompassIcon } as const;
 
@@ -36,9 +37,9 @@ export function TripPage() {
   const issueFor = (id: string): CartIssue | undefined => issues.find((i) => i.itemIds.includes(id));
   const blocked = cartBlocked(cart.items, today);
   const day = (d: string) =>
-    new Intl.DateTimeFormat(locale, { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
+    dateTimeFormat(locale, { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
   const short = (d: string) =>
-    new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
+    dateTimeFormat(locale, { day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
 
   if (!cart.items.length) {
     return (

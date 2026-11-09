@@ -10,6 +10,7 @@ import { SectionHeader } from "@/components/workspace/section-header";
 import { RateGrid, type RateCell } from "@/components/workspace/rate-grid";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
+import { dateTimeFormat } from "@/lib/domain/date-format";
 
 /**
  * What each night of a home sells for, a month at a time, against its
@@ -37,7 +38,7 @@ export default async function Rates({ params, searchParams }: { params: Promise<
   const cells: RateCell[] = nights.map((n) => ({ date: n.date, major: n.rate.minor / 10 ** exp, own: n.own, inMonth: n.date.startsWith(month), past: n.date < today }));
   const own = Object.keys(home.nightlyRates ?? {}).filter((d) => d >= today).length;
   const link = (m: string, slug = home.slug) => `/manage/rates?home=${slug}&month=${m}`;
-  const title = new Intl.DateTimeFormat(intl, { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${first}T00:00:00Z`));
+  const title = dateTimeFormat(intl, { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${first}T00:00:00Z`));
 
   return (
     <div className="flex min-w-0 flex-col gap-5">

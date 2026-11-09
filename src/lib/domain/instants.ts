@@ -1,3 +1,4 @@
+import { dateTimeFormat } from "./date-format";
 /**
  * Timestamps, as opposed to dates.
  *
@@ -23,7 +24,7 @@ const CLOCK = { hourCycle: "h23" } as const;
 export const OPERATING_TIMEZONE = "Africa/Kigali";
 
 export function formatTimeOfDay(iso: string, locale: string): string {
-  return new Intl.DateTimeFormat(locale, {
+  return dateTimeFormat(locale, {
     hour: "2-digit",
     minute: "2-digit",
     timeZone: OPERATING_TIMEZONE,
@@ -33,7 +34,7 @@ export function formatTimeOfDay(iso: string, locale: string): string {
 
 /** Day and time together, for a thread list where threads are months apart. */
 export function formatStamp(iso: string, locale: string): string {
-  return new Intl.DateTimeFormat(locale, {
+  return dateTimeFormat(locale, {
     day: "numeric",
     month: "short",
     hour: "2-digit",
@@ -45,7 +46,7 @@ export function formatStamp(iso: string, locale: string): string {
 
 /** The calendar day an instant fell on in Kigali, for grouping a transcript. */
 export function dayOf(iso: string): string {
-  return new Intl.DateTimeFormat("en-CA", {
+  return dateTimeFormat("en-CA", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -82,7 +83,7 @@ export function formatAgo(iso: string, now: Date, locale: string): string {
     (Date.parse(`${today}T00:00:00Z`) - Date.parse(`${day}T00:00:00Z`)) / 86_400_000,
   );
   if (days <= 6) return rtf.format(-days, "day");
-  return new Intl.DateTimeFormat(locale, {
+  return dateTimeFormat(locale, {
     day: "numeric",
     month: "short",
     timeZone: OPERATING_TIMEZONE,

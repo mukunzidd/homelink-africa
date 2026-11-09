@@ -8,6 +8,7 @@ import { addTicketNote, blockForTicket, createTicket, unblockForTicket, updateHo
 import { TeamSelect, control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
 import { FileDrop } from "@/components/ui/file-drop";
 import { cn } from "@/lib/cn";
+import { dateTimeFormat } from "@/lib/domain/date-format";
 
 const HK: HousekeepingTask["status"][] = ["todo", "inProgress", "ready", "issue"];
 
@@ -67,7 +68,7 @@ const PRIORITIES: MaintenanceTicket["priority"][] = ["urgent", "normal", "low"];
 export function TicketActions({ ticket, team, today }: { ticket: MaintenanceTicket; team: string[]; today: string }) {
   const t = useTranslations("workspace.work");
   const intl = INTL_LOCALES[useLocale() as Locale];
-  const day = (d: string) => new Intl.DateTimeFormat(intl, { day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
+  const day = (d: string) => dateTimeFormat(intl, { day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
   const w = useWrite();
   const [when, setWhen] = useState(ticket.scheduledFor ?? "");
   const [note, setNote] = useState("");

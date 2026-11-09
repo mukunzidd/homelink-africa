@@ -8,6 +8,7 @@ import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { useToast } from "@/components/notifications/toaster";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
+import { dateTimeFormat } from "@/lib/domain/date-format";
 
 type Night = { date: string; state: "free" | "booked" | "owner" | "maintenance" | "past" };
 
@@ -22,9 +23,9 @@ export function AvailabilityTab({ listingId, slug, month, nights, prev, next }: 
   const toast = useToast();
   const intl = INTL_LOCALES[useLocale() as Locale];
   const [busy, setBusy] = useState<string | null>(null);
-  const title = new Intl.DateTimeFormat(intl, { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${month}-01T00:00:00Z`));
-  const dayName = (d: string) => new Intl.DateTimeFormat(intl, { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
-  const weekday = (i: number) => new Intl.DateTimeFormat(intl, { weekday: "short", timeZone: "UTC" }).format(new Date(Date.UTC(2026, 10, 2 + i)));
+  const title = dateTimeFormat(intl, { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${month}-01T00:00:00Z`));
+  const dayName = (d: string) => dateTimeFormat(intl, { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
+  const weekday = (i: number) => dateTimeFormat(intl, { weekday: "short", timeZone: "UTC" }).format(new Date(Date.UTC(2026, 10, 2 + i)));
   // Monday-first grid; pad the first week.
   const lead = (new Date(`${month}-01T00:00:00Z`).getUTCDay() + 6) % 7;
   const href = (m: string) => `/manage/portfolio/${slug}?tab=availability&month=${m}`;

@@ -7,6 +7,7 @@ import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { addDays } from "@/lib/domain/dates";
 import { useToast } from "@/components/notifications/toaster";
 import { cn } from "@/lib/cn";
+import { dateTimeFormat } from "@/lib/domain/date-format";
 
 export type RateCell = { date: string; major: number; own: boolean; inMonth: boolean; past: boolean };
 
@@ -28,8 +29,8 @@ export function RateGrid({ listingId, cells, base, currency }: { listingId: stri
   const hi = a && b ? (a < b ? b : a) : a;
   const inSel = (d: string) => !!lo && !!hi && d >= lo && d <= hi;
   const num = new Intl.NumberFormat(intl, { maximumFractionDigits: 2 });
-  const day = (d: string) => new Intl.DateTimeFormat(intl, { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
-  const weekday = (i: number) => new Intl.DateTimeFormat(intl, { weekday: "short", timeZone: "UTC" }).format(new Date(Date.UTC(2026, 10, 2 + i)));
+  const day = (d: string) => dateTimeFormat(intl, { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
+  const weekday = (i: number) => dateTimeFormat(intl, { weekday: "short", timeZone: "UTC" }).format(new Date(Date.UTC(2026, 10, 2 + i)));
 
   function pick(d: string) {
     if (!a || (a && b)) {
