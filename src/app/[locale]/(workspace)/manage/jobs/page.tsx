@@ -2,7 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { JobOffer } from "@/lib/domain/types";
 import { repos } from "@/lib/repos";
 import { requireSection } from "@/lib/workspace/guard";
-import { partnerFor } from "@/lib/workspace/partner";
+import { openOffers, partnerFor } from "@/lib/workspace/partner";
 import { formatDate } from "@/lib/domain/dates";
 import { kigaliDay } from "@/lib/domain/instants";
 import { formatMoney } from "@/lib/domain/money";
@@ -27,8 +27,7 @@ export default async function Jobs({ params }: { params: Promise<{ locale: strin
   const me = partnerFor(access.role);
   const all = me ? await repos().partners.offers(me) : [];
   const today = kigaliDay();
-  const now = Date.now();
-  const offers = all.filter((j) => j.status === "offered" && (!j.offerExpiresAt || Date.parse(j.offerExpiresAt) > now));
+  const offers = openOffers(all, new Date());
   const upcoming = all.filter((j) => j.status === "accepted" && j.end >= today);
   const done = all.filter((j) => j.status === "done" || (j.status === "accepted" && j.end < today)).reverse();
   const day = (d: string) => formatDate(d, intl, { weekday: "long", day: "numeric", month: "long" });
