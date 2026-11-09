@@ -40,7 +40,7 @@
   },
   "landing": {
     "heroTitle": "Un logement prêt à votre arrivée",
-    "heroBody": "Chaque logement, voiture et guide sur HomeLink a été inspecté en personne par notre équipe à Kigali. S'il figure ici, c'est que nous y sommes allés.",
+    "heroBody": "Chaque logement, voiture et guide sur HomeLink a été inspecté en personne par notre équipe à Kigali.",
     "feedTitle": "Vérifiés à Kigali cette semaine",
     "feedBody": "Récemment inspectés et prêts à réserver.",
     "viewAll": "Voir tous les logements",
@@ -71,7 +71,8 @@
     },
     "daysTitle": "Excursions",
     "daysBody": "Gorilles, lac, canopée et ville, avec des guides que nous connaissons personnellement.",
-    "daysAll": "Toutes les excursions"
+    "daysAll": "Toutes les excursions",
+    "heroImageAlt": "Des maisons à flanc de colline à Kigali, sous un ciel d’après-midi"
   },
   "search": {
     "where": "Où",

@@ -40,7 +40,7 @@
   },
   "landing": {
     "heroTitle": "Urugo rwiteguye igihe ugeze",
-    "heroBody": "Buri cumbi, imodoka n'umuyobozi kuri HomeLink byagenzuwe imbonankubone n'itsinda ryacu i Kigali. Niba biri hano, twahageze ubwacu.",
+    "heroBody": "Buri cumbi, imodoka n'umuyobozi kuri HomeLink byagenzuwe imbonankubone n'itsinda ryacu i Kigali.",
     "feedTitle": "Byagenzuwe i Kigali muri iki cyumweru",
     "feedBody": "Bimaze kugenzurwa kandi biteguye gufatwa.",
     "viewAll": "Reba amacumbi yose",
@@ -71,7 +71,8 @@
     },
     "daysTitle": "Ingendo",
     "daysBody": "Ingagi, ikiyaga, ishyamba n’umujyi, hamwe n’abayobozi tuzi ku giti cyabo.",
-    "daysAll": "Ingendo zose"
+    "daysAll": "Ingendo zose",
+    "heroImageAlt": "Amazu ku musozi i Kigali, ku gicamunsi"
   },
   "search": {
     "where": "Aho",

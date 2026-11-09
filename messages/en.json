@@ -40,7 +40,7 @@
   },
   "landing": {
     "heroTitle": "A home that is ready when you land",
-    "heroBody": "Every stay, car, and guide on HomeLink has been inspected in person by our team in Kigali. If it is here, we have stood in the room.",
+    "heroBody": "Every stay, car, and guide on HomeLink has been inspected in person by our team in Kigali.",
     "feedTitle": "Verified in Kigali this week",
     "feedBody": "Newly inspected and ready to book.",
     "viewAll": "View all stays",
@@ -71,7 +71,8 @@
     },
     "daysTitle": "Days out",
     "daysBody": "Gorillas, the lake, the forest canopy and the city, with guides we know personally.",
-    "daysAll": "All days out"
+    "daysAll": "All days out",
+    "heroImageAlt": "Homes on a hillside in Kigali under an afternoon sky"
   },
   "search": {
     "where": "Where",

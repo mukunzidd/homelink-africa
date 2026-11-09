@@ -40,7 +40,7 @@
   },
   "landing": {
     "heroTitle": "Nyumba iliyo tayari ukiwasili",
-    "heroBody": "Kila malazi, gari na mwongozaji kwenye HomeLink wamekaguliwa ana kwa ana na timu yetu ya Kigali. Kila kilichopo hapa, tumefika na kukiona kwa macho yetu.",
+    "heroBody": "Kila malazi, gari na mwongozaji kwenye HomeLink wamekaguliwa ana kwa ana na timu yetu ya Kigali.",
     "feedTitle": "Vilivyothibitishwa Kigali wiki hii",
     "feedBody": "Vimekaguliwa karibuni na viko tayari kuhifadhiwa.",
     "viewAll": "Tazama malazi yote",
@@ -71,7 +71,8 @@
     },
     "daysTitle": "Matembezi",
     "daysBody": "Sokwe mtu, ziwa, vilele vya miti msituni na jiji, pamoja na waongozaji tunaowafahamu binafsi.",
-    "daysAll": "Matembezi yote"
+    "daysAll": "Matembezi yote",
+    "heroImageAlt": "Nyumba kwenye kilima mjini Kigali, wakati wa mchana"
   },
   "search": {
     "where": "Wapi",

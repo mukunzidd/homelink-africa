@@ -158,9 +158,14 @@ function useSearch(query: string, currency: string) {
   return { data, loading };
 }
 
-function Palette({ prefill, onClose }: { prefill: string; onClose: () => void }) {
+/**
+ * Everything the palette knows, without the dialog around it: the sentence,
+ * the answer, the rows and which one is picked. The dialog and the landing
+ * hero's inline field both run on it, so a sentence reads and ranks the same
+ * wherever it is typed.
+ */
+function usePalette(prefill: string, onLeave: () => void) {
   const t = useTranslations("smart");
-  const locale = useLocale();
   const router = useRouter();
   const { currency } = usePreferences();
   const [query, setQuery] = useState(prefill);
@@ -168,33 +173,22 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
   // row only takes over once the arrows or the pointer pick one, and any new
   // answer hands control back to the sentence.
   const [picked, setPicked] = useState<{ key: string; index: number }>({ key: "", index: -1 });
-  // The palette only ever mounts in the browser, after a click or a key.
-  const [recent] = useState<string[]>(() => readRecent());
-  const [viewed] = useState<Viewed[]>(() => readViewed());
+  // The dialog only mounts in the browser; the inline field also renders on
+  // the server, where there is no storage to read.
+  const [recent] = useState<string[]>(() => (typeof window === "undefined" ? [] : readRecent()));
+  const [viewed] = useState<Viewed[]>(() => (typeof window === "undefined" ? [] : readViewed()));
   const { items: savedItems } = useSaved();
   const pathname = usePathname();
   const lane = pathname.startsWith("/cars") ? "cars" : pathname.startsWith("/experiences") ? "experiences" : "homes";
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const listId = useId();
-  const returnFocus = useRef<HTMLElement | null>(null);
+  // Submitted before the answer arrived: the field shows it is working.
+  const [pending, setPending] = useState(false);
 
   const trimmed = query.trim();
   const { data, loading } = useSearch(trimmed, currency);
   const fresh = data && data.query === trimmed ? data : null;
-
-  useEffect(() => {
-    returnFocus.current = document.activeElement as HTMLElement | null;
-    inputRef.current?.focus();
-    const el = inputRef.current;
-    if (el) el.setSelectionRange(el.value.length, el.value.length);
-    const { overflow } = document.body.style;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = overflow;
-      returnFocus.current?.focus?.();
-    };
-  }, []);
 
   const rows: Row[] = useMemo(() => {
     if (!trimmed) {
@@ -232,17 +226,35 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
       ?.scrollIntoView({ block: "nearest" });
   }, [active]);
 
-  function go(href: string) {
-    if (trimmed) remember(trimmed);
-    onClose();
-    router.push(href);
+  const go = useCallback(
+    (href: string) => {
+      if (trimmed) remember(trimmed);
+      onLeave();
+      router.push(href);
+    },
+    [trimmed, onLeave, router],
+  );
+
+  /** Search everything the sentence describes, now or as soon as it is read. */
+  async function submit() {
+    if (!trimmed) {
+      inputRef.current?.focus();
+      return;
+    }
+    if (fresh) return go(fresh.href);
+    // Enter came faster than the debounce: ask for this sentence directly
+    // rather than waiting on the answer the typing will fetch anyway.
+    setPending(true);
+    try {
+      const res = await fetch(`/api/search?q=${encodeURIComponent(trimmed)}&cur=${currency}`);
+      if (res.ok) go(((await res.json()) as PaletteResponse).href);
+    } finally {
+      setPending(false);
+    }
   }
 
   function choose(row: Row | undefined) {
-    if (!row) {
-      if (fresh) go(fresh.href);
-      return;
-    }
+    if (!row) return submit();
     if (row.type === "recent" || row.type === "example") {
       setQuery(row.query);
       inputRef.current?.focus();
@@ -251,6 +263,7 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
     go(row.href);
   }
 
+  /** Arrows and Enter. Escape and Tab belong to whoever holds the field. */
   function onKeyDown(e: React.KeyboardEvent) {
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -260,18 +273,22 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
       setActive((i) => Math.max(0, i - 1));
     } else if (e.key === "Enter") {
       e.preventDefault();
-      // Enter on a typed sentence with nothing highlighted beyond the first
-      // row means "show me all of it", which is what a search box does.
+      // Enter on a typed sentence with nothing highlighted means "show me
+      // all of it", which is what a search box does.
       if (active >= 0) choose(rows[active]);
-      else if (trimmed && fresh) go(fresh.href);
-    } else if (e.key === "Escape") {
-      e.preventDefault();
-      onClose();
-    } else if (e.key === "Tab") {
-      // Keep focus inside the dialog; the list is driven from the field.
-      e.preventDefault();
+      else submit();
     }
   }
+
+  return { t, query, setQuery, trimmed, fresh, loading: loading || pending, rows, active, setActive, choose, submit, onKeyDown, inputRef, listRef, listId, lane };
+}
+
+type PaletteModel = ReturnType<typeof usePalette>;
+
+/** What the sentence was read as, then the rows: shared by both shells. */
+function PaletteResults({ m }: { m: PaletteModel }) {
+  const { t, fresh, trimmed, rows, active, setActive, choose, listRef, listId } = m;
+  const locale = useLocale();
 
   const groupLabel: Record<PaletteRow["kind"], string> = {
     stay: t("groupStays"),
@@ -284,7 +301,119 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
     ? fresh.groups.stays.length + fresh.groups.sales.length + fresh.groups.cars.length + fresh.groups.experiences.length + (fresh.staff?.length ?? 0)
     : 0;
 
-  let lastHeading: string | null = null;
+  // A group's heading shows above its first row only.
+  const headings = rows.map((row) =>
+    row.type === "recent"
+      ? t("recent")
+      : row.type === "viewed"
+        ? t("recentlyViewed")
+        : row.type === "saved"
+          ? null
+          : row.type === "example"
+            ? t("tryAsking")
+            : row.type === "place"
+              ? t("groupPlaces")
+              : row.type === "booking"
+                ? t("groupBookings")
+                : row.type === "item"
+                  ? row.key.startsWith("closest-")
+                    ? t("closestHeading")
+                    : groupLabel[row.row.kind]
+                  : null,
+  );
+
+  return (
+    <>
+      {fresh && trimmed && (
+        <div className="flex flex-col gap-2 border-b border-line-soft bg-canvas/60 px-4 py-3 sm:px-5">
+          <IntentChips intent={fresh.intent} locale={locale} />
+          {fresh.relaxed.length > 0 && totalHits > 0 && (
+            <p className="text-[13px] text-warn">
+              {fresh.relaxed.length === 1 && fresh.relaxed[0] === "text"
+                ? t("relaxedText", { text: fresh.intent.text })
+                : t("relaxed", { what: fresh.relaxed.map((k) => t(`relax.${k}`)).join(", ") })}
+            </p>
+          )}
+        </div>
+      )}
+
+      <div ref={listRef} id={listId} role="listbox" aria-label={t("title")} className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain py-2">
+        {rows.map((row, index) => {
+          const heading = headings[index];
+          const showHeading = heading && heading !== headings[index - 1];
+
+          return (
+            <div key={row.key}>
+              {showHeading && (
+                <p className="px-5 pb-1 pt-3 text-[12px] font-medium text-ink-3">
+                  {heading}
+                </p>
+              )}
+              <div
+                id={`${listId}-${index}`}
+                role="option"
+                aria-selected={index === active}
+                data-index={index}
+                onMouseMove={() => setActive(index)}
+                // Keeps focus in the field, so the inline dropdown does not
+                // read the click as focus leaving and close under it.
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => choose(row)}
+                className={cn(
+                  "mx-2 flex cursor-pointer items-center gap-3 rounded-ctl px-3 py-2",
+                  index === active ? "bg-brand-tint" : "hover:bg-surface-2",
+                  row.type === "all" && "mt-1",
+                  row.type === "all" && active === -1 && "ring-1 ring-inset ring-brand/30",
+                )}
+              >
+                <RowBody row={row} t={t} active={index === active} fresh={fresh} />
+              </div>
+            </div>
+          );
+        })}
+
+        {trimmed && fresh && totalHits === 0 && fresh.places.length === 0 && (
+          <div className="order-first px-5 pb-2 pt-4">
+            <p className="font-display text-lg font-semibold text-ink">
+              {fresh.intent.text ? t("nothingMentions", { text: fresh.intent.text }) : t("nothingTitle")}
+            </p>
+            <p className="mt-1 max-w-[52ch] text-sm text-ink-2">{t("nothingBody")}</p>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
+function Palette({ prefill, onClose }: { prefill: string; onClose: () => void }) {
+  const m = usePalette(prefill, onClose);
+  const { t, query, setQuery, trimmed, fresh, loading, rows, active, inputRef, listId, lane } = m;
+  const returnFocus = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    returnFocus.current = document.activeElement as HTMLElement | null;
+    inputRef.current?.focus();
+    const el = inputRef.current;
+    if (el) el.setSelectionRange(el.value.length, el.value.length);
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = overflow;
+      returnFocus.current?.focus?.();
+    };
+  }, [inputRef]);
+
+  function onKeyDown(e: React.KeyboardEvent) {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      onClose();
+    } else if (e.key === "Tab") {
+      // Keep focus inside the dialog; the list is driven from the field.
+      e.preventDefault();
+    } else {
+      m.onKeyDown(e);
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-[60] flex items-start justify-center sm:px-4 sm:pt-[9vh]">
@@ -351,78 +480,7 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
           </kbd>
         </div>
 
-        {fresh && trimmed && (
-          <div className="flex flex-col gap-2 border-b border-line-soft bg-canvas/60 px-4 py-3 sm:px-5">
-            <IntentChips intent={fresh.intent} locale={locale} />
-            {fresh.relaxed.length > 0 && totalHits > 0 && (
-              <p className="text-[13px] text-warn">
-                {fresh.relaxed.length === 1 && fresh.relaxed[0] === "text"
-                  ? t("relaxedText", { text: fresh.intent.text })
-                  : t("relaxed", { what: fresh.relaxed.map((k) => t(`relax.${k}`)).join(", ") })}
-              </p>
-            )}
-          </div>
-        )}
-
-        <div ref={listRef} id={listId} role="listbox" aria-label={t("title")} className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain py-2">
-          {rows.map((row, index) => {
-            const heading =
-              row.type === "recent"
-                ? t("recent")
-                : row.type === "viewed"
-                  ? t("recentlyViewed")
-                  : row.type === "saved"
-                    ? null
-                    : row.type === "example"
-                      ? t("tryAsking")
-                      : row.type === "place"
-                        ? t("groupPlaces")
-                        : row.type === "booking"
-                          ? t("groupBookings")
-                        : row.type === "item"
-                          ? row.key.startsWith("closest-")
-                            ? t("closestHeading")
-                            : groupLabel[row.row.kind]
-                          : null;
-            const showHeading = heading && heading !== lastHeading;
-            lastHeading = heading;
-
-            return (
-              <div key={row.key}>
-                {showHeading && (
-                  <p className="px-5 pb-1 pt-3 text-[12px] font-medium text-ink-3">
-                    {heading}
-                  </p>
-                )}
-                <div
-                  id={`${listId}-${index}`}
-                  role="option"
-                  aria-selected={index === active}
-                  data-index={index}
-                  onMouseMove={() => setActive(index)}
-                  onClick={() => choose(row)}
-                  className={cn(
-                    "mx-2 flex cursor-pointer items-center gap-3 rounded-ctl px-3 py-2",
-                    index === active ? "bg-brand-tint" : "hover:bg-surface-2",
-                    row.type === "all" && "mt-1",
-                    row.type === "all" && active === -1 && "ring-1 ring-inset ring-brand/30",
-                  )}
-                >
-                  <RowBody row={row} t={t} active={index === active} fresh={fresh} />
-                </div>
-              </div>
-            );
-          })}
-
-          {trimmed && fresh && totalHits === 0 && fresh.places.length === 0 && (
-            <div className="order-first px-5 pb-2 pt-4">
-              <p className="font-display text-lg font-semibold text-ink">
-                {fresh.intent.text ? t("nothingMentions", { text: fresh.intent.text }) : t("nothingTitle")}
-              </p>
-              <p className="mt-1 max-w-[52ch] text-sm text-ink-2">{t("nothingBody")}</p>
-            </div>
-          )}
-        </div>
+        <PaletteResults m={m} />
 
         <div className="hidden items-center justify-between gap-4 border-t border-line px-5 py-2.5 text-[12px] text-ink-3 sm:flex">
           <span className="flex items-center gap-3">
@@ -439,6 +497,145 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Smart search as a field on the page rather than a dialog over it: the
+ * landing hero has the room, so the sentence, how it was read and what it
+ * found all happen in place, under the headline that promised them.
+ *
+ * Same model as the dialog. It opens on focus, closes on Escape, on a click
+ * outside or when focus leaves, and does not trap Tab: it is part of the
+ * page, not over it.
+ */
+// The inline field on the page, if there is one: the landing's example
+// sentences fill it in place instead of opening the dialog over it.
+let inlineAsk: ((query: string) => void) | null = null;
+
+/** Asks the inline field, if the page has one. False means there was none. */
+export function askInline(query: string): boolean {
+  if (!inlineAsk) return false;
+  inlineAsk(query);
+  return true;
+}
+
+export function InlineSmartSearch({ cycle }: { cycle: string[] }) {
+  const [open, setOpen] = useState(false);
+  const close = useCallback(() => setOpen(false), []);
+  const m = usePalette("", close);
+  const { t, query, setQuery, trimmed, loading, rows, active, inputRef, listId, submit } = m;
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [i, setI] = useState(0);
+
+  // The empty field shows what it accepts, slowly, and stops while someone
+  // is in it.
+  useEffect(() => {
+    if (open || query || !cycle.length) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setInterval(() => setI((n) => (n + 1) % cycle.length), 3800);
+    return () => clearInterval(id);
+  }, [open, query, cycle.length]);
+
+  useEffect(() => {
+    inlineAsk = (q) => {
+      setQuery(q);
+      setOpen(true);
+      inputRef.current?.focus({ preventScroll: true });
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      rootRef.current?.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
+    };
+    return () => {
+      inlineAsk = null;
+    };
+  }, [setQuery, inputRef]);
+
+  useEffect(() => {
+    if (!open) return;
+    function onDown(e: PointerEvent) {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [open]);
+
+  const expanded = open && rows.length > 0;
+
+  return (
+    <div
+      ref={rootRef}
+      className="relative w-full"
+      onBlur={(e) => {
+        if (!rootRef.current?.contains(e.relatedTarget as Node)) setOpen(false);
+      }}
+    >
+      <form
+        role="search"
+        onSubmit={(e) => {
+          e.preventDefault();
+          submit();
+        }}
+        className="flex items-center gap-3 rounded-[16px] border border-line bg-surface py-2 pl-4 pr-2 shadow-[0_8px_24px_-16px_rgba(20,24,20,0.35)] transition-[border-color,box-shadow] duration-150 focus-within:border-brand/60 focus-within:ring-2 focus-within:ring-brand/20"
+      >
+        <SearchIcon size={18} className="flex-none text-ink-3" />
+        <span className="relative min-w-0 flex-1">
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setOpen(true);
+            }}
+            onFocus={() => setOpen(true)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                if (open) {
+                  e.preventDefault();
+                  setOpen(false);
+                }
+                return;
+              }
+              if (!open && (e.key === "ArrowDown" || e.key === "ArrowUp")) setOpen(true);
+              m.onKeyDown(e);
+            }}
+            aria-label={t("title")}
+            role="combobox"
+            aria-expanded={expanded}
+            aria-controls={listId}
+            aria-activedescendant={expanded && rows[active] ? `${listId}-${active}` : undefined}
+            aria-autocomplete="list"
+            autoComplete="off"
+            spellCheck={false}
+            enterKeyHint="search"
+            className="h-11 w-full bg-transparent text-[16px] text-ink outline-none sm:text-[17px]"
+          />
+          {!query && cycle.length > 0 && (
+            <span aria-hidden className="pointer-events-none absolute inset-0 flex items-center overflow-hidden text-[16px] text-ink-3 sm:text-[17px]">
+              <span key={i} className="truncate animate-[rise_400ms_ease-out]">
+                {cycle[i]}
+              </span>
+            </span>
+          )}
+        </span>
+        {loading && trimmed && (
+          <span aria-hidden className="h-4 w-4 flex-none animate-spin rounded-full border-2 border-brand-tint border-t-brand" />
+        )}
+        <button
+          type="submit"
+          aria-label={t("heroButton")}
+          className="inline-flex h-11 flex-none cursor-pointer items-center gap-2 rounded-ctl bg-brand px-4 text-[15px] font-medium text-on-brand transition-colors duration-150 hover:bg-brand-deep sm:px-5"
+        >
+          <span className="hidden sm:inline">{t("heroButton")}</span>
+          <ArrowRightIcon />
+        </button>
+      </form>
+
+      {expanded && (
+        <div className="absolute inset-x-0 top-full z-30 mt-2 flex max-h-[min(480px,64vh)] flex-col overflow-hidden rounded-card border border-line bg-surface text-left shadow-[var(--shadow-pop)] animate-[rise_160ms_cubic-bezier(.2,.8,.2,1)]">
+          <PaletteResults m={m} />
+        </div>
+      )}
     </div>
   );
 }
