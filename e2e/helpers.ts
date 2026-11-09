@@ -14,12 +14,12 @@ export async function as(context: BrowserContext, role: Role, extra: Record<stri
   }, [role, extra] as const);
 }
 
-/** Collects console errors and page errors, ignoring the known dev-only notFound warning. */
+/** Collects console errors and page errors. */
 export function watchErrors(page: Page) {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   page.on("console", (m) => {
-    if (m.type() === "error" && !m.text().includes("Encountered a script tag")) errors.push(m.text());
+    if (m.type() === "error") errors.push(m.text());
   });
   return errors;
 }

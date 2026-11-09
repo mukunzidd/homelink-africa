@@ -28,7 +28,7 @@ const ONLY = process.env.ONLY;
 const OUT = ".sweep";
 const WIDTHS = { phone: [390, 844], tablet: [1024, 768], desktop: [1440, 900] };
 const LOCALES = ["en", "fr", "rw", "sw"];
-const IGNORED_CONSOLE = ["Encountered a script tag", "Download the React DevTools"];
+const IGNORED_CONSOLE = ["Download the React DevTools"];
 const FORBIDDEN = /\b(lease[sd]?|leasing|bail|baux)\b/i;
 
 const SITE = [

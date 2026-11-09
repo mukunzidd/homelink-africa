@@ -210,3 +210,21 @@ for (const [role, path] of [["guest", "/en/stays"], ["ops", "/en/manage/today"]]
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   });
 }
+
+test("a missing page logs nothing but its 404, and a stored dark theme paints before React runs", async ({ page, context }) => {
+  await as(context, "guest", { theme: "dark" });
+  const errors = watchErrors(page);
+  // Read the attribute at DOMContentLoaded, before any client code has hydrated.
+  await context.addInitScript(() =>
+    document.addEventListener("DOMContentLoaded", () => {
+      (window as unknown as { themeAtParse: string | null }).themeAtParse = document.documentElement.getAttribute("data-theme");
+    }),
+  );
+  await page.goto("/en/stays");
+  await hydrated(page);
+  expect(await page.evaluate(() => (window as unknown as { themeAtParse: string | null }).themeAtParse)).toBe("dark");
+  await page.goto("/en/no-such-page");
+  await hydrated(page);
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  expect(errors.filter((e) => !e.includes("status of 404"))).toEqual([]);
+});
