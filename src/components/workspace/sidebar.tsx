@@ -37,6 +37,7 @@ export function Sidebar({ groups, badges }: { groups: NavGroup[]; badges: Badges
 
   return (
     <aside
+      data-sidebar
       data-collapsed={collapsed || undefined}
       className={cn(
         "sticky top-0 hidden h-screen flex-none flex-col border-r border-line bg-surface lg:flex",
@@ -44,10 +45,41 @@ export function Sidebar({ groups, badges }: { groups: NavGroup[]; badges: Badges
         collapsed ? "w-16" : "w-[248px]",
       )}
     >
-      <div className={cn("flex h-14 flex-none items-center border-b border-line", collapsed ? "justify-center" : "px-4")}>
-        <Link href="/manage" className="rounded-ctl" aria-label="HomeLink">
-          {collapsed ? <Logo showWordmark={false} /> : <Logo />}
-        </Link>
+      {/* The fold control sits at the top, beside the logo, where people look
+          for it. Folded, the logo mark is the control: hovered or focused it
+          turns into the unfold icon. `[` does the same from anywhere. */}
+      <div className={cn("flex h-14 flex-none items-center border-b border-line", collapsed ? "justify-center" : "justify-between pl-4 pr-2")}>
+        {collapsed ? (
+          <button
+            type="button"
+            onClick={() => toggle(false)}
+            aria-label={t("expand")}
+            aria-keyshortcuts="["
+            title={t("collapseHint")}
+            className="group grid size-10 cursor-pointer place-items-center rounded-ctl text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
+          >
+            <span className="group-hover:hidden group-focus-visible:hidden">
+              <Logo showWordmark={false} />
+            </span>
+            <SidebarIcon size={18} className="hidden group-hover:block group-focus-visible:block" />
+          </button>
+        ) : (
+          <>
+            <Link href="/manage" className="rounded-ctl" aria-label="HomeLink">
+              <Logo />
+            </Link>
+            <button
+              type="button"
+              onClick={() => toggle(true)}
+              aria-label={t("collapse")}
+              aria-keyshortcuts="["
+              title={t("collapseHint")}
+              className="grid size-9 cursor-pointer place-items-center rounded-ctl text-ink-3 transition-colors hover:bg-surface-2 hover:text-ink"
+            >
+              <SidebarIcon size={17} />
+            </button>
+          </>
+        )}
       </div>
 
       <div className={cn("min-h-0 flex-1 overflow-y-auto py-4", collapsed ? "px-2" : "px-3")}>
@@ -66,25 +98,6 @@ export function Sidebar({ groups, badges }: { groups: NavGroup[]; badges: Badges
           <ExitIcon size={17} />
           {!collapsed && t("backToSite")}
         </Link>
-        <button
-          type="button"
-          onClick={() => toggle()}
-          aria-label={collapsed ? t("expand") : t("collapse")}
-          aria-keyshortcuts="["
-          title={t("collapseHint")}
-          className={cn(
-            "flex h-9 cursor-pointer items-center rounded-ctl text-[14px] text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink",
-            collapsed ? "justify-center" : "gap-3 px-3",
-          )}
-        >
-          <SidebarIcon size={17} />
-          {!collapsed && (
-            <span className="flex flex-1 items-center justify-between">
-              {t("collapse")}
-              <kbd className="rounded-chip border border-line px-1.5 font-mono text-[11px] text-ink-3">[</kbd>
-            </span>
-          )}
-        </button>
       </div>
     </aside>
   );

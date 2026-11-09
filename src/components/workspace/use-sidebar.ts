@@ -4,21 +4,23 @@ import { useCallback, useSyncExternalStore } from "react";
 
 /**
  * Whether the workspace sidebar is folded to its icon rail, remembered on
- * this device.
+ * this device. Folded unless someone has unfolded it here: most of a
+ * working day is spent in one or two sections, and the room goes to tables.
  *
- * Same pattern as `lib/saved.ts`: the server snapshot is "expanded", so the
- * first render matches the server and a folded sidebar folds a moment after
- * hydration instead of mismatching. Shared through a window event so the
- * keyboard shortcut and the button stay in step.
+ * Same pattern as `lib/saved.ts`: the server snapshot is the default,
+ * "collapsed", so the first render matches the server, and only someone
+ * who chose to unfold it sees it open a moment after hydration. Shared
+ * through a window event so the keyboard shortcut and the button stay in
+ * step.
  */
 const KEY = "homelink.sidebar.v1";
 const EVENT = "homelink:sidebar";
 
 function read(): boolean {
   try {
-    return window.localStorage.getItem(KEY) === "collapsed";
+    return window.localStorage.getItem(KEY) !== "expanded";
   } catch {
-    return false;
+    return true;
   }
 }
 
@@ -32,7 +34,7 @@ function subscribe(onChange: () => void) {
 }
 
 export function useSidebarCollapsed(): [boolean, (next?: boolean) => void] {
-  const collapsed = useSyncExternalStore(subscribe, read, () => false);
+  const collapsed = useSyncExternalStore(subscribe, read, () => true);
   const toggle = useCallback((next?: boolean) => {
     const value = next ?? !read();
     try {
