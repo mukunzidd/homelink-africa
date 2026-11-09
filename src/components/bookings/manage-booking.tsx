@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import type { BookingEventKind, IncidentCategory, Review, ServiceKind } from "@/lib/domain/types";
 import type { Money } from "@/lib/domain/money";
+import type { CheckInDetails } from "@/lib/domain/check-in";
 import { usePreferences } from "@/lib/preferences/context";
 import { Link, useRouter } from "@/i18n/navigation";
 import { cancelBooking, changeBookingDates } from "@/app/actions/bookings";
@@ -39,7 +40,7 @@ export type ManageProps = {
   refund: Money | null;
   kept: Money | null;
   releaseWhen: string;
-  checkIn: { directions: string; doorCode: string; wifiName: string; wifiPassword: string } | null;
+  checkIn: CheckInDetails | null;
   manager: string | null;
   reviewed: boolean;
   issues: number;
@@ -98,18 +99,26 @@ export function ManageBooking(p: ManageProps) {
               <div className="flex flex-col gap-1">
                 <p className="flex items-center gap-1.5 text-[13px] font-medium text-ink-3">
                   <KeyIcon size={14} />
-                  {t("doorCode")}
+                  {t("gettingIn")}
                 </p>
-                <p className="tnum font-mono text-[26px] font-semibold tracking-[0.2em] text-ink">{p.checkIn.doorCode}</p>
+                {p.checkIn.entry === "code" && p.checkIn.doorCode ? (
+                  <>
+                    <p className="text-[15px] text-ink">{t("entry.code")}</p>
+                    <p className="tnum font-mono text-[26px] font-semibold tracking-[0.2em] text-ink">{p.checkIn.doorCode}</p>
+                  </>
+                ) : (
+                  <p className="text-[15px] font-semibold text-ink">{t(`entry.${p.checkIn.entry === "code" ? "keys" : p.checkIn.entry}`)}</p>
+                )}
+                {p.checkIn.entryNote && <p className="text-[14px] leading-relaxed text-ink-2">{p.checkIn.entryNote}</p>}
               </div>
-              <div className="flex flex-col gap-1">
+              {(p.checkIn.wifiName || p.checkIn.wifiPassword) && <div className="flex flex-col gap-1">
                 <p className="flex items-center gap-1.5 text-[13px] font-medium text-ink-3">
                   <WifiIcon size={14} />
                   {t("wifi")}
                 </p>
                 <p className="text-[15px] text-ink">{p.checkIn.wifiName}</p>
                 <p className="font-mono text-[15px] text-ink">{p.checkIn.wifiPassword}</p>
-              </div>
+              </div>}
               {p.manager && (
                 <div className="flex flex-col gap-1 border-t border-trust/20 pt-3 sm:col-span-2">
                   <p className="text-[13px] font-medium text-ink-3">{t("manager")}</p>

@@ -54,7 +54,8 @@
     },
     "smartTitle": "Ask it the way you would ask a friend in Kigali",
     "smartBody": "Type a sentence. Smart search picks out the place, the size, the budget and the dates, shows you how it read them, and searches only what our team has inspected.",
-    "smartHint": "Press ⌘K or / on any page.",
+    "localTime": "{time} in Kigali",
+    "smartHint": "Press <k>⌘K</k> or <k>/</k> on any page.",
     "placesTitle": "Neighbourhoods we know",
     "placesBody": "Every one walked by our team. The number is how many verified places are there today.",
     "fromPrice": "From",
@@ -1943,7 +1944,16 @@
       "ownerChecked": "Owner identity checked",
       "yes": "Yes",
       "no": "No",
-      "toInspections": "Go to inspections"
+      "toInspections": "Go to inspections",
+      "entry": "How the guest gets in",
+      "entryKinds": {
+        "keys": "Keys handed over in person",
+        "caretaker": "Caretaker on site",
+        "guard": "Guard at the gate",
+        "code": "Door or key box code"
+      },
+      "entryNote": "Who to look for, and where",
+      "entryNotePlaceholder": "Jean at the gate has the keys. Message him when you land."
     },
     "calendar": {
       "title": "Calendar",
@@ -3221,7 +3231,14 @@
       "depositInspection": "The move-out walk-through is done; the deposit comes back within 14 days, less anything itemised.",
       "depositReturned": "{amount} returned to your account.",
       "whenReleased": "on {date} at 14:00",
-      "duringTitle": "During your stay"
+      "duringTitle": "During your stay",
+      "gettingIn": "Getting in",
+      "entry": {
+        "keys": "Keys handed over when you arrive",
+        "caretaker": "A caretaker lives on site and lets you in",
+        "guard": "A guard at the gate, day and night",
+        "code": "Door code"
+      }
     }
   },
   "files": {

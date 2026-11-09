@@ -1,5 +1,6 @@
 "use server";
 
+import { normaliseCheckIn } from "@/lib/domain/check-in";
 import { refresh, revalidatePath } from "next/cache";
 import type { Amenity, LeaseTerms, Listing, StayMode } from "@/lib/domain/types";
 import { CURRENCIES, exponentOf, type CurrencyCode } from "@/lib/domain/money";
@@ -69,8 +70,7 @@ function clean(raw: Record<string, unknown>): ListingPatch {
     p.propertyManager = { name: str(m.name, 80)?.trim() ?? "", since: isIsoDate(m.since) ? m.since : kigaliDay() };
   }
   if ("checkIn" in raw && raw.checkIn) {
-    const c = raw.checkIn as Partial<NonNullable<Listing["checkIn"]>>;
-    p.checkIn = { directions: str(c.directions, 1000) ?? "", doorCode: str(c.doorCode, 40) ?? "", wifiName: str(c.wifiName, 60) ?? "", wifiPassword: str(c.wifiPassword, 60) ?? "" };
+    p.checkIn = normaliseCheckIn(raw.checkIn);
   }
   return p;
 }

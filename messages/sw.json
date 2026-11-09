@@ -54,7 +54,8 @@
     },
     "smartTitle": "Uliza kama ungemuuliza rafiki aliye Kigali",
     "smartBody": "Andika sentensi. Utafutaji mahiri unatambua mahali, ukubwa, bajeti na tarehe, unakuonyesha jinsi ulivyoyaelewa, na unatafuta tu kile ambacho timu yetu imekagua.",
-    "smartHint": "Bonyeza ⌘K au / kwenye ukurasa wowote.",
+    "localTime": "Saa {time} Kigali",
+    "smartHint": "Bonyeza <k>⌘K</k> au <k>/</k> kwenye ukurasa wowote.",
     "placesTitle": "Mitaa tunayoijua",
     "placesBody": "Kila mtaa umetembelewa na timu yetu. Namba inaonyesha ni malazi mangapi yaliyothibitishwa yaliyopo leo.",
     "fromPrice": "Kuanzia",
@@ -1943,7 +1944,16 @@
       "ownerChecked": "Utambulisho wa mmiliki umekaguliwa",
       "yes": "Ndiyo",
       "no": "Hapana",
-      "toInspections": "Nenda kwenye ukaguzi"
+      "toInspections": "Nenda kwenye ukaguzi",
+      "entry": "Mgeni anaingiaje",
+      "entryKinds": {
+        "keys": "Funguo hukabidhiwa ana kwa ana",
+        "caretaker": "Mtunzaji yupo hapo",
+        "guard": "Mlinzi getini",
+        "code": "Namba ya siri ya mlango au kisanduku cha funguo"
+      },
+      "entryNote": "Amtafute nani, na wapi",
+      "entryNotePlaceholder": "Jean aliye getini ana funguo. Mtumie ujumbe ukitua."
     },
     "calendar": {
       "title": "Kalenda",
@@ -3221,7 +3231,14 @@
       "depositInspection": "Ukaguzi wa kuhama umekamilika; amana inarudi ndani ya siku 14, ukiondoa gharama zilizoorodheshwa.",
       "depositReturned": "{amount} zimerudishwa kwenye akaunti yako.",
       "whenReleased": "tarehe {date} saa nane mchana",
-      "duringTitle": "Wakati wa kukaa kwako"
+      "duringTitle": "Wakati wa kukaa kwako",
+      "gettingIn": "Kuingia",
+      "entry": {
+        "keys": "Utakabidhiwa funguo utakapofika",
+        "caretaker": "Mtunzaji anaishi hapo na atakufungulia",
+        "guard": "Mlinzi getini, mchana na usiku",
+        "code": "Namba ya mlango"
+      }
     }
   },
   "files": {

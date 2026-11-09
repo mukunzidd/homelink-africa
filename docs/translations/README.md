@@ -31,6 +31,11 @@ its uncertain list is the longest and the one to start with.
    ("hashize iminota 5"), and Swahili weekday abbreviations (Jtt … Jpi), all
    in `src/lib/domain/date-format.ts`.
 
+4. Strings added after the reviews, written by an assistant and not yet
+   reviewed in any language but English: how a guest gets in
+   (`booking.manage.gettingIn`, `booking.manage.entry.*`,
+   `workspace.editor.entry*`).
+
 ## Guard rails
 
 `src/i18n/messages.test.ts` checks that every language has the English keys

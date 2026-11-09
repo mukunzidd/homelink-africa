@@ -13,6 +13,7 @@ import type {
   VerificationTask,
 } from "@/lib/domain/types";
 import { money } from "@/lib/domain/money";
+import type { CheckInDetails } from "@/lib/domain/check-in";
 
 /**
  * Phase 1 fixture data.
@@ -334,12 +335,23 @@ export const LISTINGS: Listing[] = RAW_LISTINGS.map((l) => ({
  * they are stable across restarts and differ between homes; the real ones
  * live with the property manager and are set per stay in Phase 2.
  */
-function checkInFor(id: string, area: string) {
+function checkInFor(id: string, area: string): CheckInDetails {
   let h = 0;
   for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  // Keys in person for most, someone at the gate for many, a code for few,
+  // which is how homes in Kigali are let in.
+  const ways: CheckInDetails["entry"][] = ["keys", "caretaker", "keys", "guard", "caretaker", "keys", "code", "guard"];
+  const entry = ways[h % ways.length];
+  const notes: Record<CheckInDetails["entry"], string> = {
+    keys: "Olivier meets you at the gate with the keys. Message him when you land so he can be there.",
+    caretaker: "Mama Claudine lives in the cottage by the gate and has the keys. She is there all day.",
+    guard: "The guard at the gate, day and night, has your name and lets you in. Keys are on the hook inside the door.",
+    code: "",
+  };
   return {
     directions: `From the ${area} roundabout, take the second paved road uphill; the gate is green, with a HomeLink plate beside the bell. Parking inside, on the left.`,
-    doorCode: String(1000 + (h % 9000)),
+    entry,
+    ...(entry === "code" ? { doorCode: String(1000 + (h % 9000)) } : { entryNote: notes[entry] }),
     wifiName: `HomeLink-${area}`,
     wifiPassword: `kigali-${(h % 100000).toString(36)}`,
   };

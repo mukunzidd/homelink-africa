@@ -54,7 +54,8 @@
     },
     "smartTitle": "Baza nk’uko wabaza inshuti i Kigali",
     "smartBody": "Andika interuro. Ishakisha rimenya agace, ingano, ingengo y’imari n’amatariki, rikakwereka uko ryabyumvise, kandi rigashakira gusa mu byo itsinda ryacu ryagenzuye.",
-    "smartHint": "Kanda ⌘K cyangwa / kuri paji iyo ari yo yose.",
+    "localTime": "Saa {time} i Kigali",
+    "smartHint": "Kanda <k>⌘K</k> cyangwa <k>/</k> kuri paji iyo ari yo yose.",
     "placesTitle": "Uduce tuzi",
     "placesBody": "Twose twasuwe n’itsinda ryacu. Umubare ni amacumbi yagenzuwe ahari uyu munsi.",
     "fromPrice": "Guhera kuri",
@@ -1943,7 +1944,16 @@
       "ownerChecked": "Nyir'inzu yagenzuwe",
       "yes": "Yego",
       "no": "Oya",
-      "toInspections": "Jya ku igenzura"
+      "toInspections": "Jya ku igenzura",
+      "entry": "Uko umushyitsi yinjira",
+      "entryKinds": {
+        "keys": "Imfunguzo zitangwa imbonankubone",
+        "caretaker": "Ushinzwe inzu aba aho",
+        "guard": "Umuzamu ku irembo",
+        "code": "Kode y’urugi cyangwa agasanduku k’imfunguzo"
+      },
+      "entryNote": "Uwo agomba gushaka, n’aho ari",
+      "entryNotePlaceholder": "Jean uri ku irembo afite imfunguzo. Mwandikire nugera."
     },
     "calendar": {
       "title": "Kalendari",
@@ -3221,7 +3231,14 @@
       "depositInspection": "Igenzura ryo kuvamo ryarangiye; ingwate igaruka mu minsi 14, havuyemo ibyasobanuwe ku rutonde.",
       "depositReturned": "{amount} yasubijwe kuri konti yawe.",
       "whenReleased": "ku wa {date} saa 14:00",
-      "duringTitle": "Mu gihe uri mu nzu"
+      "duringTitle": "Mu gihe uri mu nzu",
+      "gettingIn": "Kwinjira",
+      "entry": {
+        "keys": "Uzahabwa imfunguzo nugerayo",
+        "caretaker": "Ushinzwe inzu aba aho, azagukingurira",
+        "guard": "Hari umuzamu ku irembo, ku manywa na nijoro",
+        "code": "Kode y’umuryango"
+      }
     }
   },
   "files": {

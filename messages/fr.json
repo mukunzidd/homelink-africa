@@ -54,7 +54,8 @@
     },
     "smartTitle": "Demandez comme vous le feriez à un ami de Kigali",
     "smartBody": "Tapez une phrase. La recherche repère le lieu, la taille, le budget et les dates, vous montre comment elle les a compris, et ne cherche que ce que notre équipe a inspecté.",
-    "smartHint": "Appuyez sur ⌘K ou / depuis n’importe quelle page.",
+    "localTime": "{time} à Kigali",
+    "smartHint": "Appuyez sur <k>⌘K</k> ou <k>/</k> depuis n’importe quelle page.",
     "placesTitle": "Les quartiers que nous connaissons",
     "placesBody": "Tous parcourus par notre équipe. Le chiffre indique combien de logements vérifiés s’y trouvent aujourd’hui.",
     "fromPrice": "À partir de",
@@ -1943,7 +1944,16 @@
       "ownerChecked": "Identité du propriétaire vérifiée",
       "yes": "Oui",
       "no": "Non",
-      "toInspections": "Aller aux inspections"
+      "toInspections": "Aller aux inspections",
+      "entry": "Comment le client entre",
+      "entryKinds": {
+        "keys": "Clés remises en main propre",
+        "caretaker": "Gardien sur place",
+        "guard": "Agent de sécurité au portail",
+        "code": "Code de porte ou de boîte à clés"
+      },
+      "entryNote": "Qui chercher, et où",
+      "entryNotePlaceholder": "Jean, au portail, a les clés. Écrivez-lui dès l’atterrissage."
     },
     "calendar": {
       "title": "Calendrier",
@@ -3221,7 +3231,14 @@
       "depositInspection": "L'état des lieux de sortie est fait ; la caution vous est rendue sous 14 jours, déduction faite des retenues détaillées.",
       "depositReturned": "{amount} rendus sur votre compte.",
       "whenReleased": "le {date} à 14 h",
-      "duringTitle": "Pendant votre séjour"
+      "duringTitle": "Pendant votre séjour",
+      "gettingIn": "Pour entrer",
+      "entry": {
+        "keys": "Les clés vous sont remises à votre arrivée",
+        "caretaker": "Un gardien vit sur place et vous ouvre",
+        "guard": "Un agent de sécurité au portail, jour et nuit",
+        "code": "Code de la porte"
+      }
     }
   },
   "files": {

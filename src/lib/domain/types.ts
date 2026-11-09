@@ -1,3 +1,4 @@
+import type { CheckInDetails } from "./check-in";
 import type { ExtraSelection } from "./extras";
 import type { CurrencyCode, Money } from "./money";
 
@@ -106,7 +107,8 @@ export type Listing = {
   /** Accepted at checkout. Plain sentences, in the order a guest needs them. */
   houseRules: string[];
   /** Released to the guest 48 hours before arrival, never shown before. */
-  checkIn?: { directions: string; doorCode: string; wifiName: string; wifiPassword: string };
+  /** Released to the guest shortly before arrival; never on a public read. */
+  checkIn?: CheckInDetails;
   /** Colour seed, used when no photograph exists yet. */
   imageSeed: string;
   /** Photographs, first is the hero. Empty until our team has shot the place. */
