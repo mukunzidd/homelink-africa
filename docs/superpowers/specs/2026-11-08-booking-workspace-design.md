@@ -358,21 +358,14 @@ people booking one flat is safe today only because the fixture store has
 no I/O between `isFree` and the write; a database needs a constraint or a
 lock.
 
-### 3b. Small bugs the final review found, deferred
+### 3b. ~~Small bugs the final review found~~ Fixed in 87a25ff
 
-- `ics.ts` `esc` does not escape semicolons (`"\;"` in a JS string is
-  `";"`) or a lone `\r`.
-- `payment.rail` is never checked against `PaymentRail`; a non-array
-  `draft.extras` throws a 500 inside `priceExtras`.
-- `useUnread` shows its toast inside a `setCount` updater; React may run
-  updaters twice. Move it out.
-- A guest's cancel notifies ops as kind `newBooking` with "(cancelled)" in
-  the name, and admin is not told; `addGuests` audits actor `"guest"`
-  when staff did it.
-- `useBookingDraft` keeps the old in-memory draft when its key changes and
-  nothing is stored (harmless while every date change navigates).
-- `booking-record.tsx` hardcodes 14 days for the balance date;
-  `portfolio.ts` and `when-panel.tsx` take "today" from UTC, not Kigali.
+Calendar export escaping, unchecked payment rails and extras, the bell's
+toast inside a state updater, cancellations notified as new bookings (now
+`bookingCancelled`, to ops and admin), the booking draft not resetting on a
+new key, and the balance date and two "today"s not following the Kigali
+rules. Each has a test that failed first, except the two client hooks, for
+which there is no React test renderer in this repo.
 
 ### 4. Translations still need native readers
 
