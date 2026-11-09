@@ -17,8 +17,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 It is the pass that built the whole product on fixtures (booking flow, trip
 cart, every workspace page per role, sign-in, settings, help) and its plan,
 `docs/superpowers/plans/2026-11-08-booking-workspace.md`, is built through
-Task 47. Its "Review and fixes" section holds what the last sweep found and
-the traps behind it. What is left of that pass is the whole-branch review.
+Task 47. Its "Review and fixes" section holds what the sweeps found and the
+traps behind them, and its **"Open issues"** section lists everything known
+to be wrong or unfinished, with evidence and a next step for each: start
+there. The whole-branch review has not run; the owner asked for it to wait.
 
 **Then `docs/superpowers/specs/2026-08-10-real-data-milestone.md`**, which is
 paused behind it. It holds the next milestone, what "done" means for each step,

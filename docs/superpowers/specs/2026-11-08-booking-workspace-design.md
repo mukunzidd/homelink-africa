@@ -292,18 +292,87 @@ Later the same day, after the copy review and the console pass:
   (682 visits). It found Kinyarwanda relative times and Swahili calendar
   headers coming from runtime ICU data the browser lacks, and one more
   untemplated grid; fixed. See also `docs/translations/`.
-- **Unexplained, dev only:** twice today `/api/notifications/unread`
-  returned 500 for a burst of four concurrent polls ("Unexpected end of
-  JSON input", every stack frame inside Next.js), out of about 2,600 polls
-  in a sweep; the next poll succeeded. It did not reproduce in 1,000
-  concurrent requests, with or without files being written into the
-  project. If it shows up against a production build, start there.
+- One unexplained server error remains; see "Open issues" below.
 
-Gaps seen during the sweep and left alone (none blocks the preview):
+Gaps seen during the sweep and left alone are listed under "Open issues".
+
+## Open issues
+
+Everything known to be wrong or unfinished on this branch as of 2026-11-09,
+most noticeable first. Each says what happens, the evidence, and where to
+start. Strike an item through, with the commit, when it is fixed.
+
+### 1. The whole-branch review has not run
+
+All 47 tasks of `docs/superpowers/plans/2026-11-08-booking-workspace.md`
+are built (the ledger is `.superpowers/sdd/2026-11-08-booking-workspace/progress.md`).
+What the execution workflow still owes is a fresh code review of the whole
+branch, `git merge-base main HEAD` to `HEAD`. The owner asked for it to
+wait. Do not run it unasked; do not merge the branch before it.
+
+### 2. `/api/notifications/unread` sometimes returns 500 (cause unknown)
+
+- **What:** a burst of concurrent polls to the bell's endpoint fails with
+  500, logged as `SyntaxError: Unexpected end of JSON input ... page:
+  '/api/notifications/unread'`. The browser logs "Failed to load resource:
+  500". The next poll, 30 seconds later, succeeds.
+- **Evidence:** seen twice on 2026-11-09, both during `make sweep` against
+  the Docker dev server: four failures out of about 2,600 polls, all four
+  within the same millisecond, roughly 390ms each, almost all of it "next.js"
+  time in the request log. No frame in the stack is ours; the route reads a
+  cookie and the fixture store and parses no JSON.
+- **Ruled out:** load alone (1,000 concurrent requests on a quiet server, 0
+  failures) and file writes into the project (600 requests while writing
+  into `.sweep/` every 50ms, 0 failures). Not tied to the dev server's
+  memory-threshold restart either: the second time, the server had been up
+  for several minutes. Concurrency comes from the sweep's three workers and
+  Strict Mode's doubled mount (see 3).
+- **Next step:** run the sweep against a production build (`next build`
+  then `next start` in the container). The sweep starts by resetting the
+  store, and `src/app/api/dev/reset/route.ts` answers 404 in any production
+  build whatever `HOMELINK_E2E` says, so skip the reset for this run (a
+  fresh `next start` is already a fresh store) rather than loosening the
+  guard. If the 500 never appears, record it as a dev-server fault and
+  close this. If it does, start from the request timing in the log.
+
+### 3. The bell's poll can restart itself (unmeasured)
+
+- **Not a bug, for the record:** a workspace page sends two unread
+  requests at the same instant on load in development (measured on
+  `/en/manage/today`: 0.66s, 0.66s, then one at 30.66s). The page has one
+  bell. The second request is React Strict Mode, on by default in the App
+  Router, running effects twice on mount in development only. Production
+  sends one. Bursts of two per open page are why issue 2 shows four at
+  once during a sweep.
+- **Possible bug, not measured:** in `useUnread`
+  (`src/components/notifications/use-unread.ts`) the effect fires a request
+  immediately whenever its `load` callback changes, and `load` follows
+  `onArrive`, which depends on the toast context in `bell.tsx`. If that
+  context value changes when a toast shows, every toast restarts the timer
+  and sends an extra request.
+- **Next step:** count requests across a toast (trigger a notification
+  while the page is open). If extra ones appear, keep `onArrive` in a ref
+  so it never restarts the effect.
+
+### 4. Translations still need native readers
+
+The French, Kinyarwanda and Swahili files were reviewed by model reviewers on
+2026-11-09 (367, 280 and 232 strings corrected). Each review's "Still needs
+a native reader" list is in `docs/translations/`, with the Kinyarwanda list
+the longest. Also for a native eye: rw dates ("12 Ukwakira 2026", day first,
+changed from Node's year-first form), rw relative times ("hashize iminota
+5") and Swahili weekday abbreviations (Jtt … Jpi), all in
+`src/lib/domain/date-format.ts`. The legal pages need a lawyer in each
+language.
+
+### 5. Fixture data gaps visible on staff screens
 
 - The finance lane table shows RWF 0 for cars and days out in most months:
-  the seeded history is stays only before October.
+  the seeded history is stays only before October (`seedHistory`).
 - The audit log opens empty after a reset; the seed records no history.
+
+### 6. Layout and accessibility, small
+
 - Finance tables on a phone scroll inside their card with the amount column
   off screen; a stacked layout would read better.
 - Lint passes with three old warnings: `aria-selected` on calendar day
@@ -311,9 +380,25 @@ Gaps seen during the sweep and left alone (none blocks the preview):
   `aria-pressed`, or a grid with `gridcell`), and an unused `at` in
   `fixtures/booking-seeds.ts`.
 
+### 7. Working on this branch: traps
+
+- **Restart the web container before a long run** (`docker compose restart
+  web`). After hours of sweeps the dev server restarts itself at its memory
+  threshold mid-run, and requests in flight fail with empty responses,
+  broken chunks or 500s that are not real findings.
+- **Do not edit files while a sweep runs.** Turbopack reloads modules under
+  load and a page can fail with "the module factory is not available".
+- **Message edits need a restart** (`docker compose restart web`) before the
+  dev server serves them.
+- **Folders that are not part of the work:** `undefined/` in the repo root
+  holds old screenshots from a scratch script with an unset output path
+  (untracked, safe to delete); `.sweep/` and `.e2e-results/` are ignored
+  test output.
+
 ## Left for later
 
-- Kinyarwanda and Swahili copy is assistant-written and needs native readers.
+- French, Kinyarwanda and Swahili copy was model-reviewed and needs native
+  readers; see "Open issues" 4.
 - Server restarts clear everything written in a session; Phase 2 persists it.
 - Booking pages, receipts and calendar files are authorised by the preview's
   role cookie, so anyone holding a reference can open one. There are no
