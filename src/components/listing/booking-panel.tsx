@@ -12,6 +12,9 @@ import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { UsersIcon } from "@/components/ui/icons";
 import { Select } from "@/components/ui/select";
 import { QuoteBreakdown } from "./quote-breakdown";
+import { TripActions } from "@/components/cart/trip-actions";
+import { cartItemId } from "@/lib/cart-checks";
+
 
 /**
  * The booking panel on a listing page.
@@ -46,6 +49,9 @@ export function BookingPanel({
     if (!isIsoDate(from) || !isIsoDate(to)) return null;
     return quoteStay(listing, from, to);
   }, [listing, from, to]);
+  // The home's shortest stay, set in the listing editor and enforced again on the server.
+  const minNights = listing.minNights ?? 1;
+  const tooShort = !!quote && quote.nights < minNights;
 
   function reserve() {
     if (!from || !to) return;
@@ -63,6 +69,7 @@ export function BookingPanel({
         />
         <span className="text-sm text-ink-3">{tListing("perNight")}</span>
       </div>
+      {minNights > 1 && <p className="-mt-2 text-[13px] text-ink-3">{tListing("minStay", { count: minNights })}</p>}
 
       <DateRangePicker
         from={from}
@@ -71,7 +78,7 @@ export function BookingPanel({
           setFrom(nextFrom);
           // A new arrival with no departure yet defaults to three nights, so
           // the panel keeps showing a price instead of blanking out.
-          setTo(nextTo ?? (nextFrom ? addDays(nextFrom, 3) : null));
+          setTo(nextTo ?? (nextFrom ? addDays(nextFrom, Math.max(3, minNights)) : null));
         }}
         labelFrom={tSearch("arriving")}
         labelTo={tSearch("leaving")}
@@ -87,7 +94,9 @@ export function BookingPanel({
         )}
       />
 
-      {quote ? (
+      {tooShort ? (
+        <p role="status" className="rounded-ctl bg-warn-tint px-3 py-2 text-[14px] text-warn">{tListing("tooShort", { count: minNights })}</p>
+      ) : quote ? (
         <>
           <QuoteBreakdown
             quote={quote}
@@ -98,6 +107,27 @@ export function BookingPanel({
           <Button onClick={reserve} fullWidth size="lg">
             {tListing("reserve")}
           </Button>
+          <TripActions
+            offerPlan
+            item={
+              from && to
+                ? {
+                    id: cartItemId("stay", listing.slug, from, to, party),
+                    kind: "stay",
+                    slug: listing.slug,
+                    supplyId: listing.id,
+                    title: listing.name,
+                    start: from,
+                    end: to,
+                    party,
+                    image: listing.images?.[0],
+                    imageSeed: listing.imageSeed,
+                    quote,
+                    supply: listing,
+                  }
+                : null
+            }
+          />
           <p className="text-center text-xs text-ink-3">{tQuote("noHiddenFees")}</p>
         </>
       ) : (

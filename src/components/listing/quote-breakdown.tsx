@@ -39,15 +39,24 @@ export function QuoteBreakdown({
   const t = useTranslations("quote");
   const tLines = useTranslations("quoteLines");
   const tVerify = useTranslations("verification");
+  const tExtras = useTranslations("extras");
   const { display, currency, fx } = usePreferences();
 
   const shown = toDisplayQuote(quote, currency, fx);
 
-  function label(key: QuoteLineKey): string {
+  function label(key: QuoteLineKey, extra?: string): string {
     const rate = display(unitRate);
     switch (key) {
-      case "accommodation":
+      case "accommodation": {
+        // Nights priced differently (a weekend, an event week) do not
+        // multiply out from the base rate; restate the average instead, so
+        // the line still checks against its own total.
+        const line = quote.lines.find((l) => l.key === "accommodation")?.amount;
+        if (line && units > 0 && line.currency === unitRate.currency && line.minor !== unitRate.minor * units) {
+          return t("accommodationAvg", { rate: display({ minor: Math.round(line.minor / units), currency: line.currency }), nights: units });
+        }
         return t("accommodation", { rate, nights: units });
+      }
       case "hire":
         return tLines("hire", { rate, days: units });
       case "seats":
@@ -58,15 +67,34 @@ export function QuoteBreakdown({
         return t("cleaning");
       case "serviceFee":
         return t("serviceFee");
+      case "extra":
+        return extra ? tExtras(`${extra}.name`) : "";
+      case "discount":
+        return tLines("discount");
+      case "rent":
+        return tLines("rent");
+      case "deposit": {
+        const rent = quote.lines.find((l) => l.key === "rent")?.amount.minor ?? 0;
+        const deposit = quote.lines.find((l) => l.key === "deposit")?.amount.minor ?? 0;
+        return tLines("deposit", { count: rent ? Math.round(deposit / rent) : 0 });
+      }
     }
   }
 
   return (
     <div className={cn("flex flex-col gap-2 text-sm", className)}>
-      {shown.lines.map((line) => (
-        <div key={line.key} className="flex items-baseline justify-between gap-4">
-          <span className="text-ink-2">{label(line.key)}</span>
-          <MoneyText amount={line.amount} className="text-ink" />
+      {shown.lines.map((line, i) => (
+        <div key={`${line.key}-${line.extra ?? i}`} className="flex items-baseline justify-between gap-4">
+          <span className="text-ink-2">{label(line.key, line.extra)}</span>
+          {line.key === "discount" ? (
+            <span className="tnum font-medium text-ok">
+              −<MoneyText amount={{ ...line.amount, minor: -line.amount.minor }} />
+            </span>
+          ) : line.key === "extra" && line.amount.minor === 0 ? (
+            <span className="text-ink-3">{tLines("free")}</span>
+          ) : (
+            <MoneyText amount={line.amount} className="text-ink" />
+          )}
         </div>
       ))}
 

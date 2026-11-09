@@ -4,7 +4,8 @@ import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/domain/dates";
 import { dayOf, formatTimeOfDay } from "@/lib/domain/instants";
 import { readsAs } from "@/lib/preferences/role";
-import { PaperclipIcon } from "@/components/ui/icons";
+import { Composer } from "./composer";
+import { LocationCard } from "./location-card";
 import { cn } from "@/lib/cn";
 
 /**
@@ -105,9 +106,16 @@ export async function ThreadView({
                   </span>
                 </div>
                 {message.body && (
-                  <p className="text-[15px] leading-relaxed text-ink-2">
+                  <p className="whitespace-pre-line break-words text-[15px] leading-relaxed text-ink-2">
                     {message.body}
                   </p>
+                )}
+
+                {message.location && (
+                  <LocationCard
+                    location={message.location}
+                    labels={{ shared: t("location.dropped"), open: t("location.open"), directions: t("location.directions"), map: t("location.mapOf", { name: message.location.name || t("location.dropped") }) }}
+                  />
                 )}
 
                 {message.attachments && message.attachments.length > 0 && (
@@ -123,10 +131,11 @@ export async function ThreadView({
                             URLs from private storage, which the image optimizer
                             can neither cache nor allowlist. Deciding that now
                             costs nothing and saves a swap later. */}
+                        <a href={attachment.url} target="_blank" rel="noopener" aria-label={t("openPhoto")} className="block rounded-inner">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={attachment.url}
-                          alt={attachment.alt}
+                          alt={attachment.alt || t("photoFrom", { name: message.authorName })}
                           decoding="async"
                           loading="lazy"
                           className={cn(
@@ -134,6 +143,7 @@ export async function ThreadView({
                             message.attachments!.length > 1 ? "h-28" : "h-48",
                           )}
                         />
+                        </a>
                       </li>
                     ))}
                   </ul>
@@ -155,70 +165,8 @@ export async function ThreadView({
         })}
       </ol>
 
-      {/*
-        Inert, and the box itself says so. Leaving the composer out would hide
-        the one part of the layout most likely to be wrong, which is how much
-        room a reply box takes from the transcript above it. The disabled state
-        carries the explanation (placeholder, and a title on the send button)
-        so no developer note has to sit under it.
-      */}
-      <div className="flex flex-col gap-2 border-t border-line pt-5">
-        <label htmlFor="reply" className="sr-only">
-          {t("replyLabel")}
-        </label>
-        <textarea
-          id="reply"
-          rows={3}
-          disabled
-          placeholder={t("replyPlaceholder")}
-          aria-describedby="reply-off"
-          className={cn(
-            "w-full resize-none rounded-ctl border border-line bg-surface-2 px-4 py-3",
-            "text-[15px] text-ink placeholder:text-ink-3",
-            "disabled:cursor-not-allowed",
-          )}
-        />
-        <span id="reply-off" className="sr-only">
-          {t("sendOff")}
-        </span>
-
-        {/*
-          The attach control is here, and inert like the box above it, because
-          leaving it out would hide the two questions it actually raises: how
-          much room it takes beside the send action, and what it has to promise.
-          Both are answered here rather than discovered when the backend lands.
-
-          It names the limits it will really have, and it repeats the location
-          line from the privacy note. Somebody attaching a photograph of their
-          front door to a thread is the moment that promise matters most, and
-          the note is four screens away by then.
-        */}
-        {/* Attach and Send share a row and the limits take their own line
-            under it: three items in one wrapping row left the limits a 60px
-            column between two buttons at 390. */}
-        <div className="flex items-center justify-between gap-3">
-          <span
-            aria-disabled="true"
-            title={t("sendOff")}
-            className={cn(
-              "inline-flex cursor-not-allowed items-center gap-2 rounded-ctl border border-line",
-              "bg-surface-2 px-3.5 py-2 text-[13px] font-semibold text-ink-3",
-            )}
-          >
-            <PaperclipIcon size={15} />
-            {t("attach")}
-          </span>
-          <button
-            type="button"
-            disabled
-            title={t("sendOff")}
-            className="min-h-9 cursor-not-allowed rounded-ctl bg-surface-2 px-4 py-2 text-[13px] font-semibold text-ink-3"
-          >
-            {t("send")}
-          </button>
-        </div>
-        <p className="text-[12.5px] text-ink-3">{t("attachLimits")}</p>
-      </div>
+      <div id="thread-end" aria-hidden="true" />
+      <Composer key={conversation.id} conversationId={conversation.id} />
     </div>
   );
 }

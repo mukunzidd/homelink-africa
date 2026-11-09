@@ -35,6 +35,7 @@ import { MoneyText } from "@/components/ui/money-text";
  */
 export async function SupplyOwnerBand({
   kind,
+  slug,
   supplyItemId,
   rate,
   rateLabel,
@@ -51,6 +52,7 @@ export async function SupplyOwnerBand({
   record,
 }: {
   kind: ServiceKind;
+  slug: string;
   supplyItemId: string;
   rate: Money;
   rateLabel: string;
@@ -58,9 +60,10 @@ export async function SupplyOwnerBand({
   record: VerificationRecord;
 }) {
   const role = parseRole((await cookies()).get(ROLE_COOKIE)?.value);
-  // Only the lane's own supplier. Ops has the queue; a guest has no business
-  // here at all.
-  if (supplyLaneFor(role) !== kind) return null;
+  // The lane's own partner, or admin, who runs every lane. Ops has the queue;
+  // a guest has no business here at all.
+  const isAdmin = role === "admin";
+  if (!isAdmin && supplyLaneFor(role) !== kind) return null;
 
   const t = await getTranslations("owner");
   const tVerify = await getTranslations("verification");
@@ -81,12 +84,12 @@ export async function SupplyOwnerBand({
 
   return (
     <section
-      aria-label={t("label")}
+      aria-label={isAdmin ? t("adminLabel") : t("label")}
       className="rounded-card border border-brand/30 bg-brand-tint/40 p-5"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
         <h2 className="font-display text-lg font-semibold text-ink">
-          {t(`title.${kind}`)}
+          {isAdmin ? t("adminTitle") : t(`title.${kind}`)}
         </h2>
         {dueForRewalk && <StatusPill tone="warn">{t("dueForRewalk")}</StatusPill>}
       </div>
@@ -122,24 +125,35 @@ export async function SupplyOwnerBand({
       </p>
 
       <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-        <Link
-          href="/inventory"
-          className="rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
-        >
-          {t("seeInInventory")}
-        </Link>
-        <Link
-          href="/messages"
-          className="rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
-        >
-          {t("askToChange")}
-        </Link>
+        {isAdmin ? (
+          <Link
+            href={kind === "stay" ? `/manage/portfolio/${slug}` : "/manage/partners"}
+            className="rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
+          >
+            {t("editInWorkspace")}
+          </Link>
+        ) : (
+          <>
+            <Link
+              href="/inventory"
+              className="rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
+            >
+              {t("seeInInventory")}
+            </Link>
+            <Link
+              href="/messages"
+              className="rounded-ctl text-sm font-semibold text-brand hover:text-brand-deep"
+            >
+              {t("askToChange")}
+            </Link>
+          </>
+        )}
       </div>
 
-      {/* Said once, plainly. A supplier who expects an edit form and does not
-          find one should be told why, not left hunting for it. */}
+      {/* Said once, plainly. A partner who expects an edit form and does not
+          find one should be told why, not left hunting for it. Admin has one. */}
       <p className="mt-2 text-[12.5px] leading-relaxed text-ink-3">
-        {t("changesNote")}
+        {isAdmin ? t("adminNote") : t("changesNote")}
       </p>
     </section>
   );

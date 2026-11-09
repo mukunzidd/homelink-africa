@@ -19,10 +19,14 @@ import { readViewed, type Viewed } from "@/lib/recently-viewed";
 import { useSaved } from "@/lib/saved";
 import { usePreferences } from "@/lib/preferences/context";
 import type { PaletteResponse, PaletteRow } from "@/app/api/search/route";
+import type { StaffHit } from "@/lib/workspace/staff-search";
+import { formatDate } from "@/lib/domain/dates";
+import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { MoneyText } from "@/components/ui/money-text";
 import {
   ArrowRightIcon,
+  CalendarIcon,
   CloseIcon,
   HeartIcon,
   HistoryIcon,
@@ -32,6 +36,7 @@ import {
 } from "@/components/ui/icons";
 import { IntentChips } from "./intent-chips";
 import { LANE_EXAMPLE_KEYS } from "@/lib/search/examples";
+import { HoverLabel } from "@/components/ui/hover-label";
 import { cn } from "@/lib/cn";
 
 /**
@@ -119,7 +124,8 @@ type Row =
   | { type: "example"; key: string; query: string }
   | { type: "viewed"; key: string; href: string; item: Viewed }
   | { type: "saved"; key: string; href: string; count: number }
-  | { type: "all"; key: string; href: string };
+  | { type: "all"; key: string; href: string }
+  | { type: "booking"; key: string; href: string; hit: StaffHit };
 
 function useSearch(query: string, currency: string) {
   const [data, setData] = useState<PaletteResponse | null>(null);
@@ -201,6 +207,8 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
     }
     if (!fresh) return [];
     const out: Row[] = [];
+    // The desk looks up bookings far more than it browses homes: theirs first.
+    for (const h of fresh.staff ?? []) out.push({ type: "booking", key: `b-${h.reference}`, href: `/manage/bookings/${h.reference}`, hit: h });
     for (const p of fresh.places) {
       if (fresh.intent.lane && fresh.intent.lane !== "stays" && fresh.intent.lane !== "buy") break;
       const base = fresh.intent.lane === "buy" ? "/buy" : "/stays";
@@ -273,7 +281,7 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
   };
 
   const totalHits = fresh
-    ? fresh.groups.stays.length + fresh.groups.sales.length + fresh.groups.cars.length + fresh.groups.experiences.length
+    ? fresh.groups.stays.length + fresh.groups.sales.length + fresh.groups.cars.length + fresh.groups.experiences.length + (fresh.staff?.length ?? 0)
     : 0;
 
   let lastHeading: string | null = null;
@@ -369,6 +377,8 @@ function Palette({ prefill, onClose }: { prefill: string; onClose: () => void })
                       ? t("tryAsking")
                       : row.type === "place"
                         ? t("groupPlaces")
+                        : row.type === "booking"
+                          ? t("groupBookings")
                         : row.type === "item"
                           ? row.key.startsWith("closest-")
                             ? t("closestHeading")
@@ -453,6 +463,7 @@ function RowBody({
   fresh: PaletteResponse | null;
 }) {
   const tListing = useTranslations("listing");
+  const intl = INTL_LOCALES[useLocale() as Locale];
 
   if (row.type === "recent" || row.type === "example") {
     return (
@@ -461,6 +472,26 @@ function RowBody({
           {row.type === "recent" ? <HistoryIcon /> : <SparkIcon />}
         </span>
         <span className="min-w-0 flex-1 truncate text-[15px] text-ink">{row.query}</span>
+        <ArrowRightIcon className={cn("text-ink-3", !active && "opacity-0")} />
+      </>
+    );
+  }
+
+  if (row.type === "booking") {
+    const h = row.hit;
+    return (
+      <>
+        <span className="grid h-8 w-8 flex-none place-items-center rounded-ctl bg-surface-2 text-ink-3">
+          <CalendarIcon size={16} />
+        </span>
+        <span className="flex min-w-0 flex-1 flex-col">
+          <span className="truncate text-[15px] text-ink">
+            <span className="font-mono text-[13.5px] font-semibold">{h.reference}</span> · {h.guest}
+          </span>
+          <span className="truncate text-[13px] text-ink-3">
+            {h.title} · {formatDate(h.start, intl, { day: "numeric", month: "short" })} → {formatDate(h.end, intl, { day: "numeric", month: "short" })}
+          </span>
+        </span>
         <ArrowRightIcon className={cn("text-ink-3", !active && "opacity-0")} />
       </>
     );
@@ -586,20 +617,15 @@ export function SmartSearchTrigger() {
       onClick={() => open()}
       aria-label={t("open")}
       aria-keyshortcuts={mac ? "Meta+K" : "Control+K"}
-      className={cn(
-        "inline-flex h-9 cursor-pointer items-center rounded-ctl text-ink-2 transition-colors duration-150",
-        // An icon button until there is room for a field. As a field it
-        // takes the only border in the bar, because it is the one control
-        // here that is about where you are going.
-        "w-9 justify-center hover:bg-surface-2 hover:text-ink",
-        "xl:w-56 xl:justify-start xl:gap-2 xl:border xl:border-line xl:bg-surface xl:pl-3 xl:pr-1.5 xl:hover:border-ink-3/40 xl:hover:bg-surface",
-      )}
+      className="group relative grid size-9 cursor-pointer place-items-center rounded-ctl text-ink-2 transition-colors duration-150 hover:bg-surface-2 hover:text-ink"
     >
-      <SearchIcon />
-      <span className="hidden flex-1 text-left text-sm text-ink-3 xl:inline">{t("triggerShort")}</span>
-      <kbd className="hidden rounded-chip border border-line bg-surface-2 px-1.5 py-0.5 font-mono text-[11px] leading-none text-ink-3 xl:inline">
-        {mac ? "⌘K" : "Ctrl K"}
-      </kbd>
+      {/* An icon at every width: the bar is for the lanes, and the palette
+          it opens is where searching happens. The shortcut is in the name
+          it shows on hover. */}
+      <SearchIcon size={17} />
+      <HoverLabel>
+        {t("triggerShort")} · {mac ? "⌘K" : "Ctrl K"}
+      </HoverLabel>
     </button>
   );
 }

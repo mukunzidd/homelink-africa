@@ -59,6 +59,12 @@ check: typecheck lint test ## Typecheck, lint and test
 build: ## Production build, in a throwaway container so the dev server keeps running
 	$(COMPOSE) run --rm --no-deps web npx next build
 
+e2e: ## End-to-end journeys in Playwright against the running stack (make up first)
+	npx playwright test
+
+sweep: ## Every route, role, theme, width; captures in .sweep/ and a findings report
+	node scripts/sweep.mjs
+
 search-reset: ## Drop the search index; the app rebuilds it on the next search
 	-curl -sf -X DELETE -H "Authorization: Bearer $(MEILI_KEY)" http://localhost:7710/indexes/supply >/dev/null
 	$(COMPOSE) restart web

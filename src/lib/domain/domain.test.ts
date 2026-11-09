@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { paginate } from "@/lib/paginate";
-import { parseRole } from "@/lib/preferences/role";
+import { parseRole, readsAs, supplyLaneFor } from "@/lib/preferences/role";
 import {
   quoteExperience,
   quoteStay,
@@ -30,6 +30,21 @@ describe("parseRole", () => {
     expect(parseRole(undefined)).toBe("visitor");
     expect(parseRole("ops")).toBe("ops");
   });
+
+  it("reads a retired host cookie as a visitor", () => {
+    expect(parseRole("host")).toBe("visitor");
+    expect(parseRole("ADMIN")).toBe("visitor");
+  });
+
+  it("gives admin no supply lane; homes are not a partner's", () => {
+    expect(supplyLaneFor("admin")).toBeNull();
+    expect(supplyLaneFor("driver")).toBe("car");
+    expect(supplyLaneFor("guide")).toBe("experience");
+  });
+
+  it("lets admin read threads as itself, now that it is in them", () => {
+    expect(readsAs("admin")).toBe("admin");
+  });
 });
 
 describe("quoteStay", () => {
@@ -53,7 +68,7 @@ describe("supplierShare", () => {
   const feeOf = (lines: { key: string; amount: { minor: number } }[]) =>
     lines.find((l) => l.key === "serviceFee")!.amount.minor;
 
-  it("recovers the service fee of every stay quote, leaving cleaning with the host", () => {
+  it("recovers the service fee of every stay quote, leaving cleaning outside the fee", () => {
     for (const listing of LISTINGS) {
       for (const to of ["2026-12-02", "2026-12-04", "2026-12-15"]) {
         const quote = quoteStay(listing, "2026-12-01", to)!;

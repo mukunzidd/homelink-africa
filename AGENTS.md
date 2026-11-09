@@ -13,10 +13,17 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Where the work is
 
-**Read `docs/superpowers/specs/2026-08-10-real-data-milestone.md` before
-starting.** It holds the current milestone, what "done" means for each step, the
-scope decisions already taken, and the open ones. It is kept ticked off as work
-lands, so it is the fastest way to find out where things stopped.
+**Read `docs/superpowers/specs/2026-11-08-booking-workspace-design.md` first.**
+It is the pass that built the whole product on fixtures (booking flow, trip
+cart, every workspace page per role, sign-in, settings, help) and its plan,
+`docs/superpowers/plans/2026-11-08-booking-workspace.md`, is built through
+Task 47. Its "Review and fixes" section holds what the last sweep found and
+the traps behind it. What is left of that pass is the whole-branch review.
+
+**Then `docs/superpowers/specs/2026-08-10-real-data-milestone.md`**, which is
+paused behind it. It holds the next milestone, what "done" means for each step,
+the scope decisions already taken, and the open ones. It is kept ticked off as
+work lands, so it is the fastest way to find out where things stopped.
 
 `docs/superpowers/specs/2026-08-09-ui-milestone.md` is the one before it, and is
 finished. Worth reading anyway: it carries the findings from two full browser
@@ -24,8 +31,11 @@ sweeps, the arguments behind several decisions that look arbitrary in the code,
 and three measuring traps that will otherwise be rediscovered the hard way.
 
 Short version: the app is a front end on fixtures. There is no backend, no auth,
-no payments, no realtime — `package.json` has four dependencies and no test
-runner, and nothing yet runs in a container. The previous milestone finished
+no payments, no realtime. It runs in Docker (`make up`, port 3100). `npm test`
+is Vitest over the domain and the fixture repos; `make e2e` walks 15 journeys
+in Playwright and `make sweep` opens every screen per role, width, theme and
+language and reports what a person would notice. Both need the dev stack, which
+compose starts with `HOMELINK_E2E=1` so they can reset the store. The UI milestone finished
 the UI and walked every journey in a browser *before* any of that got built, so
 the schema is designed against screens people have actually looked at. The
 current one puts those same screens on Postgres without moving any of them.

@@ -10,6 +10,8 @@ import { repos } from "@/lib/repos";
 import type { Role } from "@/lib/domain/types";
 import { MobileMenu } from "./mobile-menu";
 import { SmartSearchTrigger } from "@/components/search/smart-search";
+import { NotificationBell } from "@/components/notifications/bell";
+import { TripPill } from "@/components/cart/trip-pill";
 
 /**
  * One 64px bar on a desktop. Below 1024px the lanes drop to a 44px strip of
@@ -25,12 +27,13 @@ import { SmartSearchTrigger } from "@/components/search/smart-search";
  * bar is logo, search, saved and the menu, with nothing hidden that cannot be
  * reached.
  *
- * From 1024px up a signed-in role also gets its own screen and Messages as
- * text links, and a visitor gets a quiet Sign in. Between 640 and 1024 the
- * links stay in the avatar menu: the bar there has the room for Sign in but
- * not for two more words beside the account.
+ * From 1024px up a guest also gets Messages as an icon, in one run with
+ * Saved and the bell; a workspace role gets one word, into the workspace; a
+ * visitor gets language and currency and a quiet Sign in. Search is an icon
+ * at every width, and the trip pill shows only once a trip has something in
+ * it.
  */
-const SIGNED_IN: Role[] = ["guest", "host", "driver", "guide", "ops", "admin"];
+const SIGNED_IN: Role[] = ["guest", "driver", "guide", "ops", "admin"];
 export async function SiteHeader() {
   const t = await getTranslations("header");
   const unread = Object.fromEntries(
@@ -68,10 +71,15 @@ export async function SiteHeader() {
           </div>
 
           <div className="ml-auto flex flex-none items-center gap-1 lg:ml-0">
-            <AccountLinks unread={unread} className="hidden lg:flex" />
+            <TripPill />
             <SmartSearchTrigger />
             <PreferencesMenu className="hidden sm:block" />
+            {/* What is yours, as one run of icons: messages, saved, and the
+                bell beside the avatar. Trips, language and currency are in
+                the avatar menu; a visitor keeps language and currency here. */}
+            <AccountLinks unread={unread} className="hidden lg:flex" />
             <SavedLink />
+            <NotificationBell allHref="/notifications" />
             <AccountMenu className="hidden sm:block" />
             <SignInLink className="hidden sm:block" />
             <MobileMenu className="sm:hidden" />

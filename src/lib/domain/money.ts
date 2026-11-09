@@ -91,6 +91,18 @@ export function isZero(m: Money): boolean {
  * Render for display. Intl already knows each currency's fraction digits, so
  * passing the correct major value is the only thing we have to get right.
  */
+/**
+ * The tag to format numbers with, given any locale tag. Kinyarwanda's CLDR
+ * data groups thousands with a period, which reads as a decimal point in
+ * Rwanda, and browsers do not carry Kinyarwanda at all, so the server and
+ * the client would also disagree. rw becomes en-RW, as NUMBER_LOCALES says;
+ * doing it here means a caller who passes the date locale still gets
+ * "RWF 157,096". Several workspace pages did, and showed "RWF 157.096".
+ */
+export function numberLocale(locale: string): string {
+  return /^rw(-|$)/i.test(locale) ? "en-RW" : locale;
+}
+
 export function formatMoney(
   m: Money,
   locale: string,
@@ -99,7 +111,7 @@ export function formatMoney(
   const exponent = EXPONENT[m.currency];
   const digits = options.showDecimals === false ? 0 : exponent;
 
-  return new Intl.NumberFormat(locale, {
+  return new Intl.NumberFormat(numberLocale(locale), {
     style: "currency",
     currency: m.currency,
     /**

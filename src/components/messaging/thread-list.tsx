@@ -24,6 +24,7 @@ export async function ThreadList({
   role,
   scopeTags,
   locale,
+  basePath = "/messages",
 }: {
   conversations: Conversation[];
   /** The thread shown beside the list on a desktop. */
@@ -35,6 +36,8 @@ export async function ThreadList({
   /** Booking reference or trip name per thread id. */
   scopeTags: Record<string, string | null>;
   locale: string;
+  /** Where a row opens: the guest's /messages, or the workspace inbox. */
+  basePath?: string;
 }) {
   const t = await getTranslations("messaging");
   const tRoles = await getTranslations("roles");
@@ -68,7 +71,7 @@ export async function ThreadList({
         return (
           <li key={conversation.id}>
             <Link
-              href={`/messages?thread=${conversation.id}`}
+              href={`${basePath}?thread=${conversation.id}`}
               aria-current={active && selected ? "true" : undefined}
               className={cn(
                 "flex flex-col gap-1 border-t border-line px-3 py-4 transition-colors duration-150",

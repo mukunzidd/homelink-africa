@@ -5,8 +5,11 @@ import { useTranslations } from "next-intl";
 import { usePreferences } from "@/lib/preferences/context";
 import type { Role } from "@/lib/domain/types";
 import { Select } from "@/components/ui/select";
-import { CloseIcon, PinIcon, PlaneIcon, SlidersIcon } from "@/components/ui/icons";
+import { BellIcon, CloseIcon, PinIcon, PlaneIcon, SlidersIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
+import { useToast } from "@/components/notifications/toaster";
+import { notifyChanged } from "@/components/notifications/use-unread";
+import { simulateNotification } from "@/app/actions/notifications";
 
 /**
  * Two controls that were in the way, moved out of it.
@@ -29,7 +32,6 @@ import { cn } from "@/lib/cn";
 const ROLES: Role[] = [
   "visitor",
   "guest",
-  "host",
   "driver",
   "guide",
   "ops",
@@ -141,6 +143,8 @@ export function PreviewControls({ className }: { className?: string }) {
         })}
       </div>
 
+      {process.env.NODE_ENV !== "production" && role !== "visitor" && <TestNotification />}
+
       {process.env.NODE_ENV !== "production" && (
         <Select
           label={t("role")}
@@ -154,5 +158,39 @@ export function PreviewControls({ className }: { className?: string }) {
       )}
 
     </div>
+  );
+}
+
+/**
+ * Sends the current role one event it can receive, so the bell, the toast
+ * and the panel can be seen arriving without a backend. Phase 2 deletes it.
+ */
+function TestNotification() {
+  const t = useTranslations("dev");
+  const tN = useTranslations("notifications");
+  const toast = useToast();
+  const [busy, setBusy] = useState(false);
+  return (
+    <button
+      type="button"
+      disabled={busy}
+      onClick={async () => {
+        setBusy(true);
+        const n = await simulateNotification();
+        setBusy(false);
+        if (!n) return;
+        notifyChanged();
+        toast.show({
+          title: tN(`kinds.${n.kind}.title`, n.params),
+          body: tN(`kinds.${n.kind}.body`, n.params),
+          href: n.href,
+          tone: n.kind === "paymentFailed" ? "crit" : "info",
+        });
+      }}
+      className="flex h-8 cursor-pointer items-center gap-1.5 rounded-ctl border border-line px-2.5 text-[13px] font-semibold text-ink-2 transition-colors hover:border-brand hover:text-brand disabled:opacity-60"
+    >
+      <BellIcon size={14} />
+      {t("testNotification")}
+    </button>
   );
 }

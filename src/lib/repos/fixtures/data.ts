@@ -39,7 +39,41 @@ function verification(
   };
 }
 
-export const LISTINGS: Listing[] = [
+/**
+ * Three property managers split the homes by area, the way a real team
+ * would: one north of the city centre, one east, one south.
+ */
+const MANAGERS = {
+  north: { name: "Placide K.", since: "2024-03-01" },
+  east: { name: "Diane U.", since: "2025-01-15" },
+  south: { name: "Olivier N.", since: "2024-09-01" },
+} as const;
+
+const MANAGER_BY_AREA: Record<string, Listing["propertyManager"]> = {
+  Kacyiru: MANAGERS.north, Nyarutarama: MANAGERS.north, Gacuriro: MANAGERS.north, Kiyovu: MANAGERS.north,
+  Kimihurura: MANAGERS.east, Remera: MANAGERS.east, Kibagabaga: MANAGERS.east,
+  Gikondo: MANAGERS.south, Kicukiro: MANAGERS.south, Nyamirambo: MANAGERS.south, Rebero: MANAGERS.south,
+};
+
+/**
+ * The rules every home shares, then a line or two that only one home needs.
+ * Short and concrete: a rule a guest has to interpret is a rule they break.
+ */
+const BASE_RULES = [
+  "Check-in from 14:00, checkout by 11:00.",
+  "No smoking indoors, including balconies.",
+  "Quiet from 22:00 to 07:00; neighbours are close in most Kigali compounds.",
+  "No parties or events. Visitors leave by 22:00.",
+];
+
+const EXTRA_RULES: Record<string, string[]> = {
+  lst_nyarutarama_villa: ["The pool is unfenced: children must be supervised at all times."],
+  lst_gikondo_family: ["Pets are welcome on request, outside the bedrooms."],
+  lst_rebero_hilltop: ["The road up is steep and unlit; arrive before dark on the first night if you can."],
+  lst_kimihurura_studio: ["One guest pass for the building's front desk per guest; show it on the way in."],
+};
+
+const RAW_LISTINGS: Omit<Listing, "propertyManager" | "houseRules">[] = [
   {
     id: "lst_kacyiru_garden",
     slug: "kacyiru-garden-apartment",
@@ -163,7 +197,7 @@ export const LISTINGS: Listing[] = [
     imageSeed: "gikondo",
     images: ["/images/homes/gikondo-family-house-1.jpg", "/images/homes/gikondo-family-house-2.jpg", "/images/homes/gikondo-family-house-3.jpg", "/images/homes/gikondo-family-house-4.jpg"],
     summary:
-      "Older build, well kept, with the kind of yard children actually use. Long-term lease preferred.",
+      "Older build, well kept, with the kind of yard children actually use. Long-term stays preferred.",
     unitsAvailable: 4,
   },
   {
@@ -288,7 +322,38 @@ export const LISTINGS: Listing[] = [
   },
 ];
 
-export const VEHICLES: Vehicle[] = [
+export const LISTINGS: Listing[] = RAW_LISTINGS.map((l) => ({
+  ...l,
+  propertyManager: MANAGER_BY_AREA[l.neighbourhood] ?? MANAGERS.north,
+  houseRules: [...BASE_RULES, ...(EXTRA_RULES[l.id] ?? [])],
+  checkIn: checkInFor(l.id, l.neighbourhood),
+}));
+
+/**
+ * Door codes and wifi for the preview. Derived from the listing's id so
+ * they are stable across restarts and differ between homes; the real ones
+ * live with the property manager and are set per stay in Phase 2.
+ */
+function checkInFor(id: string, area: string) {
+  let h = 0;
+  for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return {
+    directions: `From the ${area} roundabout, take the second paved road uphill; the gate is green, with a HomeLink plate beside the bell. Parking inside, on the left.`,
+    doorCode: String(1000 + (h % 9000)),
+    wifiName: `HomeLink-${area}`,
+    wifiPassword: `kigali-${(h % 100000).toString(36)}`,
+  };
+}
+
+/** What every hire agrees to. The ones people ask about, said up front. */
+const HIRE_RULES = [
+  "Return the car with the fuel it had at handover.",
+  "No smoking in the car.",
+  "Only the drivers named on the booking may drive.",
+  "Kigali and the main national roads; ask the team before taking it into a national park.",
+];
+
+const RAW_VEHICLES: Omit<Vehicle, "rules">[] = [
   {
     id: "veh_rav4",
     slug: "toyota-rav4",
@@ -366,6 +431,8 @@ export const VEHICLES: Vehicle[] = [
     unitsAvailable: 3,
   },
 ];
+
+export const VEHICLES: Vehicle[] = RAW_VEHICLES.map((v) => ({ ...v, rules: HIRE_RULES }));
 
 export const HOMES_FOR_SALE: HomeForSale[] = [
   {
@@ -512,7 +579,14 @@ export const HOMES_FOR_SALE: HomeForSale[] = [
   },
 ];
 
-export const EXPERIENCES: Experience[] = [
+/** What every day out agrees to. */
+const DAY_RULES = [
+  "Be at the pickup point 15 minutes before the start; the guide waits 20 minutes at most.",
+  "Wear closed shoes and bring water.",
+  "Follow the guide's instructions on safety, always.",
+];
+
+const RAW_EXPERIENCES: Omit<Experience, "rules">[] = [
   {
     id: "exp_gorillas",
     slug: "volcanoes-gorilla-trek",
@@ -537,6 +611,10 @@ export const EXPERIENCES: Experience[] = [
       "A full day at altitude with a park-licensed tracker. Permits handled by us, transport from Kigali included.",
     meetingPoint: "Kinigi park headquarters",
     departs: "04:30",
+    slots: ["04:30"],
+    requiresPermit: true,
+    // The whole price is the park permit, bought in each person's name.
+    permitShare: money(150_000, "USD"),
     driveHours: 2.5,
     location: { lat: -1.4296, lng: 29.5926 },
   },
@@ -563,6 +641,7 @@ export const EXPERIENCES: Experience[] = [
       "Nyamirambo, the markets, and lunch cooked by a women's cooperative. The city as people actually live it.",
     meetingPoint: "Nyamirambo Women's Centre",
     departs: "09:00",
+    slots: ["09:00", "14:00"],
     driveHours: 0.25,
     location: { lat: -1.9786, lng: 30.0446 },
   },
@@ -588,6 +667,7 @@ export const EXPERIENCES: Experience[] = [
     summary: "Boat out to the islands, swimming where it is safe, and fish grilled on the shore.",
     meetingPoint: "Rubavu public beach",
     departs: "06:00",
+    slots: ["06:00"],
     driveHours: 3,
     location: { lat: -1.6806, lng: 29.2608 },
   },
@@ -613,15 +693,22 @@ export const EXPERIENCES: Experience[] = [
     summary: "The suspended bridge above the rainforest, plus a chance at the colobus troops on the way in.",
     meetingPoint: "Nyungwe reception centre",
     departs: "05:00",
+    slots: ["05:00"],
     driveHours: 5,
     location: { lat: -2.4781, lng: 29.2006 },
   },
 ];
 
+export const EXPERIENCES: Experience[] = RAW_EXPERIENCES.map((e) => ({ ...e, rules: DAY_RULES }));
+
+/** The preview's guest: the six bookings below are hers, and show in her Trips. */
+const ANGE = { name: "Ange Uwase", email: "ange@example.rw", phone: "+250 788 123 456" };
+
 export const BOOKINGS: Booking[] = [
   {
     id: "bkg_001",
     reference: "HL-4KQ2-8M",
+    guest: ANGE,
     service: "stay",
     supplyItemId: "lst_kacyiru_garden",
     title: "Garden apartment with hill view",
@@ -636,6 +723,7 @@ export const BOOKINGS: Booking[] = [
   {
     id: "bkg_002",
     reference: "HL-7XB1-2P",
+    guest: ANGE,
     service: "car",
     supplyItemId: "veh_rav4",
     title: "Toyota RAV4, self-drive",
@@ -649,6 +737,7 @@ export const BOOKINGS: Booking[] = [
   {
     id: "bkg_003",
     reference: "HL-9DL5-4T",
+    guest: ANGE,
     service: "experience",
     supplyItemId: "exp_kigali_walk",
     title: "Kigali on foot",
@@ -672,6 +761,7 @@ export const PAST_BOOKINGS: Booking[] = [
   {
     id: "bkg_004",
     reference: "HL-2RN8-6C",
+    guest: ANGE,
     service: "stay",
     supplyItemId: "lst_remera_studio",
     title: "Bright studio near the stadium",
@@ -686,6 +776,7 @@ export const PAST_BOOKINGS: Booking[] = [
   {
     id: "bkg_005",
     reference: "HL-6TS3-9J",
+    guest: ANGE,
     service: "experience",
     supplyItemId: "exp_kivu",
     title: "A day on Lake Kivu",
@@ -699,6 +790,7 @@ export const PAST_BOOKINGS: Booking[] = [
   {
     id: "bkg_006",
     reference: "HL-8WM4-1F",
+    guest: ANGE,
     service: "car",
     supplyItemId: "veh_corolla",
     title: "Toyota Corolla, self-drive",
@@ -951,20 +1043,14 @@ export const ADDON_REQUESTS: AddOnRequest[] = [
 
 /*
  * The same escrow state a guest reads as safety, read from behind as a job.
+ * Only partners appear: HomeLink hosts every home, so a stay pays nobody
+ * outside the company.
  * Amounts are what supply is actually paid: the booking total less HomeLink's
  * service fee, as `supplierShare` in pricing.ts works it out. They are written
  * out rather than computed so the fixture reads on its own, and they used to
  * be round guesses that disagreed with the supplier's own Money tab.
  */
 export const PAYOUTS: Payout[] = [
-  {
-    id: "pay_001",
-    bookingId: "bkg_001",
-    payee: "Placide K.",
-    amount: money(450_021, "RWF"),
-    status: "held",
-    releaseOn: "2026-11-14",
-  },
   {
     id: "pay_002",
     bookingId: "bkg_002",
@@ -982,14 +1068,6 @@ export const PAYOUTS: Payout[] = [
     releaseOn: "2026-11-15",
   },
   {
-    id: "pay_004",
-    bookingId: "bkg_004",
-    payee: "Placide K.",
-    amount: money(394_947, "RWF"),
-    status: "paid",
-    releaseOn: "2026-03-09",
-  },
-  {
     id: "pay_005",
     bookingId: "bkg_005",
     payee: "Didier B.",
@@ -1004,7 +1082,7 @@ export const CONVERSATIONS: Conversation[] = [
     id: "cnv_001",
     subject: "Arrival details, Garden apartment",
     scope: { kind: "booking", id: "bkg_001" },
-    participantNames: ["Marie L.", "Aline M."],
+    participantNames: ["Ange U.", "Aline M."],
     participantRoles: ["guest", "ops"],
     lastMessagePreview:
       "Your flight lands at 19:40, so I will have someone at the gate with the keys.",
@@ -1018,7 +1096,7 @@ export const CONVERSATIONS: Conversation[] = [
     // The concierge is in every thread, not only the ones it started: §8
     // has ops seeing and stepping into any conversation, and "sees
     // everything by being in everything" is how the repo models that.
-    participantNames: ["Marie L.", "Eric H.", "Aline M."],
+    participantNames: ["Ange U.", "Eric H.", "Aline M."],
     participantRoles: ["guest", "driver", "ops"],
     lastMessagePreview: "The RAV4 is booked out to you from Saturday morning.",
     lastMessageAt: "2026-11-08T09:05:00Z",
@@ -1028,7 +1106,7 @@ export const CONVERSATIONS: Conversation[] = [
     id: "cnv_003",
     subject: "Where we meet on Sunday",
     scope: { kind: "booking", id: "bkg_003" },
-    participantNames: ["Marie L.", "Solange K.", "Aline M."],
+    participantNames: ["Ange U.", "Solange K.", "Aline M."],
     participantRoles: ["guest", "guide", "ops"],
     // The last message in this thread is a photograph with no text. A preview
     // has to say something, and the alt text is the only sentence that exists —
@@ -1043,7 +1121,7 @@ export const CONVERSATIONS: Conversation[] = [
     subject: "Generator and keys, 14 November",
     scope: { kind: "booking", id: "bkg_001" },
     participantNames: ["Aline M.", "Placide K."],
-    participantRoles: ["ops", "host"],
+    participantRoles: ["ops", "admin"],
     lastMessagePreview: "Tank is full and I ran it for ten minutes this morning. Living room is made up for them.",
     lastMessageAt: "2026-11-09T11:15:00Z",
     unreadCount: 0,
@@ -1062,7 +1140,7 @@ export const CONVERSATIONS: Conversation[] = [
     id: "cnv_006",
     subject: "After the stay, Remera studio",
     scope: { kind: "booking", id: "bkg_004" },
-    participantNames: ["Marie L.", "Patrick N."],
+    participantNames: ["Ange U.", "Patrick N."],
     participantRoles: ["guest", "ops"],
     lastMessagePreview: "Glad it worked. The water tank complaint is with the owner.",
     lastMessageAt: "2026-03-10T08:05:00Z",
@@ -1072,9 +1150,9 @@ export const CONVERSATIONS: Conversation[] = [
     // Trip-scoped rather than booking-scoped. Rarer, and the one thread that
     // is about the shape of the week rather than about a single line of it.
     id: "cnv_007",
-    subject: "Marie L., November week",
+    subject: "Ange U., November week",
     scope: { kind: "trip", id: "trp_001" },
-    participantNames: ["Marie L.", "Aline M."],
+    participantNames: ["Ange U.", "Aline M."],
     participantRoles: ["guest", "ops"],
     lastMessagePreview:
       "I will come back to you about a week out, once you have the flight numbers.",
@@ -1087,7 +1165,7 @@ export const MESSAGES: Message[] = [
   {
     id: "msg_001",
     conversationId: "cnv_001",
-    authorName: "Marie L.",
+    authorName: "Ange U.",
     authorRole: "guest",
     body: "We land Saturday evening on RwandAir from Brussels. Is a late check-in workable?",
     sentAt: "2026-11-09T13:40:00Z",
@@ -1104,7 +1182,7 @@ export const MESSAGES: Message[] = [
   {
     id: "msg_003",
     conversationId: "cnv_002",
-    authorName: "Marie L.",
+    authorName: "Ange U.",
     authorRole: "guest",
     body: "Are we collecting the car at the airport or in town?",
     sentAt: "2026-11-08T08:31:00Z",
@@ -1169,7 +1247,7 @@ export const MESSAGES: Message[] = [
     id: "msg_007",
     conversationId: "cnv_004",
     authorName: "Placide K.",
-    authorRole: "host",
+    authorRole: "admin",
     body: "Tank is full and I ran it for ten minutes this morning. Living room is made up for them.",
     attachments: [
       {
@@ -1201,7 +1279,7 @@ export const MESSAGES: Message[] = [
   {
     id: "msg_010",
     conversationId: "cnv_006",
-    authorName: "Marie L.",
+    authorName: "Ange U.",
     authorRole: "guest",
     body: "All fine, thank you. The only thing was the water pressure in the mornings.",
     sentAt: "2026-03-09T17:20:00Z",

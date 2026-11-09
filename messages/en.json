@@ -16,12 +16,15 @@
     "trips": "Trips",
     "messages": "Messages",
     "help": "Help",
-    "inventory": "Your listings",
-    "queue": "Queue",
     "preferences": "Language, currency and theme",
     "close": "Close",
     "yourScreens": "Your screens",
-    "messagesUnread": "Messages, with unread replies"
+    "messagesUnread": "Messages, with unread replies",
+    "myHomeLink": "My HomeLink",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "workspace": "Workspace",
+    "languageCurrency": "Language and currency"
   },
   "nav": {
     "stays": "Stays",
@@ -133,7 +136,9 @@
     "save": "Save",
     "reserve": "Reserve",
     "seatCount": "{count, plural, one {# seat} other {# seats}}",
-    "durationHours": "{count, plural, one {# hour} other {# hours}}"
+    "durationHours": "{count, plural, one {# hour} other {# hours}}",
+    "minStay": "Stays of {count} nights or more",
+    "tooShort": "This home takes stays of {count} nights or more. Pick a later departure."
   },
   "verification": {
     "badge": "Verified",
@@ -148,7 +153,7 @@
       "photographed": "Photographed by us",
       "photographedBody": "Every image here was shot by the HomeLink team. No owner-supplied photos appear on a verified listing.",
       "identity": "Owner identity confirmed",
-      "identityBody": "Title or lease authority verified against national ID. Identity checks complete before any payout is possible.",
+      "identityBody": "Title deed or the right to rent it out verified against national ID. Identity checks complete before any payout is possible.",
       "escrow": "Your money is held",
       "escrowBody": "Payment sits in escrow until you confirm check-in. Not as described means a full refund and another home the same night."
     },
@@ -198,7 +203,7 @@
     "fibre": "Fibre internet",
     "furnished": "Furnished",
     "parking": "Parking",
-    "longTerm": "Long-term lease",
+    "longTerm": "Long-term stay",
     "selfDrive": "Self-drive",
     "withDriver": "With driver",
     "clear": "Clear filters",
@@ -217,12 +222,12 @@
   "dev": {
     "label": "Preview as",
     "role": "Role",
-    "note": "Development only. Roles are mocked until accounts are wired up."
+    "note": "Development only. Roles are mocked until accounts are wired up.",
+    "testNotification": "Send a test notification"
   },
   "roles": {
     "visitor": "Signed out",
     "guest": "Guest",
-    "host": "Host",
     "driver": "Driver",
     "guide": "Guide",
     "ops": "Concierge ops",
@@ -252,9 +257,9 @@
     "unavailable": "Choose dates to see the total",
     "nightlyFrom": "From",
     "monthlyFrom": "Long-term from",
-    "leaseAvailable": "Available as a long-term lease",
-    "leaseBody": "Twelve months or more is handled as a lease application rather than a nightly booking: documents, a deposit, and a signed agreement.",
-    "applyForLease": "Apply for a lease",
+    "leaseAvailable": "Available to rent long-term",
+    "leaseBody": "Twelve months or more is handled as a rental application rather than a nightly booking: documents, a deposit, and a signed rental agreement.",
+    "applyForLease": "Apply to rent",
     "highlights": "What stands out",
     "thingsToKnow": "Things to know",
     "houseRules": "House rules",
@@ -269,11 +274,13 @@
     "hostedBy": "Verified by",
     "lease": {
       "moveInTitle": "Moving in",
-      "moveInBody": "Free from {date}. The lease runs for at least twelve months, from the month you choose when you apply.",
-      "depositBody": "{deposit}, held as a deposit and returned when the lease ends. The deposit terms come with the lease.",
+      "moveInBody": "Free from {date}. You rent it for at least twelve months, from the month you choose when you apply.",
+      "depositBody": "{deposit}, held as a deposit and returned when you move out. The deposit terms are in the rental agreement.",
       "viewingTitle": "The viewing",
-      "viewingBody": "The Kigali team arranges a viewing and sends the lease to read before it. Nothing is charged here."
-    }
+      "viewingBody": "The Kigali team arranges a viewing and sends the rental agreement to read before it. Nothing is charged here."
+    },
+    "hostedByHomeLink": "Hosted by HomeLink",
+    "managedBy": "{name} looks after this home · on the team since {year}"
   },
   "quote": {
     "accommodation": "{rate} × {nights, plural, one {# night} other {# nights}}",
@@ -282,7 +289,8 @@
     "total": "Total",
     "totalIn": "Total ({currency})",
     "chargedIn": "Charged in {currency}. Converted at today's rate; the amount you are charged is confirmed before you pay.",
-    "noHiddenFees": "No booking fee is added at the end. This is the price."
+    "noHiddenFees": "No booking fee is added at the end. This is the price.",
+    "accommodationAvg": "{rate} average × {nights, plural, one {# night} other {# nights}}"
   },
   "checkout": {
     "title": "Confirm and pay",
@@ -311,8 +319,8 @@
     "payNow": "Pay {amount}",
     "processing": "Taking payment…",
     "stubNotice": "This is a preview. Nothing will be charged.",
-    "escrowTitle": "Your money is held until you arrive",
-    "escrowBody": "We hold the full amount and release it to the host only after you confirm check-in. If the place is not as described, you are refunded in full and we find you another home the same night.",
+    "escrowTitle": "Your money stays refundable until you are inside",
+    "escrowBody": "We hold the full amount and only count it as ours once someone from the team confirms you are inside. If the place is not as described, you are refunded in full and we find you another home the same night.",
     "noEscrowBody": "This stay is below our escrow threshold, so payment settles directly. The same guarantee on accuracy still applies.",
     "cancellation": "Free cancellation until {date}. After that the first night is non-refundable.",
     "agree": "By paying you accept the booking terms and the cancellation policy above.",
@@ -369,7 +377,11 @@
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {# day} other {# days}}",
     "driver": "Driver",
-    "seats": "{rate} × {count, plural, one {# person} other {# people}}"
+    "seats": "{rate} × {count, plural, one {# person} other {# people}}",
+    "discount": "Promo code",
+    "free": "Free",
+    "rent": "First month's rent",
+    "deposit": "Deposit, {count, plural, one {# month} other {# months}} (returned)"
   },
   "cars": {
     "title": "Cars",
@@ -467,7 +479,7 @@
     "longStay": "Longer than that",
     "goAnytime": "Go anytime",
     "monthsUnit": "{count, plural, one {month} other {months}}",
-    "leaseNote": "A year or more is a lease, not a nightly booking. We'll take you through documents and a deposit instead.",
+    "leaseNote": "A year or more is renting, not a nightly booking. We'll take you through documents and a deposit instead.",
     "adults": "Adults",
     "adultsHint": "Ages 13 or above",
     "children": "Children",
@@ -492,7 +504,7 @@
     "inspected": "Someone walked through it",
     "inspectedBody": "{name} checked this place in person on {date}, not from a form.",
     "escrow": "Your money waits",
-    "escrowBody": "We hold it and release it to the host only once you confirm you're in.",
+    "escrowBody": "We hold it and only count it as ours once the team confirms you're in.",
     "power": "The power stays on",
     "powerBody": "Backup generator on site, started and fuelled at inspection.",
     "fibre": "Fibre that works",
@@ -500,7 +512,7 @@
     "photos": "Photos we took",
     "photosBody": "Shot by our team. Nothing here came from the owner's phone.",
     "deposit": "A deposit that comes back",
-    "depositBody": "{deposit}, held as a deposit and returned when the lease ends."
+    "depositBody": "{deposit}, held as a deposit and returned when you move out."
   },
   "carHighlight": {
     "inspected": "Someone drove it first",
@@ -542,7 +554,15 @@
     "noThread": "No messages yet",
     "partOf": "Part of {name}",
     "notYours": "This screen belongs to someone else",
-    "notYoursBody": "Trips is where your own bookings live. If you supply something to HomeLink it is under Inventory, and if you are on the Kigali team it is under Queue."
+    "notYoursBody": "Trips is where your own bookings live. If you supply something to HomeLink it is under Inventory, and if you are on the Kigali team it is under Queue.",
+    "tabs": {
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "cancelled": "Cancelled"
+    },
+    "tabsLabel": "Which bookings",
+    "emptyPast": "Nothing here yet. Stays, hires and days out you've finished will be listed here, with a review to leave.",
+    "emptyCancelled": "No cancelled bookings."
   },
   "inventory": {
     "metaTitle": "Your inventory",
@@ -569,7 +589,7 @@
     "dueOnStart": "Due on the start date",
     "moneyNote": "Nothing on this screen moves money. Payouts are run by the Kigali team, and the amounts here are what they are working from.",
     "notYours": "This screen belongs to someone else",
-    "notYoursBody": "Inventory is for hosts, drivers and guides. If you are a guest, your bookings are under Trips.",
+    "notYoursBody": "This screen is for drivers and guides. If you are a guest, your bookings are under Trips.",
     "ownershipNote": "Everything HomeLink has verified in this lane. Which supplier owns what is not modelled yet — in V1 inventory is listed by the concierge team, so there is effectively one supplier.",
     "tabsLabel": "Sections",
     "tabs": {
@@ -603,9 +623,9 @@
     "readAt": "Read at {time}",
     "delivered": "Delivered",
     "replyLabel": "Write a reply",
-    "replyPlaceholder": "Replies open when messaging goes live",
+    "replyPlaceholder": "Write a reply…",
     "attach": "Attach a photo",
-    "attachLimits": "JPEG, PNG or WebP, up to 15MB. Location data is stripped before anything is stored.",
+    "attachLimits": "JPEG, PNG or WebP, up to 15MB, four to a message. Location data is removed on your device before a photo is sent.",
     "subtitleFor": {
       "guest": "Every thread is attached to something you have booked, with the Kigali team or the person meeting you.",
       "supply": "Threads about the bookings on what you supply. The Kigali team is in each one.",
@@ -613,7 +633,60 @@
     },
     "party": "{name} · {role}",
     "send": "Send",
-    "sendOff": "Sending is switched off until messaging goes live"
+    "enterHint": "Enter to send · Shift+Enter for a new line",
+    "sending": "Sending…",
+    "sendFailed": "That did not send. Check your connection and try again.",
+    "tooLong": "A message can be up to {max} characters.",
+    "emoji": "Add an emoji",
+    "emojiGroups": {
+      "recent": "Recently used",
+      "smileys": "Faces",
+      "people": "Hands and hearts",
+      "travel": "Travel and places",
+      "food": "Food and drink",
+      "objects": "Things"
+    },
+    "photoUploading": "Uploading…",
+    "photoFailed": "Did not upload",
+    "removePhoto": "Remove photo",
+    "photoAlt": "What it shows",
+    "photoAltLabel": "Describe photo {n} (optional)",
+    "wrongType": "{name} is not a JPEG, PNG or WebP photo.",
+    "tooBig": "{name} is over 15MB.",
+    "tooMany": "Up to {max} photos in one message.",
+    "dropHere": "Drop photos to attach them",
+    "openPhoto": "Open the photo full size",
+    "photoFrom": "Photo from {name}",
+    "location": {
+      "button": "Location",
+      "title": "Share a location",
+      "search": "Search a place or a street address",
+      "useMine": "Use where I am now",
+      "locating": "Finding you…",
+      "denied": "Location is blocked for this site. Allow it in your browser, or search instead.",
+      "unavailable": "Your device could not find you. Search, or move the map to the spot.",
+      "streetHint": "{district}. Move the map until the pin is on the door.",
+      "useTyped": "Use “{text}” as the address",
+      "useTypedHint": "Then move the map to the spot.",
+      "noMatch": "No place by that name here. Use it as the address and move the map to the spot.",
+      "mapHint": "Drag the map, or tap a spot, to put the pin where you mean.",
+      "mapLabel": "Map for choosing a place",
+      "name": "Name (optional)",
+      "namePlaceholder": "Nyabugogo Bus Park",
+      "address": "Address or directions (optional)",
+      "addressPlaceholder": "KG 7 Ave, the blue gate",
+      "share": "Share location",
+      "cancel": "Cancel",
+      "kinds": {
+        "landmark": "Place",
+        "transport": "Bus park or airport",
+        "neighbourhood": "Neighbourhood"
+      },
+      "dropped": "Shared location",
+      "open": "Open in Maps",
+      "directions": "Directions",
+      "mapOf": "Map of {name}, opens in Google Maps"
+    }
   },
   "queue": {
     "title": "The queue",
@@ -749,7 +822,11 @@
     "askToChange": "Ask the team to change something",
     "changesNote": "Rates, photographs and availability are changed by the Kigali team for now. Message them and it is done the same day.",
     "groupCap": "Group cap",
-    "freeFrom": "Free from"
+    "freeFrom": "Free from",
+    "adminLabel": "This listing, seen from the workspace",
+    "adminTitle": "You run this one",
+    "editInWorkspace": "Edit in the workspace",
+    "adminNote": "Changes made in the workspace show on this page as soon as they are saved."
   },
   "smart": {
     "title": "Smart search",
@@ -816,7 +893,7 @@
     "perNightShort": "/night",
     "perMonthShort": "/month",
     "perDayShort": "/day",
-    "chipLease": "Long-term lease",
+    "chipLease": "Long-term stay",
     "chipText": "Mentions “{text}”",
     "drive": {
       "withDriver": "With a driver",
@@ -855,7 +932,8 @@
     "placeholderLane": {
       "cars": "Try “automatic for the weekend”",
       "experiences": "Try “gorillas next week for 2”"
-    }
+    },
+    "groupBookings": "Bookings"
   },
   "saved": {
     "title": "Saved",
@@ -882,14 +960,16 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "resultsLabel": "Map of {count, plural, one {# result} other {# results}}",
+    "areaPinLabel": "{count} from {price}",
+    "areaPinTitle": "{area}: {count, plural, one {# home} other {# homes}} from {price}",
     "list": "List",
     "map": "Map",
     "showMap": "Show on map",
     "whereTitle": "Where you will be",
     "areaLabel": "Approximate area in {place}",
-    "areaNote": "The circle is the street, not the door: the exact address comes with your booking.",
+    "areaNote": "The circle is the neighbourhood, not the street: the exact address comes with your booking.",
     "contributors": "contributors",
-    "areaNoteLease": "The circle is the street, not the door. The exact address comes with your viewing time."
+    "areaNoteLease": "The circle is the neighbourhood, not the street. The exact address comes with your viewing time."
   },
   "share": {
     "share": "Share",
@@ -922,7 +1002,14 @@
     "buyLink": "Buy a home",
     "allNeighbourhoods": "All neighbourhoods",
     "yoursSupply": "Your listings",
-    "yoursOps": "Your work"
+    "yoursOps": "Your work",
+    "helpTitle": "Help",
+    "help": "Help centre",
+    "contact": "Contact us",
+    "cancellation": "Cancellation policy",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "languages": "Languages"
   },
   "homes": {
     "modeLabel": "How long for",
@@ -984,7 +1071,7 @@
     "plotLabel": "Plot",
     "listedLabel": "Listed",
     "about": "About this home",
-    "areaNote": "The circle is the street, not the gate: the exact plot comes with the title documents at the viewing.",
+    "areaNote": "The circle is the neighbourhood, not the street: the exact plot comes with the title documents at the viewing.",
     "howTitle": "How buying through HomeLink works",
     "how": {
       "viewingTitle": "A viewing with our team",
@@ -1014,12 +1101,12 @@
   "lease": {
     "perMonth": "per month",
     "moveIn": "Move in",
-    "term": "Lease length",
+    "term": "How long",
     "months": "{count} months",
     "nameLabel": "Your name",
     "contactLabel": "Email or phone",
-    "apply": "Apply for a lease",
-    "whatNext": "The Kigali team sends the lease, the deposit terms and a viewing time. Nothing is charged here.",
+    "apply": "Apply to rent",
+    "whatNext": "The Kigali team sends the rental agreement, the deposit terms and a viewing time. Nothing is charged here.",
     "noted": "Application noted",
     "preview": "This preview does not send applications yet. When messaging goes live, this opens a thread with the concierge, who replies within a working day.",
     "shorter": "Staying less than a year? Book by the night",
@@ -1078,7 +1165,7 @@
     "noMatchText": "Nothing we list mentions “{text}”. Try a neighbourhood, a budget, or what the place should have.",
     "noCarBody": "No vehicle matches all of those. Fewer seats, or either gearbox, usually opens it up.",
     "stayPromise": "Every place was inspected in person, and your payment is held until you confirm check-in.",
-    "rentPromise": "Monthly prices for leases of twelve months or more, with the documents checked before you sign.",
+    "rentPromise": "Monthly prices for homes rented for twelve months or more, with the documents checked before you sign.",
     "rentCount": "{count, plural, one {# verified home to rent in Kigali} other {# verified homes to rent in Kigali}}",
     "carsCount": "{count, plural, one {# vetted car in Kigali} other {# vetted cars in Kigali}}",
     "daysCount": "{count, plural, one {# day out from Kigali} other {# days out from Kigali}}",
@@ -1143,11 +1230,11 @@
     "minutesShort": "{minutes} min",
     "travelTitle": "Getting around",
     "travelNote": "By car on a weekday, estimated from the map. Rush hour on KN 5 adds more.",
-    "leaseTermsTitle": "The lease",
+    "leaseTermsTitle": "Renting terms",
     "deposit": "Deposit",
     "depositMonths": "{count, plural, one {# month of rent} other {# months of rent}}",
     "availableFrom": "Free from",
-    "minimumTerm": "Shortest lease",
+    "minimumTerm": "Shortest stay",
     "twelveMonths": "12 months",
     "includedInRent": "Included in the rent",
     "included": {
@@ -1188,7 +1275,6 @@
     "comparePicked": "{count, plural, one {# home picked} other {# homes picked}}",
     "compareOpen": "Compare",
     "compareTitle": "Side by side",
-    "compareClose": "Close the comparison",
     "compare": {
       "price": "Price",
       "neighbourhood": "Neighbourhood",
@@ -1212,7 +1298,8 @@
     },
     "budgetPlaceholder": "Most you would pay, e.g. {example}",
     "bandBack": "Show earlier neighbourhoods",
-    "bandMore": "Show more neighbourhoods"
+    "bandMore": "Show more neighbourhoods",
+    "comparePickMore": "pick one more"
   },
   "abroad": {
     "title": "Buying from abroad",
@@ -1236,14 +1323,15 @@
     },
     "messages": {
       "title": "Messages",
-      "body": "Sign in to read the conversation that comes with each booking, with the Kigali team and your host, driver or guide."
+      "body": "Sign in to read the conversation that comes with each booking, with the Kigali team, your driver or your guide."
     },
     "signIn": "Sign in",
     "previewNote": "Preview sign-in",
     "booking": {
       "title": "Your booking",
       "body": "Sign in to see this booking: its reference, dates, what you paid and the thread with the team."
-    }
+    },
+    "createAccount": "Create an account"
   },
   "hoods": {
     "indexTitle": "Kigali, neighbourhood by neighbourhood",
@@ -1300,5 +1388,2197 @@
     "stadium": "Amahoro stadium",
     "golf": "Golf course",
     "market": "Kimironko market"
+  },
+  "workspace": {
+    "sections": {
+      "overview": "Overview",
+      "today": "Today",
+      "bookings": "Bookings",
+      "calendar": "Calendar",
+      "asks": "Guest asks",
+      "inspections": "Inspections",
+      "housekeeping": "Housekeeping",
+      "maintenance": "Maintenance",
+      "incidents": "Incidents",
+      "inbox": "Inbox",
+      "notifications": "Notifications",
+      "portfolio": "Homes",
+      "rates": "Rates",
+      "tenants": "Tenants",
+      "sales": "Homes for sale",
+      "partners": "Drivers and guides",
+      "finance": "Finance",
+      "people": "People",
+      "content": "Content",
+      "settings": "Settings",
+      "audit": "Audit log",
+      "jobs": "Jobs",
+      "schedule": "Schedule",
+      "earnings": "Earnings",
+      "documents": "Documents"
+    },
+    "groups": {
+      "work": "Daily work",
+      "homes": "Homes and supply",
+      "money": "Money",
+      "platform": "Platform",
+      "partner": "Your work"
+    },
+    "label": "Workspace",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "collapseHint": "Press [ to toggle",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "backToSite": "Back to the site",
+    "signOut": "Sign out",
+    "new": "New",
+    "newListing": "New listing",
+    "newBlock": "Block dates",
+    "newTicket": "New maintenance ticket",
+    "newIncident": "Log an incident",
+    "allHomes": "All homes",
+    "propertyLabel": "Show",
+    "more": "More",
+    "comingTitle": "Not built yet",
+    "comingBody": "This section is part of the workspace plan and lands in a later step of this pass.",
+    "notForYouTitle": "This part of the workspace is not yours",
+    "notForYouBody": "Your role does not include this section. If you need it, ask an admin to change your role.",
+    "notForGuestTitle": "The workspace is for the HomeLink team",
+    "notForGuestBody": "Your bookings, trips and messages are in your account.",
+    "toYourAccount": "Go to your account",
+    "signInTitle": "Sign in to the workspace",
+    "signInBody": "The workspace is where the HomeLink team, drivers and guides do their work.",
+    "signInAs": "Preview as",
+    "today": {
+      "description": "Who arrives, who leaves, who is in, and the homes that turn over today.",
+      "yesterday": "Yesterday",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "arrivals": "Arrivals",
+      "departures": "Departures",
+      "inHouse": "In house",
+      "turnovers": "Turnovers",
+      "turnoverHint": "Out at 11:00, next guest in at 14:00",
+      "eta": "Arriving about {time}",
+      "etaUnknown": "Arrival time not given",
+      "checkIn": "Check in",
+      "checkOut": "Check out",
+      "checkedIn": "Checked in",
+      "checkedOut": "Checked out",
+      "open": "Open",
+      "none": "Nobody.",
+      "escrow": "Escrow releases on check-in",
+      "openAsks": "Open asks",
+      "openIncidents": "Open incidents",
+      "seeAll": "See all",
+      "nights": "{count, plural, one {# night} other {# nights}}"
+    },
+    "bookings": {
+      "title": "Bookings",
+      "description": "{count, plural, one {# booking} other {# bookings}}",
+      "search": "Search",
+      "searchPlaceholder": "Reference, guest name or email, or home",
+      "all": "All",
+      "lane": "Lane",
+      "lanes": {
+        "stay": "Stays",
+        "car": "Cars",
+        "experience": "Days out"
+      },
+      "from": "From",
+      "to": "To",
+      "apply": "Apply",
+      "clear": "Clear",
+      "colReference": "Reference",
+      "colGuest": "Guest",
+      "colWhat": "What",
+      "colDates": "Dates",
+      "colStatus": "Status",
+      "colTotal": "Total",
+      "colPaid": "Paid",
+      "colEscrow": "Escrow",
+      "escrowHeld": "Escrow held",
+      "paid": {
+        "paid": "Paid",
+        "part": "Deposit paid",
+        "refunded": "Refunded",
+        "none": "Not paid"
+      },
+      "empty": "No bookings yet.",
+      "emptyFiltered": "No booking matches these filters.",
+      "pages": "Pages",
+      "pageOf": "Page {page} of {pages}",
+      "prev": "Previous",
+      "next": "Next",
+      "back": "All bookings",
+      "guest": "Guest",
+      "email": "Email",
+      "phone": "Phone",
+      "arrival": "Arrival time",
+      "purpose": "Trip purpose",
+      "purposes": {
+        "work": "Work",
+        "leisure": "Leisure"
+      },
+      "requests": "Requests",
+      "price": "Price",
+      "payments": "Payments",
+      "noPayments": "No payments yet.",
+      "timeline": "Timeline",
+      "kinds": {
+        "full": "Payment",
+        "deposit": "Deposit",
+        "balance": "Balance",
+        "rent": "Rent",
+        "change": "Date change",
+        "refund": "Refund"
+      },
+      "rails": {
+        "card": "Card",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Bank transfer"
+      },
+      "payStatus": {
+        "pending": "Pending",
+        "succeeded": "Succeeded",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "notes": "Staff notes",
+      "notesHint": "Only the team sees these.",
+      "notePlaceholder": "What the next person on the desk should know",
+      "addNote": "Add note",
+      "related": "Related",
+      "thread": "Messages with the guest",
+      "noThread": "No messages yet: open the inbox",
+      "incidents": "{count, plural, =0 {No problems reported} one {# problem reported} other {# problems reported}}",
+      "actions": "Actions",
+      "resend": "Resend confirmation",
+      "resent": "Confirmation sent again to {name}",
+      "changeDates": "Change dates",
+      "start": "Starts",
+      "end": "Ends",
+      "saveDates": "Move booking",
+      "moved": "Moved. Price difference: {amount}",
+      "unavailable": "Those dates are taken.",
+      "invalid": "Those dates do not work for this booking.",
+      "changeParty": "Add guests",
+      "partySize": "People (up to {max})",
+      "save": "Save",
+      "partySaved": "Party updated",
+      "partyFailed": "That many people do not fit, or the booking has started.",
+      "refund": "Refund part of a payment",
+      "refundLeft": "Up to {amount} is left to refund.",
+      "refundAmount": "Amount ({currency})",
+      "reason": "Reason",
+      "refundReasonHint": "What the guest is told",
+      "refundSubmit": "Refund",
+      "refunded": "Refunded {amount}",
+      "tooMuch": "That is more than is left to refund.",
+      "refundInvalid": "Check the amount and give a reason.",
+      "cancel": "Cancel booking",
+      "refundChoice": "Refund",
+      "cancelPolicy": "Policy refund: {amount}",
+      "cancelGoodwill": "Goodwill: everything paid, {amount}",
+      "confirmCancel": "Cancel and refund",
+      "cancelled": "Cancelled. Refunded {amount}.",
+      "notAllowed": "Your role cannot do that."
+    },
+    "notFoundTitle": "Nothing here",
+    "notFoundBody": "No booking, home or page has that address. Check a reference has all its characters, or search for it with ⌘K.",
+    "queue": {
+      "asks": {
+        "title": "Guest asks",
+        "description": "What guests asked a person for, in their own words. Give each one to someone, price it, and close it."
+      },
+      "inspections": {
+        "title": "Inspections",
+        "description": "Homes, cars and days out waiting for someone to walk them before they go live."
+      },
+      "incidents": {
+        "title": "Incidents",
+        "description": "Problems guests reported during a stay, most urgent first.",
+        "forBooking": "Problems reported on {reference}."
+      },
+      "inbox": {
+        "title": "Inbox"
+      },
+      "filter": {
+        "active": "To do",
+        "all": "All",
+        "open": "Open"
+      },
+      "nobody": "Nobody",
+      "owner": "Owner",
+      "who": "Who",
+      "status": "Status",
+      "guest": "Guest",
+      "booking": "Booking",
+      "dates": "Dates",
+      "quoted": "Quoted",
+      "assigned": "Given to {name}",
+      "notAllowed": "Your role cannot do that.",
+      "empty": "Nothing here.",
+      "quote": "Quote a price",
+      "quoteAmount": "Price (RWF)",
+      "quoteNote": "What you will arrange",
+      "quoteNoteHint": "Driver and car for the week, from the airport",
+      "quoteHint": "The guest sees this in their messages on this booking, and replies there.",
+      "quoteSend": "Send to the guest",
+      "quoteSent": "Quote sent to the guest's messages",
+      "markArranged": "Mark arranged",
+      "markedArranged": "Marked arranged",
+      "decline": "Decline",
+      "reopen": "Reopen",
+      "date": "Date",
+      "inspector": "Inspector",
+      "schedule": "Book the visit",
+      "reschedule": "Move the visit",
+      "visitBooked": "Visit booked",
+      "visit": "Visit",
+      "checklist": "Checklist",
+      "points": "{passed} of {total} points",
+      "notes": "Notes",
+      "saveInspection": "Save the inspection",
+      "inspectionSaved": "Inspection saved",
+      "publish": "Publish",
+      "publishAdmin": "An admin puts this live.",
+      "publishedToast": "Published",
+      "draft": "Draft",
+      "draftWaiting": "Waiting in Homes for admin to finish",
+      "urgency": {
+        "now": "Needs someone now",
+        "today": "Today",
+        "whenever": "When convenient"
+      },
+      "incidentStatus": {
+        "open": "Open",
+        "inProgress": "Being fixed",
+        "resolved": "Resolved"
+      },
+      "toTicket": "Make a maintenance ticket",
+      "ticketOpened": "Maintenance ticket opened",
+      "ticket": "Ticket",
+      "noHome": "Only a home's problems become maintenance tickets.",
+      "check": {
+        "stay": {
+          "matchesPhotos": "Matches the photos",
+          "power": "Power on every socket",
+          "backupPower": "Backup power switches over",
+          "water": "Water pressure",
+          "hotWater": "Hot water",
+          "internet": "Internet speed",
+          "locks": "Locks and keys",
+          "smokeAlarm": "Smoke alarm works",
+          "cleanliness": "Clean",
+          "access": "Easy to find and reach"
+        },
+        "car": {
+          "documents": "Registration and papers",
+          "insurance": "Insurance in date",
+          "tyres": "Tyres and spare pressure",
+          "brakes": "Brakes",
+          "lights": "Lights and indicators",
+          "aircon": "Air conditioning",
+          "interior": "Clean inside",
+          "spare": "Spare wheel and jack"
+        },
+        "experience": {
+          "guideLicence": "Guide licence",
+          "route": "Route walked",
+          "safety": "Safety briefing",
+          "vehicle": "Vehicle checked",
+          "firstAid": "First-aid kit",
+          "timing": "Timings hold"
+        }
+      }
+    },
+    "work": {
+      "housekeeping": "Housekeeping",
+      "housekeepingBody": "Every clean the homes need, day by day. A turnover with a guest arriving the same afternoon comes first; mark it ready so the desk can hand over the keys.",
+      "days": "Days",
+      "today": "Today",
+      "cleans": "{count, plural, =0 {no cleans} one {# clean} other {# cleans}}",
+      "hk": {
+        "todo": "To do",
+        "inProgress": "Cleaning",
+        "ready": "Ready",
+        "issue": "Problem"
+      },
+      "hkDone": {
+        "todo": "Back to to do",
+        "inProgress": "Marked as cleaning",
+        "ready": "Ready for the guest",
+        "issue": "Problem flagged to the desk"
+      },
+      "kind": {
+        "turnover": "Turnover",
+        "midStay": "Mid-stay clean",
+        "deep": "Deep clean"
+      },
+      "tight": "Guest arriving today",
+      "window": "Window",
+      "leaving": "Leaving",
+      "staying": "Staying",
+      "arriving": "Arriving",
+      "around": "around {time}",
+      "noCleans": "No cleans on this day.",
+      "cleaner": "Cleaner",
+      "assignedTo": "Given to {name}",
+      "nobody": "Nobody yet",
+      "progress": "Progress",
+      "noteSaved": "Note saved",
+      "note": "Note",
+      "notePlaceholder": "Anything the desk or the next cleaner should know",
+      "saveNote": "Save note",
+      "maintenance": "Maintenance",
+      "maintenanceBody": "Repairs across the homes, urgent first. Open one to give it to someone, book the visit, or take the home off sale while the work is on.",
+      "active": "Still to fix",
+      "all": "All",
+      "ticket": {
+        "open": "Open",
+        "scheduled": "Scheduled",
+        "inProgress": "In progress",
+        "done": "Done"
+      },
+      "priorityName": {
+        "urgent": "Urgent",
+        "normal": "Normal",
+        "low": "Low"
+      },
+      "source": {
+        "tenant": "From a tenant",
+        "guest": "From a guest",
+        "staff": "From the team",
+        "inspection": "From an inspection"
+      },
+      "offSale": "Off sale for the work",
+      "visitOn": "Visit {date}",
+      "home": "Home",
+      "reported": "Reported",
+      "photo": "Photo",
+      "fromIncident": "From incident",
+      "noTickets": "Nothing here.",
+      "status": "Status",
+      "priority": "Priority",
+      "fixer": "Who fixes it",
+      "moved": "Ticket updated",
+      "visit": "Visit day",
+      "setVisit": "Set the visit",
+      "scheduledFor": "Visit set for {date}",
+      "unscheduled": "Visit removed",
+      "blockTitle": "Take the home off sale",
+      "blockedFor": "Off sale for {count, plural, one {# night} other {# nights}}, {first} to {last}.",
+      "unblock": "Put it back on sale",
+      "unblocked": "Back on sale",
+      "blockBooked": "Guests are booked on {dates}. Move the work, not the guest.",
+      "blockInvalid": "Pick a start day and between 1 and 30 nights.",
+      "from": "From",
+      "nights": "Nights",
+      "block": "Take off sale",
+      "blockHint": "Nights with a guest in the home are refused: the work moves, not the guest.",
+      "addNote": "Add a note",
+      "ticketNotePlaceholder": "What was found, what was done, what is still needed",
+      "newTicket": "New ticket",
+      "ticketCreated": "Ticket created",
+      "what": "What needs fixing",
+      "whatPlaceholder": "Shower drains slowly",
+      "details": "Details",
+      "create": "Create ticket",
+      "cancel": "Cancel"
+    },
+    "overview": {
+      "title": "Overview",
+      "subtitle": "How the homes are doing, and what is waiting on you. {date}.",
+      "thisWeek": "Bookings this week",
+      "lastWeek": "{count} the week before",
+      "occupancy": "Occupancy",
+      "next30": "Next 30 days, all homes",
+      "revenue": "Revenue this month",
+      "revenueHint": "Placed this month, less refunds",
+      "openIncidents": "Open incidents",
+      "overdueRent": "Rent overdue",
+      "weeklyTitle": "Bookings placed, last 12 weeks",
+      "bookingsCount": "{count, plural, one {# booking} other {# bookings}}",
+      "occupancyTitle": "Occupancy by home, next 30 days",
+      "toCalendar": "Calendar",
+      "today": "Today",
+      "toToday": "Open the day",
+      "arrivals": "Arriving",
+      "departures": "Leaving",
+      "inHouse": "Staying",
+      "turnovers": "Same-day turnovers",
+      "todo": "Waiting on you",
+      "todos": {
+        "publish": "{count, plural, one {# inspected home} other {# inspected homes}} to put live",
+        "incidents": "{count, plural, one {# incident} other {# incidents}} with nobody on it",
+        "asks": "{count, plural, one {# guest ask} other {# guest asks}} with no owner",
+        "urgent": "{count, plural, one {# urgent repair} other {# urgent repairs}} not done",
+        "cleans": "{count, plural, one {# clean} other {# cleans}} not ready before an arrival",
+        "rent": "{count, plural, one {# tenant} other {# tenants}} behind on rent"
+      },
+      "allClear": "Nothing is waiting on you."
+    },
+    "editor": {
+      "leaveTitle": "Leave without saving?",
+      "leaveBody": "Your changes on this tab have not been saved.",
+      "stay": "Keep editing",
+      "leave": "Discard and leave",
+      "notSaved": "Not saved. Check the fields marked in red.",
+      "saved": "Saved. The site shows it now.",
+      "unsaved": "Unsaved changes",
+      "allSaved": "Everything saved",
+      "discard": "Discard",
+      "saving": "Saving…",
+      "save": "Save",
+      "errors": {
+        "name": "A home needs a name.",
+        "nightlyRate": "The nightly rate must be above zero.",
+        "monthlyRate": "Renting needs a monthly rate above zero.",
+        "sleeps": "Sleeps must be at least the number of bedrooms, and at least one.",
+        "bedrooms": "Bedrooms must be between 0 and 20.",
+        "modes": "Offer it for at least one kind of stay.",
+        "minNights": "The minimum stay is between 1 and 30 nights."
+      },
+      "name": "Name",
+      "summary": "Summary",
+      "summaryHint": "{count} characters. The first two sentences show on cards.",
+      "bedrooms": "Bedrooms",
+      "sleeps": "Sleeps",
+      "photosHint": "The first photo is the cover on every card and at the top of the page. Drag to reorder, or use the arrows.",
+      "cover": "Cover",
+      "makeCover": "Make cover",
+      "moveEarlier": "Move photo {n} earlier",
+      "moveLater": "Move photo {n} later",
+      "removePhoto": "Remove photo {n}",
+      "noPhotos": "No photos yet. Our team photographs every home before it goes live.",
+      "addPhoto": "Add a photo",
+      "phase2Upload": "Shown here only: uploading photos to storage arrives with the backend, so this one is not saved.",
+      "amenitiesHint": "Only what someone has checked in person.",
+      "rulesHint": "One sentence each, in the order a guest needs them. Guests accept them all at checkout.",
+      "ruleN": "Rule {n}",
+      "moveUp": "Move rule {n} up",
+      "moveDown": "Move rule {n} down",
+      "removeRule": "Remove rule {n}",
+      "addRule": "Add a rule",
+      "offeredFor": "Offered for",
+      "mode": {
+        "nightly": "Nightly stays",
+        "lease": "Renting"
+      },
+      "nightlyRate": "Nightly rate ({currency})",
+      "monthlyRate": "Monthly rent ({currency})",
+      "minNights": "Minimum nights",
+      "rentingTerms": "Renting terms",
+      "depositMonths": "Deposit (months)",
+      "availableFrom": "Free from",
+      "checkInHint": "Sent to the guest 48 hours before arrival, never before.",
+      "directions": "Directions",
+      "doorCode": "Door or key box code",
+      "wifiName": "Wi-fi name",
+      "wifiPassword": "Wi-fi password",
+      "manager": "Looked after by",
+      "nobody": "Nobody yet",
+      "managerSince": "Since",
+      "managerHint": "Named on the home's page: guests know who picks up at eleven at night.",
+      "availabilityHint": "Tap a free night to hold it for the owner; tap again to release it. Nights with guests, and nights held for a repair, are changed from the booking or the ticket.",
+      "prevMonth": "Previous month",
+      "nextMonth": "Next month",
+      "held": "{date} held",
+      "released": "{date} released",
+      "cannotHold": "That night cannot be changed here.",
+      "night": {
+        "free": "Free",
+        "booked": "Guests",
+        "owner": "Held for the owner",
+        "maintenance": "Repair",
+        "past": "Past"
+      },
+      "startListing": "Start the listing",
+      "newListing": "New listing",
+      "neighbourhood": "Neighbourhood",
+      "createDraft": "Create draft",
+      "cancel": "Cancel",
+      "unpublished": "Taken off the site",
+      "published": "Live on the site",
+      "notInspected": "Not inspected yet. A home goes live only once someone has stood in it.",
+      "unpublish": "Take off the site",
+      "publish": "Put live",
+      "portfolio": "Homes",
+      "portfolioBody": "{count} homes, {live} live. Open one to edit what guests see.",
+      "fromInspections": "Inspected, waiting to be written up",
+      "view": "View",
+      "views": {
+        "table": "Table",
+        "cards": "Cards"
+      },
+      "home": "Home",
+      "rate": "Nightly",
+      "next30": "Next 30 days",
+      "nextArrival": "Next arrival",
+      "openTickets": "Repairs",
+      "state": "State",
+      "live": "Live",
+      "draft": "Draft",
+      "viewOnSite": "View on the site",
+      "sections": "Sections",
+      "tabs": {
+        "details": "Details",
+        "photos": "Photos",
+        "amenities": "Amenities",
+        "rules": "House rules",
+        "pricing": "Pricing",
+        "availability": "Availability",
+        "checkin": "Check-in",
+        "manager": "Manager",
+        "inspection": "Inspection"
+      },
+      "inspectionHint": "The record of who stood in this home and what they checked. It changes only through a new inspection.",
+      "inspector": "Inspector",
+      "notYet": "Not yet",
+      "inspectedOn": "Inspected",
+      "points": "Points checked",
+      "photographed": "Photographed by us",
+      "ownerChecked": "Owner identity checked",
+      "yes": "Yes",
+      "no": "No",
+      "toInspections": "Go to inspections"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "bodyAdmin": "Every home against the next two weeks or month. A bar is a booking; tap a free night to hold it for the owner.",
+      "bodyOps": "Every home against the next two weeks or month. A bar is a booking; open it to see the guest.",
+      "home": "Home",
+      "earlier": "Earlier",
+      "later": "Later",
+      "today": "Today",
+      "span": "Days shown",
+      "days": "{count} days",
+      "held": "Night held",
+      "released": "Night released",
+      "cannot": "That night cannot be changed.",
+      "tapToHold": "Tap to hold for the owner",
+      "tapToRelease": "Held. Tap to release",
+      "repair": "Held for a repair",
+      "blocked": "Held for the owner",
+      "legendStay": "Booked",
+      "legendRent": "Renting",
+      "legendEnded": "Stayed",
+      "legendHeld": "Held",
+      "legendRepair": "Repair"
+    },
+    "rates": {
+      "title": "Rates",
+      "body": "What each night sells for, against the home's base rate. Tap a first and a last night, then set a price or put them back to the base.",
+      "homes": "Homes",
+      "prev": "Previous month",
+      "next": "Next month",
+      "base": "Base rate",
+      "ownCount": "{count, plural, =0 {no nights priced differently} one {# night priced differently} other {# nights priced differently}}",
+      "own": "its own rate",
+      "selected": "{from} to {to}",
+      "selectedOne": "{date}",
+      "pickEnd": "tap a last night, or set this one",
+      "pickStart": "Tap a first night to start.",
+      "price": "Price a night ({currency})",
+      "setButton": "Set the price",
+      "baseButton": "Back to base",
+      "clear": "Clear",
+      "set": "Prices set",
+      "backToBase": "Back to the base rate",
+      "failed": "Not saved. The price must be above zero."
+    },
+    "homes": {
+      "tenants": "Tenants",
+      "tenantsBody": "Every renting under way, anyone behind on rent first. Open one to remind them, record a transfer, or start the move-out.",
+      "rentings": "Rentings",
+      "overdue": "Behind on rent",
+      "dueSoon": "Due in the next five days",
+      "rent": {
+        "overdue": "Overdue",
+        "due": "Due",
+        "upcoming": "Up to date",
+        "paid": "Paid in full"
+      },
+      "movingOut": "Moving out",
+      "movedOut": "Deposit returned",
+      "perMonth": "{amount} a month",
+      "nextDue": "Next due {date}",
+      "allPaid": "Every month paid",
+      "ends": "Ends {date}",
+      "booking": "Booking",
+      "paidMonths": "Months paid",
+      "monthsOf": "{paid} of {total}",
+      "deposit": "Deposit held",
+      "phone": "Phone",
+      "noTenants": "Nobody is renting right now.",
+      "remind": "Send a rent reminder",
+      "reminded": "Reminder sent",
+      "received": "Received by transfer ({currency})",
+      "record": "Record payment",
+      "recordHint": "For rent paid outside the app; it counts towards the oldest unpaid month.",
+      "recorded": "Payment recorded",
+      "moveOutDate": "Move-out day",
+      "startMoveOut": "Start the move-out",
+      "moveOutBooked": "Move-out inspection booked",
+      "moveOutOn": "Move-out inspection {date}. Return the deposit once it is done.",
+      "returnDeposit": "Return the deposit",
+      "depositReturned": "Deposit returned",
+      "depositDone": "Moved out; the deposit has gone back.",
+      "sales": "Homes for sale",
+      "salesBody": "Homes on the market and the people asking to see them. Every change to a viewing tells the person who asked.",
+      "viewings": "Viewing requests",
+      "view": {
+        "requested": "Requested",
+        "confirmed": "Confirmed",
+        "rescheduled": "Moved",
+        "done": "Done",
+        "cancelled": "Cancelled"
+      },
+      "mode": {
+        "inPerson": "In person",
+        "video": "By video"
+      },
+      "noViewings": "Nobody has asked to see a home yet.",
+      "onSale": "On the market",
+      "sale": {
+        "onMarket": "On the market",
+        "underOffer": "Under offer",
+        "sold": "Sold"
+      },
+      "viewingsCount": "{count, plural, =0 {no viewings} one {# viewing} other {# viewings}}",
+      "viewOnSite": "View on the site",
+      "askingPrice": "Asking price ({currency})",
+      "status": "Status",
+      "save": "Save",
+      "saleSaved": "Saved",
+      "confirm": "Confirm",
+      "viewingConfirmed": "Confirmed; they have been told",
+      "reschedule": "Move it",
+      "markDone": "Mark as done",
+      "viewingDone": "Marked done",
+      "cancelViewing": "Cancel",
+      "viewingCancelled": "Cancelled; they have been told",
+      "day": "Day",
+      "time": "Time",
+      "move": "Move the viewing",
+      "viewingMoved": "Moved; they have been told",
+      "viewingFailed": "That slot is taken or not allowed. Pick another.",
+      "partners": "Drivers and guides",
+      "partnersBody": "Who drives the cars and leads the days out, how they are rated, the work coming up, and any paper about to run out.",
+      "unassigned": "{count, plural, one {# job} other {# jobs}} with nobody on them",
+      "people": "{count, plural, one {# person} other {# people}}",
+      "role": {
+        "driver": "Driver",
+        "guide": "Guide"
+      },
+      "docExpired": "Document expired",
+      "docSoon": "Expires in {days} days",
+      "upcomingJobs": "{count, plural, =0 {No jobs in the next two weeks} one {# job in the next two weeks} other {# jobs in the next two weeks}}",
+      "since": "since {date}",
+      "documents": "Documents",
+      "doc": {
+        "licence": "Driving licence",
+        "insurance": "Insurance",
+        "permit": "Guide permit",
+        "id": "National ID",
+        "vehicleInspection": "Vehicle inspection"
+      },
+      "expires": "Expires {date}",
+      "docValid": "Valid",
+      "theirJobs": "Their jobs · {count}",
+      "noJobs": "Nothing given to them yet.",
+      "openInLane": "Open in their lane · {count}",
+      "noOpen": "Nothing waiting.",
+      "payouts": "Payouts",
+      "payout": {
+        "held": "Held until check-in",
+        "due": "Due",
+        "paid": "Paid"
+      },
+      "noPayouts": "No payouts yet.",
+      "assignTo": "Give to",
+      "assigned": "Job given",
+      "nobody": "Nobody"
+    },
+    "finance": {
+      "title": "Finance",
+      "body": "Money in, money out, and money held for someone else. Every action here is recorded in the audit log.",
+      "tabs": {
+        "revenue": "Revenue",
+        "payments": "Payments",
+        "reconciliation": "Reconciliation",
+        "refunds": "Refunds",
+        "deposits": "Deposits held",
+        "payouts": "Payouts",
+        "invoices": "Invoices"
+      },
+      "revenueTitle": "Revenue by month, francs (thousands)",
+      "lane": "Lane",
+      "lanes": {
+        "stay": "Stays and renting",
+        "car": "Cars",
+        "experience": "Days out"
+      },
+      "total": "Total",
+      "revenueNote": "Bookings placed in each month, less refunds, converted to francs at today's rate.",
+      "allRails": "Every rail",
+      "allStates": "Every state",
+      "pay": {
+        "succeeded": "Received",
+        "pending": "Pending",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "when": "When",
+      "booking": "Booking",
+      "rail": "Rail",
+      "kind": "For",
+      "amount": "Amount",
+      "state": "State",
+      "none": "Nothing here.",
+      "reconcileSummary": "{matched} matched · {suggested} suggested · {unmatched} need a person",
+      "statementLine": "Statement line",
+      "payment": "Our payment",
+      "rec": {
+        "matched": "Matched",
+        "suggested": "Suggested",
+        "unmatched": "Unmatched"
+      },
+      "needsPerson": "Needs a person",
+      "match": "Match",
+      "matched": "Matched",
+      "guest": "Guest",
+      "refund": {
+        "awaiting": "Awaiting approval",
+        "paid": "Paid",
+        "other": "Other"
+      },
+      "approve": "Approve",
+      "approved": "Refund approved and sent",
+      "rentingDeposits": "Renting deposits",
+      "endsOn": "ends {date}",
+      "moveOutOn": "move-out {date}",
+      "escrow": "Escrow on stays",
+      "escrowNote": "Held until the guest checks in, then released to the home automatically.",
+      "arrives": "Arrives",
+      "payee": "Payee",
+      "releaseOn": "Releases",
+      "payout": {
+        "held": "Held until check-in",
+        "due": "Due",
+        "paid": "Paid"
+      },
+      "markPaid": "Mark paid",
+      "paidDone": "Payout marked paid",
+      "issued": "Issued",
+      "receipt": "Receipt",
+      "keep": "Keep for repairs ({currency})",
+      "reason": "Reason",
+      "reasonPlaceholder": "Repaint the hallway wall",
+      "release": "Return the deposit",
+      "reasonNeeded": "Anything kept needs a reason the tenant can read.",
+      "confirmTitle": "Send this to the tenant?",
+      "confirmBody": "This is what they will read, word for word.",
+      "back": "Back",
+      "send": "Return and send",
+      "released": "Deposit returned; the tenant has been told",
+      "sentenceKept": "We are returning {back} of your {deposit} deposit. We kept {kept} for: {reason}.",
+      "sentenceFull": "We are returning your {deposit} deposit in full."
+    },
+    "admin": {
+      "save": "Save",
+      "refused": "Not saved: a value is out of range.",
+      "saved": "Saved",
+      "email": "Email",
+      "role": "Role",
+      "roles": {
+        "ops": "Desk",
+        "admin": "Admin",
+        "driver": "Driver",
+        "guide": "Guide"
+      },
+      "invite": "Send invite",
+      "invited": "Invite sent to {email}",
+      "inviteRefused": "Not sent: check the address, or they are already on the team.",
+      "roleChanged": "Role changed",
+      "deactivated": "Switched off",
+      "deactivate": "Switch off",
+      "lastAdmin": "There must always be one admin.",
+      "annText": "Text",
+      "from": "From",
+      "until": "Until",
+      "remove": "Remove",
+      "addAnnouncement": "Add an announcement",
+      "up": "Move {name} up",
+      "down": "Move {name} down",
+      "addHome": "Add a home",
+      "choose": "Choose a home",
+      "featuredHint": "These lead the landing page in this order; the most recently inspected homes fill the rest.",
+      "ourLine": "Our line for {name}",
+      "ourLinePlaceholder": "Leave empty to use the standard description",
+      "showTimes": "Show travel times",
+      "offered": "Offer {name}",
+      "lanes": {
+        "stay": "Stays",
+        "car": "Cars",
+        "experience": "Days out"
+      },
+      "code": "Code",
+      "percent": "% off",
+      "cap": "Cap (RWF)",
+      "expires": "Valid until",
+      "lane": "For",
+      "anyLane": "Anything",
+      "addCode": "Add a code",
+      "bank": {
+        "bankName": "Bank",
+        "accountName": "Account name",
+        "accountNumber": "Account number",
+        "swift": "SWIFT"
+      },
+      "export": "Export as CSV",
+      "people": "People",
+      "peopleBody": "Everyone who signs in to the workspace. Invite someone, change their role, or switch them off. There is always at least one admin.",
+      "status": {
+        "active": "Active",
+        "invited": "Invited",
+        "deactivated": "Switched off"
+      },
+      "lastActive": "Active {when}",
+      "neverSignedIn": "Not signed in yet",
+      "content": "Content",
+      "contentBody": "What the public site says, changed without a release.",
+      "announcements": "Announcements",
+      "announcementsHint": "A line across the top of every page, between two dates.",
+      "featured": "Homes on the landing page",
+      "neighbourhoods": "Neighbourhoods",
+      "neighbourhoodsHint": "A line of our own for each place, and whether its travel times show.",
+      "settings": "Settings",
+      "settingsBody": "The numbers the business runs on. Prices here reach the booking pages and the server at once.",
+      "windows": "Free cancellation",
+      "windowsHint": "How many days before the start a guest can cancel for everything back.",
+      "windowFor": "{lane}, days",
+      "extras": "Extras",
+      "promos": "Promo codes",
+      "promosHint": "Off the nights only, never fees or extras, and capped.",
+      "fx": "Display rates",
+      "fxHint": "For showing prices in other currencies. What a guest is charged uses the payment provider's rate on the day.",
+      "perFranc": "Francs for 1 {currency}",
+      "bankTitle": "Bank transfer details",
+      "templates": "Notification texts",
+      "templatesHint": "What each notification says, in each language. Read-only for now: they are edited in the translation files.",
+      "audit": "Audit log",
+      "auditBody": "Every action recorded, newest first, in Kigali time.",
+      "who": "Who",
+      "anyone": "Anyone",
+      "actors": {
+        "admin": "Admin",
+        "ops": "Desk",
+        "driver": "Driver",
+        "guide": "Guide",
+        "guest": "Guest"
+      },
+      "what": "What",
+      "filter": "Filter",
+      "when": "When",
+      "target": "On",
+      "detail": "Detail",
+      "noEntries": "Nothing recorded for these filters."
+    },
+    "partner": {
+      "ranOut": "This offer has run out",
+      "answerWithin": "Answer within {h}h {m}m",
+      "accepted": "Accepted; the desk knows",
+      "declined": "Declined; the desk will offer it to someone else",
+      "accept": "Accept",
+      "decline": "Decline",
+      "why": "Why not?",
+      "whyPlaceholder": "Already driving that evening",
+      "sendDecline": "Decline",
+      "back": "Back",
+      "cannotAnswer": "That offer can no longer be answered.",
+      "replace": "Send a newer copy",
+      "replaced": "Sent; the desk will check it",
+      "newCopy": "The new copy",
+      "validUntil": "Valid until",
+      "send": "Send",
+      "replaceRefused": "Not sent: the new copy must be valid past today.",
+      "state": {
+        "offered": "Offered to you",
+        "accepted": "Yours",
+        "declined": "Declined",
+        "done": "Done"
+      },
+      "kind": {
+        "hire": "Car handover",
+        "transfer": "Transfer",
+        "dayOut": "Day out"
+      },
+      "people": "{count, plural, one {# person} other {# people}}",
+      "jobs": "Jobs",
+      "jobsBody": "Offers to answer first, then what you have taken on, then what is done.",
+      "offers": "Offers",
+      "noOffers": "No offers waiting.",
+      "upcoming": "Coming up",
+      "noUpcoming": "Nothing taken on yet.",
+      "done": "Done",
+      "schedule": "Schedule",
+      "scheduleBody": "The next two weeks, a day at a time.",
+      "today": "Today",
+      "free": "Free",
+      "earnings": "Earnings",
+      "earningsBody": "What you are owed and what has been paid. Pay for a job is held until the guest checks in.",
+      "paidThisMonth": "Paid this month",
+      "paidLastMonth": "Paid last month",
+      "dueNow": "Due to you",
+      "held": "Held",
+      "heldHint": "Until the guest checks in",
+      "payout": {
+        "held": "Held until check-in",
+        "due": "Due",
+        "paid": "Paid"
+      },
+      "noPayouts": "Nothing yet.",
+      "documents": "Documents",
+      "documentsBody": "The papers that let you work, soonest to run out first. Send a newer copy before one runs out.",
+      "doc": {
+        "licence": "Driving licence",
+        "insurance": "Insurance",
+        "permit": "Guide certification",
+        "id": "National ID",
+        "vehicleInspection": "Vehicle inspection"
+      },
+      "until": "Valid until {date}",
+      "daysLeft": "{count, plural, one {# day left} other {# days left}}",
+      "expiry": {
+        "valid": "Valid",
+        "expired": "Expired"
+      },
+      "carReturn": "Car return"
+    }
+  },
+  "account": {
+    "nav": {
+      "label": "Your account",
+      "overview": "Overview",
+      "trips": "Trips and bookings",
+      "renting": "Your rented home",
+      "viewings": "Viewings",
+      "payments": "Payments",
+      "saved": "Saved",
+      "notifications": "Notifications",
+      "settings": "Settings"
+    },
+    "overview": {
+      "hello": "Hello, {name}",
+      "next": "Next up",
+      "inDays": "{count, plural, =0 {Today} one {Tomorrow} other {In # days}}",
+      "underway": "Under way",
+      "checkInReady": "Check-in details are ready",
+      "checkInSoon": "Check-in details unlock {date}",
+      "viewBooking": "View booking",
+      "message": "Message the team",
+      "nothing": "Nothing booked yet. Homes, cars and days out are all a search away.",
+      "find": "Find a stay",
+      "latest": "Latest",
+      "seeAll": "See all",
+      "shortcuts": "Your account",
+      "rentDue": "Rent of {amount} due {date}",
+      "viewingOn": "Viewing on {date} at {time}"
+    },
+    "payments": {
+      "title": "Payments",
+      "intro": "Everything you've paid and been refunded, with a receipt for each booking.",
+      "date": "Date",
+      "what": "For",
+      "method": "Method",
+      "status": "Status",
+      "amount": "Amount",
+      "receipt": "Receipt",
+      "empty": "No payments yet.",
+      "totalPaid": "Paid this year",
+      "totalRefunded": "Refunded"
+    },
+    "renting": {
+      "title": "Your rented home",
+      "none": "You're not renting a home with us right now.",
+      "term": "{start} to {end}",
+      "depositHeld": "Deposit held: {amount}",
+      "schedule": "Rent",
+      "status": {
+        "paid": "Paid",
+        "due": "Due",
+        "overdue": "Overdue",
+        "upcoming": "Upcoming"
+      },
+      "pay": "Pay {amount}",
+      "paid": "Rent paid. A receipt is in your payments.",
+      "repairs": "Repairs",
+      "repairsBody": "Something broken? Tell us here and the team schedules a fix, at no cost to you unless it was caused by misuse.",
+      "newRepair": "Ask for a repair",
+      "repairTitle": "What needs fixing?",
+      "repairDetail": "Tell us more",
+      "priority": "How soon?",
+      "priorities": {
+        "urgent": "Urgent",
+        "normal": "This week",
+        "low": "When convenient"
+      },
+      "send": "Send request",
+      "sent": "Sent. The team will schedule it.",
+      "ticketStatus": {
+        "open": "Received",
+        "scheduled": "Scheduled",
+        "inProgress": "Being fixed",
+        "done": "Fixed"
+      },
+      "noRepairs": "No repairs requested.",
+      "documents": "Documents",
+      "docAgreement": "Rental agreement",
+      "docReceipts": "Receipts"
+    },
+    "viewings": {
+      "title": "Viewings",
+      "none": "No viewings booked. You can book one from any home for sale.",
+      "status": {
+        "requested": "Requested",
+        "confirmed": "Confirmed",
+        "rescheduled": "Moved",
+        "done": "Done",
+        "cancelled": "Cancelled"
+      },
+      "cancel": "Cancel viewing",
+      "move": "Choose another time",
+      "video": "By video",
+      "inPerson": "In person"
+    },
+    "settings": {
+      "title": "Settings",
+      "tabs": {
+        "label": "Settings",
+        "profile": "Profile",
+        "security": "Sign-in and security",
+        "payment": "Payment methods",
+        "notifications": "Notifications",
+        "preferences": "Preferences",
+        "privacy": "Privacy",
+        "id": "ID check"
+      },
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "verifyHint": "We will send a code to the new one before it counts.",
+      "codeSent": "A code is on its way to {to}",
+      "saved": "Saved",
+      "photo": "Photo",
+      "emergency": "Someone to call in an emergency",
+      "emergencyName": "Their name",
+      "emergencyPhone": "Their phone",
+      "save": "Save",
+      "checkFields": "Check the email and phone numbers.",
+      "password": "Password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "again": "New password again",
+      "passwordRule": "At least 8 characters, and not the same as now.",
+      "passwordMismatch": "The two new passwords are not the same.",
+      "changePassword": "Change password",
+      "passwordChanged": "Password changed",
+      "twoStep": "Two-step sign-in",
+      "twoStepBody": "A code to your phone as well as your password, every time you sign in on a new device.",
+      "twoStepOn": "Two-step sign-in is on",
+      "twoStepOff": "Two-step sign-in is off",
+      "sessions": "Where you are signed in",
+      "signOutOthers": "Sign out everywhere else",
+      "signedOutOthers": "Signed out everywhere else",
+      "thisDevice": "this device",
+      "signOut": "Sign out",
+      "signedOut": "Signed out",
+      "brand": {
+        "visa": "Visa",
+        "mastercard": "Mastercard",
+        "card": "Card"
+      },
+      "provider": {
+        "mtn": "MTN MoMo",
+        "airtel": "Airtel Money"
+      },
+      "expires": "Expires {date}",
+      "mobileMoney": "Mobile Money",
+      "default": "Default",
+      "defaultSet": "Default changed",
+      "makeDefault": "Make default",
+      "remove": "Remove",
+      "noMethods": "Nothing saved. You can add one here or at checkout.",
+      "addCard": "Add a card",
+      "addMomo": "Add Mobile Money",
+      "cardNumber": "Card number",
+      "expiry": "Expiry",
+      "nameOnCard": "Name on the card",
+      "momoNumber": "Mobile Money number",
+      "weKeep": "We keep the last four digits and the expiry, never the full number.",
+      "cancel": "Cancel",
+      "cardRefused": "That card number or expiry is not right.",
+      "momoRefused": "That is not an MTN or Airtel number.",
+      "added": "Added",
+      "removeTitle": "Remove this?",
+      "removeBody": "{what} will no longer be offered at checkout.",
+      "keep": "Keep it",
+      "removed": "Removed",
+      "deletedTitle": "Your account is closed",
+      "deletedBody": "We have signed you out. Receipts for past bookings are kept for as long as the law asks; everything else is gone.",
+      "toHome": "Back to HomeLink",
+      "download": "Download my data",
+      "downloadBody": "Your profile, bookings, payments and viewings, as a file you can keep.",
+      "downloadButton": "Download a copy",
+      "deleteTitle": "Delete my account",
+      "deleteBody": "This closes your account and signs you out. It cannot be undone.",
+      "typeWord": "Type {word} to confirm",
+      "deleteButton": "Delete my account",
+      "deleteBlocked": "You have a booking still to come ({reference}). Cancel it or wait until it is over, then delete the account.",
+      "deleteConfirmTitle": "Delete your account?",
+      "deleteConfirmBody": "Your account closes now and you are signed out.",
+      "deleteForever": "Delete it",
+      "deleteWord": "DELETE"
+    },
+    "id": {
+      "intro": "A photo of an ID and a selfie, checked once by a person on our team, so renting and some car hires do not ask you again.",
+      "status": {
+        "none": "Not checked yet",
+        "pending": "With our team",
+        "verified": "ID checked",
+        "retry": "We need another photo"
+      },
+      "statusBody": {
+        "none": "Send a photo of one document below.",
+        "pending": "We usually answer within a working day.",
+        "verified": "Nothing more to do. Renting and hires will not ask for it again.",
+        "retry": "The photo was blurred or cut off. Send it again in good light, with all four corners showing."
+      },
+      "previewCycle": "Preview: next status",
+      "sent": "Sent to our team",
+      "which": "Which document",
+      "doc": {
+        "nationalId": "National ID",
+        "passport": "Passport",
+        "drivingLicence": "Driving licence"
+      },
+      "front": "Front",
+      "back": "Back",
+      "selfie": "A selfie",
+      "selfieHint": "Your face, in good light, no sunglasses.",
+      "privacy": "Seen only by the team member who checks it, and deleted 30 days after the check.",
+      "send": "Send for checking"
+    }
+  },
+  "notifications": {
+    "kinds": {
+      "bookingConfirmed": {
+        "title": "Booking confirmed",
+        "body": "{name} is booked. Your reference is {ref}."
+      },
+      "paymentReceived": {
+        "title": "Payment received",
+        "body": "We received {amount} for {ref}."
+      },
+      "paymentFailed": {
+        "title": "Payment didn't go through",
+        "body": "The payment of {amount} for {ref} was declined. Nothing was charged."
+      },
+      "momoPending": {
+        "title": "Approve the payment on your phone",
+        "body": "A Mobile Money request for {amount} is waiting on your phone."
+      },
+      "checkInReady": {
+        "title": "Check-in details are ready",
+        "body": "Directions, door code and wifi for {name}, arriving {date}."
+      },
+      "rentDue": {
+        "title": "Rent due {date}",
+        "body": "{amount} for this month's rent is due on {date}."
+      },
+      "newMessage": {
+        "title": "New message from {from}",
+        "body": "{subject}"
+      },
+      "reviewRequest": {
+        "title": "How was {name}?",
+        "body": "Two minutes on what worked and what didn't helps the next guest."
+      },
+      "viewingConfirmed": {
+        "title": "Viewing confirmed",
+        "body": "{name}, {date}. Bring an ID."
+      },
+      "newBooking": {
+        "title": "New booking",
+        "body": "{guest} booked {name} ({ref})."
+      },
+      "arrivalToday": {
+        "title": "{count, plural, one {# arrival today} other {# arrivals today}}",
+        "body": "Check the Today board for times and keys."
+      },
+      "newAsk": {
+        "title": "New guest ask",
+        "body": "{guest}: “{ask}”"
+      },
+      "newIncident": {
+        "title": "Incident reported",
+        "body": "{category} at {name}."
+      },
+      "inspectionDue": {
+        "title": "Inspection due",
+        "body": "{name} is due a re-walk by {date}."
+      },
+      "jobOffered": {
+        "title": "New job offer",
+        "body": "{what} on {date}. Accept or decline before it expires."
+      },
+      "jobChanged": {
+        "title": "Job changed",
+        "body": "{what} on {date} has new details."
+      },
+      "payoutSent": {
+        "title": "Payout sent",
+        "body": "{amount} is on its way to your account."
+      },
+      "documentExpiring": {
+        "title": "Document expiring",
+        "body": "{doc} expires on {date}."
+      },
+      "viewingChanged": {
+        "title": "Viewing {state, select, moved {moved} done {done, thank you} cancelled {cancelled} other {updated}}",
+        "body": "{name}: {when}."
+      },
+      "jobAccepted": {
+        "title": "{name} took a job",
+        "body": "{what}, {date}."
+      }
+    },
+    "title": "Notifications",
+    "markAll": "Mark all as read",
+    "seeAll": "See all",
+    "all": "All",
+    "unread": "Unread",
+    "bell": "{count, plural, =0 {Notifications} one {Notifications, # unread} other {Notifications, # unread}}",
+    "empty": "Nothing yet. Bookings, payments and messages will show up here.",
+    "emptyUnread": "You're all caught up.",
+    "filterLabel": "Show",
+    "allCategories": "Everything",
+    "newCount": "{count} new",
+    "categories": {
+      "booking": "Bookings",
+      "payment": "Payments",
+      "message": "Messages",
+      "stay": "Stays",
+      "work": "Work",
+      "system": "Account"
+    },
+    "groups": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "earlier": "Earlier"
+    },
+    "prefs": {
+      "title": "Notification settings",
+      "intro": "Choose how each kind of news reaches you. In-app always keeps a copy in your notifications.",
+      "channels": {
+        "inApp": "In-app",
+        "email": "Email",
+        "sms": "SMS",
+        "whatsapp": "WhatsApp",
+        "push": "Phone"
+      },
+      "cellLabel": "{channel} for {kind}",
+      "locked": "Always on: this one needs you to act.",
+      "quietTitle": "Quiet hours",
+      "quietBody": "No SMS, WhatsApp or phone alerts between these times. Urgent payment problems still come through.",
+      "quietOn": "Use quiet hours",
+      "from": "From",
+      "to": "To",
+      "kigaliTime": "Kigali time",
+      "save": "Save settings",
+      "saving": "Saving…",
+      "saved": "Notification settings saved",
+      "pushTitle": "Notifications on this phone",
+      "pushBody": "Get a buzz when something needs you, even with HomeLink closed.",
+      "pushButton": "Turn on phone notifications",
+      "pushGranted": "On. This browser will show HomeLink notifications.",
+      "pushDenied": "Blocked in this browser. To change it, open the site settings from the padlock in the address bar.",
+      "pushUnsupported": "This browser cannot show notifications. Email, SMS and WhatsApp still work.",
+      "back": "All notifications",
+      "link": "Settings"
+    },
+    "categoriesKinds": {
+      "bookingConfirmed": "Booking confirmed",
+      "paymentReceived": "Payment received",
+      "paymentFailed": "Payment failed",
+      "momoPending": "Mobile Money waiting for approval",
+      "checkInReady": "Check-in details ready",
+      "rentDue": "Rent due",
+      "newMessage": "New message",
+      "reviewRequest": "Review request",
+      "viewingConfirmed": "Viewing confirmed",
+      "newBooking": "New booking",
+      "arrivalToday": "Arrivals today",
+      "newAsk": "New guest ask",
+      "newIncident": "Incident reported",
+      "inspectionDue": "Inspection due",
+      "jobOffered": "New job offer",
+      "jobChanged": "Job changed",
+      "payoutSent": "Payout sent",
+      "documentExpiring": "Document expiring",
+      "viewingChanged": "Viewing moved or done",
+      "jobAccepted": "Job accepted by a driver or guide"
+    }
+  },
+  "extras": {
+    "airportPickup": {
+      "name": "Airport pickup",
+      "body": "A driver meets you at arrivals with your name on a sign, any hour."
+    },
+    "earlyCheckIn": {
+      "name": "Early check-in",
+      "body": "In from 10:00 instead of 14:00, for an early flight."
+    },
+    "lateCheckout": {
+      "name": "Late checkout",
+      "body": "Leave at 16:00 instead of 11:00, for an evening flight."
+    },
+    "groceries": {
+      "name": "Groceries on arrival",
+      "body": "Bread, milk, eggs, fruit, coffee and water in the kitchen when you walk in."
+    },
+    "cot": {
+      "name": "Baby cot",
+      "body": "A travel cot made up with sheets. Free."
+    },
+    "midStayClean": {
+      "name": "Mid-stay clean",
+      "body": "A full clean and fresh towels and sheets, per visit."
+    },
+    "childSeat": {
+      "name": "Child seat",
+      "body": "Fitted before handover, for children up to 4 years. Per day."
+    },
+    "fullInsurance": {
+      "name": "Full insurance",
+      "body": "No excess to pay if the car is damaged. Per day."
+    }
+  },
+  "booking": {
+    "steps": {
+      "dates": "Dates",
+      "details": "Your details",
+      "extras": "Extras",
+      "review": "Review",
+      "pay": "Pay",
+      "driver": "Driver",
+      "people": "People",
+      "application": "Application",
+      "agreement": "Agreement"
+    },
+    "stepOf": "Step {current} of {total}",
+    "continue": "Continue",
+    "continueTo": "Continue to {step}",
+    "back": "Back",
+    "hold": {
+      "label": "Dates held for {time}",
+      "warn": "Dates held for {time}. Finish soon.",
+      "expiredTitle": "Your dates are no longer held",
+      "expiredBody": "We hold dates for 15 minutes while you book. Check they are still free and carry on where you left off; nothing you typed is lost.",
+      "checkAgain": "Check again and continue",
+      "checking": "Checking…",
+      "gone": "Someone else booked these dates in the meantime."
+    },
+    "summary": {
+      "title": "Your booking",
+      "change": "Change",
+      "show": "Show price details",
+      "hide": "Hide price details",
+      "total": "Total",
+      "free": "Free cancellation until {date}",
+      "noFree": "See the cancellation rules in the review step"
+    },
+    "details": {
+      "title": "Who's coming",
+      "haveAccount": "Booked with us before?",
+      "signIn": "Sign in",
+      "signInBody": "Your details fill in, and the booking lands in your trips.",
+      "orGuest": "Or carry on as a guest. You can create an account after you book.",
+      "contactTitle": "Contact details",
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "phoneHint": "We text you the check-in details. Add the country code if the number isn't Rwandan.",
+      "forSomeoneElse": "I'm booking for someone else",
+      "travellerName": "Traveller's full name",
+      "travellerHint": "We'll greet them by name and send them the check-in details too.",
+      "travellerError": "Enter the name of the person staying.",
+      "arrivalTitle": "Arrival",
+      "arrival": "Roughly when will you arrive?",
+      "arrivalNotSure": "Not sure yet",
+      "arrivalHint": "So someone is there with the keys. Check-in is from 14:00.",
+      "purpose": "What brings you to Kigali?",
+      "purposeLeisure": "A visit or holiday",
+      "purposeWork": "Work",
+      "requests": "Anything we should know?",
+      "requestsPlaceholder": "A cot, a ground-floor room, a late flight…",
+      "requestsCount": "{count} / 500"
+    },
+    "extras": {
+      "title": "Make arrival easier",
+      "body": "Each one is arranged by the Kigali team. You can also add them later from your booking.",
+      "add": "Add",
+      "added": "Added",
+      "remove": "Remove {name}",
+      "increase": "One more {name}",
+      "decrease": "One fewer {name}",
+      "perBooking": "per stay",
+      "perVisit": "per visit",
+      "perDay": "per day",
+      "free": "Free",
+      "none": "Nothing to add to this booking."
+    },
+    "review": {
+      "title": "Check everything",
+      "who": "Guest",
+      "travelling": "Travelling: {name}",
+      "when": "Dates",
+      "party": "Guests",
+      "extras": "Extras",
+      "none": "None",
+      "edit": "Edit",
+      "requests": "Your note",
+      "rulesTitle": "House rules",
+      "rulesAccept": "I've read the house rules and agree to them",
+      "rulesError": "Accept the house rules to continue.",
+      "cancelTitle": "If your plans change",
+      "cancelFull": "Full refund",
+      "cancelHalf": "Half the nights refunded, cleaning and extras in full",
+      "cancelNone": "No refund",
+      "cancelUntil": "Until {date}",
+      "cancelFrom": "From {date}",
+      "cancelCarFree": "Free cancellation",
+      "cancelCarOneDay": "One day's hire is kept",
+      "cancelDayFree": "Full refund",
+      "cancelDayNone": "No refund",
+      "cancelPermit": "Park permits are bought in your name and are never refundable.",
+      "promoLabel": "Promo code",
+      "promoApply": "Apply",
+      "promoRemove": "Remove",
+      "promoOk": "{code} applied, {amount} off",
+      "promoErrors": {
+        "unknown": "We don't recognise that code.",
+        "expired": "That code has expired.",
+        "notApplicable": "That code doesn't apply to this booking."
+      },
+      "rulesTitleCar": "Rules for the hire",
+      "rulesTitleDay": "Rules for the day",
+      "rulesAcceptOther": "I've read the rules and agree to them",
+      "cancelDayPermit": "Refund, less the park permits",
+      "people": "People",
+      "startsAt": "Starts at {time}"
+    },
+    "pay": {
+      "title": "Pay securely",
+      "planTitle": "When would you like to pay?",
+      "planFull": "Pay in full now",
+      "planFullBody": "{amount} today",
+      "planDeposit": "Pay 30% now",
+      "planDepositBody": "{now} today, {balance} on {date}",
+      "methodTitle": "Payment method",
+      "card": "Card",
+      "cardHint": "Visa, Mastercard",
+      "mobileMoney": "Mobile Money",
+      "mobileMoneyHint": "MTN or Airtel",
+      "bankTransfer": "Bank transfer",
+      "bankTransferHint": "For a long-term stay",
+      "momoProvider": "{provider} Mobile Money",
+      "momoUnknown": "MTN numbers start 078 or 079, Airtel 072 or 073.",
+      "payNow": "Pay {amount}",
+      "payDeposit": "Pay {amount} now",
+      "processing": "Processing…",
+      "secure": "Encrypted end to end. HomeLink never sees your full card number.",
+      "testHint": "Preview: nothing is charged. Card 4242 4242 4242 4242 succeeds, 4000 0000 0000 0002 is declined, 4000 0027 6000 3184 asks your bank. A Mobile Money number ending 0000 times out, 1111 is declined.",
+      "declinedTitle": "Your bank declined the payment",
+      "declinedBody": "Nothing was charged. Check the card details, try another card, or pay with Mobile Money.",
+      "agree": "By paying you agree to the house rules and the cancellation rules above."
+    },
+    "threeDs": {
+      "title": "Confirm with your bank",
+      "body": "Your bank sent a 6-digit code to the phone linked to this card.",
+      "code": "Code",
+      "codeError": "Enter the 6 digits.",
+      "confirm": "Confirm payment",
+      "cancel": "Cancel"
+    },
+    "momo": {
+      "waitTitle": "Approve the payment on your phone",
+      "waitBody": "We sent a payment request for {amount} to {number} on {provider} Mobile Money. Enter your PIN on the phone to approve it.",
+      "remaining": "{seconds, plural, one {# second left} other {# seconds left}}",
+      "approved": "I've approved it",
+      "other": "Use another number",
+      "timeoutTitle": "The request timed out",
+      "timeoutBody": "Your phone didn't confirm in time. Nothing was charged.",
+      "declinedTitle": "The payment was declined",
+      "declinedBody": "The request was declined on the phone. Nothing was charged.",
+      "tryAgain": "Send the request again"
+    },
+    "states": {
+      "datesTakenTitle": "These dates were just booked",
+      "datesTakenBody": "Someone else booked {name} for some of these nights while you were paying. Nothing was charged.",
+      "pickNewDates": "Choose other dates",
+      "priceChangedTitle": "The price has changed",
+      "priceChangedBody": "The total for this booking is now {next}. It was {previous}. Nothing has been charged.",
+      "payNew": "Continue with the new total",
+      "invalidTitle": "Something needs another look",
+      "invalidBody": "A detail in the booking didn't check out on our side. Go back through the steps; nothing was charged."
+    },
+    "booked": "Booked. Your reference is {ref}.",
+    "driver": {
+      "title": "How you'll travel",
+      "withDriverBody": "A HomeLink driver who knows the roads. Fuel and parking are on us.",
+      "selfDriveBody": "You drive. We check your licence again at handover.",
+      "licence": "Your driving licence",
+      "licenceHint": "A photo or PDF, up to 10 MB. International and Rwandan licences are both fine.",
+      "licenceError": "Add your licence to drive yourself.",
+      "pickupTitle": "Where should we meet you?",
+      "airport": "Kigali International Airport",
+      "hotel": "Your hotel",
+      "address": "An address",
+      "hotelName": "Hotel name",
+      "addressDetail": "Address or landmark",
+      "flight": "Flight number (optional)",
+      "flightHint": "We track it and wait if you land late.",
+      "flightError": "That doesn't look like a flight number. For example: WB464."
+    },
+    "days": "{count, plural, one {# day} other {# days}}",
+    "people": {
+      "title": "Who's coming",
+      "body": "Names as they are on a passport or ID. The guide checks them at the start.",
+      "slot": "Start time",
+      "fixedSlot": "Starts at {time}",
+      "person": "Person {n}",
+      "name": "Full name",
+      "age": "Age",
+      "ageError": "Must be at least {min} on the day.",
+      "nameError": "Enter this person's full name.",
+      "nationality": "Nationality",
+      "nationalityError": "Choose a nationality.",
+      "passport": "Passport or ID number",
+      "passportError": "Enter the passport or ID number.",
+      "permitNote": "The park issues a permit in each person's name, so we need their passport details. A permit can't be moved to someone else or refunded.",
+      "pickup": "Pickup point",
+      "pickupHint": "We meet you here. Need collecting from Kigali? Say so in the next step.",
+      "dietary": "Food allergies or diet",
+      "dietaryPlaceholder": "Vegetarian, no nuts…",
+      "other": "Other",
+      "choose": "Choose…",
+      "slotError": "Choose a start time."
+    },
+    "application": {
+      "title": "About you as a tenant",
+      "body": "The Kigali team reads every application. This is what they need to say yes quickly.",
+      "term": "Moving in {month}, for {count, plural, one {# month} other {# months}}",
+      "occupants": "How many people will live there?",
+      "employer": "Employer, school or organisation",
+      "employerHint": "Where you work or study in Kigali, or the organisation posting you here.",
+      "employerError": "Tell us where you work or study.",
+      "income": "Monthly income",
+      "incomeHint": "A band is enough. It stays between you and the Kigali team.",
+      "incomeBands": {
+        "under500k": "Under RWF 500,000",
+        "500kTo1m": "RWF 500,000 to 1 million",
+        "1mTo2m": "RWF 1 to 2 million",
+        "over2m": "Over RWF 2 million"
+      },
+      "incomeError": "Choose a band.",
+      "id": "Passport or national ID",
+      "idHint": "A photo of the page with your picture. Optional now; needed before you move in.",
+      "verifyIdLink": "Check your ID once on your account, and skip this next time"
+    },
+    "agreement": {
+      "title": "Rental agreement",
+      "body": "Read it to the end. It is the agreement you will hold a copy of.",
+      "heading": "Rental agreement for {home}",
+      "parties": "Between HomeLink Africa Ltd, managing the home for its owner, and {tenant}, the tenant.",
+      "clauseHome": "The home: {home}, {area}. Furnished as inspected and photographed by HomeLink.",
+      "clauseTerm": "The term: {count, plural, one {# month} other {# months}} from {start}. Either side may end it with two months' written notice after the first six months.",
+      "clauseRent": "Rent: {rent} a month, paid in advance by the 5th of each month, by card, Mobile Money or bank transfer.",
+      "clauseDeposit": "Deposit: {deposit}, held by HomeLink and returned within 14 days of moving out, less the cost of any damage beyond normal wear, itemised in writing.",
+      "clauseIncludes": "Included in the rent: {includes}. Electricity is on a prepaid meter in the tenant's name.",
+      "clauseCare": "The tenant keeps the home clean and reports anything broken within 48 hours through HomeLink; HomeLink repairs what is not the tenant's fault at its own cost.",
+      "clauseRules": "The house rules agreed at review are part of this agreement.",
+      "clauseLaw": "This agreement is governed by the laws of Rwanda.",
+      "scrollHint": "Scroll to the end to sign.",
+      "read": "I have read the whole agreement",
+      "sign": "Type your full name to sign",
+      "signHint": "It must match the name on your details: {name}.",
+      "signError": "The signature must match your name: {name}.",
+      "signed": "Signed by {name} on {date}"
+    },
+    "bank": {
+      "title": "Pay by bank transfer",
+      "body": "Transfer the amount below from any Rwandan or international bank. We confirm by email and SMS when it arrives, usually within one working day; your home is held until then.",
+      "accountName": "Account name",
+      "bank": "Bank",
+      "account": "Account number",
+      "swift": "SWIFT",
+      "reference": "Reference",
+      "referenceValue": "Your booking reference, shown on the next screen",
+      "placeholder": "Preview account details; not a real account.",
+      "confirm": "I'll make the transfer"
+    },
+    "rent": {
+      "stageFull": "Full refund if your application isn't accepted",
+      "stageFullWhen": "Before the agreement is countersigned",
+      "stageDeposit": "Deposit returned when you move out",
+      "stageDepositWhen": "Less any damage, itemised in writing",
+      "facts": "{count, plural, one {# month} other {# months}} from {month}"
+    },
+    "viewing": {
+      "title": "Book a viewing",
+      "intro": "Someone from the Kigali team shows you round and answers questions about the title, the area and the price. Nothing is charged.",
+      "how": "How would you like to see it?",
+      "inPerson": "In person",
+      "inPersonBody": "Meet us at the gate. About 45 minutes.",
+      "video": "By video",
+      "videoBody": "A live walk-through from wherever you are. We send the link the day before.",
+      "day": "Day",
+      "time": "Time (Kigali)",
+      "timeError": "Choose a time.",
+      "contact": "Your details",
+      "notes": "Anything you'd like us to prepare?",
+      "notesPlaceholder": "Questions about the title, a second visit with a surveyor…",
+      "submit": "Request this viewing",
+      "sending": "Sending…",
+      "doneTitle": "Viewing requested",
+      "doneBody": "{date} at {time}. The Kigali team confirms by message within a few hours.",
+      "bringPerson": "Bring an ID; the guard at the gate will ask for it.",
+      "bringVideo": "We send the video link by email and WhatsApp the day before.",
+      "seeViewings": "See your viewings",
+      "back": "Back to the home",
+      "button": "Book a viewing"
+    },
+    "record": {
+      "pendingTitle": "Your home is held until the transfer arrives",
+      "pendingBody": "Send {amount} to {account} at {bank}, with {ref} as the reference. We confirm by email and SMS, usually within one working day.",
+      "receipt": "Receipt",
+      "calendar": "Add to calendar",
+      "details": "Booking details",
+      "slot": "Starts at {time}",
+      "meet": "Meet at",
+      "price": "What you paid for",
+      "payments": "Payments",
+      "kinds": {
+        "full": "Paid in full",
+        "deposit": "Deposit",
+        "balance": "Balance",
+        "rent": "Rent",
+        "change": "Date change",
+        "refund": "Refund"
+      },
+      "status": {
+        "pending": "Waiting",
+        "succeeded": "Paid",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "rails": {
+        "card": "Card",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Bank transfer"
+      },
+      "balanceDue": "Balance of {amount} due on {date}",
+      "moveInTitle": "Moving in",
+      "moveInBody": "On the day, someone from the team walks through the home with you. These are done together and signed by both of you.",
+      "moveIn": {
+        "keys": "Keys and gate fobs handed over, counted",
+        "meters": "Water and electricity meters read and photographed",
+        "inventory": "Inventory of furniture and appliances checked",
+        "photos": "A photo of every room, before you unpack",
+        "contact": "Your property manager's number saved in your phone"
+      },
+      "receiptTitle": "Receipt {ref}",
+      "print": "Print or save as PDF",
+      "issued": "Issued {date}",
+      "billedTo": "Billed to",
+      "item": "Item",
+      "amount": "Amount",
+      "paid": "Paid",
+      "vatNote": "HomeLink Africa Ltd, Kigali, Rwanda. Prices include VAT where it applies. Preview receipt: no tax number yet."
+    },
+    "manage": {
+      "title": "Your booking",
+      "timeline": "What has happened",
+      "events": {
+        "placed": "Booked",
+        "paid": "Paid",
+        "datesChanged": "Dates changed",
+        "guestsAdded": "Guests changed",
+        "checkInReleased": "Check-in details sent",
+        "checkedIn": "Checked in",
+        "checkedOut": "Checked out",
+        "cancelled": "Cancelled",
+        "refunded": "Refunded",
+        "reviewed": "Reviewed",
+        "issueReported": "Problem reported",
+        "noteAdded": "Note from the team"
+      },
+      "actions": "Change your booking",
+      "changeDates": "Change dates",
+      "addGuests": "Change guests",
+      "cancel": "Cancel booking",
+      "extend": "Stay longer",
+      "report": "Report a problem",
+      "ask": "Ask for something",
+      "newDates": "New dates",
+      "arrive": "Arriving",
+      "leave": "Leaving",
+      "checking": "Checking…",
+      "costMore": "This costs {amount} more. It is charged to the card you paid with.",
+      "costLess": "This costs {amount} less. It goes back to the card you paid with.",
+      "costSame": "The price stays the same.",
+      "unavailable": "Those dates aren't free. Try others.",
+      "invalid": "Choose a later leaving date, from today on.",
+      "confirmChange": "Confirm the change",
+      "guests": "Guests",
+      "guestsMax": "This home sleeps {count}.",
+      "save": "Save",
+      "close": "Close",
+      "cancelTitle": "Cancel this booking?",
+      "cancelRefund": "You get {refund} back. {kept} is kept, under the rules you agreed to.",
+      "cancelRefundFull": "You get the full {refund} back.",
+      "cancelReason": "What changed?",
+      "reasons": {
+        "plansChanged": "My plans changed",
+        "foundElse": "I found somewhere else",
+        "travel": "My travel was cancelled",
+        "other": "Something else"
+      },
+      "keep": "Keep my booking",
+      "confirmCancel": "Cancel and refund {refund}",
+      "cancelledToast": "Cancelled. {refund} is on its way back.",
+      "checkInTitle": "Check-in details",
+      "checkInLocked": "Directions, the door code and wifi unlock {when}.",
+      "directions": "Getting there",
+      "doorCode": "Door code",
+      "wifi": "Wifi",
+      "manager": "Your property manager",
+      "emergency": "Emergency line, any hour",
+      "onlineTitle": "Check in online",
+      "onlineBody": "Send each adult's ID now and arrival is just a key handover.",
+      "onlineDone": "Checked in online for {names}.",
+      "adult": "Adult {n}",
+      "sendIds": "Send for check-in",
+      "reportTitle": "Report a problem",
+      "reportBody": "It goes straight to the team on duty. If it's urgent, also call the emergency line.",
+      "category": "What is it about?",
+      "categories": {
+        "power": "Power",
+        "water": "Water",
+        "internet": "Internet",
+        "cleanliness": "Cleanliness",
+        "safety": "Safety",
+        "noise": "Noise",
+        "other": "Something else"
+      },
+      "urgency": "How urgent?",
+      "urgencies": {
+        "now": "Right now",
+        "today": "Today",
+        "whenever": "When you can"
+      },
+      "describe": "What's happening?",
+      "photo": "A photo, if it helps",
+      "send": "Send to the team",
+      "reported": "Sent. The team on duty has it.",
+      "openIssues": "{count, plural, one {# problem reported} other {# problems reported}}",
+      "reviewTitle": "How was it?",
+      "reviewBody": "Two minutes on what worked and what didn't helps the next guest, and us.",
+      "aspects": {
+        "cleanliness": "Cleanliness",
+        "accuracy": "As described",
+        "checkIn": "Check-in",
+        "communication": "Communication",
+        "location": "Location",
+        "value": "Value"
+      },
+      "stars": "{count, plural, one {# star} other {# stars}} for {aspect}",
+      "reviewText": "In your own words",
+      "submitReview": "Post review",
+      "reviewed": "Thank you. Your review is on the listing.",
+      "bookAgain": "Book again",
+      "depositTitle": "Your deposit",
+      "depositHeld": "{amount} held since you moved in.",
+      "depositInspection": "The move-out walk-through is done; the deposit comes back within 14 days, less anything itemised.",
+      "depositReturned": "{amount} returned to your account.",
+      "whenReleased": "on {date} at 14:00",
+      "duringTitle": "During your stay"
+    }
+  },
+  "files": {
+    "choose": "Choose a file",
+    "drop": "or drop it here",
+    "type": "That kind of file can't be used here. Use a photo or a PDF.",
+    "size": "That file is too large. The limit is 10 MB.",
+    "remove": "Remove the file",
+    "note": "Kept on this device until we check it. Nothing is uploaded in this preview."
+  },
+  "cart": {
+    "planTitle": "Planning a full trip?",
+    "planBody": "Add a car and days out to this stay and pay once. Each part can still be changed or cancelled on its own.",
+    "planButton": "Plan a trip around this stay",
+    "add": "Add to trip",
+    "inTrip": "In your trip",
+    "added": "Added to your trip",
+    "pill": "Trip",
+    "pillLabel": "Your trip, {count, plural, one {# item} other {# items}}",
+    "title": "Your trip",
+    "intro": "Everything you're booking together, day by day. You pay once; each part keeps its own booking, so it can be changed or cancelled on its own.",
+    "empty": "Nothing in your trip yet. Add a stay, a car or a day out from its page.",
+    "browseStays": "Find a stay",
+    "issues": {
+      "staysOverlap": "These two stays overlap. Remove one or change its dates.",
+      "carOutsideStay": "This car is booked for days outside your stay. That's fine if you arrive early or leave late.",
+      "dayOutsideStay": "This day out falls on a day you have no stay booked.",
+      "inPast": "These dates have passed. Remove it and add it again with new dates."
+    },
+    "remove": "Remove {name}",
+    "booked": "Already booked",
+    "total": "Trip total",
+    "checkout": "Check out the whole trip",
+    "blocked": "Fix the items marked in red to check out.",
+    "suggestCarBody": "A car with a driver who meets you at the airport.",
+    "suggestDayBody": "Gorillas, Nyungwe, Lake Kivu or a walk through Kigali.",
+    "turnOff": "Book items one at a time instead",
+    "turnOffTitle": "Turn off the trip?",
+    "turnOffBody": "This empties your trip. Anything already booked stays booked.",
+    "turnOffConfirm": "Empty and turn off",
+    "keep": "Keep my trip",
+    "checkoutTitle": "Book your trip",
+    "stepItems": "Each part",
+    "stepItemsBody": "A few details only some parts need: who is on each day out, and a licence for a car you'll drive.",
+    "nothingNeeded": "Nothing else needed for this part.",
+    "reviewItems": "What you're booking",
+    "rulesAll": "I've read the rules for every part and agree to them",
+    "booked_toast": "Your trip is booked: {count, plural, one {# booking} other {# bookings}}.",
+    "failed": "Part of the trip couldn't be booked, so nothing was charged. {name}: those dates were just taken.",
+    "tripName": "Kigali, {month}",
+    "dayHeading": "{date}",
+    "trayClose": "Close",
+    "trayAlso": "Also in your trip: {count, plural, one {# more} other {# more}}",
+    "viewCount": "View trip ({count})",
+    "addTitle": "Add to this trip",
+    "addStay": "A place to stay",
+    "addCar": "A car",
+    "addDay": "A day out",
+    "addStayBody": "A home for these dates, or a night somewhere on the way.",
+    "addAnother": "Add another, on the same dates."
+  },
+  "auth": {
+    "or": "or",
+    "signInTitle": "Sign in",
+    "signInBody": "With your phone or your email. We text or email you a code; no password needed by phone.",
+    "noAccount": "New to HomeLink?",
+    "createOne": "Create an account",
+    "signInWith": "Sign in with",
+    "tab": {
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "phone": "Phone number",
+    "phoneInvalid": "Enter a phone number with at least 9 digits.",
+    "sendCode": "Send me a code",
+    "email": "Email",
+    "emailInvalid": "Enter an email address like name@example.com.",
+    "password": "Password",
+    "forgot": "Forgot it?",
+    "passwordShort": "At least 8 characters.",
+    "signIn": "Sign in",
+    "sendLink": "Email me a sign-in link instead",
+    "signUpTitle": "Create your account",
+    "signUpBody": "For your trips, messages with the team and receipts, in one place.",
+    "haveAccount": "Already have an account?",
+    "name": "Your name",
+    "phoneOrEmail": "Phone or email",
+    "contactInvalid": "Enter a phone number or an email address.",
+    "language": "Write to me in",
+    "terms": "I accept the <terms>terms</terms> and have read how we use my data in the <privacy>privacy notice</privacy>.",
+    "continue": "Continue",
+    "verifyTitle": "Enter the code",
+    "verifyBody": "We sent a 6-digit code to {to}.",
+    "verifyBodyNone": "We sent you a 6-digit code.",
+    "codeLabel": "Digit",
+    "wrongCode": "That code is not right. Check the message and try again, or ask for a new one.",
+    "verify": "Confirm",
+    "resendIn": "Send a new code in {s}s",
+    "resend": "Send a new code",
+    "resent": "A new code is on its way.",
+    "previewCode": "Preview: any code works except 000000.",
+    "forgotTitle": "Reset your password",
+    "forgotBody": "We will email you a link to choose a new one.",
+    "backToSignIn": "Back to sign in",
+    "sendReset": "Email me a link",
+    "checkTitle": "Check your email",
+    "checkBody": "We sent a sign-in link to {to}. It works once, for the next 15 minutes.",
+    "checkResetBody": "We sent a link to {to} to choose a new password. It works once, for the next 15 minutes.",
+    "checkHint": "Nothing there? Look in spam, or go back and check the address.",
+    "openLink": "Preview: open the link",
+    "workHere": "Work at HomeLink?",
+    "staffTitle": "Try the workspace",
+    "staffBody": "A preview tool, not a sign-in: pick the role to see the workspace as. Real staff accounts come with the backend.",
+    "google": "Continue with Google",
+    "apple": "Continue with Apple"
+  },
+  "help": {
+    "title": "Help",
+    "intro": "Short answers to what people ask us most. If yours is not here, the team answers within a working day.",
+    "search": "Search help",
+    "searchPlaceholder": "Search, for example \"cancel\" or \"deposit\"",
+    "noHits": "Nothing matches that.",
+    "askUs": "Ask the team",
+    "stillStuck": "Still stuck?",
+    "related": "Also in this section",
+    "categories": {
+      "booking": "Booking and paying",
+      "changing": "Changing and cancelling",
+      "stay": "Check-in and your stay",
+      "renting": "Renting a home",
+      "cars": "Cars and drivers",
+      "days": "Days out"
+    },
+    "articles": {
+      "how-to-book": {
+        "title": "How booking works",
+        "body": "Pick your dates, check the price, and go through four short steps: your details, any extras, the rules, then payment.\n\nWe hold the dates for {holdMinutes} minutes while you pay. Once payment goes through you get a reference starting HL- and a confirmation by email and in your account."
+      },
+      "ways-to-pay": {
+        "title": "Ways to pay",
+        "body": "You can pay by card (Visa or Mastercard) or by Mobile Money (MTN or Airtel). Prices are set in Rwandan francs; other currencies are shown at today's rate for guidance.\n\nFor some longer stays you can pay a deposit now and the rest closer to arrival. The checkout shows when that is offered."
+      },
+      "fees": {
+        "title": "What the price includes",
+        "body": "The price you see at checkout is the price you pay. It includes the nights, a cleaning fee of RWF {cleaning} for a stay, and a service fee of {feePercent}% of the nights.\n\nNothing is added at the end, and there is no booking fee on top."
+      },
+      "escrow": {
+        "title": "Why some payments are held",
+        "body": "For stays of RWF {escrowFrom} or more, we hold your payment until you have checked in. The home is only paid once you are inside and it is as described.\n\nIf it is not, tell us within the first day and we put it right or give the money back."
+      },
+      "cancel-stay": {
+        "title": "Cancelling a stay",
+        "body": "Cancel up to {stayDays} days before arrival and you get everything back.\n\nAfter that and up to the day before, you get half of what the nights cost, plus the cleaning fee and any extras, which were never used. On the day of arrival there is no refund."
+      },
+      "cancel-car-day": {
+        "title": "Cancelling a car or a day out",
+        "body": "A car can be cancelled for a full refund up to {carDays} days before pickup. After that, one day's hire is kept.\n\nA day out can be cancelled for a full refund up to {dayDays} days before. Park permits bought in your name cannot be resold, so their share is kept."
+      },
+      "change-dates": {
+        "title": "Changing your dates",
+        "body": "Open the booking in your account and choose new dates. You see the new price and the difference before you confirm.\n\nIf the new dates cost less, the difference comes back to you; if more, you pay the difference. Dates can only be moved before the booking begins."
+      },
+      "refund-timing": {
+        "title": "When a refund arrives",
+        "body": "We send refunds the same day. Mobile Money usually shows within minutes; cards take 5 to 10 working days, depending on your bank.\n\nYour booking shows each refund and when it was sent."
+      },
+      "check-in": {
+        "title": "Getting in",
+        "body": "Check-in is from {checkIn}. The address, the door code and the wi-fi arrive 48 hours before, in your booking and by message, never earlier.\n\nArriving late? Tell us your time in the booking and someone will be there, or the key box code will work whenever you arrive."
+      },
+      "something-wrong": {
+        "title": "Something is wrong during a stay",
+        "body": "Report it from your booking: choose what it is and how urgent. Something urgent (no power, no water, a lock) reaches the team at once, day or night.\n\nYou can also call the emergency line shown on the contact page while you are staying."
+      },
+      "extras": {
+        "title": "Airport pickup, early check-in and other extras",
+        "body": "Add extras while booking, or later from your booking. The team arranges each one and confirms it in your messages.\n\nExtras are refunded in full if you cancel before arrival."
+      },
+      "verified": {
+        "title": "What \"verified\" means",
+        "body": "Someone from our team has stood in every home, driven every car and been on every day out we list, against a checklist, and photographed it themselves.\n\nThe page shows who checked it and when."
+      },
+      "renting-how": {
+        "title": "How renting works",
+        "body": "Renting is for 12 or 24 months, starting on the 1st of a month. You apply with a few details and an ID; the team answers within two working days.\n\nYou pay the first month and the deposit to move in, then the rent each month."
+      },
+      "renting-deposit": {
+        "title": "The deposit",
+        "body": "The deposit is held for the whole tenancy and returned after you move out, once the home has been checked against the move-in record.\n\nIf anything is kept for repairs, you are told what and why, in writing, before the rest is sent."
+      },
+      "renting-repairs": {
+        "title": "Repairs while you rent",
+        "body": "Report repairs from your renting page. Urgent ones (water, power, security) are seen the same day; others are booked with you.\n\nYou are never charged for wear that comes with ordinary living."
+      },
+      "renting-moving-out": {
+        "title": "Moving out",
+        "body": "Tell us your moving-out date at least a month ahead. We book an inspection for that day, compare the home with how you received it, and return the deposit."
+      },
+      "car-with-driver": {
+        "title": "A car with a driver",
+        "body": "The driver meets you where you say, knows the roads and waits while you are out. Their meals and fuel are included in the price.\n\nYou see their name in your booking before the day."
+      },
+      "car-self-drive": {
+        "title": "Driving yourself",
+        "body": "You need a driving licence held for at least two years. Upload it while booking; the team checks it before pickup.\n\nOnly the drivers named on the booking may drive."
+      },
+      "car-pickup": {
+        "title": "Picking up and returning a car",
+        "body": "Pickup is where your booking says, often the airport. The car is shown with photos of any marks already there, and returned with the same fuel it left with."
+      },
+      "car-insurance": {
+        "title": "Insurance",
+        "body": "Every car carries third-party insurance. Full cover is an extra you can add while booking, and lowers what you pay if the car is damaged."
+      },
+      "day-what-to-bring": {
+        "title": "What to bring",
+        "body": "Each day out lists what to bring on its page: usually water, shoes you can walk in, and a layer for the hills.\n\nThe guide tells you the meeting point in your booking."
+      },
+      "day-permits": {
+        "title": "Park permits",
+        "body": "Some days need a park permit bought in each person's name, so the names and passport numbers are asked for while booking.\n\nPermits cannot be resold, so their share is not refunded if you cancel."
+      },
+      "day-group": {
+        "title": "Group sizes and ages",
+        "body": "Each day out shows the largest group and the youngest age allowed. The booking will not let you add more people than there is room for."
+      },
+      "day-weather": {
+        "title": "If the weather turns",
+        "body": "Days out go ahead in rain unless it is unsafe. If the guide or the park calls it off, you choose another day or get everything back."
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact us",
+    "intro": "Write to the team, or reach us on WhatsApp or by phone. We answer within a working day, and at once for anything urgent during a stay.",
+    "topic": "What is it about?",
+    "topics": {
+      "booking": "A booking",
+      "change": "Changing or cancelling",
+      "payment": "A payment",
+      "stay": "During my stay",
+      "renting": "Renting",
+      "other": "Something else"
+    },
+    "reference": "Booking reference (optional)",
+    "badReference": "That is not one of your bookings. Check the reference, or leave it empty.",
+    "message": "Your message",
+    "empty": "Write a message first.",
+    "send": "Send",
+    "sent": "Sent",
+    "sentBody": "The team will answer within a working day.",
+    "openThread": "Open the conversation",
+    "signInFirst": "Sign in so we can answer you and see your bookings.",
+    "signIn": "Sign in",
+    "whatsapp": "WhatsApp",
+    "whatsappHint": "Usually answered within the hour",
+    "call": "Call us",
+    "hours": "Every day, 07:00 to 22:00",
+    "emergencyTitle": "Staying at {home}? Emergency line",
+    "emergencyBody": "Any time, day or night, for anything urgent in the home."
+  },
+  "legal": {
+    "updated": "Last updated 8 November 2026",
+    "draft": "Draft wording for review. The final text will be supplied by our lawyers before launch.",
+    "help": "Help centre",
+    "terms": {
+      "title": "Terms of use",
+      "intro": "These terms cover booking homes, cars and days out with HomeLink Africa Ltd in Rwanda.",
+      "who": {
+        "title": "Who we are",
+        "body": "HomeLink Africa Ltd hosts every home it lists and arranges every car and day out with drivers and guides it has checked. You book with us, not with an owner."
+      },
+      "booking": {
+        "title": "Booking",
+        "body": "A booking is made when payment goes through and you receive a reference. The rules of the home, car or day out form part of it and are shown before you pay."
+      },
+      "paying": {
+        "title": "Paying",
+        "body": "Prices are set in Rwandan francs and include every fee: the nights, a RWF {cleaning} cleaning fee for a stay and a {feePercent}% service fee. Payments of RWF {escrowFrom} or more for a stay are held until you check in."
+      },
+      "verified": {
+        "title": "What we promise",
+        "body": "Everything we list has been inspected in person. If a home, car or day out is not what its page says, tell us within a day and we put it right or refund you."
+      },
+      "conduct": {
+        "title": "Your part",
+        "body": "Follow the house rules, leave the home as you found it, and tell us about damage. Only the people named on a booking may stay, drive or join."
+      },
+      "liability": {
+        "title": "Responsibility",
+        "body": "We are responsible for what we promise above. We are not responsible for losses beyond the price of the booking, except where the law says otherwise."
+      }
+    },
+    "privacy": {
+      "title": "Privacy notice",
+      "intro": "What we collect about you, why, and what you can ask us to do with it.",
+      "what": {
+        "title": "What we collect",
+        "body": "Your name and contact details, your bookings and payments, messages with the team, and an ID when renting or hiring a car needs one. Photos lose their location data on your device before they are sent."
+      },
+      "why": {
+        "title": "Why",
+        "body": "To make and run your bookings, to keep homes and people safe, and to meet the law on payments and tenancy. We do not sell your data."
+      },
+      "who": {
+        "title": "Who sees it",
+        "body": "The team running your booking, the driver or guide on it (only what they need), and the payment providers. Card numbers are never stored by us."
+      },
+      "keep": {
+        "title": "How long we keep it",
+        "body": "Receipts for as long as tax law asks. ID photos are deleted 30 days after they are checked. Everything else is deleted when you close your account."
+      },
+      "rights": {
+        "title": "Your rights",
+        "body": "You can download a copy of your data or close your account from your settings, and ask us to correct anything that is wrong."
+      },
+      "contact": {
+        "title": "Questions",
+        "body": "Write to us from the contact page, and the person responsible for data will answer."
+      }
+    },
+    "cancellation": {
+      "title": "Cancellation policy",
+      "intro": "What you get back if you cancel, by kind of booking. Your booking always shows the exact amount before you confirm.",
+      "stays": {
+        "title": "Stays",
+        "body": "Up to {stayDays} days before arrival: everything back.\n\nAfter that, up to the day before: half of the nights, plus the cleaning fee and extras in full. On the day of arrival: no refund."
+      },
+      "renting": {
+        "title": "Renting",
+        "body": "Before you move in, the first month and the deposit come back in full if you cancel at least 30 days ahead. Once you have moved in, the tenancy agreement sets out how to leave early."
+      },
+      "cars": {
+        "title": "Cars",
+        "body": "Up to {carDays} days before pickup: everything back. After that, one day's hire is kept and the rest comes back."
+      },
+      "days": {
+        "title": "Days out",
+        "body": "Up to {dayDays} days before: everything back. After that, no refund. Park permits bought in your name are never refunded, as they cannot be resold."
+      },
+      "ours": {
+        "title": "If we cancel",
+        "body": "If we have to cancel, you get everything back at once, and the team offers you something as good or better if there is one."
+      },
+      "how": {
+        "title": "How to cancel",
+        "body": "Open the booking in your account and choose Cancel. You see what comes back before you confirm, and the refund is sent the same day."
+      }
+    }
+  },
+  "reviews": {
+    "title": "{score} from {count, plural, one {# review} other {# reviews}}",
+    "titleNew": "Reviews",
+    "new": "New to HomeLink: {count, plural, =0 {no reviews yet} one {one review so far} other {# reviews so far}}. We show scores once three guests have stayed, so one opinion never stands for a place.",
+    "more": "Show more reviews",
+    "aspects": {
+      "cleanliness": "Cleanliness",
+      "accuracy": "As described",
+      "checkIn": "Check-in",
+      "communication": "Communication",
+      "location": "Location",
+      "value": "Value"
+    }
   }
 }

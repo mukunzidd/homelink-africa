@@ -16,12 +16,15 @@
     "trips": "Voyages",
     "messages": "Messages",
     "help": "Aide",
-    "inventory": "Vos annonces",
-    "queue": "File d'attente",
     "preferences": "Langue, devise et thème",
     "close": "Fermer",
     "yourScreens": "Vos écrans",
-    "messagesUnread": "Messages, avec des réponses non lues"
+    "messagesUnread": "Messages, avec des réponses non lues",
+    "myHomeLink": "Mon HomeLink",
+    "notifications": "Notifications",
+    "settings": "Paramètres",
+    "workspace": "Espace de travail",
+    "languageCurrency": "Langue et devise"
   },
   "nav": {
     "stays": "Séjours",
@@ -37,19 +40,19 @@
   },
   "landing": {
     "heroTitle": "Un logement prêt à votre arrivée",
-    "heroBody": "Chaque logement, voiture et guide sur HomeLink a été inspecté en personne par notre équipe à Kigali. S'il est ici, nous y sommes allés.",
+    "heroBody": "Chaque logement, voiture et guide sur HomeLink a été inspecté en personne par notre équipe à Kigali. S'il figure ici, c'est que nous y sommes allés.",
     "feedTitle": "Vérifiés à Kigali cette semaine",
     "feedBody": "Récemment inspectés et prêts à réserver.",
     "viewAll": "Voir tous les logements",
     "lanesTitle": "Ce que vous pouvez réserver",
     "lane": {
       "stays": "{count} logements à la nuit",
-      "homes": "{count} logements à louer",
+      "homes": "{count} logements au mois",
       "cars": "{count} véhicules, avec ou sans chauffeur",
-      "experiences": "{count} sorties avec des guides connus",
+      "experiences": "{count} excursions avec des guides identifiés",
       "buy": "{count} biens à vendre, titre vérifié"
     },
-    "smartTitle": "Demandez comme vous le feriez à un ami à Kigali",
+    "smartTitle": "Demandez comme vous le feriez à un ami de Kigali",
     "smartBody": "Tapez une phrase. La recherche repère le lieu, la taille, le budget et les dates, vous montre comment elle les a compris, et ne cherche que ce que notre équipe a inspecté.",
     "smartHint": "Appuyez sur ⌘K ou / depuis n’importe quelle page.",
     "placesTitle": "Les quartiers que nous connaissons",
@@ -59,15 +62,15 @@
     "howBody": "Trois promesses, chacune tenue par une personne et garantie par le logiciel.",
     "how": {
       "inspectTitle": "Quelqu’un est venu sur place",
-      "inspectBody": "Chaque logement est vérifié sur 34 points : pression de l’eau, secours électrique, accès routier, cuisine. Nous le photographions nous-mêmes.",
+      "inspectBody": "Chaque logement est vérifié sur 34 points : pression de l’eau, groupe électrogène, accès routier, cuisine. Nous le photographions nous-mêmes.",
       "escrowTitle": "Votre argent attend",
-      "escrowBody": "Le paiement est bloqué jusqu’à ce que vous confirmiez votre arrivée. Si le logement ne correspond pas, remboursement complet et un autre logement le soir même.",
+      "escrowBody": "Le paiement est bloqué jusqu’à ce que vous confirmiez votre arrivée. Si le logement ne correspond pas à la description, vous êtes intégralement remboursé et relogé le soir même.",
       "peopleTitle": "Une équipe à Kigali",
       "peopleBody": "Concierge, inspecteurs et guides que vous pouvez contacter par leur nom, avant et pendant votre séjour."
     },
-    "daysTitle": "Sorties",
+    "daysTitle": "Excursions",
     "daysBody": "Gorilles, lac, canopée et ville, avec des guides que nous connaissons personnellement.",
-    "daysAll": "Toutes les sorties"
+    "daysAll": "Toutes les excursions"
   },
   "search": {
     "where": "Où",
@@ -94,7 +97,7 @@
   "results": {
     "countWithDates": "{count, plural, one {# logement} other {# logements}} pour {range}",
     "countNoDates": "{count, plural, one {# logement vérifié} other {# logements vérifiés}} à Kigali",
-    "addDatesPrompt": "Ajoutez des dates pour voir les totaux et ce qui est réellement libre",
+    "addDatesPrompt": "Ajoutez des dates pour voir les totaux et ce qui est vraiment disponible",
     "addDatesAction": "Ajouter des dates",
     "sortLabel": "Trier",
     "sort": {
@@ -102,7 +105,7 @@
       "priceAsc": "Prix croissant",
       "priceDesc": "Prix décroissant",
       "newest": "Vérifiés récemment",
-      "size": "Plus de chambres"
+      "size": "Le plus de chambres"
     },
     "neighbourhood": "Quartier",
     "anyNeighbourhood": "Partout à Kigali",
@@ -111,7 +114,7 @@
     "bedroomsPlus": "{count}+",
     "totalFor": "au total pour {count, plural, one {# nuit} other {# nuits}}",
     "filtersHeading": "Affiner",
-    "activeFilters": "{count, plural, one {# filtre} other {# filtres}} actifs",
+    "activeFilters": "{count, plural, one {# filtre actif} other {# filtres actifs}}",
     "clearAll": "Tout effacer"
   },
   "gallery": {
@@ -121,41 +124,43 @@
     "previous": "Photo précédente",
     "next": "Photo suivante",
     "counter": "{current} sur {total}",
-    "placeholderNote": "Les photos sont réalisées pour chaque logement et ne sont pas encore intégrées. Ces panneaux remplacent la série réelle."
+    "placeholderNote": "Les photos sont réalisées pour chaque annonce et ne sont pas encore intégrées. Ces encadrés remplacent provisoirement les vraies photos."
   },
   "listing": {
     "perNight": "par nuit",
     "perMonth": "par mois",
     "perDay": "par jour",
     "bedrooms": "{count, plural, one {# chambre} other {# chambres}}",
-    "sleeps": "Couche {count}",
+    "sleeps": "Jusqu'à {count} personnes",
     "nightsTotal": "{count, plural, one {# nuit} other {# nuits}}",
     "save": "Enregistrer",
     "reserve": "Réserver",
     "seatCount": "{count, plural, one {# place} other {# places}}",
-    "durationHours": "{count, plural, one {# heure} other {# heures}}"
+    "durationHours": "{count, plural, one {# heure} other {# heures}}",
+    "minStay": "Séjours de {count} nuits minimum",
+    "tooShort": "Ce logement se réserve pour {count} nuits minimum. Choisissez une date de départ plus tardive."
   },
   "verification": {
     "badge": "Vérifié",
     "escrow": "Séquestre",
-    "escrowShort": "Retenu jusqu'à votre arrivée confirmée",
+    "escrowShort": "Bloqué jusqu'à la confirmation de votre arrivée",
     "title": "Vérifié par quelqu'un qui est allé sur place",
     "inspectedBy": "Inspecté par {name} le {date}",
     "openRecord": "Voir nos vérifications",
     "steps": {
       "inspected": "Inspecté en personne",
-      "inspectedBody": "Contrôlé selon une liste de 34 points : pression d'eau, groupe électrogène, accès routier et cuisine.",
+      "inspectedBody": "Contrôlé selon une liste de 34 points : pression de l'eau, groupe électrogène, accès routier et cuisine.",
       "photographed": "Photographié par nous",
       "photographedBody": "Chaque image ici a été prise par l'équipe HomeLink. Aucune photo fournie par le propriétaire n'apparaît sur une annonce vérifiée.",
       "identity": "Identité du propriétaire confirmée",
-      "identityBody": "Titre de propriété ou mandat de location vérifié avec la pièce d'identité nationale. Contrôles effectués avant tout versement.",
-      "escrow": "Votre argent est retenu",
-      "escrowBody": "Le paiement reste sous séquestre jusqu'à votre arrivée confirmée. Si le logement ne correspond pas, remboursement intégral et un autre logement le soir même."
+      "identityBody": "Titre de propriété ou mandat de location vérifié sur la carte d'identité nationale. Aucun versement n'est possible avant la fin de ces contrôles.",
+      "escrow": "Votre argent est bloqué",
+      "escrowBody": "Le paiement reste sous séquestre jusqu'à la confirmation de votre arrivée. Si le logement ne correspond pas à la description, vous êtes intégralement remboursé et relogé le soir même."
     },
     "kinds": {
       "car": {
         "inspectedBody": "Révisé, essayé sur route et contrôlé selon une liste de 22 points : pneus, freins, roue de secours, cric et papiers.",
-        "identityBody": "Propriété de l'exploitant et assurance vérifiées avec la carte grise avant toute location.",
+        "identityBody": "Propriété de l'exploitant et assurance vérifiées sur la carte grise avant toute location.",
         "photographedBody": "Photographié par l'équipe HomeLink. Chaque photo montre ce véhicule précis, pas une photo de catalogue du modèle.",
         "title": "Vérifiée par quelqu'un qui l'a conduite"
       },
@@ -167,12 +172,12 @@
       },
       "sale": {
         "title": "Vérifié par quelqu’un qui a parcouru la parcelle",
-        "inspectedBody": "Visité en entier selon une liste de 41 points : structure, toiture, eau, électricité, évacuation et accès routier.",
+        "inspectedBody": "Parcouru en entier selon une liste de 41 points : structure, toiture, eau, électricité, évacuation et accès routier.",
         "photographedBody": "Photographié par l’équipe HomeLink : ce bien, cette parcelle, pas un rendu.",
         "identityBody": "Titre vérifié auprès du registre foncier et pièce d’identité du vendeur contrôlée avant la mise en ligne."
       }
     },
-    "escrowShortSupply": "Retenu jusqu'à l'arrivée du voyageur"
+    "escrowShortSupply": "Bloqué jusqu'à l'arrivée du voyageur"
   },
   "trust": {
     "listingsVerified": "{count} annonces vérifiées",
@@ -187,8 +192,8 @@
     "paymentPending": "Paiement en attente",
     "fundsReleased": "Fonds versés",
     "cancelled": "Annulé",
-    "disputed": "Litige",
-    "lowAvailability": "{count, plural, one {# restant pour ces dates} other {# restants pour ces dates}}",
+    "disputed": "En litige",
+    "lowAvailability": "{count, plural, one {Plus que # pour ces dates} other {Plus que # pour ces dates}}",
     "active": "En cours",
     "completed": "Terminé"
   },
@@ -198,7 +203,7 @@
     "fibre": "Internet fibre",
     "furnished": "Meublé",
     "parking": "Parking",
-    "longTerm": "Bail long terme",
+    "longTerm": "Location longue durée",
     "selfDrive": "Sans chauffeur",
     "withDriver": "Avec chauffeur",
     "clear": "Effacer les filtres",
@@ -217,25 +222,25 @@
   "dev": {
     "label": "Aperçu en tant que",
     "role": "Rôle",
-    "note": "Développement uniquement. Les rôles sont simulés en attendant les comptes."
+    "note": "Développement uniquement. Les rôles sont simulés en attendant les comptes.",
+    "testNotification": "Envoyer une notification de test"
   },
   "roles": {
     "visitor": "Déconnecté",
     "guest": "Voyageur",
-    "host": "Hôte",
     "driver": "Chauffeur",
     "guide": "Guide",
-    "ops": "Équipe conciergerie",
+    "ops": "Conciergerie",
     "admin": "Administrateur"
   },
   "empty": {
     "noResults": "Rien ne correspond encore à ces filtres",
-    "noResultsBody": "Nous ne listons que ce que nous avons inspecté, les résultats sont donc plus restreints que prévu. Élargissez les dates ou retirez un filtre.",
-    "comingSoon": "Pas encore construit",
+    "noResultsBody": "Nous ne proposons que ce que nous avons inspecté : les résultats sont donc plus restreints que vous ne le pensez peut-être. Élargissez les dates ou retirez un filtre.",
+    "comingSoon": "Pas encore prêt",
     "comingSoonBody": "Cet écran fait partie de la structure mais n'a pas encore de contenu."
   },
   "amenities": {
-    "label": "Ce qu'il y a",
+    "label": "Sur place",
     "backupPower": "Groupe électrogène",
     "fibre": "Internet fibre",
     "furnished": "Meublé",
@@ -251,14 +256,14 @@
     "checkAvailability": "Vérifier la disponibilité",
     "unavailable": "Choisissez des dates pour voir le total",
     "nightlyFrom": "À partir de",
-    "monthlyFrom": "Long terme à partir de",
-    "leaseAvailable": "Disponible en bail long terme",
-    "leaseBody": "Douze mois ou plus passent par une demande de bail plutôt qu'une réservation à la nuit : documents, dépôt de garantie et contrat signé.",
-    "applyForLease": "Demander un bail",
-    "highlights": "Ce qui ressort",
-    "thingsToKnow": "À savoir",
+    "monthlyFrom": "Au mois, dès",
+    "leaseAvailable": "Disponible en location longue durée",
+    "leaseBody": "À partir de douze mois, il s'agit d'une demande de location et non d'une réservation à la nuit : documents, caution et contrat de location signé.",
+    "applyForLease": "Demander à louer",
+    "highlights": "Les points forts",
+    "thingsToKnow": "Bon à savoir",
     "houseRules": "Règlement intérieur",
-    "houseRulesBody": "Arrivée à partir de 14h00, départ avant 11h00. Pas de fêtes. Silence après 22h00, les voisins vous en remercieront.",
+    "houseRulesBody": "Arrivée à partir de 14 h, départ avant 11 h. Pas de fêtes. Silence après 22 h : les voisins vous en remercieront.",
     "cancellationTitle": "Annulation",
     "safetyTitle": "Sécurité et paiement",
     "inspectorRole": "Inspecteur HomeLink",
@@ -269,11 +274,13 @@
     "hostedBy": "Vérifié par",
     "lease": {
       "moveInTitle": "Emménagement",
-      "moveInBody": "Libre dès le {date}. Le bail dure au moins douze mois, à partir du mois choisi dans votre demande.",
-      "depositBody": "{deposit}, versés en caution et rendus à la fin du bail. Les conditions de caution arrivent avec le bail.",
+      "moveInBody": "Libre dès le {date}. La location dure au moins douze mois, à partir du mois choisi dans votre demande.",
+      "depositBody": "Caution de {deposit}, restituée à votre départ. Les conditions de caution figurent dans le contrat de location.",
       "viewingTitle": "La visite",
-      "viewingBody": "L’équipe de Kigali organise une visite et envoie le bail à lire avant. Rien n’est débité ici."
-    }
+      "viewingBody": "L’équipe de Kigali organise une visite et vous envoie le contrat de location à lire avant. Rien n’est débité ici."
+    },
+    "hostedByHomeLink": "Géré par HomeLink",
+    "managedBy": "{name} s'occupe de ce logement · dans l'équipe depuis {year}"
   },
   "quote": {
     "accommodation": "{rate} × {nights, plural, one {# nuit} other {# nuits}}",
@@ -282,7 +289,8 @@
     "total": "Total",
     "totalIn": "Total ({currency})",
     "chargedIn": "Débité en {currency}. Converti au taux du jour ; le montant débité est confirmé avant le paiement.",
-    "noHiddenFees": "Aucun frais de réservation n'est ajouté à la fin. C'est le prix."
+    "noHiddenFees": "Pas de frais de réservation ajoutés à la fin : c'est le prix final.",
+    "accommodationAvg": "{rate} en moyenne × {nights, plural, one {# nuit} other {# nuits}}"
   },
   "checkout": {
     "title": "Confirmer et payer",
@@ -298,8 +306,8 @@
     "yourStay": "Votre séjour",
     "changeDates": "Modifier",
     "guestsLabel": "Qui vient",
-    "guestsHelp": "Ce logement couche {max} personnes.",
-    "payWith": "Comment souhaitez-vous payer",
+    "guestsHelp": "Ce logement peut accueillir {max} personnes.",
+    "payWith": "Moyen de paiement",
     "card": "Carte",
     "cardHint": "Visa, Mastercard, Amex",
     "mobileMoney": "Mobile Money",
@@ -311,15 +319,15 @@
     "payNow": "Payer {amount}",
     "processing": "Paiement en cours…",
     "stubNotice": "Ceci est un aperçu. Rien ne vous sera débité.",
-    "escrowTitle": "Votre argent est retenu jusqu'à votre arrivée",
-    "escrowBody": "Nous retenons la totalité du montant et ne le versons à l'hôte qu'après confirmation de votre arrivée. Si le logement ne correspond pas, remboursement intégral et un autre logement le soir même.",
-    "noEscrowBody": "Ce séjour est en dessous de notre seuil de séquestre, le paiement est donc direct. La même garantie d'exactitude s'applique.",
+    "escrowTitle": "Votre argent reste remboursable jusqu'à votre entrée dans les lieux",
+    "escrowBody": "Nous conservons la totalité du montant et ne le considérons comme acquis qu'une fois que l'équipe a confirmé votre arrivée. Si le logement ne correspond pas à la description, vous êtes intégralement remboursé et nous vous trouvons un autre logement le soir même.",
+    "noEscrowBody": "Ce séjour est sous notre seuil de séquestre : le paiement est donc direct. La même garantie de conformité s'applique.",
     "cancellation": "Annulation gratuite jusqu'au {date}. Ensuite, la première nuit n'est pas remboursable.",
     "agree": "En payant, vous acceptez les conditions de réservation et la politique d'annulation ci-dessus.",
     "summaryTitle": {
       "stay": "Votre séjour",
       "car": "Votre voiture",
-      "experience": "Votre sortie"
+      "experience": "Votre excursion"
     },
     "kinds": {
       "car": {
@@ -327,9 +335,9 @@
         "guaranteeBody": "Révisée, essayée sur route et contrôlée le {date} selon notre liste de {points} points : pneus, freins, roue de secours, cric et papiers. Si la voiture ne correspond pas à sa fiche, vous ne la payez pas."
       },
       "experience": {
-        "guaranteeTitle": "{name}, de notre équipe, a fait cette sortie",
-        "guaranteeBody": "Faite en entier et contrôlée le {date} selon notre liste de {points} points : sécurité, horaires et ce qui est réellement inclus. Si la sortie ne correspond pas à sa fiche, vous ne la payez pas.",
-        "cancellation": "Si la sortie est annulée pour raison de sécurité, vous êtes remboursé intégralement."
+        "guaranteeTitle": "{name}, de notre équipe, a fait cette excursion",
+        "guaranteeBody": "Faite en entier et contrôlée le {date} selon notre liste de {points} points : sécurité, horaires et ce qui est réellement inclus. Si l'excursion ne correspond pas à sa fiche, vous ne la payez pas.",
+        "cancellation": "Si l'excursion est annulée pour raison de sécurité, vous êtes intégralement remboursé."
       }
     },
     "detailsTitle": "Vos coordonnées",
@@ -349,7 +357,7 @@
   },
   "confirmation": {
     "title": "C'est réservé",
-    "body": "Nous avons envoyé les détails par e-mail et ouvert une conversation avec l'équipe conciergerie.",
+    "body": "Nous avons envoyé les détails par e-mail et ouvert une conversation avec l'équipe de conciergerie.",
     "reference": "Référence de réservation",
     "referenceHint": "Citez-la si vous nous appelez ou nous écrivez.",
     "whatNext": "La suite",
@@ -359,7 +367,7 @@
     "openMessages": "Ouvrir la conversation",
     "viewBooking": "Voir la réservation",
     "arrangeTitle": "Besoin d'autre chose ?",
-    "arrangeBody": "Une voiture à l'aéroport, un chauffeur pour la semaine, une sortie qui en vaut la peine. Dites-le à l'équipe de Kigali et elle s'en occupe — pas de seconde réservation, pas de compte séparé.",
+    "arrangeBody": "Une voiture à l'aéroport, un chauffeur pour la semaine, une excursion qui en vaut la peine. Dites-le à l'équipe de Kigali et elle s'en occupe — sans deuxième réservation ni compte séparé.",
     "arrangeAction": "Écrire à l'équipe",
     "arrangeNote": "Elle reprendra contact environ une semaine avant votre arrivée, quand vous connaîtrez votre vol.",
     "viewListing": "Voir l'annonce",
@@ -369,7 +377,11 @@
   "quoteLines": {
     "hire": "{rate} × {days, plural, one {# jour} other {# jours}}",
     "driver": "Chauffeur",
-    "seats": "{rate} × {count, plural, one {# personne} other {# personnes}}"
+    "seats": "{rate} × {count, plural, one {# personne} other {# personnes}}",
+    "discount": "Code promo",
+    "free": "Gratuit",
+    "rent": "Loyer du premier mois",
+    "deposit": "Caution, {count, plural, one {# mois} other {# mois}} (restituée)"
   },
   "cars": {
     "title": "Voitures",
@@ -386,7 +398,7 @@
       "suv": "SUV",
       "minibus": "Minibus"
     },
-    "driveMode": "Comment vous conduirez",
+    "driveMode": "Mode de conduite",
     "selfDrive": "Sans chauffeur",
     "withDriver": "Avec chauffeur",
     "driverIncluded": "Chauffeur inclus",
@@ -404,15 +416,15 @@
     "thingsToKnow": "Bon à savoir",
     "paperworkTitle": "Permis et papiers",
     "paperworkSelfBody": "Apportez votre permis national, et un permis international si vous êtes de passage. Assurance, carte grise et triangle sont dans la boîte à gants.",
-    "paperworkDriverBody": "Rien à apporter. Le chauffeur détient le permis, l'assurance et les entrées de parc.",
+    "paperworkDriverBody": "Rien à apporter. Le chauffeur a le permis, l'assurance et les autorisations d'entrée dans les parcs.",
     "fuelTitle": "Carburant et kilométrage",
-    "fuelBody": "Remise pleine, rendue pleine. Pas de plafond kilométrique, et aucun supplément pour sortir de Kigali.",
+    "fuelBody": "Livrée avec le plein, rendue avec le plein. Pas de plafond kilométrique, et aucun supplément pour sortir de Kigali.",
     "cancellationTitle": "Annulation",
     "cancellationBody": "Annulation gratuite jusqu'au {date}. Ensuite, la première journée n'est pas remboursable."
   },
   "experiences": {
     "title": "Excursions",
-    "subtitle": "{count, plural, one {# sortie} other {# sorties}} avec des guides que nous connaissons par leur nom.",
+    "subtitle": "{count, plural, one {# excursion} other {# excursions}} avec des guides que nous connaissons par leur nom.",
     "perPerson": "par personne",
     "duration": "{count, plural, one {# heure} other {# heures}}",
     "minAge": "À partir de {age} ans",
@@ -429,19 +441,19 @@
       "lake": "Lac",
       "food": "Cuisine"
     },
-    "book": "Réserver cette sortie",
-    "about": "À propos de cette sortie",
+    "book": "Réserver cette excursion",
+    "about": "À propos de cette excursion",
     "backToExperiences": "Toutes les excursions",
     "peopleLabel": "Combien de personnes",
     "whenLabel": "Quel jour",
-    "ageNotice": "L'âge minimum pour cette sortie est de {age} ans.",
-    "guideRole": "Guide agréé. Pas un salarié HomeLink.",
+    "ageNotice": "L'âge minimum pour cette excursion est de {age} ans.",
+    "guideRole": "Guide agréé, non salarié de HomeLink.",
     "thingsToKnow": "Bon à savoir",
-    "bringTitle": "Ce qu'il faut prendre",
+    "bringTitle": "À emporter",
     "bringBody": "Des chaussures fermées, une veste de pluie, de l'eau. Le matériel spécifique est fourni et déjà compris dans le prix.",
     "ageTitle": "Âge minimum",
-    "weatherTitle": "La météo",
-    "weatherBody": "Ici la pluie tombe l'après-midi et annule rarement quoi que ce soit. Si une sortie est annulée pour raison de sécurité, elle est remboursée intégralement.",
+    "weatherTitle": "Météo",
+    "weatherBody": "Ici la pluie tombe l'après-midi et annule rarement quoi que ce soit. Si une excursion est annulée pour raison de sécurité, elle est intégralement remboursée.",
     "ageBody": "À partir de {age} ans. La limite est fixée par le parc ou l'opérateur, pas par nous, et elle est vérifiée au point de rendez-vous."
   },
   "searchPanel": {
@@ -452,14 +464,14 @@
     "whoLabel": "Voyageurs",
     "whoValue": "Combien",
     "search": "Rechercher",
-    "suggested": "Là où nous avons inspecté",
+    "suggested": "Là où nous avons inspecté des logements",
     "nearby": "À proximité",
     "nearbyHint": "Voir ce qui vous entoure",
     "anywhere": "Partout à Kigali",
-    "anywhereHint": "Tout ce où nous sommes allés",
+    "anywhereHint": "Tous les lieux que nous avons visités",
     "placesCount": "{count, plural, one {# logement vérifié} other {# logements vérifiés}}",
     "modeDates": "Dates précises",
-    "modeFlexible": "À peu près",
+    "modeFlexible": "Flexible",
     "howLong": "Combien de temps restez-vous ?",
     "weekend": "Un week-end",
     "week": "Une semaine",
@@ -467,7 +479,7 @@
     "longStay": "Plus longtemps",
     "goAnytime": "N'importe quand",
     "monthsUnit": "{count, plural, one {mois} other {mois}}",
-    "leaseNote": "Un an ou plus relève du bail, pas de la réservation à la nuit. Nous vous accompagnons pour les documents et le dépôt.",
+    "leaseNote": "Un an ou plus, c'est une location longue durée, pas une réservation à la nuit. Nous vous accompagnons pour les documents et la caution.",
     "adults": "Adultes",
     "adultsHint": "13 ans et plus",
     "children": "Enfants",
@@ -492,64 +504,72 @@
     "inspected": "Quelqu'un y est allé",
     "inspectedBody": "{name} a vérifié ce logement en personne le {date}, pas depuis un formulaire.",
     "escrow": "Votre argent attend",
-    "escrowBody": "Nous le retenons et ne le versons à l'hôte qu'une fois votre arrivée confirmée.",
-    "power": "Le courant tient",
-    "powerBody": "Groupe électrogène sur place, démarré et plein lors de l'inspection.",
+    "escrowBody": "Nous le conservons et ne le considérons comme acquis qu'une fois votre arrivée confirmée par l'équipe.",
+    "power": "Toujours du courant",
+    "powerBody": "Groupe électrogène sur place, démarré et le plein fait lors de l'inspection.",
     "fibre": "Une fibre qui marche",
     "fibreBody": "Débit testé sur place, pas repris d'une annonce.",
     "photos": "Nos propres photos",
     "photosBody": "Prises par notre équipe. Rien ne vient du téléphone du propriétaire.",
     "deposit": "Une caution qui vous revient",
-    "depositBody": "{deposit}, versés en caution et rendus à la fin du bail."
+    "depositBody": "Caution de {deposit}, restituée à votre départ."
   },
   "carHighlight": {
     "inspected": "Quelqu'un l'a conduite avant vous",
     "inspectedBody": "{name} a révisé et essayé cette voiture précise le {date}, sur une liste de {points} points.",
-    "driver": "Un chauffeur vient avec",
-    "driverBody": "Le tarif comprend quelqu'un qui roule sur ces routes depuis des années. Sur les pistes des parcs, ce n'est pas du luxe.",
+    "driver": "Chauffeur compris",
+    "driverBody": "Le tarif comprend un chauffeur qui connaît ces routes depuis des années. Sur les pistes des parcs, ce n'est pas du luxe.",
     "automatic": "Boîte automatique, sur ces collines",
     "automaticBody": "Kigali est bâtie sur des crêtes et la circulation s'arrête en pleine montée. Celle-ci passe les rapports pour vous.",
-    "unpaved": "Faite pour là où le bitume s'arrête",
-    "unpavedBody": "Garde au sol et quatre roues motrices, parce que la moitié des endroits qui valent le détour cessent d'être des routes.",
+    "unpaved": "Faite pour sortir du bitume",
+    "unpavedBody": "Garde au sol et quatre roues motrices, parce que la moitié des endroits qui valent le détour ne sont accessibles que par la piste.",
     "group": "Tout le monde tient dans un seul véhicule",
     "groupBody": "{count} places : personne ne suit dans une deuxième voiture, personne ne se perd.",
     "fleet": "Il y en a presque toujours une de libre",
-    "fleetBody": "{count} disponibles en ce moment : changer de dates vous coûte rarement la réservation."
+    "fleetBody": "{count} dans la flotte en ce moment : changer de dates vous fait rarement perdre la réservation."
   },
   "experienceHighlight": {
     "inspected": "L'un de nous a fait la journée entière",
-    "inspectedBody": "{name} a suivi cette sortie exacte le {date}, du début à la fin, avant sa mise en ligne.",
+    "inspectedBody": "{name} a fait cette excursion précise le {date}, du début à la fin, avant sa mise en ligne.",
     "permit": "Le permis, c'est notre affaire",
-    "permitBody": "Les permis des Volcans partent des mois à l'avance et se paient en dollars. Le vôtre est réservé, et il est déjà compris dans le prix.",
+    "permitBody": "Les permis du parc des Volcans s'épuisent des mois à l'avance et se paient en dollars. Le vôtre est réservé, et déjà compris dans le prix.",
     "halfDay": "De retour avant l'après-midi",
-    "halfDayBody": "{count} heures de porte à porte : cela tient d'un côté ou de l'autre d'une journée de travail.",
+    "halfDayBody": "{count} heures de porte à porte : elle se cale avant ou après une journée de travail.",
     "smallGroup": "Un petit groupe",
-    "smallGroupBody": "Plafonné à {count}. Vous ne suivez pas un fanion levé au milieu d'une foule.",
+    "smallGroupBody": "{count} personnes maximum. Vous ne suivez pas un fanion au milieu de la foule.",
     "food": "Le déjeuner est compris",
     "foodBody": "Cuisiné sur place par les gens qui y vivent, pas transporté depuis une cuisine de Kigali.",
     "fullDay": "C'est toute la journée",
-    "fullDayBody": "{count} heures avec le transport depuis Kigali à l'aller et au retour, pas un créneau autour duquel il faut construire sa journée."
+    "fullDayBody": "{count} heures avec le transport depuis Kigali à l'aller et au retour, pas un simple créneau autour duquel organiser votre journée."
   },
   "trips": {
     "title": "Vos voyages",
     "subtitle": "Tout ce que vous avez réservé chez nous, et la conversation qui va avec.",
     "comingUp": "À venir",
-    "earlier": "Précédemment",
+    "earlier": "Passés",
     "emptyBody": "Rien de réservé pour l'instant. Tout ce qui figure sur HomeLink a été inspecté en personne : il y en a donc moins que vous ne l'imaginez — et aucune mauvaise surprise à l'arrivée.",
     "browse": "Voir les logements vérifiés",
     "reference": "Réf.",
     "openThread": "Ouvrir la conversation",
     "noThread": "Aucun message",
     "partOf": "Fait partie de {name}",
-    "notYours": "Cet écran est celui de quelqu'un d'autre",
-    "notYoursBody": "Voyages regroupe vos propres réservations. Si vous proposez quelque chose à HomeLink, c'est dans Mon offre ; si vous êtes de l'équipe de Kigali, c'est dans La file."
+    "notYours": "Cet écran ne vous est pas destiné",
+    "notYoursBody": "Voyages regroupe vos propres réservations. Si vous proposez quelque chose à HomeLink, c'est dans Mon offre ; si vous êtes de l'équipe de Kigali, c'est dans La file.",
+    "tabs": {
+      "upcoming": "À venir",
+      "past": "Passées",
+      "cancelled": "Annulées"
+    },
+    "tabsLabel": "Quelles réservations",
+    "emptyPast": "Rien pour l'instant. Vos séjours, locations et excursions terminés apparaîtront ici, avec un avis à laisser.",
+    "emptyCancelled": "Aucune réservation annulée."
   },
   "inventory": {
     "metaTitle": "Votre offre",
     "title": {
       "stay": "Vos logements",
       "car": "Vos véhicules",
-      "experience": "Vos sorties"
+      "experience": "Vos excursions"
     },
     "subtitle": {
       "stay": "Ce que vous avez mis en ligne chez nous, ce qui est réservé, et quand l'argent vous parvient.",
@@ -558,7 +578,7 @@
     },
     "listed": "En ligne",
     "bookedNow": "À venir",
-    "dueToYou": "À vous revenir",
+    "dueToYou": "À recevoir",
     "nothingBooked": "Rien de réservé pour l'instant. Les réservations apparaissent ici dès qu'un voyageur paie.",
     "inspectedOn": "Inspecté le {date}",
     "unitsFree": "{count, plural, one {# libre} other {# libres}}",
@@ -568,12 +588,12 @@
     "moneyTitle": "Votre argent",
     "dueOnStart": "Dû à la date de début",
     "moneyNote": "Rien sur cet écran ne déplace d'argent. Les versements sont effectués par l'équipe de Kigali, et ces montants sont ceux sur lesquels elle travaille.",
-    "notYours": "Cet écran est celui de quelqu'un d'autre",
-    "notYoursBody": "Cette page est réservée aux hôtes, chauffeurs et guides. Si vous êtes voyageur, vos réservations sont dans Voyages.",
-    "ownershipNote": "Tout ce que HomeLink a vérifié dans cette catégorie. La répartition entre prestataires n'est pas encore modélisée : en V1, l'offre est mise en ligne par l'équipe concierge, il n'y a donc qu'un seul prestataire.",
+    "notYours": "Cet écran ne vous est pas destiné",
+    "notYoursBody": "Cet écran est réservé aux chauffeurs et aux guides. Si vous êtes voyageur, vos réservations sont dans Voyages.",
+    "ownershipNote": "Tout ce que HomeLink a vérifié dans cette catégorie. La répartition entre prestataires n'est pas encore modélisée : en V1, l'offre est mise en ligne par l'équipe de conciergerie, il n'y a donc qu'un seul prestataire.",
     "tabsLabel": "Sections",
     "tabs": {
-      "booked": "Réservé",
+      "booked": "Réservations",
       "listings": "En ligne",
       "money": "Argent"
     },
@@ -601,36 +621,89 @@
     "you": "Vous",
     "aboutBooking": "À propos de la réservation {reference}",
     "readAt": "Lu à {time}",
-    "delivered": "Remis",
+    "delivered": "Distribué",
     "replyLabel": "Écrire une réponse",
-    "replyPlaceholder": "Les réponses seront possibles dès l’ouverture de la messagerie",
+    "replyPlaceholder": "Écrire une réponse…",
     "attach": "Joindre une photo",
-    "attachLimits": "JPEG, PNG ou WebP, jusqu'à 15 Mo. Les données de localisation sont retirées avant tout stockage.",
+    "attachLimits": "JPEG, PNG ou WebP, jusqu'à 15 Mo, quatre par message. La localisation est retirée sur votre appareil avant l'envoi.",
     "subtitleFor": {
-      "guest": "Chaque fil est rattaché à quelque chose que vous avez réservé, avec l’équipe de Kigali ou la personne qui vous accueille.",
-      "supply": "Les fils sur les réservations de ce que vous proposez. L’équipe de Kigali participe à chacun.",
-      "ops": "Tous les fils auxquels l’équipe de Kigali participe, chacun rattaché à une réservation ou à un voyage."
+      "guest": "Chaque conversation est liée à l'une de vos réservations, avec l’équipe de Kigali ou la personne qui vous accueille.",
+      "supply": "Les conversations sur les réservations de ce que vous proposez. L’équipe de Kigali participe à chacune.",
+      "ops": "Toutes les conversations auxquelles l’équipe de Kigali participe, chacune liée à une réservation ou à un voyage."
     },
     "party": "{name} · {role}",
     "send": "Envoyer",
-    "sendOff": "L’envoi est désactivé jusqu’à l’ouverture de la messagerie"
+    "enterHint": "Entrée pour envoyer · Maj+Entrée pour aller à la ligne",
+    "sending": "Envoi…",
+    "sendFailed": "Le message n'est pas parti. Vérifiez votre connexion et réessayez.",
+    "tooLong": "Un message peut compter jusqu'à {max} caractères.",
+    "emoji": "Ajouter un émoji",
+    "emojiGroups": {
+      "recent": "Utilisés récemment",
+      "smileys": "Visages",
+      "people": "Mains et cœurs",
+      "travel": "Voyage et lieux",
+      "food": "Nourriture et boissons",
+      "objects": "Objets"
+    },
+    "photoUploading": "Envoi…",
+    "photoFailed": "Échec de l'envoi",
+    "removePhoto": "Retirer la photo",
+    "photoAlt": "Ce qu'elle montre",
+    "photoAltLabel": "Décrire la photo {n} (facultatif)",
+    "wrongType": "{name} n'est pas une photo JPEG, PNG ou WebP.",
+    "tooBig": "{name} dépasse 15 Mo.",
+    "tooMany": "{max} photos maximum par message.",
+    "dropHere": "Déposez les photos pour les joindre",
+    "openPhoto": "Ouvrir la photo en grand",
+    "photoFrom": "Photo de {name}",
+    "location": {
+      "button": "Lieu",
+      "title": "Partager un lieu",
+      "search": "Chercher un lieu ou une adresse",
+      "useMine": "Utiliser ma position",
+      "locating": "Localisation…",
+      "denied": "La localisation est bloquée pour ce site. Autorisez-la dans le navigateur, ou faites une recherche.",
+      "unavailable": "Votre appareil n'a pas pu vous localiser. Faites une recherche, ou déplacez la carte jusqu'au bon endroit.",
+      "streetHint": "{district}. Déplacez la carte jusqu'à ce que le repère soit sur la porte.",
+      "useTyped": "Utiliser « {text} » comme adresse",
+      "useTypedHint": "Puis déplacez la carte jusqu'au bon endroit.",
+      "noMatch": "Aucun lieu de ce nom ici. Utilisez-le comme adresse et déplacez la carte jusqu'au bon endroit.",
+      "mapHint": "Faites glisser la carte, ou touchez un point, pour placer le repère.",
+      "mapLabel": "Carte pour choisir un lieu",
+      "name": "Nom (facultatif)",
+      "namePlaceholder": "Gare routière de Nyabugogo",
+      "address": "Adresse ou indications (facultatif)",
+      "addressPlaceholder": "KG 7 Ave, le portail bleu",
+      "share": "Partager le lieu",
+      "cancel": "Annuler",
+      "kinds": {
+        "landmark": "Lieu",
+        "transport": "Gare routière ou aéroport",
+        "neighbourhood": "Quartier"
+      },
+      "dropped": "Lieu partagé",
+      "open": "Ouvrir dans Maps",
+      "directions": "Itinéraire",
+      "mapOf": "Carte de {name}, s'ouvre dans Google Maps"
+    }
   },
   "queue": {
     "title": "La file",
     "subtitle": "Ce qui attend d'être vérifié, ce qu'un voyageur a demandé à une personne, ce qui est dû aux prestataires, et qui attend une réponse.",
     "countVerify": "À vérifier",
-    "countAsks": "Demandes ouvertes",
-    "countReplies": "En attente de nous",
+    "countAsks": "Demandes en cours",
+    "countReplies": "En attente de réponse",
     "countOwed": "Dû aux prestataires",
     "lane": {
       "stay": "Logement",
       "car": "Voiture",
-      "experience": "Sortie"
+      "experience": "Excursion"
     },
     "verifyStatus": {
       "requested": "Pas encore planifié",
       "scheduled": "Visite planifiée",
-      "inspected": "Visité, pas en ligne",
+      "inspected": "Inspecté, hors ligne",
       "published": "En ligne"
     },
     "reinspection": "Nouvelle visite",
@@ -638,22 +711,22 @@
     "scheduled": "Visite",
     "inspector": "Inspecteur",
     "askStatus": {
-      "open": "Personne encore",
+      "open": "Non attribuée",
       "quoted": "Chiffré",
       "arranged": "Organisé",
       "declined": "Refusé"
     },
     "withWhom": "Suivi par",
     "payoutStatus": {
-      "held": "Retenu",
+      "held": "Bloqué",
       "due": "Dû",
       "paid": "Versé"
     },
-    "releasesOn": "Libéré le {date}",
+    "releasesOn": "Débloqué le {date}",
     "paidOn": "Versé le {date}",
     "readOnlyNote": "Aperçu : les actions sont désactivées.",
-    "notYours": "Cet écran est celui de l'équipe de Kigali",
-    "notYoursBody": "La file est l'outil de l'équipe concierge. Si vous avez réservé, c'est dans Voyages ; si vous proposez quelque chose, c'est dans Mon offre.",
+    "notYours": "Cet écran est réservé à l'équipe de Kigali",
+    "notYoursBody": "La file est l'outil de l'équipe de conciergerie. Si vous avez réservé, c'est dans Voyages ; si vous proposez quelque chose, c'est dans Mon offre.",
     "tabsLabel": "Sections de la file",
     "tabs": {
       "verify": "Vérification",
@@ -661,13 +734,13 @@
       "payouts": "Versements",
       "threads": "Conversations"
     },
-    "openOnly": "En attente de quelqu'un",
+    "openOnly": "À prendre en charge",
     "empty": "Rien ici.",
     "emptyOpen": "Rien en attente. Tout a été traité dans cette section.",
     "note": {
       "verify": "Rien ne passe en ligne sans que quelqu'un y soit allé. Ce qui n'a pas encore de visite planifiée est en haut.",
-      "asks": "Chaque bouton « écrire à l'équipe » d'une confirmation arrive ici comme une tâche humaine. Une liste longue est l'argument pour intégrer l'une de ces demandes au tunnel de réservation.",
-      "payouts": "Le même séquestre que le voyageur lit comme une sécurité, vu de l'intérieur comme une tâche. L'argent retenu attend une arrivée confirmée.",
+      "asks": "Chaque bouton « Écrire à l'équipe » d'une confirmation arrive ici comme une tâche à confier à quelqu'un. Une longue liste plaide pour intégrer l'une de ces demandes au tunnel de réservation.",
+      "payouts": "Le même séquestre que le voyageur perçoit comme une sécurité, vu de l'intérieur comme une tâche. L'argent bloqué attend la confirmation d'une arrivée.",
       "threads": "Toutes les conversations de l'équipe. Un point plein signale quelqu'un qui nous attend."
     },
     "tabCount": "{open} sur {total}",
@@ -699,13 +772,13 @@
       "amount": "Montant",
       "recipient": "Bénéficiaire",
       "why": {
-        "held": "Pourquoi il est retenu",
+        "held": "Pourquoi il est bloqué",
         "due": "Date de versement",
         "paid": "Date du versement"
       },
       "because": {
         "held": "Bloqué sous séquestre jusqu’à ce que le voyageur confirme son arrivée, prévue le {date}.",
-        "due": "Versé le {date}, jour où commence la réservation.",
+        "due": "Sera versé le {date}, jour du début de la réservation.",
         "paid": "Versé le {date}."
       },
       "action": {
@@ -730,18 +803,18 @@
     "label": "Pages",
     "range": "{from}–{to} sur {total}",
     "pageOf": "{page} / {pages}",
-    "previous": "Retour",
-    "next": "Suite"
+    "previous": "Précédent",
+    "next": "Suivant"
   },
   "owner": {
-    "label": "Votre côté de cette annonce",
+    "label": "Votre annonce, côté prestataire",
     "title": {
       "stay": "Celle-ci est à vous",
       "car": "Celui-ci est à vous",
       "experience": "Celle-ci est à vous"
     },
     "bookedNow": "Réservé",
-    "coming": "À vous revenir",
+    "coming": "À recevoir",
     "free": "Libre",
     "dueForRewalk": "Nouvelle visite à prévoir",
     "rewalkNote": "bientôt un an, elle est donc dans la file de vérification.",
@@ -749,22 +822,26 @@
     "askToChange": "Demander une modification à l'équipe",
     "changesNote": "Pour l'instant, les tarifs, les photos et les disponibilités sont modifiés par l'équipe de Kigali. Écrivez-leur et c'est fait le jour même.",
     "groupCap": "Groupe max.",
-    "freeFrom": "Libre à partir du"
+    "freeFrom": "Libre à partir du",
+    "adminLabel": "Cette annonce, vue depuis l'espace de travail",
+    "adminTitle": "C'est vous qui gérez cette annonce",
+    "editInWorkspace": "Modifier dans l'espace de travail",
+    "adminNote": "Les modifications faites dans l'espace de travail apparaissent ici dès leur enregistrement."
   },
   "smart": {
     "title": "Recherche intelligente",
     "open": "Ouvrir la recherche intelligente",
     "trigger": "Recherche intelligente",
-    "placeholder": "Essayez « 2 chambres à Kimihurura sous 150 $ »",
+    "placeholder": "Essayez « 2 chambres à Kimihurura à moins de 150 $ »",
     "close": "Fermer",
     "clear": "Effacer",
     "heroButton": "Rechercher",
-    "example1": "2 chambres à Kimihurura avec groupe électrogène sous 150 $",
+    "example1": "2 chambres à Kimihurura avec groupe électrogène à moins de 150 $",
     "example1Short": "2 chambres à Kimihurura",
-    "example2": "Près du centre de convention la semaine prochaine pour 2",
-    "example2Short": "Près du centre de convention",
-    "example3": "Maison avec jardin pour 6 personnes",
-    "example3Short": "Maison avec jardin",
+    "example2": "Près du centre de congrès la semaine prochaine pour 2",
+    "example2Short": "Près du centre de congrès",
+    "example3": "Maison familiale avec jardin pour 6 personnes",
+    "example3Short": "Maison familiale avec jardin",
     "example4": "Voiture avec chauffeur pour 7",
     "example4Short": "Voiture avec chauffeur",
     "understood": "Compris comme",
@@ -773,22 +850,22 @@
     "groupPlaces": "Quartiers",
     "groupStays": "Séjours",
     "groupCars": "Voitures",
-    "groupExperiences": "Sorties",
+    "groupExperiences": "Excursions",
     "placeCount": "{count, plural, one {# logement} other {# logements}}",
     "seeAll": {
       "stays": "Voir tous les séjours correspondants",
       "cars": "Voir toutes les voitures correspondantes",
-      "experiences": "Voir toutes les sorties correspondantes",
+      "experiences": "Voir toutes les excursions correspondantes",
       "buy": "Voir tous les biens à vendre correspondants"
     },
     "perPerson": "par personne",
     "nothingTitle": "Rien de ce que nous avons inspecté ne correspond",
-    "nothingBody": "Nous ne listons que ce que notre équipe a visité. Essayez moins de mots, un quartier ou un budget.",
+    "nothingBody": "Nous ne proposons que ce que notre équipe a visité. Essayez moins de mots, un quartier ou un budget.",
     "relaxed": "Rien ne correspondait à tout : voici les plus proches, sans {what}.",
     "relaxedTitle": "Aucune correspondance exacte.",
-    "relaxedBody": "Voici les logements les plus proches, sans {what}. Retirez un filtre ci-dessus pour élargir vous-même.",
+    "relaxedBody": "Voici les logements les plus proches, sans {what}. Retirez un filtre ci-dessus pour élargir vous-même la recherche.",
     "relax": {
-      "text": "les mots en plus",
+      "text": "les mots supplémentaires",
       "maxPrice": "la limite de prix",
       "amenities": "tous les équipements",
       "bedrooms": "le nombre de chambres",
@@ -804,10 +881,10 @@
     "lane": {
       "stays": "Séjours",
       "cars": "Voitures",
-      "experiences": "Sorties",
+      "experiences": "Excursions",
       "buy": "À vendre"
     },
-    "chipNear": "{place}, près de : {landmark}",
+    "chipNear": "{place}, côté {landmark}",
     "chipTyped": "{place} (vous avez tapé « {typed} »)",
     "chipBedrooms": "{count}+ chambres",
     "chipParty": "{count, plural, one {# voyageur} other {# voyageurs}}",
@@ -823,7 +900,7 @@
       "selfDrive": "Sans chauffeur"
     },
     "landmark": {
-      "conventionCentre": "centre de convention",
+      "conventionCentre": "centre de congrès",
       "stadium": "stade",
       "golf": "golf",
       "embassies": "ambassades",
@@ -846,35 +923,36 @@
     "forNights": "{count, plural, one {pour # nuit} other {pour # nuits}}",
     "forDays": "{count, plural, one {pour # jour} other {pour # jours}}",
     "exampleRent": "3 chambres à louer à Kacyiru dès janvier",
-    "exampleBuy": "Maison à acheter à Gacuriro sous 300 millions",
+    "exampleBuy": "Maison à acheter à Gacuriro à moins de 300 millions",
     "exampleCar1": "Automatique sans chauffeur pour le week-end",
     "exampleCar2": "Minibus avec chauffeur pour 10 personnes",
     "exampleDay1": "Gorilles la semaine prochaine pour 2",
     "exampleDay2": "Une journée sur le lac ce samedi",
-    "exampleDay3": "Une balade en ville avec à manger",
+    "exampleDay3": "Une balade gourmande en ville",
     "placeholderLane": {
       "cars": "Essayez « automatique pour le week-end »",
       "experiences": "Essayez « gorilles la semaine prochaine pour 2 »"
-    }
+    },
+    "groupBookings": "Réservations"
   },
   "saved": {
     "title": "Favoris",
-    "subtitle": "Les lieux que vous avez aimés, gardés sur cet appareil en attendant les comptes.",
+    "subtitle": "Ce que vous avez mis en favori, gardé sur cet appareil en attendant les comptes.",
     "save": "Enregistrer",
     "saved": "Enregistré",
     "remove": "Retirer des favoris",
     "saveNamed": "Enregistrer {name}",
     "removeNamed": "Retirer {name} des favoris",
     "link": "Favoris",
-    "linkCount": "Favoris, {count, plural, one {# lieu} other {# lieux}}",
+    "linkCount": "Favoris, {count, plural, one {# élément} other {# éléments}}",
     "emptyTitle": "Aucun favori pour l’instant",
-    "emptyBody": "Touchez le cœur d’un séjour, d’une voiture ou d’une sortie : il vous attendra ici.",
+    "emptyBody": "Touchez le cœur d’un séjour, d’une voiture ou d’une excursion pour le retrouver ici.",
     "browse": "Voir les séjours",
-    "ask": "Demander à la recherche",
+    "ask": "Essayer la recherche",
     "kind": {
       "stay": "Séjour",
       "car": "Voiture",
-      "experience": "Sortie",
+      "experience": "Excursion",
       "sale": "À vendre"
     }
   },
@@ -882,14 +960,16 @@
     "zoomIn": "Zoomer",
     "zoomOut": "Dézoomer",
     "resultsLabel": "Carte de {count, plural, one {# résultat} other {# résultats}}",
+    "areaPinLabel": "{count} dès {price}",
+    "areaPinTitle": "{area} : {count, plural, one {# logement} other {# logements}} dès {price}",
     "list": "Liste",
     "map": "Carte",
     "showMap": "Voir sur la carte",
     "whereTitle": "Où vous serez",
     "areaLabel": "Zone approximative à {place}",
-    "areaNote": "Le cercle indique la rue, pas la porte : l’adresse exacte arrive avec votre réservation.",
+    "areaNote": "Le cercle indique le quartier, pas la rue : l’adresse exacte vous est communiquée à la réservation.",
     "contributors": "contributeurs",
-    "areaNoteLease": "Le cercle indique la rue, pas la porte. L’adresse exacte arrive avec l’horaire de visite."
+    "areaNoteLease": "Le cercle indique le quartier, pas la rue. L’adresse exacte vous est communiquée avec l’horaire de visite."
   },
   "share": {
     "share": "Partager",
@@ -897,13 +977,13 @@
     "copyPrompt": "Copiez ce lien"
   },
   "places": {
-    "Gacuriro": "Résidences sécurisées sur la crête nord, prisées des familles en poste longue durée.",
-    "Gikondo": "Rues plus anciennes et calmes, avec de vrais jardins, à deux pas du centre.",
+    "Gacuriro": "Résidences sécurisées sur la crête nord, prisées des familles en mission de longue durée.",
+    "Gikondo": "Rues plus anciennes et calmes, avec de vraies cours, à quelques minutes du centre.",
     "Kacyiru": "Ambassades et ministères, larges trottoirs et soirées tranquilles.",
     "Kibagabaga": "Résidentiel et verdoyant, près du marché de Kimironko.",
     "Kicukiro": "À quinze minutes de l’aéroport, et d’un bon rapport qualité-prix.",
-    "Kimihurura": "Les restaurants de la KG 5, le centre de convention et la vue sur les collines.",
-    "Kiyovu": "L’ancien centre : central, praticable à pied et calme le soir.",
+    "Kimihurura": "Les restaurants de la KG 5, le centre de congrès et la vue sur les collines.",
+    "Kiyovu": "L’ancien centre : central, agréable à pied et calme le soir.",
     "Nyamirambo": "La rue la plus animée de Kigali : café, musique et couleurs.",
     "Nyarutarama": "Grandes maisons près du golf et de la route du lac.",
     "Rebero": "La crête la plus haute du sud, avec toute la ville en contrebas.",
@@ -914,7 +994,7 @@
     "yours": "Votre voyage",
     "saved": "Favoris",
     "kigali": "Quartiers",
-    "promise": "Si c’est listé ici, quelqu’un de notre équipe l’a visité, conduit ou parcouru.",
+    "promise": "Tout ce qui figure ici a été visité, conduit ou parcouru par quelqu'un de notre équipe.",
     "rights": "© {year} HomeLink Africa. Kigali, Rwanda.",
     "prices": "Les prix sont fixés en RWF et affichés dans votre devise au taux du jour.",
     "stayLink": "Séjourner",
@@ -922,7 +1002,14 @@
     "buyLink": "Acheter",
     "allNeighbourhoods": "Tous les quartiers",
     "yoursSupply": "Vos annonces",
-    "yoursOps": "Votre travail"
+    "yoursOps": "Votre travail",
+    "helpTitle": "Aide",
+    "help": "Centre d'aide",
+    "contact": "Nous contacter",
+    "cancellation": "Politique d'annulation",
+    "terms": "Conditions",
+    "privacy": "Confidentialité",
+    "languages": "Langues"
   },
   "homes": {
     "modeLabel": "Pour combien de temps",
@@ -934,7 +1021,7 @@
     "modeUnit": {
       "stay": "À la nuit",
       "rent": "Au mois",
-      "buy": "Pour posséder"
+      "buy": "À l'achat"
     },
     "modeHint": {
       "stay": "{count} à la nuit",
@@ -948,7 +1035,7 @@
     "rent": "Louer",
     "buy": "Acheter",
     "cars": "Voitures",
-    "experiences": "Sorties",
+    "experiences": "Excursions",
     "book": "Réserver",
     "booking": "Réservation",
     "trips": "Voyages",
@@ -956,9 +1043,9 @@
   },
   "sale": {
     "metaTitle": "Maisons à vendre à Kigali",
-    "count": "{count, plural, one {# logement vérifié à vendre} other {# logements vérifiés à vendre}} à Kigali",
-    "subtitle": "Visités par notre équipe, titre vérifié auprès du registre foncier avant la mise en ligne.",
-    "emptyBody": "Nous ne listons que les biens dont nous avons vérifié les papiers. Essayez un autre quartier ou un budget plus élevé.",
+    "count": "{count, plural, one {# bien vérifié à vendre} other {# biens vérifiés à vendre}} à Kigali",
+    "subtitle": "Parcourus par notre équipe, titre vérifié auprès du registre foncier avant la mise en vente.",
+    "emptyBody": "Nous ne proposons que les biens dont nous avons vérifié les papiers : il y en a donc moins qu'ailleurs. Essayez un autre quartier ou un budget plus élevé.",
     "bathrooms": "{count, plural, one {# salle de bain} other {# salles de bain}}",
     "floor": "{sqm} m²",
     "plot": "terrain de {sqm} m²",
@@ -973,7 +1060,7 @@
       "apartment": "Appartement",
       "townhouse": "Maison de ville"
     },
-    "maxPlaceholder": "Prix max, ex. 200M",
+    "maxPlaceholder": "Prix max, ex. 200 M",
     "sort": {
       "recommended": "Plus récents",
       "size": "Plus grande surface"
@@ -984,17 +1071,17 @@
     "plotLabel": "Terrain",
     "listedLabel": "Mis en vente",
     "about": "À propos de ce bien",
-    "areaNote": "Le cercle indique la rue, pas le portail : la parcelle exacte vous est montrée avec le titre lors de la visite.",
+    "areaNote": "Le cercle indique le quartier, pas la rue : la parcelle exacte vous est montrée avec le titre lors de la visite.",
     "howTitle": "Acheter avec HomeLink",
     "how": {
       "viewingTitle": "Une visite avec notre équipe",
-      "viewingBody": "Sur place, ou en visio depuis l’étranger, avec l’inspecteur qui l’a visité.",
+      "viewingBody": "Sur place, ou en visio depuis l’étranger, avec l’inspecteur qui l’a inspecté.",
       "papersTitle": "Les papiers vérifiés",
       "papersBody": "Le titre, la pièce d’identité du vendeur et les limites de la parcelle, partagés avant toute offre.",
       "notaryTitle": "Un notaire indépendant",
       "notaryBody": "Nous vous en présentons un ; le transfert passe par le registre foncier, pas par nous."
     },
-    "viewingLabel": "Comment souhaitez-vous visiter",
+    "viewingLabel": "Comment souhaitez-vous visiter ?",
     "viewing": {
       "inPerson": "Sur place",
       "video": "En visio"
@@ -1003,10 +1090,10 @@
     "contactLabel": "E-mail ou téléphone",
     "messageLabel": "Message",
     "messageDefault": "Je souhaite organiser une visite de « {name} ».",
-    "enquire": "Contacter l’équipe à Kigali",
+    "enquire": "Contacter l’équipe de Kigali",
     "noFunds": "HomeLink ne détient jamais l’argent de l’achat. Vous payez le vendeur via le notaire.",
     "enquiryNoted": "Demande enregistrée",
-    "enquiryPreview": "Cet aperçu n’envoie pas encore de messages. Une fois la messagerie en ligne, cela ouvrira une conversation avec le concierge, qui répond sous un jour ouvré.",
+    "enquiryPreview": "Cet aperçu n’envoie pas encore de messages. Une fois la messagerie en ligne, ce bouton ouvrira une conversation avec le concierge, qui répond sous un jour ouvré.",
     "perSqmLabel": "Prix au m²",
     "askingShort": "prix demandé",
     "enquireShort": "Contacter l'équipe"
@@ -1014,20 +1101,20 @@
   "lease": {
     "perMonth": "par mois",
     "moveIn": "Emménagement",
-    "term": "Durée du bail",
+    "term": "Durée",
     "months": "{count} mois",
     "nameLabel": "Votre nom",
     "contactLabel": "E-mail ou téléphone",
-    "apply": "Demander un bail",
-    "whatNext": "L’équipe de Kigali envoie le bail, les conditions de caution et un horaire de visite. Rien n’est débité ici.",
+    "apply": "Demander à louer",
+    "whatNext": "L’équipe de Kigali vous envoie le contrat de location, les conditions de caution et un horaire de visite. Rien n’est débité ici.",
     "noted": "Demande enregistrée",
-    "preview": "Cet aperçu n’envoie pas encore de demandes. Une fois la messagerie en ligne, cela ouvrira une conversation avec le concierge, qui répond sous un jour ouvré.",
+    "preview": "Cet aperçu n’envoie pas encore de demandes. Une fois la messagerie en ligne, ce bouton ouvrira une conversation avec le concierge, qui répond sous un jour ouvré.",
     "shorter": "Moins d’un an ? Réservez à la nuit",
-    "shorterLabel": "Réserver {name} à la nuit",
+    "shorterLabel": "Réserver plutôt {name} à la nuit",
     "notFreeYet": "Pas encore libre"
   },
   "landmarks": {
-    "conventionCentre": "le centre de convention",
+    "conventionCentre": "le centre de congrès",
     "cityCentre": "le centre-ville",
     "airport": "l'aéroport",
     "embassies": "les ambassades",
@@ -1038,37 +1125,38 @@
   "signedOut": {
     "trips": {
       "title": "Vos voyages",
-      "body": "Connectez-vous pour voir vos séjours, voitures et sorties, chacun avec sa référence, ses dates et la personne à contacter."
+      "body": "Connectez-vous pour voir vos séjours, voitures et excursions, chacun avec sa référence, ses dates et la personne à contacter."
     },
     "messages": {
       "title": "Messages",
-      "body": "Connectez-vous pour lire la conversation liée à chaque réservation, avec l’équipe de Kigali et votre hôte, chauffeur ou guide."
+      "body": "Connectez-vous pour lire la conversation liée à chaque réservation, avec l'équipe de Kigali, votre chauffeur ou votre guide."
     },
     "signIn": "Se connecter",
     "previewNote": "Connexion d’aperçu",
     "booking": {
       "title": "Votre réservation",
       "body": "Connectez-vous pour voir cette réservation : sa référence, ses dates, ce que vous avez payé et la conversation avec l’équipe."
-    }
+    },
+    "createAccount": "Créer un compte"
   },
   "abroad": {
     "title": "Acheter depuis l'étranger",
     "intro": "Beaucoup de nos acheteurs vivent hors du Rwanda. Voici comment se passe un achat quand vous ne pouvez pas être à Kigali à chaque étape.",
     "step": "Étape {n}",
-    "viewTitle": "Visiter en appel vidéo",
+    "viewTitle": "Visiter en visio",
     "viewBody": "L'inspecteur qui a parcouru la maison fait la visite en direct, en vidéo, et répond à vos questions pièce par pièce.",
     "papersTitle": "Voir les papiers d'abord",
     "papersBody": "Le titre, les limites de la parcelle et la pièce d'identité du vendeur vous sont transmis avant toute offre.",
     "poaTitle": "Signer par une personne de confiance",
     "poaBody": "Une procuration notariée permet à un proche ou à un avocat à Kigali de signer pour vous.",
-    "moneyTitle": "Faire circuler l'argent par la voie officielle",
+    "moneyTitle": "Transférer l'argent par les voies officielles",
     "moneyBody": "Les fonds partent par virement sur le compte du notaire, jamais en espèces et jamais par HomeLink.",
-    "notaryTitle": "Le transfert au cadastre",
+    "notaryTitle": "Le transfert au registre foncier",
     "notaryBody": "Un notaire indépendant enregistre le transfert auprès du registre foncier, et vous recevez le nouveau titre."
   },
   "hoods": {
     "indexTitle": "Kigali, quartier par quartier",
-    "indexBody": "{count} quartiers où notre équipe a inspecté un logement à louer, à la nuit ou à acheter.",
+    "indexBody": "{count} quartiers où notre équipe a inspecté des logements pour séjourner, louer ou acheter.",
     "district": "District de {district}, Kigali",
     "stayFrom": "Séjour dès",
     "rentTypical": "Loyer autour de",
@@ -1076,9 +1164,9 @@
     "rentCount": "{count, plural, one {# à louer} other {# à louer}}",
     "saleCount": "{count, plural, one {# à vendre} other {# à vendre}}",
     "mode": {
-      "stay": "{count, plural, =0 {Aucun séjour pour l'instant} one {# logement pour un séjour} other {# logements pour un séjour}}",
+      "stay": "{count, plural, =0 {Aucun séjour pour l'instant} one {# logement à la nuit} other {# logements à la nuit}}",
       "rent": "{count, plural, =0 {Rien à louer pour l'instant} one {# logement à louer} other {# logements à louer}}",
-      "buy": "{count, plural, =0 {Rien à vendre pour l'instant} one {# maison à vendre} other {# maisons à vendre}}"
+      "buy": "{count, plural, =0 {Rien à vendre pour l'instant} one {# bien à vendre} other {# biens à vendre}}"
     },
     "noneYet": "Nous n'en avons pas encore inspecté ici.",
     "see": "Voir",
@@ -1086,15 +1174,15 @@
     "salesHere": "À vendre ici",
     "others": "Autres quartiers",
     "goodFor": {
-      "Gacuriro": "Convient aux familles en poste longue durée qui veulent de l'espace et un portail.",
+      "Gacuriro": "Convient aux familles en mission de longue durée qui veulent de l'espace et un portail.",
       "Gikondo": "Convient à un long séjour à petit budget, avec une cour.",
       "Kacyiru": "Convient à qui travaille avec un ministère ou une ambassade.",
       "Kibagabaga": "Convient aux familles qui veulent un jardin et un marché tout près.",
       "Kicukiro": "Convient à une arrivée tardive ou à un vol matinal.",
       "Kimihurura": "Convient à une semaine de conférence, ou à un premier mois en ville.",
-      "Kiyovu": "Convient à un court séjour avec tout à pied.",
-      "Nyamirambo": "Convient à qui veut la ville au niveau de la rue.",
-      "Nyarutarama": "Convient à une famille qui reçoit, ou à un long poste.",
+      "Kiyovu": "Convient à un court séjour, avec tout accessible à pied.",
+      "Nyamirambo": "Convient à qui veut vivre la ville de l'intérieur.",
+      "Nyarutarama": "Convient à une famille qui reçoit, ou à une longue mission.",
       "Rebero": "Convient à qui veut la vue et ne craint pas la montée.",
       "Remera": "Convient à un premier emploi à Kigali, près des lignes de bus."
     },
@@ -1106,9 +1194,9 @@
   "list": {
     "inspectedBy": "Inspecté le {date} par {name}",
     "photos": "{count} photos",
-    "minutesTo": "{minutes} min jusqu'à {place}",
+    "minutesTo": "{minutes} min pour rejoindre {place}",
     "minutesShort": "{minutes} min",
-    "ctaApply": "Postuler",
+    "ctaApply": "Demander à louer",
     "ctaCheckDates": "Voir les dates",
     "ctaHire": "Louer",
     "ctaBookDay": "Réserver",
@@ -1120,37 +1208,37 @@
     "noFilters": "Aucun filtre",
     "chipFrom": "Trajets depuis {place}",
     "measureFrom": "Trajets depuis",
-    "endCount": "{count, plural, one {C'est le seul que nous avons.} other {C'est tout, # au total.}}",
+    "endCount": "{count, plural, one {Il n'y en a pas d'autre.} other {C'est tout : # au total.}}",
     "endTitle": {
       "stay": "Vous ne trouvez pas le bon logement ?",
       "rent": "Vous ne trouvez pas le bon logement à louer ?",
-      "buy": "Vous cherchez un bien que nous n'avons pas ?",
+      "buy": "Vous cherchez un bien que nous ne proposons pas ?",
       "cars": "Besoin d'un autre véhicule ?",
-      "experiences": "Envie d'une sortie que nous ne proposons pas encore ?"
+      "experiences": "Envie d'une excursion que nous ne proposons pas encore ?"
     },
-    "endBody": "Dites à l'équipe de Kigali ce que vous cherchez. Chaque demande est lue par une personne, et nous connaissons souvent un bien avant qu'il soit en ligne.",
-    "endOthers": "Ou voir",
+    "endBody": "Dites à l'équipe de Kigali ce que vous cherchez. Chaque demande est lue par une personne, et nous savons souvent ce qui arrive avant que ce soit en ligne.",
+    "endOthers": "Voir aussi",
     "requestWhat": "Que cherchez-vous ?",
     "requestPlaceholder": {
-      "stay": "Un deux-pièces calme près des ambassades, mi-décembre",
+      "stay": "Deux chambres au calme près des ambassades, mi-décembre",
       "rent": "Trois chambres à Kacyiru dès mars, environ 2 000 $ par mois",
       "buy": "Une maison familiale avec jardin, jusqu'à 250 M RWF",
       "cars": "Un sept places avec chauffeur pour une semaine à Musanze",
       "experiences": "Une journée dans les plantations de café près de Huye"
     },
     "requestContact": "E-mail ou téléphone",
-    "requestSend": "Prévenir l'équipe",
+    "requestSend": "Envoyer à l'équipe",
     "requestNoted": "C'est noté.",
     "requestPreview": "Ceci est un aperçu, rien n'a encore été envoyé. Une fois les comptes en place, la demande arrive à l'équipe de Kigali telle que vous l'avez écrite.",
     "notifyTitle": "Dites-nous ce qu'il vous faut et nous vous préviendrons dès qu'un bien correspond",
     "closestWeHave": "Ce qui s'en rapproche le plus",
     "noMatchText": "Rien de ce que nous proposons ne mentionne « {text} ». Essayez un quartier, un budget, ou ce que le logement doit avoir.",
-    "noCarBody": "Aucun véhicule ne réunit tout cela. Moins de places, ou n'importe quelle boîte, élargit souvent le choix.",
-    "stayPromise": "Chaque logement a été inspecté sur place, et votre paiement est retenu jusqu'à ce que vous confirmiez l'arrivée.",
-    "rentPromise": "Loyers mensuels pour des baux de douze mois ou plus, avec les documents vérifiés avant la signature.",
+    "noCarBody": "Aucun véhicule ne réunit tout cela. Moins de places, ou l'une ou l'autre boîte de vitesses, élargit souvent le choix.",
+    "stayPromise": "Chaque logement a été inspecté sur place, et votre paiement est bloqué jusqu'à la confirmation de votre arrivée.",
+    "rentPromise": "Loyers mensuels pour des locations de douze mois ou plus, avec les documents vérifiés avant la signature.",
     "rentCount": "{count, plural, one {# logement vérifié à louer à Kigali} other {# logements vérifiés à louer à Kigali}}",
     "carsCount": "{count, plural, one {# voiture vérifiée à Kigali} other {# voitures vérifiées à Kigali}}",
-    "daysCount": "{count, plural, one {# sortie depuis Kigali} other {# sorties depuis Kigali}}",
+    "daysCount": "{count, plural, one {# excursion depuis Kigali} other {# excursions depuis Kigali}}",
     "carsPromise": "Entretenue et vérifiée avant chaque location par quelqu'un de notre équipe qui l'a conduite.",
     "daysPromise": "Faites en entier par notre équipe avant d'être proposées, avec des guides que nous connaissons par leur nom.",
     "bandLabel": "Quartiers",
@@ -1201,21 +1289,21 @@
     "peopleLabel": "Personnes",
     "people": "{count, plural, one {# personne} other {# personnes}}",
     "forPeople": "{count, plural, one {pour # personne} other {pour # personnes}}",
-    "departsAt": "Départ {time} · {hours} heures",
+    "departsAt": "Départ à {time} · {hours} h",
     "driveFromKigali": "{hours} h de route depuis Kigali",
     "inKigaliLong": "À Kigali, pas de long trajet",
     "inKigali": "à Kigali",
     "hoursShort": "{hours} h",
     "guidedBy": "Guidé par {name}",
     "groupMaxNote": "Jusqu'à {count} personnes",
-    "daysMapLabel": "Carte du Rwanda avec chaque sortie et sa route depuis Kigali",
+    "daysMapLabel": "Carte du Rwanda avec chaque excursion et sa route depuis Kigali",
     "travelTitle": "Se déplacer",
     "travelNote": "En voiture un jour de semaine, estimé d'après la carte. L'heure de pointe sur la KN 5 ajoute du temps.",
-    "leaseTermsTitle": "Le bail",
+    "leaseTermsTitle": "Conditions de location",
     "deposit": "Caution",
     "depositMonths": "{count, plural, one {# mois de loyer} other {# mois de loyer}}",
     "availableFrom": "Libre dès",
-    "minimumTerm": "Bail le plus court",
+    "minimumTerm": "Durée minimale",
     "twelveMonths": "12 mois",
     "includedInRent": "Compris dans le loyer",
     "included": {
@@ -1228,7 +1316,7 @@
     "yearBuilt": "Construit en",
     "upi": "Numéro de parcelle (UPI)",
     "inspectedFact": "Inspecté le",
-    "whenSuits": "Quand cela vous arrange-t-il ?",
+    "whenSuits": "Quand êtes-vous disponible ?",
     "viewingWhen": {
       "thisWeek": "Cette semaine",
       "nextWeek": "La semaine prochaine",
@@ -1238,16 +1326,16 @@
     "tripTitle": "La suite du voyage",
     "tripCar": "Une voiture depuis l'aéroport",
     "tripCarBody": "Voitures libres pour {when}, avec le total pour tout le séjour.",
-    "tripDay": "Une sortie pendant votre séjour",
-    "tripDayBody": "Sorties du {date}, au prix pour {count, plural, one {# personne} other {# personnes}}.",
+    "tripDay": "Une excursion pendant votre séjour",
+    "tripDayBody": "Excursions du {date}, au prix pour {count, plural, one {# personne} other {# personnes}}.",
     "emptyStay": "Séjourner une nuit",
     "emptyRent": "Louer un logement",
     "emptyBuy": "Acheter une maison",
     "emptyCars": "Louer une voiture",
-    "emptyDays": "Trouver une sortie",
+    "emptyDays": "Trouver une excursion",
     "savedAll": "Tout",
     "compareHint": "Cochez deux ou trois logements pour les comparer côte à côte.",
-    "notePlaceholder": "Demander pour le groupe électrogène, celui avec l'avocatier…",
+    "notePlaceholder": "Poser la question du groupe électrogène, celle avec l'avocatier…",
     "noteLabel": "Votre note",
     "noteSave": "Enregistrer",
     "noteCancel": "Annuler",
@@ -1256,7 +1344,6 @@
     "comparePicked": "{count, plural, one {# logement choisi} other {# logements choisis}}",
     "compareOpen": "Comparer",
     "compareTitle": "Côte à côte",
-    "compareClose": "Fermer la comparaison",
     "compare": {
       "price": "Prix",
       "neighbourhood": "Quartier",
@@ -1280,7 +1367,8 @@
     },
     "budgetPlaceholder": "Votre maximum, par ex. {example}",
     "bandBack": "Voir les quartiers précédents",
-    "bandMore": "Voir plus de quartiers"
+    "bandMore": "Voir plus de quartiers",
+    "comparePickMore": "choisissez-en un autre"
   },
   "notFound": {
     "title": "Cette page n’existe pas",
@@ -1293,12 +1381,2204 @@
     "experiences": "Excursions"
   },
   "landmarkNames": {
-    "conventionCentre": "Centre de convention",
+    "conventionCentre": "Centre de congrès",
     "cityCentre": "Centre-ville",
     "airport": "Aéroport",
     "embassies": "Ambassades",
     "stadium": "Stade Amahoro",
     "golf": "Golf",
     "market": "Marché de Kimironko"
+  },
+  "workspace": {
+    "sections": {
+      "overview": "Vue d'ensemble",
+      "today": "Aujourd'hui",
+      "bookings": "Réservations",
+      "calendar": "Calendrier",
+      "asks": "Demandes",
+      "inspections": "Inspections",
+      "housekeeping": "Ménage",
+      "maintenance": "Maintenance",
+      "incidents": "Incidents",
+      "inbox": "Messages",
+      "notifications": "Notifications",
+      "portfolio": "Logements",
+      "rates": "Tarifs",
+      "tenants": "Locataires",
+      "sales": "Biens à vendre",
+      "partners": "Chauffeurs et guides",
+      "finance": "Finances",
+      "people": "Équipe",
+      "content": "Contenu",
+      "settings": "Paramètres",
+      "audit": "Journal d'audit",
+      "jobs": "Missions",
+      "schedule": "Planning",
+      "earnings": "Revenus",
+      "documents": "Documents"
+    },
+    "groups": {
+      "work": "Au quotidien",
+      "homes": "Logements et offre",
+      "money": "Argent",
+      "platform": "Plateforme",
+      "partner": "Votre travail"
+    },
+    "label": "Espace de travail",
+    "collapse": "Réduire la barre latérale",
+    "expand": "Déplier la barre latérale",
+    "collapseHint": "Appuyez sur [ pour basculer",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "backToSite": "Retour au site",
+    "signOut": "Se déconnecter",
+    "new": "Nouveau",
+    "newListing": "Nouvelle annonce",
+    "newBlock": "Bloquer des dates",
+    "newTicket": "Nouveau ticket de maintenance",
+    "newIncident": "Signaler un incident",
+    "allHomes": "Tous les logements",
+    "propertyLabel": "Afficher",
+    "more": "Plus",
+    "comingTitle": "Pas encore construit",
+    "comingBody": "Cette section fait partie du plan de l'espace de travail et arrive dans une étape suivante.",
+    "notForYouTitle": "Cette partie de l'espace de travail ne vous est pas ouverte",
+    "notForYouBody": "Votre rôle n'inclut pas cette section. Si vous en avez besoin, demandez à un administrateur de le modifier.",
+    "notForGuestTitle": "L'espace de travail est réservé à l'équipe HomeLink",
+    "notForGuestBody": "Vos réservations, voyages et messages sont dans votre compte.",
+    "toYourAccount": "Aller à votre compte",
+    "signInTitle": "Connectez-vous à l'espace de travail",
+    "signInBody": "L'espace de travail est l'endroit où l'équipe HomeLink, les chauffeurs et les guides travaillent.",
+    "signInAs": "Aperçu en tant que",
+    "today": {
+      "description": "Qui arrive, qui part, qui est là, et les logements à préparer aujourd'hui.",
+      "yesterday": "Hier",
+      "today": "Aujourd'hui",
+      "tomorrow": "Demain",
+      "arrivals": "Arrivées",
+      "departures": "Départs",
+      "inHouse": "Sur place",
+      "turnovers": "Rotations",
+      "turnoverHint": "Départ à 11 h, prochain client à 14 h",
+      "eta": "Arrivée vers {time}",
+      "etaUnknown": "Heure d'arrivée non précisée",
+      "checkIn": "Enregistrer l'arrivée",
+      "checkOut": "Enregistrer le départ",
+      "checkedIn": "Arrivé",
+      "checkedOut": "Parti",
+      "open": "Ouvrir",
+      "none": "Personne.",
+      "escrow": "Séquestre débloqué à l'arrivée",
+      "openAsks": "Demandes ouvertes",
+      "openIncidents": "Incidents ouverts",
+      "seeAll": "Tout voir",
+      "nights": "{count, plural, one {# nuit} other {# nuits}}"
+    },
+    "bookings": {
+      "title": "Réservations",
+      "description": "{count, plural, one {# réservation} other {# réservations}}",
+      "search": "Rechercher",
+      "searchPlaceholder": "Référence, nom ou e-mail du client, ou logement",
+      "all": "Toutes",
+      "lane": "Type",
+      "lanes": {
+        "stay": "Séjours",
+        "car": "Voitures",
+        "experience": "Excursions"
+      },
+      "from": "Du",
+      "to": "Au",
+      "apply": "Appliquer",
+      "clear": "Effacer",
+      "colReference": "Référence",
+      "colGuest": "Client",
+      "colWhat": "Quoi",
+      "colDates": "Dates",
+      "colStatus": "Statut",
+      "colTotal": "Total",
+      "colPaid": "Payé",
+      "colEscrow": "Séquestre",
+      "escrowHeld": "Séquestre en cours",
+      "paid": {
+        "paid": "Payé",
+        "part": "Acompte payé",
+        "refunded": "Remboursé",
+        "none": "Non payé"
+      },
+      "empty": "Aucune réservation pour l’instant.",
+      "emptyFiltered": "Aucune réservation ne correspond à ces filtres.",
+      "pages": "Pages",
+      "pageOf": "Page {page} sur {pages}",
+      "prev": "Précédente",
+      "next": "Suivante",
+      "back": "Toutes les réservations",
+      "guest": "Client",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "arrival": "Heure d’arrivée",
+      "purpose": "Motif du voyage",
+      "purposes": {
+        "work": "Travail",
+        "leisure": "Loisirs"
+      },
+      "requests": "Demandes",
+      "price": "Prix",
+      "payments": "Paiements",
+      "noPayments": "Aucun paiement pour l’instant.",
+      "timeline": "Historique",
+      "kinds": {
+        "full": "Paiement",
+        "deposit": "Acompte",
+        "balance": "Solde",
+        "rent": "Loyer",
+        "change": "Changement de dates",
+        "refund": "Remboursement"
+      },
+      "rails": {
+        "card": "Carte",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Virement bancaire"
+      },
+      "payStatus": {
+        "pending": "En attente",
+        "succeeded": "Réussi",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "notes": "Notes de l’équipe",
+      "notesHint": "Seule l’équipe les voit.",
+      "notePlaceholder": "Ce que la prochaine personne à l’accueil doit savoir",
+      "addNote": "Ajouter la note",
+      "related": "Éléments liés",
+      "thread": "Messages avec le client",
+      "noThread": "Pas encore de messages : ouvrir la messagerie",
+      "incidents": "{count, plural, =0 {Aucun problème signalé} one {# problème signalé} other {# problèmes signalés}}",
+      "actions": "Actions",
+      "resend": "Renvoyer la confirmation",
+      "resent": "Confirmation renvoyée à {name}",
+      "changeDates": "Changer les dates",
+      "start": "Début",
+      "end": "Fin",
+      "saveDates": "Déplacer la réservation",
+      "moved": "Déplacée. Différence de prix : {amount}",
+      "unavailable": "Ces dates sont prises.",
+      "invalid": "Ces dates ne conviennent pas à cette réservation.",
+      "changeParty": "Ajouter des personnes",
+      "partySize": "Personnes (jusqu’à {max})",
+      "save": "Enregistrer",
+      "partySaved": "Nombre de personnes mis à jour",
+      "partyFailed": "Trop de personnes pour ce logement, ou la réservation a déjà commencé.",
+      "refund": "Rembourser une partie",
+      "refundLeft": "Il reste jusqu'à {amount} à rembourser.",
+      "refundAmount": "Montant ({currency})",
+      "reason": "Motif",
+      "refundReasonHint": "Ce que le client verra",
+      "refundSubmit": "Rembourser",
+      "refunded": "{amount} remboursé",
+      "tooMuch": "C’est plus que ce qui reste à rembourser.",
+      "refundInvalid": "Vérifiez le montant et indiquez un motif.",
+      "cancel": "Annuler la réservation",
+      "refundChoice": "Remboursement",
+      "cancelPolicy": "Selon les conditions d'annulation : {amount}",
+      "cancelGoodwill": "Geste commercial : tout ce qui a été payé, {amount}",
+      "confirmCancel": "Annuler et rembourser",
+      "cancelled": "Annulée. {amount} remboursé.",
+      "notAllowed": "Votre rôle ne permet pas cette action."
+    },
+    "notFoundTitle": "Rien ici",
+    "notFoundBody": "Aucune réservation, aucun logement ni aucune page n’a cette adresse. Vérifiez que la référence est complète, ou cherchez-la avec ⌘K.",
+    "queue": {
+      "asks": {
+        "title": "Demandes des clients",
+        "description": "Ce que les clients ont demandé à une personne, avec leurs propres mots. Confiez chaque demande à quelqu'un, chiffrez-la, puis clôturez-la."
+      },
+      "inspections": {
+        "title": "Inspections",
+        "description": "Logements, voitures et excursions en attente d’une visite avant leur mise en ligne."
+      },
+      "incidents": {
+        "title": "Incidents",
+        "description": "Problèmes signalés par les clients pendant un séjour, les plus urgents d’abord.",
+        "forBooking": "Problèmes signalés sur {reference}."
+      },
+      "inbox": {
+        "title": "Messagerie"
+      },
+      "filter": {
+        "active": "À traiter",
+        "all": "Tout",
+        "open": "Ouverts"
+      },
+      "nobody": "Personne",
+      "owner": "Responsable",
+      "who": "Qui",
+      "status": "Statut",
+      "guest": "Client",
+      "booking": "Réservation",
+      "dates": "Dates",
+      "quoted": "Devis",
+      "assigned": "Confié à {name}",
+      "notAllowed": "Votre rôle ne permet pas cette action.",
+      "empty": "Rien ici.",
+      "quote": "Proposer un prix",
+      "quoteAmount": "Prix (RWF)",
+      "quoteNote": "Ce que vous organisez",
+      "quoteNoteHint": "Chauffeur et voiture pour la semaine, depuis l’aéroport",
+      "quoteHint": "Le client le voit dans ses messages sur cette réservation et y répond.",
+      "quoteSend": "Envoyer au client",
+      "quoteSent": "Devis envoyé dans les messages du client",
+      "markArranged": "Marquer comme organisé",
+      "markedArranged": "Marqué comme organisé",
+      "decline": "Refuser",
+      "reopen": "Rouvrir",
+      "date": "Date",
+      "inspector": "Inspecteur",
+      "schedule": "Planifier la visite",
+      "reschedule": "Déplacer la visite",
+      "visitBooked": "Visite planifiée",
+      "visit": "Visite",
+      "checklist": "Liste de contrôle",
+      "points": "{passed} points sur {total}",
+      "notes": "Notes",
+      "saveInspection": "Enregistrer l’inspection",
+      "inspectionSaved": "Inspection enregistrée",
+      "publish": "Publier",
+      "publishAdmin": "La mise en ligne revient à un administrateur.",
+      "publishedToast": "Publié",
+      "draft": "Brouillon",
+      "draftWaiting": "En attente dans Logements, à finaliser par un administrateur",
+      "urgency": {
+        "now": "Il faut quelqu’un tout de suite",
+        "today": "Aujourd’hui",
+        "whenever": "Quand c’est possible"
+      },
+      "incidentStatus": {
+        "open": "Ouvert",
+        "inProgress": "En réparation",
+        "resolved": "Résolu"
+      },
+      "toTicket": "Créer un ticket de maintenance",
+      "ticketOpened": "Ticket de maintenance ouvert",
+      "ticket": "Ticket",
+      "noHome": "Seuls les problèmes d’un logement deviennent des tickets de maintenance.",
+      "check": {
+        "stay": {
+          "matchesPhotos": "Conforme aux photos",
+          "power": "Courant dans chaque prise",
+          "backupPower": "Le groupe électrogène prend le relais",
+          "water": "Pression d’eau",
+          "hotWater": "Eau chaude",
+          "internet": "Débit internet",
+          "locks": "Serrures et clés",
+          "smokeAlarm": "Détecteur de fumée fonctionnel",
+          "cleanliness": "Propre",
+          "access": "Facile à trouver et à atteindre"
+        },
+        "car": {
+          "documents": "Carte grise et papiers",
+          "insurance": "Assurance valide",
+          "tyres": "Pneus et pression",
+          "brakes": "Freins",
+          "lights": "Feux et clignotants",
+          "aircon": "Climatisation",
+          "interior": "Intérieur propre",
+          "spare": "Roue de secours et cric"
+        },
+        "experience": {
+          "guideLicence": "Licence du guide",
+          "route": "Parcours reconnu",
+          "safety": "Consignes de sécurité",
+          "vehicle": "Véhicule vérifié",
+          "firstAid": "Trousse de secours",
+          "timing": "Horaires respectés"
+        }
+      }
+    },
+    "work": {
+      "housekeeping": "Ménage",
+      "housekeepingBody": "Tous les ménages à faire dans les logements, jour par jour. Une rotation avec un client qui arrive l'après-midi même passe en premier ; marquez-la prête pour que l'accueil remette les clés.",
+      "days": "Jours",
+      "today": "Aujourd'hui",
+      "cleans": "{count, plural, =0 {aucun ménage} one {# ménage} other {# ménages}}",
+      "hk": {
+        "todo": "À faire",
+        "inProgress": "En cours",
+        "ready": "Prêt",
+        "issue": "Problème"
+      },
+      "hkDone": {
+        "todo": "Remis à faire",
+        "inProgress": "Marqué en cours",
+        "ready": "Prêt pour le client",
+        "issue": "Problème signalé à l'accueil"
+      },
+      "kind": {
+        "turnover": "Rotation",
+        "midStay": "Ménage en cours de séjour",
+        "deep": "Grand ménage"
+      },
+      "tight": "Client attendu aujourd'hui",
+      "window": "Créneau",
+      "leaving": "Départ",
+      "staying": "Sur place",
+      "arriving": "Arrivée",
+      "around": "vers {time}",
+      "noCleans": "Aucun ménage ce jour-là.",
+      "cleaner": "Agent de ménage",
+      "assignedTo": "Confié à {name}",
+      "nobody": "Personne pour l'instant",
+      "progress": "Avancement",
+      "noteSaved": "Note enregistrée",
+      "note": "Note",
+      "notePlaceholder": "Ce que l'accueil ou le prochain agent doit savoir",
+      "saveNote": "Enregistrer la note",
+      "maintenance": "Maintenance",
+      "maintenanceBody": "Les réparations dans les logements, les urgentes d'abord. Ouvrez-en une pour la confier, planifier l'intervention ou fermer le logement à la réservation pendant les travaux.",
+      "active": "À réparer",
+      "all": "Tout",
+      "ticket": {
+        "open": "Ouvert",
+        "scheduled": "Planifié",
+        "inProgress": "En cours",
+        "done": "Terminé"
+      },
+      "priorityName": {
+        "urgent": "Urgent",
+        "normal": "Normal",
+        "low": "Faible"
+      },
+      "source": {
+        "tenant": "D'un locataire",
+        "guest": "D'un client",
+        "staff": "De l'équipe",
+        "inspection": "D'une inspection"
+      },
+      "offSale": "Fermé à la réservation pendant les travaux",
+      "visitOn": "Intervention le {date}",
+      "home": "Logement",
+      "reported": "Signalé",
+      "photo": "Photo",
+      "fromIncident": "Depuis l'incident",
+      "noTickets": "Rien ici.",
+      "status": "Statut",
+      "priority": "Priorité",
+      "fixer": "Qui répare",
+      "moved": "Ticket mis à jour",
+      "visit": "Jour d'intervention",
+      "setVisit": "Planifier l'intervention",
+      "scheduledFor": "Intervention prévue le {date}",
+      "unscheduled": "Intervention annulée",
+      "blockTitle": "Fermer le logement à la réservation",
+      "blockedFor": "Fermé à la réservation pour {count, plural, one {# nuit} other {# nuits}}, du {first} au {last}.",
+      "unblock": "Le rouvrir à la réservation",
+      "unblocked": "Rouvert à la réservation",
+      "blockBooked": "Des clients ont réservé ces dates : {dates}. Déplacez les travaux, pas le client.",
+      "blockInvalid": "Choisissez un jour de début et une durée de 1 à 30 nuits.",
+      "from": "À partir du",
+      "nights": "Nuits",
+      "block": "Fermer à la réservation",
+      "blockHint": "Les nuits où un client occupe le logement sont refusées : on déplace les travaux, pas le client.",
+      "addNote": "Ajouter une note",
+      "ticketNotePlaceholder": "Ce qui a été constaté, ce qui a été fait, ce qu'il reste à faire",
+      "newTicket": "Nouveau ticket",
+      "ticketCreated": "Ticket créé",
+      "what": "Ce qu'il faut réparer",
+      "whatPlaceholder": "L'eau de la douche s'écoule mal",
+      "details": "Détails",
+      "create": "Créer le ticket",
+      "cancel": "Annuler"
+    },
+    "overview": {
+      "title": "Vue d'ensemble",
+      "subtitle": "Comment vont les logements, et ce qui vous attend. {date}.",
+      "thisWeek": "Réservations cette semaine",
+      "lastWeek": "{count} la semaine d'avant",
+      "occupancy": "Taux d'occupation",
+      "next30": "30 prochains jours, tous logements",
+      "revenue": "Chiffre d'affaires du mois",
+      "revenueHint": "Réservé ce mois-ci, remboursements déduits",
+      "openIncidents": "Incidents ouverts",
+      "overdueRent": "Loyers en retard",
+      "weeklyTitle": "Réservations, 12 dernières semaines",
+      "bookingsCount": "{count, plural, one {# réservation} other {# réservations}}",
+      "occupancyTitle": "Occupation par logement, 30 prochains jours",
+      "toCalendar": "Calendrier",
+      "today": "Aujourd'hui",
+      "toToday": "Ouvrir la journée",
+      "arrivals": "Arrivées",
+      "departures": "Départs",
+      "inHouse": "Sur place",
+      "turnovers": "Rotations le jour même",
+      "todo": "Ce qui vous attend",
+      "todos": {
+        "publish": "{count, plural, one {# logement inspecté} other {# logements inspectés}} à mettre en ligne",
+        "incidents": "{count, plural, one {# incident} other {# incidents}} sans responsable",
+        "asks": "{count, plural, one {# demande client} other {# demandes client}} sans responsable",
+        "urgent": "{count, plural, one {# réparation urgente non terminée} other {# réparations urgentes non terminées}}",
+        "cleans": "{count, plural, one {# ménage pas prêt} other {# ménages pas prêts}} avant une arrivée",
+        "rent": "{count, plural, one {# locataire} other {# locataires}} en retard de loyer"
+      },
+      "allClear": "Rien ne vous attend."
+    },
+    "editor": {
+      "leaveTitle": "Partir sans enregistrer ?",
+      "leaveBody": "Vos modifications sur cet onglet ne sont pas enregistrées.",
+      "stay": "Continuer",
+      "leave": "Abandonner et partir",
+      "notSaved": "Non enregistré. Vérifiez les champs en rouge.",
+      "saved": "Enregistré. Le site l'affiche maintenant.",
+      "unsaved": "Modifications non enregistrées",
+      "allSaved": "Tout est enregistré",
+      "discard": "Annuler les modifications",
+      "saving": "Enregistrement…",
+      "save": "Enregistrer",
+      "errors": {
+        "name": "Un logement a besoin d'un nom.",
+        "nightlyRate": "Le prix par nuit doit être supérieur à zéro.",
+        "monthlyRate": "La location longue durée demande un loyer mensuel supérieur à zéro.",
+        "sleeps": "Le nombre de couchages doit être au moins égal au nombre de chambres, et au moins un.",
+        "bedrooms": "Le nombre de chambres doit être compris entre 0 et 20.",
+        "modes": "Proposez-le pour au moins un type de séjour.",
+        "minNights": "Le séjour minimum doit être compris entre 1 et 30 nuits."
+      },
+      "name": "Nom",
+      "summary": "Résumé",
+      "summaryHint": "{count} caractères. Les deux premières phrases s'affichent sur les cartes.",
+      "bedrooms": "Chambres",
+      "sleeps": "Couchages",
+      "photosHint": "La première photo sert de couverture sur chaque carte et en haut de la page. Faites glisser pour changer l'ordre, ou utilisez les flèches.",
+      "cover": "Couverture",
+      "makeCover": "Mettre en couverture",
+      "moveEarlier": "Avancer la photo {n}",
+      "moveLater": "Reculer la photo {n}",
+      "removePhoto": "Retirer la photo {n}",
+      "noPhotos": "Pas encore de photos. Notre équipe photographie chaque logement avant sa mise en ligne.",
+      "addPhoto": "Ajouter une photo",
+      "phase2Upload": "Affichée ici seulement : l'envoi des photos arrive avec le backend, celle-ci n'est donc pas enregistrée.",
+      "amenitiesHint": "Uniquement ce que quelqu'un a vérifié sur place.",
+      "rulesHint": "Une phrase chacune, dans l'ordre où le client en a besoin. Les clients les acceptent toutes au paiement.",
+      "ruleN": "Règle {n}",
+      "moveUp": "Monter la règle {n}",
+      "moveDown": "Descendre la règle {n}",
+      "removeRule": "Retirer la règle {n}",
+      "addRule": "Ajouter une règle",
+      "offeredFor": "Proposé pour",
+      "mode": {
+        "nightly": "Séjours à la nuit",
+        "lease": "Location longue durée"
+      },
+      "nightlyRate": "Prix par nuit ({currency})",
+      "monthlyRate": "Loyer mensuel ({currency})",
+      "minNights": "Nuits minimum",
+      "rentingTerms": "Conditions de location",
+      "depositMonths": "Caution (mois)",
+      "availableFrom": "Libre à partir du",
+      "checkInHint": "Envoyé au client 48 heures avant l'arrivée, jamais avant.",
+      "directions": "Itinéraire",
+      "doorCode": "Code de porte ou de boîte à clés",
+      "wifiName": "Nom du wi-fi",
+      "wifiPassword": "Mot de passe wi-fi",
+      "manager": "Suivi par",
+      "nobody": "Personne pour l'instant",
+      "managerSince": "Depuis",
+      "managerHint": "Son nom figure sur la page du logement : les clients savent qui répond à vingt-trois heures.",
+      "availabilityHint": "Touchez une nuit libre pour la bloquer pour le propriétaire ; touchez à nouveau pour la libérer. Les nuits avec des clients, et celles bloquées pour une réparation, se modifient depuis la réservation ou le ticket.",
+      "prevMonth": "Mois précédent",
+      "nextMonth": "Mois suivant",
+      "held": "{date} bloquée",
+      "released": "{date} libérée",
+      "cannotHold": "Cette nuit ne peut pas être changée ici.",
+      "night": {
+        "free": "Libre",
+        "booked": "Clients",
+        "owner": "Bloquée pour le propriétaire",
+        "maintenance": "Réparation",
+        "past": "Passée"
+      },
+      "startListing": "Commencer l'annonce",
+      "newListing": "Nouvelle annonce",
+      "neighbourhood": "Quartier",
+      "createDraft": "Créer le brouillon",
+      "cancel": "Annuler",
+      "unpublished": "Retiré du site",
+      "published": "En ligne sur le site",
+      "notInspected": "Pas encore inspecté. Un logement n'est mis en ligne qu'après une visite sur place.",
+      "unpublish": "Retirer du site",
+      "publish": "Mettre en ligne",
+      "portfolio": "Logements",
+      "portfolioBody": "{count} logements, {live} en ligne. Ouvrez-en un pour modifier ce que voient les clients.",
+      "fromInspections": "Inspectés, en attente de rédaction",
+      "view": "Affichage",
+      "views": {
+        "table": "Tableau",
+        "cards": "Cartes"
+      },
+      "home": "Logement",
+      "rate": "Par nuit",
+      "next30": "30 prochains jours",
+      "nextArrival": "Prochaine arrivée",
+      "openTickets": "Réparations",
+      "state": "État",
+      "live": "En ligne",
+      "draft": "Brouillon",
+      "viewOnSite": "Voir sur le site",
+      "sections": "Sections",
+      "tabs": {
+        "details": "Détails",
+        "photos": "Photos",
+        "amenities": "Équipements",
+        "rules": "Règlement",
+        "pricing": "Tarifs",
+        "availability": "Disponibilités",
+        "checkin": "Arrivée",
+        "manager": "Responsable",
+        "inspection": "Inspection"
+      },
+      "inspectionHint": "Le compte rendu de qui a visité ce logement et de ce qui a été vérifié. Il ne change que par une nouvelle inspection.",
+      "inspector": "Inspecteur",
+      "notYet": "Pas encore",
+      "inspectedOn": "Inspecté le",
+      "points": "Points vérifiés",
+      "photographed": "Photographié par nous",
+      "ownerChecked": "Identité du propriétaire vérifiée",
+      "yes": "Oui",
+      "no": "Non",
+      "toInspections": "Aller aux inspections"
+    },
+    "calendar": {
+      "title": "Calendrier",
+      "bodyAdmin": "Chaque logement sur les deux semaines ou le mois à venir. Une barre est une réservation ; touchez une nuit libre pour la bloquer pour le propriétaire.",
+      "bodyOps": "Chaque logement sur les deux semaines ou le mois à venir. Une barre est une réservation ; ouvrez-la pour voir le client.",
+      "home": "Logement",
+      "earlier": "Plus tôt",
+      "later": "Plus tard",
+      "today": "Aujourd'hui",
+      "span": "Jours affichés",
+      "days": "{count} jours",
+      "held": "Nuit bloquée",
+      "released": "Nuit libérée",
+      "cannot": "Cette nuit ne peut pas être changée.",
+      "tapToHold": "Touchez pour bloquer pour le propriétaire",
+      "tapToRelease": "Bloquée. Touchez pour libérer",
+      "repair": "Bloquée pour une réparation",
+      "blocked": "Bloquée pour le propriétaire",
+      "legendStay": "Réservé",
+      "legendRent": "Location",
+      "legendEnded": "Séjour passé",
+      "legendHeld": "Bloqué",
+      "legendRepair": "Réparation"
+    },
+    "rates": {
+      "title": "Tarifs",
+      "body": "Le prix de chaque nuit, comparé au tarif de base du logement. Touchez une première et une dernière nuit, puis fixez un prix ou revenez au tarif de base.",
+      "homes": "Logements",
+      "prev": "Mois précédent",
+      "next": "Mois suivant",
+      "base": "Tarif de base",
+      "ownCount": "{count, plural, =0 {aucune nuit à un autre prix} one {# nuit à un autre prix} other {# nuits à un autre prix}}",
+      "own": "son propre tarif",
+      "selected": "Du {from} au {to}",
+      "selectedOne": "{date}",
+      "pickEnd": "touchez une dernière nuit, ou fixez celle-ci",
+      "pickStart": "Touchez une première nuit pour commencer.",
+      "price": "Prix par nuit ({currency})",
+      "setButton": "Fixer le prix",
+      "baseButton": "Revenir au tarif de base",
+      "clear": "Effacer",
+      "set": "Prix fixés",
+      "backToBase": "Retour au tarif de base",
+      "failed": "Non enregistré. Le prix doit être supérieur à zéro."
+    },
+    "homes": {
+      "tenants": "Locataires",
+      "tenantsBody": "Chaque location en cours, les retards de loyer d'abord. Ouvrez-en une pour relancer, enregistrer un virement ou lancer le départ.",
+      "rentings": "Locations",
+      "overdue": "En retard de loyer",
+      "dueSoon": "À payer dans les cinq jours",
+      "rent": {
+        "overdue": "En retard",
+        "due": "À payer",
+        "upcoming": "À jour",
+        "paid": "Tout payé"
+      },
+      "movingOut": "Départ prévu",
+      "movedOut": "Caution rendue",
+      "perMonth": "{amount} par mois",
+      "nextDue": "Prochaine échéance le {date}",
+      "allPaid": "Tous les mois payés",
+      "ends": "Fin le {date}",
+      "booking": "Réservation",
+      "paidMonths": "Mois payés",
+      "monthsOf": "{paid} sur {total}",
+      "deposit": "Caution détenue",
+      "phone": "Téléphone",
+      "noTenants": "Personne ne loue en ce moment.",
+      "remind": "Envoyer un rappel de loyer",
+      "reminded": "Rappel envoyé",
+      "received": "Reçu par virement ({currency})",
+      "record": "Enregistrer le paiement",
+      "recordHint": "Pour un loyer payé hors de l'application ; il compte pour le plus ancien mois impayé.",
+      "recorded": "Paiement enregistré",
+      "moveOutDate": "Jour du départ",
+      "startMoveOut": "Lancer le départ",
+      "moveOutBooked": "État des lieux de sortie prévu",
+      "moveOutOn": "État des lieux de sortie le {date}. Rendez la caution une fois l'état des lieux fait.",
+      "returnDeposit": "Rendre la caution",
+      "depositReturned": "Caution rendue",
+      "depositDone": "Locataire parti ; caution rendue.",
+      "sales": "Biens à vendre",
+      "salesBody": "Les biens en vente et les personnes qui demandent à les visiter. Chaque modification d'une visite est signalée à la personne concernée.",
+      "viewings": "Demandes de visite",
+      "view": {
+        "requested": "Demandée",
+        "confirmed": "Confirmée",
+        "rescheduled": "Déplacée",
+        "done": "Effectuée",
+        "cancelled": "Annulée"
+      },
+      "mode": {
+        "inPerson": "Sur place",
+        "video": "En vidéo"
+      },
+      "noViewings": "Personne n'a encore demandé de visite.",
+      "onSale": "En vente",
+      "sale": {
+        "onMarket": "En vente",
+        "underOffer": "Offre en cours",
+        "sold": "Vendu"
+      },
+      "viewingsCount": "{count, plural, =0 {aucune visite} one {# visite} other {# visites}}",
+      "viewOnSite": "Voir sur le site",
+      "askingPrice": "Prix demandé ({currency})",
+      "status": "Statut",
+      "save": "Enregistrer",
+      "saleSaved": "Enregistré",
+      "confirm": "Confirmer",
+      "viewingConfirmed": "Confirmée ; la personne a été prévenue",
+      "reschedule": "Déplacer",
+      "markDone": "Marquer comme effectuée",
+      "viewingDone": "Marquée comme effectuée",
+      "cancelViewing": "Annuler",
+      "viewingCancelled": "Annulée ; la personne a été prévenue",
+      "day": "Jour",
+      "time": "Heure",
+      "move": "Déplacer la visite",
+      "viewingMoved": "Déplacée ; la personne a été prévenue",
+      "viewingFailed": "Ce créneau est pris ou non autorisé. Choisissez-en un autre.",
+      "partners": "Chauffeurs et guides",
+      "partnersBody": "Qui conduit les voitures et mène les excursions, leurs notes, les missions à venir, et les documents qui expirent bientôt.",
+      "unassigned": "{count, plural, one {# mission non attribuée} other {# missions non attribuées}}",
+      "people": "{count, plural, one {# personne} other {# personnes}}",
+      "role": {
+        "driver": "Chauffeur",
+        "guide": "Guide"
+      },
+      "docExpired": "Document expiré",
+      "docSoon": "Expire dans {days} jours",
+      "upcomingJobs": "{count, plural, =0 {Aucune mission dans les deux prochaines semaines} one {# mission dans les deux prochaines semaines} other {# missions dans les deux prochaines semaines}}",
+      "since": "depuis le {date}",
+      "documents": "Documents",
+      "doc": {
+        "licence": "Permis de conduire",
+        "insurance": "Assurance",
+        "permit": "Licence de guide",
+        "id": "Carte d'identité",
+        "vehicleInspection": "Contrôle technique"
+      },
+      "expires": "Expire le {date}",
+      "docValid": "Valide",
+      "theirJobs": "Ses missions · {count}",
+      "noJobs": "Rien ne lui a encore été confié.",
+      "openInLane": "En attente dans son domaine · {count}",
+      "noOpen": "Rien en attente.",
+      "payouts": "Versements",
+      "payout": {
+        "held": "Bloqué jusqu'à l'arrivée",
+        "due": "Dû",
+        "paid": "Versé"
+      },
+      "noPayouts": "Aucun versement pour l'instant.",
+      "assignTo": "Confier à",
+      "assigned": "Mission confiée",
+      "nobody": "Personne"
+    },
+    "finance": {
+      "title": "Finances",
+      "body": "L'argent qui entre, qui sort, et celui détenu pour quelqu'un d'autre. Chaque action ici est consignée dans le journal d'audit.",
+      "tabs": {
+        "revenue": "Chiffre d'affaires",
+        "payments": "Paiements",
+        "reconciliation": "Rapprochement",
+        "refunds": "Remboursements",
+        "deposits": "Cautions détenues",
+        "payouts": "Versements",
+        "invoices": "Factures"
+      },
+      "revenueTitle": "Chiffre d'affaires par mois, francs (milliers)",
+      "lane": "Activité",
+      "lanes": {
+        "stay": "Séjours et locations",
+        "car": "Voitures",
+        "experience": "Excursions"
+      },
+      "total": "Total",
+      "revenueNote": "Réservations passées chaque mois, remboursements déduits, converties en francs au taux du jour.",
+      "allRails": "Tous les moyens",
+      "allStates": "Tous les états",
+      "pay": {
+        "succeeded": "Reçu",
+        "pending": "En attente",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "when": "Quand",
+      "booking": "Réservation",
+      "rail": "Moyen",
+      "kind": "Pour",
+      "amount": "Montant",
+      "state": "État",
+      "none": "Rien ici.",
+      "reconcileSummary": "{matched} rapprochés · {suggested} suggérés · {unmatched} à traiter à la main",
+      "statementLine": "Ligne du relevé",
+      "payment": "Notre paiement",
+      "rec": {
+        "matched": "Rapproché",
+        "suggested": "Suggéré",
+        "unmatched": "Non rapproché"
+      },
+      "needsPerson": "À traiter à la main",
+      "match": "Rapprocher",
+      "matched": "Rapproché",
+      "guest": "Client",
+      "refund": {
+        "awaiting": "En attente d'approbation",
+        "paid": "Versé",
+        "other": "Autre"
+      },
+      "approve": "Approuver",
+      "approved": "Remboursement approuvé et envoyé",
+      "rentingDeposits": "Cautions de location",
+      "endsOn": "fin le {date}",
+      "moveOutOn": "départ le {date}",
+      "escrow": "Séquestre des séjours",
+      "escrowNote": "Bloqué jusqu'à l'arrivée du client, puis versé automatiquement pour le logement.",
+      "arrives": "Arrivée",
+      "payee": "Bénéficiaire",
+      "releaseOn": "Versement",
+      "payout": {
+        "held": "Bloqué jusqu'à l'arrivée",
+        "due": "Dû",
+        "paid": "Versé"
+      },
+      "markPaid": "Marquer comme versé",
+      "paidDone": "Versement marqué comme effectué",
+      "issued": "Émise le",
+      "receipt": "Reçu",
+      "keep": "Retenir pour réparations ({currency})",
+      "reason": "Motif",
+      "reasonPlaceholder": "Repeindre le mur du couloir",
+      "release": "Rendre la caution",
+      "reasonNeeded": "Toute retenue demande un motif lisible par le locataire.",
+      "confirmTitle": "Envoyer ceci au locataire ?",
+      "confirmBody": "C'est ce qu'il lira, mot pour mot.",
+      "back": "Retour",
+      "send": "Rendre et envoyer",
+      "released": "Caution rendue ; le locataire a été prévenu",
+      "sentenceKept": "Nous vous rendons {back} sur votre caution de {deposit}. Nous avons retenu {kept} pour : {reason}.",
+      "sentenceFull": "Nous vous rendons l'intégralité de votre caution de {deposit}."
+    },
+    "admin": {
+      "save": "Enregistrer",
+      "refused": "Non enregistré : une valeur est hors limites.",
+      "saved": "Enregistré",
+      "email": "E-mail",
+      "role": "Rôle",
+      "roles": {
+        "ops": "Accueil",
+        "admin": "Admin",
+        "driver": "Chauffeur",
+        "guide": "Guide"
+      },
+      "invite": "Envoyer l'invitation",
+      "invited": "Invitation envoyée à {email}",
+      "inviteRefused": "Non envoyée : vérifiez l'adresse, ou la personne fait déjà partie de l'équipe.",
+      "roleChanged": "Rôle modifié",
+      "deactivated": "Désactivé",
+      "deactivate": "Désactiver",
+      "lastAdmin": "Il doit toujours y avoir au moins un administrateur.",
+      "annText": "Texte",
+      "from": "Du",
+      "until": "Au",
+      "remove": "Retirer",
+      "addAnnouncement": "Ajouter une annonce",
+      "up": "Monter {name}",
+      "down": "Descendre {name}",
+      "addHome": "Ajouter un logement",
+      "choose": "Choisir un logement",
+      "featuredHint": "Ils apparaissent en tête de la page d'accueil, dans cet ordre ; les logements inspectés le plus récemment complètent la liste.",
+      "ourLine": "Notre phrase pour {name}",
+      "ourLinePlaceholder": "Laisser vide pour la description standard",
+      "showTimes": "Afficher les temps de trajet",
+      "offered": "Proposer {name}",
+      "lanes": {
+        "stay": "Séjours",
+        "car": "Voitures",
+        "experience": "Excursions"
+      },
+      "code": "Code",
+      "percent": "% de remise",
+      "cap": "Plafond (RWF)",
+      "expires": "Valable jusqu'au",
+      "lane": "Pour",
+      "anyLane": "Tout",
+      "addCode": "Ajouter un code",
+      "bank": {
+        "bankName": "Banque",
+        "accountName": "Titulaire",
+        "accountNumber": "Numéro de compte",
+        "swift": "SWIFT"
+      },
+      "export": "Exporter en CSV",
+      "people": "Équipe",
+      "peopleBody": "Tous ceux qui se connectent à l'espace de travail. Invitez quelqu'un, changez son rôle ou désactivez son accès. Il y a toujours au moins un administrateur.",
+      "status": {
+        "active": "Actif",
+        "invited": "Invité",
+        "deactivated": "Désactivé"
+      },
+      "lastActive": "Actif {when}",
+      "neverSignedIn": "Pas encore connecté",
+      "content": "Contenu",
+      "contentBody": "Ce que dit le site public, modifié sans nouvelle version.",
+      "announcements": "Annonces",
+      "announcementsHint": "Une ligne en haut de chaque page, entre deux dates.",
+      "featured": "Logements de la page d'accueil",
+      "neighbourhoods": "Quartiers",
+      "neighbourhoodsHint": "Notre propre phrase pour chaque quartier, et l'affichage ou non de ses temps de trajet.",
+      "settings": "Paramètres",
+      "settingsBody": "Les chiffres qui font tourner l'activité. Les prix modifiés ici s'appliquent aussitôt aux pages de réservation et au serveur.",
+      "windows": "Annulation gratuite",
+      "windowsHint": "Jusqu'à combien de jours avant le début un client peut annuler avec remboursement intégral.",
+      "windowFor": "{lane}, jours",
+      "extras": "Options",
+      "promos": "Codes promo",
+      "promosHint": "Sur les nuits seulement, jamais sur les frais ni les options, et plafonnés.",
+      "fx": "Taux d'affichage",
+      "fxHint": "Pour afficher les prix dans d'autres devises. Le montant débité au client suit le taux du jour du prestataire de paiement.",
+      "perFranc": "Francs pour 1 {currency}",
+      "bankTitle": "Coordonnées bancaires",
+      "templates": "Textes des notifications",
+      "templatesHint": "Ce que dit chaque notification, dans chaque langue. En lecture seule pour l'instant : ils se modifient dans les fichiers de traduction.",
+      "audit": "Journal d'audit",
+      "auditBody": "Chaque action consignée, la plus récente d'abord, à l'heure de Kigali.",
+      "who": "Qui",
+      "anyone": "Tout le monde",
+      "actors": {
+        "admin": "Admin",
+        "ops": "Accueil",
+        "driver": "Chauffeur",
+        "guide": "Guide",
+        "guest": "Client"
+      },
+      "what": "Quoi",
+      "filter": "Filtrer",
+      "when": "Quand",
+      "target": "Sur",
+      "detail": "Détail",
+      "noEntries": "Rien de consigné pour ces filtres."
+    },
+    "partner": {
+      "ranOut": "Cette offre a expiré",
+      "answerWithin": "Répondre sous {h} h {m} min",
+      "accepted": "Acceptée ; l'accueil est prévenu",
+      "declined": "Refusée ; l'accueil la proposera à quelqu'un d'autre",
+      "accept": "Accepter",
+      "decline": "Refuser",
+      "why": "Pour quelle raison ?",
+      "whyPlaceholder": "Je conduis déjà ce soir-là",
+      "sendDecline": "Refuser",
+      "back": "Retour",
+      "cannotAnswer": "Cette offre ne peut plus recevoir de réponse.",
+      "replace": "Envoyer une copie plus récente",
+      "replaced": "Envoyé ; l'accueil va vérifier",
+      "newCopy": "La nouvelle copie",
+      "validUntil": "Valable jusqu'au",
+      "send": "Envoyer",
+      "replaceRefused": "Non envoyé : la nouvelle copie doit être encore valable après aujourd'hui.",
+      "state": {
+        "offered": "Proposé",
+        "accepted": "À vous",
+        "declined": "Refusé",
+        "done": "Fait"
+      },
+      "kind": {
+        "hire": "Remise de voiture",
+        "transfer": "Transfert",
+        "dayOut": "Excursion"
+      },
+      "people": "{count, plural, one {# personne} other {# personnes}}",
+      "jobs": "Missions",
+      "jobsBody": "D'abord les offres en attente de réponse, puis ce que vous avez accepté, puis ce qui est fait.",
+      "offers": "Offres",
+      "noOffers": "Aucune offre en attente.",
+      "upcoming": "À venir",
+      "noUpcoming": "Rien d'accepté pour l'instant.",
+      "done": "Fait",
+      "schedule": "Planning",
+      "scheduleBody": "Les deux prochaines semaines, jour par jour.",
+      "today": "Aujourd'hui",
+      "free": "Libre",
+      "earnings": "Revenus",
+      "earningsBody": "Ce qui vous est dû et ce qui a été versé. Le paiement d'une mission est bloqué jusqu'à l'arrivée du client.",
+      "paidThisMonth": "Versé ce mois-ci",
+      "paidLastMonth": "Versé le mois dernier",
+      "dueNow": "À vous verser",
+      "held": "Bloqué",
+      "heldHint": "Jusqu'à l'arrivée du client",
+      "payout": {
+        "held": "Bloqué jusqu'à l'arrivée",
+        "due": "Dû",
+        "paid": "Versé"
+      },
+      "noPayouts": "Rien pour l'instant.",
+      "documents": "Documents",
+      "documentsBody": "Les papiers qui vous permettent de travailler, les plus proches de l'expiration d'abord. Envoyez une copie plus récente avant l'expiration.",
+      "doc": {
+        "licence": "Permis de conduire",
+        "insurance": "Assurance",
+        "permit": "Certification de guide",
+        "id": "Carte d'identité",
+        "vehicleInspection": "Contrôle technique"
+      },
+      "until": "Valable jusqu'au {date}",
+      "daysLeft": "{count, plural, one {# jour restant} other {# jours restants}}",
+      "expiry": {
+        "valid": "Valide",
+        "expired": "Expiré"
+      },
+      "carReturn": "Retour de voiture"
+    }
+  },
+  "account": {
+    "nav": {
+      "label": "Votre compte",
+      "overview": "Vue d'ensemble",
+      "trips": "Voyages et réservations",
+      "renting": "Votre location",
+      "viewings": "Visites",
+      "payments": "Paiements",
+      "saved": "Favoris",
+      "notifications": "Notifications",
+      "settings": "Paramètres"
+    },
+    "overview": {
+      "hello": "Bonjour, {name}",
+      "next": "À venir",
+      "inDays": "{count, plural, =0 {Aujourd'hui} one {Demain} other {Dans # jours}}",
+      "underway": "En cours",
+      "checkInReady": "Les infos d'arrivée sont prêtes",
+      "checkInSoon": "Les infos d'arrivée seront disponibles le {date}",
+      "viewBooking": "Voir la réservation",
+      "message": "Écrire à l'équipe",
+      "nothing": "Rien de réservé pour l'instant. Logements, voitures, excursions : il suffit d'une recherche.",
+      "find": "Trouver un séjour",
+      "latest": "Dernières nouvelles",
+      "seeAll": "Tout voir",
+      "shortcuts": "Votre compte",
+      "rentDue": "Loyer de {amount} à payer le {date}",
+      "viewingOn": "Visite le {date} à {time}"
+    },
+    "payments": {
+      "title": "Paiements",
+      "intro": "Tout ce que vous avez payé et ce qui vous a été remboursé, avec un reçu par réservation.",
+      "date": "Date",
+      "what": "Pour",
+      "method": "Moyen",
+      "status": "Statut",
+      "amount": "Montant",
+      "receipt": "Reçu",
+      "empty": "Aucun paiement pour l'instant.",
+      "totalPaid": "Payé cette année",
+      "totalRefunded": "Remboursé"
+    },
+    "renting": {
+      "title": "Votre location",
+      "none": "Vous ne louez pas de logement chez nous en ce moment.",
+      "term": "Du {start} au {end}",
+      "depositHeld": "Caution conservée : {amount}",
+      "schedule": "Loyer",
+      "status": {
+        "paid": "Payé",
+        "due": "À payer",
+        "overdue": "En retard",
+        "upcoming": "À venir"
+      },
+      "pay": "Payer {amount}",
+      "paid": "Loyer payé. Le reçu est dans vos paiements.",
+      "repairs": "Réparations",
+      "repairsBody": "Quelque chose de cassé ? Dites-le ici et l'équipe planifie la réparation, sans frais pour vous sauf en cas de mauvaise utilisation.",
+      "newRepair": "Demander une réparation",
+      "repairTitle": "Qu'est-ce qui doit être réparé ?",
+      "repairDetail": "Dites-nous-en plus",
+      "priority": "Dans quel délai ?",
+      "priorities": {
+        "urgent": "Urgent",
+        "normal": "Cette semaine",
+        "low": "Quand c'est possible"
+      },
+      "send": "Envoyer",
+      "sent": "Envoyé. L'équipe va planifier l'intervention.",
+      "ticketStatus": {
+        "open": "Reçue",
+        "scheduled": "Planifiée",
+        "inProgress": "En cours",
+        "done": "Réparée"
+      },
+      "noRepairs": "Aucune réparation demandée.",
+      "documents": "Documents",
+      "docAgreement": "Contrat de location",
+      "docReceipts": "Reçus"
+    },
+    "viewings": {
+      "title": "Visites",
+      "none": "Aucune visite réservée. Réservez-en une depuis n'importe quel bien à vendre.",
+      "status": {
+        "requested": "Demandée",
+        "confirmed": "Confirmée",
+        "rescheduled": "Déplacée",
+        "done": "Effectuée",
+        "cancelled": "Annulée"
+      },
+      "cancel": "Annuler la visite",
+      "move": "Choisir un autre horaire",
+      "video": "En vidéo",
+      "inPerson": "Sur place"
+    },
+    "settings": {
+      "title": "Paramètres",
+      "tabs": {
+        "label": "Paramètres",
+        "profile": "Profil",
+        "security": "Connexion et sécurité",
+        "payment": "Moyens de paiement",
+        "notifications": "Notifications",
+        "preferences": "Préférences",
+        "privacy": "Confidentialité",
+        "id": "Vérification d'identité"
+      },
+      "name": "Nom",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "verifyHint": "Nous enverrons un code de confirmation à la nouvelle adresse ou au nouveau numéro avant de l'enregistrer.",
+      "codeSent": "Un code a été envoyé à {to}",
+      "saved": "Enregistré",
+      "photo": "Photo",
+      "emergency": "Personne à contacter en cas d'urgence",
+      "emergencyName": "Son nom",
+      "emergencyPhone": "Son téléphone",
+      "save": "Enregistrer",
+      "checkFields": "Vérifiez l'e-mail et les numéros de téléphone.",
+      "password": "Mot de passe",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "again": "Confirmer le nouveau mot de passe",
+      "passwordRule": "Au moins 8 caractères, et différent de l'actuel.",
+      "passwordMismatch": "Les deux nouveaux mots de passe ne correspondent pas.",
+      "changePassword": "Changer le mot de passe",
+      "passwordChanged": "Mot de passe changé",
+      "twoStep": "Connexion en deux étapes",
+      "twoStepBody": "Un code sur votre téléphone en plus du mot de passe, à chaque connexion depuis un nouvel appareil.",
+      "twoStepOn": "La connexion en deux étapes est activée",
+      "twoStepOff": "La connexion en deux étapes est désactivée",
+      "sessions": "Où vous êtes connecté",
+      "signOutOthers": "Se déconnecter partout ailleurs",
+      "signedOutOthers": "Déconnecté partout ailleurs",
+      "thisDevice": "cet appareil",
+      "signOut": "Déconnecter",
+      "signedOut": "Déconnecté",
+      "brand": {
+        "visa": "Visa",
+        "mastercard": "Mastercard",
+        "card": "Carte"
+      },
+      "provider": {
+        "mtn": "MTN MoMo",
+        "airtel": "Airtel Money"
+      },
+      "expires": "Expire {date}",
+      "mobileMoney": "Mobile Money",
+      "default": "Par défaut",
+      "defaultSet": "Moyen par défaut changé",
+      "makeDefault": "Définir par défaut",
+      "remove": "Retirer",
+      "noMethods": "Rien d'enregistré. Ajoutez-en un ici ou au paiement.",
+      "addCard": "Ajouter une carte",
+      "addMomo": "Ajouter Mobile Money",
+      "cardNumber": "Numéro de carte",
+      "expiry": "Expiration",
+      "nameOnCard": "Nom sur la carte",
+      "momoNumber": "Numéro Mobile Money",
+      "weKeep": "Nous gardons les quatre derniers chiffres et l'expiration, jamais le numéro complet.",
+      "cancel": "Annuler",
+      "cardRefused": "Le numéro ou la date d'expiration de la carte est incorrect.",
+      "momoRefused": "Ce n'est pas un numéro MTN ou Airtel.",
+      "added": "Ajouté",
+      "removeTitle": "Retirer ceci ?",
+      "removeBody": "{what} ne sera plus proposé au paiement.",
+      "keep": "Garder",
+      "removed": "Retiré",
+      "deletedTitle": "Votre compte est fermé",
+      "deletedBody": "Vous êtes déconnecté. Les reçus des réservations passées sont conservés aussi longtemps que la loi l'exige ; tout le reste est supprimé.",
+      "toHome": "Retour à HomeLink",
+      "download": "Télécharger mes données",
+      "downloadBody": "Votre profil, vos réservations, paiements et visites, dans un fichier à garder.",
+      "downloadButton": "Télécharger une copie",
+      "deleteTitle": "Supprimer mon compte",
+      "deleteBody": "Cela ferme votre compte et vous déconnecte. C'est irréversible.",
+      "typeWord": "Saisissez {word} pour confirmer",
+      "deleteButton": "Supprimer mon compte",
+      "deleteBlocked": "Vous avez une réservation à venir ({reference}). Annulez-la ou attendez qu'elle soit terminée, puis supprimez le compte.",
+      "deleteConfirmTitle": "Supprimer votre compte ?",
+      "deleteConfirmBody": "Votre compte sera fermé immédiatement et vous serez déconnecté.",
+      "deleteForever": "Supprimer",
+      "deleteWord": "SUPPRIMER"
+    },
+    "id": {
+      "intro": "Une photo d'une pièce d'identité et un selfie, vérifiés une fois par une personne de notre équipe, pour ne plus vous les redemander lors d'une location ou de certaines locations de voiture.",
+      "status": {
+        "none": "Pas encore vérifié",
+        "pending": "En cours de vérification",
+        "verified": "Identité vérifiée",
+        "retry": "Il nous faut une autre photo"
+      },
+      "statusBody": {
+        "none": "Envoyez la photo d'un document ci-dessous.",
+        "pending": "Nous répondons en général sous un jour ouvré.",
+        "verified": "Rien d'autre à faire. Elle ne vous sera plus demandée pour une location ou une voiture.",
+        "retry": "La photo était floue ou coupée. Renvoyez-la avec une bonne lumière, les quatre coins visibles."
+      },
+      "previewCycle": "Aperçu : statut suivant",
+      "sent": "Envoyé à notre équipe",
+      "which": "Quel document",
+      "doc": {
+        "nationalId": "Carte d'identité",
+        "passport": "Passeport",
+        "drivingLicence": "Permis de conduire"
+      },
+      "front": "Recto",
+      "back": "Verso",
+      "selfie": "Un selfie",
+      "selfieHint": "Votre visage, bien éclairé, sans lunettes de soleil.",
+      "privacy": "Visible uniquement par le membre de l'équipe qui la vérifie, et supprimée 30 jours après la vérification.",
+      "send": "Envoyer pour vérification"
+    }
+  },
+  "notifications": {
+    "kinds": {
+      "bookingConfirmed": {
+        "title": "Réservation confirmée",
+        "body": "Réservation confirmée pour {name}. Votre référence : {ref}."
+      },
+      "paymentReceived": {
+        "title": "Paiement reçu",
+        "body": "Nous avons reçu {amount} pour {ref}."
+      },
+      "paymentFailed": {
+        "title": "Le paiement n'a pas abouti",
+        "body": "Le paiement de {amount} pour {ref} a été refusé. Rien n'a été débité."
+      },
+      "momoPending": {
+        "title": "Validez le paiement sur votre téléphone",
+        "body": "Une demande Mobile Money de {amount} attend sur votre téléphone."
+      },
+      "checkInReady": {
+        "title": "Les infos d'arrivée sont prêtes",
+        "body": "Itinéraire, code de la porte et wi-fi pour {name}, arrivée le {date}."
+      },
+      "rentDue": {
+        "title": "Loyer à payer le {date}",
+        "body": "{amount} de loyer pour ce mois est à payer le {date}."
+      },
+      "newMessage": {
+        "title": "Nouveau message de {from}",
+        "body": "{subject}"
+      },
+      "reviewRequest": {
+        "title": "Votre avis sur {name} ?",
+        "body": "Deux minutes pour dire ce qui a marché ou non : vous aidez le prochain voyageur."
+      },
+      "viewingConfirmed": {
+        "title": "Visite confirmée",
+        "body": "{name}, {date}. Apportez une pièce d'identité."
+      },
+      "newBooking": {
+        "title": "Nouvelle réservation",
+        "body": "{guest} a réservé {name} ({ref})."
+      },
+      "arrivalToday": {
+        "title": "{count, plural, one {# arrivée aujourd'hui} other {# arrivées aujourd'hui}}",
+        "body": "Consultez l'écran Aujourd'hui pour les horaires et les clés."
+      },
+      "newAsk": {
+        "title": "Nouvelle demande",
+        "body": "{guest} : « {ask} »"
+      },
+      "newIncident": {
+        "title": "Incident signalé",
+        "body": "{category} à {name}."
+      },
+      "inspectionDue": {
+        "title": "Inspection à prévoir",
+        "body": "{name} doit être réinspecté avant le {date}."
+      },
+      "jobOffered": {
+        "title": "Nouvelle mission proposée",
+        "body": "{what} le {date}. Acceptez ou refusez avant expiration."
+      },
+      "jobChanged": {
+        "title": "Mission modifiée",
+        "body": "Nouveaux détails pour {what} le {date}."
+      },
+      "payoutSent": {
+        "title": "Versement envoyé",
+        "body": "{amount} est en route vers votre compte."
+      },
+      "documentExpiring": {
+        "title": "Document arrivant à expiration",
+        "body": "{doc} expire le {date}."
+      },
+      "viewingChanged": {
+        "title": "Visite {state, select, moved {déplacée} done {effectuée, merci} cancelled {annulée} other {mise à jour}}",
+        "body": "{name} : {when}."
+      },
+      "jobAccepted": {
+        "title": "{name} a accepté une mission",
+        "body": "{what}, {date}."
+      }
+    },
+    "title": "Notifications",
+    "markAll": "Tout marquer comme lu",
+    "seeAll": "Tout voir",
+    "all": "Toutes",
+    "unread": "Non lues",
+    "bell": "{count, plural, =0 {Notifications} one {Notifications, # non lue} other {Notifications, # non lues}}",
+    "empty": "Rien pour l'instant. Réservations, paiements et messages apparaîtront ici.",
+    "emptyUnread": "Vous êtes à jour.",
+    "filterLabel": "Afficher",
+    "allCategories": "Tout",
+    "newCount": "{count} nouvelles",
+    "categories": {
+      "booking": "Réservations",
+      "payment": "Paiements",
+      "message": "Messages",
+      "stay": "Séjours",
+      "work": "Travail",
+      "system": "Compte"
+    },
+    "groups": {
+      "today": "Aujourd'hui",
+      "yesterday": "Hier",
+      "earlier": "Plus tôt"
+    },
+    "prefs": {
+      "title": "Paramètres des notifications",
+      "intro": "Choisissez comment chaque type d'information vous parvient. L'application en garde toujours une copie.",
+      "channels": {
+        "inApp": "Application",
+        "email": "E-mail",
+        "sms": "SMS",
+        "whatsapp": "WhatsApp",
+        "push": "Téléphone"
+      },
+      "cellLabel": "{channel} pour « {kind} »",
+      "locked": "Toujours activé : celle-ci demande une action de votre part.",
+      "quietTitle": "Heures calmes",
+      "quietBody": "Pas de SMS, de WhatsApp ni d'alertes sur le téléphone entre ces heures. Les problèmes de paiement urgents passent quand même.",
+      "quietOn": "Activer les heures calmes",
+      "from": "De",
+      "to": "À",
+      "kigaliTime": "Heure de Kigali",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…",
+      "saved": "Paramètres enregistrés",
+      "pushTitle": "Notifications sur ce téléphone",
+      "pushBody": "Recevez une alerte quand quelque chose vous attend, même quand HomeLink est fermé.",
+      "pushButton": "Activer les notifications",
+      "pushGranted": "Activées. Ce navigateur affichera les notifications HomeLink.",
+      "pushDenied": "Bloquées dans ce navigateur. Pour changer, ouvrez les paramètres du site depuis le cadenas de la barre d'adresse.",
+      "pushUnsupported": "Ce navigateur ne peut pas afficher de notifications. E-mail, SMS et WhatsApp fonctionnent toujours.",
+      "back": "Toutes les notifications",
+      "link": "Paramètres"
+    },
+    "categoriesKinds": {
+      "bookingConfirmed": "Réservation confirmée",
+      "paymentReceived": "Paiement reçu",
+      "paymentFailed": "Paiement refusé",
+      "momoPending": "Mobile Money en attente de validation",
+      "checkInReady": "Infos d'arrivée prêtes",
+      "rentDue": "Loyer à payer",
+      "newMessage": "Nouveau message",
+      "reviewRequest": "Demande d'avis",
+      "viewingConfirmed": "Visite confirmée",
+      "newBooking": "Nouvelle réservation",
+      "arrivalToday": "Arrivées du jour",
+      "newAsk": "Nouvelle demande",
+      "newIncident": "Incident signalé",
+      "inspectionDue": "Inspection à prévoir",
+      "jobOffered": "Nouvelle mission",
+      "jobChanged": "Mission modifiée",
+      "payoutSent": "Versement envoyé",
+      "documentExpiring": "Document arrivant à expiration",
+      "viewingChanged": "Visite déplacée ou effectuée",
+      "jobAccepted": "Mission acceptée par un chauffeur ou un guide"
+    }
+  },
+  "extras": {
+    "airportPickup": {
+      "name": "Accueil à l'aéroport",
+      "body": "Un chauffeur vous attend aux arrivées avec une pancarte à votre nom, à toute heure."
+    },
+    "earlyCheckIn": {
+      "name": "Arrivée anticipée",
+      "body": "Accès dès 10 h au lieu de 14 h, pour un vol matinal."
+    },
+    "lateCheckout": {
+      "name": "Départ tardif",
+      "body": "Départ à 16 h au lieu de 11 h, pour un vol du soir."
+    },
+    "groceries": {
+      "name": "Courses à l'arrivée",
+      "body": "Pain, lait, œufs, fruits, café et eau dans la cuisine à votre arrivée."
+    },
+    "cot": {
+      "name": "Lit bébé",
+      "body": "Un lit parapluie avec draps. Gratuit."
+    },
+    "midStayClean": {
+      "name": "Ménage en cours de séjour",
+      "body": "Ménage complet, serviettes et draps propres, par passage."
+    },
+    "childSeat": {
+      "name": "Siège enfant",
+      "body": "Installé avant la remise du véhicule, jusqu'à 4 ans. Par jour."
+    },
+    "fullInsurance": {
+      "name": "Assurance complète",
+      "body": "Aucune franchise à payer en cas de dommage. Par jour."
+    }
+  },
+  "booking": {
+    "steps": {
+      "dates": "Dates",
+      "details": "Vos coordonnées",
+      "extras": "Options",
+      "review": "Vérification",
+      "pay": "Paiement",
+      "driver": "Conducteur",
+      "people": "Personnes",
+      "application": "Demande",
+      "agreement": "Contrat"
+    },
+    "stepOf": "Étape {current} sur {total}",
+    "continue": "Continuer",
+    "continueTo": "Étape suivante : {step}",
+    "back": "Retour",
+    "hold": {
+      "label": "Dates bloquées pour vous encore {time}",
+      "warn": "Dates bloquées pour vous encore {time}. Terminez vite.",
+      "expiredTitle": "Vos dates ne sont plus bloquées",
+      "expiredBody": "Nous bloquons les dates 15 minutes pendant votre réservation. Vérifiez qu'elles sont toujours libres et reprenez où vous en étiez ; rien de ce que vous avez saisi n'est perdu.",
+      "checkAgain": "Vérifier et continuer",
+      "checking": "Vérification…",
+      "gone": "Quelqu'un d'autre a réservé ces dates entre-temps."
+    },
+    "summary": {
+      "title": "Votre réservation",
+      "change": "Modifier",
+      "show": "Afficher le détail du prix",
+      "hide": "Masquer le détail du prix",
+      "total": "Total",
+      "free": "Annulation gratuite jusqu'au {date}",
+      "noFree": "Les conditions d'annulation sont à l'étape de vérification"
+    },
+    "details": {
+      "title": "Qui vient",
+      "haveAccount": "Déjà réservé chez nous ?",
+      "signIn": "Se connecter",
+      "signInBody": "Vos coordonnées se remplissent toutes seules, et la réservation rejoint vos voyages.",
+      "orGuest": "Ou continuez sans compte. Vous pourrez en créer un après avoir réservé.",
+      "contactTitle": "Coordonnées",
+      "fullName": "Nom complet",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "phoneHint": "Nous vous envoyons les infos d'arrivée par SMS. Ajoutez l'indicatif du pays si le numéro n'est pas rwandais.",
+      "forSomeoneElse": "Je réserve pour quelqu'un d'autre",
+      "travellerName": "Nom complet du voyageur",
+      "travellerHint": "Nous l'accueillerons par son nom et lui enverrons aussi les infos d'arrivée.",
+      "travellerError": "Indiquez le nom de la personne qui séjourne.",
+      "arrivalTitle": "Arrivée",
+      "arrival": "Vers quelle heure arriverez-vous ?",
+      "arrivalNotSure": "Je ne sais pas encore",
+      "arrivalHint": "Pour que quelqu'un soit là avec les clés. L'arrivée se fait à partir de 14 h.",
+      "purpose": "Qu'est-ce qui vous amène à Kigali ?",
+      "purposeLeisure": "Une visite ou des vacances",
+      "purposeWork": "Le travail",
+      "requests": "Quelque chose à nous signaler ?",
+      "requestsPlaceholder": "Un lit bébé, une chambre au rez-de-chaussée, un vol tardif…",
+      "requestsCount": "{count} / 500"
+    },
+    "extras": {
+      "title": "Une arrivée plus simple",
+      "body": "Chaque option est organisée par l'équipe de Kigali. Vous pouvez aussi en ajouter plus tard depuis votre réservation.",
+      "add": "Ajouter",
+      "added": "Ajouté",
+      "remove": "Retirer {name}",
+      "increase": "Augmenter : {name}",
+      "decrease": "Diminuer : {name}",
+      "perBooking": "par séjour",
+      "perVisit": "par passage",
+      "perDay": "par jour",
+      "free": "Gratuit",
+      "none": "Rien à ajouter à cette réservation."
+    },
+    "review": {
+      "title": "Tout vérifier",
+      "who": "Voyageur",
+      "travelling": "Personne qui voyage : {name}",
+      "when": "Dates",
+      "party": "Voyageurs",
+      "extras": "Options",
+      "none": "Aucun",
+      "edit": "Modifier",
+      "requests": "Votre message",
+      "rulesTitle": "Règlement intérieur",
+      "rulesAccept": "J'ai lu le règlement intérieur et je l'accepte",
+      "rulesError": "Acceptez le règlement intérieur pour continuer.",
+      "cancelTitle": "Si vos projets changent",
+      "cancelFull": "Remboursement intégral",
+      "cancelHalf": "La moitié des nuits remboursée, ménage et options en totalité",
+      "cancelNone": "Aucun remboursement",
+      "cancelUntil": "Jusqu'au {date}",
+      "cancelFrom": "À partir du {date}",
+      "cancelCarFree": "Annulation gratuite",
+      "cancelCarOneDay": "Une journée de location est retenue",
+      "cancelDayFree": "Remboursement intégral",
+      "cancelDayNone": "Aucun remboursement",
+      "cancelPermit": "Les permis du parc sont achetés à votre nom et ne sont jamais remboursables.",
+      "promoLabel": "Code promo",
+      "promoApply": "Appliquer",
+      "promoRemove": "Retirer",
+      "promoOk": "{code} appliqué : {amount} de réduction",
+      "promoErrors": {
+        "unknown": "Nous ne reconnaissons pas ce code.",
+        "expired": "Ce code a expiré.",
+        "notApplicable": "Ce code ne s'applique pas à cette réservation."
+      },
+      "rulesTitleCar": "Règles de la location",
+      "rulesTitleDay": "Règles de la journée",
+      "rulesAcceptOther": "J'ai lu les règles et je les accepte",
+      "cancelDayPermit": "Remboursement, hors permis du parc",
+      "people": "Participants",
+      "startsAt": "Départ à {time}"
+    },
+    "pay": {
+      "title": "Paiement sécurisé",
+      "planTitle": "Quand souhaitez-vous payer ?",
+      "planFull": "Tout payer maintenant",
+      "planFullBody": "{amount} aujourd'hui",
+      "planDeposit": "Payer 30 % maintenant",
+      "planDepositBody": "{now} aujourd'hui, {balance} le {date}",
+      "methodTitle": "Moyen de paiement",
+      "card": "Carte",
+      "cardHint": "Visa, Mastercard",
+      "mobileMoney": "Mobile Money",
+      "mobileMoneyHint": "MTN ou Airtel",
+      "bankTransfer": "Virement bancaire",
+      "bankTransferHint": "Pour une location longue durée",
+      "momoProvider": "{provider} Mobile Money",
+      "momoUnknown": "Les numéros MTN commencent par 078 ou 079, ceux d'Airtel par 072 ou 073.",
+      "payNow": "Payer {amount}",
+      "payDeposit": "Payer {amount} maintenant",
+      "processing": "Paiement en cours…",
+      "secure": "Chiffré de bout en bout. HomeLink ne voit jamais votre numéro de carte complet.",
+      "testHint": "Aperçu : rien n'est débité. La carte 4242 4242 4242 4242 passe, 4000 0000 0000 0002 est refusée, 4000 0027 6000 3184 demande une validation à votre banque. Un numéro Mobile Money se terminant par 0000 expire, par 1111 est refusé.",
+      "declinedTitle": "Votre banque a refusé le paiement",
+      "declinedBody": "Rien n'a été débité. Vérifiez les infos de la carte, essayez une autre carte ou payez par Mobile Money.",
+      "agree": "En payant, vous acceptez le règlement intérieur et les conditions d'annulation ci-dessus."
+    },
+    "threeDs": {
+      "title": "Confirmez auprès de votre banque",
+      "body": "Votre banque a envoyé un code à 6 chiffres au téléphone lié à cette carte.",
+      "code": "Code",
+      "codeError": "Saisissez les 6 chiffres.",
+      "confirm": "Confirmer le paiement",
+      "cancel": "Annuler"
+    },
+    "momo": {
+      "waitTitle": "Validez le paiement sur votre téléphone",
+      "waitBody": "Nous avons envoyé une demande {provider} de {amount} au {number}. Saisissez votre code PIN Mobile Money sur le téléphone pour la valider.",
+      "remaining": "{seconds, plural, one {# seconde restante} other {# secondes restantes}}",
+      "approved": "J'ai validé",
+      "other": "Utiliser un autre numéro",
+      "timeoutTitle": "La demande a expiré",
+      "timeoutBody": "Votre téléphone n'a pas confirmé à temps. Rien n'a été débité.",
+      "declinedTitle": "Le paiement a été refusé",
+      "declinedBody": "La demande a été refusée sur le téléphone. Rien n'a été débité.",
+      "tryAgain": "Renvoyer la demande"
+    },
+    "states": {
+      "datesTakenTitle": "Ces dates viennent d'être réservées",
+      "datesTakenBody": "Quelqu'un d'autre a réservé {name} pour certaines de ces nuits pendant votre paiement. Rien n'a été débité.",
+      "pickNewDates": "Choisir d'autres dates",
+      "priceChangedTitle": "Le prix a changé",
+      "priceChangedBody": "Le total de cette réservation est maintenant de {next}, contre {previous} avant. Rien n'a été débité.",
+      "payNew": "Continuer avec le nouveau total",
+      "invalidTitle": "Un détail est à revoir",
+      "invalidBody": "Une information de la réservation n'a pas passé nos vérifications. Reprenez les étapes ; rien n'a été débité."
+    },
+    "booked": "C'est réservé. Votre référence est {ref}.",
+    "driver": {
+      "title": "Votre mode de déplacement",
+      "withDriverBody": "Un chauffeur HomeLink qui connaît les routes. Carburant et parking à notre charge.",
+      "selfDriveBody": "Vous conduisez. Nous revérifions votre permis à la remise du véhicule.",
+      "licence": "Votre permis de conduire",
+      "licenceHint": "Une photo ou un PDF, 10 Mo maximum. Permis international ou rwandais acceptés.",
+      "licenceError": "Ajoutez votre permis pour conduire vous-même.",
+      "pickupTitle": "Où vous retrouver ?",
+      "airport": "Aéroport international de Kigali",
+      "hotel": "Votre hôtel",
+      "address": "Une adresse",
+      "hotelName": "Nom de l'hôtel",
+      "addressDetail": "Adresse ou point de repère",
+      "flight": "Numéro de vol (facultatif)",
+      "flightHint": "Nous le suivons et attendons si vous atterrissez en retard.",
+      "flightError": "Ce n'est pas un numéro de vol valide. Par exemple : WB464."
+    },
+    "days": "{count, plural, one {# jour} other {# jours}}",
+    "people": {
+      "title": "Qui vient",
+      "body": "Les noms tels qu'ils figurent sur le passeport ou la pièce d'identité. Le guide les vérifie au départ.",
+      "slot": "Heure de départ",
+      "fixedSlot": "Départ à {time}",
+      "person": "Personne {n}",
+      "name": "Nom complet",
+      "age": "Âge",
+      "ageError": "Il faut avoir au moins {min} ans le jour de l'excursion.",
+      "nameError": "Saisissez le nom complet de cette personne.",
+      "nationality": "Nationalité",
+      "nationalityError": "Choisissez une nationalité.",
+      "passport": "Numéro de passeport ou de pièce d'identité",
+      "passportError": "Saisissez le numéro de passeport ou de pièce d'identité.",
+      "permitNote": "Le parc délivre un permis au nom de chaque personne : nous avons besoin de ses informations de passeport. Un permis ne peut être ni transféré ni remboursé.",
+      "pickup": "Point de rendez-vous",
+      "pickupHint": "Rendez-vous ici. Besoin qu'on vienne vous chercher à Kigali ? Dites-le à l'étape suivante.",
+      "dietary": "Allergies ou régime alimentaire",
+      "dietaryPlaceholder": "Végétarien, sans fruits à coque…",
+      "other": "Autre",
+      "choose": "Choisir…",
+      "slotError": "Choisissez une heure de départ."
+    },
+    "application": {
+      "title": "À propos de vous, futur locataire",
+      "body": "L'équipe de Kigali lit chaque demande. Voici ce qu'il lui faut pour vous donner rapidement son accord.",
+      "term": "Emménagement en {month}, pour {count, plural, one {# mois} other {# mois}}",
+      "occupants": "Combien de personnes y vivront ?",
+      "employer": "Employeur, école ou organisation",
+      "employerHint": "Où vous travaillez ou étudiez à Kigali, ou l'organisation qui vous y affecte.",
+      "employerError": "Indiquez où vous travaillez ou étudiez.",
+      "income": "Revenu mensuel",
+      "incomeHint": "Une fourchette suffit. Elle reste entre vous et l'équipe de Kigali.",
+      "incomeBands": {
+        "under500k": "Moins de 500 000 RWF",
+        "500kTo1m": "De 500 000 RWF à 1 million",
+        "1mTo2m": "De 1 à 2 millions RWF",
+        "over2m": "Plus de 2 millions RWF"
+      },
+      "incomeError": "Choisissez une fourchette.",
+      "id": "Passeport ou carte d'identité",
+      "idHint": "Une photo de la page avec votre portrait. Facultatif pour l'instant ; obligatoire avant l'emménagement.",
+      "verifyIdLink": "Faites vérifier votre identité une fois sur votre compte, et passez cette étape la prochaine fois"
+    },
+    "agreement": {
+      "title": "Contrat de location",
+      "body": "Lisez-le jusqu'au bout. C'est le contrat dont vous garderez une copie.",
+      "heading": "Contrat de location pour {home}",
+      "parties": "Entre HomeLink Africa Ltd, qui gère le logement pour le compte de son propriétaire, et {tenant}, le locataire.",
+      "clauseHome": "Le logement : {home}, {area}. Meublé tel qu'inspecté et photographié par HomeLink.",
+      "clauseTerm": "Durée : {count, plural, one {# mois} other {# mois}} à compter du {start}. Après les six premiers mois, chaque partie peut y mettre fin par écrit avec un préavis de deux mois.",
+      "clauseRent": "Loyer : {rent} par mois, payable d'avance au plus tard le 5 de chaque mois, par carte, Mobile Money ou virement bancaire.",
+      "clauseDeposit": "Caution : {deposit}, conservée par HomeLink et restituée dans les 14 jours suivant votre départ, déduction faite du coût des dégâts allant au-delà de l'usure normale, détaillés par écrit.",
+      "clauseIncludes": "Compris dans le loyer : {includes}. L'électricité passe par un compteur prépayé au nom du locataire.",
+      "clauseCare": "Le locataire maintient le logement propre et signale toute panne ou casse sous 48 heures via HomeLink ; HomeLink répare à ses frais ce qui n'est pas dû au locataire.",
+      "clauseRules": "Le règlement intérieur accepté lors de la vérification fait partie de ce contrat.",
+      "clauseLaw": "Ce contrat est régi par le droit rwandais.",
+      "scrollHint": "Faites défiler jusqu'en bas pour signer.",
+      "read": "J'ai lu tout le contrat",
+      "sign": "Saisissez votre nom complet pour signer",
+      "signHint": "Il doit correspondre au nom indiqué dans vos coordonnées : {name}.",
+      "signError": "La signature doit correspondre à votre nom : {name}.",
+      "signed": "Signé par {name} le {date}"
+    },
+    "bank": {
+      "title": "Payer par virement bancaire",
+      "body": "Virez le montant ci-dessous depuis n'importe quelle banque rwandaise ou étrangère. Nous confirmons par e-mail et SMS à réception, généralement sous un jour ouvré ; le logement vous est réservé d'ici là.",
+      "accountName": "Titulaire du compte",
+      "bank": "Banque",
+      "account": "Numéro de compte",
+      "swift": "SWIFT",
+      "reference": "Référence",
+      "referenceValue": "Votre référence de réservation, affichée à l'écran suivant",
+      "placeholder": "Coordonnées bancaires d'aperçu ; ce n'est pas un vrai compte.",
+      "confirm": "Je vais faire le virement"
+    },
+    "rent": {
+      "stageFull": "Remboursement intégral si votre demande n'est pas acceptée",
+      "stageFullWhen": "Avant la contresignature du contrat",
+      "stageDeposit": "Caution restituée à votre départ",
+      "stageDepositWhen": "Déduction faite des éventuels dégâts, détaillés par écrit",
+      "facts": "{count, plural, one {# mois} other {# mois}} à partir de {month}"
+    },
+    "viewing": {
+      "title": "Réserver une visite",
+      "intro": "Un membre de l'équipe de Kigali vous fait visiter et répond à vos questions sur le titre, le quartier et le prix. Rien n'est débité.",
+      "how": "Comment souhaitez-vous visiter ?",
+      "inPerson": "Sur place",
+      "inPersonBody": "Rendez-vous au portail. Environ 45 minutes.",
+      "video": "En vidéo",
+      "videoBody": "Une visite en direct où que vous soyez. Nous envoyons le lien la veille.",
+      "day": "Jour",
+      "time": "Heure (Kigali)",
+      "timeError": "Choisissez une heure.",
+      "contact": "Vos coordonnées",
+      "notes": "Quelque chose à préparer pour vous ?",
+      "notesPlaceholder": "Questions sur le titre, une seconde visite avec un géomètre…",
+      "submit": "Demander cette visite",
+      "sending": "Envoi…",
+      "doneTitle": "Visite demandée",
+      "doneBody": "Le {date} à {time}. L'équipe de Kigali confirme par message sous quelques heures.",
+      "bringPerson": "Apportez une pièce d'identité ; le gardien la demandera.",
+      "bringVideo": "Nous envoyons le lien vidéo par e-mail et WhatsApp la veille.",
+      "seeViewings": "Voir vos visites",
+      "back": "Retour au logement",
+      "button": "Réserver une visite"
+    },
+    "record": {
+      "pendingTitle": "Votre logement est réservé jusqu'à réception du virement",
+      "pendingBody": "Envoyez {amount} au compte {account} chez {bank}, avec la référence {ref}. Nous confirmons par e-mail et SMS, en général sous un jour ouvré.",
+      "receipt": "Reçu",
+      "calendar": "Ajouter au calendrier",
+      "details": "Détails de la réservation",
+      "slot": "Départ à {time}",
+      "meet": "Rendez-vous",
+      "price": "Ce que vous avez payé",
+      "payments": "Paiements",
+      "kinds": {
+        "full": "Payé en totalité",
+        "deposit": "Acompte",
+        "balance": "Solde",
+        "rent": "Loyer",
+        "change": "Changement de dates",
+        "refund": "Remboursement"
+      },
+      "status": {
+        "pending": "En attente",
+        "succeeded": "Payé",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "rails": {
+        "card": "Carte",
+        "mobileMoney": "Mobile Money",
+        "bankTransfer": "Virement"
+      },
+      "balanceDue": "Solde de {amount} à payer le {date}",
+      "moveInTitle": "L'emménagement",
+      "moveInBody": "Le jour J, un membre de l'équipe fait le tour du logement avec vous. Les points ci-dessous sont vérifiés ensemble et signés par vous deux.",
+      "moveIn": {
+        "keys": "Clés et badges remis et comptés",
+        "meters": "Compteurs d'eau et d'électricité relevés et photographiés",
+        "inventory": "Inventaire des meubles et appareils vérifié",
+        "photos": "Une photo de chaque pièce, avant de défaire vos bagages",
+        "contact": "Le numéro de votre gestionnaire enregistré dans votre téléphone"
+      },
+      "receiptTitle": "Reçu {ref}",
+      "print": "Imprimer ou enregistrer en PDF",
+      "issued": "Émis le {date}",
+      "billedTo": "Facturé à",
+      "item": "Article",
+      "amount": "Montant",
+      "paid": "Payé",
+      "vatNote": "HomeLink Africa Ltd, Kigali, Rwanda. Prix TTC le cas échéant. Reçu d'aperçu : pas encore de numéro fiscal."
+    },
+    "manage": {
+      "title": "Votre réservation",
+      "timeline": "Ce qui s'est passé",
+      "events": {
+        "placed": "Réservé",
+        "paid": "Payé",
+        "datesChanged": "Dates modifiées",
+        "guestsAdded": "Voyageurs modifiés",
+        "checkInReleased": "Infos d'arrivée envoyées",
+        "checkedIn": "Arrivée",
+        "checkedOut": "Départ",
+        "cancelled": "Annulé",
+        "refunded": "Remboursé",
+        "reviewed": "Avis publié",
+        "issueReported": "Problème signalé",
+        "noteAdded": "Message de l'équipe"
+      },
+      "actions": "Modifier votre réservation",
+      "changeDates": "Changer les dates",
+      "addGuests": "Changer les voyageurs",
+      "cancel": "Annuler la réservation",
+      "extend": "Rester plus longtemps",
+      "report": "Signaler un problème",
+      "ask": "Demander quelque chose",
+      "newDates": "Nouvelles dates",
+      "arrive": "Arrivée",
+      "leave": "Départ",
+      "checking": "Vérification…",
+      "costMore": "Cela coûte {amount} de plus. Le montant est débité sur la carte utilisée pour payer.",
+      "costLess": "Cela coûte {amount} de moins. La différence est remboursée sur la carte utilisée pour payer.",
+      "costSame": "Le prix ne change pas.",
+      "unavailable": "Ces dates ne sont pas libres. Essayez-en d'autres.",
+      "invalid": "Choisissez une date de départ plus tardive, à partir d'aujourd'hui.",
+      "confirmChange": "Confirmer la modification",
+      "guests": "Voyageurs",
+      "guestsMax": "Ce logement peut accueillir {count} personnes.",
+      "save": "Enregistrer",
+      "close": "Fermer",
+      "cancelTitle": "Annuler cette réservation ?",
+      "cancelRefund": "Vous récupérez {refund}. {kept} est retenu, selon les conditions acceptées.",
+      "cancelRefundFull": "Vous récupérez la totalité, soit {refund}.",
+      "cancelReason": "Qu'est-ce qui a changé ?",
+      "reasons": {
+        "plansChanged": "Mes projets ont changé",
+        "foundElse": "J'ai trouvé ailleurs",
+        "travel": "Mon voyage est annulé",
+        "other": "Autre chose"
+      },
+      "keep": "Garder ma réservation",
+      "confirmCancel": "Annuler et rembourser {refund}",
+      "cancelledToast": "Réservation annulée. Le remboursement de {refund} est en cours.",
+      "checkInTitle": "Infos d'arrivée",
+      "checkInLocked": "L'itinéraire, le code de la porte et le wifi seront disponibles {when}.",
+      "directions": "Comment venir",
+      "doorCode": "Code de la porte",
+      "wifi": "Wifi",
+      "manager": "Votre gestionnaire",
+      "emergency": "Ligne d'urgence, jour et nuit",
+      "onlineTitle": "Enregistrement en ligne",
+      "onlineBody": "Envoyez la pièce d'identité de chaque adulte maintenant : à l'arrivée, il ne restera qu'à remettre les clés.",
+      "onlineDone": "Enregistrement en ligne effectué pour {names}.",
+      "adult": "Adulte {n}",
+      "sendIds": "Envoyer pour l'enregistrement",
+      "reportTitle": "Signaler un problème",
+      "reportBody": "Votre message va directement à l'équipe de garde. En cas d'urgence, appelez aussi la ligne d'urgence.",
+      "category": "De quoi s'agit-il ?",
+      "categories": {
+        "power": "Électricité",
+        "water": "Eau",
+        "internet": "Internet",
+        "cleanliness": "Propreté",
+        "safety": "Sécurité",
+        "noise": "Bruit",
+        "other": "Autre chose"
+      },
+      "urgency": "Quel degré d'urgence ?",
+      "urgencies": {
+        "now": "Tout de suite",
+        "today": "Aujourd'hui",
+        "whenever": "Quand vous pouvez"
+      },
+      "describe": "Que se passe-t-il ?",
+      "photo": "Une photo, si ça aide",
+      "send": "Envoyer à l'équipe",
+      "reported": "Envoyé. L'équipe de garde l'a reçu.",
+      "openIssues": "{count, plural, one {# problème signalé} other {# problèmes signalés}}",
+      "reviewTitle": "Comment ça s'est passé ?",
+      "reviewBody": "Deux minutes pour dire ce qui a marché ou non : vous aidez le prochain voyageur, et nous aussi.",
+      "aspects": {
+        "cleanliness": "Propreté",
+        "accuracy": "Conforme à l'annonce",
+        "checkIn": "Arrivée",
+        "communication": "Communication",
+        "location": "Emplacement",
+        "value": "Rapport qualité-prix"
+      },
+      "stars": "{count, plural, one {# étoile} other {# étoiles}} pour {aspect}",
+      "reviewText": "Avec vos propres mots",
+      "submitReview": "Publier l'avis",
+      "reviewed": "Merci. Votre avis est publié sur l'annonce.",
+      "bookAgain": "Réserver à nouveau",
+      "depositTitle": "Votre caution",
+      "depositHeld": "{amount} conservés depuis votre emménagement.",
+      "depositInspection": "L'état des lieux de sortie est fait ; la caution vous est rendue sous 14 jours, déduction faite des retenues détaillées.",
+      "depositReturned": "{amount} rendus sur votre compte.",
+      "whenReleased": "le {date} à 14 h",
+      "duringTitle": "Pendant votre séjour"
+    }
+  },
+  "files": {
+    "choose": "Choisir un fichier",
+    "drop": "ou déposez-le ici",
+    "type": "Ce type de fichier n'est pas accepté. Utilisez une photo ou un PDF.",
+    "size": "Ce fichier est trop lourd. La limite est de 10 Mo.",
+    "remove": "Retirer le fichier",
+    "note": "Conservé sur cet appareil jusqu'à notre vérification. Rien n'est envoyé dans cet aperçu."
+  },
+  "cart": {
+    "planTitle": "Vous préparez tout un voyage ?",
+    "planBody": "Ajoutez une voiture et des excursions à ce séjour, et payez en une fois. Chaque partie peut toujours être modifiée ou annulée séparément.",
+    "planButton": "Organiser un voyage autour de ce séjour",
+    "add": "Ajouter au voyage",
+    "inTrip": "Dans votre voyage",
+    "added": "Ajouté à votre voyage",
+    "pill": "Voyage",
+    "pillLabel": "Votre voyage, {count, plural, one {# élément} other {# éléments}}",
+    "title": "Votre voyage",
+    "intro": "Tout ce que vous réservez ensemble, jour par jour. Vous payez une seule fois ; chaque partie garde sa propre réservation, et peut donc être modifiée ou annulée séparément.",
+    "empty": "Rien dans votre voyage pour l'instant. Ajoutez un séjour, une voiture ou une excursion depuis sa page.",
+    "browseStays": "Trouver un logement",
+    "issues": {
+      "staysOverlap": "Ces deux séjours se chevauchent. Retirez-en un ou changez ses dates.",
+      "carOutsideStay": "Cette voiture est réservée pour des jours en dehors de votre séjour. Pas de souci si vous arrivez tôt ou partez tard.",
+      "dayOutsideStay": "Cette excursion tombe un jour où vous n'avez aucun séjour réservé.",
+      "inPast": "Ces dates sont passées. Retirez cet élément et ajoutez-le de nouveau avec d'autres dates."
+    },
+    "remove": "Retirer {name}",
+    "booked": "Déjà réservé",
+    "total": "Total du voyage",
+    "checkout": "Payer tout le voyage",
+    "blocked": "Corrigez les éléments marqués en rouge pour passer au paiement.",
+    "suggestCarBody": "Une voiture avec un chauffeur qui vous attend à l'aéroport.",
+    "suggestDayBody": "Gorilles, Nyungwe, lac Kivu ou une balade dans Kigali.",
+    "turnOff": "Réserver plutôt chaque élément séparément",
+    "turnOffTitle": "Désactiver le voyage ?",
+    "turnOffBody": "Votre voyage sera vidé. Ce qui est déjà réservé le reste.",
+    "turnOffConfirm": "Vider et désactiver",
+    "keep": "Garder mon voyage",
+    "checkoutTitle": "Réservez votre voyage",
+    "stepItems": "Chaque partie",
+    "stepItemsBody": "Quelques détails dont seules certaines parties ont besoin : qui participe à chaque excursion, et un permis pour une voiture que vous conduirez.",
+    "nothingNeeded": "Rien d'autre à fournir pour cette partie.",
+    "reviewItems": "Ce que vous réservez",
+    "rulesAll": "J'ai lu les règles de chaque partie et je les accepte",
+    "booked_toast": "Votre voyage est réservé : {count, plural, one {# réservation} other {# réservations}}.",
+    "failed": "Une partie du voyage n'a pas pu être réservée, donc rien n'a été prélevé. {name} : ces dates viennent d'être prises.",
+    "tripName": "Kigali, {month}",
+    "dayHeading": "{date}",
+    "trayClose": "Fermer",
+    "trayAlso": "Aussi dans votre voyage : {count, plural, one {# autre} other {# autres}}",
+    "viewCount": "Voir le voyage ({count})",
+    "addTitle": "Ajouter à ce voyage",
+    "addStay": "Un logement",
+    "addCar": "Une voiture",
+    "addDay": "Une excursion",
+    "addStayBody": "Un logement pour ces dates, ou une nuit sur la route.",
+    "addAnother": "En ajouter un autre, aux mêmes dates."
+  },
+  "auth": {
+    "or": "ou",
+    "signInTitle": "Se connecter",
+    "signInBody": "Avec votre téléphone ou votre e-mail. Nous vous envoyons un code par SMS ou e-mail ; pas de mot de passe par téléphone.",
+    "noAccount": "Nouveau sur HomeLink ?",
+    "createOne": "Créer un compte",
+    "signInWith": "Se connecter avec",
+    "tab": {
+      "phone": "Téléphone",
+      "email": "E-mail"
+    },
+    "phone": "Numéro de téléphone",
+    "phoneInvalid": "Saisissez un numéro d'au moins 9 chiffres.",
+    "sendCode": "Recevoir un code",
+    "email": "E-mail",
+    "emailInvalid": "Saisissez une adresse comme nom@exemple.com.",
+    "password": "Mot de passe",
+    "forgot": "Oublié ?",
+    "passwordShort": "Au moins 8 caractères.",
+    "signIn": "Se connecter",
+    "sendLink": "Recevoir plutôt un lien de connexion",
+    "signUpTitle": "Créer votre compte",
+    "signUpBody": "Vos voyages, vos échanges avec l'équipe et vos reçus, au même endroit.",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "name": "Votre nom",
+    "phoneOrEmail": "Téléphone ou e-mail",
+    "contactInvalid": "Saisissez un numéro de téléphone ou une adresse e-mail.",
+    "language": "M'écrire en",
+    "terms": "J'accepte les <terms>conditions</terms> et j'ai lu comment mes données sont utilisées dans la <privacy>politique de confidentialité</privacy>.",
+    "continue": "Continuer",
+    "verifyTitle": "Saisissez le code",
+    "verifyBody": "Nous avons envoyé un code à 6 chiffres à {to}.",
+    "verifyBodyNone": "Nous vous avons envoyé un code à 6 chiffres.",
+    "codeLabel": "Chiffre",
+    "wrongCode": "Ce code n'est pas le bon. Vérifiez le message et réessayez, ou demandez-en un nouveau.",
+    "verify": "Confirmer",
+    "resendIn": "Nouveau code dans {s} s",
+    "resend": "Envoyer un nouveau code",
+    "resent": "Un nouveau code arrive.",
+    "previewCode": "Aperçu : tout code fonctionne sauf 000000.",
+    "forgotTitle": "Réinitialiser le mot de passe",
+    "forgotBody": "Nous vous envoyons un lien pour en choisir un nouveau.",
+    "backToSignIn": "Retour à la connexion",
+    "sendReset": "Recevoir un lien",
+    "checkTitle": "Consultez vos e-mails",
+    "checkBody": "Nous avons envoyé un lien de connexion à {to}. Il fonctionne une fois, pendant 15 minutes.",
+    "checkResetBody": "Nous avons envoyé à {to} un lien pour choisir un nouveau mot de passe. Il fonctionne une fois, pendant 15 minutes.",
+    "checkHint": "Rien reçu ? Regardez dans les spams, ou revenez vérifier l'adresse.",
+    "openLink": "Aperçu : ouvrir le lien",
+    "workHere": "Vous travaillez chez HomeLink ?",
+    "staffTitle": "Essayer l'espace de travail",
+    "staffBody": "Un outil d'aperçu, pas une connexion : choisissez le rôle avec lequel voir l'espace de travail. Les vrais comptes du personnel arrivent avec le backend.",
+    "google": "Continuer avec Google",
+    "apple": "Continuer avec Apple"
+  },
+  "help": {
+    "title": "Aide",
+    "intro": "Des réponses courtes aux questions qu'on nous pose le plus. Si la vôtre n'y est pas, l'équipe répond sous un jour ouvré.",
+    "search": "Rechercher dans l'aide",
+    "searchPlaceholder": "Cherchez, par exemple « annuler » ou « caution »",
+    "noHits": "Rien ne correspond.",
+    "askUs": "Demander à l'équipe",
+    "stillStuck": "Toujours bloqué ?",
+    "related": "Dans la même rubrique",
+    "categories": {
+      "booking": "Réserver et payer",
+      "changing": "Modifier et annuler",
+      "stay": "Arrivée et séjour",
+      "renting": "Louer un logement",
+      "cars": "Voitures et chauffeurs",
+      "days": "Excursions"
+    },
+    "articles": {
+      "how-to-book": {
+        "title": "Comment réserver",
+        "body": "Choisissez vos dates, vérifiez le prix, puis suivez quatre courtes étapes : vos coordonnées, les options, le règlement, puis le paiement.\n\nNous bloquons les dates pendant {holdMinutes} minutes, le temps du paiement. Une fois le paiement passé, vous recevez une référence commençant par HL- et une confirmation par e-mail et dans votre compte."
+      },
+      "ways-to-pay": {
+        "title": "Moyens de paiement",
+        "body": "Vous pouvez payer par carte (Visa ou Mastercard) ou par Mobile Money (MTN ou Airtel). Les prix sont fixés en francs rwandais ; les autres devises sont affichées au taux du jour à titre indicatif.\n\nPour certains longs séjours, vous pouvez payer un acompte maintenant et le reste plus près de l'arrivée. La page de paiement indique quand c'est possible."
+      },
+      "fees": {
+        "title": "Ce que comprend le prix",
+        "body": "Le prix affiché au paiement est celui que vous payez. Il comprend les nuits, des frais de ménage de {cleaning} RWF pour un séjour, et des frais de service de {feePercent} % du prix des nuits.\n\nRien n'est ajouté à la fin, et il n'y a pas de frais de réservation en plus."
+      },
+      "escrow": {
+        "title": "Pourquoi certains paiements sont bloqués",
+        "body": "Pour les séjours de {escrowFrom} RWF ou plus, nous bloquons votre paiement jusqu'à votre arrivée. Le propriétaire n'est payé qu'une fois que vous êtes dans les lieux et que le logement est conforme.\n\nS'il ne l'est pas, prévenez-nous dès le premier jour et nous arrangeons la situation ou vous remboursons."
+      },
+      "cancel-stay": {
+        "title": "Annuler un séjour",
+        "body": "Annulez jusqu'à {stayDays} jours avant l'arrivée et tout vous est rendu.\n\nEnsuite et jusqu'à la veille, vous récupérez la moitié du prix des nuits, plus les frais de ménage et les options, puisqu'ils n'ont pas servi. Le jour de l'arrivée, il n'y a pas de remboursement."
+      },
+      "cancel-car-day": {
+        "title": "Annuler une voiture ou une excursion",
+        "body": "Une voiture peut être annulée avec remboursement intégral jusqu'à {carDays} jours avant la prise en charge. Ensuite, une journée de location est retenue.\n\nUne excursion peut être annulée avec remboursement intégral jusqu'à {dayDays} jours avant. Les permis de parc achetés à votre nom ne peuvent pas être revendus, leur part est donc retenue."
+      },
+      "change-dates": {
+        "title": "Changer vos dates",
+        "body": "Ouvrez la réservation dans votre compte et choisissez de nouvelles dates. Vous voyez le nouveau prix et la différence avant de confirmer.\n\nSi les nouvelles dates coûtent moins cher, la différence vous revient ; si elles coûtent plus cher, vous payez la différence. Les dates ne peuvent être déplacées qu'avant le début de la réservation."
+      },
+      "refund-timing": {
+        "title": "Quand arrive un remboursement",
+        "body": "Nous envoyons les remboursements le jour même. Sur Mobile Money, ils apparaissent en général en quelques minutes ; sur carte, comptez 5 à 10 jours ouvrés selon votre banque.\n\nVotre réservation indique chaque remboursement et sa date d'envoi."
+      },
+      "check-in": {
+        "title": "Entrer dans le logement",
+        "body": "L'arrivée se fait à partir de {checkIn}. L'adresse, le code de la porte et le wi-fi vous sont communiqués 48 heures avant, dans votre réservation et par message, jamais plus tôt.\n\nVous arrivez tard ? Indiquez votre heure dans la réservation et quelqu'un sera là, ou le code de la boîte à clés fonctionnera à toute heure."
+      },
+      "something-wrong": {
+        "title": "Un problème pendant le séjour",
+        "body": "Signalez-le depuis votre réservation : choisissez de quoi il s'agit et l'urgence. Ce qui est urgent (pas de courant, pas d'eau, une serrure) arrive tout de suite à l'équipe, de jour comme de nuit.\n\nVous pouvez aussi appeler la ligne d'urgence indiquée sur la page contact pendant votre séjour."
+      },
+      "extras": {
+        "title": "Accueil à l'aéroport, arrivée anticipée et autres options",
+        "body": "Ajoutez des options en réservant, ou plus tard depuis votre réservation. L'équipe organise chacune et la confirme dans vos messages.\n\nLes options sont remboursées intégralement si vous annulez avant l'arrivée."
+      },
+      "verified": {
+        "title": "Ce que signifie « vérifié »",
+        "body": "Quelqu'un de notre équipe est allé dans chaque logement, a conduit chaque voiture et a fait chaque excursion que nous proposons, selon une liste de contrôle, et l'a photographié lui-même.\n\nLa page indique qui a vérifié et quand."
+      },
+      "renting-how": {
+        "title": "Comment fonctionne la location",
+        "body": "La location dure 12 ou 24 mois et commence le 1er du mois. Vous faites une demande avec quelques informations et une pièce d'identité ; l'équipe répond sous deux jours ouvrés.\n\nVous payez le premier mois et la caution pour emménager, puis le loyer chaque mois."
+      },
+      "renting-deposit": {
+        "title": "La caution",
+        "body": "La caution est conservée pendant toute la location et rendue après votre départ, une fois le logement comparé à l'état des lieux d'entrée.\n\nSi une somme est retenue pour des réparations, nous vous indiquons par écrit le montant et la raison avant de vous rendre le reste."
+      },
+      "renting-repairs": {
+        "title": "Réparations pendant la location",
+        "body": "Signalez les réparations depuis votre page de location. Les urgentes (eau, électricité, sécurité) sont traitées le jour même ; les autres sont planifiées avec vous.\n\nL'usure normale de la vie quotidienne ne vous est jamais facturée."
+      },
+      "renting-moving-out": {
+        "title": "Quitter le logement",
+        "body": "Indiquez votre date de départ au moins un mois à l'avance. Nous prévoyons un état des lieux ce jour-là, comparons le logement avec son état à votre arrivée, et rendons la caution."
+      },
+      "car-with-driver": {
+        "title": "Une voiture avec chauffeur",
+        "body": "Le chauffeur vous retrouve où vous le souhaitez, connaît les routes et vous attend pendant vos visites. Ses repas et le carburant sont compris dans le prix.\n\nSon nom figure dans votre réservation avant le jour J."
+      },
+      "car-self-drive": {
+        "title": "Conduire vous-même",
+        "body": "Il faut un permis de conduire obtenu depuis au moins deux ans. Envoyez-le en réservant ; l'équipe le vérifie avant la prise en charge.\n\nSeuls les conducteurs nommés sur la réservation peuvent conduire."
+      },
+      "car-pickup": {
+        "title": "Prendre et rendre une voiture",
+        "body": "La prise en charge se fait là où l'indique votre réservation, souvent l'aéroport. La voiture vous est présentée avec des photos des rayures et traces déjà présentes, et doit être rendue avec le même niveau de carburant qu'au départ."
+      },
+      "car-insurance": {
+        "title": "Assurance",
+        "body": "Chaque voiture est assurée au tiers. La couverture complète est une option à ajouter en réservant, et réduit ce que vous payez si la voiture est abîmée."
+      },
+      "day-what-to-bring": {
+        "title": "Ce qu'il faut apporter",
+        "body": "Chaque excursion indique sur sa page ce qu'il faut apporter : en général de l'eau, des chaussures de marche et un vêtement chaud pour les collines.\n\nLe guide vous donne le point de rendez-vous dans votre réservation."
+      },
+      "day-permits": {
+        "title": "Permis de parc",
+        "body": "Certaines excursions demandent un permis de parc au nom de chaque personne ; les noms et numéros de passeport sont donc demandés en réservant.\n\nLes permis ne peuvent pas être revendus, leur part n'est donc pas remboursée si vous annulez."
+      },
+      "day-group": {
+        "title": "Taille des groupes et âges",
+        "body": "Chaque excursion indique le groupe maximum et l'âge minimum. La réservation ne vous laisse pas ajouter plus de personnes qu'il n'y a de place."
+      },
+      "day-weather": {
+        "title": "Si le temps se gâte",
+        "body": "Les excursions ont lieu sous la pluie, sauf si c'est dangereux. Si le guide ou le parc annule, vous choisissez un autre jour ou êtes intégralement remboursé."
+      }
+    }
+  },
+  "contact": {
+    "title": "Nous contacter",
+    "intro": "Écrivez à l'équipe, ou joignez-nous sur WhatsApp ou par téléphone. Nous répondons sous un jour ouvré, et tout de suite pour une urgence pendant un séjour.",
+    "topic": "À quel sujet ?",
+    "topics": {
+      "booking": "Une réservation",
+      "change": "Modifier ou annuler",
+      "payment": "Un paiement",
+      "stay": "Pendant mon séjour",
+      "renting": "Location",
+      "other": "Autre chose"
+    },
+    "reference": "Référence de réservation (facultatif)",
+    "badReference": "Ce n'est pas une de vos réservations. Vérifiez la référence, ou laissez le champ vide.",
+    "message": "Votre message",
+    "empty": "Écrivez d'abord un message.",
+    "send": "Envoyer",
+    "sent": "Envoyé",
+    "sentBody": "L'équipe vous répondra sous un jour ouvré.",
+    "openThread": "Ouvrir la conversation",
+    "signInFirst": "Connectez-vous pour que nous puissions vous répondre et voir vos réservations.",
+    "signIn": "Se connecter",
+    "whatsapp": "WhatsApp",
+    "whatsappHint": "Réponse en général dans l'heure",
+    "call": "Nous appeler",
+    "hours": "Tous les jours, de 7 h à 22 h",
+    "emergencyTitle": "Vous séjournez à {home} ? Ligne d'urgence",
+    "emergencyBody": "À toute heure, de jour comme de nuit, pour toute urgence dans le logement."
+  },
+  "legal": {
+    "updated": "Dernière mise à jour : 8 novembre 2026",
+    "draft": "Projet de texte pour relecture. Le texte définitif sera fourni par nos avocats avant le lancement.",
+    "help": "Centre d'aide",
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "intro": "Ces conditions couvrent la réservation de logements, de voitures et d'excursions auprès de HomeLink Africa Ltd au Rwanda.",
+      "who": {
+        "title": "Qui nous sommes",
+        "body": "HomeLink Africa Ltd est l'hôte de chaque logement proposé et organise chaque voiture et excursion avec des chauffeurs et guides vérifiés. Vous réservez avec nous, pas avec un propriétaire."
+      },
+      "booking": {
+        "title": "Réservation",
+        "body": "Une réservation est faite quand le paiement passe et que vous recevez une référence. Le règlement du logement, de la voiture ou de l'excursion en fait partie et est affiché avant de payer."
+      },
+      "paying": {
+        "title": "Paiement",
+        "body": "Les prix sont fixés en francs rwandais et incluent tous les frais : les nuits, des frais de ménage de {cleaning} RWF pour un séjour et des frais de service de {feePercent} %. Les paiements de {escrowFrom} RWF ou plus pour un séjour sont bloqués jusqu'à votre arrivée."
+      },
+      "verified": {
+        "title": "Ce que nous promettons",
+        "body": "Tout ce que nous proposons a été inspecté sur place. Si un logement, une voiture ou une excursion n'est pas conforme à sa page, prévenez-nous dans la journée et nous corrigeons ou vous remboursons."
+      },
+      "conduct": {
+        "title": "Vos engagements",
+        "body": "Respectez le règlement, laissez le logement comme vous l'avez trouvé, et signalez les dégâts. Seules les personnes nommées sur une réservation peuvent séjourner, conduire ou participer."
+      },
+      "liability": {
+        "title": "Responsabilité",
+        "body": "Nous répondons de ce que nous promettons ci-dessus. Nous ne répondons pas des pertes au-delà du prix de la réservation, sauf si la loi en dispose autrement."
+      }
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "intro": "Ce que nous recueillons sur vous, pourquoi, et ce que vous pouvez nous demander d'en faire.",
+      "what": {
+        "title": "Ce que nous recueillons",
+        "body": "Votre nom et vos coordonnées, vos réservations et paiements, vos messages avec l'équipe, et une pièce d'identité quand une location ou une voiture l'exige. Les photos perdent leur localisation sur votre appareil avant l'envoi."
+      },
+      "why": {
+        "title": "Pourquoi",
+        "body": "Pour faire et gérer vos réservations, assurer la sécurité des logements et des personnes, et respecter la loi sur les paiements et la location. Nous ne vendons pas vos données."
+      },
+      "who": {
+        "title": "Qui les voit",
+        "body": "L'équipe qui gère votre réservation, le chauffeur ou le guide concerné (seulement le nécessaire), et les prestataires de paiement. Nous ne stockons jamais les numéros de carte."
+      },
+      "keep": {
+        "title": "Durée de conservation",
+        "body": "Les reçus aussi longtemps que la loi fiscale l'exige. Les photos d'identité sont supprimées 30 jours après la vérification. Tout le reste est supprimé à la fermeture de votre compte."
+      },
+      "rights": {
+        "title": "Vos droits",
+        "body": "Vous pouvez télécharger une copie de vos données ou fermer votre compte depuis vos paramètres, et nous demander de corriger ce qui est faux."
+      },
+      "contact": {
+        "title": "Questions",
+        "body": "Écrivez-nous depuis la page contact ; la personne responsable des données vous répondra."
+      }
+    },
+    "cancellation": {
+      "title": "Politique d'annulation",
+      "intro": "Ce qui vous est rendu si vous annulez, selon le type de réservation. Votre réservation affiche toujours le montant exact avant de confirmer.",
+      "stays": {
+        "title": "Séjours",
+        "body": "Jusqu'à {stayDays} jours avant l'arrivée : tout est rendu.\n\nEnsuite, jusqu'à la veille : la moitié des nuits, plus les frais de ménage et les options en entier. Le jour de l'arrivée : pas de remboursement."
+      },
+      "renting": {
+        "title": "Location",
+        "body": "Avant d'emménager, le premier mois et la caution sont rendus intégralement si vous annulez au moins 30 jours avant. Une fois installé, le contrat de location prévoit comment partir plus tôt."
+      },
+      "cars": {
+        "title": "Voitures",
+        "body": "Jusqu'à {carDays} jours avant la prise en charge : tout est rendu. Ensuite, une journée de location est retenue et le reste est rendu."
+      },
+      "days": {
+        "title": "Excursions",
+        "body": "Jusqu'à {dayDays} jours avant : tout est rendu. Ensuite, pas de remboursement. Les permis de parc achetés à votre nom ne sont jamais remboursés, car ils ne peuvent être revendus."
+      },
+      "ours": {
+        "title": "Si nous annulons",
+        "body": "Si nous devons annuler, tout vous est rendu immédiatement, et l'équipe vous propose quelque chose d'aussi bien ou mieux s'il y en a."
+      },
+      "how": {
+        "title": "Comment annuler",
+        "body": "Ouvrez la réservation dans votre compte et choisissez Annuler. Vous voyez ce qui est rendu avant de confirmer, et le remboursement part le jour même."
+      }
+    }
+  },
+  "reviews": {
+    "title": "{score}, d'après {count, plural, one {# avis} other {# avis}}",
+    "titleNew": "Avis",
+    "new": "Nouveau sur HomeLink : {count, plural, =0 {pas encore d'avis} one {un avis pour l'instant} other {# avis pour l'instant}}. Nous affichons les notes à partir de trois séjours, pour qu'une seule opinion ne résume jamais un lieu.",
+    "more": "Voir plus d'avis",
+    "aspects": {
+      "cleanliness": "Propreté",
+      "accuracy": "Conforme à la description",
+      "checkIn": "Arrivée",
+      "communication": "Communication",
+      "location": "Emplacement",
+      "value": "Rapport qualité-prix"
+    }
   }
 }

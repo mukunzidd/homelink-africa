@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { LOCALE_LABELS, routing } from "@/i18n/routing";
 import { Logo } from "./logo";
 import { FooterAccountColumn } from "./footer-account-column";
 import { FOOTER_LINK } from "./footer-link";
@@ -36,11 +37,21 @@ export async function SiteFooter() {
         { href: "/neighbourhoods", label: tFooter("allNeighbourhoods") },
       ],
     },
+    {
+      title: tFooter("helpTitle"),
+      links: [
+        { href: "/help", label: tFooter("help") },
+        { href: "/contact", label: tFooter("contact") },
+        { href: "/legal/cancellation", label: tFooter("cancellation") },
+        { href: "/legal/terms", label: tFooter("terms") },
+        { href: "/legal/privacy", label: tFooter("privacy") },
+      ],
+    },
   ];
 
   return (
     <footer className="mt-24 border-t border-line bg-surface">
-      <div className="mx-auto grid max-w-[1180px] gap-10 px-6 py-12 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+      <div className="mx-auto grid max-w-[1180px] gap-10 px-6 py-12 sm:grid-cols-2 md:grid-cols-[1.4fr_repeat(4,1fr)]">
         <div className="flex flex-col gap-3">
           <Logo />
           <p className="max-w-[36ch] text-sm leading-relaxed text-ink-2">{t("tagline")}</p>
@@ -68,6 +79,14 @@ export async function SiteFooter() {
       <div className="border-t border-line-soft">
         <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-3 px-6 py-5 text-[12px] text-ink-3">
           <span>{tFooter("rights", { year: 2026 })}</span>
+          {/* Each language's home page, named in itself, so someone who cannot read the current one can still find theirs. */}
+          <nav aria-label={tFooter("languages")} className="flex flex-wrap gap-x-4 gap-y-1">
+            {routing.locales.map((l) => (
+              <Link key={l} href="/" locale={l} lang={l} className="hover:text-ink">
+                {LOCALE_LABELS[l]}
+              </Link>
+            ))}
+          </nav>
           <span>{tFooter("prices")}</span>
         </div>
       </div>

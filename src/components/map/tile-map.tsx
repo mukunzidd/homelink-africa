@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { MinusIcon, PlusIcon } from "@/components/ui/icons";
@@ -96,7 +96,19 @@ export function TileMap({
   preview = false,
   landmarks = [],
   minZoom = MIN_Z,
+  focus,
+  crosshair = false,
+  onCenterChange,
 }: {
+  /** Centre here (at street zoom unless given), replacing any fit to pins. Changing it recentres. */
+  focus?: { lat: number; lng: number; zoom?: number };
+  /**
+   * Picking a spot: a pin fixed at the centre that the map moves under, the
+   * way people already pick a pickup point in a ride app. A tap moves the
+   * spot tapped to the centre; dragging pans as usual.
+   */
+  crosshair?: boolean;
+  onCenterChange?: (center: { lat: number; lng: number }) => void;
   /** Reference points: the convention centre, the airport. Never fitted to. */
   landmarks?: MapLandmark[];
   /** The whole country needs to zoom out further than a city does. */
@@ -122,10 +134,10 @@ export function TileMap({
   const drag = useRef<{ x: number; y: number; cx: number; cy: number } | null>(null);
 
   const fitPoints = useMemo(
-    () => (area ? [{ lat: area.lat, lng: area.lng }] : pins.map((p) => ({ lat: p.lat, lng: p.lng }))),
-    [area, pins],
+    () => (focus ? [{ lat: focus.lat, lng: focus.lng }] : area ? [{ lat: area.lat, lng: area.lng }] : pins.map((p) => ({ lat: p.lat, lng: p.lng }))),
+    [focus, area, pins],
   );
-  const fitKey = fitPoints.map((p) => `${p.lat},${p.lng}`).join("|");
+  const fitKey = fitPoints.map((p) => `${p.lat},${p.lng}`).join("|") + (focus ? `z${focus.zoom ?? 16}` : "");
 
   useLayoutEffect(() => {
     const el = ref.current;
@@ -144,6 +156,7 @@ export function TileMap({
   const fitted = useMemo(
     () => {
       if (!size.w || !size.h) return null;
+      if (focus) return { center: { lat: focus.lat, lng: focus.lng }, zoom: Math.min(MAX_Z, Math.max(minZoom, focus.zoom ?? 16)) };
       if (area) {
         // Zoom out until the whole circle fits with a margin: a 900 m
         // neighbourhood at street zoom filled the map edge to edge.
@@ -168,6 +181,12 @@ export function TileMap({
     },
     [view, setView, minZoom],
   );
+
+  const centerLat = view?.center.lat;
+  const centerLng = view?.center.lng;
+  useEffect(() => {
+    if (onCenterChange && centerLat !== undefined && centerLng !== undefined) onCenterChange({ lat: centerLat, lng: centerLng });
+  }, [onCenterChange, centerLat, centerLng]);
 
   const ready = view && size.w > 0;
   const z = view?.zoom ?? 12;
@@ -213,9 +232,15 @@ export function TileMap({
     const dy = e.clientY - d.y;
     setView({ zoom: view.zoom, center: unproject(d.cx - dx, d.cy - dy, view.zoom) });
   }
-  function onPointerUp() {
+  function onPointerUp(e: React.PointerEvent) {
+    const d = drag.current;
     drag.current = null;
     setDragging(false);
+    // A tap, not a drag: in picking mode, the tapped spot becomes the centre.
+    if (crosshair && d && view && ref.current && Math.hypot(e.clientX - d.x, e.clientY - d.y) < 5) {
+      const box = ref.current.getBoundingClientRect();
+      setView({ zoom: view.zoom, center: unproject(originX + e.clientX - box.left, originY + e.clientY - box.top, view.zoom) });
+    }
   }
 
   return (
@@ -340,6 +365,16 @@ export function TileMap({
             </div>
           );
         })}
+
+      {crosshair && (
+        <span aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 z-30">
+          <span className="absolute size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink/40" />
+          <svg width="30" height="40" viewBox="0 0 30 40" className="absolute -translate-x-1/2 -translate-y-full drop-shadow-[0_2px_3px_rgba(0,0,0,0.3)]">
+            <path d="M15 39C15 39 28 24.5 28 14A13 13 0 0 0 2 14C2 24.5 15 39 15 39Z" fill="var(--brand)" stroke="var(--surface)" strokeWidth="2" />
+            <circle cx="15" cy="14" r="5" fill="var(--surface)" />
+          </svg>
+        </span>
+      )}
 
       {!preview && <div data-map-control className="absolute right-3 top-3 flex flex-col overflow-hidden rounded-ctl border border-line bg-surface shadow-[var(--shadow-card)]">
         <button type="button" aria-label={t("zoomIn")} onClick={() => zoomBy(1)} className="grid h-9 w-9 cursor-pointer place-items-center text-ink-2 hover:bg-surface-2 hover:text-ink">

@@ -30,6 +30,9 @@ services:
       # Meilisearch directly, so there is no host URL to get wrong.
       MEILI_URL: http://meilisearch:7700
       MEILI_MASTER_KEY: *meili-key
+      # Lets the end-to-end suite reset the fixture store (POST /api/dev/reset).
+      # Dev container only; the route is a 404 in any production build.
+      HOMELINK_E2E: "1"
     ports:
       # Overridable so a second copy can run beside a host dev server.
       - "127.0.0.1:${HOMELINK_PORT:-3100}:3100"

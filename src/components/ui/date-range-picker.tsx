@@ -90,6 +90,8 @@ export function DateRangePicker({
   const [hovered, setHovered] = useState<IsoDate | null>(null);
   const [focused, setFocused] = useState<IsoDate>(() => from ?? min);
   const [align, setAlign] = useState<"start" | "end">("start");
+  /** Set when the popover is placed against the viewport; see below. */
+  const [fixedAt, setFixedAt] = useState<{ top: number; left: number } | null>(null);
 
   useDismissable(rootRef, open, () => setOpen(false));
 
@@ -103,12 +105,51 @@ export function DateRangePicker({
   useLayoutEffect(() => {
     if (!open) return;
     const node = popoverRef.current;
-    if (!node) return;
+    if (!node || fixedAt) return;
 
     setAlign("start");
     const rect = node.getBoundingClientRect();
     const overflowsRight = rect.left + node.offsetWidth > window.innerWidth - 8;
     if (overflowsRight) setAlign("end");
+  }, [open, view, fixedAt]);
+
+  /**
+   * Inside anything that clips (a dialog's scrolling body, a card with
+   * overflow hidden, a table that scrolls sideways) an absolute popover is
+   * cut off at that box's edge: the change-dates dialog showed three weeks
+   * of a month. There the popover is placed with `position: fixed` against
+   * the viewport instead, below the field if it fits, above if that is
+   * roomier, and otherwise pulled up until it is whole. It stays in the same
+   * DOM, so a dialog's focus trap and outside-click handling still count it
+   * as inside. Where nothing clips, as in the search bars, it keeps its
+   * usual place.
+   */
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!open || !root || !clippedByAncestor(root)) {
+      setFixedAt(null);
+      return;
+    }
+    const place = () => {
+      const node = popoverRef.current;
+      const r = root.getBoundingClientRect();
+      const h = node?.offsetHeight ?? 420;
+      const w = node?.offsetWidth ?? 320;
+      const gap = 8;
+      const below = window.innerHeight - r.bottom - gap * 2;
+      const above = r.top - gap * 2;
+      let top = below >= h || below >= above ? r.bottom + gap : r.top - gap - h;
+      top = Math.max(gap, Math.min(top, window.innerHeight - gap - h));
+      const left = Math.max(gap, Math.min(r.left, window.innerWidth - gap - w));
+      setFixedAt({ top, left });
+    };
+    place();
+    window.addEventListener("resize", place);
+    window.addEventListener("scroll", place, true);
+    return () => {
+      window.removeEventListener("resize", place);
+      window.removeEventListener("scroll", place, true);
+    };
   }, [open, view]);
 
   // Keep the roving-focus cell in the DOM's focus, but only while the popover
@@ -243,10 +284,12 @@ export function DateRangePicker({
           role="dialog"
           aria-modal="false"
           aria-label={editing === "from" ? labelFrom : labelTo}
+          style={fixedAt ? { position: "fixed", top: fixedAt.top, left: fixedAt.left } : undefined}
           className={cn(
-            "absolute z-50 mt-2 w-max rounded-card",
+            "z-50 w-max rounded-card",
             "border border-line bg-surface p-4 shadow-[var(--shadow-pop)]",
-            align === "end" ? "right-0" : "left-0",
+            !fixedAt && "absolute mt-2",
+            !fixedAt && (align === "end" ? "right-0" : "left-0"),
           )}
         >
           <div className="mb-3 flex items-center justify-between gap-4">
@@ -445,4 +488,13 @@ function MonthGrid({
       })}
     </div>
   );
+}
+
+/** Whether any ancestor would cut off content that hangs outside it. */
+function clippedByAncestor(el: HTMLElement): boolean {
+  for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+    const cs = getComputedStyle(a);
+    if (cs.overflowX !== "visible" || cs.overflowY !== "visible") return true;
+  }
+  return false;
 }

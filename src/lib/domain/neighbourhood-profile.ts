@@ -1,6 +1,7 @@
 import type { HomeForSale, Listing, GeoPoint } from "./types";
 import type { Money } from "./money";
 import { money } from "./money";
+import { areaCentre } from "@/lib/places/area";
 
 /**
  * Everything the product knows about one neighbourhood, gathered from the
@@ -39,11 +40,9 @@ export function buildProfiles(nightly: Listing[], leases: Listing[], sales: Home
       const stays = nightly.filter((l) => l.neighbourhood === name);
       const rentals = leases.filter((l) => l.neighbourhood === name);
       const forSale = sales.filter((h) => h.neighbourhood === name);
-      const points = [...stays, ...rentals, ...forSale].map((x) => x.location);
-      const centre = {
-        lat: points.reduce((a, p) => a + p.lat, 0) / points.length,
-        lng: points.reduce((a, p) => a + p.lng, 0) / points.length,
-      };
+      // The gazetteer's centre, never an average of the homes: with one home
+      // listed, the average is that home's door.
+      const centre = areaCentre(name);
       const pictured = [...stays, ...rentals, ...forSale].find((x) => x.images?.length);
       const monthly = rentals.flatMap((l) => (l.monthlyRate ? [l.monthlyRate] : []));
       return {

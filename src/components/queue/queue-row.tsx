@@ -21,7 +21,12 @@ export function QueueRow({
   summary,
   children,
   muted = false,
+  open,
+  id,
 }: {
+  /** Opened on arrival: a link straight to one record. */
+  open?: boolean;
+  id?: string;
   summary: React.ReactNode;
   /** The read-only record shown when the row is open. */
   children: React.ReactNode;
@@ -29,8 +34,8 @@ export function QueueRow({
   muted?: boolean;
 }) {
   return (
-    <li className="border-t border-line">
-      <details className="group">
+    <li id={id} className="scroll-mt-24 border-t border-line">
+      <details className="group" open={open}>
         <summary
           className={cn(
             "flex cursor-pointer list-none items-start gap-3 py-4 transition-colors duration-150",

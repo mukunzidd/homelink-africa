@@ -68,4 +68,6 @@ export type EngineHit = {
 export interface SearchEngine {
   readonly name: "meilisearch" | "local";
   search(query: EngineQuery): Promise<EngineHit[]>;
+  /** Re-reads the documents, after a write changed what is searchable (an edit, a home taken down). */
+  refresh(): Promise<void>;
 }

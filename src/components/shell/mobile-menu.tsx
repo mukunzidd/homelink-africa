@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { usePreferences } from "@/lib/preferences/context";
 import { CloseIcon, MenuIcon } from "@/components/ui/icons";
-import { BY_ROLE } from "./account-menu";
+import { BY_ROLE, ICONS } from "./account-menu";
 import { PreferencesPanel } from "./preference-controls";
 import { PreviewControls } from "./preview-bar";
 import { cn } from "@/lib/cn";
@@ -23,8 +23,7 @@ import { cn } from "@/lib/cn";
 export function MobileMenu({ className }: { className?: string }) {
   const t = useTranslations("header");
   const tRoles = useTranslations("roles");
-  const { role, setRole } = usePreferences();
-  const router = useRouter();
+  const { role } = usePreferences();
   const tSignedOut = useTranslations("signedOut");
   const tDev = useTranslations("dev");
   const pathname = usePathname();
@@ -105,10 +104,14 @@ export function MobileMenu({ className }: { className?: string }) {
                       onClick={() => setOpen(false)}
                       aria-current={pathname === d.href ? "page" : undefined}
                       className={cn(
-                        "flex h-10 items-center rounded-inner px-2 text-[15px] transition-colors duration-150",
+                        "flex h-10 items-center gap-3 rounded-inner px-2 text-[15px] transition-colors duration-150",
                         pathname === d.href ? "bg-surface-2 font-medium text-ink" : "text-ink-2 hover:bg-surface-2 hover:text-ink",
                       )}
                     >
+                      {(() => {
+                        const Icon = ICONS[d.key];
+                        return Icon ? <Icon size={17} className="text-ink-3" /> : null;
+                      })()}
                       {t(d.key)}
                     </Link>
                   ))}
@@ -118,18 +121,13 @@ export function MobileMenu({ className }: { className?: string }) {
                   phone sheet is the only header a phone has, so it does too. */}
               {role === "visitor" && (
                 <div className="flex flex-col gap-2 rounded-card border border-line p-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setRole("guest");
-                      setOpen(false);
-                      router.refresh();
-                    }}
-                    className="flex min-h-11 w-full cursor-pointer items-center justify-center rounded-ctl bg-brand text-[15px] font-semibold text-on-brand hover:bg-brand-deep"
+                  <Link
+                    href={`/sign-in?next=${encodeURIComponent(pathname)}`}
+                    onClick={() => setOpen(false)}
+                    className="flex min-h-11 w-full items-center justify-center rounded-ctl bg-brand text-[15px] font-semibold text-on-brand hover:bg-brand-deep"
                   >
                     {tSignedOut("signIn")}
-                  </button>
-                  <p className="text-center text-[12px] text-ink-3">{tSignedOut("previewNote")}</p>
+                  </Link>
                 </div>
               )}
               <PreferencesPanel onDone={() => setOpen(false)} />

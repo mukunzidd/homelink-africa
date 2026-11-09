@@ -12,6 +12,7 @@ import { WherePanel, type Destination } from "./panels/where-panel";
 import { WhenPanel, type WhenValue } from "./panels/when-panel";
 import { WhoPanel, partySize, type Party } from "./panels/who-panel";
 import { cn } from "@/lib/cn";
+import { dateTimeFormat } from "@/lib/domain/date-format";
 
 type Segment = "where" | "when" | "who" | "movein" | "bedrooms";
 
@@ -345,7 +346,7 @@ function nextMonths(n: number): string[] {
 
 function monthName(ym: string, locale: string): string {
   const [y, m] = ym.split("-").map(Number);
-  return new Intl.DateTimeFormat(locale, { month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(y, m - 1, 1)));
+  return dateTimeFormat(locale, { month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(y, m - 1, 1)));
 }
 
 function PanelFooter({

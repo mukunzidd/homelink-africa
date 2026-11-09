@@ -2,6 +2,9 @@ import type { DriveMode, Experience, Listing, ServiceKind, Vehicle } from "./typ
 import type { CurrencyCode, FxTable, Money } from "./money";
 import { add, convert, money, multiply, subtract } from "./money";
 import { nightsBetween, type IsoDate } from "./dates";
+import { priceExtras, type ExtraKey, type ExtraSelection } from "./extras";
+import { applyPromo, type PromoResult } from "./promo";
+import type { PricingCatalog } from "./catalog";
 
 /**
  * Quote arithmetic, in the supplier's own currency.
@@ -11,17 +14,17 @@ import { nightsBetween, type IsoDate } from "./dates";
  */
 
 /** Flat cleaning fee per stay, in RWF. Fixture-level until suppliers set it. */
-const CLEANING_FEE_RWF = 32_000;
+export const CLEANING_FEE_RWF = 32_000;
 
 /** HomeLink's commission, as a fraction of the accommodation subtotal. */
-const SERVICE_FEE_RATE = 0.1076;
+export const SERVICE_FEE_RATE = 0.1076;
 
 /**
  * Stays at or above this hold funds until check-in is confirmed.
  * Product & UX §7 scopes escrow to high-value stays; this is where that line
  * currently sits.
  */
-const ESCROW_THRESHOLD_RWF = 300_000;
+export const ESCROW_THRESHOLD_RWF = 300_000;
 
 export type QuoteLineKey =
   | "accommodation"
@@ -29,11 +32,20 @@ export type QuoteLineKey =
   | "serviceFee"
   | "hire"
   | "driver"
-  | "seats";
+  | "seats"
+  /** One chosen extra; `QuoteLine.extra` says which. */
+  | "extra"
+  /** A promo code. Always negative. */
+  | "discount"
+  /** The first month of a long-term stay. */
+  | "rent"
+  /** Held for the length of a long-term stay and returned. */
+  | "deposit";
 
 export type QuoteLine = {
   key: QuoteLineKey;
   amount: Money;
+  extra?: ExtraKey;
 };
 
 export type Quote = {
@@ -54,7 +66,17 @@ export function quoteStay(
 
   const currency = listing.nightlyRate.currency;
 
-  const accommodation = multiply(listing.nightlyRate, nights);
+  // A night with its own rate (a weekend, a conference week) is priced at
+  // that rate; every other night at the base. Same currency throughout:
+  // the rates grid only ever sets rates in the home's own currency.
+  // Every night at the base, then each night with its own rate adjusted.
+  // Walking the exceptions rather than the nights keeps this the same cost
+  // however far apart the dates are: they come from the URL.
+  let minor = listing.nightlyRate.minor * nights;
+  for (const [d, own] of Object.entries(listing.nightlyRates ?? {})) {
+    if (d >= from && d < to && own.currency === currency) minor += own.minor - listing.nightlyRate.minor;
+  }
+  const accommodation = money(minor, currency);
   const cleaning = money(CLEANING_FEE_RWF, currency);
   const serviceFee = money(
     Math.round(accommodation.minor * SERVICE_FEE_RATE),
@@ -202,7 +224,7 @@ export function toDisplayQuote(
   }
 
   const lines = quote.lines.map((line) => ({
-    key: line.key,
+    ...line,
     amount: convert(line.amount, currency, fx),
   }));
 
@@ -238,4 +260,85 @@ export function bookingReference(seed: string): string {
     hash = Math.floor(hash / ALPHABET.length) + i * 7919;
   }
   return `HL-${out.slice(0, 4)}-${out.slice(4)}`;
+}
+
+export type QuoteInput = {
+  kind: ServiceKind;
+  start: IsoDate;
+  end: IsoDate;
+  party: number;
+  driveMode?: DriveMode;
+  extras?: ExtraSelection[];
+  promoCode?: string;
+  /** Set for a long-term stay: priced by the month, not the night. */
+  rentMonths?: number;
+};
+
+/**
+ * The whole price of a booking: the lane's base quote, then the extras,
+ * then a promo code, then escrow decided on the final total.
+ *
+ * This is what the server runs when a booking is placed. The browser shows
+ * the same function's answer, but the server never takes the browser's
+ * number for it.
+ */
+export function quoteBooking(
+  supply: Listing | Vehicle | Experience,
+  input: QuoteInput,
+  on: IsoDate,
+  catalog?: PricingCatalog,
+): (Quote & { promo?: PromoResult }) | null {
+  if (input.kind === "stay" && input.rentMonths) return quoteRent(supply as Listing, input.rentMonths);
+  const base =
+    input.kind === "stay"
+      ? quoteStay(supply as Listing, input.start, input.end)
+      : input.kind === "car"
+        ? quoteVehicle(supply as Vehicle, input.start, input.end, input.driveMode ?? "selfDrive")
+        : quoteExperience(supply as Experience, input.party);
+  if (!base) return null;
+
+  const currency = base.total.currency;
+  const extras = priceExtras(input.kind, input.extras ?? [], base.nights, catalog).filter(
+    // Extras are priced in RWF; a lane priced in another currency has none.
+    (l) => l.amount.currency === currency,
+  );
+  const lines: QuoteLine[] = [...base.lines, ...extras];
+
+  let promo: PromoResult | undefined;
+  if (input.promoCode?.trim()) {
+    promo = applyPromo(input.promoCode, base, on, catalog, input.kind);
+    if (promo.ok && promo.discount.minor > 0) {
+      lines.push({ key: "discount", amount: money(-promo.discount.minor, currency) });
+    }
+  }
+
+  const total = lines.reduce<Money>((acc, l) => add(acc, l.amount), money(0, currency));
+  return {
+    nights: base.nights,
+    lines,
+    total,
+    escrowHeld: input.kind === "stay" && total.minor >= ESCROW_THRESHOLD_RWF,
+    ...(promo ? { promo } : {}),
+  };
+}
+
+/**
+ * What a long-term stay asks for up front: the first month and the deposit.
+ * No cleaning fee, no service fee on top, no extras and no promo code: a
+ * rent is a rent, and the agreement states exactly these two numbers.
+ * `nights` carries the number of months, for the breakdown's labels.
+ */
+export function quoteRent(listing: Listing, months: number): Quote | null {
+  if (!listing.monthlyRate || !listing.leaseTerms || months < 1) return null;
+  const rent = listing.monthlyRate;
+  const deposit = multiply(rent, listing.leaseTerms.depositMonths);
+  return {
+    nights: months,
+    lines: [
+      { key: "rent", amount: rent },
+      { key: "deposit", amount: deposit },
+    ],
+    total: add(rent, deposit),
+    escrowHeld: false,
+  };
 }

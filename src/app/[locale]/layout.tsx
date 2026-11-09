@@ -7,11 +7,10 @@ import { Fraunces, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 import { NUMBER_LOCALES, routing, type Locale } from "@/i18n/routing";
 import { repos } from "@/lib/repos";
 import { PreferencesProvider } from "@/lib/preferences/context";
-import { SiteHeader } from "@/components/shell/site-header";
-import { SiteFooter } from "@/components/shell/site-footer";
 import { PreviewBar } from "@/components/shell/preview-bar";
 import { ThemeScript } from "@/components/shell/theme-script";
 import { SmartSearchProvider } from "@/components/search/smart-search";
+import { ToastProvider } from "@/components/notifications/toaster";
 
 import "../globals.css";
 
@@ -96,12 +95,10 @@ export default async function LocaleLayout({
             initialSegment={initialSegment}
           >
             <SmartSearchProvider>
-              <SiteHeader />
-              <main id="content" className="flex-1">
+              <ToastProvider>
                 {children}
-              </main>
-              <SiteFooter />
-              <PreviewBar />
+                <PreviewBar />
+              </ToastProvider>
             </SmartSearchProvider>
           </PreferencesProvider>
         </NextIntlClientProvider>

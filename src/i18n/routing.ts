@@ -6,7 +6,7 @@ import { defineRouting } from "next-intl/routing";
  * language as one of five coordinated localization layers, not just strings.
  */
 export const routing = defineRouting({
-  locales: ["en", "fr", "rw"],
+  locales: ["en", "fr", "rw", "sw"],
   defaultLocale: "en",
   localePrefix: "always",
 });
@@ -17,6 +17,7 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   en: "English",
   fr: "Français",
   rw: "Kinyarwanda",
+  sw: "Kiswahili",
 };
 
 /**
@@ -27,14 +28,17 @@ export const INTL_LOCALES: Record<Locale, string> = {
   en: "en-US",
   fr: "fr-FR",
   rw: "rw-RW",
+  sw: "sw-RW",
 };
 
 /**
  * BCP 47 tags for NUMBERS AND MONEY specifically, which are not always the
  * same tag as the one used for dates.
  *
- * `rw-RW` is the correct tag for Kinyarwanda dates — it gives "2026 Ukwakira
- * 12", which is what we want. But its CLDR number data groups with a period,
+ * `rw-RW` is the tag for Kinyarwanda dates, which go through
+ * `dateTimeFormat()` in lib/domain/date-format.ts: browsers carry no
+ * Kinyarwanda data, so that builds "12 Ukwakira 2026" from a fixed table of
+ * CLDR names instead of asking the runtime. Its CLDR number data groups with a period,
  * rendering RWF 165,000 as "RF 165.000". Rwanda writes money the English way:
  * banks, the revenue authority, and every invoice in Kigali use "165,000".
  * A period there reads as a decimal point to a Rwandan, which on a payment
@@ -47,4 +51,7 @@ export const NUMBER_LOCALES: Record<Locale, string> = {
   en: "en-US",
   fr: "fr-FR",
   rw: "en-RW",
+  // Swahili groups with a comma in CLDR, so it keeps its own tag. Measured
+  // in Node and Chrome on 2026-11-08: "RWF 165,000".
+  sw: "sw-RW",
 };

@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { cn } from "@/lib/cn";
+import { FORMAT, VALID, type FieldId } from "@/lib/booking/validation";
 
 type Rail = "card" | "mobileMoney";
 
@@ -359,17 +360,6 @@ export function CheckoutForm({
 
 /* ------------------------------------------------------------ the fields */
 
-/** Stable ids: the label points at them, and a failed submit focuses one. */
-type FieldId =
-  | "guest-name"
-  | "guest-email"
-  | "guest-phone"
-  | "card-number"
-  | "card-name"
-  | "card-expiry"
-  | "card-cvc"
-  | "momo-number";
-
 const DETAIL_FIELDS: FieldId[] = ["guest-name", "guest-email", "guest-phone"];
 const CARD_FIELDS: FieldId[] = ["card-number", "card-name", "card-expiry", "card-cvc"];
 const MOMO_FIELDS: FieldId[] = ["momo-number"];
@@ -383,43 +373,4 @@ const EMPTY: Record<FieldId, string> = {
   "card-expiry": "",
   "card-cvc": "",
   "momo-number": "",
-};
-
-const digits = (v: string) => v.replace(/\D/g, "");
-
-/**
- * Light checks: the shape of the thing, not whether it exists. A real card is
- * the payment provider's question, and Phase 2 asks it.
- */
-const VALID: Record<FieldId, (v: string) => boolean> = {
-  "guest-name": (v) => v.trim().length >= 2,
-  "guest-email": (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
-  // Nine digits is a Rwandan number without the 0; a visitor's number with
-  // its country code is longer.
-  "guest-phone": (v) => digits(v).length >= 9 && digits(v).length <= 15,
-  "card-number": (v) => digits(v).length >= 13 && digits(v).length <= 19,
-  "card-name": (v) => v.trim().length >= 2,
-  "card-expiry": (v) => {
-    const m = /^(0[1-9]|1[0-2])\/(\d{2})$/.exec(v);
-    if (!m) return false;
-    // A card is good to the end of its expiry month.
-    const now = new Date();
-    const expires = new Date(2000 + Number(m[2]), Number(m[1]), 1);
-    return expires > now;
-  },
-  "card-cvc": (v) => /^\d{3,4}$/.test(v),
-  // Typed the way Rwandans write it (078 123 4567), without the leading 0, or
-  // with +250 in front. All three are the same nine-digit subscriber number.
-  // It used to accept only the nine, while its own placeholder showed ten.
-  "momo-number": (v) => /^(?:250|0)?7\d{8}$/.test(digits(v)),
-};
-
-/** Typed as the card prints it, so the reader can check it against the card. */
-const FORMAT: Partial<Record<FieldId, (v: string) => string>> = {
-  "card-number": (v) => digits(v).slice(0, 19).replace(/(\d{4})(?=\d)/g, "$1 "),
-  "card-expiry": (v) => {
-    const d = digits(v).slice(0, 4);
-    return d.length > 2 ? `${d.slice(0, 2)}/${d.slice(2)}` : d;
-  },
-  "card-cvc": (v) => digits(v).slice(0, 4),
 };

@@ -1,33 +1,32 @@
 import type {
-  BookingRepo,
+  AuditRepo,
   ExperiencesRepo,
   FxRepo,
   MessagingRepo,
   MobilityRepo,
+  NotificationsRepo,
   OpsRepo,
   Repositories,
   SalesRepo,
   StaysRepo,
   TripRepo,
 } from "@/lib/repos/types";
-import type { Role } from "@/lib/domain/types";
+import type { Conversation, HousekeepingTask, IdCheck, Listing, PartnerJob, Role, SavedMethod, SharedLocation, StaffMember } from "@/lib/domain/types";
+import { momoProvider } from "@/lib/booking/payment-sim";
+import { turnoverTasks } from "@/lib/workspace/day-board";
 import { readsAs } from "@/lib/preferences/role";
-import { convert } from "@/lib/domain/money";
-import {
-  ADDON_REQUESTS,
-  BOOKINGS,
-  CONVERSATIONS,
-  EXPERIENCES,
-  FX_RATES,
-  HOMES_FOR_SALE,
-  LISTINGS,
-  MESSAGES,
-  PAST_BOOKINGS,
-  PAYOUTS,
-  TRIPS,
-  VEHICLES,
-  VERIFICATION_QUEUE,
-} from "./data";
+import { convert, formatMoney, money, type Money } from "@/lib/domain/money";
+import { listingPatchErrors } from "@/lib/workspace/listing-patch";
+import { addDays, isIsoDate, nightsBetween } from "@/lib/domain/dates";
+import { CHECKLIST } from "@/lib/workspace/inspection";
+import { FX_RATES } from "./data";
+import { kigaliDay } from "@/lib/domain/instants";
+import { nextId, recordAudit, store } from "./store";
+import { availability, makeBookings, makeTrips } from "./bookings";
+import { MESSAGE_LIMITS, type IncidentsRepo, type AccountRepo, type AdminRepo, type FinanceRepo, type PartnersRepo, type SiteSettings, type RatesRepo, type ReviewsRepo, type ViewingsRepo, type WorkRepo } from "@/lib/repos/types";
+import type { Review } from "@/lib/domain/types";
+import { NOTIFICATION_CATALOG, defaultPrefs } from "@/lib/notifications/catalog";
+import { inArea } from "@/lib/places/area";
 
 /**
  * In-memory implementations for Phase 1.
@@ -37,9 +36,67 @@ import {
  * here is that the *signatures* are right, not that the filtering is fast.
  */
 
+/** Homes the public may see: anything not explicitly unpublished. */
+const live = () => store().listings.filter((l) => l.published !== false);
+
+const slugify = (s: string) =>
+  s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "home";
+
 const stays: StaysRepo = {
+  async all() {
+    return [...store().listings];
+  },
+
+  async update(id, patch) {
+    const l = store().listings.find((x) => x.id === id);
+    if (!l) throw new Error(`No listing ${id}`);
+    const errors = listingPatchErrors(patch, l);
+    if (errors.length) throw new Error(`Invalid: ${errors.join(", ")}`);
+    Object.assign(l, structuredClone(patch));
+    return l;
+  },
+
+  async create({ name, neighbourhood }) {
+    const base = slugify(name);
+    let slug = base;
+    for (let i = 2; store().listings.some((l) => l.slug === slug); i++) slug = `${base}-${i}`;
+    const made: Listing = {
+      id: nextId("lst"),
+      slug,
+      name: name.trim(),
+      neighbourhood: neighbourhood.trim(),
+      city: "Kigali",
+      location: { lat: -1.9441, lng: 30.0619 },
+      bedrooms: 1,
+      sleeps: 2,
+      amenities: [],
+      nightlyRate: money(50_000, "RWF"),
+      modes: ["nightly"],
+      // Not inspected yet: no inspector, no points. It cannot go live like this.
+      verification: { id: `ver_${slug}`, inspectorName: "", inspectedAt: new Date().toISOString().slice(0, 10), checklistPoints: 0, photographedByHomeLink: false, ownerIdentityConfirmed: false },
+      propertyManager: { name: "", since: new Date().toISOString().slice(0, 10) },
+      houseRules: [],
+      imageSeed: slug,
+      images: [],
+      summary: "",
+      unitsAvailable: 1,
+      published: false,
+    };
+    store().listings.push(made);
+    return made;
+  },
+
+  async setPublished(id, published) {
+    const l = store().listings.find((x) => x.id === id);
+    if (!l) throw new Error(`No listing ${id}`);
+    // Nothing unverified is ever listed: a home goes live only once someone has stood in it.
+    if (published && (!l.verification.inspectorName || l.verification.checklistPoints < 1)) throw new Error("Not inspected");
+    l.published = published;
+    return l;
+  },
+
   async list(query = {}) {
-    let out = [...LISTINGS];
+    let out = live();
 
     if (query.neighbourhood) {
       const needle = query.neighbourhood.trim().toLowerCase();
@@ -96,34 +153,37 @@ const stays: StaysRepo = {
         out.sort(byNewest);
     }
 
-    return query.limit ? out.slice(0, query.limit) : out;
+    return (query.limit ? out.slice(0, query.limit) : out).map(inArea);
   },
 
   async bySlug(slug) {
-    return LISTINGS.find((l) => l.slug === slug) ?? null;
+    const l = live().find((x) => x.slug === slug);
+    return l ? inArea(l) : null;
   },
 
   async byId(id) {
-    return LISTINGS.find((l) => l.id === id) ?? null;
+    const l = store().listings.find((x) => x.id === id);
+    return l ? inArea(l) : null;
   },
 
   async featured(limit = 3) {
-    return [...LISTINGS]
-      .sort((a, b) =>
-        b.verification.inspectedAt.localeCompare(a.verification.inspectedAt),
-      )
-      .slice(0, limit);
+    // Admin's picks first, in admin's order; the most recently inspected fill the rest.
+    const picks = store().content.featured.map((id) => live().find((l) => l.id === id)).filter((l): l is Listing => !!l);
+    const rest = live()
+      .filter((l) => !picks.includes(l))
+      .sort((a, b) => b.verification.inspectedAt.localeCompare(a.verification.inspectedAt));
+    return [...picks, ...rest].slice(0, limit).map(inArea);
   },
 
   async neighbourhoods() {
-    return [...new Set(LISTINGS.map((l) => l.neighbourhood))].sort((a, b) =>
+    return [...new Set(live().map((l) => l.neighbourhood))].sort((a, b) =>
       a.localeCompare(b),
     );
   },
 
   async neighbourhoodsWithCounts() {
     const counts = new Map<string, number>();
-    for (const l of LISTINGS) {
+    for (const l of live()) {
       counts.set(l.neighbourhood, (counts.get(l.neighbourhood) ?? 0) + 1);
     }
     return [...counts.entries()]
@@ -132,9 +192,23 @@ const stays: StaysRepo = {
   },
 };
 
+const SALE_STATUS = ["onMarket", "underOffer", "sold"] as const;
+
 const sales: SalesRepo = {
+  async all() {
+    return [...store().sales];
+  },
+  async update(id, patch) {
+    const h = store().sales.find((x) => x.id === id);
+    if (!h) throw new Error(`No home ${id}`);
+    if (patch.price && (patch.price.currency !== h.price.currency || !Number.isInteger(patch.price.minor) || patch.price.minor <= 0)) throw new Error("Bad price");
+    if (patch.saleStatus !== undefined && !SALE_STATUS.includes(patch.saleStatus as never)) throw new Error("Bad status");
+    if (patch.price) h.price = { ...patch.price };
+    if (patch.saleStatus) h.saleStatus = patch.saleStatus;
+    return h;
+  },
   async list(query = {}) {
-    let out = [...HOMES_FOR_SALE];
+    let out = store().sales.filter((h) => h.saleStatus !== "sold");
     if (query.neighbourhood) {
       const needle = query.neighbourhood.trim().toLowerCase();
       out = out.filter((h) => h.neighbourhood.toLowerCase().includes(needle));
@@ -159,22 +233,24 @@ const sales: SalesRepo = {
         // Recommended is newest on the market, named for what it is.
         out.sort((a, b) => b.listedAt.localeCompare(a.listedAt));
     }
-    return query.limit ? out.slice(0, query.limit) : out;
+    return (query.limit ? out.slice(0, query.limit) : out).map(inArea);
   },
   async bySlug(slug) {
-    return HOMES_FOR_SALE.find((h) => h.slug === slug) ?? null;
+    const h = store().sales.find((x) => x.slug === slug);
+    return h ? inArea(h) : null;
   },
   async byId(id) {
-    return HOMES_FOR_SALE.find((h) => h.id === id) ?? null;
+    const h = store().sales.find((x) => x.id === id);
+    return h ? inArea(h) : null;
   },
   async neighbourhoods() {
-    return [...new Set(HOMES_FOR_SALE.map((h) => h.neighbourhood))].sort((a, b) => a.localeCompare(b));
+    return [...new Set(store().sales.map((h) => h.neighbourhood))].sort((a, b) => a.localeCompare(b));
   },
 };
 
 const mobility: MobilityRepo = {
   async list(query = {}) {
-    let out = [...VEHICLES];
+    let out = [...store().vehicles];
     if (query.driveMode) {
       out = out.filter((v) => v.driveModes.includes(query.driveMode!));
     }
@@ -185,17 +261,17 @@ const mobility: MobilityRepo = {
   },
 
   async bySlug(slug) {
-    return VEHICLES.find((v) => v.slug === slug) ?? null;
+    return store().vehicles.find((v) => v.slug === slug) ?? null;
   },
 
   async byId(id) {
-    return VEHICLES.find((v) => v.id === id) ?? null;
+    return store().vehicles.find((v) => v.id === id) ?? null;
   },
 };
 
 const experiences: ExperiencesRepo = {
   async list(query = {}) {
-    let out = [...EXPERIENCES];
+    let out = [...store().experiences];
     if (query.interest) {
       out = out.filter((e) => e.interests.includes(query.interest!));
     }
@@ -206,39 +282,22 @@ const experiences: ExperiencesRepo = {
   },
 
   async bySlug(slug) {
-    return EXPERIENCES.find((e) => e.slug === slug) ?? null;
+    return store().experiences.find((e) => e.slug === slug) ?? null;
   },
 
   async byId(id) {
-    return EXPERIENCES.find((e) => e.id === id) ?? null;
+    return store().experiences.find((e) => e.id === id) ?? null;
   },
 };
 
 /** Newest first, so "coming up" and "earlier" both read outward from today. */
-const ALL_BOOKINGS = [...BOOKINGS, ...PAST_BOOKINGS].sort((a, b) =>
-  b.startDate.localeCompare(a.startDate),
-);
 
-const bookings: BookingRepo = {
+const tripReads: Pick<TripRepo, "listForCurrentUser" | "byId"> = {
   async listForCurrentUser() {
-    return [...ALL_BOOKINGS];
+    return [...store().trips];
   },
   async byId(id) {
-    return ALL_BOOKINGS.find((b) => b.id === id) ?? null;
-  },
-  async byReference(reference) {
-    // Case-insensitive: the code is printed in caps and will be typed in both.
-    const needle = reference.trim().toUpperCase();
-    return ALL_BOOKINGS.find((b) => b.reference.toUpperCase() === needle) ?? null;
-  },
-};
-
-const trips: TripRepo = {
-  async listForCurrentUser() {
-    return [...TRIPS];
-  },
-  async byId(id) {
-    return TRIPS.find((t) => t.id === id) ?? null;
+    return store().trips.find((t) => t.id === id) ?? null;
   },
 };
 
@@ -252,43 +311,44 @@ const trips: TripRepo = {
  */
 function unreadFor(conversationId: string, role: Role): number {
   const reader = readsAs(role);
-  return MESSAGES.filter(
+  return store().messages.filter(
     (m) => m.conversationId === conversationId && m.authorRole !== reader && !m.readAt,
   ).length;
 }
 
 function visibleTo(role: Role) {
   const reader = readsAs(role);
-  return (c: (typeof CONVERSATIONS)[number]) =>
-    c.participantRoles.includes(reader);
+  // Admin runs the homes and the desk both, so it is in every room.
+  return (c: Conversation) =>
+    reader === "admin" || c.participantRoles.includes(reader);
 }
 
-function forReader(c: (typeof CONVERSATIONS)[number], role: Role) {
+function forReader(c: Conversation, role: Role) {
   return { ...c, unreadCount: unreadFor(c.id, role) };
 }
 
 const messaging: MessagingRepo = {
   async forRole(role) {
-    return CONVERSATIONS.filter(visibleTo(role))
+    return store().conversations.filter(visibleTo(role))
       .map((c) => forReader(c, role))
       .sort((a, b) => b.lastMessageAt.localeCompare(a.lastMessageAt));
   },
 
   async byId(conversationId, role) {
-    const found = CONVERSATIONS.find(
+    const found = store().conversations.find(
       (c) => c.id === conversationId && visibleTo(role)(c),
     );
     return found ? forReader(found, role) : null;
   },
 
   async messages(conversationId) {
-    return MESSAGES.filter((m) => m.conversationId === conversationId).sort((a, b) =>
+    return store().messages.filter((m) => m.conversationId === conversationId).sort((a, b) =>
       a.sentAt.localeCompare(b.sentAt),
     );
   },
 
   async forBooking(bookingId, role) {
-    const found = CONVERSATIONS.find(
+    const found = store().conversations.find(
       (c) =>
         c.scope.kind === "booking" &&
         c.scope.id === bookingId &&
@@ -296,7 +356,141 @@ const messaging: MessagingRepo = {
     );
     return found ? forReader(found, role) : null;
   },
+
+  async send(conversationId, role, input) {
+    const c = store().conversations.find((x) => x.id === conversationId && visibleTo(role)(x));
+    if (!c) throw new Error("Not in this thread");
+    const body = input.body.trim().slice(0, MESSAGE_LIMITS.body);
+    const wanted = input.attachments ?? [];
+    if (wanted.length > MESSAGE_LIMITS.photos) throw new Error("Too many photos");
+    const held = wanted.map((a) => {
+      const u = store().uploads.find((x) => x.id === a.id && x.conversationId === c.id && x.by === role && !x.messageId);
+      if (!u) throw new Error("No such photo");
+      return { u, alt: a.alt.trim().slice(0, 200) };
+    });
+    const location = input.location ? cleanLocation(input.location) : undefined;
+    if (!body && !held.length && !location) throw new Error("Nothing to send");
+
+    const reader = readsAs(role);
+    const at = new Date().toISOString();
+    const i = c.participantRoles.indexOf(reader);
+    const authorName = i >= 0 ? c.participantNames[i] : "HomeLink";
+    const id = nextId("msg");
+    const message = {
+      id,
+      conversationId: c.id,
+      authorName,
+      authorRole: reader,
+      body,
+      sentAt: at,
+      ...(location ? { location } : {}),
+      ...(held.length
+        ? { attachments: held.map(({ u, alt }) => ({ id: u.id, url: fileUrl(u.id), alt })) }
+        : {}),
+    };
+    for (const { u } of held) u.messageId = id;
+    store().messages.push(message);
+    c.lastMessagePreview = body
+      ? body.slice(0, 120)
+      : location
+        ? `📍 ${location.name || location.address || `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`}`.slice(0, 120)
+        : `📷 ${held.length}`;
+    c.lastMessageAt = at;
+
+    // Everyone else in the room hears about it; admin is in every room by
+    // visibility, but is only told about threads it is a party to.
+    for (const audience of new Set(c.participantRoles.filter((r) => r !== reader))) {
+      await notifications.create({
+        audience,
+        kind: "newMessage",
+        params: { from: authorName, subject: c.subject },
+        href: audience === "guest" ? `/messages?thread=${c.id}` : `/manage/inbox?thread=${c.id}`,
+      });
+    }
+    return message;
+  },
+
+  async upload(conversationId, role, file) {
+    const c = store().conversations.find((x) => x.id === conversationId && visibleTo(role)(x));
+    if (!c) throw new Error("Not in this thread");
+    if (!(MESSAGE_LIMITS.mimes as readonly string[]).includes(file.mime) || sniff(file.bytes) !== file.mime) throw new Error("Not a photo");
+    if (file.bytes.byteLength > MESSAGE_LIMITS.bytes) throw new Error("Too big");
+    // Unsent photos are held in memory; without a ceiling a loop of uploads
+    // that never sends is a way to fill it.
+    const pending = store().uploads.filter((u) => u.conversationId === c.id && u.by === role && !u.messageId).length;
+    if (pending >= MESSAGE_LIMITS.pending) throw new Error("Too many unsent photos");
+    const id = nextId("upl");
+    store().uploads.push({ id, conversationId: c.id, by: role, mime: file.mime, bytes: file.bytes });
+    return { id, url: fileUrl(id) };
+  },
+
+  async file(id, role) {
+    const u = store().uploads.find((x) => x.id === id);
+    if (!u) return null;
+    const c = store().conversations.find((x) => x.id === u.conversationId && visibleTo(role)(x));
+    // Before it is sent, a photo is only its uploader's.
+    if (!c || (!u.messageId && u.by !== role)) return null;
+    return { mime: u.mime, bytes: u.bytes };
+  },
+
+  async contact(input) {
+    const body = input.body.trim().slice(0, 2000);
+    if (!body) return { ok: false as const, reason: "empty" as const };
+    const topic = input.topic.trim().slice(0, 40) || "other";
+    if (input.reference?.trim()) {
+      const ref = input.reference.trim().toUpperCase();
+      const mine = (await bookings.listForCurrentUser()).find((b) => b.reference === ref);
+      if (!mine) return { ok: false as const, reason: "reference" as const };
+      const name = store().account.profile.name;
+      const c = postToGuest(mine.id, name, "guest", body);
+      for (const audience of ["ops", "admin"] as const) {
+        await notifications.create({ audience, kind: "newMessage", params: { from: name, subject: c.subject }, href: `/manage/inbox?thread=${c.id}` });
+      }
+      return { ok: true as const, conversationId: c.id };
+    }
+    await notifications.create({ audience: "ops", kind: "newMessage", params: { from: store().account.profile.name, subject: `${topic}: ${body.slice(0, 60)}` }, href: "/manage/inbox" });
+    recordAudit({ actor: "guest", action: "contact.message", target: topic, detail: body.slice(0, 300) });
+    return { ok: true as const };
+  },
+
+  async markRead(conversationId, role) {
+    const c = store().conversations.find((x) => x.id === conversationId && visibleTo(role)(x));
+    if (!c) return 0;
+    const reader = readsAs(role);
+    const at = new Date().toISOString();
+    let n = 0;
+    for (const m of store().messages) {
+      if (m.conversationId === c.id && m.authorRole !== reader && !m.readAt) {
+        m.readAt = at;
+        n++;
+      }
+    }
+    return n;
+  },
 };
+
+/** A point on the earth with short text, or a throw. */
+function cleanLocation(l: SharedLocation): SharedLocation {
+  const lat = Number(l.lat);
+  const lng = Number(l.lng);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) throw new Error("Not a place");
+  const name = typeof l.name === "string" ? l.name.trim().slice(0, 120) : "";
+  const address = typeof l.address === "string" ? l.address.trim().slice(0, 200) : "";
+  // Six decimals is ten centimetres; anything finer is noise from the phone.
+  const round = (n: number) => Math.round(n * 1e6) / 1e6;
+  return { lat: round(lat), lng: round(lng), ...(name ? { name } : {}), ...(address ? { address } : {}) };
+}
+
+const fileUrl = (id: string) => `/api/messages/files/${id}`;
+
+/** What the bytes say they are; the browser's word for it is not enough. */
+function sniff(b: Uint8Array): string | null {
+  if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "image/jpeg";
+  if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return "image/png";
+  const ascii = (from: number, to: number) => String.fromCharCode(...b.slice(from, to));
+  if (b.length >= 12 && ascii(0, 4) === "RIFF" && ascii(8, 12) === "WEBP") return "image/webp";
+  return null;
+}
 
 /**
  * Ordered by what still needs doing, then oldest first inside that.
@@ -318,23 +512,133 @@ function byState<T>(order: string[], stateOf: (item: T) => string) {
   return (a: T, b: T) => order.indexOf(stateOf(a)) - order.indexOf(stateOf(b));
 }
 
+/** The desk's people. Phase 2 reads them from staff accounts. */
+const TEAM = ["Aline M.", "Patrick N.", "Claudine U.", "Eric H."];
+
+function findAsk(id: string) {
+  const a = store().addOnRequests.find((x) => x.id === id);
+  if (!a) throw new Error(`No ask ${id}`);
+  return a;
+}
+
+function findTask(id: string) {
+  const t = store().verificationQueue.find((x) => x.id === id);
+  if (!t) throw new Error(`No inspection ${id}`);
+  return t;
+}
+
+/**
+ * Posts into the guest's thread on a booking, opening one if the booking has
+ * none yet: a quote the guest cannot see is not a quote.
+ */
+function postToGuest(bookingId: string, authorName: string, authorRole: Role, body: string) {
+  const b = store().bookings.find((x) => x.id === bookingId);
+  if (!b) throw new Error("No such booking");
+  const at = new Date().toISOString();
+  // Only the guest and the desk: a driver or guide on the same booking
+  // shares other threads, and must not read what the guest is charged.
+  let c = store().conversations.find(
+    (x) => x.scope.kind === "booking" && x.scope.id === bookingId && x.participantRoles.includes("guest") && x.participantRoles.every((r) => r === "guest" || r === "ops" || r === "admin"),
+  );
+  if (!c) {
+    c = {
+      id: nextId("cnv"),
+      subject: b.title,
+      scope: { kind: "booking", id: bookingId },
+      participantNames: [b.guest?.name ?? "Guest", "HomeLink"],
+      participantRoles: ["guest", "ops"],
+      lastMessagePreview: "",
+      lastMessageAt: at,
+      unreadCount: 0,
+    };
+    store().conversations.push(c);
+  }
+  store().messages.push({ id: nextId("msg"), conversationId: c.id, authorName, authorRole, body, sentAt: at });
+  c.lastMessagePreview = body.slice(0, 120);
+  c.lastMessageAt = at;
+  return c;
+}
+
 const ops: OpsRepo = {
+  async team() {
+    return TEAM;
+  },
+
+  async updateAsk(id, by, patch) {
+    const a = findAsk(id);
+    if (patch.owner !== undefined && !TEAM.includes(patch.owner)) throw new Error("Not on the team");
+    if (patch.owner !== undefined) a.owner = patch.owner;
+    if (patch.status) a.status = patch.status;
+    recordAudit({ actor: by, action: "ask.update", target: id, detail: JSON.stringify(patch) });
+    return a;
+  },
+
+  async quoteAsk(id, by, price, note) {
+    const a = findAsk(id);
+    if (!Number.isInteger(price.minor) || price.minor <= 0) throw new Error("A quote needs a price");
+    a.quote = price;
+    a.quoteNote = note.trim().slice(0, 300);
+    a.status = "quoted";
+    const amount = formatMoney(price, "en-RW");
+    postToGuest(a.bookingId, a.owner ?? "HomeLink", readsAs(by), `${a.quoteNote ? `${a.quoteNote}. ` : ""}We can arrange this for ${amount}. Reply here to go ahead, or to change anything.`);
+    recordAudit({ actor: by, action: "ask.quote", target: id, detail: amount });
+    return a;
+  },
+
+  async scheduleInspection(id, by, date, inspector, today) {
+    const t = findTask(id);
+    if (!isIsoDate(date) || date < today || !TEAM.includes(inspector) || t.status === "published") return { ok: false, reason: "invalid" };
+    t.scheduledFor = date;
+    t.inspectorName = inspector;
+    if (t.status === "requested") t.status = "scheduled";
+    recordAudit({ actor: by, action: "inspection.schedule", target: id, detail: `${date} ${inspector}` });
+    return { ok: true };
+  },
+
+  async recordInspection(id, by, checklist, notes) {
+    const t = findTask(id);
+    if (t.status !== "scheduled" && t.status !== "inspected") throw new Error("Schedule the visit first");
+    t.checklist = Object.fromEntries(CHECKLIST[t.service].map((k) => [k, checklist[k] === true]));
+    t.inspectionNotes = notes.trim().slice(0, 1000);
+    t.status = "inspected";
+    recordAudit({ actor: by, action: "inspection.record", target: id });
+    return t;
+  },
+
+  async publishInspection(id, by) {
+    const t = findTask(id);
+    if (t.status !== "inspected") return { ok: false, reason: "notInspected" };
+    t.status = "published";
+    let draftId: string | undefined;
+    if (t.kind === "new") {
+      draftId = nextId("drf");
+      store().drafts.push({ id: draftId, taskId: t.id, service: t.service, name: t.name, where: t.where, createdAt: new Date().toISOString() });
+      t.draftId = draftId;
+    }
+    recordAudit({ actor: by, action: "inspection.publish", target: id });
+    return { ok: true, draftId };
+  },
+
+  async drafts() {
+    return [...store().drafts].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+
   async verificationQueue() {
-    return [...VERIFICATION_QUEUE].sort(
+    return [...store().verificationQueue].sort(
       (a, b) =>
         byState(VERIFY_ORDER, (t: typeof a) => t.status)(a, b) ||
         a.requestedAt.localeCompare(b.requestedAt),
     );
   },
   async addOnRequests() {
-    return [...ADDON_REQUESTS].sort(
+    return [...store().addOnRequests].sort(
       (a, b) =>
         byState(REQUEST_ORDER, (r: typeof a) => r.status)(a, b) ||
         a.requestedAt.localeCompare(b.requestedAt),
     );
   },
   async payouts() {
-    return [...PAYOUTS].sort(
+    return [...store().payouts].sort(
       (a, b) =>
         byState(PAYOUT_ORDER, (p: typeof a) => p.status)(a, b) ||
         // Settled rows read most-recent-first; outstanding ones read soonest.
@@ -347,10 +651,617 @@ const ops: OpsRepo = {
 
 const fx: FxRepo = {
   async rates() {
-    return FX_RATES;
+    return store().settings.fxDisplay;
   },
   base() {
     return "RWF";
+  },
+};
+
+const notifications: NotificationsRepo = {
+  async forRole(role, filter = {}) {
+    return store()
+      .notifications.filter(
+        (n) =>
+          n.audience === role &&
+          (!filter.category || n.category === filter.category) &&
+          (!filter.unreadOnly || !n.readAt),
+      )
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+
+  async unreadCount(role) {
+    return store().notifications.filter((n) => n.audience === role && !n.readAt).length;
+  },
+
+  async markRead(role, ids) {
+    const at = new Date().toISOString();
+    let marked = 0;
+    for (const n of store().notifications) {
+      // Another role's id is skipped silently: an error would confirm it exists.
+      if (n.audience === role && !n.readAt && ids.includes(n.id)) {
+        n.readAt = at;
+        marked++;
+      }
+    }
+    return marked;
+  },
+
+  async markAllRead(role) {
+    const ids = store().notifications.filter((n) => n.audience === role && !n.readAt).map((n) => n.id);
+    return notifications.markRead(role, ids);
+  },
+
+  async create(input) {
+    const entry = NOTIFICATION_CATALOG[input.kind];
+    if (!entry || !entry.audiences.includes(input.audience)) {
+      throw new Error(`${input.kind} is not sent to ${input.audience}`);
+    }
+    const made = {
+      ...input,
+      id: nextId("ntf"),
+      category: entry.category,
+      createdAt: new Date().toISOString(),
+    };
+    store().notifications.push(made);
+    return made;
+  },
+
+  async prefs(role) {
+    const s = store();
+    s.prefs[role] ??= defaultPrefs(role);
+    return structuredClone(s.prefs[role]);
+  },
+
+  async setPrefs(role, prefs) {
+    store().prefs[role] = structuredClone(prefs);
+  },
+};
+
+const audit: AuditRepo = {
+  async record(entry) {
+    return recordAudit(entry);
+  },
+  async list(filter = {}) {
+    return store()
+      .audit.filter(
+        (e) =>
+          (!filter.actor || e.actor === filter.actor) &&
+          (!filter.action || e.action.startsWith(filter.action)) &&
+          (!filter.from || e.at >= filter.from) &&
+          (!filter.to || e.at <= filter.to),
+      )
+      .sort((a, b) => b.at.localeCompare(a.at));
+  },
+};
+
+const bookings = makeBookings(notifications);
+const trips = makeTrips(notifications, tripReads);
+
+const incidents: IncidentsRepo = {
+  async forBooking(bookingId) {
+    return store().incidents.filter((i) => i.bookingId === bookingId).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+  async all() {
+    return [...store().incidents].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+  async create(input) {
+    const b = store().bookings.find((x) => x.id === input.bookingId);
+    if (!b) throw new Error("No such booking");
+    const made = {
+      ...input,
+      description: input.description.slice(0, 1000),
+      id: nextId("inc"),
+      status: "open" as const,
+      createdAt: new Date().toISOString(),
+    };
+    store().incidents.push(made);
+    b.timeline = [...(b.timeline ?? []), { at: made.createdAt, kind: "issueReported", actor: "guest", note: input.category }];
+    for (const audience of ["ops", "admin"] as const) {
+      await notifications.create({
+        audience,
+        kind: "newIncident",
+        params: { name: b.title, category: input.category },
+        href: "/manage/incidents",
+      });
+    }
+    return made;
+  },
+  async update(id, patch) {
+    const i = store().incidents.find((x) => x.id === id);
+    if (!i) throw new Error(`No incident ${id}`);
+    // Named fields only: whatever else a caller sends is ignored.
+    if (patch.status !== undefined) {
+      if (!["open", "inProgress", "resolved"].includes(patch.status)) throw new Error("No such status");
+      i.status = patch.status;
+    }
+    if (patch.assignee !== undefined) {
+      if (typeof patch.assignee !== "string" || (patch.assignee !== "" && !TEAM.includes(patch.assignee))) throw new Error("Not on the team");
+      i.assignee = patch.assignee || undefined;
+    }
+    return i;
+  },
+
+  async toTicket(id, by) {
+    const i = store().incidents.find((x) => x.id === id);
+    if (!i) throw new Error(`No incident ${id}`);
+    if (i.ticketId) return store().tickets.find((t) => t.id === i.ticketId) ?? null;
+    const b = store().bookings.find((x) => x.id === i.bookingId);
+    if (!b || b.service !== "stay") return null;
+    const ticket = await work.createTicket({
+      listingId: b.supplyItemId,
+      bookingId: b.id,
+      title: i.description.slice(0, 80),
+      description: i.description,
+      photoName: i.photoName,
+      priority: i.urgency === "now" ? "urgent" : i.urgency === "today" ? "normal" : "low",
+      assignee: i.assignee,
+      source: "guest",
+    });
+    i.ticketId = ticket.id;
+    i.status = "inProgress";
+    recordAudit({ actor: by, action: "incident.toTicket", target: id, detail: ticket.id });
+    return ticket;
+  },
+};
+
+const ASPECTS = ["cleanliness", "accuracy", "checkIn", "communication", "location", "value"] as const;
+
+const reviews: ReviewsRepo = {
+  async forSupply(supplyId) {
+    return store().reviews.filter((r) => r.supplyId === supplyId).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+  async forBooking(bookingId) {
+    return store().reviews.find((r) => r.bookingId === bookingId) ?? null;
+  },
+  async create({ bookingId, ratings, text }) {
+    const b = store().bookings.find((x) => x.id === bookingId);
+    if (!b) throw new Error("No such booking");
+    if (b.endDate >= kigaliDay() || b.status === "cancelled") throw new Error("Reviews open once it is over");
+    if (store().reviews.some((r) => r.bookingId === bookingId)) throw new Error("Already reviewed");
+    const clean = Object.fromEntries(
+      ASPECTS.map((a) => [a, Math.min(5, Math.max(1, Math.round(Number(ratings[a]) || 0)))]),
+    ) as Review["ratings"];
+    const made: Review = {
+      id: nextId("rev"),
+      bookingId,
+      supplyId: b.supplyItemId,
+      ratings: clean,
+      text: text.trim().slice(0, 2000),
+      createdAt: new Date().toISOString(),
+      guestFirstName: (b.guest?.name ?? "Guest").split(/\s+/)[0],
+    };
+    store().reviews.push(made);
+    b.timeline = [...(b.timeline ?? []), { at: made.createdAt, kind: "reviewed", actor: "guest" }];
+    return made;
+  },
+};
+
+const HK_STATUS: HousekeepingTask["status"][] = ["todo", "inProgress", "ready", "issue"];
+
+/**
+ * The day's cleans, worked out from the bookings each time so they can
+ * never disagree with them. Mid-stay visits are spread evenly through the
+ * stay: one visit on a five-night stay is the middle day.
+ */
+function cleansOn(date: string): Omit<HousekeepingTask, "assignee" | "status" | "note">[] {
+  const bookings = store().bookings.filter((b) => b.service === "stay" && b.status !== "cancelled");
+  const turnovers = turnoverTasks(bookings, date).map((t) => ({
+    id: `hk_${date}_${t.listingId}_turnover`,
+    listingId: t.listingId,
+    date,
+    kind: "turnover" as const,
+    window: { from: t.from, until: t.nextBookingId ? t.until : "18:00" },
+    bookingId: t.outBookingId,
+    ...(t.nextBookingId ? { nextBookingId: t.nextBookingId } : {}),
+  }));
+  const mid = bookings.flatMap((b) => {
+    const visits = b.extras?.find((e) => e.key === "midStayClean")?.quantity ?? 0;
+    if (!visits || b.stayMode === "lease") return [];
+    const nights = nightsBetween(b.startDate, b.endDate);
+    const days = Array.from({ length: visits }, (_, i) => addDays(b.startDate, Math.max(1, Math.floor(((i + 1) * nights) / (visits + 1)))));
+    return days.includes(date)
+      ? [{ id: `hk_${date}_${b.supplyItemId}_mid_${b.id}`, listingId: b.supplyItemId, date, kind: "midStay" as const, window: { from: "10:00", until: "13:00" }, bookingId: b.id }]
+      : [];
+  });
+  return [...turnovers, ...mid];
+}
+
+/** The bookings a driver or guide works: cars and days out still to come or under way. */
+function jobsOf(): PartnerJob[] {
+  const today = kigaliDay();
+  return store()
+    .bookings.filter((b) => (b.service === "car" || b.service === "experience") && (b.status === "confirmed" || b.status === "active") && b.endDate >= today)
+    .map((b) => ({
+      bookingId: b.id,
+      reference: b.reference,
+      role: b.service === "car" ? ("driver" as const) : ("guide" as const),
+      supplyId: b.supplyItemId,
+      title: b.title,
+      start: b.startDate,
+      end: b.endDate,
+      guest: b.guest?.name ?? "",
+      party: b.party,
+      ...(b.partnerId ? { partnerId: b.partnerId } : {}),
+    }))
+    .sort((a, b) => a.start.localeCompare(b.start));
+}
+
+const WORK_ROLES: StaffMember["role"][] = ["ops", "admin", "driver", "guide"];
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const activeAdmins = () => store().staff.filter((m) => m.role === "admin" && m.status === "active");
+
+function checkSettings(s: SiteSettings) {
+  const ok = (cond: boolean, what: string) => {
+    if (!cond) throw new Error(`Invalid ${what}`);
+  };
+  for (const [k, e] of Object.entries(s.catalog.extras)) ok(!!e && Number.isInteger(e.price.minor) && e.price.minor >= 0 && e.price.minor <= 10_000_000 && e.price.currency === "RWF" && typeof e.enabled === "boolean", `extra ${k}`);
+  for (const [code, p] of Object.entries(s.catalog.promos)) ok(/^[A-Z0-9]{3,20}$/.test(code) && Number.isInteger(p.percent) && p.percent >= 1 && p.percent <= 90 && Number.isInteger(p.capRwf) && p.capRwf >= 0 && isIsoDate(p.validUntil) && (!p.lane || ["stay", "car", "experience"].includes(p.lane)), `promo ${code}`);
+  for (const [lane, d] of Object.entries(s.catalog.windows)) ok(Number.isInteger(d) && d >= 0 && d <= 60, `window ${lane}`);
+  ok(s.fxDisplay.RWF === 1 && Object.values(s.fxDisplay).every((r) => typeof r === "number" && r > 0 && Number.isFinite(r)), "rates");
+  ok(Object.values(s.bank).every((v) => typeof v === "string" && v.length <= 80), "bank");
+}
+
+const admin: AdminRepo = {
+  async staff() {
+    return [...store().staff].sort((a, b) => a.status.localeCompare(b.status) || a.role.localeCompare(b.role) || a.name.localeCompare(b.name));
+  },
+  async invite(email, role, by) {
+    const e = email.trim().toLowerCase();
+    if (!EMAIL.test(e) || e.length > 120) throw new Error("Bad email");
+    if (!WORK_ROLES.includes(role)) throw new Error("Bad role");
+    if (store().staff.some((m) => m.email === e)) throw new Error("Already on the team");
+    const made: StaffMember = { id: nextId("stf"), name: e.split("@")[0], email: e, role, status: "invited" };
+    store().staff.push(made);
+    recordAudit({ actor: by, action: "staff.invite", target: made.id, detail: `${e} as ${role}` });
+    return made;
+  },
+  async setRole(id, role, by) {
+    const m = store().staff.find((x) => x.id === id);
+    if (!m || !WORK_ROLES.includes(role)) throw new Error("No such person or role");
+    if (m.role === "admin" && role !== "admin" && m.status === "active" && activeAdmins().length <= 1) throw new Error("The last admin cannot be demoted");
+    m.role = role;
+    recordAudit({ actor: by, action: "staff.role", target: id, detail: role });
+    return m;
+  },
+  async deactivate(id, by) {
+    const m = store().staff.find((x) => x.id === id);
+    if (!m) throw new Error("No such person");
+    if (m.role === "admin" && m.status === "active" && activeAdmins().length <= 1) throw new Error("The last admin cannot be deactivated");
+    m.status = "deactivated";
+    recordAudit({ actor: by, action: "staff.deactivate", target: id, detail: m.email });
+    return m;
+  },
+  async settings() {
+    return structuredClone(store().settings);
+  },
+  async updateSettings(patch, by) {
+    const next: SiteSettings = { ...structuredClone(store().settings), ...structuredClone(patch) };
+    checkSettings(next);
+    store().settings = next;
+    recordAudit({ actor: by, action: "settings.update", target: Object.keys(patch).join(","), detail: "" });
+    return structuredClone(next);
+  },
+  async content() {
+    return structuredClone(store().content);
+  },
+  async updateContent(patch, by) {
+    const next = { ...structuredClone(store().content), ...structuredClone(patch) };
+    for (const a of next.announcements) if (!a.text.trim() || a.text.length > 200 || !isIsoDate(a.start) || !isIsoDate(a.end) || a.end < a.start) throw new Error("Bad announcement");
+    next.featured = next.featured.filter((id, i, all) => all.indexOf(id) === i && store().listings.some((l) => l.id === id)).slice(0, 12);
+    store().content = next;
+    recordAudit({ actor: by, action: "content.update", target: Object.keys(patch).join(","), detail: "" });
+    return structuredClone(next);
+  },
+  async activeAnnouncements(on) {
+    return store().content.announcements.filter((a) => a.start <= on && on <= a.end);
+  },
+};
+
+const PHONE = (p: string) => /^\+?[\d\s]{9,20}$/.test(p.trim()) && p.replace(/\D/g, "").length >= 9;
+const luhn = (digits: string) => {
+  let sum = 0;
+  for (let i = 0; i < digits.length; i++) {
+    let d = Number(digits[digits.length - 1 - i]);
+    if (i % 2) d = d * 2 > 9 ? d * 2 - 9 : d * 2;
+    sum += d;
+  }
+  return digits.length >= 12 && digits.length <= 19 && sum % 10 === 0;
+};
+
+const account: AccountRepo = {
+  async profile() {
+    return structuredClone(store().account.profile);
+  },
+  async updateProfile(patch) {
+    const cur = store().account.profile;
+    const next = { ...cur, ...structuredClone(patch) };
+    if (!next.name?.trim() || next.name.trim().length > 80) throw new Error("Bad name");
+    if (!EMAIL.test(next.email)) throw new Error("Bad email");
+    if (!PHONE(next.phone)) throw new Error("Bad phone");
+    if (next.emergency && (next.emergency.name.trim().length > 80 || (next.emergency.phone && !PHONE(next.emergency.phone)))) throw new Error("Bad emergency contact");
+    next.name = next.name.trim();
+    store().account.profile = next;
+    return structuredClone(next);
+  },
+  async methods() {
+    return structuredClone(store().account.methods);
+  },
+  async addMethod(m) {
+    const methods = store().account.methods;
+    if (methods.length >= 6) throw new Error("Too many");
+    let made: SavedMethod;
+    if (m.kind === "card") {
+      const digits = m.number.replace(/\D/g, "");
+      if (!luhn(digits)) throw new Error("Bad card");
+      const [mm, yy] = m.expiry.split("/").map((x) => Number(x));
+      const now = new Date();
+      if (!(mm >= 1 && mm <= 12) || !(yy >= 0) || 2000 + yy < now.getUTCFullYear() || (2000 + yy === now.getUTCFullYear() && mm < now.getUTCMonth() + 1)) throw new Error("Expired");
+      const brand = digits.startsWith("4") ? "visa" : /^5[1-5]|^2[2-7]/.test(digits) ? "mastercard" : "card";
+      made = { id: nextId("pm"), kind: "card", brand, last4: digits.slice(-4), expiry: `${String(mm).padStart(2, "0")}/${String(yy).padStart(2, "0")}`, isDefault: !methods.length };
+    } else {
+      const provider = momoProvider(m.number);
+      if (!provider) throw new Error("Not a Mobile Money number");
+      made = { id: nextId("pm"), kind: "mobileMoney", provider, last4: m.number.replace(/\D/g, "").slice(-4), isDefault: !methods.length };
+    }
+    methods.push(made);
+    return { ...made };
+  },
+  async removeMethod(id) {
+    const a = store().account;
+    const gone = a.methods.find((x) => x.id === id);
+    if (!gone) throw new Error("No such method");
+    a.methods = a.methods.filter((x) => x.id !== id);
+    if (gone.isDefault && a.methods.length) a.methods[0].isDefault = true;
+  },
+  async setDefault(id) {
+    const a = store().account;
+    if (!a.methods.some((x) => x.id === id)) throw new Error("No such method");
+    for (const x of a.methods) x.isDefault = x.id === id;
+  },
+  async sessions() {
+    return structuredClone(store().account.sessions);
+  },
+  async signOutSession(id) {
+    const a = store().account;
+    const s = a.sessions.find((x) => x.id === id);
+    if (!s || s.current) throw new Error("Not another session");
+    a.sessions = a.sessions.filter((x) => x.id !== id);
+  },
+  async signOutOthers() {
+    store().account.sessions = store().account.sessions.filter((x) => x.current);
+  },
+  async idCheck() {
+    return { ...store().account.idCheck };
+  },
+  async submitIdCheck(input) {
+    if (!["nationalId", "passport", "drivingLicence"].includes(input.docType)) throw new Error("Bad document");
+    if (!input.front?.trim() || !input.selfie?.trim()) throw new Error("Front and selfie needed");
+    if (input.docType !== "passport" && !input.back?.trim()) throw new Error("Back needed");
+    store().account.idCheck = { status: "pending", docType: input.docType, submittedAt: new Date().toISOString() };
+    return { ...store().account.idCheck };
+  },
+  async cycleIdCheck() {
+    const order: IdCheck["status"][] = ["none", "pending", "verified", "retry"];
+    const c = store().account.idCheck;
+    c.status = order[(order.indexOf(c.status) + 1) % order.length];
+    return { ...c };
+  },
+  async deleteAccount() {
+    const today = kigaliDay();
+    const mine = await bookings.listForCurrentUser();
+    const blocking = mine.find((b) => (b.status === "confirmed" && b.endDate >= today) || b.status === "active");
+    if (blocking) return { ok: false as const, reason: "upcoming" as const, reference: blocking.reference };
+    store().account.deleted = true;
+    return { ok: true as const };
+  },
+};
+
+const finance: FinanceRepo = {
+  async payments(filter = {}) {
+    return store()
+      .payments.filter((p) => p.kind !== "refund" && (!filter.rail || p.rail === filter.rail) && (!filter.status || p.status === filter.status))
+      .sort((a, b) => b.at.localeCompare(a.at));
+  },
+  async refunds() {
+    return store().payments.filter((p) => p.kind === "refund").sort((a, b) => b.at.localeCompare(a.at));
+  },
+  async approveRefund(id, by) {
+    const r = store().payments.find((p) => p.id === id && p.kind === "refund");
+    if (!r || r.status !== "pending") throw new Error("Nothing to approve");
+    r.status = "succeeded";
+    recordAudit({ actor: by, action: "refund.approve", target: id, detail: `${r.amount.minor} ${r.amount.currency}` });
+  },
+  async statement() {
+    return { lines: [...store().statement].sort((a, b) => b.at.localeCompare(a.at)) };
+  },
+  async reconcile(lineId, paymentId, by) {
+    const s = store();
+    const line = s.statement.find((l) => l.id === lineId);
+    const p = s.payments.find((x) => x.id === paymentId);
+    if (!line || line.paymentId) throw new Error("No open line");
+    if (!p || p.rail !== "mobileMoney" || p.amount.currency !== line.amount.currency || p.amount.minor !== line.amount.minor) throw new Error("Not this payment");
+    if (s.statement.some((l) => l.paymentId === paymentId)) throw new Error("Already matched");
+    line.paymentId = paymentId;
+    recordAudit({ actor: by, action: "payment.reconcile", target: paymentId, detail: line.ref });
+  },
+  async releaseDeposit(bookingId, deductions, reason, by) {
+    const b = store().bookings.find((x) => x.id === bookingId);
+    const deposit = b?.lines?.find((l) => l.key === "deposit")?.amount;
+    if (!b || b.stayMode !== "lease" || !deposit) throw new Error("No deposit held");
+    if (store().payments.some((p) => p.bookingId === b.id && p.kind === "refund" && p.status !== "failed")) throw new Error("Already returned");
+    if (deductions.currency !== deposit.currency || !Number.isInteger(deductions.minor) || deductions.minor < 0 || deductions.minor > deposit.minor) throw new Error("Bad deductions");
+    if (deductions.minor > 0 && !reason.trim()) throw new Error("A deduction needs a reason");
+    const at = new Date().toISOString();
+    store().payments.push({ id: nextId("pmt"), bookingId: b.id, rail: "bankTransfer", kind: "refund", amount: money(deposit.minor - deductions.minor, deposit.currency), status: "succeeded", at });
+    if (b.moveOut) b.moveOut = { ...b.moveOut, status: "returned", returnedAt: at };
+    recordAudit({ actor: by, action: "deposit.release", target: b.id, detail: `less ${deductions.minor} ${deductions.currency}${reason.trim() ? `: ${reason.trim().slice(0, 300)}` : ""}` });
+  },
+  async payouts() {
+    return [...store().payouts].sort((a, b) => a.releaseOn.localeCompare(b.releaseOn));
+  },
+  async markPayoutPaid(id, by) {
+    const p = store().payouts.find((x) => x.id === id);
+    if (!p || p.status !== "due") throw new Error("Not due");
+    p.status = "paid";
+    recordAudit({ actor: by, action: "payout.paid", target: id, detail: `${p.amount.minor} ${p.amount.currency} to ${p.payee}` });
+  },
+};
+
+const partners: PartnersRepo = {
+  async list() {
+    return [...store().partners].sort((a, b) => a.role.localeCompare(b.role) || a.name.localeCompare(b.name));
+  },
+  async byId(id) {
+    return store().partners.find((p) => p.id === id) ?? null;
+  },
+  async documents(partnerId) {
+    return store().partnerDocs.filter((d) => d.partnerId === partnerId).sort((a, b) => a.expires.localeCompare(b.expires));
+  },
+  async jobs(filter = {}) {
+    return jobsOf().filter(
+      (j) => (!filter.partnerId || j.partnerId === filter.partnerId) && (!filter.unassigned || !j.partnerId) && (!filter.role || j.role === filter.role),
+    );
+  },
+  async offers(partnerId) {
+    return store().jobOffers.filter((j) => j.partnerId === partnerId).sort((a, b) => a.start.localeCompare(b.start));
+  },
+  async respond(offerId, partnerId, accept, reason) {
+    const j = store().jobOffers.find((x) => x.id === offerId);
+    if (!j || j.partnerId !== partnerId) throw new Error("Not your offer");
+    if (j.status !== "offered") throw new Error("Already answered");
+    if (j.offerExpiresAt && Date.parse(j.offerExpiresAt) < Date.now()) throw new Error("This offer has run out");
+    const why = (reason ?? "").trim().slice(0, 300);
+    if (!accept && !why) throw new Error("A reason is needed");
+    j.status = accept ? "accepted" : "declined";
+    if (!accept) j.declineReason = why;
+    const b = store().bookings.find((x) => x.id === j.bookingId);
+    const p = store().partners.find((x) => x.id === partnerId);
+    if (accept && b) {
+      b.partnerId = partnerId;
+      for (const audience of ["ops", "admin"] as const) {
+        await notifications.create({ audience, kind: "jobAccepted", params: { name: p?.shortName ?? "", what: b.title, date: j.start }, href: `/manage/bookings/${b.reference}` });
+      }
+    }
+    recordAudit({ actor: p?.role ?? "driver", action: accept ? "job.accept" : "job.decline", target: b?.reference ?? j.bookingId, detail: why });
+    return { ...j };
+  },
+  async replaceDocument(docId, partnerId, doc) {
+    const d = store().partnerDocs.find((x) => x.id === docId);
+    if (!d || d.partnerId !== partnerId) throw new Error("Not your document");
+    if (!isIsoDate(doc.expires) || doc.expires <= kigaliDay()) throw new Error("Must be valid past today");
+    const name = doc.fileName.trim().slice(0, 120);
+    if (!name) throw new Error("No file");
+    d.expires = doc.expires;
+    d.fileName = name;
+    recordAudit({ actor: store().partners.find((x) => x.id === partnerId)?.role ?? "driver", action: "document.replace", target: docId, detail: `${name} until ${doc.expires}` });
+    return { ...d };
+  },
+  async assign(bookingId, partnerId, by) {
+    const job = jobsOf().find((j) => j.bookingId === bookingId);
+    const b = store().bookings.find((x) => x.id === bookingId);
+    if (!job || !b) throw new Error("Not a job still to do");
+    if (partnerId === null) {
+      delete b.partnerId;
+    } else {
+      const p = store().partners.find((x) => x.id === partnerId);
+      if (!p || p.role !== job.role) throw new Error("Not this partner's kind of work");
+      b.partnerId = p.id;
+    }
+    recordAudit({ actor: by, action: "job.assign", target: bookingId, detail: partnerId ?? "nobody" });
+  },
+};
+
+const rates: RatesRepo = {
+  async forRange(listingId, from, to) {
+    const l = store().listings.find((x) => x.id === listingId);
+    if (!l) throw new Error(`No listing ${listingId}`);
+    const out: { date: string; rate: Money; own: boolean }[] = [];
+    for (let d = from; d < to; d = addDays(d, 1)) {
+      const own = l.nightlyRates?.[d];
+      out.push({ date: d, rate: own ?? l.nightlyRate, own: !!own });
+    }
+    return out;
+  },
+  async setRange(listingId, from, to, rate) {
+    const l = store().listings.find((x) => x.id === listingId);
+    if (!l) throw new Error(`No listing ${listingId}`);
+    if (!isIsoDate(from) || !isIsoDate(to) || to <= from || nightsBetween(from, to) > 366) throw new Error("Bad range");
+    if (rate && (rate.currency !== l.nightlyRate.currency || !(rate.minor > 0) || !Number.isInteger(rate.minor))) throw new Error("Bad rate");
+    const next = { ...(l.nightlyRates ?? {}) };
+    for (let d = from; d < to; d = addDays(d, 1)) {
+      // A rate equal to the base is the base: no point keeping it as an exception.
+      if (rate && rate.minor !== l.nightlyRate.minor) next[d] = { ...rate };
+      else delete next[d];
+    }
+    l.nightlyRates = next;
+  },
+};
+
+const work: WorkRepo = {
+  async housekeeping(date) {
+    const kept = store().housekeeping;
+    return cleansOn(date).map((t) => ({ ...t, ...(kept[t.id] ?? { status: "todo" as const }) }));
+  },
+  async updateHousekeeping(id, by, patch) {
+    const date = /^hk_(\d{4}-\d{2}-\d{2})_/.exec(id)?.[1];
+    const task = date ? cleansOn(date).find((t) => t.id === id) : undefined;
+    if (!task) throw new Error(`No housekeeping task ${id}`);
+    if (patch.status !== undefined && !HK_STATUS.includes(patch.status)) throw new Error("No such status");
+    const cur = store().housekeeping[id] ?? { status: "todo" as const };
+    const next = {
+      ...cur,
+      ...(patch.assignee !== undefined ? { assignee: patch.assignee || undefined } : {}),
+      ...(patch.status !== undefined ? { status: patch.status } : {}),
+      ...(patch.note !== undefined ? { note: patch.note.trim().slice(0, 500) || undefined } : {}),
+    };
+    store().housekeeping[id] = next;
+    recordAudit({ actor: by, action: "housekeeping.update", target: id, detail: JSON.stringify(patch) });
+    return { ...task, ...next };
+  },
+  async tickets(filter = {}) {
+    return store()
+      .tickets.filter((t) => (!filter.listingId || t.listingId === filter.listingId) && (!filter.status || filter.status.includes(t.status)))
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  },
+  async createTicket(t) {
+    const made = { ...t, id: nextId("tkt"), status: "open" as const, createdAt: new Date().toISOString() };
+    store().tickets.push(made);
+    return made;
+  },
+  async updateTicket(id, patch) {
+    const t = store().tickets.find((x) => x.id === id);
+    if (!t) throw new Error(`No ticket ${id}`);
+    Object.assign(t, patch);
+    return t;
+  },
+};
+
+const viewings: ViewingsRepo = {
+  async create(v) {
+    const made = { ...v, id: nextId("vwg"), status: "requested" as const, createdAt: new Date().toISOString() };
+    store().viewings.push(made);
+    return made;
+  },
+  async forCurrentUser() {
+    // One preview account: viewings seeded for other people are the sales
+    // desk's to see, not hers. Anything requested in the preview is hers.
+    return (await viewings.all()).filter((v) => v.id !== "vwg_002" && v.id !== "vwg_003");
+  },
+  async all() {
+    return [...store().viewings].sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`));
+  },
+  async taken(saleId) {
+    return store()
+      .viewings.filter((v) => v.saleId === saleId && v.status !== "cancelled")
+      .map((v) => ({ date: v.date, time: v.time }));
+  },
+  async setStatus(id, status, move) {
+    const v = store().viewings.find((x) => x.id === id);
+    if (!v) throw new Error(`No viewing ${id}`);
+    v.status = status;
+    if (move) Object.assign(v, move);
+    return v;
   },
 };
 
@@ -360,8 +1271,20 @@ export const fixtureRepositories: Repositories = {
   mobility,
   experiences,
   bookings,
+  availability,
+  viewings,
+  incidents,
+  reviews,
+  work,
+  rates,
+  partners,
+  finance,
+  admin,
+  account,
   trips,
   messaging,
   ops,
+  notifications,
+  audit,
   fx,
 };

@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { MoneyText } from "@/components/ui/money-text";
 import { Select } from "@/components/ui/select";
 import { UsersIcon } from "@/components/ui/icons";
+import { TripActions } from "@/components/cart/trip-actions";
+import { cartItemId } from "@/lib/cart-checks";
 import { QuoteBreakdown } from "@/components/listing/quote-breakdown";
 import { SingleDatePicker } from "@/components/ui/single-date-picker";
 
@@ -81,6 +83,26 @@ export function SeatsPanel({ experience, initialDate, initialParty }: { experien
           <Button onClick={book} fullWidth size="lg">
             {t("book")}
           </Button>
+          <TripActions
+            item={
+              date
+                ? {
+                    id: cartItemId("experience", experience.slug, date, date, party),
+                    kind: "experience",
+                    slug: experience.slug,
+                    supplyId: experience.id,
+                    title: experience.name,
+                    start: date,
+                    end: date,
+                    party,
+                    image: experience.images?.[0],
+                    imageSeed: experience.imageSeed,
+                    quote,
+                    supply: experience,
+                  }
+                : null
+            }
+          />
           <p className="text-center text-xs text-ink-3">
             {tQuote("noHiddenFees")}
           </p>

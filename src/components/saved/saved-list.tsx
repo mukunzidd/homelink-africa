@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import type { Money } from "@/lib/domain/money";
 import { Link } from "@/i18n/navigation";
@@ -8,8 +8,9 @@ import { useSaved, type SavedKind } from "@/lib/saved";
 import { SupplyImage } from "@/components/ui/supply-image";
 import { MoneyText } from "@/components/ui/money-text";
 import { SaveButton } from "@/components/ui/save-button";
-import { CloseIcon, ColumnsIcon, HeartIcon, NoteIcon, SparkIcon } from "@/components/ui/icons";
+import { ColumnsIcon, HeartIcon, NoteIcon, SparkIcon } from "@/components/ui/icons";
 import { useSmartSearch } from "@/components/search/smart-search";
+import { Dialog } from "@/components/ui/dialog";
 import { cn } from "@/lib/cn";
 
 export type SavedCatalogueItem = {
@@ -92,12 +93,6 @@ export function SavedList({ catalogue }: { catalogue: SavedCatalogueItem[] }) {
   const shown = tab === "all" ? saved : saved.filter((s) => s.kind === tab);
   const chosen = picked.map((id) => byId.get(id)).filter((x): x is SavedCatalogueItem => !!x && saved.includes(x));
 
-  useEffect(() => {
-    if (!comparing) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setComparing(false);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [comparing]);
 
   if (!saved.length) {
     return (
@@ -240,7 +235,10 @@ export function SavedList({ catalogue }: { catalogue: SavedCatalogueItem[] }) {
 
       {chosen.length > 0 && (
         <div className="sticky bottom-4 z-30 mx-auto flex items-center gap-3 rounded-full border border-line bg-surface py-2 pl-5 pr-2 shadow-[var(--shadow-pop)]">
-          <span className="text-[14px] text-ink-2">{tList("comparePicked", { count: chosen.length })}</span>
+          <span className="text-[14px] text-ink-2">
+            {tList("comparePicked", { count: chosen.length })}
+            {chosen.length < 2 && <span className="text-ink-3"> · {tList("comparePickMore")}</span>}
+          </span>
           <button
             type="button"
             disabled={chosen.length < 2}
@@ -253,19 +251,15 @@ export function SavedList({ catalogue }: { catalogue: SavedCatalogueItem[] }) {
         </div>
       )}
 
-      {comparing && chosen.length >= 2 && (
-        <section aria-label={tList("compareTitle")} className="flex flex-col gap-3 rounded-card border border-line bg-surface p-4 sm:p-5">
-          <div className="flex items-center justify-between">
-            <h2 className="font-display text-xl font-semibold text-ink">{tList("compareTitle")}</h2>
-            <button type="button" onClick={() => setComparing(false)} aria-label={tList("compareClose")} className="grid size-9 cursor-pointer place-items-center rounded-ctl text-ink-2 hover:bg-surface-2">
-              <CloseIcon />
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[520px] border-collapse text-[14px]">
+      {/* Over the page rather than under the list: under it, the table
+          landed below the fold and pressing Compare looked like nothing
+          happened. */}
+      <Dialog open={comparing && chosen.length >= 2} onClose={() => setComparing(false)} title={tList("compareTitle")} size="lg">
+          <div className="-mx-1 overflow-x-auto px-1">
+            <table className="w-full min-w-[480px] border-collapse text-[14px]">
               <thead>
                 <tr>
-                  <th className="w-40" />
+                  <th className="sticky left-0 z-10 w-24 bg-surface sm:w-40" />
                   {chosen.map((c) => (
                     <th key={c.id} className="px-3 pb-3 text-left align-bottom font-semibold text-ink">
                       <SupplyImage seed={c.seed} src={c.image} alt="" sizes="200px" className="mb-2 h-24 w-full rounded-ctl" />
@@ -286,8 +280,7 @@ export function SavedList({ catalogue }: { catalogue: SavedCatalogueItem[] }) {
               </tbody>
             </table>
           </div>
-        </section>
-      )}
+      </Dialog>
     </div>
   );
 }
@@ -295,7 +288,7 @@ export function SavedList({ catalogue }: { catalogue: SavedCatalogueItem[] }) {
 function CompareRow({ label, cells }: { label: string; cells: React.ReactNode[] }) {
   return (
     <tr className="border-t border-line-soft">
-      <th scope="row" className="py-2.5 pr-3 text-left text-[13px] font-medium text-ink-3">{label}</th>
+      <th scope="row" className="sticky left-0 z-10 bg-surface py-2.5 pr-3 text-left text-[13px] font-medium text-ink-3">{label}</th>
       {cells.map((c, i) => (
         <td key={i} className="tnum px-3 py-2.5 align-top text-ink-2">{c || "–"}</td>
       ))}

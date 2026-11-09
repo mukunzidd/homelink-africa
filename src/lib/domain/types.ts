@@ -1,3 +1,4 @@
+import type { ExtraSelection } from "./extras";
 import type { CurrencyCode, Money } from "./money";
 
 /**
@@ -13,7 +14,6 @@ import type { CurrencyCode, Money } from "./money";
 export type Role =
   | "visitor"
   | "guest"
-  | "host"
   | "driver"
   | "guide"
   | "ops"
@@ -80,9 +80,11 @@ export type Listing = {
   neighbourhood: string;
   city: string;
   /**
-   * The middle of the street, not the door. A guest sees the area before they
-   * book and the address after; anything finer than ~150m would give the
-   * second away with the first.
+   * Stored as the middle of the street, not the door, for staff. Every read
+   * the public site makes replaces it with the neighbourhood's centre
+   * (lib/places/area.ts): a guest sees the neighbourhood before booking and
+   * the address after, and anything finer lets them find the gate and skip
+   * the booking.
    */
   location: GeoPoint;
   bedrooms: number;
@@ -95,6 +97,16 @@ export type Listing = {
   leaseTerms?: LeaseTerms;
   modes: StayMode[];
   verification: VerificationRecord;
+  /**
+   * HomeLink hosts every home itself; this is the person on the team who
+   * looks after this one. Named on the page, because "the host" is otherwise
+   * a company, and a company does not pick up at eleven at night.
+   */
+  propertyManager: { name: string; since: string };
+  /** Accepted at checkout. Plain sentences, in the order a guest needs them. */
+  houseRules: string[];
+  /** Released to the guest 48 hours before arrival, never shown before. */
+  checkIn?: { directions: string; doorCode: string; wifiName: string; wifiPassword: string };
   /** Colour seed, used when no photograph exists yet. */
   imageSeed: string;
   /** Photographs, first is the hero. Empty until our team has shot the place. */
@@ -102,6 +114,12 @@ export type Listing = {
   summary: string;
   /** Remaining units for the shown dates. Honest scarcity only. */
   unitsAvailable: number;
+  /** False while admin is still writing it; nothing public reads it then. Absent means live. */
+  published?: boolean;
+  /** Shortest stay taken, in nights. Absent means one. */
+  minNights?: number;
+  /** Nights priced differently from the base rate, by ISO date, set on the rates grid. */
+  nightlyRates?: Record<string, Money>;
 };
 
 /* -------------------------------------------------------------------- sale */
@@ -138,6 +156,8 @@ export type HomeForSale = {
   summary: string;
   /** ISO date the home came on the market. */
   listedAt: string;
+  /** Absent means on the market. A sold home leaves the public list. */
+  saleStatus?: "onMarket" | "underOffer" | "sold";
   yearBuilt: number;
   /**
    * The land registry's Unique Parcel Identifier. Shown masked on the page:
@@ -167,6 +187,8 @@ export type Vehicle = {
   images?: string[];
   summary: string;
   unitsAvailable: number;
+  /** Accepted at checkout, like a home's house rules. */
+  rules: string[];
 };
 
 /* ------------------------------------------------------------- experiences */
@@ -198,6 +220,13 @@ export type Experience = {
   departs: string;
   /** Hours on the road from Kigali, one way. A walk in the city is a quarter. */
   driveHours: number;
+  /** Start times a guest can pick, "HH:MM" Kigali. Absent means `departs` only. */
+  slots?: string[];
+  /** Accepted at checkout, like a home's house rules. */
+  rules: string[];
+  /** A park permit is bought in each person's name: passports needed, never refunded. */
+  requiresPermit?: boolean;
+  permitShare?: Money;
   /** Where the day happens, for the map of Rwanda on the list. */
   location: GeoPoint;
 };
@@ -232,7 +261,57 @@ export type Booking = {
   /** High-value stays hold funds until check-in is confirmed. */
   escrowHeld: boolean;
   stayMode?: StayMode;
+
+  /*
+   * Everything below arrives with the full booking flow and is optional, so
+   * the older fixtures still describe themselves without it.
+   */
+  guest?: GuestDetails;
+  extras?: ExtraSelection[];
+  promoCode?: string;
+  paymentPlan?: "full" | "deposit";
+  /** The server's quote lines at the moment of booking. */
+  lines?: import("./pricing").QuoteLine[];
+  timeline?: BookingEvent[];
+  tripId?: string;
+  driveMode?: DriveMode;
+  pickup?: { kind: "airport" | "hotel" | "address"; detail: string; flight?: string };
+  participants?: Participant[];
+  slot?: string;
+  dietary?: string;
+  application?: RentApplication;
+  checkedInAt?: string;
+  /** Each adult's name and ID, sent ahead so arrival is a key handover. */
+  onlineCheckIn?: { at: string; adults: { name: string; idFileName: string }[] };
+  cancelledAt?: string;
+  cancelReason?: string;
+  refund?: Money;
+  staffNotes?: { at: string; by: Role; text: string }[];
+  /** The driver or guide on this job, once someone has been given it. */
+  partnerId?: string;
+  /** A renting coming to an end: the inspection booked, and the deposit to give back after it. */
+  moveOut?: { date: string; taskId: string; deposit: Money; status: "scheduled" | "returned"; returnedAt?: string };
 };
+
+export type PaymentRecord = {
+  id: string;
+  bookingId: string;
+  rail: PaymentRail;
+  kind: "full" | "deposit" | "balance" | "rent" | "change" | "refund";
+  amount: Money;
+  status: "pending" | "succeeded" | "failed" | "refunded";
+  /** ISO instant. */
+  at: string;
+};
+
+export type BookingEventKind =
+  | "placed" | "paid" | "datesChanged" | "guestsAdded" | "checkInReleased" | "checkedIn"
+  | "checkedOut" | "cancelled" | "refunded" | "reviewed" | "issueReported" | "noteAdded";
+
+export type BookingEvent = { at: string; kind: BookingEventKind; actor: Role; note?: string };
+
+/** A night or day a home or car cannot be booked, for a reason other than a booking. */
+export type Block = { supplyId: string; date: string; reason: "maintenance" | "owner" };
 
 export type TripStatus = "draft" | "booked" | "active" | "completed";
 
@@ -277,6 +356,21 @@ export type VerificationTask = {
   status: VerificationTaskStatus;
   /** Why this one is not simply moving through. Usually the whole story. */
   note?: string;
+  /** Point by point, against CHECKLIST for the lane. */
+  checklist?: Record<string, boolean>;
+  inspectionNotes?: string;
+  /** Set when a new candidate is published: the draft admin finishes in the editor. */
+  draftId?: string;
+};
+
+/** What publishing a new candidate leaves for admin: a name and a place, not yet a listing. */
+export type ListingDraft = {
+  id: string;
+  taskId: string;
+  service: ServiceKind;
+  name: string;
+  where: string;
+  createdAt: string;
 };
 
 /**
@@ -296,6 +390,9 @@ export type AddOnRequest = {
   requestedAt: string;
   status: AddOnRequestStatus;
   owner?: string;
+  /** The price the desk quoted, sent to the guest in the booking's thread. */
+  quote?: Money;
+  quoteNote?: string;
 };
 
 /** Money out to supply. Mirrors the escrow state a guest sees, from behind. */
@@ -352,6 +449,14 @@ export type Attachment = {
   alt: string;
 };
 
+/** A point someone shared, with the name and the directions people give. */
+export type SharedLocation = GeoPoint & {
+  /** "Nyabugogo Bus Park", or nothing for a dropped pin. */
+  name?: string;
+  /** What gets someone to the door: "KG 7 Ave, the blue gate". */
+  address?: string;
+};
+
 export type Message = {
   id: string;
   conversationId: string;
@@ -360,6 +465,8 @@ export type Message = {
   /** May be empty when the photograph is the whole message. */
   body: string;
   attachments?: Attachment[];
+  /** A place shared in the thread: where to meet, where the car is. */
+  location?: SharedLocation;
   sentAt: string;
   readAt?: string;
 };
@@ -373,4 +480,291 @@ export type SegmentDefaults = {
   currency: CurrencyCode;
   rail: "card" | "mobileMoney";
   tripPromptsOn: boolean;
+};
+
+/* ------------------------------------------------------------------- audit */
+
+/**
+ * Who did what, to which thing, and when. Every write a member of staff
+ * makes records one, and the admin audit log reads them back.
+ */
+export type AuditEntry = {
+  id: string;
+  /** ISO instant. */
+  at: string;
+  actor: Role;
+  /** Dotted verb, e.g. "booking.cancel", "listing.update". */
+  action: string;
+  /** The id or reference of the thing acted on. */
+  target: string;
+  detail?: string;
+};
+
+/* ----------------------------------------------------------- notifications */
+
+export type NotificationCategory = "booking" | "payment" | "message" | "stay" | "work" | "system";
+
+export type NotificationKind =
+  | "bookingConfirmed" | "paymentReceived" | "paymentFailed" | "momoPending" | "checkInReady"
+  | "rentDue" | "newMessage" | "reviewRequest" | "viewingConfirmed" | "viewingChanged"
+  | "newBooking" | "arrivalToday" | "newAsk" | "newIncident" | "inspectionDue"
+  | "jobOffered" | "jobChanged" | "jobAccepted" | "payoutSent" | "documentExpiring";
+
+export type Channel = "inApp" | "email" | "sms" | "whatsapp" | "push";
+
+/**
+ * Something that happened that a person should hear about.
+ *
+ * Addressed to a role, because there are no user accounts yet; Phase 2
+ * addresses it to a user. `params` are already formatted for reading (an
+ * amount is "RWF 165,000", not minor units), since a notification states
+ * what was true when it was sent, not what a converter says today.
+ */
+export type AppNotification = {
+  id: string;
+  audience: Role;
+  kind: NotificationKind;
+  category: NotificationCategory;
+  params: Record<string, string | number>;
+  href: string;
+  /** ISO instant. */
+  createdAt: string;
+  readAt?: string;
+};
+
+export type NotificationPrefs = {
+  channels: Partial<Record<NotificationKind, Channel[]>>;
+  /** Kigali times, "HH:MM". Null when off. */
+  quietHours: { from: string; to: string } | null;
+};
+
+export type { ExtraKey, ExtraSelection } from "./extras";
+
+/* ----------------------------------------------------------- booking flow */
+
+export type GuestDetails = {
+  name: string;
+  email: string;
+  phone: string;
+  /** Booking for someone else; then `travellerName` is required. */
+  forSomeoneElse?: boolean;
+  travellerName?: string;
+  /** "HH:MM", Kigali time. */
+  arrivalTime?: string;
+  purpose?: "work" | "leisure";
+  requests?: string;
+};
+
+export type Participant = { name: string; age: number; nationality?: string; passport?: string };
+
+export type RentApplication = {
+  occupants: number;
+  employer: string;
+  incomeBand: "under500k" | "500kTo1m" | "1mTo2m" | "over2m";
+  idFileName?: string;
+  moveIn: string;
+  months: number;
+};
+
+export type PaymentRail = "card" | "mobileMoney" | "bankTransfer";
+
+/** One line of the Mobile Money statement the operator sends, matched to a payment or not yet. */
+export type StatementLine = {
+  id: string;
+  /** ISO instant. */
+  at: string;
+  amount: Money;
+  phone: string;
+  /** The operator's transaction reference. */
+  ref: string;
+  paymentId?: string;
+};
+
+/** A request to see a home for sale, in person or by video. */
+export type Viewing = {
+  id: string;
+  saleId: string;
+  mode: "inPerson" | "video";
+  date: string;
+  /** "HH:MM", Kigali. */
+  time: string;
+  contact: GuestDetails;
+  notes?: string;
+  status: "requested" | "confirmed" | "rescheduled" | "done" | "cancelled";
+  createdAt: string;
+};
+
+export type IncidentCategory = "power" | "water" | "internet" | "cleanliness" | "safety" | "noise" | "other";
+
+/** Something wrong during a stay, reported by the guest or the team. */
+export type Incident = {
+  id: string;
+  bookingId: string;
+  category: IncidentCategory;
+  urgency: "now" | "today" | "whenever";
+  description: string;
+  photoName?: string;
+  status: "open" | "inProgress" | "resolved";
+  createdAt: string;
+  assignee?: string;
+  /** The maintenance ticket this became, if it needed a repair. */
+  ticketId?: string;
+};
+
+export type ReviewAspect = "cleanliness" | "accuracy" | "checkIn" | "communication" | "location" | "value";
+
+export type Review = {
+  id: string;
+  bookingId: string;
+  supplyId: string;
+  ratings: Record<ReviewAspect, number>;
+  text: string;
+  createdAt: string;
+  guestFirstName: string;
+};
+
+/** Something to fix in a home: from a tenant, a guest's report, an inspection or the team. */
+/**
+ * A clean the housekeeping team owes a home on one day. Derived from the
+ * bookings (a departure is a turnover; a booked mid-stay clean is a visit
+ * on the middle day), with who has it and how far it got kept beside.
+ */
+export type HousekeepingTask = {
+  id: string;
+  listingId: string;
+  date: string;
+  kind: "turnover" | "midStay" | "deep";
+  window: { from: string; until: string };
+  /** The booking leaving (turnover) or staying (mid-stay). */
+  bookingId: string;
+  /** The booking arriving after a turnover, which is what makes it tight. */
+  nextBookingId?: string;
+  assignee?: string;
+  status: "todo" | "inProgress" | "ready" | "issue";
+  note?: string;
+};
+
+/** The preview guest's own account details. */
+export type Profile = {
+  name: string;
+  email: string;
+  phone: string;
+  photoName?: string;
+  emergency?: { name: string; phone: string };
+  twoStep: boolean;
+};
+
+/** A saved way to pay. A card keeps its brand, last four and expiry only, never the number. */
+export type SavedMethod = {
+  id: string;
+  kind: "card" | "mobileMoney";
+  brand?: "visa" | "mastercard" | "card";
+  provider?: "mtn" | "airtel";
+  last4: string;
+  expiry?: string;
+  isDefault: boolean;
+};
+
+export type AccountSession = { id: string; device: string; city: string; lastActiveAt: string; current: boolean };
+
+export type IdCheck = {
+  status: "none" | "pending" | "verified" | "retry";
+  docType?: "nationalId" | "passport" | "drivingLicence";
+  submittedAt?: string;
+};
+
+/** Someone who signs in to the workspace. Guests are not here: they are customers, not staff. */
+export type StaffMember = {
+  id: string;
+  name: string;
+  email: string;
+  role: "ops" | "admin" | "driver" | "guide";
+  status: "active" | "invited" | "deactivated";
+  lastActiveAt?: string;
+};
+
+/** A line across the top of the site, between two dates. */
+export type Announcement = { id: string; text: string; start: string; end: string };
+
+/** What admin edits about the public site without a deploy. */
+export type SiteContent = {
+  announcements: Announcement[];
+  /** Listing ids for the landing page, in order; the rest fill in by recency. */
+  featured: string[];
+  /** Per neighbourhood: a line of our own, a photo from one of its homes, and whether its landmarks show. */
+  neighbourhoods: Record<string, { text?: string; photo?: string; showLandmarks?: boolean }>;
+};
+
+/** A driver or guide who works HomeLink's cars and days out. */
+export type Partner = {
+  id: string;
+  role: "driver" | "guide";
+  name: string;
+  /** The short form bookings and payouts use: "Eric H.". */
+  shortName: string;
+  phone: string;
+  /** The cars they drive or the days out they lead. */
+  supplyIds: string[];
+  rating: number;
+  joinedAt: string;
+};
+
+export type PartnerDocument = {
+  id: string;
+  partnerId: string;
+  kind: "licence" | "insurance" | "permit" | "id" | "vehicleInspection";
+  expires: string;
+  /** The file sent in for it. Kept by name until the backend stores files. */
+  fileName?: string;
+};
+
+/** Work offered to one driver or guide, which they accept or decline before it runs out. */
+export type JobOffer = {
+  id: string;
+  partnerId: string;
+  bookingId: string;
+  kind: "hire" | "transfer" | "dayOut";
+  start: string;
+  end: string;
+  /** "HH:MM" Kigali, and where. */
+  time: string;
+  pickup: string;
+  party: number;
+  status: "offered" | "accepted" | "declined" | "done";
+  offerExpiresAt?: string;
+  declineReason?: string;
+  pay: Money;
+};
+
+/** A booking seen as work for a driver or a guide. */
+export type PartnerJob = {
+  bookingId: string;
+  reference: string;
+  role: "driver" | "guide";
+  supplyId: string;
+  title: string;
+  start: string;
+  end: string;
+  guest: string;
+  party: number;
+  partnerId?: string;
+};
+
+export type MaintenanceTicket = {
+  id: string;
+  listingId: string;
+  bookingId?: string;
+  title: string;
+  description: string;
+  photoName?: string;
+  priority: "low" | "normal" | "urgent";
+  status: "open" | "scheduled" | "inProgress" | "done";
+  createdAt: string;
+  assignee?: string;
+  scheduledFor?: string;
+  source: "tenant" | "guest" | "staff" | "inspection";
+  /** Who said what while it was being fixed. */
+  notes?: { at: string; by: string; text: string }[];
+  /** Days the home was taken off sale for the work. */
+  blockedDates?: string[];
 };

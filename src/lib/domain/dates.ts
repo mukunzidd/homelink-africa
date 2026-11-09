@@ -1,3 +1,4 @@
+import { dateTimeFormat } from "./date-format";
 /**
  * Dates as plain `YYYY-MM-DD` strings.
  *
@@ -57,7 +58,7 @@ export function formatDate(
   locale: string,
   options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" },
 ): string {
-  return new Intl.DateTimeFormat(locale, { ...options, timeZone: "UTC" }).format(
+  return dateTimeFormat(locale, { ...options, timeZone: "UTC" }).format(
     toUtc(date),
   );
 }
@@ -67,7 +68,7 @@ export function formatDateRange(
   to: IsoDate,
   locale: string,
 ): string {
-  return new Intl.DateTimeFormat(locale, {
+  return dateTimeFormat(locale, {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -115,7 +116,7 @@ export function firstDayOfWeek(locale: string): number {
 /** Weekday initials in the locale's own order, for the grid header. */
 export function weekdayLabels(locale: string, format: "narrow" | "short" = "narrow"): string[] {
   const first = firstDayOfWeek(locale);
-  const fmt = new Intl.DateTimeFormat(locale, { weekday: format, timeZone: "UTC" });
+  const fmt = dateTimeFormat(locale, { weekday: format, timeZone: "UTC" });
   // 2024-01-07 is a Sunday, so offsetting from it lands on each weekday.
   return Array.from({ length: 7 }, (_, i) =>
     fmt.format(new Date(Date.UTC(2024, 0, 7 + ((first + i) % 7)))),
@@ -123,7 +124,7 @@ export function weekdayLabels(locale: string, format: "narrow" | "short" = "narr
 }
 
 export function formatMonthTitle(month: IsoDate, locale: string): string {
-  return new Intl.DateTimeFormat(locale, {
+  return dateTimeFormat(locale, {
     month: "long",
     year: "numeric",
     timeZone: "UTC",
@@ -201,4 +202,11 @@ export function quickRanges(from: IsoDate = today()): QuickRange[] {
     { key: "weekend", from: friday, to: addDays(friday, 2) },
     { key: "nextWeek", from: nextMonday, to: addDays(nextMonday, 7) },
   ];
+}
+
+/** Whole calendar months from one date to another, by month number. */
+export function monthsBetween(from: IsoDate, to: IsoDate): number {
+  const [fy, fm] = from.split("-").map(Number);
+  const [ty, tm] = to.split("-").map(Number);
+  return (ty - fy) * 12 + (tm - fm);
 }
