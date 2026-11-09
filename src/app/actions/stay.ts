@@ -7,7 +7,7 @@ import { repos } from "@/lib/repos";
 import { ROLE_COOKIE, parseRole } from "@/lib/preferences/role";
 import { kigaliDay } from "@/lib/domain/instants";
 import { quoteBooking } from "@/lib/domain/pricing";
-import { isIsoDate } from "@/lib/domain/dates";
+import { dateChange } from "@/lib/booking/date-change";
 
 /**
  * What a guest does with a booking after it is made. Each checks the role
@@ -23,8 +23,9 @@ async function guestOnly() {
 export async function previewChange(reference: string, start: string, end: string) {
   await guestOnly();
   const b = await repos().bookings.byReference(reference);
-  if (!b || !isIsoDate(start) || !isIsoDate(end) || start < kigaliDay() || end <= start) return { ok: false as const, reason: "invalid" as const };
-  const free = await repos().availability.isFree(b.supplyItemId, start, end, { party: b.party, exceptBookingId: b.id });
+  const window = b ? dateChange(b, start, end, kigaliDay()) : null;
+  if (!b || !window || b.stayMode === "lease") return { ok: false as const, reason: "invalid" as const };
+  const free = await repos().availability.isFree(b.supplyItemId, window.from, window.to, { party: b.party, exceptBookingId: b.id });
   if (!free) return { ok: false as const, reason: "unavailable" as const };
   const supply = (await repos().stays.byId(b.supplyItemId)) ?? (await repos().mobility.byId(b.supplyItemId));
   if (!supply) return { ok: false as const, reason: "invalid" as const };

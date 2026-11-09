@@ -320,3 +320,26 @@ test("a guest's cancellation reaches the desk and admin as a cancellation", asyn
   }
   await guest.close();
 });
+
+test("a guest in the middle of a stay can stay two nights longer", async ({ page, context }) => {
+  await as(context, "guest");
+  const errors = watchErrors(page);
+  await page.goto("/en/bookings/HL-PDUR-02");
+  await hydrated(page);
+  await page.getByRole("button", { name: "Stay longer" }).click();
+  const dialog = page.getByRole("dialog", { name: "Stay longer" });
+  // The leaving date opens on the current one; two days on by keyboard,
+  // so the test does not care which month that lands in.
+  await dialog.locator("button[aria-haspopup=dialog]").last().click();
+  const calendar = page.locator("[role=dialog][aria-modal=false]");
+  await calendar.locator("button[data-focused=true]").focus();
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("Enter");
+  await expect(calendar).toBeHidden();
+  await expect(dialog.getByText(/^This costs .* more\./)).toBeVisible();
+  await dialog.getByRole("button", { name: "Confirm the change" }).click();
+  await expect(dialog).toBeHidden();
+  await expect(page.getByText("Dates changed").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});

@@ -1,3 +1,4 @@
+import { dateChange } from "@/lib/booking/date-change";
 import type {
   Booking,
   BookingEvent,
@@ -458,18 +459,16 @@ export function makeBookings(notifications: NotificationsRepo): BookingRepo {
     async changeDates(reference, start, end, today, by = "guest") {
       const b = find(reference);
       const supply = supplyById(b.supplyItemId);
-      // Only a booking that is still ahead can move: once it has begun, ended
-      // or been cancelled, new dates would be a new booking.
-      if (b.status !== "confirmed" || b.startDate <= today) return { ok: false, reason: "invalid" };
-      if (!supply || !isIsoDate(start) || !isIsoDate(end) || start < today || end < start) {
-        return { ok: false, reason: "invalid" };
-      }
+      // A booking still ahead moves freely; one under way can only run
+      // longer; one ended or cancelled does not move (see dateChange).
+      const window = dateChange(b, start, end, today);
+      if (!supply || !window) return { ok: false, reason: "invalid" };
       // A renting is priced by the month with a deposit; repricing it by the
       // night would drop both and refund the difference. Its dates change by
       // a new agreement, not here.
       if (b.stayMode === "lease") return { ok: false, reason: "invalid" };
       if (supply.kind === "stay" && nightsBetween(start, end) < (supply.item.minNights ?? 1)) return { ok: false, reason: "invalid" };
-      const free = await availability.isFree(supply.item.id, start, end, {
+      const free = await availability.isFree(supply.item.id, window.from, window.to, {
         party: b.party,
         exceptBookingId: b.id,
         slot: supply.kind === "experience" ? departureOf(b, supply.item) : undefined,

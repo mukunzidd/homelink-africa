@@ -314,6 +314,25 @@ describe("money back never exceeds money in (security review, Task 34)", () => {
     expect(await repos.bookings.changeDates(bk.reference, addDays(today, 40), addDays(today, 42), today, "ops")).toEqual({ ok: false, reason: "invalid" });
   });
 
+  it("lets a stay under way run longer, and charges the added nights", async () => {
+    const during = store().bookings.find((b) => b.id === "bkg_phase_during")!;
+    const total = during.total.minor;
+    const end = addDays(during.endDate, 2);
+    const r = await repos.bookings.changeDates(during.reference, during.startDate, end, today);
+    expect(r.ok).toBe(true);
+    expect(during.endDate).toBe(end);
+    expect(during.status).toBe("active");
+    const charged = store().payments.filter((p) => p.bookingId === during.id && p.kind === "change");
+    expect(charged.at(-1)?.amount.minor).toBe(during.total.minor - total);
+    expect(during.total.minor).toBeGreaterThan(total);
+  });
+
+  it("will not shorten a stay under way, or move where it started", async () => {
+    const during = store().bookings.find((b) => b.id === "bkg_phase_during")!;
+    expect(await repos.bookings.changeDates(during.reference, during.startDate, addDays(during.endDate, -1), today)).toEqual({ ok: false, reason: "invalid" });
+    expect(await repos.bookings.changeDates(during.reference, today, addDays(during.endDate, 2), today)).toEqual({ ok: false, reason: "invalid" });
+  });
+
   it("records who moved it on the timeline", async () => {
     const bk = await placed();
     await repos.bookings.changeDates(bk.reference, bk.startDate, addDays(bk.endDate, 1), today, "ops");
