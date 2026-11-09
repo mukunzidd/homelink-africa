@@ -5,6 +5,7 @@ import type { Money } from "@/lib/domain/money";
 import { usePreferences } from "@/lib/preferences/context";
 import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { cn } from "@/lib/cn";
+import { numberLocale } from "@/lib/domain/money";
 
 /**
  * The price in francs, beside the converted one.
@@ -18,7 +19,7 @@ export function RwfFigure({ amount, className }: { amount: Money; className?: st
   const { currency } = usePreferences();
   const locale = useLocale() as Locale;
   if (currency === "RWF" || amount.currency !== "RWF") return null;
-  const label = new Intl.NumberFormat(INTL_LOCALES[locale], {
+  const label = new Intl.NumberFormat(numberLocale(INTL_LOCALES[locale]), {
     style: "currency",
     currency: "RWF",
     currencyDisplay: "code",

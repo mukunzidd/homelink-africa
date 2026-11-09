@@ -7,6 +7,7 @@ import { INTL_LOCALES, type Locale } from "@/i18n/routing";
 import { control, label, primary, quiet, useWrite } from "@/components/queue/queue-forms";
 import { Dialog } from "@/components/ui/dialog";
 import { cn } from "@/lib/cn";
+import { numberLocale } from "@/lib/domain/money";
 
 function Act({ run, text, done, tone = "quiet" }: { run: () => Promise<{ ok: boolean }>; text: string; done: string; tone?: "quiet" | "primary" }) {
   const w = useWrite();
@@ -45,7 +46,7 @@ export function ReleaseDeposit({ bookingId, depositMajor, currency }: { bookingI
   const [reason, setReason] = useState("");
   const [confirming, setConfirming] = useState(false);
   const keptN = Number(kept.replace(/[\s,]/g, "")) || 0;
-  const fmt = (n: number) => `${currency} ${new Intl.NumberFormat(intl).format(n)}`;
+  const fmt = (n: number) => `${currency} ${new Intl.NumberFormat(numberLocale(intl)).format(n)}`;
   const invalid = keptN < 0 || keptN > depositMajor || (keptN > 0 && !reason.trim());
   const sentence = keptN > 0 ? t("sentenceKept", { back: fmt(depositMajor - keptN), deposit: fmt(depositMajor), kept: fmt(keptN), reason: reason.trim() }) : t("sentenceFull", { deposit: fmt(depositMajor) });
   return (

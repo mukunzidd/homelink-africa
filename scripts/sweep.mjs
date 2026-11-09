@@ -189,6 +189,9 @@ async function visit(browser, [role, locale, path, width, scheme]) {
     if (seen.scrollWidth > seen.innerWidth) problems.push(`scrolls sideways: ${seen.scrollWidth}px in ${seen.innerWidth}px`);
     for (const c of seen.clipped.slice(0, 5)) problems.push(`clipped: ${c}`);
     for (const src of seen.broken) problems.push(`broken image: ${src.slice(0, 120)}`);
+    // Rwanda groups money with commas; a period reads as a decimal point.
+    const grouped = /\b(RWF|RF|Frw)\s?\d{1,3}\.\d{3}\b/.exec(seen.text);
+    if (grouped) problems.push(`money grouped with a period: "${grouped[0]}"`);
     const word = FORBIDDEN.exec(seen.text);
     if (word) problems.push(`says "${word[0]}"`);
   }

@@ -3,7 +3,7 @@ import type { Booking, ServiceKind } from "@/lib/domain/types";
 import type { FxTable } from "@/lib/domain/money";
 import { revenue } from "@/lib/workspace/metrics";
 import { addMonths, formatDate } from "@/lib/domain/dates";
-import { formatMoney } from "@/lib/domain/money";
+import { formatMoney, numberLocale } from "@/lib/domain/money";
 import { WeeklyBars } from "@/components/workspace/charts";
 import { FinanceTable, td } from "./shared";
 
@@ -21,7 +21,7 @@ export async function RevenueTab({ bookings, fx, today, intl }: { bookings: Book
     <div className="flex flex-col gap-5">
       <section className="flex flex-col gap-3 rounded-card border border-line bg-surface p-5">
         <h2 className="text-[15px] font-semibold text-ink">{t("revenueTitle")}</h2>
-        <WeeklyBars values={totals.map((v) => Math.round(v / 1000))} labels={months.map(label)} title={t("revenueTitle")} unit={(n) => `RWF ${new Intl.NumberFormat(intl).format(n)}k`} />
+        <WeeklyBars values={totals.map((v) => Math.round(v / 1000))} labels={months.map(label)} title={t("revenueTitle")} unit={(n) => `RWF ${new Intl.NumberFormat(numberLocale(intl)).format(n)}k`} />
       </section>
       <FinanceTable head={[t("lane"), ...months.map(label)]}>
         {LANES.map((lane) => (
