@@ -1321,7 +1321,8 @@
     "booking": {
       "title": "Your booking",
       "body": "Sign in to see this booking: its reference, dates, what you paid and the thread with the team."
-    }
+    },
+    "createAccount": "Create an account"
   },
   "hoods": {
     "indexTitle": "Kigali, neighbourhood by neighbourhood",
@@ -3147,5 +3148,60 @@
     "addDay": "A day out",
     "addStayBody": "A home for these dates, or a night somewhere on the way.",
     "addAnother": "Add another, on the same dates."
+  },
+  "auth": {
+    "or": "or",
+    "signInTitle": "Sign in",
+    "signInBody": "With your phone or your email. We text or email you a code; no password needed by phone.",
+    "noAccount": "New to HomeLink?",
+    "createOne": "Create an account",
+    "signInWith": "Sign in with",
+    "tab": {
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "phone": "Phone number",
+    "phoneInvalid": "Enter a phone number with at least 9 digits.",
+    "sendCode": "Send me a code",
+    "email": "Email",
+    "emailInvalid": "Enter an email address like name@example.com.",
+    "password": "Password",
+    "forgot": "Forgot it?",
+    "passwordShort": "At least 8 characters.",
+    "signIn": "Sign in",
+    "sendLink": "Email me a sign-in link instead",
+    "signUpTitle": "Create your account",
+    "signUpBody": "For your trips, messages with the team and receipts, in one place.",
+    "haveAccount": "Already have an account?",
+    "name": "Your name",
+    "phoneOrEmail": "Phone or email",
+    "contactInvalid": "Enter a phone number or an email address.",
+    "language": "Write to me in",
+    "terms": "I accept the <terms>terms</terms> and have read how we use my data in the <privacy>privacy notice</privacy>.",
+    "continue": "Continue",
+    "verifyTitle": "Enter the code",
+    "verifyBody": "We sent a 6-digit code to {to}.",
+    "verifyBodyNone": "We sent you a 6-digit code.",
+    "codeLabel": "Digit",
+    "wrongCode": "That code is not right. Check the message and try again, or ask for a new one.",
+    "verify": "Confirm",
+    "resendIn": "Send a new code in {s}s",
+    "resend": "Send a new code",
+    "resent": "A new code is on its way.",
+    "previewCode": "Preview: any code works except 000000.",
+    "forgotTitle": "Reset your password",
+    "forgotBody": "We will email you a link to choose a new one.",
+    "backToSignIn": "Back to sign in",
+    "sendReset": "Email me a link",
+    "checkTitle": "Check your email",
+    "checkBody": "We sent a sign-in link to {to}. It works once, for the next 15 minutes.",
+    "checkResetBody": "We sent a link to {to} to choose a new password. It works once, for the next 15 minutes.",
+    "checkHint": "Nothing there? Look in spam, or go back and check the address.",
+    "openLink": "Preview: open the link",
+    "workHere": "Work at HomeLink?",
+    "staffTitle": "Try the workspace",
+    "staffBody": "A preview tool, not a sign-in: pick the role to see the workspace as. Real staff accounts come with the backend.",
+    "google": "Continue with Google",
+    "apple": "Continue with Apple"
   }
 }

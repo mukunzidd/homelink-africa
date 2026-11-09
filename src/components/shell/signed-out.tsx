@@ -1,8 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
-import { usePreferences } from "@/lib/preferences/context";
+import { Link, usePathname } from "@/i18n/navigation";
 import { CalendarIcon, MessageIcon } from "@/components/ui/icons";
 
 /**
@@ -20,8 +19,7 @@ import { CalendarIcon, MessageIcon } from "@/components/ui/icons";
  */
 export function SignedOut({ screen }: { screen: "trips" | "messages" | "booking" }) {
   const t = useTranslations("signedOut");
-  const { setRole } = usePreferences();
-  const router = useRouter();
+  const pathname = usePathname();
   const Icon = screen === "messages" ? MessageIcon : CalendarIcon;
 
   return (
@@ -38,17 +36,15 @@ export function SignedOut({ screen }: { screen: "trips" | "messages" | "booking"
           <p className="text-[15px] leading-relaxed text-ink-2">{t(`${screen}.body`)}</p>
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <button
-            type="button"
-            onClick={() => {
-              setRole("guest");
-              router.refresh();
-            }}
-            className="inline-flex min-h-11 cursor-pointer items-center rounded-ctl bg-brand px-5 text-[15px] font-semibold text-on-brand hover:bg-brand-deep"
+          <Link
+            href={`/sign-in?next=${encodeURIComponent(pathname)}`}
+            className="inline-flex min-h-11 items-center rounded-ctl bg-brand px-5 text-[15px] font-semibold text-on-brand hover:bg-brand-deep"
           >
             {t("signIn")}
-          </button>
-          <p className="text-[13px] text-ink-3">{t("previewNote")}</p>
+          </Link>
+          <Link href={`/sign-up?next=${encodeURIComponent(pathname)}`} className="text-[14px] font-semibold text-brand hover:underline">
+            {t("createAccount")}
+          </Link>
         </div>
       </div>
     </div>

@@ -1127,7 +1127,8 @@
     "booking": {
       "title": "Ibyo wafashe",
       "body": "Injira urebe iyi reservation: nimero yayo, amatariki, ibyo wishyuye n’ikiganiro n’itsinda."
-    }
+    },
+    "createAccount": "Fungura konti"
   },
   "abroad": {
     "title": "Kugura uri mu mahanga",
@@ -3147,5 +3148,60 @@
     "addDay": "Urugendo rw'umunsi",
     "addStayBody": "Inzu y'aya matariki, cyangwa ijoro rimwe mu nzira.",
     "addAnother": "Ongeraho ikindi, ku matariki amwe."
+  },
+  "auth": {
+    "or": "cyangwa",
+    "signInTitle": "Injira",
+    "signInBody": "Ukoresheje telefoni cyangwa imeyili. Tukoherereza kode kuri SMS cyangwa imeyili; nta jambo ry'ibanga kuri telefoni.",
+    "noAccount": "Uri mushya kuri HomeLink?",
+    "createOne": "Fungura konti",
+    "signInWith": "Injira ukoresheje",
+    "tab": {
+      "phone": "Telefoni",
+      "email": "Imeyili"
+    },
+    "phone": "Nimero ya telefoni",
+    "phoneInvalid": "Andika nimero ifite imibare 9 nibura.",
+    "sendCode": "Nyoherereza kode",
+    "email": "Imeyili",
+    "emailInvalid": "Andika aderesi nka izina@urugero.com.",
+    "password": "Ijambo ry'ibanga",
+    "forgot": "Waryibagiwe?",
+    "passwordShort": "Nibura inyuguti 8.",
+    "signIn": "Injira",
+    "sendLink": "Ahubwo nyoherereza umurongo wo kwinjira",
+    "signUpTitle": "Fungura konti yawe",
+    "signUpBody": "Ingendo zawe, ubutumwa n'ikipe n'inyemezabwishyu, ahantu hamwe.",
+    "haveAccount": "Usanzwe ufite konti?",
+    "name": "Izina ryawe",
+    "phoneOrEmail": "Telefoni cyangwa imeyili",
+    "contactInvalid": "Andika nimero ya telefoni cyangwa aderesi ya imeyili.",
+    "language": "Unyandikire mu",
+    "terms": "Nemeye <terms>amategeko</terms> kandi nasomye uko amakuru yanjye akoreshwa mu <privacy>itangazo ry'ubuzima bwite</privacy>.",
+    "continue": "Komeza",
+    "verifyTitle": "Andika kode",
+    "verifyBody": "Twohereje kode y'imibare 6 kuri {to}.",
+    "verifyBodyNone": "Twakoherereje kode y'imibare 6.",
+    "codeLabel": "Umubare",
+    "wrongCode": "Iyo kode si yo. Reba ubutumwa wongere ugerageze, cyangwa usabe indi.",
+    "verify": "Emeza",
+    "resendIn": "Indi kode mu masegonda {s}",
+    "resend": "Ohereza indi kode",
+    "resent": "Indi kode iri mu nzira.",
+    "previewCode": "Igerageza: kode iyo ari yo yose irakora uretse 000000.",
+    "forgotTitle": "Hindura ijambo ry'ibanga",
+    "forgotBody": "Tukoherereza umurongo kuri imeyili wo guhitamo irindi.",
+    "backToSignIn": "Subira ku kwinjira",
+    "sendReset": "Nyoherereza umurongo",
+    "checkTitle": "Reba imeyili yawe",
+    "checkBody": "Twohereje umurongo wo kwinjira kuri {to}. Ukora inshuro imwe, mu minota 15.",
+    "checkResetBody": "Twohereje kuri {to} umurongo wo guhitamo ijambo ry'ibanga rishya. Ukora inshuro imwe, mu minota 15.",
+    "checkHint": "Nta cyo ubona? Reba muri spam, cyangwa usubire inyuma urebe aderesi.",
+    "openLink": "Igerageza: fungura umurongo",
+    "workHere": "Ukorera HomeLink?",
+    "staffTitle": "Gerageza umwanya w'akazi",
+    "staffBody": "Igikoresho cy'igerageza, si ukwinjira: hitamo inshingano ushaka kureberamo umwanya w'akazi. Konti nyakuri z'abakozi zizaza hamwe na backend.",
+    "google": "Komeza na Google",
+    "apple": "Komeza na Apple"
   }
 }

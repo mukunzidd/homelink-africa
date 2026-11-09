@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import type { Role } from "@/lib/domain/types";
 import { homeFor } from "@/lib/workspace/nav";
 import { usePreferences } from "@/lib/preferences/context";
@@ -216,22 +216,18 @@ export function AccountMenu({ className }: { className?: string }) {
  */
 export function SignInLink({ className }: { className?: string }) {
   const t = useTranslations("header");
-  const { role, setRole } = usePreferences();
-  const router = useRouter();
+  const { role } = usePreferences();
+  const pathname = usePathname();
   if (role !== "visitor") return null;
-
+  // Back to this page afterwards; safeNext on the sign-in screen keeps it on this site.
   return (
     <div className={className}>
-      <button
-        type="button"
-        onClick={() => {
-          setRole("guest");
-          router.refresh();
-        }}
-        className="flex h-9 cursor-pointer items-center rounded-ctl px-3 text-sm font-semibold text-ink-2 transition-colors duration-150 hover:bg-surface-2 hover:text-ink"
+      <Link
+        href={`/sign-in?next=${encodeURIComponent(pathname)}`}
+        className="flex h-9 items-center rounded-ctl px-3 text-sm font-semibold text-ink-2 transition-colors duration-150 hover:bg-surface-2 hover:text-ink"
       >
         {t("signIn")}
-      </button>
+      </Link>
     </div>
   );
 }

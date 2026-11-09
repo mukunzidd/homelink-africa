@@ -1127,7 +1127,8 @@
     "booking": {
       "title": "Votre réservation",
       "body": "Connectez-vous pour voir cette réservation : sa référence, ses dates, ce que vous avez payé et la conversation avec l’équipe."
-    }
+    },
+    "createAccount": "Créer un compte"
   },
   "abroad": {
     "title": "Acheter depuis l'étranger",
@@ -3147,5 +3148,60 @@
     "addDay": "Une excursion",
     "addStayBody": "Un logement pour ces dates, ou une nuit sur la route.",
     "addAnother": "En ajouter un autre, aux mêmes dates."
+  },
+  "auth": {
+    "or": "ou",
+    "signInTitle": "Se connecter",
+    "signInBody": "Avec votre téléphone ou votre e-mail. Nous vous envoyons un code par SMS ou e-mail ; pas de mot de passe par téléphone.",
+    "noAccount": "Nouveau sur HomeLink ?",
+    "createOne": "Créer un compte",
+    "signInWith": "Se connecter avec",
+    "tab": {
+      "phone": "Téléphone",
+      "email": "E-mail"
+    },
+    "phone": "Numéro de téléphone",
+    "phoneInvalid": "Saisissez un numéro d'au moins 9 chiffres.",
+    "sendCode": "Recevoir un code",
+    "email": "E-mail",
+    "emailInvalid": "Saisissez une adresse comme nom@exemple.com.",
+    "password": "Mot de passe",
+    "forgot": "Oublié ?",
+    "passwordShort": "Au moins 8 caractères.",
+    "signIn": "Se connecter",
+    "sendLink": "Recevoir plutôt un lien de connexion",
+    "signUpTitle": "Créer votre compte",
+    "signUpBody": "Vos voyages, vos échanges avec l'équipe et vos reçus, au même endroit.",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "name": "Votre nom",
+    "phoneOrEmail": "Téléphone ou e-mail",
+    "contactInvalid": "Saisissez un numéro de téléphone ou une adresse e-mail.",
+    "language": "M'écrire en",
+    "terms": "J'accepte les <terms>conditions</terms> et j'ai lu comment mes données sont utilisées dans la <privacy>politique de confidentialité</privacy>.",
+    "continue": "Continuer",
+    "verifyTitle": "Saisissez le code",
+    "verifyBody": "Nous avons envoyé un code à 6 chiffres à {to}.",
+    "verifyBodyNone": "Nous vous avons envoyé un code à 6 chiffres.",
+    "codeLabel": "Chiffre",
+    "wrongCode": "Ce code n'est pas le bon. Vérifiez le message et réessayez, ou demandez-en un nouveau.",
+    "verify": "Confirmer",
+    "resendIn": "Nouveau code dans {s} s",
+    "resend": "Envoyer un nouveau code",
+    "resent": "Un nouveau code arrive.",
+    "previewCode": "Aperçu : tout code fonctionne sauf 000000.",
+    "forgotTitle": "Réinitialiser le mot de passe",
+    "forgotBody": "Nous vous envoyons un lien pour en choisir un nouveau.",
+    "backToSignIn": "Retour à la connexion",
+    "sendReset": "Recevoir un lien",
+    "checkTitle": "Consultez vos e-mails",
+    "checkBody": "Nous avons envoyé un lien de connexion à {to}. Il fonctionne une fois, pendant 15 minutes.",
+    "checkResetBody": "Nous avons envoyé à {to} un lien pour choisir un nouveau mot de passe. Il fonctionne une fois, pendant 15 minutes.",
+    "checkHint": "Rien reçu ? Regardez dans les spams, ou revenez vérifier l'adresse.",
+    "openLink": "Aperçu : ouvrir le lien",
+    "workHere": "Vous travaillez chez HomeLink ?",
+    "staffTitle": "Essayer l'espace de travail",
+    "staffBody": "Un outil d'aperçu, pas une connexion : choisissez le rôle avec lequel voir l'espace de travail. Les vrais comptes du personnel arrivent avec le backend.",
+    "google": "Continuer avec Google",
+    "apple": "Continuer avec Apple"
   }
 }

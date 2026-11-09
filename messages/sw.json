@@ -1321,7 +1321,8 @@
     "booking": {
       "title": "Nafasi uliyoweka",
       "body": "Ingia uone nafasi hii: namba ya kumbukumbu, tarehe, ulicholipa na mazungumzo na timu."
-    }
+    },
+    "createAccount": "Fungua akaunti"
   },
   "hoods": {
     "indexTitle": "Kigali, mtaa kwa mtaa",
@@ -3147,5 +3148,60 @@
     "addDay": "Matembezi ya siku",
     "addStayBody": "Nyumba kwa tarehe hizi, au usiku mmoja njiani.",
     "addAnother": "Ongeza nyingine, kwa tarehe zile zile."
+  },
+  "auth": {
+    "or": "au",
+    "signInTitle": "Ingia",
+    "signInBody": "Kwa simu au barua pepe. Tunakutumia msimbo kwa SMS au barua pepe; hakuna nenosiri kwa simu.",
+    "noAccount": "Mgeni kwenye HomeLink?",
+    "createOne": "Fungua akaunti",
+    "signInWith": "Ingia kwa",
+    "tab": {
+      "phone": "Simu",
+      "email": "Barua pepe"
+    },
+    "phone": "Namba ya simu",
+    "phoneInvalid": "Andika namba yenye tarakimu 9 angalau.",
+    "sendCode": "Nitumie msimbo",
+    "email": "Barua pepe",
+    "emailInvalid": "Andika anwani kama jina@mfano.com.",
+    "password": "Nenosiri",
+    "forgot": "Umesahau?",
+    "passwordShort": "Angalau herufi 8.",
+    "signIn": "Ingia",
+    "sendLink": "Badala yake nitumie kiungo cha kuingia",
+    "signUpTitle": "Fungua akaunti yako",
+    "signUpBody": "Safari zako, ujumbe na timu na risiti, mahali pamoja.",
+    "haveAccount": "Una akaunti tayari?",
+    "name": "Jina lako",
+    "phoneOrEmail": "Simu au barua pepe",
+    "contactInvalid": "Andika namba ya simu au anwani ya barua pepe.",
+    "language": "Niandikie kwa",
+    "terms": "Ninakubali <terms>masharti</terms> na nimesoma jinsi data yangu inavyotumiwa katika <privacy>taarifa ya faragha</privacy>.",
+    "continue": "Endelea",
+    "verifyTitle": "Andika msimbo",
+    "verifyBody": "Tumetuma msimbo wa tarakimu 6 kwa {to}.",
+    "verifyBodyNone": "Tumekutumia msimbo wa tarakimu 6.",
+    "codeLabel": "Tarakimu",
+    "wrongCode": "Msimbo huo si sahihi. Angalia ujumbe ujaribu tena, au omba mpya.",
+    "verify": "Thibitisha",
+    "resendIn": "Msimbo mpya baada ya sekunde {s}",
+    "resend": "Tuma msimbo mpya",
+    "resent": "Msimbo mpya uko njiani.",
+    "previewCode": "Onyesho: msimbo wowote unafanya kazi isipokuwa 000000.",
+    "forgotTitle": "Weka upya nenosiri",
+    "forgotBody": "Tutakutumia kiungo cha kuchagua jipya.",
+    "backToSignIn": "Rudi kwenye kuingia",
+    "sendReset": "Nitumie kiungo",
+    "checkTitle": "Angalia barua pepe yako",
+    "checkBody": "Tumetuma kiungo cha kuingia kwa {to}. Kinafanya kazi mara moja, kwa dakika 15.",
+    "checkResetBody": "Tumetuma kwa {to} kiungo cha kuchagua nenosiri jipya. Kinafanya kazi mara moja, kwa dakika 15.",
+    "checkHint": "Hakuna kitu? Angalia kwenye spam, au rudi uhakikishe anwani.",
+    "openLink": "Onyesho: fungua kiungo",
+    "workHere": "Unafanya kazi HomeLink?",
+    "staffTitle": "Jaribu eneo la kazi",
+    "staffBody": "Zana ya onyesho, si kuingia: chagua jukumu la kuona eneo la kazi kwalo. Akaunti halisi za wafanyakazi zinakuja na backend.",
+    "google": "Endelea na Google",
+    "apple": "Endelea na Apple"
   }
 }
