@@ -3652,9 +3652,18 @@
       "doors": {
         "name": "Hapa au ng’ambo",
         "body": "Ukurasa unabadilika kulingana na wewe: anayewasili kwa ndege anaona kwanza malazi, kupokelewa na amana; aliye Rwanda anaona kwanza kukodi kwa mwezi, kununua na magari kwa faranga"
+      },
+      "board": {
+        "name": "Ubao wa kuwasili",
+        "body": "Jaribio. Kila kilichokaguliwa, kila aina, kwenye ubao mmoja wa uwanja wa ndege, rangi ya kaharabu juu ya nyeusi, na saa za Kigali; weka kiashiria juu ya mstari kuona picha yake"
+      },
+      "wall": {
+        "name": "Ukuta wa bei",
+        "body": "Jaribio. Picha ya kila nyumba kwenye ukuta mmoja, nafuu kwanza; kitelezi kimoja kinaweka bei ya usiku na nyumba zilizo juu yake zinafifia"
       }
     },
     "groupDesigns": "Kurasa zilizosanifiwa upya kabisa",
-    "groupHeroes": "Machaguo ya sehemu ya juu kwenye ukurasa wa sasa"
+    "groupHeroes": "Machaguo ya sehemu ya juu kwenye ukurasa wa sasa",
+    "groupExperiments": "Majaribio"
   }
 }

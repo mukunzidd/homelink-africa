@@ -3652,9 +3652,18 @@
       "doors": {
         "name": "Hano cyangwa mu mahanga",
         "body": "Urupapuro ruhinduka bitewe n’uwo uri we: uje mu ndege abanza kubona amacumbi, kwakirwa no kubikirwa amafaranga; uri mu Rwanda abanza kubona gukodesha ku kwezi, kugura n’imodoka mu mafaranga y’u Rwanda"
+      },
+      "board": {
+        "name": "Ikibaho cy’ingendo",
+        "body": "Igerageza. Ibyagenzuwe byose, mu byiciro byose, ku kibaho kimwe nk’icyo ku kibuga cy’indege, n’isaha y’i Kigali; shyira akanyabugeni ku murongo urebe ifoto yawo"
+      },
+      "wall": {
+        "name": "Urukuta rw’ibiciro",
+        "body": "Igerageza. Ifoto ya buri nzu ku rukuta rumwe, uhereye ku ihendutse; akagendanyo kamwe gashyiraho igiciro cy’ijoro, inzu zirengeje icyo giciro zikazima"
       }
     },
     "groupDesigns": "Impapuro zavuguruwe zose",
-    "groupHeroes": "Amahitamo y’igice cyo hejuru ku rupapuro rw’ubu"
+    "groupHeroes": "Amahitamo y’igice cyo hejuru ku rupapuro rw’ubu",
+    "groupExperiments": "Igerageza"
   }
 }

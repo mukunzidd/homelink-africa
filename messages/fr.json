@@ -3652,9 +3652,18 @@
       "doors": {
         "name": "Ici ou à l’étranger",
         "body": "La page change selon qui vous êtes : qui arrive en avion voit d’abord les séjours, l’accueil et le séquestre ; qui vit au Rwanda voit la location au mois, l’achat et les voitures en francs"
+      },
+      "board": {
+        "name": "Tableau des arrivées",
+        "body": "Expérimental. Tout ce qui est inspecté, toutes catégories, sur un tableau d’aéroport ambre sur noir, à l’heure de Kigali ; survolez une ligne pour voir sa photo"
+      },
+      "wall": {
+        "name": "Mur des prix",
+        "body": "Expérimental. La photo de chaque logement sur un seul mur, du moins cher au plus cher ; un curseur fixe un prix par nuit et les logements au-dessus s’effacent"
       }
     },
     "groupDesigns": "Pages entièrement repensées",
-    "groupHeroes": "Variantes d’en-tête sur la page actuelle"
+    "groupHeroes": "Variantes d’en-tête sur la page actuelle",
+    "groupExperiments": "Expériences"
   }
 }

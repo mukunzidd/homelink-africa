@@ -3652,9 +3652,18 @@
       "doors": {
         "name": "Here or abroad",
         "body": "The page changes with who you are: someone flying in sees stays, pickup and escrow first; someone in Rwanda sees renting, buying and cars in francs"
+      },
+      "board": {
+        "name": "Departures board",
+        "body": "Experimental. Everything inspected, every lane, as one arrivals board in amber on black, with Kigali time; hover a line to see its photo"
+      },
+      "wall": {
+        "name": "Budget wall",
+        "body": "Experimental. Every home’s photo on one wall, cheapest first; one slider sets a nightly price and the homes above it fade"
       }
     },
     "groupDesigns": "Whole-page redesigns",
-    "groupHeroes": "Hero options on today’s page"
+    "groupHeroes": "Hero options on today’s page",
+    "groupExperiments": "Experiments"
   }
 }
